@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -237,15 +238,15 @@ namespace RabbitOM.Net.Sdp
             {
                 return false;
             }
-
+            
             result = new OriginField()
             {
-                UserName = tokens.Length > 0 ? tokens[0] : string.Empty ,
-                SessionId = tokens.Length > 1 ? tokens[1] : string.Empty ,
-                Version = tokens.Length > 2 ? tokens[2] : string.Empty ,
-                Address = tokens.Length > 5 ? tokens[5] : string.Empty ,
-                NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType( tokens.Length > 3 ? tokens[3] : string.Empty ) ,
-                AddressType = SessionDescriptorDataConverter.ConvertToAddressType( tokens.Length > 4 ? tokens[4] : string.Empty ) ,
+                UserName    = tokens.ElementAtOrDefault(0) ?? string.Empty ,
+                SessionId   = tokens.ElementAtOrDefault(1) ?? string.Empty ,
+                Version     = tokens.ElementAtOrDefault(2) ?? string.Empty ,
+                Address     = tokens.ElementAtOrDefault(5) ?? string.Empty ,
+                NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty ) ,
+                AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty ) ,
             };
 
             return true;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitOM.Net.Sdp
@@ -163,8 +164,8 @@ namespace RabbitOM.Net.Sdp
 
             result = new RepeatField()
             {
-                RepeatInterval = new ValueTime( SessionDescriptorDataConverter.ConvertToLong( tokens.Length > 0 ? tokens[0] : string.Empty ) , SessionDescriptorDataConverter.ConvertToLong( tokens.Length > 1 ? tokens[1] : string.Empty ) ) ,
-                ActiveDuration = new ValueTime( SessionDescriptorDataConverter.ConvertToLong( tokens.Length > 2 ? tokens[2] : string.Empty ) , SessionDescriptorDataConverter.ConvertToLong( tokens.Length > 3 ? tokens[3] : string.Empty ) ) ,
+                RepeatInterval = new ValueTime( SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty ) , SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty ) ) ,
+                ActiveDuration = new ValueTime( SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(2) ?? string.Empty ) , SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(3) ?? string.Empty ) ) ,
             };
 
             return true;

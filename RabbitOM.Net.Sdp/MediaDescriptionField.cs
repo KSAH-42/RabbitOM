@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitOM.Net.Sdp
@@ -253,11 +254,11 @@ namespace RabbitOM.Net.Sdp
 
             result = new MediaDescriptionField()
             {
-                Type = SessionDescriptorDataConverter.ConvertToMediaType( tokens.Length > 0 ? tokens[0] : string.Empty ) ,
-                Port = SessionDescriptorDataConverter.ConvertToInt( tokens.Length > 1 ? tokens[1] : string.Empty ) ,
-                Payload = SessionDescriptorDataConverter.ConvertToInt( tokens.Length > 3 ? tokens[3] : string.Empty ) ,
-                Protocol = SessionDescriptorDataConverter.ConvertToProtocolType( protocolTokens[0] ) ,
-                Profile = SessionDescriptorDataConverter.ConvertToProfileType( protocolTokens[1] ) ,
+                Type     = SessionDescriptorDataConverter.ConvertToMediaType( tokens.ElementAtOrDefault(0) ?? string.Empty ) ,
+                Port     = SessionDescriptorDataConverter.ConvertToInt(tokens.ElementAtOrDefault( 1 ) ?? string.Empty ) ,
+                Payload  = SessionDescriptorDataConverter.ConvertToInt(tokens.ElementAtOrDefault(3) ?? string.Empty ) ,
+                Protocol = SessionDescriptorDataConverter.ConvertToProtocolType( protocolTokens.ElementAtOrDefault(0) ) ,
+                Profile  = SessionDescriptorDataConverter.ConvertToProfileType( protocolTokens.ElementAtOrDefault(1) ) ,
             };
 
             return true;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -206,10 +207,10 @@ namespace RabbitOM.Net.Sdp
 
             result = new ConnectionField()
             {
-                NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType( tokens.Length > 0 ? tokens[0] : string.Empty ) ,
-                AddressType = SessionDescriptorDataConverter.ConvertToAddressType( tokens.Length > 1 ? tokens[1] : string.Empty ) ,
-                Address = tokens[2] ,
-                TTL = SessionDescriptorDataConverter.ConvertToTTL( tokens[2] ) ,
+                NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType( tokens.ElementAtOrDefault( 0 ) ?? string.Empty ) ,
+                AddressType = SessionDescriptorDataConverter.ConvertToAddressType( tokens.ElementAtOrDefault( 1 ) ?? string.Empty ) ,
+                Address     = tokens.ElementAtOrDefault( 2 ) ,
+                TTL         = SessionDescriptorDataConverter.ConvertToTTL( tokens.ElementAtOrDefault( 2 ) ) ,
             };
 
             return true;
