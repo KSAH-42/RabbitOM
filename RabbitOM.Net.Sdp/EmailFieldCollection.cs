@@ -72,6 +72,14 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
+		/// Check if the collection is empty
+		/// </summary>
+		public override bool IsEmpty
+		{
+			get => _collection.IsEmpty;
+		}
+		
+		/// <summary>
 		/// Gets the number of fields
 		/// </summary>
 		public override int Count
