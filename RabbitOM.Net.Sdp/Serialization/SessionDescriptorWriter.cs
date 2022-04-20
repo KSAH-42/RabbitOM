@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <param name="field">the field</param>
         public void WriteField(  BaseField field )
         {
-            if ( field == null || ! field.Validate())
+            if ( field == null || ! field.TryValidate())
             {
                 return;
             }

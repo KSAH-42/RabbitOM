@@ -77,7 +77,7 @@ namespace RabbitOM.Net.Sdp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             return 0 <= _startTime && _startTime <= _stopTime;
         }

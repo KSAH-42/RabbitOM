@@ -2,6 +2,7 @@
 
 namespace RabbitOM.Net.Sdp
 {
+    using RabbitOM.Net.Sdp.Validation;
     using RabbitOM.Net.Sdp.Serialization;
 
     /// <summary>
@@ -163,16 +164,46 @@ namespace RabbitOM.Net.Sdp
         }
 
 
+        /// <summary>
+        /// Just perform a validation only on mandatory fields
+        /// </summary>
+        public void Validate()
+        {
+            Validate(SessionDescriptorValidator.DefaultValidator);
+        }
+
+        /// <summary>
+        /// Just perform a validation only on mandatory fields
+        /// </summary>
+        /// <param name="validator">the validator</param>
+        /// <exception cref="ArgumentNullException"/>
+        public void Validate(SessionDescriptorValidator validator)
+        {
+            if ( validator == null )
+			{
+                throw new ArgumentNullException(nameof(validator));
+            }
+
+            validator.Validate(this);
+        }
 
         /// <summary>
         /// Just perform a validation only on mandatory fields
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Validate()
+        public bool TryValidate()
+		{
+            return TryValidate(SessionDescriptorValidator.DefaultValidator);
+		}
+
+        /// <summary>
+        /// Just perform a validation only on mandatory fields
+        /// </summary>
+        /// <param name="validator">the validator</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryValidate( SessionDescriptorValidator validator)
         {
-            return _version.Validate()
-                && _origin.Validate()
-                && _sessionName.Validate();
+            return validator?.TryValidate( this ) ?? false;
         }
 
         /// <summary>

@@ -132,7 +132,7 @@ namespace RabbitOM.Net.Sdp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             return Validate( true );
         }
@@ -163,7 +163,7 @@ namespace RabbitOM.Net.Sdp
                 return false;
             }
 
-            return ignoreControlValidation || _connection.Validate();
+            return ignoreControlValidation || _connection.TryValidate();
         }
 
         /// <summary>

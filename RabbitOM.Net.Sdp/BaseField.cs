@@ -21,7 +21,19 @@ namespace RabbitOM.Net.Sdp
         /// <summary>
         /// Validate
         /// </summary>
+        /// <exception cref="Exception"/>
+        public virtual void Validate()
+		{
+            if ( ! TryValidate() )
+			{
+                throw new Exception( "Validation failed" );
+			}
+		}
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public abstract bool Validate();
+        public abstract bool TryValidate();
     }
 }
