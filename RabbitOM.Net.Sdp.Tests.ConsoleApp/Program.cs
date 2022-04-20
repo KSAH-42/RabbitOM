@@ -7,17 +7,219 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 {
-	public sealed class SdpAttributeParamater
+	public sealed class SdpSequence
+	{
+		public readonly static IReadOnlyCollection<char> SupportedSeparators = new HashSet<char>()
+		{
+			'/' , '\\'
+		};
+
+		private readonly ExtensionList _values = new ExtensionList();
+
+		public ExtensionList Values
+		{
+			get => _values;
+		}
+
+		public void Validate()
+		{
+			if ( ! TryValidate() )
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+
+		public bool TryValidate()
+		{
+			return _values.Any();
+		}
+
+		public override string ToString()
+		{
+			return string.Join( "/" , _values);
+		}
+
+		public static SdpSequence Parse( string value )
+		{
+			return TryParse(value, out SdpSequence result) ? result : throw new InvalidOperationException();
+		}
+
+		public static bool TryParse( string value, out SdpSequence result )
+		{
+			result = null;
+
+			if ( string.IsNullOrWhiteSpace( value ) )
+			{
+				return false;
+			}
+
+			if (!SupportedSeparators.Where(x => value.Contains(x)).Any())
+			{
+				return false;
+			}			
+
+			var tokens = value.Split( SupportedSeparators.ToArray() , StringSplitOptions.RemoveEmptyEntries );
+
+			if (tokens == null || !tokens.Any() )
+			{
+				return false;
+			}
+
+			result = new SdpSequence();
+			result.Values.AddRange(tokens);
+
+			return true;
+		}
+	}
+
+	public sealed class SdpSequenceCollection : ICollection, ICollection<SdpSequence>, IEnumerable, IEnumerable<SdpSequence>
+	{
+		private readonly HashSet<SdpSequence> _collection = new HashSet<SdpSequence>();
+
+		public SdpSequenceCollection()
+		{
+		}
+
+		public SdpSequenceCollection( IEnumerable<SdpSequence> items )
+		{
+			AddRange(items);
+		}
+
+		public SdpSequence this[ int index ]
+		{
+			get => GetAt(index);
+		}
+
+		public int Count => _collection.Count;
+
+		public object SyncRoot => this;
+
+		public bool IsSynchronized => false;
+
+		public bool IsReadOnly => false;
+
+		public void Add(SdpSequence item)
+		{
+			if ( item == null )
+			{
+				throw new ArgumentNullException(nameof(item));
+			}
+
+			if ( !_collection.Add( item ) )
+			{
+				throw new ArgumentException(nameof(item));
+			}
+		}
+
+		public void AddRange( IEnumerable<SdpSequence> items )
+		{
+			if ( items == null )
+			{
+				throw new ArgumentNullException(nameof(items));
+			}
+
+			items.ToList().ForEach(Add);
+		}
+
+		public void Clear()
+		{
+			_collection.Clear();
+		}
+
+		public bool Contains(SdpSequence item)
+		{
+			return _collection.Contains(item);
+		}
+
+		public void CopyTo(Array array, int index)
+		{
+			_collection.CopyTo(array as SdpSequence[], index);
+		}
+
+		public void CopyTo(SdpSequence[] array, int arrayIndex)
+		{
+			_collection.CopyTo(array, arrayIndex);
+		}
+
+		public IEnumerator GetEnumerator()
+		{
+			return _collection.GetEnumerator();
+		}
+
+		public SdpSequence GetAt( int index )
+		{
+			return _collection.ElementAt(index) ?? throw new InvalidOperationException();
+		}
+
+		public SdpSequence FindAt(int index)
+		{
+			return _collection.ElementAtOrDefault(index);
+		}
+
+		public IEnumerable<SdpSequence> FindAll( Predicate<SdpSequence> predicate )
+		{
+			return _collection.Where(x => predicate(x)).ToList();
+		}
+
+		public bool Remove(SdpSequence item)
+		{
+			return _collection.Remove(item);
+		}
+
+		public int RemoveRange( IEnumerable<SdpSequence> items )
+		{
+			if ( items == null )
+			{
+				return 0;
+			}
+
+			return items.Where(x => _collection.Remove(x)).Count();
+		}
+
+		IEnumerator<SdpSequence> IEnumerable<SdpSequence>.GetEnumerator()
+		{
+			return _collection.GetEnumerator();
+		}
+
+		public bool TryAdd( SdpSequence item )
+		{
+			if ( item == null )
+			{
+				return false;
+			}
+
+			return _collection.Add(item);
+		}
+
+		public bool TryAddRange(IEnumerable<SdpSequence> items )
+		{
+			return items?.Where(TryAdd).Any() ?? false;
+		}
+
+		public bool TryAddRange( IEnumerable<SdpSequence> items , out int result )
+		{
+			result = items?.Where(TryAdd).Count() ?? 0;
+			return result > 0;
+		}
+
+		public bool TryGetAt( int index , out SdpSequence sequence )
+		{
+			sequence = _collection.ElementAtOrDefault(index);
+			return sequence != null;
+		}
+	}
+
+	public sealed class SdpAttributeParameter
 	{
 		public readonly static IReadOnlyCollection<char> SupportedSeparators = new HashSet<char>()
 		{
 			':','=',
 		};
 
-		public SdpAttributeParamater()
+		public SdpAttributeParameter()
 		{
 		}
-		public SdpAttributeParamater(char separator , string name , string value)
+		public SdpAttributeParameter(char separator , string name , string value)
 		{
 			Separator = separator;
 			Name = name ?? string.Empty;
@@ -56,28 +258,28 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			return $"{Name}{Separator}{Value}";
 		}
 
-		public static SdpAttributeParamater Parse(string value)
+		public static SdpAttributeParameter Parse(string value)
 		{
-			return TryParse(value, out SdpAttributeParamater p) ? p : throw new FormatException();
+			return TryParse(value, out SdpAttributeParameter p) ? p : throw new FormatException();
 		}
 
-		public static SdpAttributeParamater Parse(string value,char separator)
+		public static SdpAttributeParameter Parse(string value,char separator)
 		{
-			return TryParse(value, separator , out SdpAttributeParamater p) ? p : throw new FormatException();
+			return TryParse(value, separator , out SdpAttributeParameter p) ? p : throw new FormatException();
 		}
 
-		public static bool TryParse( string value , out SdpAttributeParamater result )
+		public static bool TryParse( string value , out SdpAttributeParameter result )
 		{
-			result = SupportedSeparators.Select(x => TryParse(value, out SdpAttributeParamater p) ? p : null).FirstOrDefault();
+			result = SupportedSeparators.Select(x => TryParse(value, x ,out SdpAttributeParameter p) ? p : null).Where( x => x != null ).FirstOrDefault();
 
 			return result != null;
 		}
 
-		public static bool TryParse( string value , char separator , out SdpAttributeParamater result )
+		public static bool TryParse( string value , char separator , out SdpAttributeParameter result )
 		{
 			result = null;
 
-			if ( string.IsNullOrWhiteSpace( value ) )
+			if ( string.IsNullOrWhiteSpace( value ) || ! value.Contains( separator ) )
 			{
 				return false;
 			}
@@ -89,29 +291,29 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 				return false;
 			}
 
-			result = new SdpAttributeParamater(separator, tokens.ElementAtOrDefault(0), tokens.ElementAtOrDefault(1));
+			result = new SdpAttributeParameter(separator, tokens.ElementAtOrDefault(0), tokens.ElementAtOrDefault(1));
 
 			return true;
 		}
 	}
 
-	public sealed class SdpAttributeParamaterCollection : ICollection, ICollection<SdpAttributeParamater>
+	public sealed class SdpAttributeParamaterCollection : ICollection, ICollection<SdpAttributeParameter>
 	{
 		//private readonly Dictionary<string, HashSet<SdpAttributeParamater>> _items = new Dictionary<string, HashSet<SdpAttributeParamater>>(StringComparer.InvariantCultureIgnoreCase);
 
-		private readonly HashSet<SdpAttributeParamater> _collection = new HashSet<SdpAttributeParamater>();
+		private readonly HashSet<SdpAttributeParameter> _collection = new HashSet<SdpAttributeParameter>();
 
-		public SdpAttributeParamater this[int index]
+		public SdpAttributeParameter this[int index]
 		{
 			get => GetAt(index);
 		}
 
-		public SdpAttributeParamater this[ string name ]
+		public SdpAttributeParameter this[ string name ]
 		{
 			get => GetByName(name);
 		}
 
-		public SdpAttributeParamater this[string name,int index]
+		public SdpAttributeParameter this[string name,int index]
 		{
 			get => GetByName(name,index);
 		}
@@ -124,16 +326,11 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 		public bool IsReadOnly => false;
 
-		public void Add(SdpAttributeParamater item)
+		public void Add(SdpAttributeParameter item)
 		{
 			if (item == null)
 			{
 				throw new ArgumentNullException();
-			}
-
-			if (ContainsName(item.Name))
-			{
-				throw new ArgumentException();
 			}
 
 			if (!_collection.Add(item))
@@ -142,7 +339,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			}
 		}
 
-		public void AddRange(IEnumerable<SdpAttributeParamater> items)
+		public void AddRange(IEnumerable<SdpAttributeParameter> items)
 		{
 			if (items == null)
 			{
@@ -157,7 +354,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			_collection.Clear();
 		}
 
-		public bool Contains(SdpAttributeParamater item)
+		public bool Contains(SdpAttributeParameter item)
 		{
 			return _collection.Contains(item);
 		}
@@ -174,10 +371,10 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 		public void CopyTo(Array array, int index)
 		{
-			_collection.CopyTo(array as SdpAttributeParamater[], index);
+			_collection.CopyTo(array as SdpAttributeParameter[], index);
 		}
 
-		public void CopyTo(SdpAttributeParamater[] array, int arrayIndex)
+		public void CopyTo(SdpAttributeParameter[] array, int arrayIndex)
 		{
 			_collection.CopyTo(array, arrayIndex);
 		}
@@ -187,104 +384,105 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			return _collection.GetEnumerator();
 		}
 
-		public SdpAttributeParamater GetAt(int index)
+		public SdpAttributeParameter GetAt(int index)
 		{
 			return _collection.ElementAt(index) ?? throw new InvalidOperationException();
 		}
 
-		public SdpAttributeParamater GetByName(string name)
+		public SdpAttributeParameter GetByName(string name)
 		{
 			return _collection.First(x => x.Name == name ) ?? throw new InvalidOperationException();
 		}
 
-		public SdpAttributeParamater GetByName(string name,int index)
+		public SdpAttributeParameter GetByName(string name,int index)
 		{
 			return _collection.Where(x => x.Name == name).ElementAt(index) ?? throw new InvalidOperationException();
 		}
 
-		public SdpAttributeParamater FindByName(string name)
+		public SdpAttributeParameter FindByName(string name)
 		{
 			return _collection.FirstOrDefault(x => x.Name == name);
 		}
 
-		public SdpAttributeParamater FindByName(string name, int index)
+		public SdpAttributeParameter FindByName(string name, int index)
 		{
 			return _collection.Where(x => x.Name == name).ElementAtOrDefault(index);
 		}
 
-		public SdpAttributeParamater FindAt(int index)
+		public SdpAttributeParameter FindAt(int index)
 		{
 			return _collection.ElementAtOrDefault(index);
 		}
 
-		public bool Remove(SdpAttributeParamater item)
+		public string FindValueByName( string name )
+		{
+			return _collection.FirstOrDefault(x => x.Name == name)?.Value ?? string.Empty;
+		}
+
+		public bool Remove(SdpAttributeParameter item)
 		{
 			return _collection.Remove(item);
 		}
 
-		public int RemoveRange(IEnumerable<SdpAttributeParamater> items)
+		public int RemoveRange(IEnumerable<SdpAttributeParameter> items)
 		{
 			return items?.Where(x => x != null).Where(_collection.Remove).Count() ?? 0;
 		}
 
-		public int RemoveRange(Predicate<SdpAttributeParamater> predicate)
+		public int RemoveRange(Predicate<SdpAttributeParameter> predicate)
 		{
 			return _collection.Where(x => predicate(x)).ToList().Where(_collection.Remove).Count();
 		}
 
-		public IEnumerable<SdpAttributeParamater> FindAllByName(string name)
+		public IEnumerable<SdpAttributeParameter> FindAllByName(string name)
 		{
 			return _collection.Where(x => x.Name == name).ToList();
 		}
 
-		public IEnumerable<SdpAttributeParamater> FindAll(Predicate<SdpAttributeParamater> predicate)
+		public IEnumerable<SdpAttributeParameter> FindAll(Predicate<SdpAttributeParameter> predicate)
 		{
 			return _collection.Where(x => predicate(x)).ToList();
 		}
 
-		IEnumerator<SdpAttributeParamater> IEnumerable<SdpAttributeParamater>.GetEnumerator()
+		IEnumerator<SdpAttributeParameter> IEnumerable<SdpAttributeParameter>.GetEnumerator()
 		{
 			return _collection.GetEnumerator();
 		}
 
-		public bool TryAdd(SdpAttributeParamater item)
+		public bool TryAdd(SdpAttributeParameter item)
 		{
 			if (item == null)
 				return false;
 
-			if (ContainsName(item.Name))
-			{
-				return false;
-			}
 			return _collection.Add(item);
 		}
 
-		public bool TryAddRange(IEnumerable<SdpAttributeParamater> items)
+		public bool TryAddRange(IEnumerable<SdpAttributeParameter> items)
 		{
 			return items?.Where(TryAdd).Any() ?? false;
 		}
 
-		public bool TryAddRange(IEnumerable<SdpAttributeParamater> items, out int result)
+		public bool TryAddRange(IEnumerable<SdpAttributeParameter> items, out int result)
 		{
 			result = items?.Where(TryAdd).Count() ?? 0;
 			return result > 0;
 		}
 
-		public bool TryGetAt(int index, out SdpAttributeParamater result)
+		public bool TryGetAt(int index, out SdpAttributeParameter result)
 		{
 			result = _collection.ElementAtOrDefault(index);
 
 			return result != null;
 		}
 
-		public bool TryGetName(string name, out SdpAttributeParamater result)
+		public bool TryGetName(string name, out SdpAttributeParameter result)
 		{
 			result = _collection.Where(x => x.Name == name).FirstOrDefault();
 
 			return result != null;
 		}
 
-		public bool TryGetName(string name , int index, out SdpAttributeParamater result)
+		public bool TryGetName(string name , int index, out SdpAttributeParameter result)
 		{
 			result = _collection.Where(x => x.Name == name).ElementAtOrDefault(index);
 
@@ -294,18 +492,77 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 	public class SdpAttributeField : BaseField
 	{
-		public SdpAttributeField( string name )
-		{
-			Name = name ?? string.Empty;
-		}
+		private string _value = string.Empty;
+
+		private readonly SdpAttributeParamaterCollection _parameters = new SdpAttributeParamaterCollection();
+
+		private readonly SdpSequenceCollection _sequences = new SdpSequenceCollection();
 
 		public override string TypeName => "a";
 
-		public string Name { get; private set; }
-		
+		public string Value
+		{
+			get => _value;
+			set => _value = SessionDescriptorDataConverter.Trim(value);
+		}
+
+		public SdpAttributeParamaterCollection Parameters { get => _parameters; }
+
+		public SdpSequenceCollection Sequences { get => _sequences; }
+
 		public override bool TryValidate()
 		{
-			return !string.IsNullOrEmpty(Name);
+			return ! string.IsNullOrWhiteSpace( _value )  
+				|| _parameters.Any()
+				|| _sequences.Any();
+		}
+
+		public override string ToString()
+		{
+			var result = string.Join( " " , new string[] { Value }.Concat( _parameters.Select( x => x.ToString() ) ) ) + " " + string.Join( " " , _sequences.Select( x => x ) );
+
+			return result;
+		}
+
+		public static SdpAttributeField Parse(string value)
+		{
+			return TryParse(value, out SdpAttributeField result) ? result : throw new FormatException();
+		}
+
+		public static bool TryParse(string value, out SdpAttributeField result )
+		{
+			result = null;
+
+			if ( string.IsNullOrWhiteSpace( value ) )
+			{
+				return false;
+			}
+
+			var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+			if ( tokens == null || ! tokens.Any() )
+			{
+				return false;
+			}
+
+			result = new SdpAttributeField();
+
+			foreach ( var token in tokens )
+			{
+				if ( SdpAttributeParameter.TryParse(token, out SdpAttributeParameter parameter ) && result.Parameters.TryAdd( parameter ) )
+				{
+					continue;
+				}
+
+				if ( SdpSequence.TryParse( token , out SdpSequence sequence ) && result.Sequences.TryAdd( sequence ) )
+				{
+					continue;
+				}
+
+				result.Value = string.Concat(result.Value, string.Join(" ", token));
+			}
+
+			return true;
 		}
 	}
 
@@ -313,7 +570,27 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
+			var field = SdpAttributeField.Parse("input/ZEZ/eZ test parameter1:value1 parameter2=value2 parameter2=value3 a/b/c//d");
+
+			Console.WriteLine( field );
+			Console.WriteLine(field.Value);
+			field.Parameters.ToList().ForEach(Console.WriteLine);
+			field.Sequences.ToList().ForEach(Console.WriteLine);
+			
 			var sessionDescriptor = new SessionDescriptor();
+			
+			Console.WriteLine( field.Value );
+
+			Console.WriteLine(field.Parameters["parameter1"].Value);
+			Console.WriteLine(field.Parameters["parameter2"].Value);
+			Console.WriteLine(field.Parameters["parameter2",1].Value);
+			Console.WriteLine(field.Parameters.FindValueByName("parameter2"));
+			Console.WriteLine(field.Parameters.FindValueByName("parameter3"));
+			Console.WriteLine(field.Sequences.Count);
+			Console.WriteLine(field.Sequences[0].Values.Count);
+			Console.WriteLine(field.Sequences[0].Values[0]);
+			Console.WriteLine(field.Sequences[0].Values[1]);
+			Console.WriteLine(field.Sequences[0].Values[2]);
 
 			sessionDescriptor.Repeats.Remove(null);
 			sessionDescriptor.SessionName.Value = "the session";
