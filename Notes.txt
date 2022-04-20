@@ -40,8 +40,7 @@ RabbitOM.Remoting.Channels
 RabbitOM.Remoting.Hosting
 RabbitOM.Windows
 RabbitOM.Windows.Controls
-RabbitOM.Windows.Presentation.dll {
+RabbitOM.Windows.Presentation.dll
 RabbitOM.Windows.Controls
 RabbitOM.Windows.Controls.Commands
 RabbitOM.Windows.Controls.Models
-}
