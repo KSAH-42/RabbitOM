@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}"
 	ProjectSection(SolutionItems) = preProject
-		Architecture.Assemblies.txt = Architecture.Assemblies.txt
-		Architecture.Namespaces.txt = Architecture.Namespaces.txt
-		Code.txt = Code.txt
+		Notes.txt = Notes.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Net.Sdp", "RabbitOM.Net.Sdp\RabbitOM.Net.Sdp.csproj", "{873FFD10-76DC-4920-8750-6ACDC29CE594}"
