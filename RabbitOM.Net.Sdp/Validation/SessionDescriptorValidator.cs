@@ -20,7 +20,7 @@ namespace RabbitOM.Net.Sdp.Validation
         public abstract void Validate(SessionDescriptor descriptor);
 
         /// <summary>
-        /// Validate
+        /// Validate          
         /// </summary>
         /// <param name="descriptor">the descriptor</param>
         /// <returns>returns true for a success, otherwise false</returns>
