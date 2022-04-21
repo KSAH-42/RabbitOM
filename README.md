@@ -17,7 +17,7 @@ But also to access to the raw data. Many libs didn't provide a direct access to 
 
 What is SDP ?
 
-SDP is a protocol used to describe streams configuration, and contains important informations like the keys used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the sdp "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used by security cameras and also used by device that support SIP protocols like VoIP systems.
+SDP is a protocol used to describe a streaming session configuration, and contains important informations like the real uri and the keys used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the SDP "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used by security cameras and also used by device that support SIP protocols like VoIP systems.
 
 About the implementation
 
@@ -75,7 +75,7 @@ Console.WriteLine(sessionDescriptor.ToString());
 
 if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
 {
-    Console.WriteLine("Parsed by the rabbit");
+    Console.WriteLine("Parsed by rabbit");
 }
 
 ~~~~
