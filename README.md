@@ -42,34 +42,33 @@ sessionDescriptor.Uri.Value = "rtsp://192.168.0.11:554";
 
 for ( int i = 1; i <= 10; ++ i )
 {
-  var mediaAttribute = new MediaDescriptionField();
+    var mediaAttribute = new MediaDescriptionField();
 
-  mediaAttribute.Payload = 1 + i;
-  mediaAttribute.Port = 10 + i;
-  mediaAttribute.Profile = ProfileType.AVP;
-  mediaAttribute.Protocol = ProtocolType.RTP;
-  mediaAttribute.Type = MediaType.Video;
+    mediaAttribute.Payload = 1 + i;
+    mediaAttribute.Port = 10 + i;
+    mediaAttribute.Profile = ProfileType.AVP;
+    mediaAttribute.Protocol = ProtocolType.RTP;
+    mediaAttribute.Type = MediaType.Video;
 
-  mediaAttribute.Encryption.Key = "myKey"+i.ToString();
-  mediaAttribute.Encryption.Method = "myMethod"+i.ToString();
-  mediaAttribute.Connection.Address = "192.168.0."+i.ToString();
-  mediaAttribute.Connection.AddressType = AddressType.IPV4;
-  mediaAttribute.Connection.NetworkType = NetworkType.Internet;
-  mediaAttribute.Bandwiths.Add(new BandwithField("modifier", i));
-  mediaAttribute.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
-  mediaAttribute.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
-  mediaAttribute.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
-  mediaAttribute.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
+    mediaAttribute.Encryption.Key = "myKey"+i.ToString();
+    mediaAttribute.Encryption.Method = "myMethod"+i.ToString();
+    mediaAttribute.Connection.Address = "192.168.0."+i.ToString();
+    mediaAttribute.Connection.AddressType = AddressType.IPV4;
+    mediaAttribute.Connection.NetworkType = NetworkType.Internet;
+    mediaAttribute.Bandwiths.Add(new BandwithField("modifier", i));
+    mediaAttribute.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
+    mediaAttribute.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
+    mediaAttribute.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
+    mediaAttribute.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
 
-  sessionDescriptor.MediaDescriptions.Add(mediaAttribute);
+    sessionDescriptor.MediaDescriptions.Add(mediaAttribute);
 }
-
 
 Console.WriteLine(sessionDescriptor.ToString());
 
 if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
 {
-  Console.WriteLine("Ok");
+    Console.WriteLine("Ok");
 }
 
 ~~~~
