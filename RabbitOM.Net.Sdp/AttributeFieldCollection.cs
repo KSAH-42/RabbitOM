@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
-	/// Represent the collection for attribute field
+	/// Represent the collection for attribute field that a allow duplicate field names
 	/// </summary>
 	public sealed class AttributeFieldCollection : FieldCollection<AttributeField>
 	{

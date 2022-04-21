@@ -6,7 +6,7 @@ using System.Linq;
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
-    /// Represent the extension list
+    /// Represent the extension list that allow duplicated field values
     /// </summary>
     public sealed class ExtensionList 
         : ICollection<string>

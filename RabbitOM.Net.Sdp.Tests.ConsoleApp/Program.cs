@@ -628,7 +628,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 				mediaAttribute.Port = 10 + i;
 				mediaAttribute.Profile = ProfileType.AVP;
 				mediaAttribute.Protocol = ProtocolType.RTP;
-				mediaAttribute.Type = MediaType.Application;
+				mediaAttribute.Type = MediaType.Video;
 				mediaAttribute.Encryption.Key = "key"+i.ToString();
 				mediaAttribute.Encryption.Method = "method"+i.ToString();
 				mediaAttribute.Connection.Address = "127.0.0."+i.ToString();
