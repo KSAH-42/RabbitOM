@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp.Serialization
     /// Represent a tolerant sdp serializer
     /// </summary>
     /// <remarks>
-    ///    <para>According to the global authorities, the serialization mecanism use a certain order: please follow this link to get more details <see href="https://tools.ietf.org/html/rfc4566#page-39"/></para>
+    ///    <para>According to the global authorities, the serialization mecanism MUST respect a certain order: please follow this link to get more details <see href="https://tools.ietf.org/html/rfc4566#page-39"/></para>
     /// </remarks>
     public static class SessionDescriptorSerializer
     {

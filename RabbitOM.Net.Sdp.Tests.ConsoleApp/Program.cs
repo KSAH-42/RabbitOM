@@ -1,4 +1,15 @@
-﻿using System;
+﻿//                  W A R N I N G
+
+// The ExtensionList class used an hashset, it may cause issues because in some
+// cases duplicated elements are allowed, for the SdpSequence class
+// duplicated value are granted, please check in other places
+// if the ExtensionList class must forbid duplicated value
+// otherwise change replace the internal hashset member
+// by a string list
+
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -570,27 +581,27 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
-			var field = SdpAttributeField.Parse("input/ZEZ/eZ test parameter1:value1 parameter2=value2 parameter2=value3 a/b/c//d");
+			var attribute = SdpAttributeField.Parse("input/ZEZ/eZ test parameter1:value1 parameter2=value2 parameter2=value3 a/b/c//d");
 
-			Console.WriteLine( field );
-			Console.WriteLine(field.Value);
-			field.Parameters.ToList().ForEach(Console.WriteLine);
-			field.Sequences.ToList().ForEach(Console.WriteLine);
 			
+			Console.WriteLine( attribute );
+			Console.WriteLine(attribute.Value);
+			attribute.Parameters.ToList().ForEach(Console.WriteLine);
+			attribute.Sequences.ToList().ForEach(Console.WriteLine);
+
 			var sessionDescriptor = new SessionDescriptor();
-			
-			Console.WriteLine( field.Value );
+			Console.WriteLine( attribute.Value );
 
-			Console.WriteLine(field.Parameters["parameter1"].Value);
-			Console.WriteLine(field.Parameters["parameter2"].Value);
-			Console.WriteLine(field.Parameters["parameter2",1].Value);
-			Console.WriteLine(field.Parameters.FindValueByName("parameter2"));
-			Console.WriteLine(field.Parameters.FindValueByName("parameter3"));
-			Console.WriteLine(field.Sequences.Count);
-			Console.WriteLine(field.Sequences[0].Values.Count);
-			Console.WriteLine(field.Sequences[0].Values[0]);
-			Console.WriteLine(field.Sequences[0].Values[1]);
-			Console.WriteLine(field.Sequences[0].Values[2]);
+			Console.WriteLine(attribute.Parameters["parameter1"].Value);
+			Console.WriteLine(attribute.Parameters["parameter2"].Value);
+			Console.WriteLine(attribute.Parameters["parameter2",1].Value);
+			Console.WriteLine(attribute.Parameters.FindValueByName("parameter2"));
+			Console.WriteLine(attribute.Parameters.FindValueByName("parameter3"));
+			Console.WriteLine(attribute.Sequences.Count);
+			Console.WriteLine(attribute.Sequences[0].Values.Count);
+			Console.WriteLine(attribute.Sequences[0].Values[0]);
+			Console.WriteLine(attribute.Sequences[0].Values[1]);
+			Console.WriteLine(attribute.Sequences[0].Values[2]);
 
 			sessionDescriptor.Repeats.Remove(null);
 			sessionDescriptor.SessionName.Value = "the session";
@@ -609,8 +620,28 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			sessionDescriptor.Attributes.TryAdd(new AttributeField("key1", "val1"));
 			sessionDescriptor.Attributes.TryAdd(new AttributeField("key1", "val1"));
 			sessionDescriptor.Attributes.TryAdd(new AttributeField("key2", "val2"));
-			
 
+			for ( int i = 0; i < 10; ++ i )
+			{
+				var mediaAttribute = new MediaDescriptionField();
+				mediaAttribute.Payload = 1 + i;
+				mediaAttribute.Port = 10 + i;
+				mediaAttribute.Profile = ProfileType.AVP;
+				mediaAttribute.Protocol = ProtocolType.RTP;
+				mediaAttribute.Type = MediaType.Application;
+				mediaAttribute.Encryption.Key = "key"+i.ToString();
+				mediaAttribute.Encryption.Method = "method"+i.ToString();
+				mediaAttribute.Connection.Address = "127.0.0."+i.ToString();
+				mediaAttribute.Connection.AddressType = AddressType.IPV4;
+				mediaAttribute.Connection.NetworkType = NetworkType.Internet;
+				mediaAttribute.Bandwiths.Add(new BandwithField("modifier", i));
+				mediaAttribute.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
+				mediaAttribute.Attributes.Add(new AttributeField("m1", "1"));
+				mediaAttribute.Attributes.Add(new AttributeField("m2", "2"));
+				mediaAttribute.Attributes.Add(new AttributeField("m3", "3"));
+
+				sessionDescriptor.MediaDescriptions.Add(mediaAttribute);
+			}
 
 			sessionDescriptor.Phones.TryAdd(null);
 			sessionDescriptor.Phones.TryAdd(new PhoneField("+33 1 12 34 56 78"));
@@ -624,6 +655,8 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			Console.WriteLine(session);
 			Console.WriteLine();
 			Console.WriteLine(sessionDescriptor);
+
+			
 		}
 	}
 }

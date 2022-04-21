@@ -18,7 +18,6 @@ namespace RabbitOM.Net.Sdp
 
 
 
-
 		/// <summary>
 		/// Initialize a new instance of the collection
 		/// </summary>
@@ -40,7 +39,6 @@ namespace RabbitOM.Net.Sdp
 
 
 
-
 		/// <summary>
 		/// Gets a field
 		/// </summary>
@@ -50,7 +48,6 @@ namespace RabbitOM.Net.Sdp
 		{ 
 			get => GetAt( index ); 
 		}
-
 
 
 

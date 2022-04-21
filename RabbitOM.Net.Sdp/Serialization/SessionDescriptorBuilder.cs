@@ -259,16 +259,17 @@ namespace RabbitOM.Net.Sdp.Serialization
             sdp.SessionName.CopyFrom( _sessionName );
             sdp.SessionInformation.CopyFrom( _sessionInformation );
             sdp.Uri.CopyFrom( _uri );
-            sdp.Emails.AddRange( _emails );
-            sdp.Phones.AddRange( _phones );
             sdp.Connection.CopyFrom( _connection );
-            sdp.Bandwiths.AddRange( _bandwiths );
-            sdp.Times.AddRange( _times );
-            sdp.Repeats.AddRange( _repeats );
             sdp.TimeZone.CopyFrom( _timeZone );
             sdp.Encryption.CopyFrom( _encryption );
-            sdp.Attributes.AddRange( _attributes );
-            sdp.MediaDescriptions.AddRange( _mediaDescriptions );
+
+            sdp.Emails.TryAddRange( _emails );
+            sdp.Phones.TryAddRange( _phones );
+            sdp.Bandwiths.TryAddRange( _bandwiths );
+            sdp.Times.TryAddRange( _times );
+            sdp.Repeats.TryAddRange( _repeats );
+            sdp.Attributes.TryAddRange( _attributes );
+            sdp.MediaDescriptions.TryAddRange( _mediaDescriptions );
             
             return sdp;
         }

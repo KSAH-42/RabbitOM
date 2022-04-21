@@ -73,7 +73,7 @@ namespace RabbitOM.Net.Sdp
             }
 
             _method = field._method;
-            _key = field._key;
+            _key    = field._key;
         }
 
         /// <summary>

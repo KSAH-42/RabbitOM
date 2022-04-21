@@ -1,3 +1,70 @@
+Rabbit.Net.Sdp.dll
+Rabbit.Net.Sdp.Components.dll
+ AttributeType
+ AttributeBase
+ RawAttribute
+ TypeAttribute
+ FmtpAttribute
+ RangeAttribute
+ RtpMapAttribute
+ AttributeFactory
+ AttributeParameter
+ AttributeParameterCollection
+ AttributeSequence
+ AttributeSequenceCollection
+
+
+FieldValue
+  RawValue.Data
+  TypeValue.Data
+  FmtpValue.Clock,Parameters
+  RtpMapValue.Clock, Sequences[]
+
+AttributeField
+
+
+ValueBase
+  ValueRaw
+  ValueControl {Value}
+  ValueRange { Parameters[]}
+  ValueType { Value}
+  ValueFmtp { Value, Parameters[] } ex:123 p1=1;p2=2;
+  ValueRtpMap { Value, Sequences[]} ex:123 s1/s2/s3/
+  
+a=control:*
+a=range:npt=0-14.800
+a=type:broadcast
+a=fmtp:96 useinbandfec=1
+a=fmtp:97 profile-level-id=42801F
+a=fmtp:98 vbr=on
+a=fmtp:99 vbr=on
+a=fmtp:96 packetization-mode=1;profile-level-id=4D4033;sprop-parameter-sets=Z01AM5ZSAHgAh9JQEBAUAAADAAQAAAMAyhA=,aOtzUg==
+a=rtpmap:96 opus/48000/2
+a=rtpmap:97 SILK/16000
+a=rtpmap:98 speex/16000
+a=rtpmap:99 speex/8000
+a=rtpmap:101 telephone-event/48000
+a=rtpmap:100 telephone-event/16000
+a=rtpmap:102 telephone-event/8000
+a=rtpmap:96 VP8/90000
+a=rtpmap:97 H264/90000
+a=rtpmap:96 H264/90000
+
+
+
+///
+
+
+
+
+
+
+attribute.TypeName
+attribute.Name
+attribute.Value as RawFieldValue
+attribute.Value as ControlFieldValue
+attribute.Value as TypeFieldValue
+
 
 RabbitOM.Collections
 RabbitOM.Configuration
@@ -10,8 +77,21 @@ RabbitOM.IO.Containers.Avi
 RabbitOM.Net
 RabbitOM.Net.Rtp
 RabbitOM.Net.Rtp.Serialization
+RabbitOM.Net.Rtp.RtpPacket
+RabbitOM.Net.Rtp.RtpPacketList
+RabbitOM.Net.Rtp.RtpFrame
+RabbitOM.Net.Rtp.RtpFrameList
+RabbitOM.Net.Rtp.RtpFrameBuffer
+RabbitOM.Net.Rtp.RtpSequencer
+RabbitOM.Net.Rtp.RtpStream
+RabbitOM.Net.Rtp.RtpClient
+RabbitOM.Net.Rtp.RtpClientUdp
+RabbitOM.Net.Rtp.RtpClientUdpMulticast
 RabbitOM.Net.Rtcp
 RabbitOM.Net.Rtcp.Serialization
+RabbitOM.Net.Rtcp.RtcpPacket
+RabbitOM.Net.Rtcp.RtcpClient
+RabbitOM.Net.Rtcp.RtcpClientUdp
 RabbitOM.Net.Rtsp
 RabbitOM.Net.Rtsp.Clients { class RTSPConnection{} class RTSPProxy{} }
 RabbitOM.Net.Rtsp.Clients.Receivers

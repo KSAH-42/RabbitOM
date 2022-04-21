@@ -95,7 +95,7 @@ namespace RabbitOM.Net.Sdp
             _encoding = info._encoding;
 
             _extensions.Clear();
-            _extensions.AddRange( info.Extensions );
+            _extensions.TryAddRange( info.Extensions );
         }
 
         /// <summary>

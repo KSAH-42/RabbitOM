@@ -122,10 +122,10 @@ namespace RabbitOM.Net.Sdp
                 return;
             }
 
-            _address = field._address;
+            _address     = field._address;
             _addressType = field._addressType;
             _networkType = field._networkType;
-            _ttl = field._ttl;
+            _ttl         = field._ttl;
         }
 
         /// <summary>

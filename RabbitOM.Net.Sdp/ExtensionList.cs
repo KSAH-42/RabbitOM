@@ -26,7 +26,7 @@ namespace RabbitOM.Net.Sdp
         /// <summary>
         /// The collection
         /// </summary>
-        private readonly ISet<string>   _collection   = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+        private readonly IList<string>   _collection   = new List<string>();
 
 
 
@@ -313,7 +313,9 @@ namespace RabbitOM.Net.Sdp
                 return false;
             }
 
-            return _collection.Add(SessionDescriptorDataConverter.Trim(element));
+            _collection.Add(SessionDescriptorDataConverter.Trim(element));
+
+            return true;
         }
 
         /// <summary>
@@ -334,7 +336,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns the number of element added</returns>
         public bool TryAddRange(IEnumerable<string> collection,out int result)
         {
-            result = _collection.Where( value => TryAdd( value ) ).Count();
+            result = _collection.Where( TryAdd ).Count();
 
             return result > 0;
         }
