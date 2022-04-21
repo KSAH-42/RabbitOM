@@ -10,10 +10,14 @@ After many research on Internet, I didn't find a stable library (in .net) used t
 * RTCP (not actually implemented)
 * Onvif (not actually implemented)
 
-But also to access to the raw data, many libs didn't provide a direct access to the audio/video packets.
+But also to access to the raw data. Many libs didn't provide a direct access to the audio/video packets.
 
 
 # About Session Description Protocol
+
+What is SDP ?
+
+SDP is a protocol used describe some streams configuration, and contains important information the Keys used by codecs, which are accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can decode video streams just be receiving data from an RTP channel. And keys are stored in sdp the document where the SDP are only exchanged during a RTSP session. The SDP protocol are used by security camera and also by device that support SIP protocols.
 
 The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. Using a simple dictionary introduce anti pattern called primitive obsession anti pattern. To avoid this ugly approach of using a just a dictionary, I decided to implement a set of classes that provide a better access to data located inside SDP document. This implementation has been tested with many security camera models and RTSP servers. The serialization mecanism MUST respect a certain order. So here, you will find a tolerant serializer. This actual implementation provide a tolerant serialization mecanism that handle many cases, like formating issues, case sensitive issues, ordering issues, extra whitespaces between separators, etc... which are sometimes, present in some systems that can deliver a SDP.
 
