@@ -623,26 +623,26 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 			for ( int i = 1; i <= 10; ++ i )
 			{
-				var mediaAttribute = new MediaDescriptionField();
+				var mediaDescription = new MediaDescriptionField();
 
-				mediaAttribute.Payload = 1 + i;
-				mediaAttribute.Port = 10 + i;
-				mediaAttribute.Profile = ProfileType.AVP;
-				mediaAttribute.Protocol = ProtocolType.RTP;
-				mediaAttribute.Type = MediaType.Video;
+				mediaDescription.Payload = 1 + i;
+				mediaDescription.Port = 10 + i;
+				mediaDescription.Profile = ProfileType.AVP;
+				mediaDescription.Protocol = ProtocolType.RTP;
+				mediaDescription.Type = MediaType.Video;
 
-				mediaAttribute.Encryption.Key = "myKey"+i.ToString();
-				mediaAttribute.Encryption.Method = "myMethod"+i.ToString();
-				mediaAttribute.Connection.Address = "192.168.0."+i.ToString();
-				mediaAttribute.Connection.AddressType = AddressType.IPV4;
-				mediaAttribute.Connection.NetworkType = NetworkType.Internet;
-				mediaAttribute.Bandwiths.Add(new BandwithField("modifier", i));
-				mediaAttribute.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
-				mediaAttribute.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
-				mediaAttribute.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
-				mediaAttribute.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
+				mediaDescription.Encryption.Key = "myKey"+i.ToString();
+				mediaDescription.Encryption.Method = "myMethod"+i.ToString();
+				mediaDescription.Connection.Address = "192.168.0."+i.ToString();
+				mediaDescription.Connection.AddressType = AddressType.IPV4;
+				mediaDescription.Connection.NetworkType = NetworkType.Internet;
+				mediaDescription.Bandwiths.Add(new BandwithField("modifier", i));
+				mediaDescription.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
+				mediaDescription.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
+				mediaDescription.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
+				mediaDescription.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
 
-				sessionDescriptor.MediaDescriptions.Add(mediaAttribute);
+				sessionDescriptor.MediaDescriptions.Add(mediaDescription);
 			}
 
 			
