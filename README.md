@@ -2,13 +2,15 @@
 
 # Introduction
 
-After many research on Internet, I didn't find a stable library (in .net) used to connect, managed, and received video/audio stream from security camera using standard protocols like:
+After many research on Internet, I didn't find a stable library (in .net) used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
 * SDP (actually implemented)
 * RTSP (not actually implemented)
 * RTP (not actually implemented)
 * RTCP (not actually implemented)
 * Onvif (not actually implemented)
+
+But also to access to the raw data, many libs didn't provide a direct access to the audio/video packets.
 
 
 # About Session Description Protocol
