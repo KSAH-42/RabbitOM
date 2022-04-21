@@ -24,12 +24,12 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <param name="field">the field</param>
         public void WriteField( BaseField field )
         {
-            if ( field == null || ! field.TryValidate())
+            if ( field == null || string.IsNullOrWhiteSpace(field.TypeName) )
             {
                 return;
             }
             
-            if ( string.IsNullOrWhiteSpace( field.TypeName ) )
+            if ( ! field.TryValidate() )
             {
                 return;
             }

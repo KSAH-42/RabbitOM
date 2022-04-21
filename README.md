@@ -23,7 +23,7 @@ About the implementation
 
 The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. Using a simple dictionary introduce an anti pattern called "primitive obsession". To avoid this ugly approach of using just a dictionary, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. This implementation has been tested with many security cameras models and RTSP servers. According to the RFC, the serialization mecanism MUST respect a particular order. So here, you will find a tolerant serializer. This actual implementation provide a tolerant serialization mecanism that handle many cases, like formating issues, case sensitive issues, ordering issues, extra whitespaces between separators, etc... which are sometimes, present in some systems that can deliver a SDP and may cause interpretation issues.
 
-Example:
+Usage:
 
 ~~~~C#
 
@@ -45,7 +45,7 @@ sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"))
 
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-sessionDescriptor.Uri.Value = "rtsp://192.168.0.11:554";
+sessionDescriptor.Uri.Value = "rtsp://192.168.0.11:554/video/channel/1";
 
 for ( int i = 1; i <= 10; ++ i )
 {
@@ -75,7 +75,7 @@ Console.WriteLine(sessionDescriptor.ToString());
 
 if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
 {
-    Console.WriteLine("Ok");
+    Console.WriteLine("Parsed by the rabbit");
 }
 
 ~~~~

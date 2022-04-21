@@ -28,7 +28,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsVersionField
+        public bool IsVersionHeader
         {
             get => CompareFieldName( VersionField.TypeNameValue );
         }
@@ -36,7 +36,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsOriginField
+        public bool IsOriginHeader
         {
             get => CompareFieldName( OriginField.TypeNameValue );
         }
@@ -44,7 +44,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsSessionNameField
+        public bool IsSessionNameHeader
         {
             get => CompareFieldName( SessionNameField.TypeNameValue );
         }
@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsSessionInformationField
+        public bool IsSessionInformationHeader
         {
             get => CompareFieldName( SessionInformationField.TypeNameValue );
         }
@@ -60,7 +60,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsEmailField
+        public bool IsEmailHeader
         {
             get => CompareFieldName( EmailField.TypeNameValue );
         }
@@ -68,7 +68,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsPhoneField
+        public bool IsPhoneHeader
         {
             get => CompareFieldName( PhoneField.TypeNameValue );
         }
@@ -76,7 +76,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsTimeField
+        public bool IsTimeHeader
         {
             get => CompareFieldName( TimeField.TypeNameValue );
         }
@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsRepeatField
+        public bool IsRepeatHeader
         {
             get => CompareFieldName( RepeatField.TypeNameValue );
         }
@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsTimeZoneField
+        public bool IsTimeZoneHeader
         {
             get => CompareFieldName( TimeZoneField.TypeNameValue );
         }
@@ -100,7 +100,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsConnectionField
+        public bool IsConnectionHeader
         {
             get => CompareFieldName( ConnectionField.TypeNameValue );
         }
@@ -108,7 +108,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsUriField
+        public bool IsUriHeader
         {
             get => CompareFieldName( UriField.TypeNameValue );
         }
@@ -116,7 +116,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsEncryptionField
+        public bool IsEncryptionHeader
         {
             get => CompareFieldName( EncryptionField.TypeNameValue );
         }
@@ -124,7 +124,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsBandwithField
+        public bool IsBandwithHeader
         {
             get => CompareFieldName( BandwithField.TypeNameValue );
         }
@@ -132,7 +132,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsMediaDescriptionField
+        public bool IsMediaDescriptionHeader
         {
             get => CompareFieldName( MediaDescriptionField.TypeNameValue );
         }
@@ -140,7 +140,7 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Check the field name
         /// </summary>
-        public bool IsAttributeField
+        public bool IsAttributeHeader
         {
             get => CompareFieldName( AttributeField.TypeNameValue );
         }
@@ -158,17 +158,17 @@ namespace RabbitOM.Net.Sdp.Serialization
         }
 
         /// <summary>
-        /// Gets the field name
+        /// Gets the heaeder name
         /// </summary>
-        public string FieldName
+        public string CurrentHeaderName
         {
             get => _textFields.Current.First ?? string.Empty;
         }
 
         /// <summary>
-        /// Gets the current value
+        /// Gets the header value
         /// </summary>
-        public string CurrentValue
+        public string CurrentHeaderValue
         {
             get => _textFields.Current.Second ?? string.Empty;
         }
@@ -191,7 +191,7 @@ namespace RabbitOM.Net.Sdp.Serialization
 
             if ( !_isUnderMediaSection )
             {
-                _isUnderMediaSection = IsMediaDescriptionField;
+                _isUnderMediaSection = IsMediaDescriptionHeader;
             }
 
             return true;

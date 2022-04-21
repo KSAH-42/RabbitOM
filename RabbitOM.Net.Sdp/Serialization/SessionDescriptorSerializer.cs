@@ -64,103 +64,103 @@ namespace RabbitOM.Net.Sdp.Serialization
 
                 while ( reader.Read() )
                 {
-                    if ( reader.IsVersionField )
+                    if ( reader.IsVersionHeader )
                     {
-                        builder.SetVersion( reader.CurrentValue );
+                        builder.SetVersion( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsOriginField )
+                    if ( reader.IsOriginHeader )
                     {
-                        builder.SetOrigin( reader.CurrentValue );
+                        builder.SetOrigin( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsSessionNameField )
+                    if ( reader.IsSessionNameHeader )
                     {
-                        builder.SetSessionName( reader.CurrentValue );
+                        builder.SetSessionName( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsSessionInformationField )
+                    if ( reader.IsSessionInformationHeader )
                     {
-                        builder.SetSessionInformation( reader.CurrentValue );
+                        builder.SetSessionInformation( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsUriField )
+                    if ( reader.IsUriHeader )
                     {
-                        builder.SetUri( reader.CurrentValue );
+                        builder.SetUri( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsEmailField )
+                    if ( reader.IsEmailHeader )
                     {
-                        builder.AddEmail( reader.CurrentValue );
+                        builder.AddEmail( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsPhoneField )
+                    if ( reader.IsPhoneHeader )
                     {
-                        builder.AddPhone( reader.CurrentValue );
+                        builder.AddPhone( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsConnectionField )
+                    if ( reader.IsConnectionHeader )
                     {
-                        builder.SetConnection( reader.CurrentValue );
+                        builder.SetConnection( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsBandwithField )
+                    if ( reader.IsBandwithHeader )
                     {
-                        builder.AddBandwith( reader.CurrentValue );
+                        builder.AddBandwith( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsTimeField )
+                    if ( reader.IsTimeHeader )
                     {
-                        builder.AddTime( reader.CurrentValue );
+                        builder.AddTime( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsRepeatField )
+                    if ( reader.IsRepeatHeader )
                     {
-                        builder.AddRepeat( reader.CurrentValue );
+                        builder.AddRepeat( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsTimeZoneField )
+                    if ( reader.IsTimeZoneHeader )
                     {
-                        builder.SetTimeZone( reader.CurrentValue );
+                        builder.SetTimeZone( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsEncryptionField )
+                    if ( reader.IsEncryptionHeader )
                     {
-                        builder.SetEncryption( reader.CurrentValue );
+                        builder.SetEncryption( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsAttributeField )
+                    if ( reader.IsAttributeHeader )
                     {
-                        builder.AddAttribute( reader.CurrentValue );
+                        builder.AddAttribute( reader.CurrentHeaderValue );
                     }
 
                     if ( reader.IsUnderMediaSection )
                     {
                         do
                         {
-                            if ( reader.IsMediaDescriptionField )
+                            if ( reader.IsMediaDescriptionHeader )
                             {
-                                builder.CreateMediaDescription( reader.CurrentValue );
+                                builder.CreateMediaDescription( reader.CurrentHeaderValue );
                             }
 
-                            if ( reader.IsConnectionField )
+                            if ( reader.IsConnectionHeader )
                             {
-                                builder.SetMediaConnection( reader.CurrentValue );
+                                builder.SetMediaConnection( reader.CurrentHeaderValue );
                             }
 
-                            if ( reader.IsEncryptionField )
+                            if ( reader.IsEncryptionHeader )
                             {
-                                builder.SetMediaEncryption( reader.CurrentValue );
+                                builder.SetMediaEncryption( reader.CurrentHeaderValue );
                             }
 
-                            if ( reader.IsBandwithField )
+                            if ( reader.IsBandwithHeader )
                             {
-                                builder.AddMediaBandwith( reader.CurrentValue );
+                                builder.AddMediaBandwith( reader.CurrentHeaderValue );
                             }
 
-                            if ( reader.IsAttributeField )
+                            if ( reader.IsAttributeHeader )
                             {
-                                builder.AddMediaAttribute( reader.CurrentValue );
+                                builder.AddMediaAttribute( reader.CurrentHeaderValue );
                             }
                         }
                         while ( reader.Read() && reader.IsUnderMediaSection );

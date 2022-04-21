@@ -113,14 +113,13 @@ RabbitOM.Media.Codecs.Jpeg
 RabbitOM.Media.Codecs.H264
 RabbitOM.Media.Codecs.HEVC
 RabbitOM.Media.Codecs.PCM
-RabbitOM.Media.Codecs.MUXX
+RabbitOM.Media.Codecs.MPEG4
 RabbitOM.Media.Rendering
 RabbitOM.Remoting
 RabbitOM.Remoting.Channels
 RabbitOM.Remoting.Hosting
 RabbitOM.Windows
-RabbitOM.Windows.Controls
 RabbitOM.Windows.Presentation.dll
-RabbitOM.Windows.Controls
-RabbitOM.Windows.Controls.Commands
-RabbitOM.Windows.Controls.Models
+ RabbitOM.Windows.Controls
+ RabbitOM.Windows.Controls.Commands
+ RabbitOM.Windows.Controls.Models
