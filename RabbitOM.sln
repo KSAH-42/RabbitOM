@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}"
 	ProjectSection(SolutionItems) = preProject
-		Notes.txt = Notes.txt
 		README.md = README.md
-		SDP.txt = SDP.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Net.Sdp", "RabbitOM.Net.Sdp\RabbitOM.Net.Sdp.csproj", "{873FFD10-76DC-4920-8750-6ACDC29CE594}"
@@ -15,6 +13,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Net.Sdp.Tests.ConsoleApp", "RabbitOM.Net.Sdp.Tests.ConsoleApp\RabbitOM.Net.Sdp.Tests.ConsoleApp.csproj", "{C0B6C69A-E757-4C9E-A84D-582E4BCE2E7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Net.Sdp.Tests", "RabbitOM.Net.Sdp.Tests\RabbitOM.Net.Sdp.Tests.csproj", "{B7656250-FA9E-40DF-A52D-2CDE04680940}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{1E661164-A7F8-4273-AB9F-F8B9F28BD75F}"
+	ProjectSection(SolutionItems) = preProject
+		Notes.txt = Notes.txt
+		SDP.txt = SDP.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1E661164-A7F8-4273-AB9F-F8B9F28BD75F} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B4AD862-E72F-4EE0-8635-83FD58C5B14A}
