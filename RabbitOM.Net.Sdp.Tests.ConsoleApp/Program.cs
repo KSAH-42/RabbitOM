@@ -624,6 +624,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			for ( int i = 0; i < 10; ++ i )
 			{
 				var mediaAttribute = new MediaDescriptionField();
+
 				mediaAttribute.Payload = 1 + i;
 				mediaAttribute.Port = 10 + i;
 				mediaAttribute.Profile = ProfileType.AVP;
