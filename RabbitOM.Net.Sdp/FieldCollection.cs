@@ -98,14 +98,14 @@ namespace RabbitOM.Net.Sdp
 		/// Copy the content to an array
 		/// </summary>
 		/// <param name="array">the target array</param>
-		/// <param name="index">the start index to begin the copy</param>
-		public abstract void CopyTo(Array array, int index);
+		/// <param name="arrayIndex">the start index to begin the copy</param>
+		public abstract void CopyTo(Array array, int arrayIndex);
 
 		/// <summary>
 		/// Copy the content to an array
 		/// </summary>
 		/// <param name="array">the target array</param>
-		/// <param name="index">the start index to begin the copy</param>
+		/// <param name="arrayIndex">the start index to begin the copy</param>
 		public abstract void CopyTo(TField[] array, int arrayIndex);
 
 		/// <summary>

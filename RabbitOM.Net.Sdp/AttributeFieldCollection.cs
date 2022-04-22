@@ -46,7 +46,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets a field
 		/// </summary>
-		/// <param name="index">the index</param>
+		/// <param name="name">the name</param>
 		/// <returns>returns an instance</returns>
 		public AttributeField this[string name]
 		{
@@ -142,17 +142,17 @@ namespace RabbitOM.Net.Sdp
 		/// Copy the content to an array
 		/// </summary>
 		/// <param name="array">the target array</param>
-		/// <param name="index">the start index to begin the copy</param>
-		public override void CopyTo(Array array, int index)
+		/// <param name="arrayIndex">the start index to begin the copy</param>
+		public override void CopyTo(Array array, int arrayIndex)
 		{
-			_collection.CopyTo( array , index );
+			_collection.CopyTo( array , arrayIndex);
 		}
 
 		/// <summary>
 		/// Copy the content to an array
 		/// </summary>
 		/// <param name="array">the target array</param>
-		/// <param name="index">the start index to begin the copy</param>
+		/// <param name="arrayIndex">the start index to begin the copy</param>
 		public override void CopyTo(AttributeField[] array, int arrayIndex)
 		{
 			_collection.CopyTo( array , arrayIndex );

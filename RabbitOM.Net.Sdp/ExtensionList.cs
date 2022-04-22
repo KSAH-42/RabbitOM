@@ -150,7 +150,6 @@ namespace RabbitOM.Net.Sdp
         /// Copy
         /// </summary>
         /// <param name="array">the array</param>
-        /// <param name="arrayIndex">the start index when the copy begin</param>
         /// <exception cref="ArgumentNullException"/>
         /// <exception cref="ArgumentException"/>
         /// <exception cref="ArgumentOutOfRangeException"/>
@@ -176,7 +175,6 @@ namespace RabbitOM.Net.Sdp
         /// Copy
         /// </summary>
         /// <param name="array">the array</param>
-        /// <param name="arrayIndex">the start index when the copy begin</param>
         /// <exception cref="ArgumentNullException"/>
 		/// <exception cref="ArgumentException"/>
 		/// <exception cref="ArgumentOutOfRangeException"/>
