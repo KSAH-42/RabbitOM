@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitOM.Net.Sdp
@@ -201,16 +202,16 @@ namespace RabbitOM.Net.Sdp
                 return;
             }
 
-            _payloadType = info._payloadType;
-            _profileLevelId = info._profileLevelId;
-            _packetizationMode = info._packetizationMode;
-            _sps = info._sps;
-            _pps = info._pps;
-            _mode = info._mode;
-            _sizeLength = info._sizeLength;
-            _indexLength = info._indexLength;
-            _indexDeltaLength = info._indexDeltaLength;
-            _configuration = info._configuration;
+            _payloadType        = info._payloadType;
+            _profileLevelId     = info._profileLevelId;
+            _packetizationMode  = info._packetizationMode;
+            _sps                = info._sps;
+            _pps                = info._pps;
+            _mode               = info._mode;
+            _sizeLength         = info._sizeLength;
+            _indexLength        = info._indexLength;
+            _indexDeltaLength   = info._indexDeltaLength;
+            _configuration      = info._configuration;
 
             _extensions.Clear();
             _extensions.AddRange( info.Extensions );
@@ -349,14 +350,7 @@ namespace RabbitOM.Net.Sdp
                 return false;
             }
 
-            var tokens = value.Trim().Split( new char[] { ' ' , ';' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( tokens == null || tokens.Length <= 0 )
-            {
-                return false;
-            }
-
-            result = new FormatAttributeValue();
+            var tokens = value.Trim().Split( new char[] { ' ', ';' }, StringSplitOptions.RemoveEmptyEntries );
 
             foreach ( var token in tokens )
             {
@@ -365,6 +359,14 @@ namespace RabbitOM.Net.Sdp
                 if ( ! SessionDescriptorDataConverter.TryExtractField( token , new char[] { '=' , ':' } , out pair ) )
                 {
                     continue;
+                }
+
+                if ( result == null )
+				{
+                    result = new FormatAttributeValue()
+                    {
+                        PayloadType = SessionDescriptorDataConverter.ConvertToByte(tokens.ElementAtOrDefault(0) ?? string.Empty ),
+                    };
                 }
 
                 if ( string.Compare( pair.First , AttributeNames.FormatPayload, true ) == 0 )
@@ -438,7 +440,7 @@ namespace RabbitOM.Net.Sdp
                 }
             }
             
-            return true;
+            return result != null;
         }
     }
 }

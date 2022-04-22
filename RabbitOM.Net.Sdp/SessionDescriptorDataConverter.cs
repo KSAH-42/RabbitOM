@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -351,7 +352,7 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Split( new char[] { '/' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 0 )
+            if ( tokens.Length <= 0 )
             {
                 return string.Empty;
             }
@@ -521,7 +522,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryExtractField( string text , char[] separators , out StringPair result )
         {
-            result = null ;
+            result = null;
 
             if ( separators != null )
             {
@@ -533,6 +534,7 @@ namespace RabbitOM.Net.Sdp
                     }
                 }
             }
+
             return false;
         }
     }

@@ -238,16 +238,16 @@ namespace RabbitOM.Net.Sdp
                 return false;
             }
 
-            string[] tokens = value.Split( new char[] { ' ' } );
+            var tokens = value.Split( new char[] { ' ' } );
 
-            if ( tokens == null || tokens.Length < 4 )
+            if ( tokens.Length < 4 )
             {
                 return false;
             }
 
-            string[] protocolTokens = tokens[ 2 ].Split( '/' );
+            var protocolTokens = tokens[ 2 ].Split( '/' );
 
-            if ( protocolTokens == null || protocolTokens.Length <= 1 )
+            if ( protocolTokens.Length <= 1 )
             {
                 return false;
             }

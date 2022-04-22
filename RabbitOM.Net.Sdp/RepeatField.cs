@@ -157,11 +157,6 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 0 )
-            {
-                return false;
-            }
-
             result = new RepeatField()
             {
                 RepeatInterval = new ValueTime( SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty ) , SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty ) ) ,

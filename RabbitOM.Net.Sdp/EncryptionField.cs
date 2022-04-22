@@ -147,7 +147,7 @@ namespace RabbitOM.Net.Sdp
             result = new EncryptionField()
             {
                 Method = field.First ,
-                Key = field.Second
+                Key    = field.Second
             };
 
             return true;

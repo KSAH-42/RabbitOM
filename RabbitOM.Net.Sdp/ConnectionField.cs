@@ -200,7 +200,7 @@ namespace RabbitOM.Net.Sdp
 
             string[] tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length < 3 )
+            if ( tokens.Length < 3 )
             {
                 return false;
             }

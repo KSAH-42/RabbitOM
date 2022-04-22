@@ -590,25 +590,25 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			Console.WriteLine(attribute.Sequences[0].Values[1]);
 			Console.WriteLine(attribute.Sequences[0].Values[2]);
 
-			var sessionDescriptor = new SessionDescriptor();
+			var descriptor = new SessionDescriptor();
 
-			sessionDescriptor.Version.Value = 1;
-			sessionDescriptor.SessionName.Value = "My session name";
-			sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
-			sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
-			sessionDescriptor.Origin.Address = "192.168.1.23";
-			sessionDescriptor.Origin.AddressType = AddressType.IPV4;
-			sessionDescriptor.Origin.NetworkType = NetworkType.Internet;
-			sessionDescriptor.Origin.UserName = "Kader";
-			sessionDescriptor.Origin.Version = "V1";
-			sessionDescriptor.Origin.SessionId = "123456789";
-			sessionDescriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
-			sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
-			sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
+			descriptor.Version.Value = 1;
+			descriptor.SessionName.Value = "My session name";
+			descriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
+			descriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
+			descriptor.Origin.Address = "192.168.1.23";
+			descriptor.Origin.AddressType = AddressType.IPV4;
+			descriptor.Origin.NetworkType = NetworkType.Internet;
+			descriptor.Origin.UserName = "Kader";
+			descriptor.Origin.Version = "V1";
+			descriptor.Origin.SessionId = "123456789";
+			descriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
+			descriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
+			descriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
 
-			sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
-			sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-			sessionDescriptor.Uri.Value = "rtsp://192.168.0.11:554";
+			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
+			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
+			descriptor.Uri.Value = "rtsp://192.168.0.11:554";
 
 			for ( int i = 1; i <= 10; ++ i )
 			{
@@ -631,13 +631,13 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 				mediaDescription.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
 				mediaDescription.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
 
-				sessionDescriptor.MediaDescriptions.Add(mediaDescription);
+				descriptor.MediaDescriptions.Add(mediaDescription);
 			}
 
 			
-			Console.WriteLine(sessionDescriptor.ToString());
+			Console.WriteLine(descriptor.ToString());
 
-			if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
+			if ( SessionDescriptor.TryParse( descriptor.ToString() , out SessionDescriptor sdp ) )
 			{
 				Console.WriteLine("Ok");
 			}

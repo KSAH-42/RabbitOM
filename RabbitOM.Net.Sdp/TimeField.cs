@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitOM.Net.Sdp
@@ -147,15 +148,10 @@ namespace RabbitOM.Net.Sdp
 
             string[] tokens = value.Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 0 )
-            {
-                return false;
-            }
-
             result = new TimeField()
             {
-                StartTime = SessionDescriptorDataConverter.ConvertToLong( tokens.Length > 0 ? tokens[0] : string.Empty ) ,
-                StopTime = SessionDescriptorDataConverter.ConvertToLong( tokens.Length > 1 ? tokens[1] : string.Empty ) ,
+                StartTime = SessionDescriptorDataConverter.ConvertToLong( tokens.ElementAtOrDefault( 0 ) ?? string.Empty ) ,
+                StopTime  = SessionDescriptorDataConverter.ConvertToLong( tokens.ElementAtOrDefault( 1 ) ?? string.Empty ) ,
             };
 
             return true;

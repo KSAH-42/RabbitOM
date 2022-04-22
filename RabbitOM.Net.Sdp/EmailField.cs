@@ -176,7 +176,7 @@ namespace RabbitOM.Net.Sdp
             result = new EmailField()
             {
                 Address = field.First ,
-                Name = field.Second
+                Name    = field.Second
             };
 
             return true;

@@ -159,7 +159,7 @@ namespace RabbitOM.Net.Sdp
             result = new BandwithField()
             {
                 Modifier = field.First ,
-                Value = SessionDescriptorDataConverter.ConvertToLong( field.Second )
+                Value    = SessionDescriptorDataConverter.ConvertToLong( field.Second )
             };
 
             return true;

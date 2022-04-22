@@ -164,7 +164,7 @@ namespace RabbitOM.Net.Sdp
 
             result = new AttributeField()
             {
-                Name = field.First ,
+                Name  = field.First ,
                 Value = field.Second
             };
 
