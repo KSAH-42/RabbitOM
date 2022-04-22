@@ -69,70 +69,71 @@ namespace RabbitOM.Net.Sdp.Serialization
                         builder.SetVersion( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsOriginHeader )
+                    else if ( reader.IsOriginHeader )
                     {
                         builder.SetOrigin( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsSessionNameHeader )
+                    else if ( reader.IsSessionNameHeader )
                     {
                         builder.SetSessionName( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsSessionInformationHeader )
+                    else if ( reader.IsSessionInformationHeader )
                     {
                         builder.SetSessionInformation( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsUriHeader )
+                    else if ( reader.IsUriHeader )
                     {
                         builder.SetUri( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsEmailHeader )
+                    else if ( reader.IsEmailHeader )
                     {
                         builder.AddEmail( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsPhoneHeader )
+                    else if ( reader.IsPhoneHeader )
                     {
                         builder.AddPhone( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsConnectionHeader )
+                    else if ( reader.IsConnectionHeader )
                     {
                         builder.SetConnection( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsBandwithHeader )
+                    else if ( reader.IsBandwithHeader )
                     {
                         builder.AddBandwith( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsTimeHeader )
+                    else if ( reader.IsTimeHeader )
                     {
                         builder.AddTime( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsRepeatHeader )
+                    else if ( reader.IsRepeatHeader )
                     {
                         builder.AddRepeat( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsTimeZoneHeader )
+                    else if ( reader.IsTimeZoneHeader )
                     {
                         builder.SetTimeZone( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsEncryptionHeader )
+                    else if ( reader.IsEncryptionHeader )
                     {
                         builder.SetEncryption( reader.CurrentHeaderValue );
                     }
 
-                    if ( reader.IsAttributeHeader )
+                    else if ( reader.IsAttributeHeader )
                     {
                         builder.AddAttribute( reader.CurrentHeaderValue );
                     }
+
 
                     if ( reader.IsUnderMediaSection )
                     {

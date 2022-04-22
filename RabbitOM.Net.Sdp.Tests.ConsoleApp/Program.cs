@@ -640,9 +640,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			if ( SessionDescriptor.TryParse( descriptor.ToString() , out SessionDescriptor sdp ) )
 			{
 				Console.WriteLine("Ok");
-			}
-
-			
+			}			
 		}
 	}
 }

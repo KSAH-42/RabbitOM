@@ -308,27 +308,27 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// </summary>
         /// <returns>returns a new document object</returns>
         public SessionDescriptor Build()
-        {
-            var sdp = new SessionDescriptor();
+        {                             
+            var descriptor = new SessionDescriptor();
 
-            sdp.Version.CopyFrom( _version );
-            sdp.Origin.CopyFrom( _origin );
-            sdp.SessionName.CopyFrom( _sessionName );
-            sdp.SessionInformation.CopyFrom( _sessionInformation );
-            sdp.Uri.CopyFrom( _uri );
-            sdp.Connection.CopyFrom( _connection );
-            sdp.TimeZone.CopyFrom( _timeZone );
-            sdp.Encryption.CopyFrom( _encryption );
+            descriptor.Version.CopyFrom( _version );
+            descriptor.Origin.CopyFrom( _origin );
+            descriptor.SessionName.CopyFrom( _sessionName );
+            descriptor.SessionInformation.CopyFrom( _sessionInformation );
+            descriptor.Uri.CopyFrom( _uri );
+            descriptor.Connection.CopyFrom( _connection );
+            descriptor.TimeZone.CopyFrom( _timeZone );
+            descriptor.Encryption.CopyFrom( _encryption );
 
-            sdp.Emails.TryAddRange( _emails );
-            sdp.Phones.TryAddRange( _phones );
-            sdp.Bandwiths.TryAddRange( _bandwiths );
-            sdp.Times.TryAddRange( _times );
-            sdp.Repeats.TryAddRange( _repeats );
-            sdp.Attributes.TryAddRange( _attributes );
-            sdp.MediaDescriptions.TryAddRange( _mediaDescriptions );
+            descriptor.Emails.TryAddRange( _emails );
+            descriptor.Phones.TryAddRange( _phones );
+            descriptor.Bandwiths.TryAddRange( _bandwiths );
+            descriptor.Times.TryAddRange( _times );
+            descriptor.Repeats.TryAddRange( _repeats );
+            descriptor.Attributes.TryAddRange( _attributes );
+            descriptor.MediaDescriptions.TryAddRange( _mediaDescriptions );
             
-            return sdp;
+            return descriptor;
         }
     }
 }
