@@ -1,15 +1,4 @@
-﻿//                  W A R N I N G
-
-// The ExtensionList class used an hashset, it may cause issues because in some
-// cases duplicated elements are allowed, for the SdpSequence class
-// duplicated value are granted, please check in other places
-// if the ExtensionList class must forbid duplicated value
-// otherwise change replace the internal hashset member
-// by a string list
-
-
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
