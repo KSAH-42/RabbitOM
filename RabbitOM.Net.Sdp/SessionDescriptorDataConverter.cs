@@ -95,12 +95,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns a value</returns>
         public static long? ConvertToNullableLong( string value )
         {
-            if ( long.TryParse( value ?? string.Empty , out long result ) )
-            {
-                return result;
-            }
-
-            return null;
+            return long.TryParse(value ?? string.Empty, out long result) ? new Nullable<long>( result ) : null;
         }
 
         /// <summary>
@@ -120,16 +115,12 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns a string</returns>
         public static string ConvertToString( AddressType value )
         {
-            if ( value == AddressType.IPV4 )
-            {
-                return "IP4";
+            switch( value )
+			{
+                case AddressType.IPV4: return "IP4";
+                case AddressType.IPV6: return "IP6";
             }
-
-            if ( value == AddressType.IPV6 )
-            {
-                return "IP6";
-            }
-
+            
             return "NONE";
         }
 
@@ -143,10 +134,10 @@ namespace RabbitOM.Net.Sdp
             switch ( value )
             {
                 case MediaType.Application: return "application";
-                case MediaType.Audio: return "audio";
-                case MediaType.Text: return "text";
-                case MediaType.Video: return "video";
-                case MediaType.Message: return "message";
+                case MediaType.Audio:       return "audio";
+                case MediaType.Text:        return "text";
+                case MediaType.Video:       return "video";
+                case MediaType.Message:     return "message";
             }
 
             return "NONE";
@@ -159,12 +150,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns a string</returns>
         public static string ConvertToString( NetworkType value )
         {
-            if ( value == NetworkType.Internet )
-            {
-                return "IN";
-            }
-
-            return "NONE";
+            return ( value == NetworkType.Internet ) ? "IN" : "NONE";
         }
 
         /// <summary>
@@ -174,15 +160,11 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns a string</returns>
         public static string ConvertToString( ProfileType value )
         {
-            if ( value == ProfileType.AVP )
-            {
-                return "AVP";
-            }
-
-            if ( value == ProfileType.SAVP )
-            {
-                return "SAVP";
-            }
+            switch( value )
+			{
+                case ProfileType.AVP:  return "AVP";
+                case ProfileType.SAVP: return "SAVP";
+			}
 
             return "NONE";
         }
@@ -374,7 +356,7 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Split( new char[] { '/' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length < 2 )
+            if ( tokens.Length < 2 )
             {
                 return byte.MinValue;
             }

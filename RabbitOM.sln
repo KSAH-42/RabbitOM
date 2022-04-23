@@ -17,7 +17,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{1E661164-A7F8-4273-AB9F-F8B9F28BD75F}"
 	ProjectSection(SolutionItems) = preProject
 		Notes.txt = Notes.txt
-		SDP.txt = SDP.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{C8BA138C-6603-4FBC-8033-5F6ED9E3D6D8}"

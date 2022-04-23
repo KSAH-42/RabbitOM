@@ -365,7 +365,7 @@ namespace RabbitOM.Net.Sdp
 				{
                     result = new FormatAttributeValue()
                     {
-                        PayloadType = SessionDescriptorDataConverter.ConvertToByte(tokens.ElementAtOrDefault(0) ?? string.Empty ),
+                        PayloadType = SessionDescriptorDataConverter.ConvertToByte( tokens.FirstOrDefault() ?? string.Empty ),
                     };
                 }
 

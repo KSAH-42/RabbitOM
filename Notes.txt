@@ -1,7 +1,25 @@
 Rabbit.Net.Sdp.dll
+ class AttributeField : BaseField
+ {
+    public string Name {get;}
+    public AttributeValue Value {get;}
+ }
+
 Rabbit.Net.Sdp.Components.dll
- AttributeType
+  AttributeValue
+     EmptyAttributeValue
+     RawAttributeValue
+     RtpMapAttributeValue
+     FmtPayloadAttributeValue
+     ControlUriAttributeValue
+     RtcpAttributeValue
+     RtcpXRAttributeValue
+
+
+
+
  AttributeBase
+ AttributeType
  RawAttribute
  TypeAttribute
  FmtpAttribute
