@@ -198,7 +198,7 @@ namespace RabbitOM.Net.Sdp
                 return false;
             }
 
-            string[] tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
+            var tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
             if ( tokens.Length < 3 )
             {

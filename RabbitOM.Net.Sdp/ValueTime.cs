@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -116,12 +117,12 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if ( tokens == null || tokens.Length <= 0 )
+            if ( tokens.Length <= 1 )
 			{
                 return false;
 			}
 
-            result = new ValueTime(SessionDescriptorDataConverter.ConvertToLong(tokens[0]), SessionDescriptorDataConverter.ConvertToLong(tokens.Length > 1 ? tokens[1] : string.Empty));
+            result = new ValueTime(SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0)), SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)));
 
             return true;
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace RabbitOM.Net.Sdp
@@ -176,31 +177,20 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Trim().Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 0 )
-            {
-                return false;
-            }
-
             result = new RtpMapAttributeValue()
             {
-                PayloadType = SessionDescriptorDataConverter.ConvertToByte( tokens[0] )
+                PayloadType = SessionDescriptorDataConverter.ConvertToByte( tokens.FirstOrDefault() )
             };
 
             if ( tokens.Length > 1 )
             {
                 var elements = tokens[ 1 ].Split( new char[] { '/' } );
 
-                if ( elements != null )
-                {
-                    if ( elements.Length > 0 )
-                    {
-                        result.Encoding = elements[0];
-                    }
+                result.Encoding = elements.FirstOrDefault();
 
-                    if ( elements.Length > 1 )
-                    {
-                        result.ClockRate = SessionDescriptorDataConverter.ConvertToUInt( elements[1] );
-                    }
+                if (elements.Length > 1)
+                {
+                    result.ClockRate = SessionDescriptorDataConverter.ConvertToUInt(elements.ElementAtOrDefault(1));
                 }
             }
 

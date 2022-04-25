@@ -146,7 +146,7 @@ namespace RabbitOM.Net.Sdp
                 return false;
             }
 
-            string[] tokens = value.Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
+            var tokens = value.Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
             result = new TimeField()
             {

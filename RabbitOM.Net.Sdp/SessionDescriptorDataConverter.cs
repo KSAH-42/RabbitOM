@@ -332,14 +332,7 @@ namespace RabbitOM.Net.Sdp
                 return string.Empty;
             }
 
-            var tokens = value.Split( new char[] { '/' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( tokens.Length <= 0 )
-            {
-                return string.Empty;
-            }
-
-            return tokens[0];
+            return value.Split( new char[] { '/' } , StringSplitOptions.RemoveEmptyEntries ).FirstOrDefault() ?? string.Empty;
         }
 
         /// <summary>
