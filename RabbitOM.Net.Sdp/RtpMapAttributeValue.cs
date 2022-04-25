@@ -177,6 +177,11 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Trim().Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
+            if ( ! tokens.Any() )
+			{
+                return false;
+			}
+
             result = new RtpMapAttributeValue()
             {
                 PayloadType = SessionDescriptorDataConverter.ConvertToByte( tokens.FirstOrDefault() )

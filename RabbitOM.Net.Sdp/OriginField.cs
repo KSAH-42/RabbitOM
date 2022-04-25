@@ -234,7 +234,7 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens.Length <= 1 )
+            if ( ! tokens.Any() )
             {
                 return false;
             }

@@ -352,6 +352,11 @@ namespace RabbitOM.Net.Sdp
 
             var tokens = value.Trim().Split( new char[] { ' ', ';' }, StringSplitOptions.RemoveEmptyEntries );
 
+            if ( ! tokens.Any() )
+			{
+                return false;
+			}
+
             foreach ( var token in tokens )
             {
                 StringPair pair = null;
