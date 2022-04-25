@@ -4,11 +4,13 @@
 
 This is a library (in .net) used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
-* SDP (actually implemented)
-* RTSP (not actually implemented)
-* RTP (not actually implemented)
-* RTCP (not actually implemented)
-* Onvif (not actually implemented)
+| Module / Protocols           | Status                                    |
+| ---------------------------- | ----------------------------------------- |
+| SDP                          | actually implemented                      |
+| RTSP                         | not actually implemented                  |
+| RTP                          | not actually implemented                  |
+| RTCP                         | not actually implemented                  |
+| Onvif                        | not actually implemented                  |
 
 
 # About Session Description Protocol
