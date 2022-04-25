@@ -92,12 +92,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if ( ! TryParse( value , out ValueTime result ) )
-			{
-                throw new FormatException();
-			}
-
-            return result;
+            return TryParse( value , out ValueTime result ) ? result : throw new FormatException();
 		}
 
         /// <summary>
