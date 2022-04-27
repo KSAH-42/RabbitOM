@@ -558,7 +558,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp.Sigma
 		public string Value
 		{
 			get => _value;
-			set => _value = SessionDescriptorDataConverter.Trim(value);
+			set => _value = value ;
 		}
 
 		public SdpAttributeParamaterCollection Parameters { get => _parameters; }

@@ -76,6 +76,5 @@ namespace RabbitOM.Net.Sdp.Tests
 			Assert.ThrowsException<Exception>(() => _collection.Add(new AttributeField("B", "2")));
 			Assert.ThrowsException<Exception>(() => _collection.Add(new AttributeField("C", "3")));
 		}
-
 	}
 }
