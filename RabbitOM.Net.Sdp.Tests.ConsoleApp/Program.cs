@@ -7,10 +7,31 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 {
+	using RabbitOM.Net.Rtsp;
+
 	class Program
 	{
 		static void Main(string[] args)
 		{
+			using ( var connection = new Rtsp.Remoting.RTSPConnection() )
+			{
+				if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
+				{
+					Console.WriteLine("Connection failed");
+					return;
+				}
+
+				connection.GetOptions()
+					 .Invoke()
+					 .Response
+					 .GetHeaderPublicOptions()
+					 .ToArray()
+					 .ToList()
+					 .ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
+					 ;
+
+				return;
+			}
 			var descriptor = new SessionDescriptor();
 
 			descriptor.Version.Value = 1;

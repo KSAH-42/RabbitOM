@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Sdp
         /// Constructor
         /// </summary>
         public EmailField()
-        {
+        {     
         }
 
         /// <summary>
