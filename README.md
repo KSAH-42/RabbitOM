@@ -141,10 +141,10 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
     // Connect to RTSP server (happytime-rtsp-server.exe)
     
     if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
-	{
+    {
         Console.WriteLine("Connection failed");
         return;
-	}
+    }
      
     // Request the available methods from a server
 
@@ -156,8 +156,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
             .ToArray()
             .ToList()
             .ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
-			;
-
+            ;
 }
 
 ~~~~
@@ -188,10 +187,11 @@ var bodyResult =
         .WriteBodyLine( "Parameter3:{0}" , System.Environment.Machine )
 
         .Invoke()
+	
         .Response
 
         .GetBody()
-		;
+        ;
 
 
 ~~~~
