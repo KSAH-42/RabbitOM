@@ -97,7 +97,7 @@ RTSP is a protocol used to describe to control and receive video/audio streams. 
 | PAUSE                        | Pause the streaming                                       |
 | STOP                         | Stop the streaming                                        |
 | GET_PARAMETER                | List customs parameters                                   |
-| GET_PARAMETER                | Change customs parameters                                 |
+| SET_PARAMETER                | Change customs parameters                                 |
 | TEARDOWN                     | Destroy the session                                       |
 | ANNOUNCE                     | Posts the description of a media                          |
 | RECORD                       | Ask for recording                                         |
@@ -133,7 +133,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
     connection.Error                += (sender, e) => Console.WriteLine("Error occurs");
 
     // Connect to RTSP server (happytime-rtsp-server.exe)
-
+    
     if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
 	{
         Console.WriteLine("Connection failed");
@@ -194,3 +194,9 @@ You can decorate each request, because some camera can not reply if there is not
 And of course, some camera or server doesn't replay or give a the right response because there some headers particular.
 If you invoke a method on a particular server, you MUST read the server documentation.
 
+NOTES:
+
+Please notes that it is not the final implementation, event it can be used for production.
+I need to change some parts of the code located on headers classes and to implement a better packet message decoder.
+I espect some code refactoring of many classes.
+This the rtsp connection has been tested with a lot of professional security cameras IP.
