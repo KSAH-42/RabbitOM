@@ -103,6 +103,9 @@ RTSP is a protocol used to describe to control and receive video/audio streams. 
 | RECORD                       | Ask for recording                                         |
 | REDIRECT                     | This method is used to redirects the traffic              |
 
+Depending of cameras, you MUST still active a streaming by sending periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server.
+Please notes also, to maintain a session active you must read the documentation of the camera. There is not predifined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods.
+
 By essence, RTSP is very similar except important things:
 
 * RTSP has some propriatary and mandatory header like CSeq header
