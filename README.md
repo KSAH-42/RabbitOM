@@ -86,7 +86,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 Where RTSP are used ?
 
-RTSP are used by security cameras and also used by Miracast technology. SmartTV start a RTSP client and connect to RTSP server on you local machine to receive the video of you desktop.
+RTSP are used by security cameras and also used by Miracast technology. SmartTV start a RTSP client and connect to RTSP server that run on your local machine in order to receive the video of your desktop.
 
 What is RTSP ?
 
