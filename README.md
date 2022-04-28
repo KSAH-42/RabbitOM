@@ -172,7 +172,7 @@ var bodyResult =
 
         .XxxxxxxMethod() // Some RTSP Method
 
-        .AddHeader( new RTSPContenRTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
+        .AddHeader( new RTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
         .AddHeader( "X-Header1" , "my value 1")
         .AddHeader( "X-Header2" , "my value 2")
         .AddHeader( "X-Header3" , "my value 3")
