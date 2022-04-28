@@ -7,7 +7,7 @@ This is a library (in .net) used to connect, managed, and received video/audio s
 | Module / Protocols           | Status                                    |
 | ---------------------------- | ----------------------------------------- |
 | SDP                          | actually implemented                      |
-| RTSP                         | actually implemented                      |
+| RTSP                         | actually implemented/in progress          |
 | RTP                          | not actually implemented                  |
 | RTCP                         | not actually implemented                  |
 | Onvif                        | not actually implemented                  |
