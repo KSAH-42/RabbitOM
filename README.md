@@ -123,22 +123,23 @@ The following code demonstrate how to list the supported method exposed by a sec
 using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 {
     // Connect to RTSP server (happytime-rtsp-server.exe)
-
-	if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
+    
+    if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
 	{
-		Console.WriteLine("Connection failed");
-		return;
+        Console.WriteLine("Connection failed");
+        return;
 	}
 
     // Request the available methods from a server
 
-	connection.GetOptions()
-			.Invoke()
-			.Response
-			.GetHeaderPublicOptions()
-			.ToArray()
-			.ToList()
-			.ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
+    connection
+            .GetOptions()
+            .Invoke()
+            .Response
+            .GetHeaderPublicOptions()
+            .ToArray()
+            .ToList()
+            .ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
 			;
 
 }
@@ -153,7 +154,7 @@ var bodyResult =
 
  connection
 
-        .XxxxxxxMethod() // Some RTSP Method
+        .XxxxxxxMethod1() // Some RTSP Method
 
         .AddHeader( "X-Header1" , "my value 1")
         .AddHeader( "X-Header2" , "my value 2")
@@ -168,11 +169,12 @@ var bodyResult =
         .WriteBodyLine( "Parameter2:{0}" , Guid.NewGuid() )
         .WriteBodyLine( "Parameter3:{0}" , System.Environment.Machine )
 
-		.Invoke()
-		.Response
+        .Invoke()
+        .Response
 
-		.GetBody()
+        .GetBody()
 		;
+
 
 ~~~~
 
