@@ -92,20 +92,20 @@ What is RTSP ?
 
 RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have a some methods like GET/POST/TRACE/DELETE, and somes headers separated by carriage sreturns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
 
-| Methods                      | Description                                                             |
-| ---------------------------- | ----------------------------------------------------------------------- |
-| OPTIONS                      | List the supported methods (DESCRIBE/PLAY/SETUP,etc...                  |
-| DESCRIBE                     | Retrive the SDP                                                         |
-| SETUP                        | Create a session with a transport layer (unicast/multicast/interleaved) |
-| PLAY                         | Start the streaming                                                     |
-| PAUSE                        | Pause the streaming                                                     |
-| STOP                         | Stop the streaming                                                      |
-| GET_PARAMETER                | List customs parameters                                                 |
-| SET_PARAMETER                | Change customs parameters                                               |
-| TEARDOWN                     | Destroy the session                                                     |
-| ANNOUNCE                     | Posts the description of a media                                        |
-| RECORD                       | Ask for recording                                                       |
-| REDIRECT                     | This method is used to redirects the traffic                            |
+| Methods                      | Description                                                                       |
+| ---------------------------- | --------------------------------------------------------------------------------- |
+| OPTIONS                      | List the supported methods (DESCRIBE/PLAY/SETUP,etc...                            |
+| DESCRIBE                     | Retrive the SDP                                                                   |
+| SETUP                        | Ask for Creating a session with a transport layer (unicast/multicast/interleaved) |
+| PLAY                         | Start the streaming                                                               |
+| PAUSE                        | Pause the streaming                                                               |
+| STOP                         | Stop the streaming                                                                |
+| GET_PARAMETER                | List customs parameters                                                           |
+| SET_PARAMETER                | Change customs parameters                                                         |
+| TEARDOWN                     | Destroy the session                                                               |
+| ANNOUNCE                     | Posts the description of a media                                                  |
+| RECORD                       | Ask for recording                                                                 |
+| REDIRECT                     | This method is used to redirects the traffic                                      |
 
 Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predifined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
 
