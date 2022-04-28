@@ -46,7 +46,7 @@ sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"))
 
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-sessionDescriptor.Uri.Value = "rtsp://192.168.0.11:554/video/channel/1";
+sessionDescriptor.Uri.Value = "rtsp://192.168.1.11:554/video/channel/1";
 
 for ( int i = 1; i <= 10; ++ i )
 {
@@ -60,7 +60,7 @@ for ( int i = 1; i <= 10; ++ i )
 
     mediaDescription.Encryption.Key = "myKey"+i.ToString();
     mediaDescription.Encryption.Method = "myMethod"+i.ToString();
-    mediaDescription.Connection.Address = "192.168.0."+i.ToString();
+    mediaDescription.Connection.Address = "192.168.1."+i.ToString();
     mediaDescription.Connection.AddressType = AddressType.IPV4;
     mediaDescription.Connection.NetworkType = NetworkType.Internet;
     mediaDescription.Bandwiths.Add(new BandwithField("modifier", i));
@@ -111,7 +111,7 @@ Depending of cameras, you MUST send periodically a heart beat message using a pa
 
 By essence, RTSP is very similar to http message except important things:
 
-* RTSP has some propriatary and mandatory header like CSeq header
+* RTSP has some proprietary and mandatory header like CSeq header
 * RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retries. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
 * Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means you open tcp socket client, you can send a request and a response, but the server can also send a request to the client on the same socket.
 * Using HTTP 1.1, Video stream are push using multipart technics. With RTSP, video packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
@@ -153,7 +153,6 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
             .Invoke()
             .Response
             .GetHeaderPublicOptions()
-            .ToArray()
             .ToList()
             .ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
             ;
