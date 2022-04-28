@@ -196,8 +196,7 @@ var bodyResult =
 
 ~~~~
 
-You can decorate each request, because some cameras can not reply if there is not custom mandatories headers.
-And of course, some cameras or servers doesn't reply or give the right response because there some headers missing headers or incomplete headers. If you invoke a method on a particular server, you MUST read the server documentation especially the SETUP method.
+You can decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel. But some cameras or server doesn't support multicast.
 
 NOTES:
 
