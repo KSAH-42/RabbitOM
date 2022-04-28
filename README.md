@@ -139,7 +139,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
         Console.WriteLine("Connection failed");
         return;
 	}
-
+     
     // Request the available methods from a server
 
     connection
