@@ -122,8 +122,18 @@ The following code demonstrate how to list the supported method exposed by a sec
 
 using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 {
+    // Events subscriptions
+
+    connection.Opened               += (sender, e) => Console.WriteLine("Connected");
+    connection.MessageReceived      += (sender, e) => Console.WriteLine("Message received");
+    connection.MessageSended        += (sender, e) => Console.WriteLine("Message sended");
+    connection.DataReceived         += (sender, e) => Console.WriteLine("Data received");
+    connection.AuthenticationFailed += (sender, e) => Console.WriteLine("Authentication failed");
+    connection.Closed               += (sender, e) => Console.WriteLine("Connection closed");
+    connection.Error                += (sender, e) => Console.WriteLine("Error occurs");
+
     // Connect to RTSP server (happytime-rtsp-server.exe)
-    
+
     if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
 	{
         Console.WriteLine("Connection failed");
@@ -145,6 +155,8 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 }
 
 ~~~~
+
+Please notes, that if you to receive video stream, you must an invoke a series of methods, please take some times to read documentation about the RTSP session state machine for more details.
 
 Below, on the pseudo code, the remote method invocation works like this:
 
