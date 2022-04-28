@@ -7,7 +7,7 @@ This is a library (in .net) used to connect, managed, and received video/audio s
 | Module / Protocols           | Status                                    |
 | ---------------------------- | ----------------------------------------- |
 | SDP                          | actually implemented                      |
-| RTSP                         | not actually implemented                  |
+| RTSP                         | actually implemented                      |
 | RTP                          | not actually implemented                  |
 | RTCP                         | not actually implemented                  |
 | Onvif                        | not actually implemented                  |
@@ -80,3 +80,103 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 }
 
 ~~~~
+
+
+# About Real Time Streaming Protocol
+
+What is RTSP ?
+
+RTSP is a protocol used to describe to control and receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have some methods like GET/POST/TRACE/DELETE. Here it is exactly the same thing exception that the method are dedicated for the streaming. RTSP propose the following methods:
+
+| Methods                      | Description                                               |
+| ---------------------------- | --------------------------------------------------------- |
+| OPTIONS                      | List the supported methods (DESCRIBE/PLAY/SETUP,etc...    |
+| DESCRIBE                     | Retrive the SDP                                           |
+| SETUP                        | Setup the transport layer (unicast/multicast/interleaved) |
+| PLAY                         | Start the streaming                                       |
+| PAUSE                        | Pause the streaming                                       |
+| STOP                         | Stop the streaming                                        |
+| GET_PARAMETER                | List customs parameters                                   |
+| GET_PARAMETER                | Change customs parameters                                 |
+| TEARDOWN                     | Destroy the session                                       |
+| ANNOUNCE                     | Posts the description of a media                          |
+| RECORD                       | Ask for recording                                         |
+| REDIRECT                     | This method is used to redirects the traffic              |
+
+By essence, RTSP is very similar except important things:
+
+* RTSP has some propriatary and mandatory header like CSeq header
+* RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header are used by each request and response has the same message identifier, and message identifier increment after each remote method invocation. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
+* Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means you open tcp socket client, you can send a request and a response, but the server can also send a request to the client on the same socket.
+* Video stream can be receiving on the same client socket while you are send packet
+
+These things are handle by the API, it's also support the lastest digest authentication used by the lastest professional security cameras.
+
+About the implementation
+
+I use the fluent to technic to perform remote method invocation:
+
+The following code demonstrate how to list the supported method exposed by a security camera:
+
+~~~~C#
+
+using ( var connection = new Rtsp.Remoting.RTSPConnection() )
+{
+    // Connect to RTSP server (happytime-rtsp-server.exe)
+
+	if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
+	{
+		Console.WriteLine("Connection failed");
+		return;
+	}
+
+    // Request the available methods from a server
+
+	connection.GetOptions()
+			.Invoke()
+			.Response
+			.GetHeaderPublicOptions()
+			.ToArray()
+			.ToList()
+			.ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
+			;
+
+}
+
+~~~~
+
+Below, on the pseudo code, the remote method invocation works like this:
+
+~~~~C#
+
+var bodyResult =
+
+ connection
+
+        .XxxxxxxMethod() // Some RTSP Method
+
+        .AddHeader( "X-Header1" , "my value 1")
+        .AddHeader( "X-Header2" , "my value 2")
+        .AddHeader( "X-Header3" , "my value 3")
+        .AddHeader( "X-Header4" , "my value 4")
+        .AddHeader( "X-Header5" , "my value 5")
+        .AddHeader( new RTSPContenRTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
+
+        .WriteBody( "Parameters")
+        .WriteBodyLine()
+        .WriteBodyLine( "Parameter1:{0}" , DateTime.Now )
+        .WriteBodyLine( "Parameter2:{0}" , Guid.NewGuid() )
+        .WriteBodyLine( "Parameter3:{0}" , System.Environment.Machine )
+
+		.Invoke()
+		.Response
+
+		.GetBody()
+		;
+
+~~~~
+
+You can decorate each request, because some camera can not reply if there is not custom mandatory headers.
+And of course, some camera or server doesn't replay or give a the right response because there some headers particular.
+If you invoke a method on a particular server, you MUST read the server documentation.
+

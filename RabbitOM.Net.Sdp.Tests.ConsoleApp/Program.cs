@@ -30,10 +30,9 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 					 .ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
 					 ;
 
-				return;
 			}
 			var descriptor = new SessionDescriptor();
-
+			
 			descriptor.Version.Value = 1;
 			descriptor.SessionName.Value = "My session name";
 			descriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
