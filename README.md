@@ -94,7 +94,7 @@ RTSP is a protocol used to control and to receive video/audio streams. RTSP is v
 
 | Methods                      | Description                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------- |
-| OPTIONS                      | List the supported methods (DESCRIBE/PLAY/SETUP,etc...                            |
+| OPTIONS                      | List the supported methods (OPTIONS/DESCRIBE/PLAY/SETUP,etc...)                   |
 | DESCRIBE                     | Retrive the SDP                                                                   |
 | SETUP                        | Ask for creating a session with a transport layer (unicast/multicast/interleaved) |
 | PLAY                         | Start the streaming                                                               |
