@@ -120,7 +120,7 @@ These things are handle by the lib, it's also support the lastest digest authent
 
 About the implementation
 
-I use the fluent to technic to perform remote method invocation:
+I use the fluent OOP approach to perform remote method invocation:
 
 The following code demonstrate how to list the supported methods exposed by a security camera:
 
