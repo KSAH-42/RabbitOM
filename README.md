@@ -161,7 +161,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 
 ~~~~
 
-Please notes, that if you want to receive video streams, you must invoke a series of methods, please take some times to read RFC about the RTSP or make some research on google about the "RTSP session state machine".
+Please notes, that if you want to receive video streams, you must invoke a series of methods, please take some times to read the RFC about the RTSP or make some research on google about the "RTSP session state machine".
 
 Below, on the pseudo code, the remote method invocation works like this:
 
@@ -196,13 +196,9 @@ var bodyResult =
 
 ~~~~
 
-You can decorate each request, because some camera can not reply if there is not custom mandatory headers.
-And of course, some camera or server doesn't replay or give a the right response because there some headers particular.
-If you invoke a method on a particular server, you MUST read the server documentation.
+You can decorate each request, because some cameras can not reply if there is not custom mandatories headers.
+And of course, some cameras or servers doesn't reply or give the right response because there some headers missing headers or incomplete headers. If you invoke a method on a particular server, you MUST read the server documentation especially the SETUP method.
 
 NOTES:
 
-Please notes that it is not the final implementation, event it can be used for production.
-I need to change some parts of the code located on headers classes and to implement a better packet message decoder.
-I espect some code refactoring of many classes.
-This the rtsp connection has been tested with a lot of professional security cameras IP.
+Please notes that it is not the final implementation, event it can be used for production. I need to change some parts of the code located on headers classes and to implement a better packet message decoder. I espect some code refactoring of many classes. This the rtsp connection has been tested with a lot of professional security cameras IP.
