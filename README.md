@@ -90,7 +90,7 @@ RTSP are used by security cameras and also used by Miracast technology. SmartTV 
 
 What is RTSP ?
 
-RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have a some methods like GET/POST/TRACE/DELETE, and somes headers separated by carriage sreturns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
+RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have a some methods like GET/POST/TRACE/DELETE/PUT and so on, and somes headers separated by carriage sreturns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
 
 | Methods                      | Description                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------- |
