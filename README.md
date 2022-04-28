@@ -179,6 +179,7 @@ var bodyResult =
         .AddHeader( "X-Header3" , "my value 3")
         .AddHeader( "X-Header4" , "my value 4")
         .AddHeader( "X-Header5" , "my value 5")
+	.AddHeader( "X-Header6" , "port_range={0}-{1];timeout={3};" , 1234 , 4321 , 5000 )
 
         .WriteBody( "Parameters")
         .WriteBodyLine()
