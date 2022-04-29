@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class TimeField : BaseField
+    public sealed class TimeField : BaseField , IFormattable
     {
         /// <summary>
         /// Represent the type name
@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Sdp
         public TimeField( long startTime , long stopTime )
         {
             _startTime = startTime;
-            _stopTime = stopTime;
+            _stopTime  = stopTime;
         }
 
 
@@ -89,16 +89,40 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
-
-            builder.Append( _startTime );
-            builder.Append( " " );
-
-            builder.Append( _stopTime );
-
-            return builder.ToString();
+            return ToString(null);
         }
 
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                return TimeFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return TimeFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            throw new FormatException();
+        }
 
 
 
@@ -123,7 +147,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out TimeField result) || result == null)
+            if (!TimeFieldFormatter.TryParse(value, out TimeField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -137,29 +161,9 @@ namespace RabbitOM.Net.Sdp
         /// <param name="value">the value</param>
         /// <param name="result">the field result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( string value , out TimeField result )
+        public static bool TryParse(string value, out TimeField result)
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( ! tokens.Any() )
-			{
-                return false;
-			}
-
-            result = new TimeField()
-            {
-                StartTime = SessionDescriptorDataConverter.ConvertToLong( tokens.ElementAtOrDefault( 0 ) ?? string.Empty ) ,
-                StopTime  = SessionDescriptorDataConverter.ConvertToLong( tokens.ElementAtOrDefault( 1 ) ?? string.Empty ) ,
-            };
-
-            return true;
+            return TimeFieldFormatter.TryParse(value, out result);
         }
     }
 }

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class EncryptionField : BaseField, ICopyable<EncryptionField>
+    public sealed class EncryptionField : BaseField, IFormattable , ICopyable<EncryptionField>
     {
         /// <summary>
         /// Represent the type name
@@ -16,9 +17,11 @@ namespace RabbitOM.Net.Sdp
 
 
 
+
         private string            _method                = string.Empty;
 
         private string            _key                   = string.Empty;
+
 
 
 
@@ -48,6 +51,7 @@ namespace RabbitOM.Net.Sdp
             get => _key;
             set => _key = SessionDescriptorDataConverter.Trim( value );
         }
+
 
 
 
@@ -82,19 +86,39 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            builder.Append( _method );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
 
-            if ( string.IsNullOrWhiteSpace( _key ) )
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
             {
-                return builder.ToString();
+                return EncryptionFieldFormatter.Format(this, format, formatProvider);
             }
 
-            builder.Append( ":" );
-            builder.Append( _key );
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return EncryptionFieldFormatter.Format(this, format, formatProvider);
+            }
 
-            return builder.ToString();
+            throw new FormatException();
         }
 
 
@@ -121,7 +145,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out EncryptionField result) || result == null)
+            if (!EncryptionFieldFormatter.TryParse(value, out EncryptionField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -137,20 +161,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out EncryptionField result )
         {
-            result = null;
-
-            if ( !SessionDescriptorDataConverter.TryExtractField( value , ':' , out StringPair field ) )
-            {
-                return false;
-            }
-
-            result = new EncryptionField()
-            {
-                Method = field.First ,
-                Key    = field.Second
-            };
-
-            return true;
+            return EncryptionFieldFormatter.TryParse( value , out result );
         }
     }
 }

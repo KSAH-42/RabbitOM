@@ -30,6 +30,9 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
 			descriptor.Uri.Value = "rtsp://192.168.0.11:554";
+			descriptor.Emails.Add(new EmailField("rabbit1@hole.com", "rabbit1"));
+			descriptor.Emails.Add(new EmailField("rabbit2@hole.com", "rabbit2"));
+			descriptor.Emails.Add(new EmailField("rabbit3@hole.com", "rabbit3"));
 
 			for ( int i = 1; i <= 10; ++ i )
 			{
@@ -61,6 +64,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			if ( SessionDescriptor.TryParse( descriptor.ToString() , out SessionDescriptor sdp ) )
 			{
 				Console.WriteLine("Ok");
+				
 			}			
 		}
 	}

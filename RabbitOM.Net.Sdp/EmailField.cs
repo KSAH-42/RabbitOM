@@ -1,12 +1,13 @@
-﻿using System;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class EmailField : BaseField
+    public sealed class EmailField : BaseField , IFormattable
     {
         /// <summary>
         /// Represent the type name
@@ -38,8 +39,7 @@ namespace RabbitOM.Net.Sdp
         /// Constructor
         /// </summary>
         /// <param name="address">the address</param>
-        public EmailField( string address )
-            : this( address , string.Empty )
+        public EmailField( string address ) : this( address , string.Empty )
         {
         }
 
@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Sdp
         public EmailField( string address , string name )
         {
             Address = address;
-            Name = name;
+            Name    = name;
         }
 
 
@@ -110,21 +110,39 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            builder.Append( _address );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
 
-            if ( string.IsNullOrWhiteSpace( _name ) )
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
             {
-                return builder.ToString();
+                return EmailFieldFormatter.Format(this, format, formatProvider);
             }
 
-            builder.Append( " " );
-            builder.Append( "(" );
-            builder.Append( _name );
-            builder.Append( ")" );
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return EmailFieldFormatter.Format(this, format, formatProvider);
+            }
 
-            return builder.ToString();
+            throw new FormatException();
         }
 
 
@@ -150,7 +168,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out EmailField result) || result == null)
+            if (!EmailFieldFormatter.TryParse(value, out EmailField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -166,20 +184,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out EmailField result )
         {
-            result = null;
-
-            if ( !SessionDescriptorDataConverter.TryExtractField( value , ' ' , out StringPair field ) )
-            {
-                return false;
-            }
-
-            result = new EmailField()
-            {
-                Address = field.First ,
-                Name    = field.Second
-            };
-
-            return true;
+            return EmailFieldFormatter.TryParse( value , out result );
         }
     }
 }

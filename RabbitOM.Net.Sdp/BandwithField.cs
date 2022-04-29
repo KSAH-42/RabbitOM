@@ -1,12 +1,13 @@
-﻿using System;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp document bandwith infos
     /// </summary>
-    public sealed class BandwithField : BaseField
+    public sealed class BandwithField : BaseField , IFormattable
     {
         /// <summary>
         /// Represent a modifier name
@@ -52,7 +53,7 @@ namespace RabbitOM.Net.Sdp
         public BandwithField( string modifier , int value )
         {
             Modifier = modifier;
-            Value = value;
+            Value    = value;
         }
 
 
@@ -106,13 +107,39 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            builder.Append( _modifier );
-            builder.Append( ":" );
-            builder.Append( _value );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
 
-            return builder.ToString();
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                return BandwithFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return BandwithFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            throw new FormatException();
         }
 
 
@@ -133,7 +160,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out BandwithField result) || result == null)
+            if (!BandwithFieldFormatter.TryParse(value, out BandwithField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -149,20 +176,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out BandwithField result )
         {
-            result = null;
-
-            if ( !SessionDescriptorDataConverter.TryExtractField( value , ':' , out StringPair field ) )
-            {
-                return false;
-            }
-
-            result = new BandwithField()
-            {
-                Modifier = field.First ,
-                Value    = SessionDescriptorDataConverter.ConvertToLong( field.Second )
-            };
-
-            return true;
+            return BandwithFieldFormatter.TryParse( value , out result );
         }
     }
 }

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class ConnectionField : BaseField
+    public sealed class ConnectionField : BaseField , IFormattable
     {
         /// <summary>
         /// Represent the type name
@@ -88,27 +87,10 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( _networkType == NetworkType.None )
-            {
-                return false;
-            }
+            return ! string.IsNullOrWhiteSpace(_address)
 
-            if ( _addressType == AddressType.None )
-            {
-                return false;
-            }
-
-            if ( string.IsNullOrWhiteSpace( _address ) )
-            {
-                return false;
-            }
-
-            if ( !IPAddress.TryParse( _address , out IPAddress ipAddress ) || ipAddress == null )
-            {
-                return false;
-            }
-
-            return true;
+                && _addressType != AddressType.None
+                && _networkType != NetworkType.None;
         }
 
         /// <summary>
@@ -134,24 +116,43 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            builder.Append( SessionDescriptorDataConverter.ConvertToString( _networkType ) );
-            builder.Append( " " );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
 
-            builder.Append( SessionDescriptorDataConverter.ConvertToString( _addressType ) );
-            builder.Append( " " );
-
-            builder.Append( _address );
-
-            if ( _ttl > 0 )
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
             {
-                builder.Append( "/" );
-                builder.Append( _ttl );
+                return ConnectionFieldFormatter.Format(this, format, formatProvider);
             }
 
-            return builder.ToString();
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            throw new FormatException();
         }
+
+
+
 
 
 
@@ -175,7 +176,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out ConnectionField result) || result == null)
+            if (!ConnectionFieldFormatter.TryParse(value, out ConnectionField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -191,29 +192,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out ConnectionField result )
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( tokens.Length < 3 )
-            {
-                return false;
-            }
-
-            result = new ConnectionField()
-            {
-                NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType( tokens.ElementAtOrDefault( 0 ) ?? string.Empty ) ,
-                AddressType = SessionDescriptorDataConverter.ConvertToAddressType( tokens.ElementAtOrDefault( 1 ) ?? string.Empty ) ,
-                Address     = tokens.ElementAtOrDefault( 2 ) ,
-                TTL         = SessionDescriptorDataConverter.ConvertToTTL( tokens.ElementAtOrDefault( 2 ) ) ,
-            };
-
-            return true;
+            return ConnectionFieldFormatter.TryParse( value , out result );
         }
     }
 }

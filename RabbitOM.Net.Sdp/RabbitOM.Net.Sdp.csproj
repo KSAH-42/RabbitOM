@@ -44,6 +44,18 @@
   <ItemGroup>
     <Compile Include="AddressType.cs" />
     <Compile Include="AttributeField.cs" />
+    <Compile Include="Serialization\Formatters\TimeFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\RtpMapAttributeValueFormatter.cs" />
+    <Compile Include="Serialization\Formatters\RepeatFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\PhoneFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\OriginFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\MediaDescriptionFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\FormatAttributeValueFormatter.cs" />
+    <Compile Include="Serialization\Formatters\EncryptionFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\EmailFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\ConnectionFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\BandwithFieldFormatter.cs" />
+    <Compile Include="Serialization\Formatters\AttributeFieldFormatter.cs" />
     <Compile Include="FieldCollectionInternal.cs" />
     <Compile Include="FieldCollection.cs" />
     <Compile Include="BaseFieldCollection.cs" />
@@ -53,7 +65,6 @@
     <Compile Include="BandwithField.cs" />
     <Compile Include="BaseField.cs" />
     <Compile Include="AttributeFieldCollection.cs" />
-    <Compile Include="Extensions\SessionDescriptorExtensions.cs" />
     <Compile Include="MediaDescriptionFieldCollection.cs" />
     <Compile Include="BandwithFieldCollection.cs" />
     <Compile Include="EmailFieldCollection.cs" />
@@ -96,5 +107,6 @@
     <Compile Include="ValueTime.cs" />
     <Compile Include="VersionField.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

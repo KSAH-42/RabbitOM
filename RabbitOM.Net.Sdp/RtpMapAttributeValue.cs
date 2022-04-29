@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the rtp map
     /// </summary>
-    public sealed class RtpMapAttributeValue : AttributeValue, ICopyable<RtpMapAttributeValue>
+    public sealed class RtpMapAttributeValue : AttributeValue, ICopyable<RtpMapAttributeValue> , IFormattable
     {
         private string                   _encoding     = string.Empty;
 
@@ -65,19 +65,7 @@ namespace RabbitOM.Net.Sdp
         /// </remarks>
         public override bool Validate()
         {
-            if ( string.IsNullOrWhiteSpace( _encoding ) )
-            {
-                return false;
-            }
-
-            if ( _clockRate <= 0 )
-            {
-                return false;
-            }
-
-            // Don't test the payload because it can be equal to zero
-
-            return true;
+            return ! string.IsNullOrWhiteSpace( _encoding ) &&  _clockRate > 0 ;
         }
 
         /// <summary>
@@ -91,42 +79,54 @@ namespace RabbitOM.Net.Sdp
                 return;
             }
 
-            _clockRate = info._clockRate;
+            _clockRate   = info._clockRate;
             _payloadType = info._payloadType;
-            _encoding = info._encoding;
+            _encoding    = info._encoding;
 
             _extensions.Clear();
+
             _extensions.TryAddRange( info.Extensions );
         }
 
         /// <summary>
-        /// Format to a string 
+        /// Format the field
         /// </summary>
-        /// <returns>returns a string</returns>
+        /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            builder.Append( _clockRate );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
 
-            if ( !string.IsNullOrWhiteSpace( _encoding ) )
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
             {
-                builder.Append( " " );
-                builder.Append( _encoding );
-                builder.Append( "/" );
-                builder.Append( _clockRate );
+                return RtpMapAttributeValueFormatter.Format(this, format, formatProvider);
             }
 
-            if ( ! _extensions.IsEmpty )
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
             {
-                foreach ( var extension in _extensions )
-                {
-                    builder.Append( " " );
-                    builder.Append( extension );
-                }
+                return RtpMapAttributeValueFormatter.Format(this, format, formatProvider);
             }
 
-            return builder.ToString();
+            throw new FormatException();
         }
 
 
@@ -152,7 +152,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out RtpMapAttributeValue result) || result == null)
+            if (!RtpMapAttributeValueFormatter.TryParse(value, out RtpMapAttributeValue result) || result == null)
             {
                 throw new FormatException();
             }
@@ -161,50 +161,14 @@ namespace RabbitOM.Net.Sdp
         }
 
         /// <summary>
-        /// Try parse the value
+        /// Try to parse
         /// </summary>
         /// <param name="value">the value</param>
-        /// <param name="result">the result</param>
+        /// <param name="result">the field result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( string value , out RtpMapAttributeValue result )
+        public static bool TryParse(string value, out RtpMapAttributeValue result)
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Trim().Split( new char[]{ ' ' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( ! tokens.Any() )
-			{
-                return false;
-			}
-
-            result = new RtpMapAttributeValue()
-            {
-                PayloadType = SessionDescriptorDataConverter.ConvertToByte( tokens.FirstOrDefault() )
-            };
-
-            if ( tokens.Length > 1 )
-            {
-                var elements = tokens[ 1 ].Split( new char[] { '/' } );
-
-                result.Encoding = elements.FirstOrDefault();
-
-                if (elements.Length > 1)
-                {
-                    result.ClockRate = SessionDescriptorDataConverter.ConvertToUInt(elements.ElementAtOrDefault(1));
-                }
-            }
-
-            for ( int i = 2 ; i < tokens.Length ; ++i )
-            {
-                result.Extensions.TryAdd( tokens[i] );
-            }
-
-            return true;
+            return RtpMapAttributeValueFormatter.TryParse(value, out result);
         }
     }
 }

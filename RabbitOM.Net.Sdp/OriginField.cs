@@ -1,19 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class OriginField : BaseField, ICopyable<OriginField>
+    public sealed class OriginField : BaseField, IFormattable , ICopyable<OriginField>
     {
         /// <summary>
         /// Represent the type name
         /// </summary>
         public const string       TypeNameValue          = "o";
+
 
 
 
@@ -29,6 +29,7 @@ namespace RabbitOM.Net.Sdp
         private AddressType       _addressType           = AddressType.None;
 
         private string            _address               = string.Empty;
+
 
 
 
@@ -98,36 +99,20 @@ namespace RabbitOM.Net.Sdp
 
 
 
+
         /// <summary>
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( string.IsNullOrWhiteSpace( _sessionId )
-                || string.IsNullOrWhiteSpace( _version )
-                || string.IsNullOrWhiteSpace( _address )
-                )
-            {
-                return false;
-            }
-
-            if ( _networkType == NetworkType.None )
-            {
-                return false;
-            }
-
-            if ( _addressType == AddressType.None )
-            {
-                return false;
-            }
-
-            if ( !IPAddress.TryParse( _address , out IPAddress ipAddress ) || ipAddress == null )
-            {
-                return false;
-            }
-
-            return true;
+            return ! string.IsNullOrWhiteSpace( _sessionId )
+                && ! string.IsNullOrWhiteSpace( _version )
+                && ! string.IsNullOrWhiteSpace( _address )
+             
+                && _networkType != NetworkType.None
+                && _addressType != AddressType.None 
+                ;
         }
 
         /// <summary>
@@ -155,34 +140,39 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            if ( string.IsNullOrWhiteSpace( _userName ) )
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
             {
-                builder.Append( "-" );
+                return OriginFieldFormatter.Format(this, format, formatProvider);
             }
-            else
+
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
             {
-                builder.Append( _userName );
+                return OriginFieldFormatter.Format(this, format, formatProvider);
             }
 
-            builder.Append( " " );
-
-            builder.Append( _sessionId );
-            builder.Append( " " );
-
-            builder.Append( _version );
-            builder.Append( " " );
-
-            builder.Append( SessionDescriptorDataConverter.ConvertToString( _networkType ) );
-            builder.Append( " " );
-
-            builder.Append( SessionDescriptorDataConverter.ConvertToString( _addressType ) );
-            builder.Append( " " );
-
-            builder.Append( _address );
-
-            return builder.ToString();
+            throw new FormatException();
         }
 
 
@@ -209,7 +199,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out OriginField result) || result == null)
+            if (!OriginFieldFormatter.TryParse(value, out OriginField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -225,31 +215,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out OriginField result )
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( ! tokens.Any() )
-            {
-                return false;
-            }
-            
-            result = new OriginField()
-            {
-                UserName    = tokens.ElementAtOrDefault(0) ?? string.Empty ,
-                SessionId   = tokens.ElementAtOrDefault(1) ?? string.Empty ,
-                Version     = tokens.ElementAtOrDefault(2) ?? string.Empty ,
-                Address     = tokens.ElementAtOrDefault(5) ?? string.Empty ,
-                NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty ) ,
-                AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty ) ,
-            };
-
-            return true;
+            return OriginFieldFormatter.TryParse( value , out result );
         }
     }
 }

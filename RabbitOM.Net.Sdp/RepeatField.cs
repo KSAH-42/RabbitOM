@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class RepeatField : BaseField
+    public sealed class RepeatField : BaseField , ICopyable<RepeatField> , IFormattable
     {
         /// <summary>
         /// Represent the type name
@@ -86,28 +86,60 @@ namespace RabbitOM.Net.Sdp
         }
 
         /// <summary>
+        /// Make a copy
+        /// </summary>
+        /// <param name="field">the field</param>
+        public void CopyFrom(RepeatField field)
+        {
+            if (field == null || object.ReferenceEquals(field, this))
+            {
+                return;
+            }
+
+            _repeatInterval = field.RepeatInterval;
+            _activeDuration = field.ActiveDuration;
+        }
+
+        /// <summary>
         /// Format the field
         /// </summary>
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
-
-            builder.Append( _repeatInterval.StartTime );
-            builder.Append( " " );
-
-            builder.Append( _repeatInterval.StopTime );
-            builder.Append( " " );
-
-            builder.Append( _activeDuration.StartTime );
-            builder.Append( " " );
-
-            builder.Append( _activeDuration.StopTime );
-            builder.Append( " " );
-
-            return builder.ToString();
+            return ToString(null);
         }
 
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                return RepeatFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return RepeatFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            throw new FormatException();
+        }
 
 
 
@@ -132,7 +164,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out RepeatField result) || result == null)
+            if (!RepeatFieldFormatter.TryParse(value, out RepeatField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -146,29 +178,9 @@ namespace RabbitOM.Net.Sdp
         /// <param name="value">the value</param>
         /// <param name="result">the field result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( string value , out RepeatField result )
+        public static bool TryParse(string value, out RepeatField result)
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( ! tokens.Any() )
-			{
-                return false;
-			}
-
-            result = new RepeatField()
-            {
-                RepeatInterval = new ValueTime( SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty ) , SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty ) ) ,
-                ActiveDuration = new ValueTime( SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(2) ?? string.Empty ) , SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(3) ?? string.Empty ) ) ,
-            };
-
-            return true;
+            return RepeatFieldFormatter.TryParse(value, out result);
         }
     }
 }

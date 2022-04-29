@@ -1,12 +1,13 @@
-﻿using System;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class AttributeField : BaseField
+    public sealed class AttributeField : BaseField , IFormattable 
     {
         /// <summary>
         /// Represent the type name
@@ -36,8 +37,7 @@ namespace RabbitOM.Net.Sdp
         /// Constructor
         /// </summary>
         /// <param name="name">the name</param>
-        public AttributeField( string name )
-            : this( name , string.Empty )
+        public AttributeField( string name ) : this( name , string.Empty )
         {
         }
 
@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Sdp
         /// <param name="value">the value</param>
         public AttributeField( string name , string value )
         {
-            Name = name;
+            Name  = name;
             Value = value;
         }
 
@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _name );
+            return ! string.IsNullOrWhiteSpace( _name );
         }
 
         /// <summary>
@@ -101,17 +101,39 @@ namespace RabbitOM.Net.Sdp
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString( null );
+        }
 
-            builder.Append( _name );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format )
+		{
+            return ToString( format , CultureInfo.CurrentCulture );
+		}
 
-            if ( ! string.IsNullOrWhiteSpace( _value ) )
-            {
-                builder.Append(":");
-                builder.Append(_value);
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString( string format , IFormatProvider formatProvider )
+        {
+            if ( string.IsNullOrWhiteSpace( format ) )
+			{
+                return AttributeFieldFormatter.Format(this, format, formatProvider);
+			}
+
+            if ( format.Equals( "sdp" , StringComparison.OrdinalIgnoreCase ) )
+			{
+                return AttributeFieldFormatter.Format(this, format, formatProvider);
             }
 
-            return builder.ToString();
+            throw new FormatException();
         }
 
 
@@ -139,7 +161,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
 			}
             
-            if ( !TryParse( value , out AttributeField result ) || result == null )
+            if ( ! AttributeFieldFormatter.TryParse( value , out AttributeField result ) || result == null )
 			{
                 throw new FormatException();
             }
@@ -155,20 +177,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out AttributeField result )
         {
-            result = null;
-
-            if ( !SessionDescriptorDataConverter.TryExtractField( value , ':' , out StringPair field ) )
-            {
-                return false;
-            }
-
-            result = new AttributeField()
-            {
-                Name  = field.First ,
-                Value = field.Second
-            };
-
-            return true;
+            return AttributeFieldFormatter.TryParse( value , out result );
         }
     }
 }

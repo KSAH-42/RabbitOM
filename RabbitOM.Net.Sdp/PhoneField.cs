@@ -1,11 +1,13 @@
-﻿using System;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the sdp field
     /// </summary>
-    public sealed class PhoneField : BaseField
+    public sealed class PhoneField : BaseField , IFormattable , ICopyable<PhoneField>
     {
         /// <summary>
         /// Represent the type name
@@ -64,19 +66,64 @@ namespace RabbitOM.Net.Sdp
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
-        {
-            return !string.IsNullOrWhiteSpace( _value );
-        }
+		{
+            return !string.IsNullOrWhiteSpace(_value);
+		}
 
+        /// <summary>
+        /// Make a copy
+        /// </summary>
+        /// <param name="field">the field</param>
+        public void CopyFrom(PhoneField field)
+        {
+            if (field == null || object.ReferenceEquals(field, this))
+            {
+                return;
+            }
+
+            _value = field._value;
+        }
+        
         /// <summary>
         /// Format the field
         /// </summary>
         /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            return _value;
+            return ToString(null);
         }
 
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                return PhoneFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+            {
+                return PhoneFieldFormatter.Format(this, format, formatProvider);
+            }
+
+            throw new FormatException();
+        }
 
 
 
@@ -101,7 +148,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentException(nameof(value));
             }
 
-            if (!TryParse(value, out PhoneField result) || result == null)
+            if (!PhoneFieldFormatter.TryParse(value, out PhoneField result) || result == null)
             {
                 throw new FormatException();
             }
@@ -117,12 +164,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out PhoneField result )
         {
-            result = new PhoneField()
-            {
-                Value = value
-            };
-
-            return true;
+            return PhoneFieldFormatter.TryParse( value , out result );
         }
     }
 }

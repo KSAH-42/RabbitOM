@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
     /// <summary>
     /// Represent the fmtp info
     /// </summary>
-    public sealed class FormatAttributeValue : AttributeValue , ICopyable<FormatAttributeValue>
+    public sealed class FormatAttributeValue : AttributeValue , IFormattable , ICopyable<FormatAttributeValue>
     {
         /// <summary>
         /// Represent field name
@@ -218,95 +218,44 @@ namespace RabbitOM.Net.Sdp
         }
 
         /// <summary>
-        /// Format to a string 
+        /// Format the field
         /// </summary>
-        /// <returns>returns a string</returns>
+        /// <returns>retuns a value</returns>
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            return ToString(null);
+        }
 
-            builder.Append( _payloadType );
-            builder.Append( " " );
-            builder.Append( TypePacketizationMode );
-            builder.Append( "=" );
-            builder.Append( _packetizationMode );
-            builder.Append( ";" );
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <returns>retuns a value</returns>
+        public string ToString(string format)
+        {
+            return ToString(format, CultureInfo.CurrentCulture);
+        }
 
-            if ( ! string.IsNullOrWhiteSpace( _profileLevelId ) )
+        /// <summary>
+        /// Format the field
+        /// </summary>
+        /// <param name="format">the format</param>
+        /// <param name="formatProvider">the format provider</param>
+        /// <returns>retuns a value</returns>
+        /// <exception cref="FormatException"/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(format))
             {
-                builder.Append( " " );
-                builder.Append( TypeProfileLevelId );
-                builder.Append( "=" );
-                builder.Append( _profileLevelId );
-                builder.Append( ";" );
+                return FormatAttributeValueFormatter.Format(this, format, formatProvider);
             }
 
-            if ( ! string.IsNullOrWhiteSpace( _pps ) )
+            if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
             {
-                builder.Append( " " );
-                builder.Append( TypeSPropParmeterSets );
-                builder.Append( "=" );
-                builder.Append( _sps );
-                builder.Append( "," );
-                builder.Append( _pps );
-                builder.Append( ";" );
+                return FormatAttributeValueFormatter.Format(this, format, formatProvider);
             }
 
-            if ( ! string.IsNullOrWhiteSpace( _mode ) )
-            {
-                builder.Append( " " );
-                builder.Append( TypeMode );
-                builder.Append( "=" );
-                builder.Append( _mode );
-                builder.Append( ";" );
-            }
-
-            if ( _sizeLength.HasValue )
-            {
-                builder.Append( " " );
-                builder.Append( TypeSizeLength );
-                builder.Append( "=" );
-                builder.Append( _sizeLength );
-                builder.Append( ";" );
-            }
-
-            if ( _indexLength.HasValue )
-            {
-                builder.Append( " " );
-                builder.Append( TypeIndexLength );
-                builder.Append( "=" );
-                builder.Append( _indexLength );
-                builder.Append( ";" );
-            }
-
-            if ( _indexDeltaLength.HasValue )
-            {
-                builder.Append( " " );
-                builder.Append( TypeIndexDeltaLength );
-                builder.Append( "=" );
-                builder.Append( _indexDeltaLength );
-                builder.Append( ";" );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( _configuration ) )
-            {
-                builder.Append( " " );
-                builder.Append( TypeConfiguration );
-                builder.Append( "=" );
-                builder.Append( _configuration );
-                builder.Append( ";" );
-            }
-
-            if ( ! _extensions.IsEmpty )
-            {
-                foreach ( var extension in _extensions )
-                {
-                    builder.Append( " " );
-                    builder.Append( extension );
-                }
-            }
-
-            return builder.ToString();
+            throw new FormatException();
         }
 
 
@@ -327,7 +276,7 @@ namespace RabbitOM.Net.Sdp
                 throw new ArgumentNullException(nameof(value));
             }
 
-            if (!TryParse(value, out FormatAttributeValue result) || result == null)
+            if (!FormatAttributeValueFormatter.TryParse(value, out FormatAttributeValue result) || result == null)
             {
                 throw new FormatException();
             }
@@ -343,109 +292,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , out FormatAttributeValue result )
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Trim().Split( new char[] { ' ', ';' }, StringSplitOptions.RemoveEmptyEntries );
-
-            if ( ! tokens.Any() )
-			{
-                return false;
-			}
-
-            foreach ( var token in tokens )
-            {
-                StringPair pair = null;
-
-                if ( ! SessionDescriptorDataConverter.TryExtractField( token , new char[] { '=' , ':' } , out pair ) )
-                {
-                    continue;
-                }
-
-                if ( result == null )
-				{
-                    result = new FormatAttributeValue()
-                    {
-                        PayloadType = SessionDescriptorDataConverter.ConvertToByte( tokens.FirstOrDefault() ?? string.Empty ),
-                    };
-                }
-
-                if ( string.Compare( pair.First , AttributeNames.FormatPayload, true ) == 0 )
-                {
-                    result.PayloadType = SessionDescriptorDataConverter.ConvertToByte( pair.Second );
-                }
-
-                else
-                
-                if ( string.Compare( pair.First , TypeProfileLevelId , true ) == 0 )
-                {
-                    result.ProfileLevelId = pair.Second;
-                }
-                
-                else
-                
-                if ( string.Compare( pair.First , TypePacketizationMode , true ) == 0 )
-                {
-                    result.PacketizationMode = SessionDescriptorDataConverter.ConvertToLong( pair.Second );
-                }
-                
-                else
-                
-                if ( string.Compare( pair.First , TypeSPropParmeterSets , true ) == 0 )
-                {
-                    if ( SessionDescriptorDataConverter.TryExtractField( pair.Second , ',' , out StringPair pairParameter ) )
-                    {
-                        result.SPS = pairParameter.First;
-                        result.PPS = pairParameter.Second;
-                    }
-                }
-                
-                else
-
-                if ( string.Compare( pair.First , TypeMode , true ) == 0 )
-                {
-                    result.Mode = pair.Second;
-                }
-
-                else
-
-                if ( string.Compare( pair.First , TypeSizeLength , true ) == 0 )
-                {
-                    result.SizeLength = SessionDescriptorDataConverter.ConvertToNullableLong( pair.Second );
-                }
-
-                else
-
-                if ( string.Compare( pair.First , TypeIndexLength , true ) == 0 )
-                {
-                    result.IndexLength = SessionDescriptorDataConverter.ConvertToNullableLong( pair.Second );
-                }
-                
-                else
-
-                if ( string.Compare( pair.First , TypeIndexDeltaLength , true ) == 0 )
-                {
-                    result.IndexDeltaLength = SessionDescriptorDataConverter.ConvertToNullableLong( pair.Second );
-                }
-
-                else
-                
-                if ( string.Compare( pair.First , TypeConfiguration , true ) == 0 )
-                {
-                    result.Configuration = pair.Second;
-                }
-                
-                else
-                {
-                    result.Extensions.TryAdd( token );
-                }
-            }
-            
-            return result != null;
+            return FormatAttributeValueFormatter.TryParse( value , out result );
         }
     }
 }
