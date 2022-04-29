@@ -29,8 +29,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             if ( !string.IsNullOrWhiteSpace( field.Value ) )
             {
-                builder.AppendFormat( formatProvider , "{0}", ":" );
-                builder.AppendFormat( formatProvider , "{0}" , field.Value );
+                builder.AppendFormat( formatProvider , ":{0}" , field.Value );
             }
                                                       
             return builder.ToString();

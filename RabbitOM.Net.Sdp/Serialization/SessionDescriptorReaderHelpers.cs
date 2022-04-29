@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace RabbitOM.Net.Sdp.Serialization
@@ -31,12 +32,14 @@ namespace RabbitOM.Net.Sdp.Serialization
                         yield break;
                     }
 
-                    if ( !SessionDescriptorDataConverter.TryExtractField( line , '=' , out StringPair pair ) )
+                    var tokens = line.Split(new char[] { '=' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+                    if (tokens.Length == 0 )
                     {
                         continue;
                     }
 
-                    yield return pair;
+                    yield return new StringPair(tokens.ElementAtOrDefault(0) , tokens.ElementAtOrDefault(1));
                 }
             }
         }
