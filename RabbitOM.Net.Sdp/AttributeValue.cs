@@ -8,7 +8,12 @@
 		/// <summary>
 		/// Validate
 		/// </summary>
+		public abstract void Validate();
+
+		/// <summary>
+		/// Validate
+		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public abstract bool Validate();
+		public abstract bool TryValidate();
 	}
 }

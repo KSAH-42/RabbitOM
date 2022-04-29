@@ -125,7 +125,7 @@ namespace RabbitOM.Net.Sdp
 				return false;
 			}
 
-			return _rtpMap.Validate();
+			return _rtpMap.TryValidate();
 		}
 
 		/// <summary>

@@ -7,15 +7,15 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the rtp map
 	/// </summary>
-	public sealed class RtpMapAttributeValue : AttributeValue, ICopyable<RtpMapAttributeValue>, IFormattable
+	public sealed class RtpMapAttributeValue : AttributeValue<RtpMapAttributeValue>, IFormattable
 	{
-		private string _encoding = string.Empty;
+		private string                 _encoding     = string.Empty;
 
-		private byte _payloadType = 0;
+		private byte                   _payloadType  = 0;
 
-		private uint _clockRate = 0;
+		private uint                   _clockRate    = 0;
 
-		private readonly ExtensionList _extensions = new ExtensionList();
+		private readonly ExtensionList _extensions   = new ExtensionList();
 
 
 
@@ -56,6 +56,19 @@ namespace RabbitOM.Net.Sdp
 
 
 
+
+		/// <summary>
+		/// Validate
+		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if ( ! TryValidate() )
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+
 		/// <summary>
 		/// Validate
 		/// </summary>
@@ -63,7 +76,7 @@ namespace RabbitOM.Net.Sdp
 		/// <remarks>
 		///   <para>a payload value with a null value is considered as valid value</para>
 		/// </remarks>
-		public override bool Validate()
+		public override bool TryValidate()
 		{
 			return !string.IsNullOrWhiteSpace(_encoding) && _clockRate > 0;
 		}
@@ -72,16 +85,16 @@ namespace RabbitOM.Net.Sdp
 		/// Copy from
 		/// </summary>
 		/// <param name="info">the object</param>
-		public void CopyFrom(RtpMapAttributeValue info)
+		public override void CopyFrom(RtpMapAttributeValue info)
 		{
 			if (info == null || object.ReferenceEquals(this, info))
 			{
 				return;
 			}
 
-			_clockRate = info._clockRate;
+			_clockRate   = info._clockRate;
 			_payloadType = info._payloadType;
-			_encoding = info._encoding;
+			_encoding    = info._encoding;
 
 			_extensions.Clear();
 

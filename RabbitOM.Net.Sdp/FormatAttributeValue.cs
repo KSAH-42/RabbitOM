@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the fmtp info
 	/// </summary>
-	public sealed class FormatAttributeValue : AttributeValue, IFormattable, ICopyable<FormatAttributeValue>
+	public sealed class FormatAttributeValue : AttributeValue<FormatAttributeValue>, IFormattable
 	{
 		/// <summary>
 		/// Represent field name
@@ -183,10 +183,18 @@ namespace RabbitOM.Net.Sdp
 		/// Validate
 		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
+		public override void Validate()
+		{
+		}
+
+		/// <summary>
+		/// Validate
+		/// </summary>
+		/// <returns>returns true for a success, otherwise false</returns>
 		/// <remarks>
 		///   <para>a payload value with a null value is considered as valid value</para>
 		/// </remarks>
-		public override bool Validate()
+		public override bool TryValidate()
 		{
 			return true;
 		}
@@ -195,7 +203,7 @@ namespace RabbitOM.Net.Sdp
 		/// Copy from
 		/// </summary>
 		/// <param name="info">the object</param>
-		public void CopyFrom(FormatAttributeValue info)
+		public override void CopyFrom(FormatAttributeValue info)
 		{
 			if (info == null || object.ReferenceEquals(this, info))
 			{
