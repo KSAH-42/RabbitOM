@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{
 		SDP.txt = SDP.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Net.Rtps", "RabbitOM.Net.Rtps\RabbitOM.Net.Rtps.csproj", "{CAEA566D-6AA9-460E-9BFA-8CE0E2FE7646}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{B7656250-FA9E-40DF-A52D-2CDE04680940}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7656250-FA9E-40DF-A52D-2CDE04680940}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7656250-FA9E-40DF-A52D-2CDE04680940}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAEA566D-6AA9-460E-9BFA-8CE0E2FE7646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAEA566D-6AA9-460E-9BFA-8CE0E2FE7646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAEA566D-6AA9-460E-9BFA-8CE0E2FE7646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAEA566D-6AA9-460E-9BFA-8CE0E2FE7646}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
