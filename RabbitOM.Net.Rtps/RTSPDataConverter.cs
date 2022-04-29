@@ -223,7 +223,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public static string ConvertToStringUTF8( byte[] value )
         {
-            if ( value == null || value.Length <= 0 )
+            if ( value == null || value.Length == 0 )
             {
                 return string.Empty;
             }
@@ -612,7 +612,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public static string ConvertToBase64( byte[] value )
         {
-            if ( value == null || value.Length <= 0 )
+            if ( value == null || value.Length == 0 )
             {
                 return string.Empty;
             }
@@ -645,7 +645,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 var buffer = Encoding.UTF8.GetBytes( value.Trim() );
 
-                if ( buffer == null || buffer.Length <= 0 )
+                if ( buffer == null || buffer.Length == 0 )
                 {
                     return string.Empty;
                 }
@@ -676,7 +676,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 var buffer = Convert.FromBase64String( value.Trim() );
 
-                if ( buffer == null || buffer.Length <= 0 )
+                if ( buffer == null || buffer.Length == 0 )
                 {
                     return string.Empty;
                 }
