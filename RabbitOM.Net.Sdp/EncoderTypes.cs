@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RabbitOM.Net.Sdp
+﻿namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
 	/// Represent the encoder types

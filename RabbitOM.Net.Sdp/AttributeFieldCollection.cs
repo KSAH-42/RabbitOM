@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -25,9 +25,9 @@ namespace RabbitOM.Net.Sdp
 		/// Initialize a new instance of the collection
 		/// </summary>
 		/// <param name="fields">the collection of field</param>
-		public AttributeFieldCollection( IEnumerable<AttributeField> fields )
+		public AttributeFieldCollection(IEnumerable<AttributeField> fields)
 		{
-			AddRange( fields );
+			AddRange(fields);
 		}
 
 
@@ -40,7 +40,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance</returns>
 		public override AttributeField this[int index]
 		{
-			get => _collection[ index ];
+			get => _collection[index];
 		}
 
 		/// <summary>
@@ -50,7 +50,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance</returns>
 		public AttributeField this[string name]
 		{
-			get => GetByName( name );
+			get => GetByName(name);
 		}
 
 
@@ -108,7 +108,7 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		public override void Add(AttributeField field)
 		{
-			_collection.Add( field );
+			_collection.Add(field);
 		}
 
 		/// <summary>
@@ -135,7 +135,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool Contains(AttributeField field)
 		{
-			return _collection.Contains( field );
+			return _collection.Contains(field);
 		}
 
 		/// <summary>
@@ -145,7 +145,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="arrayIndex">the start index to begin the copy</param>
 		public override void CopyTo(Array array, int arrayIndex)
 		{
-			_collection.CopyTo( array , arrayIndex);
+			_collection.CopyTo(array, arrayIndex);
 		}
 
 		/// <summary>
@@ -155,7 +155,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="arrayIndex">the start index to begin the copy</param>
 		public override void CopyTo(AttributeField[] array, int arrayIndex)
 		{
-			_collection.CopyTo( array , arrayIndex );
+			_collection.CopyTo(array, arrayIndex);
 		}
 
 		/// <summary>
@@ -165,7 +165,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwis false</returns>
 		public override bool Remove(AttributeField field)
 		{
-			return _collection.Remove( field );
+			return _collection.Remove(field);
 		}
 
 		/// <summary>
@@ -175,7 +175,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns the number of fields removed</returns>
 		public override int RemoveAll(IEnumerable<AttributeField> fields)
 		{
-			return _collection.RemoveAll( fields );
+			return _collection.RemoveAll(fields);
 		}
 
 		/// <summary>
@@ -185,7 +185,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns the number of fields removed</returns>
 		public override int RemoveAll(Predicate<AttributeField> predicate)
 		{
-			return _collection.RemoveAll( predicate );
+			return _collection.RemoveAll(predicate);
 		}
 
 		/// <summary>
@@ -204,7 +204,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance</returns>
 		public override AttributeField GetAt(int index)
 		{
-			return _collection.GetAt( index );
+			return _collection.GetAt(index);
 		}
 
 		/// <summary>
@@ -214,7 +214,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance, otherwise null is return</returns>
 		public override AttributeField FindAt(int index)
 		{
-			return _collection.FindAt( index );
+			return _collection.FindAt(index);
 		}
 
 
@@ -226,7 +226,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="InvalidOperationException"/>
 		public AttributeField GetByName(string name)
 		{
-			return GetByName(name,true);
+			return GetByName(name, true);
 		}
 
 		/// <summary>
@@ -248,7 +248,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance,otherwise null</returns>
 		public AttributeField FindByName(string name)
 		{
-			return FindByName(name,true);
+			return FindByName(name, true);
 		}
 
 		/// <summary>
@@ -259,7 +259,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance,otherwise null</returns>
 		public AttributeField FindByName(string name, bool ignoreCase)
 		{
-			return _collection.FirstOrDefault(field => string.Compare(field.Name ?? string.Empty, name ?? string.Empty, ignoreCase) == 0) ;
+			return _collection.FirstOrDefault(field => string.Compare(field.Name ?? string.Empty, name ?? string.Empty, ignoreCase) == 0);
 		}
 
 		/// <summary>
@@ -269,7 +269,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns a collection of field</returns>
 		public override IEnumerable<AttributeField> FindAll(Predicate<AttributeField> predicate)
 		{
-			return _collection.FindAll( predicate );
+			return _collection.FindAll(predicate);
 		}
 
 		/// <summary>
@@ -279,7 +279,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryAdd(AttributeField field)
 		{
-			return _collection.TryAdd( field );
+			return _collection.TryAdd(field);
 		}
 
 		/// <summary>
@@ -289,7 +289,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryAddRange(IEnumerable<AttributeField> fields)
 		{
-			return _collection.TryAddRange( fields );
+			return _collection.TryAddRange(fields);
 		}
 
 		/// <summary>
@@ -300,7 +300,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryAddRange(IEnumerable<AttributeField> fields, out int result)
 		{
-			return _collection.TryAddRange( fields , out result );
+			return _collection.TryAddRange(fields, out result);
 		}
 
 		/// <summary>
@@ -311,7 +311,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryGetAt(int index, out AttributeField result)
 		{
-			return _collection.TryGetAt( index , out result );
+			return _collection.TryGetAt(index, out result);
 		}
 
 		/// <summary>
@@ -322,7 +322,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool TryGetByName(string name, out AttributeField result)
 		{
-			return TryGetByName( name , true , out result );
+			return TryGetByName(name, true, out result);
 		}
 
 		/// <summary>
@@ -332,9 +332,9 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="ignoreCase">set to true to ignore the case</param>
 		/// <param name="result">the result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public bool TryGetByName(string name , bool ignoreCase, out AttributeField result)
+		public bool TryGetByName(string name, bool ignoreCase, out AttributeField result)
 		{
-			result = _collection.FirstOrDefault( field => string.Compare( field.Name ?? string.Empty , name ?? string.Empty , ignoreCase ) == 0 );
+			result = _collection.FirstOrDefault(field => string.Compare(field.Name ?? string.Empty, name ?? string.Empty, ignoreCase) == 0);
 
 			return result != null;
 		}

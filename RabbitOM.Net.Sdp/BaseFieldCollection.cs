@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -187,9 +187,9 @@ namespace RabbitOM.Net.Sdp
 		public int RemoveAll<TField>(Predicate<TField> predicate)
 			where TField : BaseField
 		{
-			if ( predicate == null )
+			if (predicate == null)
 			{
-				throw new ArgumentNullException( nameof( predicate ) );
+				throw new ArgumentNullException(nameof(predicate));
 			}
 
 			return _collection
@@ -252,14 +252,14 @@ namespace RabbitOM.Net.Sdp
 		public IEnumerable<TField> FindAll<TField>(Predicate<TField> predicate)
 			where TField : BaseField
 		{
-			if ( predicate == null )
+			if (predicate == null)
 			{
-				throw new ArgumentNullException( nameof( predicate ) );
+				throw new ArgumentNullException(nameof(predicate));
 			}
 
 			return _collection
-				.Select( field => field as TField )
-				.Where( field => field != null && predicate( field ) )
+				.Select(field => field as TField)
+				.Where(field => field != null && predicate(field))
 				.ToList();
 		}
 

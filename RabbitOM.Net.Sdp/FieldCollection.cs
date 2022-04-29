@@ -16,9 +16,9 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		/// <param name="index">the index</param>
 		/// <returns>returns an instance</returns>
-		public abstract TField this[int index] 
-		{ 
-			get; 
+		public abstract TField this[int index]
+		{
+			get;
 		}
 
 
@@ -29,25 +29,25 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets the sync root
 		/// </summary>
-		public abstract object SyncRoot 
-		{ 
-			get; 
+		public abstract object SyncRoot
+		{
+			get;
 		}
 
 		/// <summary>
 		/// Check if the collection is thread safe
 		/// </summary>
 		public abstract bool IsSynchronized
-		{ 
+		{
 			get;
 		}
 
 		/// <summary>
 		/// Check if the collection is just a read only collection
 		/// </summary>
-		public abstract bool IsReadOnly 
-		{ 
-			get; 
+		public abstract bool IsReadOnly
+		{
+			get;
 		}
 
 		/// <summary>
@@ -61,9 +61,9 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets the number of fields
 		/// </summary>
-		public abstract int Count 
-		{ 
-			get; 
+		public abstract int Count
+		{
+			get;
 		}
 
 
@@ -185,7 +185,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="fields">the collection of fields</param>
 		/// <param name="result">the number of fields added</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public abstract bool TryAddRange(IEnumerable<TField> fields,out int result);
+		public abstract bool TryAddRange(IEnumerable<TField> fields, out int result);
 
 		/// <summary>
 		/// Try to get a field at the desired index

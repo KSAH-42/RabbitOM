@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -30,9 +30,9 @@ namespace RabbitOM.Net.Sdp
 		/// Initialize a new instance of the collection
 		/// </summary>
 		/// <param name="collection">the collection</param>
-		public FieldCollectionInternal( IEnumerable<TField> collection )
+		public FieldCollectionInternal(IEnumerable<TField> collection)
 		{
-			AddRange( collection );
+			AddRange(collection);
 		}
 
 
@@ -44,9 +44,9 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		/// <param name="index">the index</param>
 		/// <returns>returns an instance</returns>
-		public TField this[int index] 
-		{ 
-			get => GetAt( index ); 
+		public TField this[int index]
+		{
+			get => GetAt(index);
 		}
 
 
@@ -56,7 +56,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets the sync root
 		/// </summary>
-		public object SyncRoot 
+		public object SyncRoot
 		{
 			get => this;
 		}
@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Check if the collection is just a read only collection
 		/// </summary>
-		public bool IsReadOnly 
+		public bool IsReadOnly
 		{
 			get => false;
 		}
@@ -88,7 +88,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets the number of fields
 		/// </summary>
-		public int Count 
+		public int Count
 		{
 			get => _collection.Count;
 		}
@@ -105,14 +105,14 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentException"/>
 		public void Add(TField field)
 		{
-			if ( field == null )
+			if (field == null)
 			{
-				throw new ArgumentNullException( nameof( field ) );
+				throw new ArgumentNullException(nameof(field));
 			}
 
-			if ( ! _collection.Add( field ) )
+			if (!_collection.Add(field))
 			{
-				throw new ArgumentException( "The element already exist" , nameof(field) );
+				throw new ArgumentException("The element already exist", nameof(field));
 			}
 		}
 
@@ -123,14 +123,14 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentNullException"/>
 		public void AddRange(IEnumerable<TField> fields)
 		{
-			if ( fields == null )
+			if (fields == null)
 			{
-				throw new ArgumentNullException( nameof( fields ) );
+				throw new ArgumentNullException(nameof(fields));
 			}
 
-			foreach ( var field in fields )
+			foreach (var field in fields)
 			{
-				Add( field );
+				Add(field);
 			}
 		}
 
@@ -149,7 +149,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool Contains(TField field)
 		{
-			return _collection.Contains( field );
+			return _collection.Contains(field);
 		}
 
 		/// <summary>
@@ -159,7 +159,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="arrayIndex">the start index to begin the copy</param>
 		public void CopyTo(Array array, int arrayIndex)
 		{
-			CopyTo( array as TField[] , arrayIndex);
+			CopyTo(array as TField[], arrayIndex);
 		}
 
 		/// <summary>
@@ -169,7 +169,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="arrayIndex">the start index to begin the copy</param>
 		public void CopyTo(TField[] array, int arrayIndex)
 		{
-			_collection.CopyTo( array , arrayIndex );
+			_collection.CopyTo(array, arrayIndex);
 		}
 
 		/// <summary>
@@ -179,7 +179,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwis false</returns>
 		public bool Remove(TField field)
 		{
-			return _collection.Remove( field );
+			return _collection.Remove(field);
 		}
 
 		/// <summary>
@@ -189,7 +189,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns the number of fields removed</returns>
 		public int RemoveAll(IEnumerable<TField> fields)
 		{
-			if ( fields == null )
+			if (fields == null)
 			{
 				return 0;
 			}
@@ -209,15 +209,15 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentNullException"/>
 		public int RemoveAll(Predicate<TField> predicate)
 		{
-			if ( predicate == null )
+			if (predicate == null)
 			{
-				throw new ArgumentNullException( nameof( predicate ) );
+				throw new ArgumentNullException(nameof(predicate));
 			}
 
 			return _collection
-				.Where( field => predicate( field ) )
+				.Where(field => predicate(field))
 				.ToList()
-				.Where( _collection.Remove )
+				.Where(_collection.Remove)
 				.Count();
 		}
 
@@ -248,7 +248,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="InvalidOperationException"/>
 		public TField GetAt(int index)
 		{
-			return _collection.ElementAt( index ) ?? throw new InvalidOperationException( "The returns field is null" );
+			return _collection.ElementAt(index) ?? throw new InvalidOperationException("The returns field is null");
 		}
 
 		/// <summary>
@@ -258,7 +258,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance, otherwise null is return</returns>
 		public TField FindAt(int index)
 		{
-			return _collection.ElementAtOrDefault( index );
+			return _collection.ElementAtOrDefault(index);
 		}
 
 		/// <summary>
@@ -269,12 +269,12 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentNullException"/>
 		public IEnumerable<TField> FindAll(Predicate<TField> predicate)
 		{
-			if ( predicate == null )
+			if (predicate == null)
 			{
-				throw new ArgumentNullException( nameof( predicate ) );
+				throw new ArgumentNullException(nameof(predicate));
 			}
 
-			return _collection.Where( field => predicate( field ) ).ToList();
+			return _collection.Where(field => predicate(field)).ToList();
 		}
 
 		/// <summary>
@@ -284,12 +284,12 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool TryAdd(TField field)
 		{
-			if ( field == null )
+			if (field == null)
 			{
 				return false;
 			}
 
-			return _collection.Add( field );
+			return _collection.Add(field);
 		}
 
 		/// <summary>
@@ -299,12 +299,12 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool TryAddRange(IEnumerable<TField> fields)
 		{
-			if ( fields == null )
+			if (fields == null)
 			{
 				return false;
 			}
 
-			return fields.Where( TryAdd ).Count() > 0;
+			return fields.Where(TryAdd).Count() > 0;
 		}
 
 		/// <summary>
@@ -313,9 +313,9 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="fields">the collection of fields</param>
 		/// <param name="result">the number of fields added</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public bool TryAddRange(IEnumerable<TField> fields,out int result)
+		public bool TryAddRange(IEnumerable<TField> fields, out int result)
 		{
-			result = fields ?.Where( TryAdd ).Count() ?? 0;
+			result = fields?.Where(TryAdd).Count() ?? 0;
 
 			return result > 0;
 		}
@@ -328,7 +328,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool TryGetAt(int index, out TField result)
 		{
-			result = _collection.ElementAtOrDefault( index );
+			result = _collection.ElementAtOrDefault(index);
 
 			return result != null;
 		}

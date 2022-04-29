@@ -78,7 +78,7 @@ namespace RabbitOM.Net.Sdp
 		{
 			get => _collection.IsEmpty;
 		}
-		
+
 		/// <summary>
 		/// Gets the number of fields
 		/// </summary>
