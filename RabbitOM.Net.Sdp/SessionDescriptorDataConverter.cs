@@ -430,6 +430,43 @@ namespace RabbitOM.Net.Sdp
         /// Extract a field as a key pair value
         /// </summary>
         /// <param name="text">the text</param>
+        /// <param name="separator">the separator</param>
+        /// <returns>returns a field,otherwise null</returns>
+        public static StringPair ExtractField( string text , char separator )
+        {
+            if ( string.IsNullOrWhiteSpace( text ) )
+            {
+                return null;
+            }
+
+            int separatorIndex = text.IndexOf( separator );
+
+            if ( separatorIndex < 0 )
+            {
+                return null;
+            }
+
+            string key = text.Remove( separatorIndex ) ?? string.Empty;
+
+            if ( string.IsNullOrWhiteSpace( key ) )
+            {
+                return null;
+            }
+
+            string value = string.Empty;
+
+            if ( ( separatorIndex + 1 ) < text.Length )
+            {
+                value = text.Substring( separatorIndex + 1 ) ?? string.Empty;
+            }
+
+            return new StringPair( key.Trim() , value.Trim() );
+        }
+
+         /// <summary>
+        /// Extract a field as a key pair value
+        /// </summary>
+        /// <param name="text">the text</param>
         /// <param name="separators">the separators</param>
         /// <param name="result">the output result</param>
         /// <returns>returns true for a success, otherwise false</returns>
@@ -441,7 +478,9 @@ namespace RabbitOM.Net.Sdp
             {
                 foreach ( var seperator in separators )
                 {
-                    if ( TryExtractField( text , seperator , out result ) )
+                    result = ExtractField(text, seperator);
+
+                    if ( result != null)
                     {
                         return true;
                     }

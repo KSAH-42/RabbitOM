@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Sdp.Serialization
                         continue;
                     }
 
-                    yield return new StringPair(tokens.ElementAtOrDefault(0) , tokens.ElementAtOrDefault(1));
+                    yield return new StringPair(tokens.ElementAtOrDefault(0) , tokens.ElementAtOrDefault(1) );
                 }
             }
         }
