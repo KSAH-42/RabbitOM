@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out TimeField result)
+		public static bool TryFrom(string value, out TimeField result)
 		{
 			result = null;
 
@@ -50,7 +50,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 			result = new TimeField()
 			{
 				StartTime = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty),
-				StopTime = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty),
+				StopTime  = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty),
 			};
 
 			return true;

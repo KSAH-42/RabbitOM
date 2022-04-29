@@ -242,7 +242,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!MediaDescriptionFieldFormatter.TryParse(value, out MediaDescriptionField result) || result == null)
+			if (!MediaDescriptionFieldFormatter.TryFrom(value, out MediaDescriptionField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -258,7 +258,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out MediaDescriptionField result)
 		{
-			return MediaDescriptionFieldFormatter.TryParse(value, out result);
+			return MediaDescriptionFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

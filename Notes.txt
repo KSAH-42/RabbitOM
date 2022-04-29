@@ -1,3 +1,13 @@
+Formatter.Format( .... )
+Formatter.FormatAsJson( .... )
+Formatter.FormatAsXml( .... )
+Formatter.FormatForCameraXXX( .... )
+Formatter.FormatForCameraXXXX( .... )
+Formatter.FormatForCameraXXXXX( .... )
+Formatter.TryFrom( value )
+Formatter.TryFromCameraXXXX(( value )
+
+
 Rabbit.Net.Sdp.dll
  class AttributeField : BaseField
  {

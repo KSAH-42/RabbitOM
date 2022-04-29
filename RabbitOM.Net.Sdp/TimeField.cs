@@ -174,7 +174,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!TimeFieldFormatter.TryParse(value, out TimeField result) || result == null)
+			if (!TimeFieldFormatter.TryFrom(value, out TimeField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -190,7 +190,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out TimeField result)
 		{
-			return TimeFieldFormatter.TryParse(value, out result);
+			return TimeFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

@@ -186,7 +186,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!AttributeFieldFormatter.TryParse(value, out AttributeField result) || result == null)
+			if (!AttributeFieldFormatter.TryFrom(value, out AttributeField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -202,7 +202,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out AttributeField result)
 		{
-			return AttributeFieldFormatter.TryParse(value, out result);
+			return AttributeFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

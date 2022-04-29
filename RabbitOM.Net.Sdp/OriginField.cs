@@ -211,7 +211,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!OriginFieldFormatter.TryParse(value, out OriginField result) || result == null)
+			if (!OriginFieldFormatter.TryFrom(value, out OriginField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -227,7 +227,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out OriginField result)
 		{
-			return OriginFieldFormatter.TryParse(value, out result);
+			return OriginFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

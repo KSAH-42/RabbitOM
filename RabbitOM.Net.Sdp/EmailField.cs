@@ -194,7 +194,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!EmailFieldFormatter.TryParse(value, out EmailField result) || result == null)
+			if (!EmailFieldFormatter.TryFrom(value, out EmailField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -210,7 +210,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out EmailField result)
 		{
-			return EmailFieldFormatter.TryParse(value, out result);
+			return EmailFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

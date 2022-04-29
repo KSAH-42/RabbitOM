@@ -160,7 +160,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!PhoneFieldFormatter.TryParse(value, out PhoneField result) || result == null)
+			if (!PhoneFieldFormatter.TryFrom(value, out PhoneField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -176,7 +176,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out PhoneField result)
 		{
-			return PhoneFieldFormatter.TryParse(value, out result);
+			return PhoneFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

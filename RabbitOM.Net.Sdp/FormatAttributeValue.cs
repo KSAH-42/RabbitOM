@@ -284,7 +284,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentNullException(nameof(value));
 			}
 
-			if (!FormatAttributeValueFormatter.TryParse(value, out FormatAttributeValue result) || result == null)
+			if (!FormatAttributeValueFormatter.TryFrom(value, out FormatAttributeValue result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -300,7 +300,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out FormatAttributeValue result)
 		{
-			return FormatAttributeValueFormatter.TryParse(value, out result);
+			return FormatAttributeValueFormatter.TryFrom(value, out result);
 		}
 	}
 }

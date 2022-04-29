@@ -157,7 +157,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!EncryptionFieldFormatter.TryParse(value, out EncryptionField result) || result == null)
+			if (!EncryptionFieldFormatter.TryFrom(value, out EncryptionField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -173,7 +173,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out EncryptionField result)
 		{
-			return EncryptionFieldFormatter.TryParse(value, out result);
+			return EncryptionFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

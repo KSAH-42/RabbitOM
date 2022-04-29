@@ -43,7 +43,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out OriginField result)
+		public static bool TryFrom(string value, out OriginField result)
 		{
 			result = null;
 
@@ -61,10 +61,10 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new OriginField()
 			{
-				UserName = tokens.ElementAtOrDefault(0) ?? string.Empty,
-				SessionId = tokens.ElementAtOrDefault(1) ?? string.Empty,
-				Version = tokens.ElementAtOrDefault(2) ?? string.Empty,
-				Address = tokens.ElementAtOrDefault(5) ?? string.Empty,
+				UserName    = tokens.ElementAtOrDefault(0) ?? string.Empty,
+				SessionId   = tokens.ElementAtOrDefault(1) ?? string.Empty,
+				Version     = tokens.ElementAtOrDefault(2) ?? string.Empty,
+				Address     = tokens.ElementAtOrDefault(5) ?? string.Empty,
 				NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty),
 				AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty),
 			};

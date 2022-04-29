@@ -40,7 +40,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out MediaDescriptionField result)
+		public static bool TryFrom(string value, out MediaDescriptionField result)
 		{
 			result = null;
 
@@ -65,11 +65,11 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new MediaDescriptionField()
 			{
-				Type = SessionDescriptorDataConverter.ConvertToMediaType(tokens.ElementAtOrDefault(0) ?? string.Empty),
-				Port = SessionDescriptorDataConverter.ConvertToInt(tokens.ElementAtOrDefault(1) ?? string.Empty),
-				Payload = SessionDescriptorDataConverter.ConvertToInt(tokens.ElementAtOrDefault(3) ?? string.Empty),
+				Type     = SessionDescriptorDataConverter.ConvertToMediaType(tokens.ElementAtOrDefault(0) ?? string.Empty),
+				Port     = SessionDescriptorDataConverter.ConvertToInt(tokens.ElementAtOrDefault(1) ?? string.Empty),
+				Payload  = SessionDescriptorDataConverter.ConvertToInt(tokens.ElementAtOrDefault(3) ?? string.Empty),
 				Protocol = SessionDescriptorDataConverter.ConvertToProtocolType(protocolTokens.ElementAtOrDefault(0)),
-				Profile = SessionDescriptorDataConverter.ConvertToProfileType(protocolTokens.ElementAtOrDefault(1)),
+				Profile  = SessionDescriptorDataConverter.ConvertToProfileType(protocolTokens.ElementAtOrDefault(1)),
 			};
 
 			return true;

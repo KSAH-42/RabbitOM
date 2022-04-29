@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out EncryptionField result)
+		public static bool TryFrom(string value, out EncryptionField result)
 		{
 			result = null;
 
@@ -60,7 +60,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 			result = new EncryptionField()
 			{
 				Method = tokens.ElementAtOrDefault(0),
-				Key = tokens.ElementAtOrDefault(1),
+				Key    = tokens.ElementAtOrDefault(1),
 			};
 
 			return true;

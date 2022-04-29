@@ -47,7 +47,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out ConnectionField result)
+		public static bool TryFrom(string value, out ConnectionField result)
 		{
 			result = null;
 
@@ -67,8 +67,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 			{
 				NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(0) ?? string.Empty),
 				AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(1) ?? string.Empty),
-				Address = tokens.ElementAtOrDefault(2),
-				TTL = SessionDescriptorDataConverter.ConvertToTTL(tokens.ElementAtOrDefault(2)),
+				Address     = tokens.ElementAtOrDefault(2),
+				TTL         = SessionDescriptorDataConverter.ConvertToTTL(tokens.ElementAtOrDefault(2)),
 			};
 
 			return true;

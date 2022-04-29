@@ -49,7 +49,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out RtpMapAttributeValue result)
+		public static bool TryFrom(string value, out RtpMapAttributeValue result)
 		{
 			result = null;
 

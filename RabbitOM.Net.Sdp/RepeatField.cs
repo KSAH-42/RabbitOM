@@ -175,7 +175,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!RepeatFieldFormatter.TryParse(value, out RepeatField result) || result == null)
+			if (!RepeatFieldFormatter.TryFrom(value, out RepeatField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -191,7 +191,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out RepeatField result)
 		{
-			return RepeatFieldFormatter.TryParse(value, out result);
+			return RepeatFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

@@ -188,7 +188,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!ConnectionFieldFormatter.TryParse(value, out ConnectionField result) || result == null)
+			if (!ConnectionFieldFormatter.TryFrom(value, out ConnectionField result) || result == null)
 			{
 				throw new FormatException();
 			}
@@ -204,7 +204,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out ConnectionField result)
 		{
-			return ConnectionFieldFormatter.TryParse(value, out result);
+			return ConnectionFieldFormatter.TryFrom(value, out result);
 		}
 	}
 }

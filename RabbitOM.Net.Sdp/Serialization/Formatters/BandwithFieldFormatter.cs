@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out BandwithField result)
+		public static bool TryFrom(string value, out BandwithField result)
 		{
 			result = null;
 
@@ -49,8 +49,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new BandwithField()
 			{
-				Modifier = tokens.ElementAtOrDefault(0),
-				Value = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)),
+				Modifier  = tokens.ElementAtOrDefault(0),
+				Value     = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)),
 			};
 
 			return true;
