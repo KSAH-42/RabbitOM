@@ -439,6 +439,7 @@ namespace RabbitOM.Net.Sdp
                 return null;
             }
 
+            // TODO: Refactor this method 
             int separatorIndex = text.IndexOf( separator );
 
             if ( separatorIndex < 0 )
