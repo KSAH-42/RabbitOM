@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class OriginField : BaseField, IFormattable, ICopyable<OriginField>
+	public sealed class OriginField : BaseField<OriginField> , IFormattable
 	{
 		/// <summary>
 		/// Represent the type name
@@ -18,17 +18,17 @@ namespace RabbitOM.Net.Sdp
 
 
 
-		private string _userName = string.Empty;
+		private string      _userName    = string.Empty;
 
-		private string _sessionId = string.Empty;
+		private string      _sessionId   = string.Empty;
 
-		private string _version = string.Empty;
+		private string      _version     = string.Empty;
 
 		private NetworkType _networkType = NetworkType.None;
 
 		private AddressType _addressType = AddressType.None;
 
-		private string _address = string.Empty;
+		private string      _address     = string.Empty;
 
 
 
@@ -99,6 +99,17 @@ namespace RabbitOM.Net.Sdp
 
 
 
+		/// <summary>
+		/// Validate
+		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
 
 		/// <summary>
 		/// Validate
@@ -119,20 +130,21 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public void CopyFrom(OriginField field)
+		public override void CopyFrom(OriginField field)
 		{
 			if (field == null || object.ReferenceEquals(field, this))
 			{
 				return;
 			}
 
-			_userName = field._userName;
-			_sessionId = field._sessionId;
-			_version = field._version;
+			_userName    = field._userName;
+			_sessionId   = field._sessionId;
+			_version     = field._version;
 			_networkType = field._networkType;
 			_addressType = field._addressType;
-			_address = field._address;
+			_address     = field._address;
 		}
+
 
 		/// <summary>
 		/// Format the field

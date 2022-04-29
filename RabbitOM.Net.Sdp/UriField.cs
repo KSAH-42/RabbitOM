@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class UriField : BaseField, ICopyable<UriField>
+	public sealed class UriField : BaseField<UriField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -39,6 +39,17 @@ namespace RabbitOM.Net.Sdp
 
 
 
+		/// <summary>
+		/// Validate
+		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
 
 		/// <summary>
 		/// Validate
@@ -58,7 +69,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public void CopyFrom(UriField field)
+		public override void CopyFrom(UriField field)
 		{
 			if (field == null || object.ReferenceEquals(field, this))
 			{

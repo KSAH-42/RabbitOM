@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AddressType.cs" />
     <Compile Include="AttributeField.cs" />
+    <Compile Include="BaseFieldT.cs" />
     <Compile Include="Serialization\Formatters\TimeFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\RtpMapAttributeValueFormatter.cs" />
     <Compile Include="Serialization\Formatters\RepeatFieldFormatter.cs" />

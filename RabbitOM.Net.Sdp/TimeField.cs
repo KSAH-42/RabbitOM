@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class TimeField : BaseField, IFormattable
+	public sealed class TimeField : BaseField<TimeField> , IFormattable
 	{
 		/// <summary>
 		/// Represent the type name
@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Sdp
 
 		private long _startTime = 0;
 
-		private long _stopTime = 0;
+		private long _stopTime  = 0;
 
 
 
@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Sdp
 		public TimeField(long startTime, long stopTime)
 		{
 			_startTime = startTime;
-			_stopTime = stopTime;
+			_stopTime  = stopTime;
 		}
 
 
@@ -77,10 +77,37 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+
+		/// <summary>
+		/// Validate
+		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
 			return 0 <= _startTime && _startTime <= _stopTime;
+		}
+
+		/// <summary>
+		/// Make a copy
+		/// </summary>
+		/// <param name="field">the field</param>
+		public override void CopyFrom(TimeField field)
+		{
+			if (field == null || object.ReferenceEquals(field, this))
+			{
+				return;
+			}
+
+			_startTime = field._startTime;
+			_stopTime  = field._stopTime;
 		}
 
 		/// <summary>

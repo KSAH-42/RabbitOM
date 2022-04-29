@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Sdp
 	/// <para>This class has been introduce to act as a value object AND to avoid the primitive type obsession</para>
 	/// <para>The session descriptor can expose primitive type but for maintenance reason, an object will be introduce even for tiny object</para>
 	/// </remarks>
-	public sealed class VersionField : BaseField, ICopyable<VersionField>
+	public sealed class VersionField : BaseField<VersionField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -47,6 +47,18 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+
+		/// <summary>
+		/// Validate
+		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
@@ -57,7 +69,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public void CopyFrom(VersionField field)
+		public override void CopyFrom(VersionField field)
 		{
 			if (field == null || object.ReferenceEquals(field, this))
 			{

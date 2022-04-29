@@ -7,33 +7,33 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class MediaDescriptionField : BaseField, IFormattable
+	public sealed class MediaDescriptionField : BaseField<MediaDescriptionField>, IFormattable
 	{
 		/// <summary>
 		/// Represent the type name
 		/// </summary>
-		public const string TypeNameValue = "m";
+		public const string                       TypeNameValue = "m";
 
 
 
 
-		private MediaType _type = MediaType.None;
+		private MediaType                         _type         = MediaType.None;
 
-		private int _port = 0;
+		private int                               _port         = 0;
 
-		private ProtocolType _protocol = ProtocolType.None;
+		private ProtocolType                      _protocol     = ProtocolType.None;
 
-		private ProfileType _profile = ProfileType.None;
+		private ProfileType                       _profile      = ProfileType.None;
 
-		private int _payload = 0;
+		private int                               _payload      = 0;
 
-		private readonly ConnectionField _connection = new ConnectionField();
+		private readonly ConnectionField          _connection   = new ConnectionField();
 
-		private readonly EncryptionField _encryption = new EncryptionField();
+		private readonly EncryptionField          _encryption   = new EncryptionField();
 
-		private readonly BandwithFieldCollection _bandwiths = new BandwithFieldCollection();
+		private readonly BandwithFieldCollection  _bandwiths    = new BandwithFieldCollection();
 
-		private readonly AttributeFieldCollection _attributes = new AttributeFieldCollection();
+		private readonly AttributeFieldCollection _attributes   = new AttributeFieldCollection();
 
 
 
@@ -129,14 +129,52 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+		
+		/// <summary>
+		/// Validate
+		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
-			return _payload > 0
-				&& _type != MediaType.None
+			return _payload  > 0
+				&& _type     != MediaType.None
 				&& _protocol != ProtocolType.None
-				&& _profile != ProfileType.None
+				&& _profile  != ProfileType.None
 				;
+		}
+
+		/// <summary>
+		/// Make a copy
+		/// </summary>
+		/// <param name="field">the field</param>
+		public override void CopyFrom(MediaDescriptionField field)
+		{
+			if (field == null || object.ReferenceEquals(field, this))
+			{
+				return;
+			}
+
+			_type     = field._type;
+			_port     = field._port;
+			_protocol = field._protocol;
+			_profile  = field._profile;
+			_payload  = field._payload;
+
+			_connection.CopyFrom(field._connection);
+			_encryption.CopyFrom(field._encryption);
+
+			_bandwiths.Clear();
+			_bandwiths.AddRange(field._bandwiths);
+			_attributes.Clear();
+			_attributes.AddRange(field._attributes);
 		}
 
 		/// <summary>

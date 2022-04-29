@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class ConnectionField : BaseField, IFormattable
+	public sealed class ConnectionField : BaseField<ConnectionField>, IFormattable
 	{
 		/// <summary>
 		/// Represent the type name
@@ -23,9 +23,9 @@ namespace RabbitOM.Net.Sdp
 
 		private AddressType _addressType = AddressType.None;
 
-		private string _address = string.Empty;
+		private string      _address     = string.Empty;
 
-		private byte _ttl = 0;
+		private byte        _ttl         = 0;
 
 
 
@@ -84,6 +84,18 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+		
+		/// <summary>
+		/// Validate
+		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
@@ -97,7 +109,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public void CopyFrom(ConnectionField field)
+		public override void CopyFrom(ConnectionField field)
 		{
 			if (field == null || object.ReferenceEquals(field, this))
 			{

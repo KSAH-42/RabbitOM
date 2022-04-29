@@ -619,5 +619,10 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp.Sigma
 
 			return true;
 		}
+
+		public override void Validate()
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

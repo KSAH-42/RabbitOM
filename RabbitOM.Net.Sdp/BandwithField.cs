@@ -1,4 +1,5 @@
-﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+﻿
+using RabbitOM.Net.Sdp.Serialization.Formatters;
 using System;
 using System.Globalization;
 
@@ -7,12 +8,12 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp document bandwith infos
 	/// </summary>
-	public sealed class BandwithField : BaseField, IFormattable
+	public sealed class BandwithField : BaseField<BandwithField> , IFormattable
 	{
 		/// <summary>
 		/// Represent a modifier name
 		/// </summary>
-		public const string ConferenceTotal = "CT";
+		public const string ConferenceTotal     = "CT";
 
 		/// <summary>
 		/// Represent a modifier name
@@ -22,7 +23,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Represent the type name
 		/// </summary>
-		public const string TypeNameValue = "b";
+		public const string TypeNameValue       = "b";
 
 
 
@@ -31,7 +32,7 @@ namespace RabbitOM.Net.Sdp
 
 		private string _modifier = string.Empty;
 
-		private long _value = 0;
+		private long   _value    = 0;
 
 
 
@@ -95,6 +96,18 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+
+		/// <summary>
+		/// Validate
+		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
@@ -102,9 +115,24 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Format the field
+		/// Make a copy
 		/// </summary>
-		/// <returns>retuns a value</returns>
+		/// <param name="field">the field</param>
+		public override void CopyFrom(BandwithField field)
+		{
+			if (field == null || object.ReferenceEquals(field, this))
+			{
+				return;
+			}
+
+			_modifier = field._modifier;
+			_value = field._value;
+		}
+		
+		/// <summary>
+		 /// Format the field
+		 /// </summary>
+		 /// <returns>retuns a value</returns>
 		public override string ToString()
 		{
 			return ToString(null);
@@ -141,6 +169,7 @@ namespace RabbitOM.Net.Sdp
 
 			throw new FormatException();
 		}
+
 
 
 

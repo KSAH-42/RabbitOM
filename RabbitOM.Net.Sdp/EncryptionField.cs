@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class EncryptionField : BaseField, IFormattable, ICopyable<EncryptionField>
+	public sealed class EncryptionField : BaseField<EncryptionField> , IFormattable
 	{
 		/// <summary>
 		/// Represent the type name
@@ -20,7 +20,7 @@ namespace RabbitOM.Net.Sdp
 
 		private string _method = string.Empty;
 
-		private string _key = string.Empty;
+		private string _key    = string.Empty;
 
 
 
@@ -59,7 +59,19 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
-		/// <returns>returns true for a success, otherwise false</returns>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
+		
+		/// <summary>
+		 /// Validate
+		 /// </summary>
+		 /// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
 			return !string.IsNullOrWhiteSpace(_method);
@@ -69,7 +81,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public void CopyFrom(EncryptionField field)
+		public override void CopyFrom(EncryptionField field)
 		{
 			if (field == null || object.ReferenceEquals(field, this))
 			{

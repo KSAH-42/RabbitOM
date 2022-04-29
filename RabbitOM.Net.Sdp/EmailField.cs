@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class EmailField : BaseField, IFormattable
+	public sealed class EmailField : BaseField<EmailField> , IFormattable
 	{
 		/// <summary>
 		/// Represent the type name
@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Sdp
 
 		private string _address = string.Empty;
 
-		private string _name = string.Empty;
+		private string _name    = string.Empty;
 
 
 
@@ -89,6 +89,17 @@ namespace RabbitOM.Net.Sdp
 
 
 
+		/// <summary>
+		/// Validate
+		/// </summary>
+		/// <exception cref="Exception"/>
+		public override void Validate()
+		{
+			if (!TryValidate())
+			{
+				throw new Exception("Validation failed");
+			}
+		}
 
 		/// <summary>
 		/// Validate
@@ -102,6 +113,21 @@ namespace RabbitOM.Net.Sdp
 			}
 
 			return Uri.IsWellFormedUriString(_address, UriKind.Relative);
+		}
+
+		/// <summary>
+		/// Make a copy
+		/// </summary>
+		/// <param name="field">the field</param>
+		public override void  CopyFrom(EmailField field)
+		{
+			if (field == null || object.ReferenceEquals(field, this))
+			{
+				return;
+			}
+
+			_name = field._name;
+			_address = field._address;
 		}
 
 		/// <summary>
@@ -144,7 +170,7 @@ namespace RabbitOM.Net.Sdp
 
 			throw new FormatException();
 		}
-
+				
 
 
 
