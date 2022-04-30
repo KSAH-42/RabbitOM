@@ -126,12 +126,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return PhoneFieldFormatter.Format(this, format, formatProvider);
+				return PhoneFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return PhoneFieldFormatter.Format(this, format, formatProvider);
+				return PhoneFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

@@ -208,12 +208,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return MediaDescriptionFieldFormatter.Format(this, format, formatProvider);
+				return MediaDescriptionFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return MediaDescriptionFieldFormatter.Format(this, format, formatProvider);
+				return MediaDescriptionFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

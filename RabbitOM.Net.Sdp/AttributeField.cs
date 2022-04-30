@@ -151,12 +151,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return AttributeFieldFormatter.Format(this, format, formatProvider);
+				return AttributeFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return AttributeFieldFormatter.Format(this, format, formatProvider);
+				return AttributeFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

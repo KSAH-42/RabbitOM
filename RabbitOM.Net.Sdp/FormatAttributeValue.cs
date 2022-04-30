@@ -255,12 +255,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return FormatAttributeValueFormatter.Format(this, format, formatProvider);
+				return FormatAttributeValueFormatter.Format( formatProvider , this );
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return FormatAttributeValueFormatter.Format(this, format, formatProvider);
+				return FormatAttributeValueFormatter.Format( formatProvider , this );
 			}
 
 			throw new FormatException();

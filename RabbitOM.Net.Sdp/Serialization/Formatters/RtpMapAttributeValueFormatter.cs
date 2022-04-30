@@ -12,11 +12,10 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="field">the field</param>
-		/// <param name="format">the format</param>
 		/// <param name="formatProvider">the format provider</param>
+		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(RtpMapAttributeValue field, string format, IFormatProvider formatProvider)
+		public static string Format(IFormatProvider formatProvider, RtpMapAttributeValue field)
 		{
 			if (field == null)
 			{

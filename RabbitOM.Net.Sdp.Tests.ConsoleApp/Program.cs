@@ -28,7 +28,6 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			descriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
 			descriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
 			
-			
 			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
 			descriptor.Emails.Add(new EmailField("rabbit1@hole.com", "rabbit1"));

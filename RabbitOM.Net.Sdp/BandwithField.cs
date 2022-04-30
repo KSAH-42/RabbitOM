@@ -126,13 +126,13 @@ namespace RabbitOM.Net.Sdp
 			}
 
 			_modifier = field._modifier;
-			_value = field._value;
+			_value    = field._value;
 		}
 		
 		/// <summary>
-		 /// Format the field
-		 /// </summary>
-		 /// <returns>retuns a value</returns>
+		/// Format the field
+		/// </summary>
+		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
 			return ToString(null);
@@ -159,12 +159,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return BandwithFieldFormatter.Format(this, format, formatProvider);
+				return BandwithFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return BandwithFieldFormatter.Format(this, format, formatProvider);
+				return BandwithFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

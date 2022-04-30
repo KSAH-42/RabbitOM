@@ -142,12 +142,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return EncryptionFieldFormatter.Format(this, format, formatProvider);
+				return EncryptionFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return EncryptionFieldFormatter.Format(this, format, formatProvider);
+				return EncryptionFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

@@ -160,12 +160,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return EmailFieldFormatter.Format(this, format, formatProvider);
+				return EmailFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return EmailFieldFormatter.Format(this, format, formatProvider);
+				return EmailFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

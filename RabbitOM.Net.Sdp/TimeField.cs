@@ -140,12 +140,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return TimeFieldFormatter.Format(this, format, formatProvider);
+				return TimeFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return TimeFieldFormatter.Format(this, format, formatProvider);
+				return TimeFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

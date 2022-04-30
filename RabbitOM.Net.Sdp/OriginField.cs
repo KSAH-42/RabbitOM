@@ -175,12 +175,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return OriginFieldFormatter.Format(this, format, formatProvider);
+				return OriginFieldFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return OriginFieldFormatter.Format(this, format, formatProvider);
+				return OriginFieldFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();

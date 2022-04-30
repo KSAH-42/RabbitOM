@@ -131,12 +131,12 @@ namespace RabbitOM.Net.Sdp
 		{
 			if ( string.IsNullOrEmpty( format ) )
 			{
-				return RtpMapAttributeValueFormatter.Format(this, format, formatProvider);
+				return RtpMapAttributeValueFormatter.Format(formatProvider, this);
 			}
 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
-				return RtpMapAttributeValueFormatter.Format(this, format, formatProvider);
+				return RtpMapAttributeValueFormatter.Format(formatProvider, this);
 			}
 
 			throw new FormatException();
