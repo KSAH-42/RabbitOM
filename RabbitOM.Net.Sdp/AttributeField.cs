@@ -186,12 +186,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! AttributeFieldFormatter.TryFrom(value, out AttributeField result) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return AttributeFieldFormatter.TryFrom(value, out AttributeField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>

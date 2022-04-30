@@ -174,12 +174,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! TimeFieldFormatter.TryFrom(value, out TimeField result ) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return TimeFieldFormatter.TryFrom(value, out TimeField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>

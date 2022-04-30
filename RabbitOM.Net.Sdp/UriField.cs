@@ -130,12 +130,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! TryParse(value, out UriField result) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return TryParse(value, out UriField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>

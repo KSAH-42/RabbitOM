@@ -210,12 +210,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! OriginFieldFormatter.TryFrom(value, out OriginField result ) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return OriginFieldFormatter.TryFrom(value, out OriginField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>

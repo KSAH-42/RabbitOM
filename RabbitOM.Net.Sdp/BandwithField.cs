@@ -189,12 +189,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! BandwithFieldFormatter.TryFrom(value, out BandwithField result) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return BandwithFieldFormatter.TryFrom(value, out BandwithField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>

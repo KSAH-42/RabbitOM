@@ -243,12 +243,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! MediaDescriptionFieldFormatter.TryFrom(value, out MediaDescriptionField result) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return MediaDescriptionFieldFormatter.TryFrom(value, out MediaDescriptionField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>

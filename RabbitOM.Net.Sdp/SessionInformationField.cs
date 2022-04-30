@@ -127,12 +127,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if ( ! TryParse(value, out SessionInformationField result ) )
-			{
-				throw new FormatException();
-			}
-
-			return result;
+			return TryParse(value, out SessionInformationField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
