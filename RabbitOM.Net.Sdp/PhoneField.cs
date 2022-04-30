@@ -160,7 +160,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!PhoneFieldFormatter.TryFrom(value, out PhoneField result) || result == null)
+			if ( ! PhoneFieldFormatter.TryFrom(value, out PhoneField result ) )
 			{
 				throw new FormatException();
 			}

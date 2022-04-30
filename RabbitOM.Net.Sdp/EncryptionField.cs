@@ -177,7 +177,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!EncryptionFieldFormatter.TryFrom(value, out EncryptionField result) || result == null)
+			if ( ! EncryptionFieldFormatter.TryFrom(value, out EncryptionField result) )
 			{
 				throw new FormatException();
 			}

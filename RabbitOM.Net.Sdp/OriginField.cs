@@ -145,7 +145,6 @@ namespace RabbitOM.Net.Sdp
 			_address     = field._address;
 		}
 
-
 		/// <summary>
 		/// Format the field
 		/// </summary>
@@ -211,7 +210,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!OriginFieldFormatter.TryFrom(value, out OriginField result) || result == null)
+			if ( ! OriginFieldFormatter.TryFrom(value, out OriginField result ) )
 			{
 				throw new FormatException();
 			}

@@ -174,7 +174,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!RepeatFieldFormatter.TryFrom(value, out RepeatField result) || result == null)
+			if ( ! RepeatFieldFormatter.TryFrom(value, out RepeatField result) )
 			{
 				throw new FormatException();
 			}

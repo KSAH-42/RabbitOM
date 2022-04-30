@@ -165,7 +165,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!RtpMapAttributeValueFormatter.TryFrom(value, out RtpMapAttributeValue result) || result == null)
+			if ( ! RtpMapAttributeValueFormatter.TryFrom(value, out RtpMapAttributeValue result) )
 			{
 				throw new FormatException();
 			}

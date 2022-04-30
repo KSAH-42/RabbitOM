@@ -128,7 +128,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!TryParse(value, out TimeZoneField result) || result == null)
+			if ( ! TryParse(value, out TimeZoneField result ) )
 			{
 				throw new FormatException();
 			}

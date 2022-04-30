@@ -194,7 +194,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!EmailFieldFormatter.TryFrom(value, out EmailField result) || result == null)
+			if ( ! EmailFieldFormatter.TryFrom(value, out EmailField result) )
 			{
 				throw new FormatException();
 			}

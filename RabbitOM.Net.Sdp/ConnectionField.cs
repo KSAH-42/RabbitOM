@@ -188,7 +188,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!ConnectionFieldFormatter.TryFrom(value, out ConnectionField result) || result == null)
+			if ( ! ConnectionFieldFormatter.TryFrom(value, out ConnectionField result) )
 			{
 				throw new FormatException();
 			}

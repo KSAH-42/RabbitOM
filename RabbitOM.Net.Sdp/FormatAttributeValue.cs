@@ -284,7 +284,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentNullException(nameof(value));
 			}
 
-			if (!FormatAttributeValueFormatter.TryFrom(value, out FormatAttributeValue result) || result == null)
+			if ( ! FormatAttributeValueFormatter.TryFrom(value, out FormatAttributeValue result ) )
 			{
 				throw new FormatException();
 			}

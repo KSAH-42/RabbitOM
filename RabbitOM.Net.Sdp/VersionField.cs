@@ -131,7 +131,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			if (!TryParse(value, out VersionField result) || result == null)
+			if ( ! TryParse(value, out VersionField result) )
 			{
 				throw new FormatException();
 			}
