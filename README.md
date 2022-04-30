@@ -2,7 +2,7 @@
 
 # Introduction
 
-This is a library (in .net) used to connect, managed, and received video/audio streams from security camera using standard protocols like:
+This is a net library used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
 | Module / Protocols           | Status                                    |
 | ---------------------------- | ----------------------------------------- |
@@ -90,7 +90,7 @@ RTSP are used by security cameras and also used by Miracast technology. SmartTV 
 
 What is RTSP ?
 
-RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have a some methods like GET/POST/TRACE/DELETE/PUT and so on, and somes headers separated by carriage sreturns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
+RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have some methods like GET/POST/TRACE/DELETE/PUT and so on, and somes headers separated by carriage returns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
 
 | Methods                      | Description                                                                       |
 | ---------------------------- | --------------------------------------------------------------------------------- |
@@ -107,22 +107,22 @@ RTSP is a protocol used to control and to receive video/audio streams. RTSP is v
 | RECORD                       | Ask for recording                                                                 |
 | REDIRECT                     | This method is used to redirects the traffic                                      |
 
-Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predifined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
+Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predefined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
 
 By essence, RTSP is very similar to http message except important things:
 
 * RTSP has some proprietary and mandatory header like CSeq header
-* RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retries. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
-* Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means you open tcp socket client, you can send a request and a response, but the server can also send a request to the client on the same socket.
-* Using HTTP 1.1, Video stream are push using multipart technics. With RTSP, video packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
+* RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retry. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
+* Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means when you open a tcp socket client and you send a request it may possible that the server can send a request to the client on the same socket during you request operation.
+* Using HTTP/1.1, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
 
-These things are handle by the lib, it's also support the lastest digest authentication used by the lastest professional security cameras.
+All these things are handle by the lib, and it's also support the lastest digest authentication used by the lastest professional security cameras.
 
 About the implementation
 
 I use the fluent OOP approach to perform remote method invocation:
 
-The following code demonstrate how to list the supported methods exposed by a security camera:
+The following code demonstrate how to list the supported methods available on a security camera:
 
 ~~~~C#
 
@@ -160,7 +160,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 
 ~~~~
 
-Please notes, that if you want to receive video streams, you must invoke a series of methods, please take some times to read the RFC about the RTSP or make some research on google about the "RTSP session state machine".
+Please notes, that if you want to receive video streams, you must invoke a series of methods, please take sometimes to read the RFC about RTSP or just make some research on google about the "RTSP session state machine".
 
 Below, on the pseudo code, the remote method invocation works like this:
 
@@ -170,7 +170,7 @@ var bodyResult =
 
  connection
 
-        .XxxxxxxMethod() // Some RTSP Method
+        .XxxxxxxMethod() // Some RTSP Method like GetOption, Play
 
         .AddHeader( new RTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
         .AddHeader( "X-Header1" , "my value 1")
