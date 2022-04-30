@@ -198,6 +198,6 @@ var bodyResult =
 
 You can decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel. But some cameras or server doesn't support multicast.
 
-# NOTES
+# Notes
 
 Please notes that it is not the final implementation, event it can be used for production. I need to change some parts of the code located on headers classes and to implement a better packet message decoder. I espect some code refactoring of many classes. This the rtsp connection has been tested with a lot of professional security cameras IP.
