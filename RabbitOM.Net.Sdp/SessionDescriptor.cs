@@ -1,42 +1,42 @@
-﻿using System;
+﻿using RabbitOM.Net.Sdp.Validation;
+using RabbitOM.Net.Sdp.Serialization;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
-	using RabbitOM.Net.Sdp.Serialization;
-	using RabbitOM.Net.Sdp.Validation;
-
 	/// <summary>
 	/// Represent the session descriptor. For more details please take some times to read the RFC https://tools.ietf.org/html/rfc4566
 	/// </summary>
-	public sealed class SessionDescriptor
+	public sealed class SessionDescriptor : IFormattable
 	{
-		private readonly VersionField _version = new VersionField();
+		private readonly VersionField                    _version = new VersionField();
 
-		private readonly SessionNameField _sessionName = new SessionNameField();
+		private readonly SessionNameField                _sessionName = new SessionNameField();
 
-		private readonly SessionInformationField _sessionInformation = new SessionInformationField();
+		private readonly SessionInformationField         _sessionInformation = new SessionInformationField();
 
-		private readonly UriField _uri = new UriField();
+		private readonly UriField                        _uri = new UriField();
 
-		private readonly OriginField _origin = new OriginField();
+		private readonly OriginField                     _origin = new OriginField();
 
-		private readonly EmailFieldCollection _emails = new EmailFieldCollection();
+		private readonly EmailFieldCollection            _emails = new EmailFieldCollection();
 
-		private readonly PhoneFieldCollection _phones = new PhoneFieldCollection();
+		private readonly PhoneFieldCollection            _phones = new PhoneFieldCollection();
 
-		private readonly ConnectionField _connection = new ConnectionField();
+		private readonly ConnectionField                 _connection = new ConnectionField();
 
-		private readonly BandwithFieldCollection _bandwiths = new BandwithFieldCollection();
+		private readonly BandwithFieldCollection         _bandwiths = new BandwithFieldCollection();
 
-		private readonly TimeFieldCollection _times = new TimeFieldCollection();
+		private readonly TimeFieldCollection             _times = new TimeFieldCollection();
 
-		private readonly RepeatFieldCollection _repeats = new RepeatFieldCollection();
+		private readonly RepeatFieldCollection           _repeats = new RepeatFieldCollection();
 
-		private readonly TimeZoneField _timeZone = new TimeZoneField();
+		private readonly TimeZoneField                   _timeZone = new TimeZoneField();
+													    
+		private readonly EncryptionField                 _encryption = new EncryptionField();
 
-		private readonly EncryptionField _encryption = new EncryptionField();
-
-		private readonly AttributeFieldCollection _attributes = new AttributeFieldCollection();
+		private readonly AttributeFieldCollection        _attributes = new AttributeFieldCollection();
 
 		private readonly MediaDescriptionFieldCollection _mediaDescriptions = new MediaDescriptionFieldCollection();
 
@@ -164,6 +164,9 @@ namespace RabbitOM.Net.Sdp
 		}
 
 
+
+
+
 		/// <summary>
 		/// Just perform a validation only on mandatory fields
 		/// </summary>
@@ -207,22 +210,54 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Serialize the class into a string 
+		/// Format the field
 		/// </summary>
-		/// <returns>returns an none empty for a success, otherwise an empty string is returns in case of failure</returns>
+		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			try
+			return ToString(null);
+		}
+
+		/// <summary>
+		/// Format the field
+		/// </summary>
+		/// <param name="format">the format</param>
+		/// <returns>retuns a value</returns>
+		public string ToString(string format)
+		{
+			return ToString(format, CultureInfo.CurrentCulture);
+		}
+
+		/// <summary>
+		/// Format the field
+		/// </summary>
+		/// <param name="format">the format</param>
+		/// <param name="formatProvider">the format provider</param>
+		/// <returns>retuns a value</returns>
+		/// <exception cref="FormatException"/>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			if ( string.IsNullOrEmpty( format) )
 			{
-				return SessionDescriptorSerializer.Serialize(this);
-			}
-			catch (Exception ex)
-			{
-				System.Diagnostics.Debug.WriteLine(ex);
+				return SessionDescriptorSerializer.Serialize( this );
 			}
 
-			return string.Empty;
+			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
+			{
+				return SessionDescriptorSerializer.Serialize( this );
+			}
+
+			//if (format.Equals("xml", StringComparison.OrdinalIgnoreCase))
+			//{
+			//	return SessionDescriptorSerializer.SerializeAsXml(this);
+			//}
+
+			throw new FormatException();
 		}
+
+
+
+
 
 		/// <summary>
 		/// Parse and create an session descriptor
@@ -239,7 +274,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentNullException(nameof(value));
 			}
 
-			if (string.IsNullOrWhiteSpace(value))
+			if ( string.IsNullOrWhiteSpace(value) )
 			{
 				throw new ArgumentException(nameof(value));
 			}
@@ -257,7 +292,7 @@ namespace RabbitOM.Net.Sdp
 		{
 			result = null;
 
-			if (string.IsNullOrWhiteSpace(value))
+			if ( string.IsNullOrWhiteSpace(value) )
 			{
 				return false;
 			}
@@ -268,7 +303,7 @@ namespace RabbitOM.Net.Sdp
 
 				return result != null;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
 				System.Diagnostics.Debug.WriteLine(ex);
 			}

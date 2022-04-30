@@ -111,15 +111,15 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(ConnectionField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
 
-			_address = field._address;
+			_address     = field._address;
 			_addressType = field._addressType;
 			_networkType = field._networkType;
-			_ttl = field._ttl;
+			_ttl         = field._ttl;
 		}
 
 		/// <summary>
@@ -150,7 +150,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return ConnectionFieldFormatter.Format(this, format, formatProvider);
 			}

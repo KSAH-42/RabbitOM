@@ -12,24 +12,25 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 		static void Main(string[] args)
 		{
 			var descriptor = new SessionDescriptor();
-			
+		
 			descriptor.Version.Value = 1;
 			descriptor.SessionName.Value = "My session name";
-			descriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
-			descriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
+			descriptor.Uri.Value = "rtsp://192.168.0.11:554";
 			descriptor.Origin.Address = "192.168.1.23";
 			descriptor.Origin.AddressType = AddressType.IPV4;
 			descriptor.Origin.NetworkType = NetworkType.Internet;
 			descriptor.Origin.UserName = "Kader";
 			descriptor.Origin.Version = "V1";
 			descriptor.Origin.SessionId = "123456789";
+			descriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
+			descriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
 			descriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
 			descriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
 			descriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
 			
+			
 			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 			descriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-			descriptor.Uri.Value = "rtsp://192.168.0.11:554";
 			descriptor.Emails.Add(new EmailField("rabbit1@hole.com", "rabbit1"));
 			descriptor.Emails.Add(new EmailField("rabbit2@hole.com", "rabbit2"));
 			descriptor.Emails.Add(new EmailField("rabbit3@hole.com", "rabbit3"));
@@ -58,13 +59,11 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 				descriptor.MediaDescriptions.Add(mediaDescription);
 			}
 
-			
 			Console.WriteLine(descriptor.ToString());
 
 			if ( SessionDescriptor.TryParse( descriptor.ToString() , out SessionDescriptor sdp ) )
 			{
 				Console.WriteLine("Ok");
-				
 			}			
 		}
 	}

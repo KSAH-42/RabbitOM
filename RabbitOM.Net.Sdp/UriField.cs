@@ -21,6 +21,25 @@ namespace RabbitOM.Net.Sdp
 
 
 		/// <summary>
+		/// Initialize a new instance of a uri field
+		/// </summary>
+		public UriField()
+		{
+		}
+
+		/// <summary>
+		/// Initialize a new instance of a uri field
+		/// </summary>
+		/// <param name="value">the value</param>
+		public UriField( string value )
+		{
+			Value = value;
+		}
+
+
+
+
+		/// <summary>
 		/// Gets the type name
 		/// </summary>
 		public override string TypeName
@@ -57,7 +76,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
-			if (string.IsNullOrWhiteSpace(_value))
+			if ( string.IsNullOrWhiteSpace( _value ) )
 			{
 				return false;
 			}
@@ -71,7 +90,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(UriField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
@@ -87,7 +106,6 @@ namespace RabbitOM.Net.Sdp
 		{
 			return _value;
 		}
-
 
 
 

@@ -54,7 +54,7 @@ namespace RabbitOM.Net.Sdp
 		public BandwithField(string modifier, int value)
 		{
 			Modifier = modifier;
-			Value = value;
+			Value    = value;
 		}
 
 
@@ -120,7 +120,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(BandwithField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
@@ -157,7 +157,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return BandwithFieldFormatter.Format(this, format, formatProvider);
 			}

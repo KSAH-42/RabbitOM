@@ -21,6 +21,26 @@ namespace RabbitOM.Net.Sdp
 
 
 		/// <summary>
+		/// Initialize a new instance of a time zone field
+		/// </summary>
+		public TimeZoneField()
+		{
+
+		}
+
+		/// <summary>
+		/// Initialize a new instance of a time zone field
+		/// </summary>
+		/// <param name="value">the value</param>
+		public TimeZoneField( string value )
+		{
+			Value = value;
+		}
+
+
+
+
+		/// <summary>
 		/// Gets the type name
 		/// </summary>
 		public override string TypeName
@@ -67,7 +87,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(TimeZoneField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}

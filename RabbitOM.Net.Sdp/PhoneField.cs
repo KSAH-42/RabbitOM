@@ -88,7 +88,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(PhoneField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
@@ -124,7 +124,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return PhoneFieldFormatter.Format(this, format, formatProvider);
 			}

@@ -157,7 +157,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(MediaDescriptionField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
@@ -173,6 +173,7 @@ namespace RabbitOM.Net.Sdp
 
 			_bandwiths.Clear();
 			_bandwiths.AddRange(field._bandwiths);
+
 			_attributes.Clear();
 			_attributes.AddRange(field._attributes);
 		}
@@ -205,7 +206,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return MediaDescriptionFieldFormatter.Format(this, format, formatProvider);
 			}

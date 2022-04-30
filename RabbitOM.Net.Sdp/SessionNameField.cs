@@ -21,6 +21,25 @@ namespace RabbitOM.Net.Sdp
 
 
 		/// <summary>
+		/// Initialize a new instance of a session name field
+		/// </summary>
+		public SessionNameField()
+		{
+		}
+
+		/// <summary>
+		/// Initialize a new instance of a session name field
+		/// </summary>
+		/// <param name="value">the value</param>
+		public SessionNameField(string value)
+		{
+			Value = value;
+		}
+
+
+
+
+		/// <summary>
 		/// Gets the type name
 		/// </summary>
 		public override string TypeName
@@ -58,7 +77,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
-			return true;
+			return ! string.IsNullOrWhiteSpace( _value );
 		}
 
 		/// <summary>
@@ -67,7 +86,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(SessionNameField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}

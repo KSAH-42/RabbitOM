@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="value">the value</param>
 		public AttributeField(string name, string value)
 		{
-			Name = name;
+			Name  = name;
 			Value = value;
 		}
 
@@ -112,7 +112,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(AttributeField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
@@ -149,7 +149,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return AttributeFieldFormatter.Format(this, format, formatProvider);
 			}

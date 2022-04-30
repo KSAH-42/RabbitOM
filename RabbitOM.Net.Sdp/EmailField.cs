@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Sdp
 		public EmailField(string address, string name)
 		{
 			Address = address;
-			Name = name;
+			Name    = name;
 		}
 
 
@@ -119,9 +119,9 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void  CopyFrom(EmailField field)
+		public override void CopyFrom(EmailField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
@@ -158,7 +158,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return EmailFieldFormatter.Format(this, format, formatProvider);
 			}

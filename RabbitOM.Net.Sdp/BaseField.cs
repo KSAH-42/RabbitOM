@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public abstract class BaseField
+	public abstract class BaseField	
 	{
 		/// <summary>
 		/// Gets the type name
@@ -29,5 +29,11 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public abstract bool TryValidate();
+
+		/// <summary>
+		/// Format to a string
+		/// </summary>
+		/// <returns>returns a string</returns>
+		public abstract override string ToString();
 	}
 }

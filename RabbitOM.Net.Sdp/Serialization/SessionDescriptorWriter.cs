@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
+using System.Collections.Generic;
 
 namespace RabbitOM.Net.Sdp.Serialization
 {
@@ -9,14 +9,6 @@ namespace RabbitOM.Net.Sdp.Serialization
 	public sealed class SessionDescriptorWriter
 	{
 		private readonly StringBuilder _builder = new StringBuilder();
-
-		/// <summary>
-		/// Gets the output
-		/// </summary>
-		public string Output
-		{
-			get => _builder.ToString();
-		}
 
 		/// <summary>
 		/// Write a field
@@ -29,14 +21,12 @@ namespace RabbitOM.Net.Sdp.Serialization
 				return;
 			}
 
-			if (!field.TryValidate())
+			if ( !field.TryValidate() )
 			{
 				return;
 			}
 
-			_builder.Append(field.TypeName);
-			_builder.Append("=");
-			_builder.Append(field.ToString());
+			_builder.AppendFormat( "{0}={1}" , field.TypeName , field.ToString() );
 			_builder.AppendLine();
 		}
 
@@ -45,8 +35,7 @@ namespace RabbitOM.Net.Sdp.Serialization
 		/// </summary>
 		/// <typeparam name="TField">the type of field</typeparam>
 		/// <param name="fields">the fields</param>
-		public void WriteFields<TField>(IEnumerable<TField> fields)
-			where TField : BaseField
+		public void WriteFields<TField>(IEnumerable<TField> fields) where TField : BaseField
 		{
 			if (fields != null)
 			{

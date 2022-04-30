@@ -46,7 +46,7 @@
 				writer.WriteFields(mediaDescription.Attributes);
 			}
 
-			return writer.Output ?? string.Empty;
+			return writer.ToString();
 		}
 
 		/// <summary>

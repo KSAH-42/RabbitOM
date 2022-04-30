@@ -27,8 +27,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public RepeatField()
-			: this(new ValueTime(), new ValueTime())
+		public RepeatField() : this( ValueTime.Zero , ValueTime.Zero )
 		{
 		}
 
@@ -102,13 +101,13 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(RepeatField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
 
-			_repeatInterval = field.RepeatInterval;
-			_activeDuration = field.ActiveDuration;
+			_repeatInterval = field._repeatInterval;
+			_activeDuration = field._activeDuration;
 		}
 
 		/// <summary>
@@ -139,7 +138,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return RepeatFieldFormatter.Format(this, format, formatProvider);
 			}

@@ -25,6 +25,26 @@ namespace RabbitOM.Net.Sdp
 
 
 
+		/// <summary>
+		/// Initialize a new instance of the encryption field
+		/// </summary>
+		public EncryptionField()
+		{
+		}
+
+
+		/// <summary>
+		/// Initialize a new instance of the encryption field
+		/// </summary>
+		/// <param name="method">the method</param>
+		/// <param name="key">the key</param>
+		public EncryptionField( string method , string key )
+		{
+			Method = method;
+			Key    = key;
+		}
+
+
 
 		/// <summary>
 		/// Gets the type name
@@ -83,13 +103,13 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="field">the field</param>
 		public override void CopyFrom(EncryptionField field)
 		{
-			if (field == null || object.ReferenceEquals(field, this))
+			if ( field == null )
 			{
 				return;
 			}
 
 			_method = field._method;
-			_key = field._key;
+			_key    = field._key;
 		}
 
 		/// <summary>
@@ -120,7 +140,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="FormatException"/>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (string.IsNullOrWhiteSpace(format))
+			if ( string.IsNullOrEmpty( format ) )
 			{
 				return EncryptionFieldFormatter.Format(this, format, formatProvider);
 			}
