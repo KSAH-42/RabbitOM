@@ -19,16 +19,6 @@ About the implementation
 The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. Using a simple dictionary can introduce an anti pattern called "primitive obsession". To avoid this ugly approach of using just a dictionary, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. According to the RFC, the serialization mecanism MUST respect a particular order. So here, you will find a tolerant serializer. This actual implementation provide a tolerant serialization mecanism that handle many cases, like formating issues, case sensitive issues, ordering issues, extra whitespaces between separators, etc... which are sometimes, present in some systems that can deliver a SDP and may cause interpretation issues. This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
 The implemtation is not truely finished. I except to add distinct Value Objects/Content Value objects
 
-Suppose the following sdp  
-
-| Attributes examples                 |
-| ----------------------------------- |
-| a=parameter1=1;parameter2=2;        |
-| a=parameter1 parameter2 data/x/y/z  |
-| a=name:john parameter key1=value1; data/x parameter2 parameter3="myData1,myData2" |
-
-Distinct ValueObject will be used to parse and access to the properties when the attribute content changes radically.
-
 Usage:
 
 ~~~~C#
