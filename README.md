@@ -123,13 +123,14 @@ By essence, RTSP is very similar to http message except important things:
 
 All these things are handle by the lib, and it's also support the lastest digest authentication used by the lastest professional security cameras.
 
-About the implementation
 
-I use the fluent OOP approach to perform remote method invocation:
+# About the implementation of RTSP classes
+
+I have already build this class, but I will commit in another moment after a code refactoring.
+
+In my previous implementation, I use the fluent OOP approach to perform remote method invocation, I will preserve this approach.
 
 The following code demonstrate how to list the supported methods available on a security camera:
-
-I have already build this class, I will commit this object in another moment, after a code refactoring.
 
 ~~~~C#
 
