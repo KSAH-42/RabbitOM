@@ -21,8 +21,10 @@ The implemtation is not truely finished. I except to add distinct Value Objects/
 
 Suppose the following sdp  
 
-| a=parameter1=1;parameter2=2; |
-| a=parameter1 parameter2 data/x/y/z |
+| Attributes examples                 |
+| ----------------------------------- |
+| a=parameter1=1;parameter2=2;        |
+| a=parameter1 parameter2 data/x/y/z  |
 | a=name:john parameter key1=value1; data/x parameter2 parameter3="myData1,myData2" |
 
 Distinct ValueObject will be used to parse and access to the properties when the attribute content changes radically.
