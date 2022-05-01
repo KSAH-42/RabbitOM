@@ -182,7 +182,6 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
-		/// <returns>returns true for a success, otherwise false</returns>
 		public override void Validate()
 		{
 		}
@@ -205,7 +204,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="info">the object</param>
 		public override void CopyFrom(FormatAttributeValue info)
 		{
-			if (info == null || object.ReferenceEquals(this, info))
+			if (info == null )
 			{
 				return;
 			}

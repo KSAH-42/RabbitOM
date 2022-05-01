@@ -4,13 +4,8 @@
 
 This is a net library used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
-| Module / Protocols           | Status                                    |
-| ---------------------------- | ----------------------------------------- |
-| SDP                          | actually implemented                      |
-| RTSP                         | in progress                               |
-| RTP                          | not actually implemented                  |
-| RTCP                         | not actually implemented                  |
-| Onvif                        | not actually implemented                  |
+In the past, I have created a similar set classes, but here I want to produce a better implementation.
+And review some existing classes that I have already created on RTSP Layer and Onvif Layer.
 
 
 # About Session Description Protocol
@@ -22,7 +17,15 @@ SDP is a protocol used to describe a streaming session configuration, and contai
 About the implementation
 
 The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. Using a simple dictionary can introduce an anti pattern called "primitive obsession". To avoid this ugly approach of using just a dictionary, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. According to the RFC, the serialization mecanism MUST respect a particular order. So here, you will find a tolerant serializer. This actual implementation provide a tolerant serialization mecanism that handle many cases, like formating issues, case sensitive issues, ordering issues, extra whitespaces between separators, etc... which are sometimes, present in some systems that can deliver a SDP and may cause interpretation issues. This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
+The implemtation is not truely finished. I except to add distinct Value Objects/Content Value objects
 
+Suppose the following sdp  
+
+a=parameter1=1;parameter2=2;
+a=parameter1 parameter2 data/x/y/z
+a=name:john parameter key1=value1; data/x parameter2 parameter3="myData1,myData2"
+
+Distinct ValueObject will be used to parse and access to the properties when the attribute content changes radically.
 
 Usage:
 
@@ -124,6 +127,8 @@ I use the fluent OOP approach to perform remote method invocation:
 
 The following code demonstrate how to list the supported methods available on a security camera:
 
+I have already build this class, I will commit this object in another moment, after a code refactoring.
+
 ~~~~C#
 
 using ( var connection = new Rtsp.Remoting.RTSPConnection() )
@@ -196,8 +201,5 @@ var bodyResult =
 
 ~~~~
 
-You can decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel. But some cameras or server doesn't support multicast.
+You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
 
-# Notes
-
-Please notes that it is not the final implementation, event it can be used for production. I need to change some parts of the code located on headers classes and to implement a better packet message decoder. I espect some code refactoring of many classes. This the rtsp connection has been tested with a lot of professional security cameras IP.
