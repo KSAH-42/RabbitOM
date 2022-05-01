@@ -161,7 +161,7 @@ namespace RabbitOM.Net.Sdp
 			{
 				return BandwithFieldFormatter.Format(formatProvider, this);
 			}
-
+						 
 			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
 			{
 				return BandwithFieldFormatter.Format(formatProvider, this);

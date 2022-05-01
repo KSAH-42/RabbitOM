@@ -5,6 +5,7 @@
 This is a net library used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
 In the past, I have created a similar set classes, but here I want to produce a better implementation.
+For instance, I found a security issue, I don't think it is a good to things to expose credentials as getter property. I will used SecureString instead of a string type for storing password.
 And review some existing classes that I have already created on RTSP Layer and Onvif Layer.
 
 
@@ -196,3 +197,136 @@ var bodyResult =
 
 You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
 
+Actual, I am "redesigning" the objects related to the rtsp communication layer, the final connection will be similar to the following code:
+
+~~~~C#
+
+public interface IRtspConnection : IDisposable
+{
+	event EventHandler<RtspOpenedEventArgs> Opened;
+	event EventHandler<RtspClosedEventArgs> Closed;
+
+	event EventHandler<RtspAuthenticationFailedEventArgs> AuthenticationFailed;
+
+	event EventHandler<RtspMessageEventArgs> MessageReceived;
+	event EventHandler<RtspMessageEventArgs> MessageSended;
+
+	event EventHandler<RtspDataReceiveEventArgs> DataReceived;
+
+	event EventHandler<RtspErrorEventArg> ReceivedError;
+	event EventHandler<RtspErrorEventArg> SendedError;
+
+	event EventHandler<RtspErrorEventArg> OpenedFailed;
+
+	event EventHandler<RtspSessionEventArg> SessionCreated;
+	event EventHandler<RtspSessionEventArg> SessionClosed;
+	event EventHandler<RtspErrorEventArg> SessionError;
+
+
+	string Uri { get; }    // store the uri without the credentials
+	string Server { get; } // hostname or ip stored on the uri
+	int Port { get; }      // the port on the uri
+	TimeSpan ConnectionTimeout { get; }
+	TimeSpan ReceiveTimeout { get; }
+	TimeSpan SendTimeout { get; }
+	int CurrentSequenceId {get;}
+
+	RTSPConnectionState Status { get; }
+
+	IReadOnlyCollection<RtspSessionInfo> Sessions { get; } // the collection will updated internal by some classes like the differents implementation of invokers
+
+
+	void Open(string uri);
+	void Open(string uri,TimeSpan openTimeout);
+	void Open(string uri,TimeSpan openTimeout , string userName , string password );
+	void Open(string uri,TimeSpan openTimeout , string userName , SecureString password );
+	void Close();
+	void ConfigureTimeouts(TimeSpan ioTimeout);
+	void ConfigureTimeouts(TimeSpan receiveTimeout,TimeSpan sendTimeout);
+	
+	IRtspInvoker GetOptions(); // Gets the default invoker used to call the OPTIONS method
+	IRtspInvoker Describe(); // Gets the describe invoker blablabla
+	IRtspInvoker Setup(); // Gets the setup invoker blablabla
+	IRtspInvoker Play(); // Get the default play invoker
+	IRtspInvoker Play(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
+	IRtspInvoker Pause(); // blablabla
+	IRtspInvoker Pause(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
+	IRtspInvoker TearDown();
+	IRtspInvoker TearDown(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
+	IRtspInvoker Record();
+	IRtspInvoker Announce();
+	IRtspInvoker GetParameter();
+	IRtspInvoker SetParameter();
+
+	// I thinks these methods will only present on the class 
+	IRtspInvoker KeepAlive(); // implement the common ping strategy
+	IRtspInvoker KeepAlive(int keepAliveMode); // 
+	IRtspInvoker CreateInvoker(string method);
+	IRtspInvoker CreateInvoker(string method, IDictionary<string,string> headers);
+	IRtspInvoker CreateInvoker(string method, IEnumerable<KeyValuePair<string,string>> headers);
+}
+
+public enum RTSPConnectionState { Closed , Opening , Opened, Broken, }
+
+// A possible implementation of session info class
+// This session info will be created by the SetupInvoker class 
+public sealed class RtspSessionInfo
+{
+	public string UniqueId { get; private set; }
+	public string TrackUri { get; private set; }
+	public DateTime CreationTime { get; private set; }
+	public TimeSpan Timeout { get; private set; }
+	public TimeSpan ExpirationTimeout { get; private set; }
+	public DateTime TimeStamp { get; private set; }
+	public bool IsPlaying { get; private set; }
+	public bool IsPaused { get; private set; }
+
+	public string Address { get; private set; }
+	public int Port { get; private set; }
+	public int TTL { get; private set; }
+	public Guid ProtocolType { get; private set; }
+	public Guid MediaType { get; private set; }
+
+	public object Tag { get; set; }
+
+	public bool HasExpired()
+	{
+	   // Something like this
+		return TimeStamp.Add( ExpirationTimeout ) < DateTime.Now;
+	}
+
+	internal void KeepAlive()
+	{
+		TimeStamp = DateTime.Now;
+	}
+
+	internal void ChangePlayStatus( bool status ) {
+		throw new NotImplementedException()
+	}
+
+	internal void ChangePauseStatus( bool status ) {
+		throw new NotImplementedException()
+	}
+
+	internal static RtspSessionInfo CreateInterleavedSessionInfo( /* string id , Guid mediaType .... */ )
+	{
+		throw new NotImplementedException()
+	}
+
+	internal static RtspSessionInfo CreateMulticastSessionInfo( /* string id , Guid mediaType .... */ )
+	{
+		throw new NotImplementedException()
+	}
+
+	internal static RtspSessionInfo CreateUnicastSessionInfo( /* string id , Guid mediaType .... */ )
+	{
+		throw new NotImplementedException()
+	}
+
+	internal static RtspSessionInfo CreateXXXXXSessionInfo( /* string id , Guid mediaType .... */ )
+	{
+		throw new NotImplementedException()
+	}
+}
+
+~~~~
