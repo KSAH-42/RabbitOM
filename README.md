@@ -204,7 +204,7 @@ Actual, I am "redesigning" the objects related to the rtsp communication layer, 
 public interface IRtspConnection : IDisposable
 {
 	event EventHandler<RtspOpenedEventArgs> Opened;
-	event EventHandler<RtspClosedEventArgs> Closed;
+	event EventHandler<RtspClosedEventArgs> Closed; // The close eventargs will contains the reason why the connection has been closed
 
 	event EventHandler<RtspAuthenticationFailedEventArgs> AuthenticationFailed;
 
