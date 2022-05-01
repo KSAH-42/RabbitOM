@@ -260,7 +260,9 @@ public interface IRtspConnection : IDisposable
 
 	// I thinks these methods will only present on the class 
 	IRtspInvoker KeepAlive(); // implement the common ping strategy
-	IRtspInvoker KeepAlive(int keepAliveMode); // 
+	IRtspInvoker KeepAlive(int keepAliveMode); 
+
+	TInvoker CreateInvoker<TInvoker>() where TInvoker : class, IRtspInvoker;
 	IRtspInvoker CreateInvoker(string method);
 	IRtspInvoker CreateInvoker(string method, IDictionary<string,string> headers);
 	IRtspInvoker CreateInvoker(string method, IEnumerable<KeyValuePair<string,string>> headers);
