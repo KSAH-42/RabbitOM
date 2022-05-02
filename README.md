@@ -98,7 +98,7 @@ RTSP is a protocol used to control and to receive video/audio streams. RTSP is v
 | STOP                         | Stop the streaming                                                                |
 | GET_PARAMETER                | List customs parameters                                                           |
 | SET_PARAMETER                | Change customs parameters                                                         |
-| TEARDOWN                     | Destroy the session                                                               |
+| TEARDOWN                     | Destroy the session and stop the associated stream. It doesn't stop all streams!  |
 | ANNOUNCE                     | Posts the description of a media                                                  |
 | RECORD                       | Ask for recording                                                                 |
 | REDIRECT                     | This method is used to redirects the traffic                                      |
@@ -234,7 +234,6 @@ public interface IRtspConnection : IDisposable
 
 	IReadOnlyCollection<RtspSessionInfo> Sessions { get; } // the collection will updated internal by some classes like the differents implementation of invokers
 
-
 	void Open(string uri);
 	void Open(string uri,TimeSpan openTimeout);
 	void Open(string uri,TimeSpan openTimeout , string userName , string password );
@@ -244,8 +243,8 @@ public interface IRtspConnection : IDisposable
 	void ConfigureTimeouts(TimeSpan receiveTimeout,TimeSpan sendTimeout);
 	
 	IRtspInvoker GetOptions(); // Gets the default invoker used to call the OPTIONS method
-	IRtspInvoker Describe(); // Gets the describe invoker blablabla
-	IRtspInvoker Setup(); // Gets the setup invoker blablabla
+	IRtspInvoker Describe();   // Gets the describe invoker blablabla
+	IRtspInvoker Setup();      // Gets the setup invoker blablabla
 	IRtspInvoker Setup(string trackUri);
 	IRtspInvoker Play(); // Get the default play invoker
 	IRtspInvoker Play(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
@@ -259,19 +258,19 @@ public interface IRtspConnection : IDisposable
 	IRtspInvoker SetParameter();
 
 	// I will move these methods below on the class implementation
-	// Or move it on seperate interface using segration patterns
-	IRtspInvoker SetupMutlicastSession(string trackUri,string address, int port);
-	IRtspInvoker SetupMutlicastSession(string trackUri,string address, int port,int ttl);
-	IRtspInvoker SetupUnicastSession(string trackUri);
-	IRtspInvoker SetupUnicastSession(string trackUri,string address);
-	IRtspInvoker SetupUnicastSession(string trackUri,string address,int port);
-	IRtspInvoker KeepAlive(); // implement the common ping strategy
-	IRtspInvoker KeepAlive(int keepAliveMode); 
-
+	// Or move it on seperate interface using segregation patterns
+	
 	TInvoker CreateInvoker<TInvoker>() where TInvoker : class, IRtspInvoker;
 	IRtspInvoker CreateInvoker(string method);
 	IRtspInvoker CreateInvoker(string method, IDictionary<string,string> headers);
 	IRtspInvoker CreateInvoker(string method, IEnumerable<KeyValuePair<string,string>> headers);
+	IRtspInvoker CreateMutlicastSessionInvoker(string trackUri,string address, int port);
+	IRtspInvoker CreateMutlicastSessionInvoker(string trackUri,string address, int port,int ttl);
+	IRtspInvoker CreateUnicastSessionInvoker(string trackUri);
+	IRtspInvoker CreateUnicastSessionInvoker(string trackUri,string address);
+	IRtspInvoker CreateUnicastSessionInvoker(string trackUri,string address,int port);
+	IRtspInvoker KeepAlive(); // implement the common ping strategy
+	IRtspInvoker KeepAlive(int keepAliveMode); 
 }
 
 public enum RTSPConnectionState { Closed , Opening , Opened, Broken, }
