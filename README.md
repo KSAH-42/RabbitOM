@@ -5,9 +5,8 @@
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
 I have already created a similar set classes, but here I want to produce a better implementation.
-For instance, I found a security issue, I don't think it is not a good things to expose credentials as getter property. I will used SecureString instead of a string type for storing password.
-And review some existing classes that I have already created on RTSP Layer and Onvif Layer.
-
+For instance, I found a security issue, I don't think it is not a good things to expose credentials as getter property using "raw strings"/plain text. I will used SecureString instead of a string type for storing password.
+And after review on some existing classes that I have already created, I will publish another implementation of the RTSP Layer and Onvif Layer.
 
 # About Session Description Protocol
 
@@ -297,8 +296,7 @@ public sealed class RtspSessionInfo
 	public object Tag { get; set; }
 
 	public bool HasExpired() {
-	   // Something like this
-		return TimeStamp.Add( ExpirationTimeout ) < DateTime.Now;
+	  	return TimeStamp.Add( ExpirationTimeout ) < DateTime.Now;
 	}
 
 	internal void KeepAlive() {
