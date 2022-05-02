@@ -229,8 +229,7 @@ public interface IRtspConnection : IDisposable
 	TimeSpan ConnectionTimeout { get; }
 	TimeSpan ReceiveTimeout { get; }
 	TimeSpan SendTimeout { get; }
-	int CurrentSequenceId {get;}
-
+	int CurrentSequenceId { get;}
 	RTSPConnectionState Status { get; }
 
 	IReadOnlyCollection<RtspSessionInfo> Sessions { get; } // the collection will updated internal by some classes like the differents implementation of invokers
