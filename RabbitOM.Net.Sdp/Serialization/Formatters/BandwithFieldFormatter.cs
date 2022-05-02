@@ -11,17 +11,16 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, BandwithField field)
+		public static string FormatAsSdp(BandwithField field)
 		{
 			if (field == null)
 			{
 				return string.Empty;
 			}
 
-			return string.Format(formatProvider, "{0}:{1}", field.Modifier, field.Value);
+			return string.Format( "{0}:{1}", field.Modifier, field.Value);
 		}
 
 		/// <summary>

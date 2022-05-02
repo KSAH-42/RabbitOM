@@ -1,13 +1,12 @@
 ﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
 using System;
-using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class TimeField : BaseField<TimeField> , IFormattable
+	public sealed class TimeField : BaseField<TimeField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -116,39 +115,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return ToString(null);
-		}
-
-		/// <summary>
-		/// Format the field
-		/// </summary>
-		/// <param name="format">the format</param>
-		/// <returns>retuns a value</returns>
-		public string ToString(string format)
-		{
-			return ToString(format, CultureInfo.CurrentCulture);
-		}
-
-		/// <summary>
-		/// Format the field
-		/// </summary>
-		/// <param name="format">the format</param>
-		/// <param name="formatProvider">the format provider</param>
-		/// <returns>retuns a value</returns>
-		/// <exception cref="FormatException"/>
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
-			if ( string.IsNullOrEmpty( format ) )
-			{
-				return TimeFieldFormatter.Format(formatProvider, this);
-			}
-
-			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
-			{
-				return TimeFieldFormatter.Format(formatProvider, this);
-			}
-
-			throw new FormatException();
+			return TimeFieldFormatter.FormatAsSdp(this);
 		}
 
 

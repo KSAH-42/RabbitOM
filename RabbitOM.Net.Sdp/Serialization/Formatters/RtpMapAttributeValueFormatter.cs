@@ -12,10 +12,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, RtpMapAttributeValue field)
+		public static string FormatAsSdp(RtpMapAttributeValue field)
 		{
 			if (field == null)
 			{
@@ -24,18 +23,18 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var builder = new StringBuilder();
 
-			builder.AppendFormat(formatProvider, "{0}", field.ClockRate);
+			builder.AppendFormat("{0}", field.ClockRate);
 
 			if (!string.IsNullOrWhiteSpace(field.Encoding))
 			{
-				builder.AppendFormat(formatProvider, "{0}/{1}", field.Encoding, field.ClockRate);
+				builder.AppendFormat("{0}/{1}", field.Encoding, field.ClockRate);
 			}
 
 			if (!field.Extensions.IsEmpty)
 			{
 				foreach (var extension in field.Extensions)
 				{
-					builder.AppendFormat(formatProvider, " {0}", extension);
+					builder.AppendFormat(" {0}", extension);
 				}
 			}
 

@@ -12,10 +12,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, FormatAttributeValue field)
+		public static string FormatAsSdp(FormatAttributeValue field)
 		{
 			if (field == null)
 			{
@@ -24,49 +23,49 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var builder = new StringBuilder();
 
-			builder.AppendFormat(formatProvider, "{0} ", field.PayloadType);
-			builder.AppendFormat(formatProvider, "{0}={1};", FormatAttributeValue.TypePacketizationMode, field.PacketizationMode);
+			builder.AppendFormat("{0} ", field.PayloadType);
+			builder.AppendFormat("{0}={1};", FormatAttributeValue.TypePacketizationMode, field.PacketizationMode);
 
 			if (!string.IsNullOrWhiteSpace(field.ProfileLevelId))
 			{
-				builder.AppendFormat(formatProvider, " {0}={1};", FormatAttributeValue.TypeProfileLevelId, field.ProfileLevelId);
+				builder.AppendFormat(" {0}={1};", FormatAttributeValue.TypeProfileLevelId, field.ProfileLevelId);
 			}
 
 			if (!string.IsNullOrWhiteSpace(field.PPS))
 			{
-				builder.AppendFormat(formatProvider, " {0}={1},{2};", FormatAttributeValue.TypeSPropParmeterSets, field.SPS, field.PPS);
+				builder.AppendFormat(" {0}={1},{2};", FormatAttributeValue.TypeSPropParmeterSets, field.SPS, field.PPS);
 			}
 
 			if (!string.IsNullOrWhiteSpace(field.Mode))
 			{
-				builder.AppendFormat(formatProvider, " {0}={1};", FormatAttributeValue.TypeMode, field.Mode);
+				builder.AppendFormat(" {0}={1};", FormatAttributeValue.TypeMode, field.Mode);
 			}
 
 			if (field.SizeLength.HasValue)
 			{
-				builder.AppendFormat(formatProvider, " {0}={1};", FormatAttributeValue.TypeSizeLength, field.SizeLength);
+				builder.AppendFormat(" {0}={1};", FormatAttributeValue.TypeSizeLength, field.SizeLength);
 			}
 
 			if (field.IndexLength.HasValue)
 			{
-				builder.AppendFormat(formatProvider, " {0}={1};", FormatAttributeValue.TypeIndexLength, field.IndexLength);
+				builder.AppendFormat(" {0}={1};", FormatAttributeValue.TypeIndexLength, field.IndexLength);
 			}
 
 			if (field.IndexDeltaLength.HasValue)
 			{
-				builder.AppendFormat(formatProvider, " {0}={1};", FormatAttributeValue.TypeIndexDeltaLength, field.IndexDeltaLength);
+				builder.AppendFormat(" {0}={1};", FormatAttributeValue.TypeIndexDeltaLength, field.IndexDeltaLength);
 			}
 
 			if (!string.IsNullOrWhiteSpace(field.Configuration))
 			{
-				builder.AppendFormat(formatProvider, " {0}={1};", FormatAttributeValue.TypeConfiguration, field.Configuration);
+				builder.AppendFormat(" {0}={1};", FormatAttributeValue.TypeConfiguration, field.Configuration);
 			}
 
 			if (!field.Extensions.IsEmpty)
 			{
 				foreach (var extension in field.Extensions)
 				{
-					builder.AppendFormat(formatProvider, " {0}", extension);
+					builder.AppendFormat(" {0}", extension);
 				}
 			}
 

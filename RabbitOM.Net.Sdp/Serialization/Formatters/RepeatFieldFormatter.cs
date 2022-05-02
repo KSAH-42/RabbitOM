@@ -12,17 +12,16 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, RepeatField field)
+		public static string FormatAsSdp(RepeatField field)
 		{
 			var builder = new StringBuilder();
 
-			builder.AppendFormat(formatProvider, "{0} ", field.RepeatInterval.StartTime);
-			builder.AppendFormat(formatProvider, "{0} ", field.RepeatInterval.StopTime);
-			builder.AppendFormat(formatProvider, "{0} ", field.ActiveDuration.StartTime);
-			builder.AppendFormat(formatProvider, "{0} ", field.ActiveDuration.StopTime);
+			builder.AppendFormat("{0} ", field.RepeatInterval.StartTime);
+			builder.AppendFormat("{0} ", field.RepeatInterval.StopTime);
+			builder.AppendFormat("{0} ", field.ActiveDuration.StartTime);
+			builder.AppendFormat("{0} ", field.ActiveDuration.StopTime);
 
 			return builder.ToString();
 		}

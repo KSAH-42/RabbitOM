@@ -1,13 +1,12 @@
 ﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
 using System;
-using System.Globalization;
 
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class AttributeField : BaseField<AttributeField> , IFormattable
+	public sealed class AttributeField : BaseField<AttributeField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -127,39 +126,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return ToString(null);
-		}
-
-		/// <summary>
-		/// Format the field
-		/// </summary>
-		/// <param name="format">the format</param>
-		/// <returns>retuns a value</returns>
-		public string ToString(string format)
-		{
-			return ToString(format, CultureInfo.CurrentCulture);
-		}
-
-		/// <summary>
-		/// Format the field
-		/// </summary>
-		/// <param name="format">the format</param>
-		/// <param name="formatProvider">the format provider</param>
-		/// <returns>retuns a value</returns>
-		/// <exception cref="FormatException"/>
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
-			if ( string.IsNullOrEmpty( format ) )
-			{
-				return AttributeFieldFormatter.Format(formatProvider, this);
-			}
-
-			if (format.Equals("sdp", StringComparison.OrdinalIgnoreCase))
-			{
-				return AttributeFieldFormatter.Format(formatProvider, this);
-			}
-
-			throw new FormatException();
+			return AttributeFieldFormatter.FormatAsSdp(this);
 		}
 
 

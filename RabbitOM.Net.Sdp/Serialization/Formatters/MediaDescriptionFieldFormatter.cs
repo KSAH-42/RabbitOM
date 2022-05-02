@@ -12,10 +12,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, MediaDescriptionField field)
+		public static string FormatAsSdp(MediaDescriptionField field)
 		{
 			if (field == null)
 			{
@@ -24,11 +23,11 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var builder = new StringBuilder();
 
-			builder.AppendFormat(formatProvider, "{0} ", SessionDescriptorDataConverter.ConvertToString(field.Type));
-			builder.AppendFormat(formatProvider, "{0} ", field.Port);
-			builder.AppendFormat(formatProvider, "{0} ", SessionDescriptorDataConverter.ConvertToString(field.Protocol));
-			builder.AppendFormat(formatProvider, "{0} ", SessionDescriptorDataConverter.ConvertToString(field.Profile));
-			builder.AppendFormat(formatProvider, "{0} ", field.Payload);
+			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.Type));
+			builder.AppendFormat("{0} ", field.Port);
+			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.Protocol));
+			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.Profile));
+			builder.AppendFormat("{0} ", field.Payload);
 
 			return builder.ToString();
 		}

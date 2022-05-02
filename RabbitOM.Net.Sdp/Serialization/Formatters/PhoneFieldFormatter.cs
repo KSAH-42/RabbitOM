@@ -10,14 +10,13 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, PhoneField field)
+		public static string FormatAsSdp(PhoneField field)
 		{
 			// TODO: ideally this class must format and fill properties the phone prefix like +33 
 
-			return string.Format(formatProvider, "{0}" , field?.Value ?? string.Empty );
+			return string.Format("{0}" , field?.Value ?? string.Empty );
 		}
 
 		/// <summary>

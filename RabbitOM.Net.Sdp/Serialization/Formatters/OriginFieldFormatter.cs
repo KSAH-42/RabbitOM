@@ -12,10 +12,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, OriginField field)
+		public static string FormatAsSdp(OriginField field)
 		{
 			if (field == null)
 			{
@@ -26,12 +25,12 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var userName = !string.IsNullOrWhiteSpace(field.UserName) ? field.UserName : "-";
 
-			builder.AppendFormat(formatProvider, "{0} ", userName);
-			builder.AppendFormat(formatProvider, "{0} ", field.SessionId);
-			builder.AppendFormat(formatProvider, "{0} ", field.Version);
-			builder.AppendFormat(formatProvider, "{0} ", SessionDescriptorDataConverter.ConvertToString(field.NetworkType));
-			builder.AppendFormat(formatProvider, "{0} ", SessionDescriptorDataConverter.ConvertToString(field.AddressType));
-			builder.AppendFormat(formatProvider, "{0} ", field.Address);
+			builder.AppendFormat("{0} ", userName);
+			builder.AppendFormat("{0} ", field.SessionId);
+			builder.AppendFormat("{0} ", field.Version);
+			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.NetworkType));
+			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.AddressType));
+			builder.AppendFormat("{0} ", field.Address);
 
 			return builder.ToString();
 		}

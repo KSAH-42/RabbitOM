@@ -26,16 +26,16 @@ Usage:
 
 var sessionDescriptor = new SessionDescriptor();
 
+sessionDescriptor.Origin.UserName = "John";
+sessionDescriptor.Origin.Address = "192.168.1.23";
+sessionDescriptor.Origin.AddressType = AddressType.IPV4;
+sessionDescriptor.Origin.NetworkType = NetworkType.Internet;
+sessionDescriptor.Origin.Version = "V1";
+sessionDescriptor.Origin.SessionId = "123456789";
 sessionDescriptor.Version.Value = 1;
 sessionDescriptor.SessionName.Value = "My session name";
 sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
 sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
-sessionDescriptor.Origin.Address = "192.168.1.23";
-sessionDescriptor.Origin.AddressType = AddressType.IPV4;
-sessionDescriptor.Origin.NetworkType = NetworkType.Internet;
-sessionDescriptor.Origin.UserName = "Kader";
-sessionDescriptor.Origin.Version = "V1";
-sessionDescriptor.Origin.SessionId = "123456789";
 sessionDescriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
 sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
 sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));

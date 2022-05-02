@@ -12,10 +12,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, EncryptionField field)
+		public static string FormatAsSdp(EncryptionField field)
 		{
 			if (field == null)
 			{
@@ -24,11 +23,11 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var builder = new StringBuilder();
 
-			builder.AppendFormat(formatProvider, "{0}", field.Method);
+			builder.AppendFormat("{0}", field.Method);
 
 			if (!string.IsNullOrWhiteSpace(field.Key))
 			{
-				builder.AppendFormat(formatProvider, ":{0}", field.Key);
+				builder.AppendFormat( ":{0}", field.Key);
 			}
 
 			return builder.ToString();

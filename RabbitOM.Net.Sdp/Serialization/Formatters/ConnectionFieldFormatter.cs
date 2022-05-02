@@ -12,10 +12,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <summary>
 		/// Format to string the field
 		/// </summary>
-		/// <param name="formatProvider">the format provider</param>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string Format(IFormatProvider formatProvider, ConnectionField field)
+		public static string FormatAsSdp(ConnectionField field)
 		{
 			if (field == null)
 			{
@@ -24,8 +23,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var builder = new StringBuilder();
 
-			builder.AppendFormat(formatProvider
-				, "{0} {1} {2}"
+			builder.AppendFormat(
+				  "{0} {1} {2}"
 				, SessionDescriptorDataConverter.ConvertToString(field.NetworkType)
 				, SessionDescriptorDataConverter.ConvertToString(field.AddressType)
 				, field.Address
@@ -34,7 +33,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			if (field.TTL > 0)
 			{
-				builder.AppendFormat(formatProvider, "/{0}", field.TTL);
+				builder.AppendFormat("/{0}", field.TTL);
 			}
 
 			return builder.ToString();
