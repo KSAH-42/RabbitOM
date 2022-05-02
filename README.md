@@ -265,7 +265,6 @@ public interface IRtspConnection : IDisposable
 	IRtspInvoker SetupUnicastSession(string trackUri);
 	IRtspInvoker SetupUnicastSession(string trackUri,string address);
 	IRtspInvoker SetupUnicastSession(string trackUri,string address,int port);
-	IRtspInvoker SetupInternalSession(string trackUri);
 	IRtspInvoker KeepAlive(); // implement the common ping strategy
 	IRtspInvoker KeepAlive(int keepAliveMode); 
 
