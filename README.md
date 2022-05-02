@@ -247,6 +247,7 @@ public interface IRtspConnection : IDisposable
 	IRtspInvoker GetOptions(); // Gets the default invoker used to call the OPTIONS method
 	IRtspInvoker Describe(); // Gets the describe invoker blablabla
 	IRtspInvoker Setup(); // Gets the setup invoker blablabla
+	IRtspInvoker Setup(string trackUri);
 	IRtspInvoker Play(); // Get the default play invoker
 	IRtspInvoker Play(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
 	IRtspInvoker Pause(); // blablabla
@@ -258,7 +259,14 @@ public interface IRtspConnection : IDisposable
 	IRtspInvoker GetParameter();
 	IRtspInvoker SetParameter();
 
-	// I thinks these methods will only present on the class 
+	// I will move these methods below on the class implementation
+	// Or move it on seperate interface using segration patterns
+	IRtspInvoker SetupMutlicastSession(string trackUri,string address, int port);
+	IRtspInvoker SetupMutlicastSession(string trackUri,string address, int port,int ttl);
+	IRtspInvoker SetupUnicastSession(string trackUri);
+	IRtspInvoker SetupUnicastSession(string trackUri,string address);
+	IRtspInvoker SetupUnicastSession(string trackUri,string address,int port);
+	IRtspInvoker SetupInternalSession(string trackUri);
 	IRtspInvoker KeepAlive(); // implement the common ping strategy
 	IRtspInvoker KeepAlive(int keepAliveMode); 
 
