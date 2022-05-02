@@ -13,7 +13,7 @@ And review some existing classes that I have already created on RTSP Layer and O
 
 What is SDP ?
 
-SDP is a protocol used to describe a streaming session configuration, and contains important informations like the real uri and the keys used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the SDP "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used not only by security cameras but also used by device that support SIP protocols like VoIP systems.
+SDP is a protocol used to describe a streaming session configuration, and contains important informations like the control/track uri and the keys/parameterSet used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the SDP "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used not only by security cameras but also used by device that support SIP protocols like VoIP systems.
 
 About the implementation
 
@@ -92,18 +92,20 @@ RTSP is a protocol used to control and to receive video/audio streams. RTSP is v
 | ---------------------------- | --------------------------------------------------------------------------------- |
 | OPTIONS                      | List the supported methods (OPTIONS/DESCRIBE/PLAY/SETUP,etc...)                   |
 | DESCRIBE                     | Retrive the SDP                                                                   |
-| SETUP                        | Ask for creating a session with a transport layer (unicast/multicast/interleaved) |
+| SETUP                        | Ask for creating a transport layer used to stream something and create a session or bundle to an existing session |
 | PLAY                         | Start the streaming                                                               |
 | PAUSE                        | Pause the streaming                                                               |
 | STOP                         | Stop the streaming                                                                |
 | GET_PARAMETER                | List customs parameters                                                           |
 | SET_PARAMETER                | Change customs parameters                                                         |
-| TEARDOWN                     | Destroy the session and stop the associated stream. It doesn't stop all streams!  |
+| TEARDOWN                     | Stop the streaming and destroy the session.  |
 | ANNOUNCE                     | Posts the description of a media                                                  |
 | RECORD                       | Ask for recording                                                                 |
 | REDIRECT                     | This method is used to redirects the traffic                                      |
 
 Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predefined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
+AFAIK, some standards/RFC ask to use GET_PARAMETER for a keepalive/ping and not using the options. I see manufacturer that use the OPTIONS method, because OPTIONS must be implemented unlike the GET_PARAMETER and SET_PARAMETER are optional.  
+So I recommand to ask to camera manufacturer to be sure about the keepalive method.
 
 By essence, RTSP is very similar to http message except important things:
 
@@ -191,8 +193,6 @@ var bodyResult =
 
         .GetBody()
         ;
-
-
 ~~~~
 
 You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
@@ -296,18 +296,24 @@ public sealed class RtspSessionInfo
 
 	public object Tag { get; set; }
 
-	public bool HasExpired()
-	{
+	public bool HasExpired() {
 	   // Something like this
 		return TimeStamp.Add( ExpirationTimeout ) < DateTime.Now;
 	}
 
-	internal void KeepAlive()
-	{
+	internal void KeepAlive() {
 		TimeStamp = DateTime.Now;
 	}
 
+	internal bool CanChangePlayStatus( bool status ) {
+		throw new NotImplementedException()
+	}
+
 	internal void ChangePlayStatus( bool status ) {
+		throw new NotImplementedException()
+	}
+
+	internal bool CanChangePauseStatus( bool status ) {
 		throw new NotImplementedException()
 	}
 
@@ -315,23 +321,19 @@ public sealed class RtspSessionInfo
 		throw new NotImplementedException()
 	}
 
-	internal static RtspSessionInfo CreateInterleavedSessionInfo( /* string id , Guid mediaType .... */ )
-	{
+	internal static RtspSessionInfo CreateInterleavedSessionInfo( /* string id , Guid mediaType .... */ ) {
 		throw new NotImplementedException()
 	}
 
-	internal static RtspSessionInfo CreateMulticastSessionInfo( /* string id , Guid mediaType .... */ )
-	{
+	internal static RtspSessionInfo CreateMulticastSessionInfo( /* string id , Guid mediaType .... */ ){
 		throw new NotImplementedException()
 	}
 
-	internal static RtspSessionInfo CreateUnicastSessionInfo( /* string id , Guid mediaType .... */ )
-	{
+	internal static RtspSessionInfo CreateUnicastSessionInfo( /* string id , Guid mediaType .... */ ){
 		throw new NotImplementedException()
 	}
 
-	internal static RtspSessionInfo CreateXXXXXSessionInfo( /* string id , Guid mediaType .... */ )
-	{
+	internal static RtspSessionInfo CreateXXXXXSessionInfo( /* string id , Guid mediaType .... */ ){
 		throw new NotImplementedException()
 	}
 }
