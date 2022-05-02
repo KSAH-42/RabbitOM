@@ -4,7 +4,7 @@
 
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
-In the past, I have created a similar set classes, but here I want to produce a better implementation.
+I have already created a similar set classes, but here I want to produce a better implementation.
 For instance, I found a security issue, I don't think it is a good to things to expose credentials as getter property. I will used SecureString instead of a string type for storing password.
 And review some existing classes that I have already created on RTSP Layer and Onvif Layer.
 
