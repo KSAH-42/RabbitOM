@@ -2,7 +2,7 @@
 
 # Introduction
 
-This is a net library used to connect, managed, and received video/audio streams from security camera using standard protocols like:
+This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
 In the past, I have created a similar set classes, but here I want to produce a better implementation.
 For instance, I found a security issue, I don't think it is a good to things to expose credentials as getter property. I will used SecureString instead of a string type for storing password.
@@ -112,7 +112,7 @@ By essence, RTSP is very similar to http message except important things:
 * RTSP has some proprietary and mandatory header like CSeq header
 * RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retry. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
 * Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means when you open a tcp socket client and you send a request it may possible that the server can send a request to the client on the same socket during you request operation.
-* Using HTTP/1.1, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
+* Using HTTP, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
 
 All these things are handle by the lib, and it's also support the lastest digest authentication used by the lastest professional security cameras.
 
