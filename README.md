@@ -4,7 +4,7 @@
 
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
-I have already created a similar set classes, but here I want to produce a better implementation.
+I have created a similar set classes in the past, but I was not satisfied. Here I want to produce a better implementation.
 For instance, I found a security issue, I don't think it is not a good things to expose credentials as getter property using "raw strings"/plain text. I will used SecureString instead of a string type for storing password.
 And after review on some existing classes that I have already created, I will publish another implementation of the RTSP Layer and Onvif Layer.
 
@@ -16,8 +16,14 @@ SDP is a protocol used to describe a streaming session configuration, and contai
 
 About the implementation
 
-The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. Using a simple dictionary can introduce an anti pattern called "primitive obsession". To avoid this ugly approach of using just a dictionary, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. According to the RFC, the serialization mecanism MUST respect a particular order. So here, you will find a tolerant serializer. This actual implementation provide a tolerant serialization mecanism that handle many cases, like formating issues, case sensitive issues, ordering issues, extra whitespaces between separators, etc... which are sometimes, present in some systems that can deliver a SDP and may cause interpretation issues. This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
-The implemtation is not truely finished. I except to add distinct Value Objects/Content Value objects
+The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. I have already encountred this situation on some others projects, and I think it is really to start early a code refactoring. So using a simple dictionary can introduce an anti pattern called "primitive obsession".
+To gets more details, I strongly recommend to visit this web site:
+https://enterprisecraftsmanship.com/posts/collections-primitive-obsession/
+
+To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
+
+This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
+The implemtation is not truely finished. I except to add distinct Value Objects/Content Value objects.
 
 Usage:
 
@@ -81,7 +87,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 Where RTSP are used ?
 
-RTSP are used by security cameras and also used by Miracast technology. SmartTV start a RTSP client and connect to RTSP server that run on your local machine in order to receive the video of your desktop.
+RTSP are used by security cameras and also used by Miracast technology. A SmartTV start a RTSP client and connect to RTSP server that run on your local machine in order to receive the video of your desktop.
 
 What is RTSP ?
 
@@ -160,7 +166,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 
 ~~~~
 
-Please notes, that if you want to receive video streams, you must invoke a series of methods, please take sometimes to read the RFC about RTSP or just make some research on google about the "RTSP session state machine".
+Please notes, that if you want to receive video streams, just make some research on google about the "RTSP session state machine" and you will got it.
 
 Below, on the pseudo code, the remote method invocation works like this:
 
@@ -199,6 +205,8 @@ You will be able to decorate each request by adding customs headers, because som
 Actual, I am "redesigning" the objects related to the rtsp communication layer, the final connection will be similar to the following code:
 
 ~~~~C#
+
+public enum RTSPConnectionState { Closed , Opening , Opened, Broken, }
 
 public interface IRtspConnection : IDisposable
 {
@@ -272,7 +280,32 @@ public interface IRtspConnection : IDisposable
 	IRtspInvoker KeepAlive(int keepAliveMode); 
 }
 
-public enum RTSPConnectionState { Closed , Opening , Opened, Broken, }
+public interface IRtspInvoker
+{
+	IRtspInvoker AddHeader(string name, byte[] value);
+	IRtspInvoker AddHeader(string name, string value);
+	IRtspInvoker AddHeader(string name, string format, params object[] parameters);
+	IRtspInvoker WriteBody();
+	IRtspInvoker WriteBody(string value);
+	IRtspInvoker WriteBody(string value,string format);
+	IRtspInvoker WriteBody(byte[] value);
+	RtspInvokerResult Invoke();
+	RtspInvokerResult InvokeWithTry();
+	bool TryInvoke(out RtspInvokerResult result);
+}
+
+public sealed class RtspInvokerResult
+{
+	public RtspInvokerResult( bool succeed, RtspInvokerRequest request , RtspInvokerResponse response ) {
+		Succeed = succeed;
+		Request = request;
+		Response = response;
+	}
+
+	public bool Succeed { get; private set;}
+	public RtspInvokerRequest Request { get; private set; }
+	public RtspInvokerResponse Response { get; private set; }
+}
 
 // A possible implementation of session info class
 // This session info will be created by the SetupInvoker class 
