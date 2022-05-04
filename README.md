@@ -290,8 +290,7 @@ public interface IRtspInvoker
 	IRtspInvoker WriteBody(string value,string format);
 	IRtspInvoker WriteBody(byte[] value);
 	RtspInvokerResult Invoke();
-	RtspInvokerResult InvokeWithTry();
-	bool TryInvoke(out RtspInvokerResult result);
+	
 }
 
 public sealed class RtspInvokerResult
