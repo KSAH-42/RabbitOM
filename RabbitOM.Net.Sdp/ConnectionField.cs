@@ -127,7 +127,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return ConnectionFieldFormatter.FormatAsSdp(this);
+			return ConnectionFieldFormatter.Format(this);
 		}
 
 
@@ -155,7 +155,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return ConnectionFieldFormatter.TryFrom(value, out ConnectionField result) ? result: throw new FormatException();
+			return ConnectionFieldFormatter.TryParse(value, out ConnectionField result) ? result: throw new FormatException();
 		}
 
 		/// <summary>
@@ -166,7 +166,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out ConnectionField result)
 		{
-			return ConnectionFieldFormatter.TryFrom(value, out result);
+			return ConnectionFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

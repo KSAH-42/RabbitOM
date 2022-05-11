@@ -135,7 +135,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return EmailFieldFormatter.FormatAsSdp(this);
+			return EmailFieldFormatter.Format(this);
 		}
 				
 
@@ -161,7 +161,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return EmailFieldFormatter.TryFrom(value, out EmailField result) ? result : throw new FormatException();
+			return EmailFieldFormatter.TryParse(value, out EmailField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -172,7 +172,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out EmailField result)
 		{
-			return EmailFieldFormatter.TryFrom(value, out result);
+			return EmailFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

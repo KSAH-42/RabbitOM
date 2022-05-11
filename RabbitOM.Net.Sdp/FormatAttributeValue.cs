@@ -229,7 +229,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return FormatAttributeValueFormatter.FormatAsSdp( this );
+			return FormatAttributeValueFormatter.Format( this );
 		}
 
 
@@ -250,7 +250,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentNullException(nameof(value));
 			}
 
-			return FormatAttributeValueFormatter.TryFrom(value, out FormatAttributeValue result) ? result : throw new FormatException();
+			return FormatAttributeValueFormatter.TryParse(value, out FormatAttributeValue result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -261,7 +261,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out FormatAttributeValue result)
 		{
-			return FormatAttributeValueFormatter.TryFrom(value, out result);
+			return FormatAttributeValueFormatter.TryParse(value, out result);
 		}
 	}
 }

@@ -150,7 +150,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return OriginFieldFormatter.FormatAsSdp( this);
+			return OriginFieldFormatter.Format( this);
 		}
 
 
@@ -177,7 +177,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return OriginFieldFormatter.TryFrom(value, out OriginField result) ? result : throw new FormatException();
+			return OriginFieldFormatter.TryParse(value, out OriginField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -188,7 +188,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out OriginField result)
 		{
-			return OriginFieldFormatter.TryFrom(value, out result);
+			return OriginFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

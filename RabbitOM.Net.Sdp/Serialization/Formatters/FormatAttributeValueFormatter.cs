@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// </summary>
 		/// <param name="field">the field</param>
 		/// <returns>returns a string</returns>
-		public static string FormatAsSdp(FormatAttributeValue field)
+		public static string Format(FormatAttributeValue field)
 		{
 			if (field == null)
 			{
@@ -78,7 +78,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryFrom(string value, out FormatAttributeValue result)
+		public static bool TryParse(string value, out FormatAttributeValue result)
 		{
 			result = null;
 

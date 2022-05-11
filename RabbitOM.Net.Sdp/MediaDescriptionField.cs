@@ -183,7 +183,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return MediaDescriptionFieldFormatter.FormatAsSdp( this );
+			return MediaDescriptionFieldFormatter.Format( this );
 		}
 
 
@@ -210,7 +210,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return MediaDescriptionFieldFormatter.TryFrom(value, out MediaDescriptionField result) ? result : throw new FormatException();
+			return MediaDescriptionFieldFormatter.TryParse(value, out MediaDescriptionField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -221,7 +221,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out MediaDescriptionField result)
 		{
-			return MediaDescriptionFieldFormatter.TryFrom(value, out result);
+			return MediaDescriptionFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

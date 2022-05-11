@@ -101,7 +101,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return PhoneFieldFormatter.FormatAsSdp( this);
+			return PhoneFieldFormatter.Format( this);
 		}
 
 
@@ -127,7 +127,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return PhoneFieldFormatter.TryFrom(value, out PhoneField result) ? result : throw new FormatException();
+			return PhoneFieldFormatter.TryParse(value, out PhoneField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -138,7 +138,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out PhoneField result)
 		{
-			return PhoneFieldFormatter.TryFrom(value, out result);
+			return PhoneFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

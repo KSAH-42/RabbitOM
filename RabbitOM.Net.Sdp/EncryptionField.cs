@@ -117,7 +117,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return EncryptionFieldFormatter.FormatAsSdp(this);
+			return EncryptionFieldFormatter.Format(this);
 		}
 
 
@@ -144,7 +144,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return EncryptionFieldFormatter.TryFrom(value, out EncryptionField result) ? result : throw new FormatException();
+			return EncryptionFieldFormatter.TryParse(value, out EncryptionField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -155,7 +155,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out EncryptionField result)
 		{
-			return EncryptionFieldFormatter.TryFrom(value, out result);
+			return EncryptionFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

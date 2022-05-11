@@ -133,7 +133,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return BandwithFieldFormatter.FormatAsSdp( this );
+			return BandwithFieldFormatter.Format( this );
 		}
 
 
@@ -155,7 +155,7 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentException(nameof(value));
 			}
 
-			return BandwithFieldFormatter.TryFrom(value, out BandwithField result) ? result : throw new FormatException();
+			return BandwithFieldFormatter.TryParse(value, out BandwithField result) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -166,7 +166,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out BandwithField result)
 		{
-			return BandwithFieldFormatter.TryFrom(value, out result);
+			return BandwithFieldFormatter.TryParse(value, out result);
 		}
 	}
 }

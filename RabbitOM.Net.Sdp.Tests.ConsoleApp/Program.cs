@@ -32,7 +32,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			descriptor.Emails.Add(new EmailField("rabbit1@hole.com", "rabbit1"));
 			descriptor.Emails.Add(new EmailField("rabbit2@hole.com", "rabbit2"));
 			descriptor.Emails.Add(new EmailField("rabbit3@hole.com", "rabbit3"));
-
+			
 			for ( int i = 1; i <= 10; ++ i )
 			{
 				var mediaDescription = new MediaDescriptionField();
