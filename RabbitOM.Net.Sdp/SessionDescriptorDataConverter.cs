@@ -321,7 +321,7 @@ namespace RabbitOM.Net.Sdp
 
 
 		/// <summary>
-		/// Perform a safe trim
+		/// Convert to a string value
 		/// </summary>
 		/// <param name="value">the value</param>
 		/// <returns>returns a trimed value</returns>
@@ -336,12 +336,12 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Perform a safe trim
+		/// Convert to a byte value
 		/// </summary>
 		/// <param name="value">the value</param>
 		/// <returns>returns a value</returns>
-		public static byte ConvertToTTL(string value)
-		{
+		public static byte ConvertToByteFromTTLFormat(string value)
+		{							   
 			if (string.IsNullOrWhiteSpace(value))
 			{
 				return byte.MinValue;
@@ -358,22 +358,22 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Perform a safe trim
+		/// Filter occurcences
 		/// </summary>
 		/// <param name="value">the value</param>
 		/// <returns>returns a trimed value</returns>
-		public static string Trim(string value)
+		public static string Filter(string value)
 		{
-			return Trim(value, true);
+			return Filter(value, true);
 		}
 
 		/// <summary>
-		/// Perform a safe trim
+		/// Filter occurcences
 		/// </summary>
 		/// <param name="value">the value</param>
 		/// <param name="ignoreQuotes">set true to ignore quotes</param>
 		/// <returns>returns a trimed value</returns>
-		public static string Trim(string value, bool ignoreQuotes)
+		public static string Filter(string value, bool ignoreQuotes)
 		{
 			if (string.IsNullOrWhiteSpace(value))
 			{
@@ -389,13 +389,13 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Perform a safe trim
+		/// Filter occurcences
 		/// </summary>
 		/// <param name="value">the value</param>
 		/// <returns>returns a trimed value</returns>
-		public static string TrimAsEmailFormat(string value)
+		public static string FilterAsEmailFormat(string value)
 		{
-			return Trim(RemoveOccurrences(value, '(', ')', '<', '>', '[', ']', '{', '}'));
+			return Filter(RemoveOccurrences(value, '(', ')', '<', '>', '[', ']', '{', '}'));
 		}
 
 		/// <summary>

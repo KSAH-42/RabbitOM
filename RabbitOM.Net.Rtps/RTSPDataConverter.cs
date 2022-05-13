@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -484,15 +485,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public static IEnumerable<TEnum> ConvertToEnum<TEnum>( IEnumerable<string> values ) where TEnum : struct
         {
-            if ( values == null )
-            {
-                yield break;
-            }
-
-            foreach ( var value in values )
-            {
-                yield return ConvertToEnum<TEnum>( value );
-            }
+            return values?.Where( item => ! string.IsNullOrWhiteSpace( item ) ).Select( value => ConvertToEnum<TEnum>(value)) ?? Enumerable.Empty<TEnum>();
         }
 
         /// <summary>
@@ -520,12 +513,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                if ( isBase64 )
-                {
-                    return Convert.FromBase64String( value );
-                }
-
-                return System.Text.Encoding.UTF8.GetBytes( value );
+                return isBase64 ? Convert.FromBase64String(value) : Encoding.UTF8.GetBytes(value);
             }
             catch ( Exception ex )
             {
@@ -549,7 +537,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return System.Text.Encoding.UTF8.GetBytes( value );
+                return Encoding.UTF8.GetBytes( value );
             }
             catch ( Exception ex )
             {
@@ -592,7 +580,12 @@ namespace RabbitOM.Net.Rtsp
                         continue;
                     }
 
-                    data[index] = byte.Parse( byteValue , NumberStyles.HexNumber , CultureInfo.InvariantCulture );
+                    if ( !byte.TryParse(byteValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture , out byte byteResult ) )
+					{
+                        return null;
+					}
+
+                    data[index] = byteResult;
                 }
 
                 return data;
@@ -645,12 +638,10 @@ namespace RabbitOM.Net.Rtsp
             {
                 var buffer = Encoding.UTF8.GetBytes( value.Trim() );
 
-                if ( buffer == null || buffer.Length == 0 )
+                if ( buffer.Length > 0 )
                 {
-                    return string.Empty;
+                    return Convert.ToBase64String( buffer) ?? string.Empty;
                 }
-
-                return Convert.ToBase64String( buffer ) ?? string.Empty;
             }
             catch ( Exception ex )
             {
@@ -676,12 +667,10 @@ namespace RabbitOM.Net.Rtsp
             {
                 var buffer = Convert.FromBase64String( value.Trim() );
 
-                if ( buffer == null || buffer.Length == 0 )
+                if ( buffer.Length > 0 )
                 {
-                    return string.Empty;
+                    return Encoding.UTF8.GetString(buffer) ?? string.Empty;
                 }
-
-                return Encoding.UTF8.GetString( buffer ) ?? string.Empty;
             }
             catch ( Exception ex )
             {

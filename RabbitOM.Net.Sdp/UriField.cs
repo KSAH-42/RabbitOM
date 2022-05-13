@@ -53,7 +53,7 @@ namespace RabbitOM.Net.Sdp
 		public string Value
 		{
 			get => _value;
-			set => _value = SessionDescriptorDataConverter.Trim(value);
+			set => _value = SessionDescriptorDataConverter.Filter(value);
 		}
 
 

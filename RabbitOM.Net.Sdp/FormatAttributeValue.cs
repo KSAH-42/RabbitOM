@@ -93,7 +93,7 @@ namespace RabbitOM.Net.Sdp
 		public string ProfileLevelId
 		{
 			get => _profileLevelId;
-			set => _profileLevelId = SessionDescriptorDataConverter.Trim(value);
+			set => _profileLevelId = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -111,7 +111,7 @@ namespace RabbitOM.Net.Sdp
 		public string SPS
 		{
 			get => _sps;
-			set => _sps = SessionDescriptorDataConverter.Trim(value);
+			set => _sps = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -120,7 +120,7 @@ namespace RabbitOM.Net.Sdp
 		public string PPS
 		{
 			get => _pps;
-			set => _pps = SessionDescriptorDataConverter.Trim(value);
+			set => _pps = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -129,7 +129,7 @@ namespace RabbitOM.Net.Sdp
 		public string Mode
 		{
 			get => _mode;
-			set => _mode = SessionDescriptorDataConverter.Trim(value);
+			set => _mode = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -165,7 +165,7 @@ namespace RabbitOM.Net.Sdp
 		public string Configuration
 		{
 			get => _configuration;
-			set => _configuration = SessionDescriptorDataConverter.Trim(value);
+			set => _configuration = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>

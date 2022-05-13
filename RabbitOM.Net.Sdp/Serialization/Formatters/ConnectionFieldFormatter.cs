@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 				NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(0) ?? string.Empty),
 				AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(1) ?? string.Empty),
 				Address     = tokens.ElementAtOrDefault(2),
-				TTL         = SessionDescriptorDataConverter.ConvertToTTL(tokens.ElementAtOrDefault(2)),
+				TTL         = SessionDescriptorDataConverter.ConvertToByteFromTTLFormat(tokens.ElementAtOrDefault(2)),
 			};
 
 			return true;

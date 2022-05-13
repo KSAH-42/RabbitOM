@@ -1,3 +1,61 @@
+IRTSPClient
+ RTSPClient
+    RTSPClientRFC2435
+    RTSPClientHttp
+
+client
+ client.Settings.KeepAliveMethod = Options/GetParameter/SetParameter
+ client.DefaultHeaders.AddHeader() 
+ client.DefaultHeaders.AddHeader(MethodType,header)
+ client.DefaultHeaders.AddHeader(MethodType,header)
+ client.DefaultHeaders.AddHeader(MethodType,header)
+ client.BaseAddress = "";
+ client.Credentials = new RtspCredentials("myUser","myPassword");
+
+ //---------------Interface-------------------
+
+ May be the client.Open/Close method are unnecessary because RTSP are state full
+
+// client.Open()  // if no BaseAddress property
+// client.Close() // if no BaseAddress property
+ client.Send( Request request )
+ client.Opened/Closed/Sended/Received/AuthenticationFailed/OpenFailed/SendFailed
+ //---------------InterfaceEvents-------------------
+ client.PacketReceived
+ 
+ //---------------Abstract class-------------------
+// client.TryOpen()
+// client.TrySend( Request request )
+
+ client.Methods.Play()
+ client.Methods.Setup()
+ client.Methods.TearDown()
+ client.Methods.Options()
+ client.Methods.GetParameter()
+ client.Methods.SetParameter()
+ client.Methods.Announce()
+ client.Methods.Describe()
+       .AddHeader()
+       .AddHeaderTransport()
+       .AddHeaderAuthentication()
+       .AddHeaderAccept()
+       .AddHeaderContentType()
+       .AddHeaderSession()
+       .AddHeaderCookies()
+       .AddHeaderCookies()
+       .WriteBody()
+       .WriteBodyField()
+       .WriteBodyLine()
+       .WriteBodyLineField()
+       .Send()
+       .Response()
+       .
+ 
+
+
+
+
+
 Formatter.Format( .... )
 Formatter.FormatAsJson( .... )
 Formatter.FormatAsXml( .... )

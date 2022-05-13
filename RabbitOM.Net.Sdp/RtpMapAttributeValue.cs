@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Sdp
 		public string Encoding
 		{
 			get => _encoding;
-			set => _encoding = SessionDescriptorDataConverter.Trim(value);
+			set => _encoding = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>

@@ -59,7 +59,7 @@ namespace RabbitOM.Net.Sdp
 		public string Method
 		{
 			get => _method;
-			set => _method = SessionDescriptorDataConverter.Trim(value);
+			set => _method = SessionDescriptorDataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace RabbitOM.Net.Sdp
 		public string Key
 		{
 			get => _key;
-			set => _key = SessionDescriptorDataConverter.Trim(value);
+			set => _key = SessionDescriptorDataConverter.Filter(value);
 		}
 
 

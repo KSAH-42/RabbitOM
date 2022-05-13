@@ -252,13 +252,13 @@ public interface IRtspConnection : IDisposable
 	IRtspInvoker GetOptions(); // Gets the default invoker used to call the OPTIONS method
 	IRtspInvoker Describe();   // Gets the describe invoker blablabla
 	IRtspInvoker Setup();      // Gets the setup invoker blablabla
-	IRtspInvoker Setup(string trackUri);
+//	IRtspInvoker Setup(string trackUri); move as abstract method into the abstract class RtspClient{}
 	IRtspInvoker Play(); // Get the default play invoker
-	IRtspInvoker Play(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
+//	IRtspInvoker Play(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
 	IRtspInvoker Pause(); // blablabla
-	IRtspInvoker Pause(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
+//	IRtspInvoker Pause(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
 	IRtspInvoker TearDown();
-	IRtspInvoker TearDown(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
+//	IRtspInvoker TearDown(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
 	IRtspInvoker Record();
 	IRtspInvoker Announce();
 	IRtspInvoker GetParameter();
