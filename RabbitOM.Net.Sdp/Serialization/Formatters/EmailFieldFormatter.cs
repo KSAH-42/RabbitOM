@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 
 namespace RabbitOM.Net.Sdp.Serialization.Formatters
 {
@@ -21,16 +20,12 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 				return string.Empty;
 			}
 
-			var builder = new StringBuilder();
-
-			builder.AppendFormat( "{0}", field.Address);
-
-			if (!string.IsNullOrWhiteSpace(field.Name))
+			if ( string.IsNullOrWhiteSpace(field.Name) )
 			{
-				builder.AppendFormat( " ({0})", field.Name);
+				return field.Address;
 			}
 
-			return builder.ToString();
+			return string.Format( "{0} ({1})" , field.Address , field.Name );
 		}
 
 		/// <summary>
