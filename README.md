@@ -2,7 +2,7 @@
 
 # Introduction
 
-This is a set of classes to used to connect, manage and receive video/audio streams from security camera using standard protocols like: RTSP,RTP,SDP
+This is a set of classes to used to control and receive video/audio streams from security camera using standard protocols like: RTSP,RTP,SDP
 
 I have created a similar set classes in the past, but I was not satisfied. Here I want to produce a better implementation.
 For instance, I found a security issue, I don't think it is not a good things to expose credentials as getter property using "raw strings"/plain text. I will used SecureString instead of a string type for storing password.
