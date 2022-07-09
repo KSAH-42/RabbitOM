@@ -202,7 +202,7 @@ var bodyResult =
 
 You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
 
-Actual, I am "redesigning" the objects related to the rtsp communication layer, the final connection will be similar to the following code:
+Actually, I am "redesigning" the objects related to the rtsp communication layer, the final connection will be similar to the following code:
 
 ~~~~C#
 
