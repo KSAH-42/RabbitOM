@@ -1,16 +1,61 @@
-IRTSPClient
- RTSPClient
-    RTSPClientRFC2435
-    RTSPClientHttp
+
+RTSPReceiver
+   RTSPVideoReceiverRFC2435Interleaved { public ctor( ReceiveConfiguration readOnlyconfiguration )}
+   RTSPVideoReceiverRFC2435Unicast     { public ctor( ReceiveConfiguration readOnlyconfiguration )}
+   RTSPVideoReceiverRFC2435Multicast   { public ctor( ReceiveConfiguration readOnlyconfiguration )}
+   RTSPAudioReceiverRFC2435Interleaved { public ctor( ReceiveConfiguration readOnlyconfiguration )}
+   RTSPAudioReceiverRFC2435Unicast     { public ctor( ReceiveConfiguration readOnlyconfiguration )}
+   RTSPAudioReceiverRFC2435Multicast   { public ctor( ReceiveConfiguration readOnlyconfiguration )}
+   RTSPHttpVideoReceiver
+   RTSPHttpAudioReceiver
+
+receiver.UniqueId
+receiver.Type
+receiver.Configuration
+receiver.Configuration.Address
+receiver.Configuration.Timeout
+receiver.Configuration.PingInterval
+receiver.Configuration.RetryInterval
+receiver.Configuration.RtpPort
+receiver.Configuration.MulticastAddress
+receiver.Tag
+receiver.Status
+receiver.IsConnected
+receiver.IsReceivingData
+receiver.IsStarted
+receiver.Start()
+receiver.Stop()
+receiver.Started
+receiver.Stopped
+receiver.Stopping
+receiver.Connected
+receiver.Disconnected
+receiver.StreamingActive
+receiver.StreamingInActive
+receiver.StreamingFailed
+receiver.DataReceived
+
+
+IRTSPConnection
+ RTSPConnection
+    RTSPClientRFC2435 : IRtsp
+    RTSPHttpClient
 
 client
- client.Settings.KeepAliveMethod = Options/GetParameter/SetParameter
- client.DefaultHeaders.AddHeader() 
- client.DefaultHeaders.AddHeader(MethodType,header)
- client.DefaultHeaders.AddHeader(MethodType,header)
- client.DefaultHeaders.AddHeader(MethodType,header)
- client.BaseAddress = "";
- client.Credentials = new RtspCredentials("myUser","myPassword");
+ connection.Settings.KeepAliveMethod = Options/GetParameter/SetParameter
+ connection.DefaultHeaders.AddHeader() 
+ connection.DefaultHeaders.AddHeader(MethodType,header)
+ connection.DefaultHeaders.AddHeader(MethodType,header)
+ connection.DefaultHeaders.AddHeader(MethodType,header)
+ connection.BaseAddress = "";
+ connection.Credentials = new RtspCredentials("myUser","myPassword");
+
+ 
+ connection.GetOptions()
+ connection.Describe()
+ connection.Describe().Invoke()
+
+   
 
  //---------------Interface-------------------
 
@@ -49,7 +94,11 @@ client
        .WriteBodyLineField()
        .Send()
        .Response()
-       .
+       .GetHeader()
+       .GetHeaderFields()
+       .GetHeaderFields( FieldDeserializer deserializer )
+       .GetHeaderFields( new DefaultDeserializer() )
+       .GetHeaderFields( new XXXDeserializer(SeparatorType.Comma) )
  
 
 
@@ -109,7 +158,7 @@ FieldValue
 AttributeField
 
 
-ValueBase
+ValueBase { TypeName / Validate() / TryValidate() }
   ValueRaw
   ValueControl {Value}
   ValueRange { Parameters[]}

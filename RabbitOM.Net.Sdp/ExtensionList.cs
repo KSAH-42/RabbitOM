@@ -334,7 +334,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns the number of element added</returns>
 		public bool TryAddRange(IEnumerable<string> collection, out int result)
 		{
-			result = collection?.Where(TryAdd).Count() ?? 0;
+			result = collection?.Where(TryAdd).Count() ?? 0;	 
 
 			return result > 0;
 		}
