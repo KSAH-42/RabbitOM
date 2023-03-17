@@ -140,6 +140,11 @@ namespace RabbitOM.Net.Sdp
 
 
 
+		/// <summary>
+		/// Parse
+		/// </summary>
+		/// <param name="value">the input text</param>
+		/// <returns>returns an instance</returns>
 		/// <exception cref="ArgumentException"/>
 		/// <exception cref="ArgumentNullException"/>
 		/// <exception cref="FormatException"/>

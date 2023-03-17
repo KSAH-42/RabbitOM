@@ -177,9 +177,9 @@ namespace RabbitOM.Net.Sdp.Serialization
 
 
 		/// <summary>
-		/// Read the 
+		/// Move to the next field
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>returns true for a success, otherwise false.</returns>
 		public bool Read()
 		{
 			if (!_textFields.MoveNext())
