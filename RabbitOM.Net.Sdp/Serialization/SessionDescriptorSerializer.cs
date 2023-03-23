@@ -166,7 +166,12 @@
 					}
 				}
 
-				return builder.Build();
+				if (builder.CanBuild() )
+				{
+					return builder.Build();
+				}
+
+				return null;
 			}
 		}
 	}

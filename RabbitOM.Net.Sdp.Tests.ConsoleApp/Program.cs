@@ -12,7 +12,8 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 		static void Main(string[] args)
 		{
 			var descriptor = new SessionDescriptor();
-		
+
+			
 			descriptor.Origin.UserName = "John";
 			descriptor.Origin.Address = "192.168.1.23";
 			descriptor.Origin.AddressType = AddressType.IPV4;
@@ -56,7 +57,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 				descriptor.MediaDescriptions.Add(mediaDescription);
 			}
-
+			
 			Console.WriteLine(descriptor.ToString());
 
 			if ( SessionDescriptor.TryParse( descriptor.ToString() , out SessionDescriptor sdp ) )

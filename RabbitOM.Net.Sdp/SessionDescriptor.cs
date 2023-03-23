@@ -263,7 +263,7 @@ namespace RabbitOM.Net.Sdp
 			{
 				result = SessionDescriptorSerializer.Deserialize(value);
 
-				return result != null;
+				return result != null ;
 			}
 			catch ( Exception ex )
 			{

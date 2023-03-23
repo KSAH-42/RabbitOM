@@ -302,6 +302,20 @@
 		}
 
 		/// <summary>
+		/// Check if the descriptor can be build
+		/// </summary>
+		/// <returns>returns true for a success, otherwise false</returns>
+		public bool CanBuild()
+		{
+			return _sessionName == null
+				|| _sessionInformation == null
+				|| _version == null
+				? false
+				: true
+				;
+		}
+
+		/// <summary>
 		/// Build
 		/// </summary>
 		/// <returns>returns a new document object</returns>
