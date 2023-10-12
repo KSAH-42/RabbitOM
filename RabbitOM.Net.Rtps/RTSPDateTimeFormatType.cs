@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtps
 {
     /// <summary>
     /// Represent the datetime format types

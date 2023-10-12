@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Security.Cryptography;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtps
 {
     /// <summary>
     /// Represent a class used to generate a digest value using MD5 algorithm
@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input">the input</param>
+        /// <param name="input"></param>
         /// <returns>returns a string</returns>
         public static string ComputeMD5Hash( string input )
         {
@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input">the input</param>
+        /// <param name="input"></param>
         /// <returns>returns a string</returns>
         public static string ComputeSHA1Hash( string input )
         {
@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input">the input</param>
+        /// <param name="input"></param>
         /// <returns>returns a string</returns>
         public static string ComputeSHA256Hash( string input )
         {
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input">the input</param>
+        /// <param name="input"></param>
         /// <returns>returns a string</returns>
         public static string ComputeSHA512Hash( string input )
         {
@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Rtsp
         /// Create a hash
         /// </summary>
         /// <param name="algorithm">the algorithm</param>
-        /// <param name="input">the input</param>
+        /// <param name="input"></param>
         /// <returns>returns a string</returns>
         private static string ComputeHash( HashAlgorithm algorithm , string input )
         {

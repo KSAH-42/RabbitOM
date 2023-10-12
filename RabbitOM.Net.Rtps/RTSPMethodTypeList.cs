@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtps
 {
     /// <summary>
     /// Represent the message method list

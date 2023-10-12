@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtps
 {
     /// <summary>
     /// Represent a tolerant value converter
@@ -224,7 +223,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public static string ConvertToStringUTF8( byte[] value )
         {
-            if ( value == null || value.Length == 0 )
+            if ( value == null || value.Length <= 0 )
             {
                 return string.Empty;
             }
@@ -485,7 +484,15 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public static IEnumerable<TEnum> ConvertToEnum<TEnum>( IEnumerable<string> values ) where TEnum : struct
         {
-            return values?.Where( item => ! string.IsNullOrWhiteSpace( item ) ).Select( value => ConvertToEnum<TEnum>(value)) ?? Enumerable.Empty<TEnum>();
+            if ( values == null )
+            {
+                yield break;
+            }
+
+            foreach ( var value in values )
+            {
+                yield return ConvertToEnum<TEnum>( value );
+            }
         }
 
         /// <summary>
@@ -513,7 +520,12 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return isBase64 ? Convert.FromBase64String(value) : Encoding.UTF8.GetBytes(value);
+                if ( isBase64 )
+                {
+                    return Convert.FromBase64String( value );
+                }
+
+                return System.Text.Encoding.UTF8.GetBytes( value );
             }
             catch ( Exception ex )
             {
@@ -537,7 +549,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return Encoding.UTF8.GetBytes( value );
+                return System.Text.Encoding.UTF8.GetBytes( value );
             }
             catch ( Exception ex )
             {
@@ -580,12 +592,7 @@ namespace RabbitOM.Net.Rtsp
                         continue;
                     }
 
-                    if ( !byte.TryParse(byteValue, NumberStyles.HexNumber, CultureInfo.InvariantCulture , out byte byteResult ) )
-					{
-                        return null;
-					}
-
-                    data[index] = byteResult;
+                    data[index] = byte.Parse( byteValue , NumberStyles.HexNumber , CultureInfo.InvariantCulture );
                 }
 
                 return data;
@@ -605,7 +612,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public static string ConvertToBase64( byte[] value )
         {
-            if ( value == null || value.Length == 0 )
+            if ( value == null || value.Length <= 0 )
             {
                 return string.Empty;
             }
@@ -638,10 +645,12 @@ namespace RabbitOM.Net.Rtsp
             {
                 var buffer = Encoding.UTF8.GetBytes( value.Trim() );
 
-                if ( buffer.Length > 0 )
+                if ( buffer == null || buffer.Length <= 0 )
                 {
-                    return Convert.ToBase64String( buffer) ?? string.Empty;
+                    return string.Empty;
                 }
+
+                return Convert.ToBase64String( buffer ) ?? string.Empty;
             }
             catch ( Exception ex )
             {
@@ -667,10 +676,12 @@ namespace RabbitOM.Net.Rtsp
             {
                 var buffer = Convert.FromBase64String( value.Trim() );
 
-                if ( buffer.Length > 0 )
+                if ( buffer == null || buffer.Length <= 0 )
                 {
-                    return Encoding.UTF8.GetString(buffer) ?? string.Empty;
+                    return string.Empty;
                 }
+
+                return Encoding.UTF8.GetString( buffer ) ?? string.Empty;
             }
             catch ( Exception ex )
             {
