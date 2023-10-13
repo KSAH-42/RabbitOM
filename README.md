@@ -20,8 +20,6 @@ SDP is a protocol used to describe a streaming session configuration, and contai
 About the implementation
 
 The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. I have already encountred this situation on some others projects, and I think it is really to start early a code refactoring. So using a simple dictionary can introduce an anti pattern called "primitive obsession".
-To gets more details, I strongly recommend to visit this web site:
-https://enterprisecraftsmanship.com/posts/collections-primitive-obsession/
 
 To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
 
