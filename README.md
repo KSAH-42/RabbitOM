@@ -2,6 +2,8 @@
 
 If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
+Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtime compressed packets from an rtsp source.
+
 # Introduction
 
 ![ScreenShot](https://github.com/KSAH-42/RabbitOM/blob/master/Images/OMRabbit.Test.Client.png)
