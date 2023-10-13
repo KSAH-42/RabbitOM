@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Tests.ConsoleApp
+namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
-    using RabbitOM.Net.Rtps;
-    using RabbitOM.Net.Rtps.Clients;
+    using RabbitOM.Net.Rtsp;
+    using RabbitOM.Net.Rtsp.Clients;
 
     class Program
 	{
+        private static readonly System.Threading.EventWaitHandle s_quitEventHandle = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset);
+
         // TODO: Remove the client class
         // TODO: Write a client receiver class for tcp streaming
         // TODO: Write a client receiver class for udp streaming
@@ -16,19 +18,32 @@ namespace RabbitOM.Net.Rtps.Tests.ConsoleApp
 
         static void Main(string[] args)
 		{
+
+            // RabbitOM.Net.Rtsp.Remoting.RTSPConnection connection = null;
+
             var client = new RTSPClient();
 
-            // I recommend to used a powershell command to be sure that RTPS port on the security camera is opened.
-            // Otherwise
+            // Make sure that the ports not blocked
             // Use the vendor configuration tool to activate the rtsp protocol
-            // AND to create a user account. 
+            // AND to create a user account for the rtsp connection
+            // You can try try to find a online security camera F R O M  a manufacturer, but it is very hard
+            // I strongly recommend to buy a camera don't waste your time to find a security camera online from any manufacturer, you will get nothing.
 
-            client.Configuration.Uri = Constants.Camera_HIK;
+            //client.Configuration.Uri = Constants.Camera_HIK;
+            client.Configuration.Uri = Constants.Movie; 
             client.Configuration.UserName = Constants.User_Admin;
             client.Configuration.Password = Constants.Password_Camera;
-            client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(15);
-            client.Configuration.SendTimeout = TimeSpan.FromSeconds(15);
-            client.Configuration.KeepAliveType = RTSPKeepAliveType.Options;
+            client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
+            client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
+            client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
+			
+            client.Options.MediaFormat = RTSPMediaFormatType.Video;
+            client.Options.DeliveryMode = RTSPDeliveryMode.Tcp;
+            client.Options.UnicastPort = RTSPClientConfigurationOptions.DefaultPort;
+            client.Options.MulticastAddress = "239.0.0.2";
+            client.Options.MulticastPort = RTSPClientConfigurationOptions.DefaultPort + 1;
+            client.Options.MulticastTTL = RTSPClientConfigurationOptions.DefaultTTL;
+            client.Options.RetriesInterval = TimeSpan.FromSeconds(5);
 
             client.CommunicationStarted += (sender, e) =>
             {
@@ -57,7 +72,7 @@ namespace RabbitOM.Net.Rtps.Tests.ConsoleApp
             client.Error += (sender, e) => 
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Client Error: " + e.Code);
+                Console.WriteLine("Client Error: " + e.Code + " " + e.Message);
             };
 
             client.PacketReceived += (sender, e) => 
@@ -65,26 +80,17 @@ namespace RabbitOM.Net.Rtps.Tests.ConsoleApp
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
                 Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length);
             };
-
+            
+            // Start connection and handle auto reconnection in case of network error
+            // You can unplug the network cable to test the auto reconnection
             client.StartCommunication();
 			
-            Console.WriteLine();
+            Console.WriteLine("Press any keys to close the application");
 
-            using ( var eventHandle = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset ) )
-            {
-                Console.CancelKeyPress += (sender, e) =>
-                {
-                    Console.WriteLine("Closing the application");
+            Console.ReadKey();
 
-                    e.Cancel = true;
-                    eventHandle.Set();
-                };
-
-                eventHandle.WaitOne();
-                Console.WriteLine("Stopping");
-            }
-            
-            client.StopCommunication( TimeSpan.FromSeconds(2));
+            client.StopCommunication( TimeSpan.FromSeconds(3));
         }
 	}
 }
+                   

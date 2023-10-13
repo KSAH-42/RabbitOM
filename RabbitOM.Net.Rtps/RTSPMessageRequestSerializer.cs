@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a request serializer

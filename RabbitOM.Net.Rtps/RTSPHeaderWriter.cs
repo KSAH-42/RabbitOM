@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a message header writer

@@ -7,8 +7,8 @@
     <ProjectGuid>{CAEA566D-6AA9-460E-9BFA-8CE0E2FE7646}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RabbitOM.Net.Rtps</RootNamespace>
-    <AssemblyName>RabbitOM.Net.Rtps</AssemblyName>
+    <RootNamespace>RabbitOM.Net.Rtsp</RootNamespace>
+    <AssemblyName>RabbitOM.Net.Rtsp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -63,20 +63,19 @@
     <Compile Include="Clients\RTSPClientSessionTransportMulticast.cs" />
     <Compile Include="Clients\RTSPClientSessionTransportUdp.cs" />
     <Compile Include="Clients\RTSPClientSessionTransportUdpAsync.cs" />
-    <Compile Include="Codecs\AACCodec.cs" />
-    <Compile Include="Codecs\AudioCodec.cs" />
-    <Compile Include="Codecs\Codec.cs" />
-    <Compile Include="Codecs\CodecConstants.cs" />
+    <Compile Include="Codecs\AACCodecInfo.cs" />
+    <Compile Include="Codecs\AudioCodecInfo.cs" />
+    <Compile Include="Codecs\CodecInfo.cs" />
     <Compile Include="Codecs\CodecType.cs" />
     <Compile Include="Codecs\G711ACodecInfo.cs" />
     <Compile Include="Codecs\G711CCodecInfo.cs" />
-    <Compile Include="Codecs\G711Codec.cs" />
-    <Compile Include="Codecs\H264Codec.cs" />
-    <Compile Include="Codecs\H265Codec.cs" />
-    <Compile Include="Codecs\MJPEGCodec.cs" />
-    <Compile Include="Codecs\NullCodec.cs" />
-    <Compile Include="Codecs\PCMCodec.cs" />
-    <Compile Include="Codecs\VideoCodec.cs" />
+    <Compile Include="Codecs\G711CodecInfo.cs" />
+    <Compile Include="Codecs\H264CodecInfo.cs" />
+    <Compile Include="Codecs\H265CodecInfo.cs" />
+    <Compile Include="Codecs\MJPEGCodecInfo.cs" />
+    <Compile Include="Codecs\NullCodecInfo.cs" />
+    <Compile Include="Codecs\PCMCodecInfo.cs" />
+    <Compile Include="Codecs\VideoCodecInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Remoting\Events\RTSPConnectionAuthenticationFailedEventArgs.cs" />
     <Compile Include="Remoting\Events\RTSPConnectionClosedEventArgs.cs" />

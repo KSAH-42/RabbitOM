@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a RTSP file

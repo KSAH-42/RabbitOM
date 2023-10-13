@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace RabbitOM.Net.Rtps.Remoting.Extensions
+namespace RabbitOM.Net.Rtsp.Remoting.Extensions
 {
     /// <summary>
     /// Represent a invoker extension class

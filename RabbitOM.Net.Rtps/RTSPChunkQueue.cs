@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a chunk circular queue
@@ -162,7 +162,7 @@ namespace RabbitOM.Net.Rtps
 			{
                 return false;
 			}
-
+        
             lock ( _lock )
             {
                 while ( _queue.Count >= _maximumOfChunks )

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a socket tcp

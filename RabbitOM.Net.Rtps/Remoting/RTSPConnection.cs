@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
     /// Represent a proxy used to interact with a remote RTSP server
@@ -154,13 +154,59 @@ namespace RabbitOM.Net.Rtps.Remoting
 
 
         /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="Exception"/>
+        public void Open(string uri)
+        {
+            Open( uri , RTSPCredentials.Empty );
+        }
+
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <param name="credentials">the credentials</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="Exception"/>
+        public void Open(string uri, RTSPCredentials credentials)
+        {
+            // TODO: Code refactoring here
+
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
+            if (credentials == null)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
+
+            if ( string.IsNullOrWhiteSpace(uri) )
+            {
+                throw new ArgumentException(nameof(uri));
+            }
+
+            if ( TryOpen(uri ,credentials ) )
+            {
+                throw new Exception( "Open failure" );
+            }
+        }
+
+
+        /// <summary>
         /// Try to open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool Open( string uri )
+        public virtual bool TryOpen( string uri )
         {
-            return _proxy.Open( uri );
+            return _proxy.TryOpen( uri );
         }
 
         /// <summary>
@@ -169,9 +215,9 @@ namespace RabbitOM.Net.Rtps.Remoting
         /// <param name="uri">the uri</param>
         /// <param name="credentials">the credentials</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool Open( string uri , RTSPCredentials credentials )
+        public virtual bool TryOpen( string uri , RTSPCredentials credentials )
         {
-            return _proxy.Open( uri , credentials );
+            return _proxy.TryOpen( uri , credentials );
         }
 
         /// <summary>

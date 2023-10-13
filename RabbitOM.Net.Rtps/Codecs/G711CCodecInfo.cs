@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent an audio codec
     /// </summary>
-    public sealed class G711CCodecInfo : G711Codec
+    public sealed class G711CCodecInfo : G711CodecInfo
     {
         /// <summary>
         /// Constructor

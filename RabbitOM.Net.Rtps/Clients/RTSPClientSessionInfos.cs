@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Net.Rtps.Clients
+namespace RabbitOM.Net.Rtsp.Clients
 {
     /// <summary>
     /// Represent the client session data informations

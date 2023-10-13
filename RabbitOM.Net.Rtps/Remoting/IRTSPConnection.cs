@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
     /// Represent a proxy used to interact with a remote RTSP server
@@ -94,8 +94,21 @@ namespace RabbitOM.Net.Rtps.Remoting
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
+        void Open(string uri);
+
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <param name="credentials">the credentials</param>
+        void Open(string uri, RTSPCredentials credentials);
+
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool Open( string uri );
+        bool TryOpen( string uri );
 
         /// <summary>
         /// Open the connection
@@ -103,7 +116,7 @@ namespace RabbitOM.Net.Rtps.Remoting
         /// <param name="uri">the uri</param>
         /// <param name="credentials">the credentials</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool Open( string uri , RTSPCredentials credentials );
+        bool TryOpen( string uri , RTSPCredentials credentials );
 
         /// <summary>
         /// Close the connection

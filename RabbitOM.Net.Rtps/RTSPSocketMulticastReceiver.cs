@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent an udp socket

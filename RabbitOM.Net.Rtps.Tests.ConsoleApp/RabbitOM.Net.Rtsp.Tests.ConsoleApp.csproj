@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{13BB93C2-5568-40A0-8957-EEFDFFA99023}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>RabbitOM.Net.Rtps.Tests.ConsoleApp</RootNamespace>
-    <AssemblyName>RabbitOM.Net.Rtps.Tests.ConsoleApp</AssemblyName>
+    <RootNamespace>RabbitOM.Net.Rtsp.Tests.ConsoleApp</RootNamespace>
+    <AssemblyName>RabbitOM.Net.Rtsp.Tests.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -51,9 +51,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RabbitOM.Net.Rtps\RabbitOM.Net.Rtps.csproj">
+    <ProjectReference Include="..\RabbitOM.Net.Rtps\RabbitOM.Net.Rtsp.csproj">
       <Project>{caea566d-6aa9-460e-9bfa-8ce0e2fe7646}</Project>
-      <Name>RabbitOM.Net.Rtps</Name>
+      <Name>RabbitOM.Net.Rtsp</Name>
     </ProjectReference>
     <ProjectReference Include="..\RabbitOM.Net.Sdp\RabbitOM.Net.Sdp.csproj">
       <Project>{873ffd10-76dc-4920-8750-6acdc29ce594}</Project>

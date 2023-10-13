@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting
 {
-    using RabbitOM.Net.Rtps.Remoting.Invokers;
+    using RabbitOM.Net.Rtsp.Remoting.Invokers;
 
     /// <summary>
     /// Represent the invoker manager. This class is used to handle the creation of invoker depending to proxy configuration. It's really looks an instance factory class but it must for the future implement optimization code

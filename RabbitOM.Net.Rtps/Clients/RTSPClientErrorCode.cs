@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Clients
+namespace RabbitOM.Net.Rtsp.Clients
 {
     /// <summary>
     /// Represent the client error codes

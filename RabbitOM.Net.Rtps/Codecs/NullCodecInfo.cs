@@ -1,16 +1,16 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a null codec info class
     /// </summary>
-    public sealed class NullCodec : Codec
+    public sealed class NullCodecInfo : CodecInfo
     {
         /// <summary>
         /// Represent a null value
         /// </summary>
-        public readonly static NullCodec Value = new NullCodec();
+        public readonly static NullCodecInfo Value = new NullCodecInfo();
         
 
 

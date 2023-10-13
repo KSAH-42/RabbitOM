@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace RabbitOM.Net.Rtps.Clients
+namespace RabbitOM.Net.Rtsp.Clients
 {
     /// <summary>
     /// Represent a client exception

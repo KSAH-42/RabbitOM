@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Remoting.Invokers
+namespace RabbitOM.Net.Rtsp.Remoting.Invokers
 {
     /// <summary>
     /// Represent the proxy invoker

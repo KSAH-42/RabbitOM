@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent an audio codec
     /// </summary>
-    public sealed class AACCodec : AudioCodec
+    public sealed class AACCodecInfo : AudioCodecInfo
     {
         private readonly byte[] _data           = null;
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// <param name="size">the size</param>
         /// <param name="index">the index</param>
         /// <param name="delta">the delta</param>
-        public AACCodec( byte[] data , int size , int index , int delta )
+        public AACCodecInfo( byte[] data , int size , int index , int delta )
         {
             _data  = data ?? new byte[ 0 ];
             _size  = size;

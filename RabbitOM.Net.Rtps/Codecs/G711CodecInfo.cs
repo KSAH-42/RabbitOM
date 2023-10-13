@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent an audio codec
     /// </summary>
-    public abstract class G711Codec : AudioCodec
+    public abstract class G711CodecInfo : AudioCodecInfo
     {
         private readonly int    _samplingRate   = 0;
 
@@ -17,7 +17,7 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// <summary>
         /// Constructor
         /// </summary>
-        public G711Codec()
+        public G711CodecInfo()
             : this ( 8000 , 1 )
         {
         }
@@ -27,7 +27,7 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// </summary>
         /// <param name="samplingRate">the sampling rate</param>
         /// <param name="channels">the channels</param>
-        protected G711Codec( int samplingRate , int channels )
+        protected G711CodecInfo( int samplingRate , int channels )
         {
             _samplingRate = samplingRate;
             _channels     = channels;

@@ -166,12 +166,7 @@
 					}
 				}
 
-				if (builder.CanBuild() )
-				{
-					return builder.Build();
-				}
-
-				return null;
+				return builder.Build();
 			}
 		}
 	}

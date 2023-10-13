@@ -43,22 +43,15 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		{
 			result = null;
 
-			if (string.IsNullOrWhiteSpace(value))
-			{
-				return false;
-			}
-
-			var tokens = value.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-
-			if (tokens.Length == 0)
+			if (!SessionDescriptorDataConverter.TryExtractField(value, ':', out StringPair field))
 			{
 				return false;
 			}
 
 			result = new AttributeField()
 			{
-				Name  = tokens.ElementAtOrDefault(0),
-				Value = tokens.ElementAtOrDefault(1),
+				Name = field.First,
+				Value = field.Second
 			};
 
 			return true;

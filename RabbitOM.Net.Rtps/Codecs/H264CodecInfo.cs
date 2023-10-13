@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a video codec
     /// </summary>
-    public sealed class H264Codec : VideoCodec
+    public sealed class H264CodecInfo : VideoCodecInfo
     {
         private readonly byte[] _sps_pps = null;
 
@@ -19,7 +18,7 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// Constructor
         /// </summary>
         /// <param name="sps_pps">the sequence parameter set</param>
-        public H264Codec( byte[] sps_pps )
+        public H264CodecInfo( byte[] sps_pps )
         {
             _sps_pps = sps_pps ?? new byte[ 0 ];
         }
@@ -64,9 +63,9 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// Create a codec descriptor
         /// </summary>
         /// <returns>returns an instance, otherwise null</returns>
-        public static H264Codec Create()
+        public static H264CodecInfo Create()
         {
-            return Create( CodecConstants.Default_H264_SPS , CodecConstants.Default_H264_PPS );
+            return Create( CodecInfo.Default_H264_SPS , CodecInfo.Default_H264_PPS );
         }
 
         /// <summary>
@@ -75,7 +74,7 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// <param name="sps">the sps value</param>
         /// <param name="pps">the pps value</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public static H264Codec Create( string sps , string pps )
+        public static H264CodecInfo Create( string sps , string pps )
         {
             if ( string.IsNullOrWhiteSpace( sps ) || string.IsNullOrWhiteSpace( pps ) )
             {
@@ -91,7 +90,7 @@ namespace RabbitOM.Net.Rtps.Codecs
                     return null;
                 }
 
-                var spsBytes = CodecConstants.H264StartMarker.Concat( spsBuffer );
+                var spsBytes = CodecInfo.H264StartMarker.Concat( spsBuffer );
 
                 if ( spsBytes == null )
                 {
@@ -105,14 +104,14 @@ namespace RabbitOM.Net.Rtps.Codecs
                     return null;
                 }
 
-                var ppsBytes = CodecConstants.H264StartMarker.Concat( ppsBuffer );
+                var ppsBytes = CodecInfo.H264StartMarker.Concat( ppsBuffer );
 
                 if ( ppsBytes == null )
                 {
                     return null;
                 }
 
-                return new H264Codec( spsBytes.Concat( ppsBytes ).ToArray() );
+                return new H264CodecInfo( spsBytes.Concat( ppsBytes ).ToArray() );
             }
             catch ( Exception ex )
             {

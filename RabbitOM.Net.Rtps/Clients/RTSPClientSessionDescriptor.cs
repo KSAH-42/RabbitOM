@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Net.Rtps.Clients
+namespace RabbitOM.Net.Rtsp.Clients
 {
     using RabbitOM.Net.Sdp;
     using RabbitOM.Net.Sdp.Extensions;
@@ -129,12 +129,12 @@ namespace RabbitOM.Net.Rtps.Clients
 
                 if ( string.IsNullOrWhiteSpace( mediaTrack.Format.SPS ) )
                 { 
-                    mediaTrack.Format.SPS = Codecs.CodecConstants.Default_H264_SPS;
+                    mediaTrack.Format.SPS = CodecInfo.Default_H264_SPS;
                 }
                 
                 if ( string.IsNullOrWhiteSpace( mediaTrack.Format.PPS ) )
                 { 
-                    mediaTrack.Format.PPS = Codecs.CodecConstants.Default_H264_PPS;
+                    mediaTrack.Format.PPS = CodecInfo.Default_H264_PPS;
                 }
 
                 if ( mediaFormat == RTSPMediaFormatType.Audio )

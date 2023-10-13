@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Net.Rtps.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
     /// Represent the request handler list

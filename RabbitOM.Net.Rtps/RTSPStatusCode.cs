@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent the RTSP status code <see href="https://www.iana.org/assignments/rtsp-parameters/rtsp-parameters.xhtml"/>

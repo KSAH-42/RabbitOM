@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a video codec
     /// </summary>
-    public sealed class PCMCodec : AudioCodec
+    public sealed class PCMCodecInfo : AudioCodecInfo
     {
         private readonly int _samplingRate = 0;
 
@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtps.Codecs
         /// <param name="samplingRate">the sampling rate</param>
         /// <param name="resolution">the resolution</param>
         /// <param name="channels">the channels</param>
-        public PCMCodec( int samplingRate , int resolution , int channels )
+        public PCMCodecInfo( int samplingRate , int resolution , int channels )
         {
             _samplingRate = samplingRate;
             _resolution   = resolution;

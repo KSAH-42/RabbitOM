@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Codecs
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a video codec
     /// </summary>
-    public sealed class MJPEGCodec : VideoCodec
+    public sealed class MJPEGCodecInfo : VideoCodecInfo
     {
         /// <summary>
         /// Gets the codec type

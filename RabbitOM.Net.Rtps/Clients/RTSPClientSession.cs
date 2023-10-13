@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Clients
+namespace RabbitOM.Net.Rtsp.Clients
 {
-    using RabbitOM.Net.Rtps.Remoting;
-    using RabbitOM.Net.Rtps.Remoting.Invokers;
+    using RabbitOM.Net.Rtsp.Remoting;
+    using RabbitOM.Net.Rtsp.Remoting.Invokers;
 
     /// <summary>
     /// Represent a rtsp session
@@ -197,7 +197,7 @@ namespace RabbitOM.Net.Rtps.Clients
 
                 _informations.Reset();
 
-                if ( ! _connection.Open( _configuration.Uri , new RTSPCredentials( _configuration.UserName , _configuration.Password ) ) )
+                if ( ! _connection.TryOpen( _configuration.Uri , new RTSPCredentials( _configuration.UserName , _configuration.Password ) ) )
                 {
                     throw new RTSPClientException( RTSPClientErrorCode.ConnectionFailed , "Connection failed" );
                 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent an uri class
@@ -354,6 +354,5 @@ namespace RabbitOM.Net.Rtps
 
             return false;
         }
-
     }
 }

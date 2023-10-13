@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
     /// Represent the invoker result

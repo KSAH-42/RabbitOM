@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace RabbitOM.Net.Rtps
+namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
     /// Represent a safe event handle class

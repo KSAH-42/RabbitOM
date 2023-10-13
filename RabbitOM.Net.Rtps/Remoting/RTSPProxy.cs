@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtps.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
     /// Represent the internal proxy class
@@ -206,9 +206,9 @@ namespace RabbitOM.Net.Rtps.Remoting
         /// </summary>
         /// <param name="uri">the uri</param>
         /// <returns>returns true for a success otherwise false</returns>
-        public bool Open( string uri )
+        public bool TryOpen( string uri )
         {
-            return Open( uri , RTSPCredentials.Empty );
+            return TryOpen( uri , RTSPCredentials.Empty );
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace RabbitOM.Net.Rtps.Remoting
         /// <param name="uri">the uri</param>
         /// <param name="credentials">the credentials</param>
         /// <returns>returns true for a success otherwise false</returns>
-        public bool Open( string uri , RTSPCredentials credentials )
+        public bool TryOpen( string uri , RTSPCredentials credentials )
         {
             if ( string.IsNullOrWhiteSpace( uri ) || credentials == null )
             {

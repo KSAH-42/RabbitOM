@@ -32,14 +32,12 @@ namespace RabbitOM.Net.Sdp.Serialization
 						yield break;
 					}
 
-					var tokens = line.Split(new char[] { '=' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-					if (tokens.Length == 0)
+					if (!SessionDescriptorDataConverter.TryExtractField(line, '=', out StringPair pair))
 					{
 						continue;
 					}
 
-					yield return new StringPair(tokens.ElementAtOrDefault(0), tokens.ElementAtOrDefault(1));
+					yield return pair;
 				}
 			}
 		}

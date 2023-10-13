@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace RabbitOM.Net.Rtps.Remoting.Extensions
+namespace RabbitOM.Net.Rtsp.Remoting.Extensions
 {
     /// <summary>
     /// Represent a connection extension class
@@ -16,7 +16,7 @@ namespace RabbitOM.Net.Rtps.Remoting.Extensions
         /// <returns>returns true for a success, otherwise false</returns>
         public static async Task<bool> OpenAsync( this IRTSPConnection connection , string uri )
         {
-            return await Task.Run( () => connection.Open( uri ) );
+            return await Task.Run( () => connection.TryOpen( uri ) );
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace RabbitOM.Net.Rtps.Remoting.Extensions
         /// <returns>returns true for a success, otherwise false</returns>
         public static async Task<bool> OpenAsync( this IRTSPConnection connection , string uri , RTSPCredentials credentials )
         {
-            return await Task.Run( () => connection.Open( uri , credentials ) );
+            return await Task.Run( () => connection.TryOpen( uri , credentials ) );
         }
 
         /// <summary>
