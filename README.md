@@ -1,11 +1,10 @@
 # RabbitOM
 
+If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
 # Introduction
 
 ![ScreenShot](https://github.com/KSAH-42/RabbitOM/blob/master/Images/OMRabbit.Test.Client.png)
-
-if you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
