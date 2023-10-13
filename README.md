@@ -10,10 +10,6 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
-I have created a similar set classes in the past, but I was not satisfied. Here I want to produce a better implementation.
-For instance, I found a security issue, I don't think it is not a good things to expose credentials as getter property using "raw strings"/plain text. I will used SecureString instead of a string type for storing password.
-And after review on some existing classes that I have already created, I will publish another implementation of the RTSP Layer and Onvif Layer.
-
 # About Real Time Streaming Protocol
 
 Where RTSP are used ?
