@@ -2,7 +2,7 @@
 
 If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
-Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtime compressed packets from an rtsp source.
+Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtime compressed packets from an rtsp source. This project will illustrated how to received packet from an rtsp source over tcp. The client support also unicast streaming and multicast, you need to configure the options of client api. The client also support auto connection in case of network failure, you can control this mecanism. If you are using Sony camera, you need to take care about the keepalive settings according to the documentation, for instance VLC will loose the connection after 1 minutes.
 
 # Introduction
 
