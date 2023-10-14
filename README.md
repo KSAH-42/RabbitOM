@@ -1,12 +1,50 @@
 # RabbitOM
 
+If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
+
+Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtime compressed packets from an rtsp source.
+
 # Introduction
 
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
-I have created a similar set classes in the past, but I was not satisfied. Here I want to produce a better implementation.
-For instance, I found a security issue, I don't think it is not a good things to expose credentials as getter property using "raw strings"/plain text. I will used SecureString instead of a string type for storing password.
-And after review on some existing classes that I have already created, I will publish another implementation of the RTSP Layer and Onvif Layer.
+# About Real Time Streaming Protocol
+
+Where RTSP are used ?
+
+RTSP are used by security cameras and also used by Miracast technology. A SmartTV start a RTSP client and connect to RTSP server that run on your local machine in order to receive the video of your desktop.
+
+What is RTSP ?
+
+RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have some methods like GET/POST/TRACE/DELETE/PUT and so on, and somes headers separated by carriage returns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
+
+| Methods                      | Description                                                                       |
+| ---------------------------- | --------------------------------------------------------------------------------- |
+| OPTIONS                      | List the supported methods (OPTIONS/DESCRIBE/PLAY/SETUP,etc...)                   |
+| DESCRIBE                     | Retrive the SDP                                                                   |
+| SETUP                        | Ask for creating a transport layer used to stream something and create a session or bundle to an existing session |
+| PLAY                         | Start the streaming                                                               |
+| PAUSE                        | Pause the streaming                                                               |
+| STOP                         | Stop the streaming                                                                |
+| GET_PARAMETER                | List customs parameters                                                           |
+| SET_PARAMETER                | Change customs parameters                                                         |
+| TEARDOWN                     | Stop the streaming and destroy the session.  |
+| ANNOUNCE                     | Posts the description of a media                                                  |
+| RECORD                       | Ask for recording                                                                 |
+| REDIRECT                     | This method is used to redirects the traffic                                      |
+
+Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predefined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
+AFAIK, some standards/RFC ask to use GET_PARAMETER for a keepalive/ping and not using the options. I see manufacturer that use the OPTIONS method, because OPTIONS must be implemented unlike the GET_PARAMETER and SET_PARAMETER are optional.  
+So I recommand to ask to camera manufacturer to be sure about the keepalive method.
+
+By essence, RTSP is very similar to http message except important things:
+
+* RTSP has some proprietary and mandatory header like CSeq header
+* RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retry. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
+* Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means when you open a tcp socket client and you send a request it may possible that the server can send a request to the client on the same socket during you request operation.
+* Using HTTP, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
+
+All these things are handle by the lib, and it's also support the lastest digest authentication used by the lastest professional security cameras.
 
 # About Session Description Protocol
 
@@ -17,8 +55,6 @@ SDP is a protocol used to describe a streaming session configuration, and contai
 About the implementation
 
 The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. I have already encountred this situation on some others projects, and I think it is really to start early a code refactoring. So using a simple dictionary can introduce an anti pattern called "primitive obsession".
-To gets more details, I strongly recommend to visit this web site:
-https://enterprisecraftsmanship.com/posts/collections-primitive-obsession/
 
 To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
 
@@ -83,45 +119,6 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 ~~~~
 
 
-# About Real Time Streaming Protocol
-
-Where RTSP are used ?
-
-RTSP are used by security cameras and also used by Miracast technology. A SmartTV start a RTSP client and connect to RTSP server that run on your local machine in order to receive the video of your desktop.
-
-What is RTSP ?
-
-RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have some methods like GET/POST/TRACE/DELETE/PUT and so on, and somes headers separated by carriage returns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
-
-| Methods                      | Description                                                                       |
-| ---------------------------- | --------------------------------------------------------------------------------- |
-| OPTIONS                      | List the supported methods (OPTIONS/DESCRIBE/PLAY/SETUP,etc...)                   |
-| DESCRIBE                     | Retrive the SDP                                                                   |
-| SETUP                        | Ask for creating a transport layer used to stream something and create a session or bundle to an existing session |
-| PLAY                         | Start the streaming                                                               |
-| PAUSE                        | Pause the streaming                                                               |
-| STOP                         | Stop the streaming                                                                |
-| GET_PARAMETER                | List customs parameters                                                           |
-| SET_PARAMETER                | Change customs parameters                                                         |
-| TEARDOWN                     | Stop the streaming and destroy the session.  |
-| ANNOUNCE                     | Posts the description of a media                                                  |
-| RECORD                       | Ask for recording                                                                 |
-| REDIRECT                     | This method is used to redirects the traffic                                      |
-
-Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predefined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
-AFAIK, some standards/RFC ask to use GET_PARAMETER for a keepalive/ping and not using the options. I see manufacturer that use the OPTIONS method, because OPTIONS must be implemented unlike the GET_PARAMETER and SET_PARAMETER are optional.  
-So I recommand to ask to camera manufacturer to be sure about the keepalive method.
-
-By essence, RTSP is very similar to http message except important things:
-
-* RTSP has some proprietary and mandatory header like CSeq header
-* RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retry. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
-* Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means when you open a tcp socket client and you send a request it may possible that the server can send a request to the client on the same socket during you request operation.
-* Using HTTP, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
-
-All these things are handle by the lib, and it's also support the lastest digest authentication used by the lastest professional security cameras.
-
-
 # About the implementation of RTSP classes
 
 I have already build this class, but I will commit in another moment after a code refactoring.
@@ -146,11 +143,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 
     // Connect to RTSP server (happytime-rtsp-server.exe)
     
-    if ( ! connection.Open("rtsp://192.168.1.11/city1.mp4", new Rtsp.RTSPCredentials("admin", "camera123")) )
-    {
-        Console.WriteLine("Connection failed");
-        return;
-    }
+    connection.Open("rtsp://192.168.1.11/city1.mp4");
      
     // Request the available methods from a server
 
