@@ -219,7 +219,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             while ( _chunks.Any() )
             {
-                if ( _chunks.Dequeue( out byte[] chunk ) )
+                if ( _chunks.TryDequeue( out byte[] chunk ) )
                 {
                     DecodeChunk( chunk );
                 }

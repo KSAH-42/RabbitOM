@@ -283,9 +283,9 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                using (_scope )
+                using ( _scope )
                 {
-                    return _collection.Count > 0 ? _collection.Dequeue() : EventArgs.Empty;
+                    return _collection.Dequeue();
                 }
             }
         }
@@ -295,7 +295,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="eventArgs">the event args</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Dequeue( out EventArgs eventArgs )
+        public bool TryDequeue( out EventArgs eventArgs )
         {
             lock ( _lock )
             {

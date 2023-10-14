@@ -282,7 +282,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 using ( _scope )
                 {
-                    return _collection.Count > 0 ? _collection.Dequeue() : null;
+                    return _collection.Dequeue();
                 }
             }
         }
@@ -292,7 +292,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="chunk">the chunk</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Dequeue( out byte[] chunk )
+        public bool TryDequeue( out byte[] chunk )
         {
             lock ( _lock )
             {

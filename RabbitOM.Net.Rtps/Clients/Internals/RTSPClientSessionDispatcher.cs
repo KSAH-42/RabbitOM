@@ -160,7 +160,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             while ( _eventQueue.Any() )
             {
-                if ( _eventQueue.Dequeue( out EventArgs eventArgs ) )
+                if ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
                 {
                     DoDispatch( eventArgs );
                 }

@@ -655,7 +655,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             while ( _eventQueue.Any() )
             {
-                if ( _eventQueue.Dequeue( out EventArgs eventArgs ) )
+                if ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
                 {
                     OnDispatchEvent( eventArgs );
                 }
@@ -676,7 +676,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         private void HandleMediaEvents()
         {
-            while (_mediaEventQueue.Dequeue(out EventArgs eventArgs))
+            while (_mediaEventQueue.TryDequeue(out EventArgs eventArgs))
             {
                 OnDispatchEvent(eventArgs);
             }
