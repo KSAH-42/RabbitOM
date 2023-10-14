@@ -8,11 +8,13 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     class Program
     {
         // TODO: Remove the client class
+        // TODO: Goal, write individual client class with it respective configuration
         // TODO: Write a client receiver class for tcp streaming
         // TODO: Write a client receiver class for udp streaming
         // TODO: Write a client receiver class for multicast streaming
         // TODO: Refactor the configuration class make it fully immutable/readonly and remove the lock
         // TODO: then inject the configuration class on each receiver constructor
+        // TODO: Secure password using securestring 
         // TODO: Reduce memory allocations
 
         // If you want to get more features, used the connection class instead to control the protocol messaging layer
