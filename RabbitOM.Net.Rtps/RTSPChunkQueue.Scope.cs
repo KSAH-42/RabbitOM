@@ -18,6 +18,7 @@ namespace RabbitOM.Net.Rtsp
             /// Initiaize new instance of scope
             /// </summary>
             /// <param name="queue">the queue</param>
+            /// <exception cref="ArgumentNullException"/>
 			public Scope(RTSPChunkQueue queue)
             {
                 _queue = queue ?? throw new ArgumentNullException(nameof(queue));
