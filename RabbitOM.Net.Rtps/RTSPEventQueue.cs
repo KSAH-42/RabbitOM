@@ -27,7 +27,7 @@ namespace RabbitOM.Net.Rtsp
 
         private readonly RTSPEventWaitHandle _handle            = new RTSPEventWaitHandle();
 
-        private readonly Queue<EventArgs>    _queue             = new Queue<EventArgs>();
+        private readonly Queue<EventArgs>    _collection        = new Queue<EventArgs>();
 
         private readonly int                 _maximumOfEvents   = DefaultMaximumOfEvents;
 
@@ -56,7 +56,7 @@ namespace RabbitOM.Net.Rtsp
 
             _lock   = new object();
             _handle = new RTSPEventWaitHandle();
-            _queue  = new Queue<EventArgs>();
+            _collection  = new Queue<EventArgs>();
             _scope  = new Scope(this);
         }
 
@@ -79,7 +79,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 lock ( _lock )
                 {
-                    return _queue.Count;
+                    return _collection.Count;
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 lock ( _lock )
                 {
-                    return _queue.Count <= 0;
+                    return _collection.Count <= 0;
                 }
             }
         }
@@ -219,7 +219,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _queue.ToList().GetEnumerator();
+                return _collection.ToList().GetEnumerator();
             }
         }
 
@@ -231,7 +231,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _queue.ToList().GetEnumerator();
+                return _collection.ToList().GetEnumerator();
             }
         }
 
@@ -243,7 +243,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _queue.Count > 0;
+                return _collection.Count > 0;
             }
         }
 
@@ -263,12 +263,12 @@ namespace RabbitOM.Net.Rtsp
             {
                 using ( _scope )
                 {
-                    while ( _queue.Count >= _maximumOfEvents )
+                    while ( _collection.Count >= _maximumOfEvents )
                     {
-                        _queue.Dequeue();
+                        _collection.Dequeue();
                     }
 
-                    _queue.Enqueue( eventArgs );
+                    _collection.Enqueue( eventArgs );
 
                     return true;
                 }
@@ -285,7 +285,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 using (_scope )
                 {
-                    return _queue.Count > 0 ? _queue.Dequeue() : EventArgs.Empty;
+                    return _collection.Count > 0 ? _collection.Dequeue() : EventArgs.Empty;
                 }
             }
         }
@@ -301,7 +301,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 using ( _scope )
                 {
-                    eventArgs = _queue.Count > 0 ? _queue.Dequeue() : null;
+                    eventArgs = _collection.Count > 0 ? _collection.Dequeue() : null;
 
                     return eventArgs != null;
                 }
@@ -317,7 +317,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 using ( _scope )
                 {
-                    _queue.Clear();
+                    _collection.Clear();
                 }
             }
         }
