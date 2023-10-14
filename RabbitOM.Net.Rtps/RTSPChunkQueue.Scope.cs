@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// This class is used to update the internal event handle
         /// </summary>
-        class Scope : IDisposable
+        sealed class Scope : IDisposable
         {
             private readonly RTSPChunkQueue _queue;
 
