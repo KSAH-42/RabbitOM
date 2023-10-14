@@ -6,8 +6,6 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 
 # Introduction
 
-![ScreenShot](https://github.com/KSAH-42/RabbitOM/blob/master/Images/OMRabbit.Test.Client.png)
-
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
 
 # About Real Time Streaming Protocol
