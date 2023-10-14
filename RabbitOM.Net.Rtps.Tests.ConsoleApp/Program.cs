@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             // AND create a user account for the rtsp connection
             // You can try to find a online security camera F R O M  a manufacturer, but ...
             // I strongly recommend to BUY a camera, and don't waste your time to find a security camera online from any manufacturers
-
+                                  
             //client.Configuration.Uri = Constants.Camera_HIK;
 
             client.Configuration.Uri = Constants.Movie;
