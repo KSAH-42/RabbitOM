@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Rtsp.Clients
        
         private RTSPMediaFormatType  _mediaFormat           = RTSPMediaFormatType.Video;
 
-        private RTSPDeliveryMode     _deliveryMode          = RTSPDeliveryMode.Udp;
+        private RTSPDeliveryMode     _deliveryMode          = RTSPDeliveryMode.Tcp;
 
         private int                  _unicastPort           = 0;
 
@@ -50,17 +50,6 @@ namespace RabbitOM.Net.Rtsp.Clients
         private string               _multicastAddress      = string.Empty;
         
 
-
-
-
-        /// <summary>
-        /// Initialize an new instance
-        /// </summary>
-        public RTSPClientConfigurationOptions()
-        {
-            ToDefault();
-        }
-        
 
 
 
@@ -262,7 +251,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                 _retriesInterval   = DefaultRetriesInterval;
                 _keepAliveInteval  = DefaultKeepAliveInterval;
                 _mediaFormat       = RTSPMediaFormatType.Video;
-                _deliveryMode      = RTSPDeliveryMode.Udp;
+                _deliveryMode      = RTSPDeliveryMode.Tcp;
                 _unicastPort       = DefaultPort;
                 _multicastPort     = DefaultPort + 1;
                 _multicastAddress  = string.Empty;
