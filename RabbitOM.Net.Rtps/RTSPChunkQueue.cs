@@ -275,7 +275,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Dequeue a packet
         /// </summary>
-        /// <returns>returns an instance, otherwise null</returns>
+        /// <returns>must returns an instance</returns>
         public byte[] Dequeue()
         {
             lock ( _lock )

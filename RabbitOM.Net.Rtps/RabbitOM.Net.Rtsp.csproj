@@ -217,6 +217,7 @@
     <Compile Include="RTSPOperator.cs" />
     <Compile Include="RTSPPacket.cs" />
     <Compile Include="RTSPPacketInterleaved.cs" />
+    <Compile Include="RTSPPacketQueue.Scope.cs" />
     <Compile Include="RTSPPacketQueue.cs" />
     <Compile Include="RTSPPacketReceivedEventArgs.cs" />
     <Compile Include="RTSPParser.cs" />

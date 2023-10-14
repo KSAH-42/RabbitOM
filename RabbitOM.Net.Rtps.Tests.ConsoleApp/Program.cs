@@ -18,6 +18,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // TODO: Find something about the duplicated code on scope object used by queue => inject a ICollection<T> or something like this ?
         // TODO: Reduce memory allocations
         // TODO: Introduce complete frame objects 
+        // TODO: At the end, remove un-necessary try catch
 
         // If you want to get more features, used the connection class instead to control the protocol messaging layer
         // using ( var connection = new RabbitOM.Net.Rtsp.Remoting.RTSPConnection() ) {}
