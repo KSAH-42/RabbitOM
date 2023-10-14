@@ -171,15 +171,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                foreach ( var element in _collection.Values )
-                {
-                    if ( element is THeader )
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                return _collection.Values.Any( x => x is THeader );
             }
         }
 
@@ -432,12 +424,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                if ( index < 0 || index >= _collection.Values.Count )
-                {
-                    return null;
-                }
-
-                return _collection.Values.ElementAt( index );
+                return _collection.Values.ElementAtOrDefault( index );
             }
         }
 
@@ -539,7 +526,7 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Remove an element
+        /// Remove an existing element
         /// </summary>
         /// <param name="element">the element to be removed</param>
         /// <returns>returns true for a success, otherwise false</returns>
@@ -552,7 +539,7 @@ namespace RabbitOM.Net.Rtsp
 
             lock ( _lock )
             {
-                if ( _collection.Values.Contains( element ) )
+                if ( _collection.Values.Contains( element ) ) // the instance should be present
                 {
                     return _collection.Remove( element.Name );
                 }
@@ -566,9 +553,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="names">a collection of names</param>
         /// <returns>returns the number of element removed</returns>
-        public int Remove( params string[] names )
+        public int RemoveRange( params string[] names )
         {
-            return Remove( names as IEnumerable<string> );
+            return RemoveRange( names as IEnumerable<string> );
         }
 
         /// <summary>
@@ -576,7 +563,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">a collection of names</param>
         /// <returns>returns the number of element removed</returns>
-        public int Remove( IEnumerable<string> collection )
+        public int RemoveRange( IEnumerable<string> collection )
         {
             if ( collection == null )
             {
@@ -589,12 +576,7 @@ namespace RabbitOM.Net.Rtsp
 
                 foreach ( var name in collection )
                 {
-                    if ( !_collection.TryGetValue( name ?? string.Empty , out RTSPHeader element ) || element == null )
-                    {
-                        continue;
-                    }
-
-                    if ( _collection.Remove( element.Name ) )
+                    if ( _collection.Remove( name ?? string.Empty) )
                     {
                         ++results;
                     }

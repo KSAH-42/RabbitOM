@@ -645,7 +645,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         private bool WaitEvents()
         {
-            return _eventQueue.Wait( _eventListener.ExitHandle );
+            return RTSPEventQueue.Wait( _eventQueue , _eventListener.ExitHandle );
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         private bool WaitMediaEvents()
         {
-            return _mediaEventQueue.Wait( _mediaEventListener.ExitHandle );
+            return RTSPEventQueue.Wait( _mediaEventQueue , _mediaEventListener.ExitHandle );
         }
 
         /// <summary>

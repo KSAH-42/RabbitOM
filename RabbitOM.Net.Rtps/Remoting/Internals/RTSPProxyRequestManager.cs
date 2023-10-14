@@ -209,7 +209,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         private bool WaitChunks()
         {
-            return _chunks.Wait( _chunkListenerThread.ExitHandle );
+            return RTSPChunkQueue.Wait( _chunks , _chunkListenerThread.ExitHandle );
         }
 
         /// <summary>

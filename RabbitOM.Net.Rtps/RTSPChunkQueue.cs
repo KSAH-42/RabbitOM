@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a chunk circular queue
     /// </summary>
-    public sealed class RTSPChunkQueue : IEnumerable<byte[]>
+    public sealed partial class RTSPChunkQueue : IEnumerable<byte[]>
     {
         /// <summary>
         /// The default maximum size
@@ -23,9 +23,11 @@ namespace RabbitOM.Net.Rtsp
 
         private readonly RTSPEventWaitHandle _handle            = null;
 
-        private readonly Queue<byte[]>       _queue             = null;
+        private readonly Queue<byte[]>       _collection        = null;
 
         private readonly int                 _maximumOfChunks   = 0;
+
+        private readonly Scope               _scope             = null;
 
 
 
@@ -49,9 +51,11 @@ namespace RabbitOM.Net.Rtsp
         public RTSPChunkQueue(int maximumOfChunks)
         {
             _maximumOfChunks = maximumOfChunks > 0 ? maximumOfChunks : throw new ArgumentOutOfRangeException(nameof(maximumOfChunks));
-            _lock = new object();
-            _queue = new Queue<byte[]>(DefaultMaximumSize);
-            _handle = new RTSPEventWaitHandle();
+            
+            _lock            = new object();
+            _collection      = new Queue<byte[]>(DefaultMaximumSize);
+            _handle          = new RTSPEventWaitHandle();
+            _scope           = new Scope( this );
         }
 
 
@@ -77,7 +81,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 lock ( _lock )
                 {
-                    return _queue.Count;
+                    return _collection.Count;
                 }
             }
         }
@@ -91,7 +95,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 lock ( _lock )
                 {
-                    return _queue.Count <= 0;
+                    return _collection.Count <= 0;
                 }
             }
         }
@@ -110,6 +114,95 @@ namespace RabbitOM.Net.Rtsp
 			}
 		}
 
+        /// <summary>
+        /// Gets the handle
+        /// </summary>
+        private RTSPEventWaitHandle Handle
+        {
+            get => _handle;
+        }
+
+
+
+
+
+
+
+        /// <summary>
+        /// Wait until an element has been push to the queue
+        /// </summary>
+        /// <param name="queue">the queue</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static bool Wait(RTSPChunkQueue queue)
+        {
+            if (queue == null)
+            {
+                throw new ArgumentNullException(nameof(queue));
+            }
+
+            return queue.Handle.Wait();
+        }
+
+        /// <summary>
+        /// Wait until an element has been push to the queue
+        /// </summary>
+        /// <param name="queue">the queue</param>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static bool Wait(RTSPChunkQueue queue, int timeout)
+        {
+            if (queue == null)
+            {
+                throw new ArgumentNullException(nameof(queue));
+            }
+
+            return queue.Handle.Wait(timeout);
+        }
+
+        /// <summary>
+        /// Wait until an element has been push to the queue
+        /// </summary>
+        /// <param name="queue">the queue</param>
+        /// <param name="cancellationHandle">the cancellation handle</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static bool Wait(RTSPChunkQueue queue, EventWaitHandle cancellationHandle)
+        {
+            if (queue == null)
+            {
+                throw new ArgumentNullException(nameof(queue));
+            }
+
+            return queue.Handle.Wait(cancellationHandle);
+        }
+
+        /// <summary>
+        /// Wait until an element has been push to the queue
+        /// </summary>
+        /// <param name="queue">the queue</param>
+        /// <param name="timeout">the timeout</param>
+        /// <param name="cancellationHandle">the cancellation handle</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static bool Wait(RTSPChunkQueue queue, int timeout, EventWaitHandle cancellationHandle)
+        {
+            if (queue == null)
+            {
+                throw new ArgumentNullException(nameof(queue));
+            }
+
+            if (cancellationHandle == null)
+            {
+                throw new ArgumentNullException(nameof(cancellationHandle));
+            }
+
+            return queue.Handle.Wait(timeout, cancellationHandle);
+        }
+
+
+
 
 
 
@@ -123,7 +216,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _queue.ToList().GetEnumerator();
+                return _collection.ToList().GetEnumerator();
             }
         }
 
@@ -135,7 +228,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _queue.ToList().GetEnumerator();
+                return _collection.ToList().GetEnumerator();
             }
         }
 
@@ -147,7 +240,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _queue.Count > 0;
+                return _collection.Count > 0;
             }
         }
 
@@ -165,16 +258,17 @@ namespace RabbitOM.Net.Rtsp
         
             lock ( _lock )
             {
-                while ( _queue.Count >= _maximumOfChunks )
+                using (_scope )
                 {
-                    _queue.Dequeue();
+                    while (_collection.Count >= _maximumOfChunks)
+                    {
+                        _collection.Dequeue();
+                    }
+
+                    _collection.Enqueue(chunk);
+
+                    return true;
                 }
-
-                _queue.Enqueue( chunk );
-
-                UpdateStatusHandle();
-
-                return true;
             }
         }
 
@@ -186,10 +280,10 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                var result = _queue.Count > 0 ? _queue.Dequeue() : null;
-                
-                UpdateStatusHandle();
-                return result;
+                using ( _scope )
+                {
+                    return _collection.Count > 0 ? _collection.Dequeue() : null;
+                }
             }
         }
 
@@ -200,15 +294,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool Dequeue( out byte[] chunk )
         {
-            chunk = null;
-
             lock ( _lock )
             {
-                chunk = _queue.Count > 0 ? _queue.Dequeue() : null;
+                using ( _scope )
+                {
+                    chunk = _collection.Count > 0 ? _collection.Dequeue() : null;
 
-                UpdateStatusHandle();
-
-                return chunk != null && chunk.Length > 0 ;
+                    return chunk != null && chunk.Length > 0 ;
+                }
             }
         }
 
@@ -219,66 +312,10 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                _queue.Clear();
-
-                UpdateStatusHandle();
-            }
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait()
-        {
-            return _handle.Wait();
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( int timeout )
-        {
-            return _handle.Wait( timeout );
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( EventWaitHandle cancellationHandle )
-        {
-            return _handle.Wait( cancellationHandle );
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( int timeout , EventWaitHandle cancellationHandle )
-        {
-            return _handle.Wait( timeout , cancellationHandle );
-        }
-
-        /// <summary>
-        /// Update the status handle
-        /// </summary>
-        private void UpdateStatusHandle()
-        {
-            int size = _queue.Count;
-
-            if ( size > 0 )
-            {
-                _handle.Set();
-            }
-            else
-            {
-                _handle.Reset();
+                using ( _scope )
+                {
+                    _collection.Clear();
+                }
             }
         }
     }

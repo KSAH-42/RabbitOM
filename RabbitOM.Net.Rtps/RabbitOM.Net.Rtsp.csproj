@@ -123,6 +123,7 @@
     <Compile Include="RTSPAuthorizationChallengeSHA256.cs" />
     <Compile Include="RTSPAuthorizationChallengeSHA512.cs" />
     <Compile Include="RTSPAuthorizationFactory.cs" />
+    <Compile Include="RTSPChunkQueue.Scope.cs" />
     <Compile Include="RTSPChunkQueue.cs" />
     <Compile Include="RTSPCredentials.cs" />
     <Compile Include="RTSPDataConverter.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="RTSPDispatcherWorker.cs" />
     <Compile Include="RTSPDisposeScope.cs" />
     <Compile Include="RTSPEventInvoker.cs" />
+    <Compile Include="RTSPEventQueue.Scope.cs" />
     <Compile Include="RTSPEventQueue.cs" />
     <Compile Include="RTSPEventWaitHandle.cs" />
     <Compile Include="RTSPFile.cs" />

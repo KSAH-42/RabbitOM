@@ -150,7 +150,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <returns>returns true for a success, otherwise false</returns>
         private bool WaitEvents()
         {
-            return _eventQueue.Wait( _eventListener.ExitHandle );
+            return RTSPEventQueue.Wait( _eventQueue , _eventListener.ExitHandle );
         }
 
         /// <summary>
@@ -162,10 +162,46 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 if ( _eventQueue.Dequeue( out EventArgs eventArgs ) )
                 {
-                    OnDispatch( eventArgs );
+                    DoDispatch( eventArgs );
                 }
             }
         }
+
+        /// <summary>
+        /// Handle the event
+        /// </summary>
+        /// <param name="e">the event arg</param>
+        private void DoDispatch(EventArgs e)
+        {
+            switch (e)
+            {
+                case RTSPPacketReceivedEventArgs eventArgs:
+                    OnPacketReceived(eventArgs);
+                    break;
+
+                case RTSPClientConnectedEventArgs eventArgs:
+                    OnConnected(eventArgs);
+                    break;
+
+                case RTSPClientDisconnectedEventArgs eventArgs:
+                    OnDisconnected(eventArgs);
+                    break;
+
+                case RTSPClientCommunicationStartedEventArgs eventArgs:
+                    OnCommunicationStarted(eventArgs);
+                    break;
+
+                case RTSPClientCommunicationStoppedEventArgs eventArgs:
+                    OnCommunicationStopped(eventArgs);
+                    break;
+
+                case RTSPClientErrorEventArgs eventArgs:
+                    OnError(eventArgs);
+                    break;
+            }
+        }
+
+
 
 
 
@@ -225,38 +261,5 @@ namespace RabbitOM.Net.Rtsp.Clients
             RTSPEventInvoker.RaiseEvent<RTSPClientErrorEventArgs>( this , e , Error );
         }
 
-        /// <summary>
-        /// Handle the event
-        /// </summary>
-        /// <param name="e">the event arg</param>
-        private void OnDispatch( EventArgs e )
-        {
-			switch ( e )
-            {
-                case RTSPPacketReceivedEventArgs eventArgs:
-                    OnPacketReceived( eventArgs );
-                    break;
-
-                case RTSPClientConnectedEventArgs eventArgs:
-                    OnConnected( eventArgs );
-                    break;
-
-                case RTSPClientDisconnectedEventArgs eventArgs:
-                    OnDisconnected( eventArgs );
-                    break;
-
-                case RTSPClientCommunicationStartedEventArgs eventArgs:
-                    OnCommunicationStarted( eventArgs );
-                    break;
-
-                case RTSPClientCommunicationStoppedEventArgs eventArgs:
-                    OnCommunicationStopped( eventArgs );
-                    break;
-
-                case RTSPClientErrorEventArgs eventArgs:
-                    OnError( eventArgs );
-                    break;
-            }
-        }
     }
 }
