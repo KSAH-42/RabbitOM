@@ -6,7 +6,7 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 
 # Introduction
 
-This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like:
+This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like RTSP/RTP/SDP.
 
 # About Real Time Streaming Protocol
 
