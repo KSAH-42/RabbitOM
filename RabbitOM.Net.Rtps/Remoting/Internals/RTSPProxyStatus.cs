@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent the proxy status
     /// </summary>
-    public sealed class RTSPProxyStatus
+    internal sealed class RTSPProxyStatus
     {
         private readonly object              _lock            = new object();
 

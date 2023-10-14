@@ -141,14 +141,6 @@ namespace RabbitOM.Net.Rtsp.Remoting
             get => _proxy.IsOpened;
         }
 
-        /// <summary>
-        /// Gets the proxy reference
-        /// </summary>
-        protected RTSPProxy Proxy
-		{
-            get => _proxy;
-		}
-
 
 
 
@@ -162,7 +154,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <exception cref="Exception"/>
         public void Open(string uri)
         {
-            Open( uri , RTSPCredentials.Empty );
+            _proxy.Open(uri);
         }
 
         /// <summary>
@@ -175,29 +167,8 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <exception cref="Exception"/>
         public void Open(string uri, RTSPCredentials credentials)
         {
-            // TODO: Code refactoring here
-
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-
-            if (credentials == null)
-            {
-                throw new ArgumentNullException(nameof(credentials));
-            }
-
-            if ( string.IsNullOrWhiteSpace(uri) )
-            {
-                throw new ArgumentException(nameof(uri));
-            }
-
-            if ( TryOpen(uri ,credentials ) )
-            {
-                throw new Exception( "Open failure" );
-            }
+            _proxy.Open(uri,credentials);
         }
-
 
         /// <summary>
         /// Try to open the connection

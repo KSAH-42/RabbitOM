@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client session data informations
     /// </summary>
-    public sealed class RTSPClientSessionInfos
+    internal sealed class RTSPClientSessionInfos
     {
         private readonly object                      _lock             = new object();
 

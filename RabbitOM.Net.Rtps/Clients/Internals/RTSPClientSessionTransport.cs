@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client transport layer used to receive packet from the network
     /// </summary>
-    public abstract class RTSPClientSessionTransport
+    internal abstract class RTSPClientSessionTransport
     {
         private readonly RTSPThread        _thread      = null;
 

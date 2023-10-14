@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client host
     /// </summary>
-    public sealed class RTSPClientSessionHost : IDisposable
+    internal sealed class RTSPClientSessionHost : IDisposable
     {
         private const int                   PressureLimit   = 3400000;
 

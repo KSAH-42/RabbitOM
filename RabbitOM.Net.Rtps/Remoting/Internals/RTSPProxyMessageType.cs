@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent the decoder message type
     /// </summary>
-    public enum RTSPProxyMessageType
+    internal enum RTSPProxyMessageType
     {
         /// <summary>
         /// None type

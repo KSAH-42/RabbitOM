@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the event dispatcher
     /// </summary>
-    public sealed class RTSPClientSessionDispatcher : IRTSPClientEvents
+    internal sealed class RTSPClientSessionDispatcher : IRTSPClientEvents
     {
         /// <summary>
         /// Raised when the communication has been started

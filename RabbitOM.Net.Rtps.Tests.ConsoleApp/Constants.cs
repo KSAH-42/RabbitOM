@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 	{
         public const string Movie = "rtsp://127.0.0.1/toy.mp4";
         public const string Camera_HIK = "rtsp://192.168.1.64/Streaming/Channels/101";
-        public const string User_Admin = "admin";
-        public const string Password_Camera = "camera123";
+        public const string UserName = "admin";
+        public const string Password = "camera123";
     }
 }

@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent the internal proxy class
     /// </summary>
-    public sealed class RTSPProxy : IDisposable
+    internal sealed class RTSPProxy : IDisposable
     {
         /// <summary>
         /// Raised when the connection has been opened
@@ -200,6 +200,50 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
 
 
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="Exception"/>
+        public void Open(string uri)
+        {
+            Open(uri, RTSPCredentials.Empty);
+        }
+
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <param name="credentials">the credentials</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="Exception"/>
+        public void Open(string uri, RTSPCredentials credentials)
+        {
+            // TODO: Code refactoring here
+
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
+            if (credentials == null)
+            {
+                throw new ArgumentNullException(nameof(credentials));
+            }
+
+            if (string.IsNullOrWhiteSpace(uri))
+            {
+                throw new ArgumentException(nameof(uri));
+            }
+
+            if (TryOpen(uri, credentials))
+            {
+                throw new Exception("Open failure");
+            }
+        }
 
         /// <summary>
         /// Open the connection

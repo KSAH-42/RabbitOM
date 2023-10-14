@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent a request manager
     /// </summary>
-    public sealed class RTSPProxyRequestManager : IDisposable
+    internal sealed class RTSPProxyRequestManager : IDisposable
     {
         private readonly RTSPProxy                    _proxy                 = null;
 

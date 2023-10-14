@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent the request handler list
     /// </summary>
-    public sealed class RTSPProxyRequestHandlerList : IEnumerable<RTSPProxyRequestHandler>
+    internal sealed class RTSPProxyRequestHandlerList : IEnumerable<RTSPProxyRequestHandler>
     {
         /// <summary>
         /// Represent the maximum of elements

@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent a rtsp session
     /// </summary>
-    public class RTSPClientSession
+    internal class RTSPClientSession
     {
         private readonly object                                            _lock                   = null;
 

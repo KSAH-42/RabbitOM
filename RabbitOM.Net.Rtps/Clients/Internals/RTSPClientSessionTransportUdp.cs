@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client transport layer used to receive packet from the network
     /// </summary>
-    public sealed class RTSPClientSessionTransportUdp : RTSPClientSessionTransport
+    internal sealed class RTSPClientSessionTransportUdp : RTSPClientSessionTransport
     {
         private readonly RTSPSocketUdpReceiver _socket    = null;
 

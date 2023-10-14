@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent a request handler
     /// </summary>
-    public sealed class RTSPProxyRequestHandler
+    internal sealed class RTSPProxyRequestHandler
     {
         private readonly RTSPDataMember<bool>  _succeed            = null;
 

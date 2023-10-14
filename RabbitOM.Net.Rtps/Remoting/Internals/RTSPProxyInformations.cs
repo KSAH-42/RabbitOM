@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent the proxy infos
     /// </summary>
-    public sealed class RTSPProxyInformations
+    internal sealed class RTSPProxyInformations
     {
         /// <summary>
         /// Represent the default sequence identifier

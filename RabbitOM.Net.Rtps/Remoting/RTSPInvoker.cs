@@ -38,14 +38,6 @@ namespace RabbitOM.Net.Rtsp.Remoting
         }
 
         /// <summary>
-        /// Gets the proxy
-        /// </summary>
-        protected RTSPProxy Proxy
-        {
-            get => _proxy;
-        }
-
-        /// <summary>
         /// Gets the builder
         /// </summary>
         protected RTSPMessageRequestBuilder Builder

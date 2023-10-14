@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent the client security manager. This is class is used to manage authentication procedures
     /// </summary>
-    public sealed class RTSPProxySecurityManager
+    internal sealed class RTSPProxySecurityManager
     {
         private readonly object                    _lock     = null;
 

@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client session descriptor
     /// </summary>
-    public sealed class RTSPClientSessionDescriptor
+    internal sealed class RTSPClientSessionDescriptor
     {
         private readonly object     _lock                = new object();
 
