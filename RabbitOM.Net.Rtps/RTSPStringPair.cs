@@ -59,7 +59,7 @@ namespace RabbitOM.Net.Rtsp
         /// Perform a validation
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        internal bool Validate()
+        internal bool TryValidate()
         {
             return !string.IsNullOrWhiteSpace( _first ) || !string.IsNullOrWhiteSpace( _second );
         }

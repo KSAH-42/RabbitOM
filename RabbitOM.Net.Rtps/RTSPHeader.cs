@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtsp
         /// Just perform a custom validation for a particular header object
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public abstract bool Validate();
+        public abstract bool TryValidate();
 
 
 

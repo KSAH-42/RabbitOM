@@ -136,14 +136,14 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
             var responseCSeq = _response.Headers.FindByName<RTSPHeaderCSeq>( RTSPHeaderNames.CSeq );
 
-            if ( responseCSeq == null || !responseCSeq.Validate() )
+            if ( responseCSeq == null || !responseCSeq.TryValidate() )
             {
                 return;
             }
 
             var requestCSeq = _request.Headers.FindByName<RTSPHeaderCSeq>( RTSPHeaderNames.CSeq );
 
-            if ( requestCSeq == null || !requestCSeq.Validate() )
+            if ( requestCSeq == null || !requestCSeq.TryValidate() )
             {
                 return;
             }

@@ -122,7 +122,7 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Validate()
+        public bool TryValidate()
         {
             if ( string.IsNullOrWhiteSpace( _host ) || _port <= 0 )
             {

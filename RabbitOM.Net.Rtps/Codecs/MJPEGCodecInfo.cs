@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             return true;
         }

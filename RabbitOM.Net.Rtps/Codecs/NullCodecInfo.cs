@@ -30,7 +30,7 @@ namespace RabbitOM.Net.Rtsp
         /// Perform a validation
         /// </summary>
         /// <returns>returns false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             return false;
         }

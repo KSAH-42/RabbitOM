@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtsp
         /// Perform a validation
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             if ( _method == RTSPMethodType.UnDefined )
             {
@@ -94,7 +94,7 @@ namespace RabbitOM.Net.Rtsp
             return !string.IsNullOrWhiteSpace( _uri )
                 && !string.IsNullOrWhiteSpace( _realm )
                 && !string.IsNullOrWhiteSpace( _nonce )
-                && _credentials.Validate();
+                && _credentials.TryValidate();
         }
     }
 }

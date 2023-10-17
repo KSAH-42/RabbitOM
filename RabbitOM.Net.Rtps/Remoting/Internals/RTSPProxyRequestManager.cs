@@ -111,7 +111,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
             var sequenceHeader = request.Headers.FindByName<RTSPHeaderCSeq>( RTSPHeaderNames.CSeq );
 
-            if ( sequenceHeader == null || !sequenceHeader.Validate() )
+            if ( sequenceHeader == null || !sequenceHeader.TryValidate() )
             {
                 return false;
             }

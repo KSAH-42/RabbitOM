@@ -53,9 +53,9 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
-            return _npt.Validate() || _clock.Validate() || _time.Validate();
+            return _npt.TryValidate() || _clock.TryValidate() || _time.TryValidate();
         }
 
         /// <summary>
@@ -66,12 +66,12 @@ namespace RabbitOM.Net.Rtsp
         {
             var writer = new RTSPHeaderWriter( RTSPSeparator.SemiColon , RTSPOperator.Equality );
 
-            if ( _npt.Validate() )
+            if ( _npt.TryValidate() )
             {
                 writer.WriteField( RTSPHeaderFieldNames.Npt , _npt.ToString() );
             }
 
-            if ( _clock.Validate() )
+            if ( _clock.TryValidate() )
             {
                 if ( writer.IsAppended )
                 {
@@ -81,7 +81,7 @@ namespace RabbitOM.Net.Rtsp
                 writer.WriteField( RTSPHeaderFieldNames.Clock , _clock.ToString() );
             }
 
-            if ( _time.Validate() )
+            if ( _time.TryValidate() )
             {
                 if ( writer.IsAppended )
                 {

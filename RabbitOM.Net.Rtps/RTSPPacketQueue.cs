@@ -248,7 +248,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool Enqueue( RTSPPacket packet )
         {
-            if ( packet == null || !packet.Validate() )
+            if ( packet == null || !packet.TryValidate() )
             {
                 return false;
             }

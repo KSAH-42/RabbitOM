@@ -111,7 +111,7 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             if ( _type == RTSPAuthenticationType.Basic )
             {

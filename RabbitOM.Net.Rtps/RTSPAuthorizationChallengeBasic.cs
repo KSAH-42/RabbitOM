@@ -31,9 +31,9 @@ namespace RabbitOM.Net.Rtsp
         /// Perform a validation
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
-            return _credentials.Validate();
+            return _credentials.TryValidate();
         }
 
         /// <summary>

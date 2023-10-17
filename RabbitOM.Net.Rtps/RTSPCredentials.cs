@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtsp
         /// Check if the user name and password has been set
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Validate()
+        public bool TryValidate()
         {
             return !string.IsNullOrWhiteSpace( _userName )
                 && !string.IsNullOrWhiteSpace( _password );

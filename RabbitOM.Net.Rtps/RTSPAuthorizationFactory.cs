@@ -93,7 +93,7 @@ namespace RabbitOM.Net.Rtsp
 
             var challenge = new RTSPAuthorizationChallengeBasic( credentials );
 
-            if ( !challenge.Validate() )
+            if ( !challenge.TryValidate() )
             {
                 return null;
             }
@@ -172,7 +172,7 @@ namespace RabbitOM.Net.Rtsp
             challenge.Realm  = _header.Realm;
             challenge.Nonce  = _header.Nonce;
 
-            if ( !challenge.Validate() )
+            if ( ! challenge.TryValidate() )
             {
                 return null;
             }

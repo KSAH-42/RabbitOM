@@ -33,7 +33,7 @@ namespace RabbitOM.Net.Rtsp
 
             foreach ( var header in request.Headers )
             {
-                if ( !header.Validate() )
+                if ( !header.TryValidate() )
                 {
                     continue;
                 }

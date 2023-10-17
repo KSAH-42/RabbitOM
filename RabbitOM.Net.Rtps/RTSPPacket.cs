@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool Validate()
+        public virtual bool TryValidate()
         {
             return _data != null && _data.Length > 0;
         }
