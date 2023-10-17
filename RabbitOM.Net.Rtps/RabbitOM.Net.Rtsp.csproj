@@ -141,7 +141,6 @@
     <Compile Include="RTSPEventQueue.Scope.cs" />
     <Compile Include="RTSPEventQueue.cs" />
     <Compile Include="RTSPEventWaitHandle.cs" />
-    <Compile Include="RTSPFile.cs" />
     <Compile Include="RTSPHashAlgorithm.cs" />
     <Compile Include="RTSPHeader.cs" />
     <Compile Include="RTSPHeaderAccept.cs" />

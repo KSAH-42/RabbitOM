@@ -34,7 +34,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
             var client = new RTSPClient();
-            
+
             #region Events
 
             client.CommunicationStarted += (sender, e) =>
