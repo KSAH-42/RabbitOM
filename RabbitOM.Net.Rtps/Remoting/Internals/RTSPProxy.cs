@@ -1,5 +1,7 @@
 ﻿using System;
 
+// TODO: Code refactoring for the exception handling: we lose the socket exception, it must be bubbled
+
 namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
@@ -385,10 +387,34 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Configure the timeout
         /// </summary>
         /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool ConfigureTimeouts( TimeSpan timeout )
+        /// <exception cref="Exception"/>
+        public void ConfigureTimeouts(TimeSpan timeout)
         {
-            return ConfigureTimeouts( timeout , timeout );
+            ConfigureTimeouts(timeout, timeout);
+        }
+
+        /// <summary>
+        /// Configure the timeout
+        /// </summary>
+        /// <param name="receiveTimeout">the receive timeout</param>
+        /// <param name="sendTimeout">the send timeout</param>
+        /// <exception cref="Exception"/>
+        public void ConfigureTimeouts(TimeSpan receiveTimeout, TimeSpan sendTimeout)
+        {
+            if ( ! TryConfigureTimeouts( receiveTimeout , sendTimeout ) )
+            {
+                throw new Exception("Configure timeout failure");
+            }
+        }
+
+        /// <summary>
+        /// Configure the timeout
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryConfigureTimeouts( TimeSpan timeout )
+        {
+            return TryConfigureTimeouts( timeout , timeout );
         }
 
         /// <summary>
@@ -397,7 +423,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="receiveTimeout">the receive timeout</param>
         /// <param name="sendTimeout">the send timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool ConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
+        public bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
         {
             try
             {

@@ -1,4 +1,48 @@
 
+OMRabbit.Net.Rtsp
+OMRabbit.Net.Rtsp.Clients
+OMRabbit.Net.Rtsp.Clients.Models
+OMRabbit.Net.Rtsp.Clients.Models.Headers
+OMRabbit.Net.Rtsp.Clients.Models.Requests
+OMRabbit.Net.Rtsp.Clients.Models.Responses
+OMRabbit.Net.Rtsp.Clients.Security
+OMRabbit.Net.Rtsp.Clients.Security.Authorization
+{
+    IRtspConnection
+     RtspConnection
+     IPCameraRtspConnection
+     MulticastRtspCameraReceiver
+     AudioMulticastRtspCameraReceiver
+     VideoMulticastRtspCameraReceiver
+     UdpRtspCameraReceiver
+     AudioUdpRtspCameraReceiver
+     VideoUdpRtspCameraReceiver
+     TcpRtspCameraReceiver
+     AudioTcpRtspCameraReceiver
+     VideoTcpRtspCameraReceiver
+}
+
+client.Headers.Add()
+client.Headers.Add()
+client.Headers.Add()
+client.Headers.Add()
+client.Headers.Add()
+
+client.Open()
+client.Close()
+
+client.Describe()
+client.Setup()
+client.SetupAsUnicast()
+client.SetupAsMulticast()
+client.Play()
+client.PlaySession()
+client.Invokers.Setup()
+client.Invokers.Play()
+client.Invokers.Pause()
+
+
+
 RTSPReceiver
    RTSPVideoReceiverRFC2435Interleaved { public ctor( ReceiveConfiguration readOnlyconfiguration )}
    RTSPVideoReceiverRFC2435Unicast     { public ctor( ReceiveConfiguration readOnlyconfiguration )}

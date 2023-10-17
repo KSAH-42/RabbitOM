@@ -278,14 +278,14 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Dequeue an event
         /// </summary>
-        /// <returns>must returns an instance</returns>
+        /// <returns>returns an instance, otherwise null</returns>
         public EventArgs Dequeue()
         {
             lock ( _lock )
             {
                 using ( _scope )
                 {
-                    return _collection.Dequeue();
+                    return _collection.Count > 0 ? _collection.Dequeue() : EventArgs.Empty;
                 }
             }
         }

@@ -133,7 +133,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool ConfigureTimeouts( TimeSpan timeout );
+        bool TryConfigureTimeouts( TimeSpan timeout );
 
         /// <summary>
         /// Configure the timeout
@@ -141,7 +141,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="receiveTimeout">the receive timeout</param>
         /// <param name="sendTimeout">the send timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool ConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout );
+        bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout );
 
         /// <summary>
         /// Gets the next sequence identifier

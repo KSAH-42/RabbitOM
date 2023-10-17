@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtsp
 
         private IPEndPoint  _groupEP         = null;
 
-        private UdpClient   _socket          = null;
+        private UdpClient   _udpClient          = null;
 
 
 
@@ -32,7 +32,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public bool IsOpened
         {
-            get => _socket != null;
+            get => _udpClient != null;
         }
 
 
@@ -54,7 +54,7 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
-            if ( _socket != null )
+            if ( _udpClient != null )
             {
                 return false;
             }
@@ -68,16 +68,16 @@ namespace RabbitOM.Net.Rtsp
             {
                 var groupEP = new IPEndPoint( IPAddress.Any , port );
 
-                var socket  = new UdpClient();
+                var udpClient = new UdpClient();
 
-                socket.ExclusiveAddressUse = false;
-                socket.Client.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
-                socket.Client.ReceiveTimeout = (int) receiveTimeout.TotalMilliseconds;
-                socket.Client.ReceiveBufferSize = DefaultReceiveBufferSize;
-                socket.JoinMulticastGroup( address , ttl );
-                socket.Client.Bind( groupEP );
+                udpClient.ExclusiveAddressUse = false;
+                udpClient.Client.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
+                udpClient.Client.ReceiveTimeout = (int) receiveTimeout.TotalMilliseconds;
+                udpClient.Client.ReceiveBufferSize = DefaultReceiveBufferSize;
+                udpClient.JoinMulticastGroup( address , ttl );
+                udpClient.Client.Bind( groupEP );
 
-                _socket = socket;
+                _udpClient = udpClient;
                 _groupEP = groupEP;
                 _ipAddress = address;
 
@@ -98,9 +98,9 @@ namespace RabbitOM.Net.Rtsp
         {
             try
             {
-                if ( _socket != null && _ipAddress != null )
+                if ( _udpClient != null && _ipAddress != null )
                 {
-                    _socket.DropMulticastGroup( _ipAddress );
+                    _udpClient.DropMulticastGroup( _ipAddress );
                 }
             }
             catch ( Exception ex )
@@ -110,10 +110,10 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                if ( _socket != null )
+                if ( _udpClient != null )
                 {
-                    _socket.Close();
-                    _socket.Dispose();
+                    _udpClient.Close();
+                    _udpClient.Dispose();
                 }
             }
             catch ( Exception ex )
@@ -121,7 +121,7 @@ namespace RabbitOM.Net.Rtsp
                 OnError( ex );
             }
 
-            _socket = null;
+            _udpClient = null;
             _groupEP = null;
             _ipAddress = null;
         }
@@ -141,14 +141,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>return true for a success, otherwise false</returns>
         public bool PollReceive( TimeSpan timeout )
         {
-            if ( _socket == null )
+            if ( _udpClient == null )
             {
                 return false;
             }
 
             try
             {
-                return _socket.Client.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead );
+                return _udpClient.Client.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead );
             }
             catch ( Exception ex )
             {
@@ -164,14 +164,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an array of bytes, otherwise null</returns>
         public byte[] Receive()
         {
-            if ( _socket == null || _groupEP == null )
+            if ( _udpClient == null || _groupEP == null )
             {
                 return null;
             }
 
             try
             {
-                return _socket.Receive( ref _groupEP );
+                return _udpClient.Receive( ref _groupEP );
             }
             catch ( Exception ex )
             {

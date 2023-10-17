@@ -32,7 +32,6 @@ namespace RabbitOM.Net.Rtsp.Clients
             _session = session ?? throw new ArgumentNullException( nameof( session ) );
             
             _session.SubscribeEvents();
-            GC.AddMemoryPressure(PressureLimit); 
         }
 
 
@@ -65,7 +64,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 _idleTimeout = _session.Options.RetriesInterval;
 
-                if ( _session.Connect() )
+                if ( _session.Open() )
                 {
                     _idleTimeout = _session.Options.KeepAliveInterval;
                 }
@@ -74,7 +73,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 if ( ! _session.Ping() )
                 {
-                    _session.Disconnect();
+                    _session.Close();
                     
                     _idleTimeout = _session.Options.RetriesInterval;
                 }
@@ -88,12 +87,10 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             if (_session.IsOpened)
             {
-                _session.Disconnect();
+                _session.Close();
             }
 
             _session.UnSusbcribeEvents();
-
-            GC.RemoveMemoryPressure(PressureLimit);
         }
     }
 }

@@ -186,7 +186,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// Open a connection
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Connect()
+        public bool Open()
         {
             try
             {
@@ -202,7 +202,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                     throw new RTSPClientException( RTSPClientErrorCode.ConnectionFailed , "Connection failed" );
                 }
 
-                if ( ! _connection.ConfigureTimeouts( _configuration.ReceiveTimeout , _configuration.SendTimeout ) )
+                if ( ! _connection.TryConfigureTimeouts( _configuration.ReceiveTimeout , _configuration.SendTimeout ) )
                 {
                     throw new RTSPClientException( RTSPClientErrorCode.ConnectionFailed , "Failed to configure the timeout" );
                 }
@@ -323,7 +323,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
 		/// Close the underlaying connection
 		/// </summary>
-		public void Disconnect()
+		public void Close()
         {
             try
             {

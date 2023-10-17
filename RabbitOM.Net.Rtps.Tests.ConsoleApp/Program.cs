@@ -14,11 +14,13 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // TODO: Write a client receiver class for multicast streaming
         // TODO: Refactor the configuration class make it fully immutable/readonly and remove the lock
         // TODO: Then inject the configuration class on each receiver constructor
-        // TODO: Secure password using securestring 
+        // TODO: Secure password using SecureString 
         // TODO: Find something about the duplicated code on scope object used by queue => inject a ICollection<T> or something like this ?
         // TODO: Reduce memory allocations
         // TODO: Introduce complete frame objects 
         // TODO: At the end, remove un-necessary try catch
+        // TODO: Some classes need to be removed 
+        //       -> RTSPFile used for debugging
 
         // If you want to get more features, used the connection class instead to control the protocol messaging layer
         // using ( var connection = new RabbitOM.Net.Rtsp.Remoting.RTSPConnection() ) {}
@@ -27,11 +29,12 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // AND create a user account for the rtsp connection
         // You can try to find a online security camera F R O M  a manufacturer, but ...
         // I strongly recommend to BUY a camera, and don't waste your time to find a security camera online from any manufacturers
+        // Otherwise you can use HappyRtspServer software
 
         static void Main(string[] args)
         {
             var client = new RTSPClient();
-
+            
             #region Events
 
             client.CommunicationStarted += (sender, e) =>
@@ -82,7 +85,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
-            
+
             client.StartCommunication();
 
             Console.BufferHeight = 100;

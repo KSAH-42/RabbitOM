@@ -211,10 +211,31 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Configure the timeout
         /// </summary>
         /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool ConfigureTimeouts( TimeSpan timeout )
+        /// <exception cref="Exception"/>
+        public virtual void ConfigureTimeouts(TimeSpan timeout)
         {
-            return _proxy.ConfigureTimeouts( timeout );
+            _proxy.ConfigureTimeouts(timeout);
+        }
+
+        /// <summary>
+        /// Configure the timeout
+        /// </summary>
+        /// <param name="receiveTimeout">the receive timeout</param>
+        /// <param name="sendTimeout">the send timeout</param>
+        /// <exception cref="Exception"/>
+        public virtual void ConfigureTimeouts(TimeSpan receiveTimeout, TimeSpan sendTimeout)
+        {
+            _proxy.ConfigureTimeouts(receiveTimeout, sendTimeout);
+        }
+
+        /// <summary>
+        /// Configure the timeout
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public virtual bool TryConfigureTimeouts( TimeSpan timeout )
+        {
+            return _proxy.TryConfigureTimeouts( timeout );
         }
 
         /// <summary>
@@ -223,9 +244,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="receiveTimeout">the receive timeout</param>
         /// <param name="sendTimeout">the send timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool ConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
+        public virtual bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
         {
-            return _proxy.ConfigureTimeouts( receiveTimeout , sendTimeout );
+            return _proxy.TryConfigureTimeouts( receiveTimeout , sendTimeout );
         }
 
         /// <summary>
