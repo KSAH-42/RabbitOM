@@ -17,7 +17,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        public G711CodecInfo()
+        protected G711CodecInfo()
             : this ( 8000 , 1 )
         {
         }

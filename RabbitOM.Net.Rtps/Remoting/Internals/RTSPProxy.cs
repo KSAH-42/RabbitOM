@@ -42,7 +42,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when the authentication has failed
         /// </summary>
-        public event EventHandler<RTSPConnectionAuthenticationFailedEventArgs>  AuthenticationFailed  = null;
+        public event EventHandler<RTSPAuthenticationFailedEventArgs>  AuthenticationFailed  = null;
 
 
 
@@ -586,7 +586,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Dispatch an event
         /// </summary>
         /// <param name="e">the event args</param>
-        public void DispatchEvent( RTSPConnectionAuthenticationFailedEventArgs e )
+        public void DispatchEvent( RTSPAuthenticationFailedEventArgs e )
         {
             _eventQueue.Enqueue( e );
         }
@@ -766,9 +766,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Occurs when the authentication has failed
         /// </summary>
         /// <param name="e">the event args</param>
-        private void OnAuthenticationFailed( RTSPConnectionAuthenticationFailedEventArgs e )
+        private void OnAuthenticationFailed( RTSPAuthenticationFailedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPConnectionAuthenticationFailedEventArgs>( this , e , AuthenticationFailed );
+            RTSPEventInvoker.RaiseEvent<RTSPAuthenticationFailedEventArgs>( this , e , AuthenticationFailed );
         }
 
         /// <summary>
@@ -810,7 +810,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     OnMessageReceived( eventArgs );
                     break;
 
-                case RTSPConnectionAuthenticationFailedEventArgs eventArgs:
+                case RTSPAuthenticationFailedEventArgs eventArgs:
                     OnAuthenticationFailed( eventArgs );
                     break;
 

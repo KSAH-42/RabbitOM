@@ -656,7 +656,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                 if ( response.Status.Code == RTSPStatusCode.UnAuthorized )
 				{
-                    _proxy.DispatchEvent( new RTSPConnectionAuthenticationFailedEventArgs() );
+                    _proxy.DispatchEvent( new RTSPAuthenticationFailedEventArgs() );
 				}
             }
 

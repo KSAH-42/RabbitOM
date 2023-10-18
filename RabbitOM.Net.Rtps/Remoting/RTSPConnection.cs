@@ -81,7 +81,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when the authentication has failed
         /// </summary>
-        public event EventHandler<RTSPConnectionAuthenticationFailedEventArgs> AuthenticationFailed
+        public event EventHandler<RTSPAuthenticationFailedEventArgs> AuthenticationFailed
         {
             add    => _proxy.AuthenticationFailed += value;
             remove => _proxy.AuthenticationFailed -= value;

@@ -7,10 +7,6 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPPortManager
     {
-        private readonly static RTSPPortManager s_default = new RTSPPortManager(54995, 65000);
-                            
-
-
         private readonly object _lock           = new object();
 
         private readonly int    _minimumPort    = 0;
@@ -44,14 +40,6 @@ namespace RabbitOM.Net.Rtsp
 
 
         /// <summary>
-        /// Represent the default port manager
-        /// </summary>
-        public static RTSPPortManager Default
-		{
-            get => s_default;
-		}
-
-        /// <summary>
         /// Gets the minimum port value
         /// </summary>
         public int MinimumPort
@@ -83,27 +71,6 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-
-        /// <summary>
-        /// Select an used port
-        /// </summary>
-        /// <param name="sourceId">the source identifier</param>
-        /// <returns>return a value</returns>
-        /// <exception cref="NotImplementedException"/>
-        public int AcquirePort( Guid sourceId )
-		{
-            throw new NotImplementedException();
-		}
-
-        /// <summary>
-        /// Release the port used by 
-        /// </summary>
-        /// <param name="sourceId">the source identifier</param>
-        /// <exception cref="NotImplementedException"/>
-        public void ReleasePort( Guid sourceId )
-		{
-            throw new NotImplementedException();
-		}
 
         /// <summary>
         /// Change the current port value

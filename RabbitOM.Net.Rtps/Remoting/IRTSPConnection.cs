@@ -35,7 +35,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when the authentication has failed
         /// </summary>
-        event EventHandler<RTSPConnectionAuthenticationFailedEventArgs> AuthenticationFailed;
+        event EventHandler<RTSPAuthenticationFailedEventArgs> AuthenticationFailed;
 
         /// <summary>
         /// Raised when an error is detected

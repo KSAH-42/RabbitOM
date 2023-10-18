@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an udp socket
     /// </summary>
-    public sealed class RTSPSocketMulticastReceiver
+    public sealed class RTSPSocketMulticastReceiver : IDisposable
     {
         /// <summary>
         /// Represent the socket buffer size
@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtsp
 
         private IPEndPoint  _groupEP         = null;
 
-        private UdpClient   _udpClient          = null;
+        private UdpClient   _udpClient       = null;
 
 
 
