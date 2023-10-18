@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp document bandwith infos
 	/// </summary>
-	public sealed class BandwithField : BaseField<BandwithField>
+	public sealed class BandwithField : BaseField , ICopyable<BandwithField>
 	{
 		/// <summary>
 		/// Represent a modifier name
@@ -116,7 +116,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(BandwithField field)
+		public void CopyFrom(BandwithField field)
 		{
 			if ( field == null )
 			{

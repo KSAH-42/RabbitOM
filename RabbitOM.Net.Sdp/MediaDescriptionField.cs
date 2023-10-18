@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class MediaDescriptionField : BaseField<MediaDescriptionField>
+	public sealed class MediaDescriptionField : BaseField, ICopyable<MediaDescriptionField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -154,7 +154,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(MediaDescriptionField field)
+		public void CopyFrom(MediaDescriptionField field)
 		{
 			if ( field == null )
 			{

@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the rtp map
 	/// </summary>
-	public sealed class RtpMapAttributeValue : AttributeValue<RtpMapAttributeValue>
+	public sealed class RtpMapAttributeValue : AttributeValue, ICopyable<RtpMapAttributeValue>
 	{
 		private string                 _encoding     = string.Empty;
 
@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Sdp
 		/// Copy from
 		/// </summary>
 		/// <param name="info">the object</param>
-		public override void CopyFrom(RtpMapAttributeValue info)
+		public void CopyFrom(RtpMapAttributeValue info)
 		{
 			if (info == null || object.ReferenceEquals(this, info))
 			{

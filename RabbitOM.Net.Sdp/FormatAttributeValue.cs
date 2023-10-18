@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the fmtp info
 	/// </summary>
-	public sealed class FormatAttributeValue : AttributeValue<FormatAttributeValue>
+	public sealed class FormatAttributeValue : AttributeValue, ICopyable<FormatAttributeValue>
 	{
 		/// <summary>
 		/// Represent field name
@@ -201,7 +201,7 @@ namespace RabbitOM.Net.Sdp
 		/// Copy from
 		/// </summary>
 		/// <param name="info">the object</param>
-		public override void CopyFrom(FormatAttributeValue info)
+		public void CopyFrom(FormatAttributeValue info)
 		{
 			if (info == null )
 			{

@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class OriginField : BaseField<OriginField>
+	public sealed class OriginField : BaseField, ICopyable<OriginField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -129,7 +129,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(OriginField field)
+		public void CopyFrom(OriginField field)
 		{
 			if ( field == null )
 			{

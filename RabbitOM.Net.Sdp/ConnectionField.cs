@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class ConnectionField : BaseField<ConnectionField>
+	public sealed class ConnectionField : BaseField, ICopyable<ConnectionField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -108,7 +108,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(ConnectionField field)
+		public void CopyFrom(ConnectionField field)
 		{
 			if ( field == null )
 			{

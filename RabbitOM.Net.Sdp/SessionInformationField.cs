@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class SessionInformationField : BaseField<SessionInformationField>
+	public sealed class SessionInformationField : BaseField, ICopyable<SessionInformationField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(SessionInformationField field)
+		public void CopyFrom(SessionInformationField field)
 		{
 			if ( field == null )
 			{

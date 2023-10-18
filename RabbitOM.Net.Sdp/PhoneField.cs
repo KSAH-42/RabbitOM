@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the sdp field
 	/// </summary>
-	public sealed class PhoneField : BaseField<PhoneField>
+	public sealed class PhoneField : BaseField, ICopyable<PhoneField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -85,7 +85,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(PhoneField field)
+		public void CopyFrom(PhoneField field)
 		{
 			if ( field == null )
 			{

@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Sdp
 	/// <para>This class has been introduce to act as a value object AND to avoid the primitive type obsession</para>
 	/// <para>The session descriptor can expose primitive type but for maintenance reason, an object will be introduce even for tiny object</para>
 	/// </remarks>
-	public sealed class VersionField : BaseField<VersionField>
+	public sealed class VersionField : BaseField, ICopyable<VersionField>
 	{
 		/// <summary>
 		/// Represent the type name
@@ -88,7 +88,7 @@ namespace RabbitOM.Net.Sdp
 		/// Make a copy
 		/// </summary>
 		/// <param name="field">the field</param>
-		public override void CopyFrom(VersionField field)
+		public void CopyFrom(VersionField field)
 		{
 			if ( field == null )
 			{
