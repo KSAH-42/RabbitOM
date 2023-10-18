@@ -346,7 +346,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 return;
             }
 
-            _proxy.DispatchEvent( new RTSPConnectionMessageSendedEventArgs( message ) );
+            _proxy.DispatchEvent( new RTSPMessageSendedEventArgs( message ) );
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 return;
             }
 
-            _proxy.DispatchEvent( new RTSPConnectionMessageReceivedEventArgs( message ) );
+            _proxy.DispatchEvent( new RTSPMessageReceivedEventArgs( message ) );
         }
 
         /// <summary>

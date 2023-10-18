@@ -448,7 +448,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         public void SubscribeEvents()
         {
-            _connection.DataReceived += OnDataReceived;
+            _connection.PacketReceived += OnDataReceived;
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         public void UnSusbcribeEvents()
         {
-            _connection.DataReceived -= OnDataReceived;
+            _connection.PacketReceived -= OnDataReceived;
         }
         
 

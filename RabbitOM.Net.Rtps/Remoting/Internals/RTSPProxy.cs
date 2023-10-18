@@ -22,12 +22,12 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when a message has been sended
         /// </summary>
-        public event EventHandler<RTSPConnectionMessageSendedEventArgs>         MessageSended         = null;
+        public event EventHandler<RTSPMessageSendedEventArgs>         MessageSended         = null;
 
         /// <summary>
         /// Raised when a message has been received
         /// </summary>
-        public event EventHandler<RTSPConnectionMessageReceivedEventArgs>       MessageReceived       = null;
+        public event EventHandler<RTSPMessageReceivedEventArgs>       MessageReceived       = null;
 
         /// <summary>
         /// Raised the data has been received
@@ -595,7 +595,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Dispatch an event
         /// </summary>
         /// <param name="e">the event args</param>
-        public void DispatchEvent( RTSPConnectionMessageSendedEventArgs e )
+        public void DispatchEvent( RTSPMessageSendedEventArgs e )
         {
             _eventQueue.Enqueue( e );
         }
@@ -604,7 +604,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Dispatch an event
         /// </summary>
         /// <param name="e">the event args</param>
-        public void DispatchEvent( RTSPConnectionMessageReceivedEventArgs e )
+        public void DispatchEvent( RTSPMessageReceivedEventArgs e )
         {
             _eventQueue.Enqueue( e );
         }
@@ -735,22 +735,22 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Occurs when a message has been sended
         /// </summary>
         /// <param name="e"></param>
-        private void OnMessageSended( RTSPConnectionMessageSendedEventArgs e )
+        private void OnMessageSended( RTSPMessageSendedEventArgs e )
         {
             _status.KeepStatusActive();
 
-            RTSPEventInvoker.RaiseEvent<RTSPConnectionMessageSendedEventArgs>( this , e , MessageSended );
+            RTSPEventInvoker.RaiseEvent<RTSPMessageSendedEventArgs>( this , e , MessageSended );
         }
 
         /// <summary>
         /// Occurs when a message has been received
         /// </summary>
         /// <param name="e">the event args</param>
-        private void OnMessageReceived( RTSPConnectionMessageReceivedEventArgs e )
+        private void OnMessageReceived( RTSPMessageReceivedEventArgs e )
         {
             _status.KeepStatusActive();
 
-            RTSPEventInvoker.RaiseEvent<RTSPConnectionMessageReceivedEventArgs>( this , e , MessageReceived );
+            RTSPEventInvoker.RaiseEvent<RTSPMessageReceivedEventArgs>( this , e , MessageReceived );
         }
 
         /// <summary>
@@ -802,11 +802,11 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     OnClosed( eventArgs );
                     break;
 
-                case RTSPConnectionMessageSendedEventArgs eventArgs:
+                case RTSPMessageSendedEventArgs eventArgs:
                     OnMessageSended( eventArgs );
                     break;
 
-                case RTSPConnectionMessageReceivedEventArgs eventArgs:
+                case RTSPMessageReceivedEventArgs eventArgs:
                     OnMessageReceived( eventArgs );
                     break;
 

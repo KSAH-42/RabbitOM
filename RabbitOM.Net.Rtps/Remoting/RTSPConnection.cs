@@ -54,7 +54,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when a message has been sended
         /// </summary>
-        public event EventHandler<RTSPConnectionMessageSendedEventArgs> MessageSended
+        public event EventHandler<RTSPMessageSendedEventArgs> MessageSended
         {
             add    => _proxy.MessageSended += value;
             remove => _proxy.MessageSended -= value;
@@ -63,7 +63,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when a message has been received
         /// </summary>
-        public event EventHandler<RTSPConnectionMessageReceivedEventArgs> MessageReceived
+        public event EventHandler<RTSPMessageReceivedEventArgs> MessageReceived
         {
             add    => _proxy.MessageReceived += value;
             remove => _proxy.MessageReceived -= value;
@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when a message has been received
         /// </summary>
-        public event EventHandler<RTSPPacketReceivedEventArgs> DataReceived
+        public event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived
         {
             add    => _proxy.DataReceived += value;
             remove => _proxy.DataReceived -= value;

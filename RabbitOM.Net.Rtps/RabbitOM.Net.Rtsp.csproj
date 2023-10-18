@@ -79,10 +79,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Remoting\Events\RTSPAuthenticationFailedEventArgs.cs" />
     <Compile Include="Remoting\Events\RTSPConnectionClosedEventArgs.cs" />
-    <Compile Include="Remoting\Events\RTSPConnectionConnectedEventArgs.cs" />
     <Compile Include="Remoting\Events\RTSPConnectionErrorEventArgs.cs" />
-    <Compile Include="Remoting\Events\RTSPConnectionMessageReceivedEventArgs.cs" />
-    <Compile Include="Remoting\Events\RTSPConnectionMessageSendedEventArgs.cs" />
+    <Compile Include="Remoting\Events\RTSPMessageReceivedEventArgs.cs" />
+    <Compile Include="Remoting\Events\RTSPMessageSendedEventArgs.cs" />
     <Compile Include="Remoting\Events\RTSPConnectionOpenedEventArgs.cs" />
     <Compile Include="Remoting\Extensions\RTSPConnectionExtensions.cs" />
     <Compile Include="Remoting\Extensions\RTSPInvokerExtensions.cs" />

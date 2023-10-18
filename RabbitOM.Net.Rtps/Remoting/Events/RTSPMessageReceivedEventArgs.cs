@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent an event args
     /// </summary>
-    public class RTSPConnectionMessageReceivedEventArgs : EventArgs
+    public class RTSPMessageReceivedEventArgs : EventArgs
     {
         private readonly RTSPMessage _message = null;
 
@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="message">the message</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPConnectionMessageReceivedEventArgs( RTSPMessage message )
+        public RTSPMessageReceivedEventArgs( RTSPMessage message )
         {
             _message = message ?? throw new ArgumentNullException( nameof( message ) );
         }

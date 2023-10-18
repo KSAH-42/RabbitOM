@@ -10,27 +10,27 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raise when the connection has been successfully opened
         /// </summary>
-        event EventHandler<RTSPConnectionOpenedEventArgs>               Opened;
+        event EventHandler<RTSPConnectionOpenedEventArgs>     Opened;
 
         /// <summary>
         /// Raised when the connection has been closed
         /// </summary>
-        event EventHandler<RTSPConnectionClosedEventArgs>               Closed;
+        event EventHandler<RTSPConnectionClosedEventArgs>     Closed;
 
         /// <summary>
         /// Raised when a message has been sended
         /// </summary>
-        event EventHandler<RTSPConnectionMessageSendedEventArgs>        MessageSended;
+        event EventHandler<RTSPMessageSendedEventArgs>        MessageSended;
 
         /// <summary>
         /// Raised when a message has been received
         /// </summary>
-        event EventHandler<RTSPConnectionMessageReceivedEventArgs>      MessageReceived;
+        event EventHandler<RTSPMessageReceivedEventArgs>      MessageReceived;
 
         /// <summary>
         /// Raised when a message has been received
         /// </summary>
-        event EventHandler<RTSPPacketReceivedEventArgs>                 DataReceived;
+        event EventHandler<RTSPPacketReceivedEventArgs>       PacketReceived;
 
         /// <summary>
         /// Raised when the authentication has failed
@@ -40,7 +40,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when an error is detected
         /// </summary>
-        event EventHandler<RTSPConnectionErrorEventArgs>                Error;
+        event EventHandler<RTSPConnectionErrorEventArgs>      Error;
 
 
 

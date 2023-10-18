@@ -192,7 +192,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 throw new ArgumentNullException(nameof(queue));
             }
-
+            
             if (cancellationHandle == null)
             {
                 throw new ArgumentNullException(nameof(cancellationHandle));
