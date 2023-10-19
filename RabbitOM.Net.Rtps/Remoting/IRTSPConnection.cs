@@ -162,7 +162,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool WaitForConnection( TimeSpan timeout );
+        bool WaitConnectionSucceed( TimeSpan timeout );
 
         /// <summary>
         /// Call the options method

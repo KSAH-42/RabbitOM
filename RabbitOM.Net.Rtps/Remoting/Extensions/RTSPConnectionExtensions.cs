@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Extensions
         /// <returns>returns true for a success, otherwise false</returns>
         public static async Task<bool> WaitForConnectionAsync( this IRTSPConnection connection , TimeSpan timeout )
         {
-            return await Task.Run( () => connection.WaitForConnection( timeout ) );
+            return await Task.Run( () => connection.WaitConnectionSucceed( timeout ) );
         }
     }
 }

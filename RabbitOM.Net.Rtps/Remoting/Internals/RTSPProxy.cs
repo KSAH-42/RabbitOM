@@ -550,7 +550,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool WaitForConnection( TimeSpan timeout )
+        public bool WaitConnectionSucceed( TimeSpan timeout )
         {
             return _status.WaitActivation( timeout );
         }

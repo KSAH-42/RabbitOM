@@ -274,9 +274,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool WaitForConnection( TimeSpan timeout )
+        public virtual bool WaitConnectionSucceed( TimeSpan timeout )
         {
-            return _proxy.WaitForConnection( timeout );
+            return _proxy.WaitConnectionSucceed( timeout );
         }
 
         /// <summary>
