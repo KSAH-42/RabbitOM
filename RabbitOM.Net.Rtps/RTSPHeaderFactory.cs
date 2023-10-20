@@ -489,17 +489,17 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a header
         /// </summary>
-        /// <param name="completeHeader">the full header value</param>
+        /// <param name="entireHeader">the full header included it's value</param>
         /// <param name="headerName">the header type name</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool CanCreateHeader( string completeHeader , string headerName )
+        public static bool CanCreateHeader( string entireHeader , string headerName )
         {
-            if ( string.IsNullOrWhiteSpace( completeHeader ) || string.IsNullOrWhiteSpace( completeHeader ) || string.IsNullOrWhiteSpace( headerName ) )
+            if ( string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( headerName ) )
             {
                 return false;
             }
 
-            var tokens = completeHeader.Split( new char[] { ':' } , StringSplitOptions.RemoveEmptyEntries );
+            var tokens = entireHeader.Split( new char[] { ':' } , StringSplitOptions.RemoveEmptyEntries );
 
             if ( tokens == null || tokens.Length <= 1 )
             {
@@ -514,21 +514,21 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a header
         /// </summary>
-        /// <param name="fullHeader">the full header: this value must contains the header name and the header value</param>
+        /// <param name="entireHeader">the full header: this value must contains the header name and the header value</param>
         /// <returns>returns an instance, otherwise null</returns>
         /// <remarks>
         /// <code>
         ///  var header = RTSPHeaderFactory.CreateHeader( "CSeq: 1") 
         /// </code>
         /// </remarks>
-        public static RTSPHeader CreateHeader( string fullHeader )
+        public static RTSPHeader CreateHeader( string entireHeader )
         {
-            if ( string.IsNullOrWhiteSpace( fullHeader ) || string.IsNullOrWhiteSpace( fullHeader ) )
+            if ( string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( entireHeader ) )
             {
                 return null;
             }
 
-            var tokens = fullHeader.Split( new char[] { ':' } , StringSplitOptions.RemoveEmptyEntries );
+            var tokens = entireHeader.Split( new char[] { ':' } , StringSplitOptions.RemoveEmptyEntries );
 
             if ( tokens == null || tokens.Length <= 1 )
             {

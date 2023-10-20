@@ -24,6 +24,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // TODO: At the end, remove un-necessary try catch
         // TODO: Some classes need to be removed 
         //       -> RTSPFile used for debugging
+        // TODO: Pass all class to internals which are not supposed to be used by the developper who want to used the assembly
+        //        => supposed to be done
 
         // If you want to get more features, used the connection class instead to control the protocol messaging layer
         // using ( var connection = new RabbitOM.Net.Rtsp.Remoting.RTSPConnection() ) {}
@@ -89,6 +91,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
+ 
             
             client.StartCommunication();
 
