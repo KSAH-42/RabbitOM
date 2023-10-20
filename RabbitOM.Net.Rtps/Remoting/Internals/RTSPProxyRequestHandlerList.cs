@@ -344,9 +344,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Remove an element
         /// </summary>
         /// <param name="element">the element to be removed</param>
-        /// <param name="release">set true to call release</param>
+        /// <param name="dispose">set true to call release</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove( RTSPProxyRequestHandler element , bool release = true)
+        public bool Remove( RTSPProxyRequestHandler element , bool dispose = true)
         {
             if ( element == null )
             {
@@ -357,9 +357,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
             {
                 if ( _collection.Values.Contains( element ) )
                 {
-                    if ( release )
+                    if ( dispose )
 					{
-                        element.Release();
+                        element.Dispose();
 					}
 
                     return _collection.Remove( element.RequestId );
@@ -378,7 +378,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
             {
                 foreach ( var element in _collection )
 				{
-                    element.Value?.Release();
+                    element.Value?.Dispose();
 				}
 
                 _collection.Clear();

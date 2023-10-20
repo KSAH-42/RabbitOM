@@ -5,11 +5,13 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent a request handler
     /// </summary>
-    internal sealed class RTSPProxyRequestHandler
+    internal sealed class RTSPProxyRequestHandler : IDisposable
     {
-        private readonly RTSPDataMember<bool>  _succeed            = null;
+        private readonly object                _lock               = null;
 
-        private readonly RTSPDataMember<bool>  _isCanceled         = null;
+        private bool                           _succeed            = false;
+
+        private bool                           _isCanceled         = false;
 
         private readonly RTSPEventWaitHandle   _completionHandle   = null;
 
@@ -30,8 +32,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public RTSPProxyRequestHandler( RTSPMessageRequest request )
         {
             _request = request ?? throw new ArgumentNullException( nameof( request ) );
-            _succeed = new RTSPDataMember<bool>( false );
-            _isCanceled = new RTSPDataMember<bool>( false );
+            _lock = new object();
             _completionHandle = new RTSPEventWaitHandle();
         }
 
@@ -56,11 +57,25 @@ namespace RabbitOM.Net.Rtsp.Remoting
         }
 
         /// <summary>
+        /// Check if completion status
+        /// </summary>
+        public bool IsCompleted
+        {
+            get => _completionHandle.Wait( TimeSpan.Zero );
+        }
+
+        /// <summary>
         /// Gets the status
         /// </summary>
         public bool Succeed
         {
-            get => _succeed.Value;
+            get
+            {
+                lock (_lock)
+                {
+                    return _succeed;
+                }
+            }
         }
 
         /// <summary>
@@ -68,16 +83,19 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         public bool IsCanceled
         {
-            get => _isCanceled.Value;
+            get
+            {
+                lock (_lock)
+                {
+                    return _isCanceled;
+                }
+            }
         }
 
-        /// <summary>
-        /// Check if completion status
-        /// </summary>
-        public bool IsCompleted
-        {
-            get => _completionHandle.Wait( TimeSpan.Zero );
-        }
+
+
+
+
 
 
 
@@ -89,8 +107,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             if ( !_completionHandle.Wait( TimeSpan.Zero ) )
             {
-                _isCanceled.Value = true;
-                _succeed.Value = false;
+                OnCancel();
 
                 _completionHandle.Set();
             }
@@ -153,16 +170,46 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 return;
             }
 
-            _succeed.Value = true;
+            OnSucceed();
         }
-        
 
         /// <summary>
-        /// Release
+        /// Dispose
         /// </summary>
-        public void Release()
+        public void Dispose()
 		{
             _completionHandle.Dispose();
+        }
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Occurs when cancelation is needed
+        /// </summary>
+        private void OnCancel()
+        {
+            lock( _lock )
+            {
+                _isCanceled = true;
+                _succeed    = false;
+            }
+        }
+
+        /// <summary>
+        /// Occurs on success
+        /// </summary>
+        private void OnSucceed()
+        {
+            lock ( _lock )
+            {
+                _succeed = true;
+            }
         }
     }
 }
