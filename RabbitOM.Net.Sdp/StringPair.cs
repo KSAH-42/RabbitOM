@@ -80,7 +80,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="separator">the separator</param>
 		/// <param name="result">the output result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryExtractField(string text, char separator, out StringPair result)
+		public static bool TryParse(string text, char separator, out StringPair result)
 		{
 			result = StringPair.Empty;
 
@@ -122,18 +122,18 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="separators">the separators</param>
 		/// <param name="result">the output result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryExtractField(string text, char[] separators, out StringPair result)
+		public static bool TryParse(string text, char[] separators, out StringPair result)
 		{
 			result = null;
 
-			if ( separators == null)
+			if ( separators == null )
 			{
 				return false;
 			}
 
 			foreach ( var seperator in separators )
 			{
-				if ( TryExtractField( text , seperator , out result ) )
+				if ( TryParse( text , seperator , out result ) )
 				{
 					return true;
 				}

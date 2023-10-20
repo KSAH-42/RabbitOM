@@ -43,7 +43,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		{
 			result = null;
 
-			if (!StringPair.TryExtractField(value, ':', out StringPair field))
+			if (!StringPair.TryParse(value, ':', out StringPair field))
 			{
 				return false;
 			}

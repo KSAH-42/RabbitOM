@@ -96,7 +96,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			foreach (var token in tokens)
 			{
-				if (!StringPair.TryExtractField(token, new char[] { '=', ':' }, out StringPair pair))
+				if (!StringPair.TryParse(token, new char[] { '=', ':' }, out StringPair pair))
 				{
 					continue;
 				}

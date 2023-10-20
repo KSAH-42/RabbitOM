@@ -32,7 +32,7 @@ namespace RabbitOM.Net.Sdp.Serialization
 						yield break;
 					}
 
-					if (!StringPair.TryExtractField(line, '=', out StringPair pair))
+					if (!StringPair.TryParse(line, '=', out StringPair pair))
 					{
 						continue;
 					}
