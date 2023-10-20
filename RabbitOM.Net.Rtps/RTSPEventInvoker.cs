@@ -14,22 +14,27 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
         /// <param name="handler">the delegate</param>
-        public static void RaiseEvent<TEventArg>( object sender , TEventArg e , EventHandler<TEventArg> handler )
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryInvoke<TEventArg>( this EventHandler<TEventArg> handler , object sender , TEventArg e )
             where TEventArg : EventArgs
         {
             if ( sender == null || e == null || handler == null )
             {
-                return;
+                return false;
             }
 
             try
             {
                 handler.Invoke( sender , e );
+
+                return true;
             }
             catch ( Exception ex )
             {
                 System.Diagnostics.Debug.WriteLine( ex );
             }
+
+            return false;
         }
 
         /// <summary>
@@ -38,22 +43,27 @@ namespace RabbitOM.Net.Rtsp
         /// <typeparam name="TEventArg">the type of event args</typeparam>
         /// <param name="e">the event args</param>
         /// <param name="handler">the delegate</param>
-        public static void RaiseCallback<TEventArg>( TEventArg e , Action<TEventArg> handler )
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryInvoke<TEventArg>( this Action<TEventArg> handler  , TEventArg e )
             where TEventArg : EventArgs
         {
             if ( e == null || handler == null )
             {
-                return;
+                return false;
             }
 
             try
             {
                 handler.Invoke( e );
+
+                return true;
             }
             catch ( Exception ex )
             {
                 System.Diagnostics.Debug.WriteLine( ex );
             }
+
+            return false;
         }
     }
 }

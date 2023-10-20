@@ -213,7 +213,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnCommunicationStarted( RTSPClientCommunicationStartedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPClientCommunicationStartedEventArgs>( this , e , CommunicationStarted );
+            CommunicationStarted?.TryInvoke( this , e );
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnCommunicationStopped( RTSPClientCommunicationStoppedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPClientCommunicationStoppedEventArgs>( this , e , CommunicationStopped );
+            CommunicationStopped?.Invoke( this , e );
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnConnected( RTSPClientConnectedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPClientConnectedEventArgs>( this , e , Connected );
+            Connected?.TryInvoke( this, e );
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnDisconnected( RTSPClientDisconnectedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPClientDisconnectedEventArgs>( this , e , Disconnected );
+            Disconnected?.TryInvoke( this, e );
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnPacketReceived(RTSPPacketReceivedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPPacketReceivedEventArgs>( this , e , PacketReceived );
+            PacketReceived?.TryInvoke( this, e );
         }
 
         /// <summary>
@@ -258,8 +258,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnError( RTSPClientErrorEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPClientErrorEventArgs>( this , e , Error );
+            Error?.TryInvoke( this, e );
         }
-
     }
 }

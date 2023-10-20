@@ -719,7 +719,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="e">the event args</param>
         private void OnOpened( RTSPConnectionOpenedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPConnectionOpenedEventArgs>( this , e , Opened );
+            Opened?.TryInvoke( this, e );
         }
 
         /// <summary>
@@ -728,7 +728,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="e">the event args</param>
         private void OnClosed( RTSPConnectionClosedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPConnectionClosedEventArgs>( this , e , Closed );
+            Closed?.TryInvoke( this , e );
         }
 
         /// <summary>
@@ -739,7 +739,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             _status.KeepStatusActive();
 
-            RTSPEventInvoker.RaiseEvent<RTSPMessageSendedEventArgs>( this , e , MessageSended );
+            MessageSended?.TryInvoke( this , e );
         }
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             _status.KeepStatusActive();
 
-            RTSPEventInvoker.RaiseEvent<RTSPMessageReceivedEventArgs>( this , e , MessageReceived );
+            MessageReceived?.TryInvoke( this , e );
         }
 
         /// <summary>
@@ -759,7 +759,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="e"></param>
         private void OnDataReceived(RTSPPacketReceivedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPPacketReceivedEventArgs>( this , e , DataReceived );
+            DataReceived?.TryInvoke( this , e );
         }
 
         /// <summary>
@@ -768,7 +768,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="e">the event args</param>
         private void OnAuthenticationFailed( RTSPAuthenticationFailedEventArgs e )
         {
-            RTSPEventInvoker.RaiseEvent<RTSPAuthenticationFailedEventArgs>( this , e , AuthenticationFailed );
+            AuthenticationFailed?.TryInvoke( this , e );
         }
 
         /// <summary>
@@ -779,7 +779,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             _status.IncreaseErrors();
 
-            RTSPEventInvoker.RaiseEvent<RTSPConnectionErrorEventArgs>( this , e , Error );
+            Error?.TryInvoke( this , e );
         }
 
         /// <summary>
