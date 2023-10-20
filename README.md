@@ -1,6 +1,6 @@
 # RabbitOM
 
-Hey Folks ! now these .net assembly can be used for receive video video, and works with H264 and H265 decoders.
+Hey Folks ! now these .net assembly can be used for receiving video streams, and works with H264 and H265 decoders. This is not the final implementation, I am actually adding many improvements. If you don't have any cameras, you can download the RTPS Happy server.
 
 If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
