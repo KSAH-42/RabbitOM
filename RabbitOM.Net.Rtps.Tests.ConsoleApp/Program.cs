@@ -53,6 +53,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Client connected - " + client.Configuration.Uri);
+				Console.WriteLine(e.TrackInfo.PPS);
             };
 
             client.Disconnected += (sender, e) =>
