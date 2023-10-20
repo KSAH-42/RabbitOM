@@ -119,24 +119,24 @@ namespace RabbitOM.Net.Rtsp
 
                 while ( reader.Read() )
                 {
-                    if ( !reader.SplitElementAsField() )
+                    if ( ! reader.SplitElementAsField() )
                     {
                         continue;
                     }
 
                     if ( reader.IsNptTimeElementType )
                     {
-                        result.Npt.Decode( reader.GetElementValue() );
+                        RTSPStringPair.TryDecode( result.Npt , reader.GetElementValue() );
                     }
 
                     if ( reader.IsClockElementType )
                     {
-                        result.Clock.Decode( reader.GetElementValue() );
+                        RTSPStringPair.TryDecode( result.Clock , reader.GetElementValue() ); 
                     }
 
                     if ( reader.IsTimeElementType )
                     {
-                        result.Time.Decode( reader.GetElementValue() );
+                        RTSPStringPair.TryDecode( result.Time, reader.GetElementValue() );
                     }
                 }
 

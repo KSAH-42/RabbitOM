@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent a proxy used to interact with a remote RTSP server
     /// </summary>
-    public class RTSPConnection : IRTSPConnection , IDisposable
+    public class RTSPConnection : IRTSPConnection
     {
         private readonly RTSPProxy _proxy = null;
 

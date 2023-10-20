@@ -37,6 +37,47 @@ namespace RabbitOM.Net.Rtsp
 
 
 
+
+
+
+        /// <summary>
+        /// Parse
+        /// </summary>
+        /// <param name="pair">the pair</param>
+        /// <param name="value">the input value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryDecode(RTSPStringPair pair, string value)
+        {
+            if (pair == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            var tokens = value.Trim().Split(new char[] { '-' });
+
+            if (tokens == null || tokens.Length <= 0)
+            {
+                return false;
+            }
+
+            pair.First = tokens[0];
+            pair.Second = tokens.Length > 1 ? tokens[1] : string.Empty;
+
+            return true;
+        }
+
+
+
+
+
+
+
+
         /// <summary>
         /// Clear
         /// </summary>
@@ -59,34 +100,10 @@ namespace RabbitOM.Net.Rtsp
         /// Perform a validation
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        internal bool TryValidate()
+        public bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _first ) || !string.IsNullOrWhiteSpace( _second );
-        }
-
-        /// <summary>
-        /// Parse
-        /// </summary>
-        /// <param name="value">the input value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        internal bool Decode( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Trim().Split( new char[] { '-' } );
-
-            if ( tokens == null || tokens.Length <= 0 )
-            {
-                return false;
-            }
-
-            First = tokens[0];
-            Second = tokens.Length > 1 ? tokens[1] : string.Empty;
-
-            return true;
+            return !string.IsNullOrWhiteSpace( _first ) 
+                || !string.IsNullOrWhiteSpace( _second );
         }
     }
 }

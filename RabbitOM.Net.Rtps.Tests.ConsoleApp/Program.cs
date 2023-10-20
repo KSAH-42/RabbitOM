@@ -7,8 +7,10 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
     class Program
     {
+        // TODO: Code review on the SDP layer
+        // TODO: Write an efficient memory buffer for replacing the RTSPMemoryStream class
         // TODO: Remove the client class
-        // TODO: Goal, write individual client class with it respective configuration
+        // TODO: Goal: write individual client class with it respective configuration
         // TODO: Write a client receiver class for tcp streaming
         // TODO: Write a client receiver class for udp streaming
         // TODO: Write a client receiver class for multicast streaming
@@ -17,6 +19,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // TODO: Secure password using SecureString 
         // TODO: Find something about the duplicated code on scope object used by queue => inject a ICollection<T> or something like this ?
         // TODO: Reduce memory allocations
+        //         => use a small memory pool ?
         // TODO: Introduce complete frame objects 
         // TODO: At the end, remove un-necessary try catch
         // TODO: Some classes need to be removed 
@@ -73,7 +76,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
 
                 // You known it: for reducing the CPU and memory consumption 
-                // comment the code below :
+                // please comment the code below if you want to measure performance:
 
                 Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length);
             };
@@ -86,7 +89,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
-
+            
             client.StartCommunication();
 
             Console.BufferHeight = 100;

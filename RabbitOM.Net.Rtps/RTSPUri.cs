@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an uri class
     /// </summary>
-    public sealed class RTSPUri
+    internal sealed class RTSPUri
     {
         /// <summary>
         /// Represent the default scheme

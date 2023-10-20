@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a safe event handle class
     /// </summary>
-    public sealed class RTSPEventWaitHandle : IDisposable
+    internal sealed class RTSPEventWaitHandle : IDisposable
     {
         private readonly EventWaitHandle _handle = null;
 
