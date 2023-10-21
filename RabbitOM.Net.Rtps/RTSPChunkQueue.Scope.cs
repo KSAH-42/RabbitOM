@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtsp
             private readonly RTSPChunkQueue _queue;
 
             /// <summary>
-            /// Initiaize new instance of scope
+            /// Initialize new instance of the scope class
             /// </summary>
             /// <param name="queue">the queue</param>
             /// <exception cref="ArgumentNullException"/>
