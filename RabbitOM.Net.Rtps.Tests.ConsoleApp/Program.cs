@@ -91,10 +91,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
- 
             
             client.StartCommunication();
-
+            
             Console.BufferHeight = 100;
 
             Console.WriteLine("Press any keys to close the application");

@@ -131,9 +131,6 @@
     <Compile Include="RTSPDeliveryMode.cs" />
     <Compile Include="RTSPDigestAlgorithmType.cs" />
     <Compile Include="RTSPDigestAlgorithmTypeConverter.cs" />
-    <Compile Include="RTSPDispatcher.cs" />
-    <Compile Include="RTSPDispatcherInvoker.cs" />
-    <Compile Include="RTSPDispatcherWorker.cs" />
     <Compile Include="RTSPDisposeScope.cs" />
     <Compile Include="RTSPEventInvoker.cs" />
     <Compile Include="RTSPEventQueue.Scope.cs" />
