@@ -1,3 +1,40 @@
+abstract class Client
+{
+    public abstract void Start();
+    public abstract void Stop();
+}
+
+class MulticastClient : Client , IClientConfigurable<MulticastConfiguration>
+{
+    public MulticastConfiguration Configuration
+    {
+        get;
+    }
+
+    public override void Start()
+    {
+        _thread.Start( () => 
+        {
+            OnStart( ... );
+
+            using ( var session = new MulticastSession( this ) )
+            {
+                using( var sessionRunner = new SessionRunner( session ) )
+                {
+                    sessionRunner.Run();
+                }
+            }
+
+            OnStop( ... );
+        };
+    }
+
+    public override void Stop()
+    {
+    }
+}
+
+
 OMRabbit.Net.Rtsp
 OMRabbit.Net.Rtsp.Clients
 OMRabbit.Net.Rtsp.Clients.Models
