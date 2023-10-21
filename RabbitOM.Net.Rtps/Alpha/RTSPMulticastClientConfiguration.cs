@@ -41,10 +41,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
         {
             get
             {
-				lock ( SyncRoot )
-				{
-					return _address;
-	            }
+		lock ( SyncRoot )
+		{
+                    return _address;
+	        }
             }
 
             private set 
