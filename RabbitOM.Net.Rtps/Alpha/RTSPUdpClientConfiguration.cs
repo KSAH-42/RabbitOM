@@ -51,7 +51,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( SyncRoot )
                 {
-                    _port = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsurePortNumber(value);
+
+                    _port = value;
                 }
             }
         }

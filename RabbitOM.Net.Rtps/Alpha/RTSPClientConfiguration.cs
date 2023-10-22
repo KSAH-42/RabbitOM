@@ -82,10 +82,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( _lock )
                 {
-                    if ( ! RTSPUri.IsWellFormed( value ) )
-                    {
-                        throw new UriFormatException( "Bad uri format" );
-                    }
+                    RTSPClientConfigurationValidator.EnsureUriWellFormed( value );
 
                     _uri = value;
                 }
@@ -153,7 +150,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _receiveTimeout = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsureTimeoutValue(value);
+
+                    _receiveTimeout = value;
                 }
             }
         }
@@ -175,7 +174,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _sendTimeout = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsureTimeoutValue(value);
+
+                    _sendTimeout = value;
                 }
             }
         }
@@ -197,7 +198,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _retriesInterval = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsureTimeoutValue(value);
+
+                    _retriesInterval = value;
                 }
             }
         }
@@ -219,7 +222,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _keepAliveInterval = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsureTimeoutValue(value);
+
+                    _keepAliveInterval = value;
                 }
             }
         }

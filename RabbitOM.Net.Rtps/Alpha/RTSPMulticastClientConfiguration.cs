@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
@@ -61,8 +60,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( SyncRoot )
                 {
-                    // TODO: throw an exception if it is not a multicast ip address
-                    _address = IPAddress.Parse(value?.ToString() ?? string.Empty ).ToString();
+                    RTSPClientConfigurationValidator.EnsureMulticastAddress(value);
+
+                    _address = value;
                 }
             }
         }
@@ -85,7 +85,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( SyncRoot )
                 {
-                    _port = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsurePortNumber(value);
+
+                    _port = value;
                 }
             }
         }
@@ -107,7 +109,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (SyncRoot)
                 {
-                    _ttl = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));
+                    RTSPClientConfigurationValidator.EnsureTTLValue(value);
+
+                    _ttl = value;
                 }
             }
         }
@@ -221,6 +225,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 RetriesInterval = retriesInterval,
                 KeepAliveInterval = keepAliveInterval,
             };
-        }
+        }        
     }
 }

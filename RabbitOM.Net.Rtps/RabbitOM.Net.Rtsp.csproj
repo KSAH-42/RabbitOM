@@ -241,6 +241,7 @@
     <Compile Include="RTSPStatusCode.cs" />
     <Compile Include="RTSPStatusHandle.cs" />
     <Compile Include="RTSPStringList.cs" />
+    <Compile Include="Alpha\RTSPClientConfigurationValidator.cs" />
     <Compile Include="RTSPStringPair.cs" />
     <Compile Include="RTSPStringReader.cs" />
     <Compile Include="RTSPThread.cs" />
