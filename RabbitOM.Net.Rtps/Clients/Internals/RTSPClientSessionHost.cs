@@ -62,7 +62,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             if ( ! _session.IsOpened )
             {
-                _idleTimeout = _session.Options.RetriesInterval;
+                _idleTimeout = _session.Options.RetriesInterval != TimeSpan.Zero ? _session.Options.RetriesInterval : RTSPClientConfigurationOptions.DefaultRetriesInterval;
 
                 if ( _session.Open() )
                 {

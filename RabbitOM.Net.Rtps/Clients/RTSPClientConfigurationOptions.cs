@@ -60,7 +60,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         public object SyncRoot
         {
             get => _lock;
-        }
+        }                                              
 
         /// <summary>
         /// Gets / Sets the retries interval
