@@ -148,7 +148,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _receiveTimeout = value ;
+                    _receiveTimeout = value != TimeSpan.Zero ? value : DefaultReceiveTimeout;
                 }
             }
         }
@@ -170,7 +170,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _sendTimeout = value;
+                    _sendTimeout = value != TimeSpan.Zero ? value : DefaultSendTimeout;
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _retriesInterval = value;
+                    _retriesInterval = value != TimeSpan.Zero ? value : DefaultRetriesInterval;
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _keepAliveInterval = value;
+                    _keepAliveInterval = value != TimeSpan.Zero ? value : DefaultKeepAliveInterval;
                 }
             }
         }

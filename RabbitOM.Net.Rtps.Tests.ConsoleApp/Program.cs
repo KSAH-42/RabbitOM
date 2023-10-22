@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             #endregion
 
-//            client.Configuration.Uri = Constants.LocalServer;
+            client.Configuration.Uri = Constants.LocalServer;
             client.Configuration.UserName = Constants.UserName;
             client.Configuration.Password = Constants.Password;
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.

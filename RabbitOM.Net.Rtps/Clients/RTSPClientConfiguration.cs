@@ -144,7 +144,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( _lock )
                 {
-                    _receiveTimeout = value;
+                    _receiveTimeout = value != TimeSpan.Zero ? value : DefaultReceiveTimeout;
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( _lock )
                 {
-                    _sendTimeout = value;
+                    _sendTimeout = value != TimeSpan.Zero ? value : DefaultSendTimeout;
                 }
             }
         }

@@ -71,7 +71,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( SyncRoot )
                 {
-                    return _retriesInterval != TimeSpan.Zero ? _retriesInterval : DefaultRetriesInterval ;
+                    return _retriesInterval;
                 }
             }
 
@@ -79,7 +79,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( SyncRoot )
                 {
-                    _retriesInterval = value;
+                    _retriesInterval = value != TimeSpan.Zero ? value : DefaultRetriesInterval;
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( SyncRoot )
                 {
-                    return _keepAliveInteval != TimeSpan.Zero ? _keepAliveInteval : DefaultRetriesInterval ;
+                    return _keepAliveInteval;
                 }
             }
 
@@ -101,7 +101,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( SyncRoot )
                 {
-                    _keepAliveInteval = value;
+                    _keepAliveInteval = value != TimeSpan.Zero ? value : DefaultKeepAliveInterval;
                 }
             }
         }   
