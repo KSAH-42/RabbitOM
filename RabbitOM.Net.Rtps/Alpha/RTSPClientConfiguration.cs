@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 {
                     if ( ! RTSPUri.IsWellFormed( value ) )
                     {
-                        throw new Exception( "Bad uri format" );
+                        throw new UriFormatException( "Bad uri format" );
                     }
 
                     _uri = value;
