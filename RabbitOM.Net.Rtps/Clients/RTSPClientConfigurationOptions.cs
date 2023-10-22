@@ -33,9 +33,9 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private readonly object      _lock                  = new object();
 
-        private TimeSpan             _retriesInterval       = TimeSpan.Zero;
+        private TimeSpan             _retriesInterval       = DefaultKeepAliveInterval;
 
-        private TimeSpan             _keepAliveInteval      = TimeSpan.Zero;
+        private TimeSpan             _keepAliveInteval      = DefaultKeepAliveInterval;
        
         private RTSPMediaFormatType  _mediaFormat           = RTSPMediaFormatType.Video;
 

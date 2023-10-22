@@ -25,16 +25,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // TODO: Some classes need to be removed 
         //       -> RTSPFile used for debugging
         // TODO: Pass all class to internals which are not supposed to be used by the developper who want to used the assembly
-        //        => supposed to be done
-
-        // If you want to get more features, used the connection class instead to control the protocol messaging layer
-        // using ( var connection = new RabbitOM.Net.Rtsp.Remoting.RTSPConnection() ) {}
+        
+        // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
         // Make sure that the ports are not blocked
-        // Use the vendor configuration tool to activate the rtsp protocol
+        // Use the vendor configuration tool to activate the rtsp protocol especially the port
         // AND create a user account for the rtsp connection
         // You can try to find a online security camera F R O M  a manufacturer, but ...
-        // I strongly recommend to BUY a camera, and don't waste your time to find a security camera online from any manufacturers
-        // Otherwise you can use HappyRtspServer software
+        // I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
+        // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
         static void Main(string[] args)
         {
@@ -79,13 +77,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
                 // You known it: for reducing the CPU and memory consumption 
                 // please comment the code below if you want to measure performance:
+                // Metric are better, but actually this is not WMI Metric for this api
 
                 Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length);
             };
 
             #endregion
 
-            client.Configuration.Uri = Constants.LocalServer;
+//            client.Configuration.Uri = Constants.LocalServer;
             client.Configuration.UserName = Constants.UserName;
             client.Configuration.Password = Constants.Password;
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
