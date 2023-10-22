@@ -10,6 +10,9 @@ namespace RabbitOM.Net.Rtsp
     {
         private readonly EventWaitHandle _handle = null;
 
+
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -17,6 +20,11 @@ namespace RabbitOM.Net.Rtsp
         {
 			_handle = new EventWaitHandle( false , EventResetMode.ManualReset );
         }
+
+
+
+
+
 
         /// <summary>
         /// Activate the event
@@ -30,7 +38,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -48,7 +56,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -66,7 +74,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -95,7 +103,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -114,7 +122,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -133,7 +141,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -163,7 +171,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -193,7 +201,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -205,6 +213,25 @@ namespace RabbitOM.Net.Rtsp
         public void Dispose()
 		{
             this._handle.Dispose();
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Fired when an exception occurs
+        /// </summary>
+        /// <param name="ex">the exception</param>
+        private void OnException( Exception ex )
+        {
+            if ( ex == null )
+            {
+                return;
+            }
+
+            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }

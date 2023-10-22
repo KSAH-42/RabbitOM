@@ -129,18 +129,39 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Create the configuration
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="address">the address</param>
+        /// <param name="address">the multicast address</param>
         /// <param name="port">the port</param>
-        /// <param name="userName">the username</param>
-        /// <param name="password">the password</param>
+        /// <param name="ttl">the ttl</param>
         /// <returns>returns an instance</returns>
-        public static RTSPMulticastClientConfiguration CreateConfiguration(string uri,string address,int port, string userName,string password)
+        public static RTSPMulticastClientConfiguration CreateConfiguration(string uri, string address, int port , byte ttl)
         {
             return new RTSPMulticastClientConfiguration()
             {
                 Uri = uri,
                 Address = address,
                 Port = port,
+                TTL = ttl,
+            };
+        }
+
+        /// <summary>
+        /// Create the configuration
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <param name="address">the address</param>
+        /// <param name="port">the port</param>
+        /// <param name="ttl">the ttl</param>
+        /// <param name="userName">the username</param>
+        /// <param name="password">the password</param>
+        /// <returns>returns an instance</returns>
+        public static RTSPMulticastClientConfiguration CreateConfiguration(string uri,string address,int port, byte ttl, string userName,string password)
+        {
+            return new RTSPMulticastClientConfiguration()
+            {
+                Uri = uri,
+                Address = address,
+                Port = port,
+                TTL = ttl,
                 UserName = userName,
                 Password = password
             };

@@ -1,3 +1,10 @@
+
+client.Configure( Configuration configuration );
+
+client.StartCommunication();
+
+
+
 abstract class Client
 {
     public abstract void Start();
