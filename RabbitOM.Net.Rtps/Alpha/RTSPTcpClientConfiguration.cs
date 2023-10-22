@@ -8,6 +8,17 @@ namespace RabbitOM.Net.Rtsp.Alpha
     public sealed class RTSPTcpClientConfiguration : RTSPClientConfiguration
     {
         /// <summary>
+        /// Disable the default constructor
+        /// </summary>
+		private RTSPTcpClientConfiguration()
+		{
+		}
+
+
+
+
+
+        /// <summary>
         /// Create the configuration
         /// </summary>
         /// <param name="uri">the uri</param>

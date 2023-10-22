@@ -23,6 +23,18 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
         /// <summary>
+        /// Disable the default constructor
+        /// </summary>
+		private RTSPUdpClientConfiguration()
+		{
+		}
+
+
+
+
+
+
+        /// <summary>
         /// Gets the udp port
         /// </summary>
         public int Port
@@ -39,7 +51,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( SyncRoot )
                 {
-                    _port = value;
+                    _port = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }

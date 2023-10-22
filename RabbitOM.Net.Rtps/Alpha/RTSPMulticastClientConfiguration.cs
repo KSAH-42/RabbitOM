@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
@@ -32,6 +33,15 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
+        /// <summary>
+        /// Disable the default constructor
+        /// </summary>
+		private RTSPMulticastClientConfiguration()
+		{
+		}
+
+
+
 
 
         /// <summary>
@@ -41,17 +51,17 @@ namespace RabbitOM.Net.Rtsp.Alpha
         {
             get
             {
-		lock ( SyncRoot )
-		{
+		        lock ( SyncRoot )
+		        {
                     return _address;
-	        }
+	            }
             }
 
             private set 
             {
                 lock ( SyncRoot )
                 {
-                    _address = value ?? string.Empty;
+                    _address = IPAddress.Parse(value?.ToString() ?? string.Empty ).ToString();
                 }
             }
         }
@@ -74,7 +84,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( SyncRoot )
                 {
-                    _port = value;
+                    _port = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }
@@ -96,7 +106,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (SyncRoot)
                 {
-                    _ttl = value;
+                    _ttl = value > 0 ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }

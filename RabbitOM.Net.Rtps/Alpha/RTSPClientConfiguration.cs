@@ -10,12 +10,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <summary>
         /// Represent the default receive timeout
         /// </summary>
-        public readonly static TimeSpan   DefaultReceiveTimeout     = TimeSpan.FromSeconds( 15 );
+        public readonly static TimeSpan   DefaultReceiveTimeout     = TimeSpan.FromSeconds(15);
 
         /// <summary>
         /// Represent the default send timeout
         /// </summary>
-        public readonly static TimeSpan   DefaultSendTimeout        = TimeSpan.FromSeconds( 15 );
+        public readonly static TimeSpan   DefaultSendTimeout        = TimeSpan.FromSeconds(15);
 
         /// <summary>
         /// Represent the default keep alive interval
@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
-
+                                                                                            
 
         private readonly object     _lock              = new object();
 
@@ -82,7 +82,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( _lock )
                 {
-                    _uri = value ?? string.Empty;
+                    if ( ! RTSPUri.IsWellFormed( value ) )
+                    {
+                        throw new Exception( "Bad uri format" );
+                    }
+
+                    _uri = value;
                 }
             }
         }
