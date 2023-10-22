@@ -61,6 +61,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock ( SyncRoot )
                 {
+                    // TODO: throw an exception if it is not a multicast ip address
                     _address = IPAddress.Parse(value?.ToString() ?? string.Empty ).ToString();
                 }
             }
