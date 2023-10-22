@@ -148,7 +148,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _receiveTimeout = value != TimeSpan.Zero ? value : DefaultReceiveTimeout;
+                    _receiveTimeout = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }
@@ -170,7 +170,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _sendTimeout = value != TimeSpan.Zero ? value : DefaultSendTimeout;
+                    _sendTimeout = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }
@@ -192,7 +192,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _retriesInterval = value != TimeSpan.Zero ? value : DefaultRetriesInterval;
+                    _retriesInterval = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }
@@ -214,7 +214,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 lock (_lock)
                 {
-                    _keepAliveInterval = value != TimeSpan.Zero ? value : DefaultKeepAliveInterval;
+                    _keepAliveInterval = value != TimeSpan.Zero ? value : throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
         }
