@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
     /// <summary>
     /// Represent a field validator
     /// </summary>
-    public static class RTSPClientConfigurationValidator
+    internal static class RTSPClientConfigurationValidator
     {
         /// <summary>
         /// Throw an exception if the port number is invalid
@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <exception cref="ArgumentOutOfRangeException"/>
         public static void EnsureTTLValue(byte value)
         {
-            if (value <= 0)
+            if (value == 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(value), "Invalid TTL value");
             }

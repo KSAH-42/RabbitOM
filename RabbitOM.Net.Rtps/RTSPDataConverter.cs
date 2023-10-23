@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using System.Security;
+using System.Runtime.InteropServices;
 
 namespace RabbitOM.Net.Rtsp
 {
@@ -235,6 +237,42 @@ namespace RabbitOM.Net.Rtsp
             catch ( Exception ex )
             {
                 System.Diagnostics.Debug.WriteLine( ex );
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Convert to a string
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns a string</returns>
+        public static string ConvertToString(SecureString value)
+        {
+            if ( value == null || value.Length <= 0 )
+            {
+                return string.Empty;
+            }
+
+            IntPtr ptrString = IntPtr.Zero;
+
+            try
+            {
+                ptrString = Marshal.SecureStringToBSTR(value);
+
+                if (ptrString != IntPtr.Zero)
+                {
+                    return Marshal.PtrToStringBSTR( ptrString ) ?? string.Empty;
+                }
+            }
+            finally
+            {
+                if (ptrString != IntPtr.Zero)
+                {
+                    Marshal.FreeBSTR( ptrString );
+
+                    ptrString = IntPtr.Zero;
+                }
             }
 
             return string.Empty;
@@ -689,6 +727,25 @@ namespace RabbitOM.Net.Rtsp
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Convert to a secure string
+        /// </summary>
+        /// <param name="value">the source</param>
+        /// <returns>returns a secure string</returns>
+        public static SecureString ConvertToSecureString(string value)
+        {
+            var result = new SecureString();
+
+            foreach (var character in value ?? string.Empty)
+            {
+                result.AppendChar(character);
+            }
+
+            result.MakeReadOnly();
+
+            return result;
         }
     }
 }

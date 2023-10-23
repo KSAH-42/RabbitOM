@@ -17,14 +17,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // TODO: Refactor the configuration class make it fully immutable/readonly and remove the lock
         // TODO: Then inject the configuration class on each receiver constructor
         // TODO: Secure password using SecureString 
-        // TODO: Find something about the duplicated code on scope object used by queue => inject a ICollection<T> or something like this ?
+        // TODO: Duplicated code: unify scope classes 
         // TODO: Reduce memory allocations
         //         => use a small memory pool ?
         // TODO: Introduce complete frame objects 
-        // TODO: At the end, remove un-necessary try catch
-        // TODO: Some classes need to be removed 
-        //       -> RTSPFile used for debugging
         // TODO: Pass all class to internals which are not supposed to be used by the developper who want to used the assembly
+
+        // TODO: Use some the lastest feature of C# 9.0 like record type for configuration classes
+        //       and remove factory methods => it must be done at the end of the final release.
         
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
         // Make sure that the ports are not blocked
@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
             var client = new RTSPClient();
-            
+
             #region Events
 
             client.CommunicationStarted += (sender, e) =>
@@ -74,15 +74,12 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.PacketReceived += (sender, e) =>
             {
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-
-                // You known it: for reducing the CPU and memory consumption 
-                // please comment the code below if you want to measure performance:
-                // Metric are better, but actually this is not WMI Metric for this api
-
                 Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length);
             };
 
             #endregion
+        
+            // Please note, that rtsp uri is not the same from a camera to another
 
             client.Configuration.Uri = Constants.LocalServer;
             client.Configuration.UserName = Constants.UserName;

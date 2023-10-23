@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
+    // TODO: the lock need to removed, it is now un necessary
+
     /// <summary>
     /// Represent the client configuration
     /// </summary>
@@ -181,10 +183,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
             }
         }
 
-        /// <summary>
-        /// Gets the retries interval
-        /// </summary>
-        public TimeSpan RetriesInterval
+		/// <summary>
+		/// Gets the retries interval
+		/// </summary>
+		public TimeSpan RetriesInterval
         {
             get
             {
