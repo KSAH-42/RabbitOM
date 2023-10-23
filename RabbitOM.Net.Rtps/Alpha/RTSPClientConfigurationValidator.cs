@@ -53,12 +53,18 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Throw an exception if the timeout value is invalid
         /// </summary>
         /// <param name="value">the value</param>
-        /// <exception cref="UriFormatException"/>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
         public static void EnsureUriWellFormed( string uri )
         {
+            if ( uri == null )
+            {
+                throw new ArgumentNullException( nameof(uri) );
+            }
+
             if ( ! RTSPUri.IsWellFormed( uri ) )
             {
-                throw new UriFormatException( nameof(uri) );
+                throw new ArgumentException( nameof(uri) );
             }
         }
 
@@ -67,7 +73,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// </summary>
         /// <param name="ipAddress">the ip address</param>
         /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="NotSupportedException"/>
+        /// <exception cref="ArgumentException"/>
         public static void EnsureMulticastAddress(string ipAddress)
         {
             if (ipAddress == null)
@@ -79,19 +85,19 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
             if (address.AddressFamily != AddressFamily.InterNetwork)
             {
-                throw new NotSupportedException("Address family not supported");
+                throw new ArgumentException("Address family not supported");
             }
 
             var bytesAddress = address.GetAddressBytes();
 
             if (bytesAddress == null || bytesAddress.Length < 4)
             {
-                throw new NotSupportedException("Bad multicast address format");
+                throw new ArgumentException("Bad multicast address format");
             }
 
             if (bytesAddress[0] < 0xE0 || bytesAddress[0] > 0xEF )
             {
-                throw new NotSupportedException("Bad multicast address format");
+                throw new ArgumentException("Bad multicast address format");
             }
         }
     }
