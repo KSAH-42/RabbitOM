@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -140,6 +140,39 @@ namespace RabbitOM.Net.Sdp
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// Extract the headers with their own value for a sdp 
+		/// </summary>
+		/// <param name="input">the input</param>
+		/// <returns>return a collection</returns>
+		public static IEnumerable<StringPair> ParseAll(string input)
+		{
+			if (string.IsNullOrWhiteSpace(input))
+			{
+				yield break;
+			}
+
+			using (var reader = new StringReader(input))
+			{
+				while (true)
+				{
+					string line = reader.ReadLine();
+
+					if (line == null)
+					{
+						yield break;
+					}
+
+					if (!StringPair.TryParse(line, '=', out StringPair pair))
+					{
+						continue;
+					}
+
+					yield return pair;
+				}
+			}
 		}
 	}
 }

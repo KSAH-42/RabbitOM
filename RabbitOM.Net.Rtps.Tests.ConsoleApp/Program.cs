@@ -1,11 +1,10 @@
-﻿using System;
+﻿using RabbitOM.Net.Rtsp;
+using RabbitOM.Net.Rtsp.Clients;
+using System;
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
-    using RabbitOM.Net.Rtsp;
-    using RabbitOM.Net.Rtsp.Clients;
-
-    class Program
+	class Program
     {
         // TODO: Code review on the SDP layer
         // TODO: Write an efficient memory buffer for replacing the RTSPMemoryStream class
@@ -56,7 +55,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Client connected - " + client.Configuration.Uri);
-				Console.WriteLine(e.TrackInfo.PPS);
             };
 
             client.Disconnected += (sender, e) =>

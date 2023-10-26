@@ -94,7 +94,6 @@
     <Compile Include="RtpMapAttributeValue.cs" />
     <Compile Include="Serialization\SessionDescriptorBuilder.cs" />
     <Compile Include="Serialization\SessionDescriptorReader.cs" />
-    <Compile Include="Serialization\SessionDescriptorReaderHelpers.cs" />
     <Compile Include="Serialization\SessionDescriptorSerializer.cs" />
     <Compile Include="Serialization\SessionDescriptorWriter.cs" />
     <Compile Include="SessionDescriptor.cs" />

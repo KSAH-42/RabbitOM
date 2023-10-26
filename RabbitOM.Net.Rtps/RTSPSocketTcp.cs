@@ -171,7 +171,7 @@ namespace RabbitOM.Net.Rtsp
                 _socket = new TcpClient();
 
                 _socket.Connect(ipAddress, port);
-                _socket.ReceiveBufferSize = 5000;
+                _socket.ReceiveBufferSize = 500000;
 
                 _stream = _socket.GetStream();
 

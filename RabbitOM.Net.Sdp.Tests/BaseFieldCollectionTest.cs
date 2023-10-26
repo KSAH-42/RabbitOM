@@ -62,7 +62,7 @@ namespace RabbitOM.Net.Sdp.Tests
 		{
 			Assert.IsNull( _collection.FindAt(-1) );
 		}
-
+		
 		[TestMethod]
 		public void FindAll_Exception_Empty()
 		{

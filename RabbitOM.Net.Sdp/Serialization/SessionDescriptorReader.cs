@@ -20,7 +20,7 @@ namespace RabbitOM.Net.Sdp.Serialization
 		/// <param name="input">the input value</param>
 		public SessionDescriptorReader(string input)
 		{
-			_textFields = SessionDescriptorReaderHelpers.ExtractTextFields(input).GetEnumerator();
+			_textFields = StringPair.ParseAll(input).GetEnumerator();
 		}
 
 
