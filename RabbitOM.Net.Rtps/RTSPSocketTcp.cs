@@ -10,11 +10,7 @@ namespace RabbitOM.Net.Rtsp
     {
         private readonly Action<Exception>  _errorHandler = null;
 
-        private TcpClient                   _socket       = null;
-
-        private NetworkStream               _stream       = null;
-
-
+        private Socket                      _socket       = null;
 
 
 
@@ -43,7 +39,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public bool IsOpening
         {
-            get => _socket != null && _stream == null;
+            get => _socket != null;
         }
 
         /// <summary>
@@ -51,7 +47,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public bool IsOpened
         {
-            get => _socket != null && _stream != null;
+            get => _socket != null;
         }
 
         /// <summary>
@@ -81,21 +77,7 @@ namespace RabbitOM.Net.Rtsp
         {
             get
             {
-                if ( _socket == null || _stream == null )
-				{
-                    return false;
-				}
-
-                try
-                {
-                    return _stream.CanRead;
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-
-                return false;
+                return _socket != null;
             }
         }
 
@@ -106,21 +88,7 @@ namespace RabbitOM.Net.Rtsp
         {
             get
             {
-                if (_socket == null || _stream == null)
-                {
-                    return false;
-                }
-
-                try
-                {
-                    return _stream.CanWrite;
-                }
-                catch (Exception ex)
-                {
-                    OnError(ex);
-                }
-
-                return false;
+                return _socket != null;
             }
         }
 
@@ -133,7 +101,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 try
                 {
-                    return _stream?.DataAvailable ?? false;
+                    return _socket != null && _socket.Available != 0;
                 }
                 catch ( Exception ex )
                 {
@@ -168,15 +136,12 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                _socket = new TcpClient();
+                _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
 
                 _socket.Connect(ipAddress, port);
                 _socket.ReceiveBufferSize = 500000;
 
-                _stream = _socket.GetStream();
-
                 return true;
-
             }
             catch ( Exception ex )
             {
@@ -205,8 +170,6 @@ namespace RabbitOM.Net.Rtsp
             {
                 OnError( ex );
             }
-
-            _stream = null;
         }
 
         /// <summary>
@@ -221,7 +184,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                _socket.Client.Shutdown( SocketShutdown.Both );
+                _socket.Shutdown( SocketShutdown.Both );
             }
             catch ( Exception ex )
             {
@@ -286,19 +249,14 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
-            if ( _stream == null )
+            if ( _socket == null )
             {
                 return false;
             }
 
             try
             {
-                if ( _stream.CanWrite )
-                {
-                    _stream.Write( buffer , 0 , buffer.Length );
-
-                    return true;
-                }
+                return _socket.Send(buffer, buffer.Length , SocketFlags.None ) > 0;
             }
             catch ( Exception ex )
             {
@@ -327,17 +285,14 @@ namespace RabbitOM.Net.Rtsp
                 return 0;
             }
 
-            if ( _stream == null )
+            if ( _socket == null )
             {
                 return 0;
             }
 
             try
             {
-                if ( _stream.CanRead )
-                {
-                    return _stream.Read( buffer , offset , buffer.Length );
-                }
+                return _socket.Receive(buffer, offset , buffer.Length , SocketFlags.None );
             }
             catch ( Exception ex )
             {
@@ -354,14 +309,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public TimeSpan GetReceiveTimeout()
         {
-            if ( _stream == null )
+            if ( _socket == null )
             {
                 return TimeSpan.Zero;
             }
 
             try
             {
-                return TimeSpan.FromMilliseconds( _stream.ReadTimeout );
+                return TimeSpan.FromMilliseconds( _socket.ReceiveTimeout );
             }
             catch ( Exception ex )
             {
@@ -377,14 +332,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public TimeSpan GetSendTimeout()
         {
-            if ( _stream == null )
+            if ( _socket == null )
             {
                 return TimeSpan.Zero;
             }
 
             try
             {
-                return TimeSpan.FromMilliseconds( _stream.WriteTimeout );
+                return TimeSpan.FromMilliseconds( _socket.SendTimeout );
             }
             catch ( Exception ex )
             {
@@ -401,14 +356,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool SetReceiveTimeout( TimeSpan value )
         {
-            if ( _stream == null )
+            if ( _socket == null )
             {
                 return false;
             }
 
             try
             {
-                _stream.ReadTimeout = (int) value.TotalMilliseconds;
+                _socket.ReceiveTimeout = (int) value.TotalMilliseconds;
 
                 return true;
             }
@@ -427,14 +382,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool SetSendTimeout( TimeSpan value )
         {
-            if ( _stream == null )
+            if ( _socket == null )
             {
                 return false;
             }
 
             try
             {
-                _stream.WriteTimeout = (int) value.TotalMilliseconds;
+                _socket.SendTimeout = (int) value.TotalMilliseconds;
 
                 return true;
             }
@@ -461,7 +416,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                _socket.Client.LingerState = new LingerOption( status , (int) timeout.TotalSeconds );
+                _socket.LingerState = new LingerOption( status , (int) timeout.TotalSeconds );
 
                 return true;
             }
@@ -487,7 +442,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return _socket.Client.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectRead );
+                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectRead );
             }
             catch ( Exception ex )
             {
@@ -511,7 +466,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return _socket.Client.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectWrite );
+                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectWrite );
             }
             catch ( Exception ex )
             {
@@ -535,7 +490,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return _socket.Client.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectError );
+                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectError );
             }
             catch ( Exception ex )
             {
