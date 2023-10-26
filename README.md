@@ -46,7 +46,7 @@ client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
 
 client.Options.DeliveryMode = RTSPDeliveryMode.Tcp; // Configure the transport layer 
 
-client.StartCommunication(); // Handle the auto reconnection in case of network failure
+client.StartCommunication(); // None blocking call: handle the auto reconnection in case of network failure
 
 Console.WriteLine("Press any keys to close the application");
 
