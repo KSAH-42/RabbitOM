@@ -11,6 +11,51 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 
 This is a set of classes to used to connect, managed, and received video/audio streams from security camera using standard protocols like RTSP/RTP/SDP.
 
+# How to receive raw rtp packets from tcp/udp/multicast using rtsp ?
+
+Like this :
+
+~~~~C#
+
+var client = new RTSPClient();
+
+// Fired when a successfull connection or when the communication has been recovered after a lost
+client.Connected += (sender, e) =>
+{
+    Console.WriteLine("Client connected - " + client.Configuration.Uri);
+};
+
+// Fired when the communication has been lost
+client.Disconnected += (sender, e) =>
+{
+    Console.WriteLine("Client disconnected - " + DateTime.Now);
+};
+
+// Fired when a raw media data has been received 
+client.PacketReceived += (sender, e) =>
+{
+    Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length); // raw rtp go here
+};
+
+client.Configuration.Uri = Constants.LocalServer;
+client.Configuration.UserName = Constants.UserName;
+client.Configuration.Password = Constants.Password;
+client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // Please read the vendor documentation to be sure.
+client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // increase the timeout if the camera is located far away 
+client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
+
+client.Options.DeliveryMode = RTSPDeliveryMode.Tcp; // Configure the transport layer 
+
+client.StartCommunication(); // Handle the auto reconnection in case of network failure
+
+Console.WriteLine("Press any keys to close the application");
+
+Console.ReadKey();
+
+client.StopCommunication();
+
+~~~~
+
 # About Real Time Streaming Protocol
 
 Where RTSP are used ?
