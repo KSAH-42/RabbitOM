@@ -13,9 +13,9 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 * Support multiple authentication: Basic, MD5, SHA256, SHA512
 * Support auto reconnection in case of network failure
 * Handle message reordering when multiple requests are sended and responses arrive in a different order
-* Provide a connection class to perform remote invocation on RTSP Methods and to give a direct access to protocol features
 * Provide classes to access to the SDP informations
 * Thread safe
+* Get more power ? I don't like the terms power, but if you want to get more power, use the RTSPConnection class instead, it will give you more features and a direct access to the protocol messaging layer. It hide the remote invocation on a server and support very nice features. The only thing to known about the connection class is that the current implementation does not support SSL/TLS. But not yet.
 
 # Introduction
 
