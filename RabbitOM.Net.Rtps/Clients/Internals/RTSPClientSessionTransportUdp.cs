@@ -50,8 +50,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
         
         
-        
-        
+       
         
         /// <summary>
         /// The thread function

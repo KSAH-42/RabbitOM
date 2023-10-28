@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
             _requestHandlers = new RTSPProxyRequestHandlerList();
             _chunks = new RTSPChunkQueue();
             _decoder = new RTSPMessageDecoder();
-            _buffer = new byte[5000000];//8096 * 8 * 2];
+            _buffer = new byte[8096 * 8 * 2];
         }
 
 
