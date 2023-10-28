@@ -72,14 +72,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.PacketReceived += (sender, e) =>
             {
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length);
+                Console.WriteLine("DataReceived {0}", e.Packet.Data.Length );
             };
 
             #endregion
         
             // Please note, that rtsp uri is not the same from a camera to another
 
-            client.Configuration.Uri = Constants.LocalServer1;
+            client.Configuration.Uri = Constants.LocalServer_Source_3;
             client.Configuration.UserName = Constants.UserName;
             client.Configuration.Password = Constants.Password;
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
@@ -88,7 +88,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             client.StartCommunication();
             
-            Console.BufferHeight = 100;
+            Console.BufferHeight = 1000;
 
             Console.WriteLine("Press any keys to close the application");
 

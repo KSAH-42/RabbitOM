@@ -302,7 +302,6 @@ namespace RabbitOM.Net.Rtsp
                 if (_stream.Length < length )
 				{
                     _stream.SeekBackward();
-                    _stream.SeekBackward();
                     return false;
 				}
                 
