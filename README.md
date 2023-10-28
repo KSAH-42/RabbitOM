@@ -12,9 +12,10 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 * Support TCP/UDP/Multicast Streaming transports
 * Support multiple authentication: Basic, MD5, SHA256, SHA512
 * Support auto reconnection in case of network failure
-* Handle message reordering when multiple requests are sended and response arrive in a different order
+* Handle message reordering when multiple requests are sended and responses arrive in a different order
 * Provide a connection class to perform remote invocation on RTSP Methods and to give a direct access to protocol features
 * Provide classes to access to the SDP informations
+* Thread safe
 
 # Introduction
 
