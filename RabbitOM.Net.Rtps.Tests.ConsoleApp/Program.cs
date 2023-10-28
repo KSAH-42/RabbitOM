@@ -79,7 +79,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         
             // Please note, that rtsp uri is not the same from a camera to another
 
-            client.Configuration.Uri = Constants.LocalServer;
+            client.Configuration.Uri = Constants.LocalServer1;
             client.Configuration.UserName = Constants.UserName;
             client.Configuration.Password = Constants.Password;
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.

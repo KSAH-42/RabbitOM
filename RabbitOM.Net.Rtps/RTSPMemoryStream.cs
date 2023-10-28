@@ -324,11 +324,10 @@ namespace RabbitOM.Net.Rtsp
             {
                 return;
             }
-
+            
             try
             {
                 long position = _stream.Position;
-
 
                 if ( position == _stream.Length )
                 {

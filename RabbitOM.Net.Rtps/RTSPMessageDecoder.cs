@@ -305,8 +305,8 @@ namespace RabbitOM.Net.Rtsp
                     _stream.SeekBackward();
                     return false;
 				}
-
-				var buffer = new byte[length];
+                
+                var buffer = new byte[length];
 
 				int bytesRead = _stream.Read(buffer, 0, buffer.Length);
 
@@ -349,8 +349,8 @@ namespace RabbitOM.Net.Rtsp
 					{
 						break;
 					}
-
-					if (RTSPHeaderFactory.CanCreateHeader(line, RTSPHeaderNames.ContentLength))
+                    
+                    if (RTSPHeaderFactory.CanCreateHeader(line, RTSPHeaderNames.ContentLength))
 					{
 						var header = RTSPHeaderFactory.CreateHeader(line) as RTSPHeaderContentLength;
 
