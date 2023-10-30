@@ -98,61 +98,55 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <summary>
         /// Occurs when the communication has been started
         /// </summary>
-        /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnCommunicationStarted( object sender , RTSPClientCommunicationStartedEventArgs e )
+        protected virtual void OnCommunicationStarted( RTSPClientCommunicationStartedEventArgs e )
         {
-            CommunicationStarted?.TryInvoke( sender , e );
+            CommunicationStarted?.TryInvoke( this , e );
         }
 
         /// <summary>
         /// Occurs when the communication has been stopped
         /// </summary>
-        /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnCommunicationStopped( object sender , RTSPClientCommunicationStoppedEventArgs e )
+        protected virtual void OnCommunicationStopped( RTSPClientCommunicationStoppedEventArgs e )
         {
-            CommunicationStopped?.TryInvoke( sender , e );
+            CommunicationStopped?.TryInvoke( this , e );
         }
 
         /// <summary>
         /// Occurs when the client is connected
         /// </summary>
-        /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnConnected( object sender , RTSPClientConnectedEventArgs e )
+        protected virtual void OnConnected( RTSPClientConnectedEventArgs e )
         {
-            Connected?.TryInvoke( sender ,e );
+            Connected?.TryInvoke( this ,e );
         }
 
         /// <summary>
         /// Occurs when the client is disconnected
         /// </summary>
-        /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnDisconnected( object sender , RTSPClientDisconnectedEventArgs e )
+        protected virtual void OnDisconnected( RTSPClientDisconnectedEventArgs e )
         {
-            Disconnected?.TryInvoke( sender , e );
+            Disconnected?.TryInvoke( this , e );
         }
 
         /// <summary>
         /// Occurs when an data has been received
         /// </summary>
-        /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnPacketReceived( object sender , RTSPPacketReceivedEventArgs e )
+        protected virtual void OnPacketReceived( RTSPPacketReceivedEventArgs e )
         {
-            PacketReceived?.TryInvoke( sender , e );
+            PacketReceived?.TryInvoke( this , e );
         }
 
         /// <summary>
         /// Occurs when an error occurs
         /// </summary>
-        /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnError( object sender , RTSPClientErrorEventArgs e )
+        protected virtual void OnError( RTSPClientErrorEventArgs e )
         {
-            Error?.TryInvoke( sender , e );
+            Error?.TryInvoke( this , e );
         }
     }
 }
