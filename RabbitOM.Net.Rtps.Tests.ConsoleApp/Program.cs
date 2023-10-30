@@ -6,6 +6,11 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
 	class Program
     {
+        // TODO: Force header class to be immutable: used constructor or method factory and pass setters to private
+
+
+        // TODO: On the connection class, remove the error handler and replace it by the differents event handler, in this case, avoid unification using strategy pattern
+        // TODO: A dispose method on the client object
         // TODO: Code review on the SDP layer
         // TODO: Write an efficient memory buffer for replacing the RTSPMemoryStream class
         // TODO: Remove the client class

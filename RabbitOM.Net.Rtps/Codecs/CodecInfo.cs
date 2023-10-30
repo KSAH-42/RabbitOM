@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Codecs
 {
     /// <summary>
     /// Represent the base codec info class

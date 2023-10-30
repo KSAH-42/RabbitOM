@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Codecs
 {
     /// <summary>
     /// Represent the type of the codec
@@ -8,14 +8,9 @@ namespace RabbitOM.Net.Rtsp
     public enum CodecType
     {
         /// <summary>
-        /// Invalid type
-        /// </summary>
-        None = 0, 
-
-        /// <summary>
         /// Video codec
         /// </summary>
-        H264 ,
+        H264 = 1,
 
         /// <summary>
         /// Video codec

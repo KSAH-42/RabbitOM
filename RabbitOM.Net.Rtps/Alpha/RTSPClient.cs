@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
     /// <summary>
     /// Represent the client
     /// </summary>
-    public abstract class RTSPClient : IRTSPClient
+    public abstract class RTSPClient : IRTSPClient 
     {
         /// <summary>
         /// Raised when the communication has been started

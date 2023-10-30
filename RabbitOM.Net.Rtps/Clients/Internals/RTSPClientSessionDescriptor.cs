@@ -1,11 +1,11 @@
-﻿using System;
+﻿using RabbitOM.Net.Rtsp.Codecs;
+using RabbitOM.Net.Sdp;
+using RabbitOM.Net.Sdp.Extensions;
+using System;
 using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Clients
-{
-    using RabbitOM.Net.Sdp;
-    using RabbitOM.Net.Sdp.Extensions;
-
+{    
     /// <summary>
     /// Represent the client session descriptor
     /// </summary>
