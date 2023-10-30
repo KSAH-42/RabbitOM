@@ -9,12 +9,13 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 
 # Main features
 
-* Support TCP/UDP/Multicast Streaming transports
+* Support Unicast TCP / Unicast UDP / Multicast Streaming transports
 * Support multiple authentication: Basic, MD5, SHA256, SHA512
-* Support auto reconnection in case of network failure
-* Handle message reordering when multiple requests are sended and responses arrive in a different order
+* Support auto reconnection in case of network failures
+* Support message reordering when multiple requests are sended and responses arrive in a different order
 * Provide classes to access to the SDP informations
 * Thread safe
+* Handle large streams like 50 MBits/seconds
  
 Get more power ? I don't like the terms power, but if you want to get more power, use the RTSPConnection class instead of the RTSPClient class, which are more genric. The RTSPConnection class will give you more features and a direct access to the protocol messaging layer. The only thing to known about the connection class is that the current implementation does not support SSL/TLS. But not yet.
 
