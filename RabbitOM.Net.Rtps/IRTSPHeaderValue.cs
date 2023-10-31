@@ -3,15 +3,15 @@
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent a message header
+    /// Represent the header value
     /// </summary>
-    /// <typeparam name="TValue">the value type</typeparam>
-    public abstract class RTSPMessageHeader<TValue> : RTSPHeader
+    /// <typeparam name="TValue">the type of the value</typeparam>
+    public interface IRTSPHeaderValue<TValue>
     {
         /// <summary>
         /// Gets / Sets the value
         /// </summary>
-        public abstract TValue Value
+        TValue Value
         {
             get;
             set;

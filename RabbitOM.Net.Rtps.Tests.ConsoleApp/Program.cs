@@ -71,7 +71,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Error += (sender, e) =>
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Client Error: " + e.Code + " " + e.Message);
+                Console.WriteLine("Client Error: " + e.Code );
             };
 
             client.PacketReceived += (sender, e) =>
@@ -81,9 +81,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             };
 
             #endregion
-        
-            // Please note, that rtsp uri is not the same from a camera to another
 
+            // Please note, that rtsp uri is not the same from a camera to another
+            
             client.Configuration.Uri = Constants.LocalServer_Source_3;
             client.Configuration.UserName = Constants.UserName;
             client.Configuration.Password = Constants.Password;

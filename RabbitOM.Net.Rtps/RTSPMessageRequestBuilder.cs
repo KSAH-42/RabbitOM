@@ -366,7 +366,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="header">the header</param>
         public void AddHeader( RTSPHeader header )
         {
-            _headers.AddOrUpdate( header );
+            _headers.TryAddOrUpdate( header );
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the header value</param>
         public void AddHeader( string name , string value )
         {
-            _headers.AddOrUpdate( new RTSPHeaderCustom( name , value ) );
+            _headers.TryAddOrUpdate( new RTSPHeaderCustom( name , value ) );
         }
 
         /// <summary>
@@ -993,51 +993,51 @@ namespace RabbitOM.Net.Rtsp
                     request = new RTSPMessageRequest( _method , uri.ToControlUri( _controlUri ) );
                 }
 
-                request.Headers.AddOrUpdate( new RTSPHeaderCSeq( _sequenceId ) );
+                request.Headers.TryAddOrUpdate( new RTSPHeaderCSeq( _sequenceId ) );
 
                 if ( !string.IsNullOrWhiteSpace( _sessionId ) )
                 {
-                    request.Headers.AddOrUpdate( new RTSPHeaderSession( _sessionId ) );
+                    request.Headers.TryAddOrUpdate( new RTSPHeaderSession( _sessionId ) );
                 }
 
                 if ( _deliveryMode.HasValue )
                 {
                     if ( _deliveryMode == RTSPDeliveryMode.Tcp )
                     {
-                        request.Headers.AddOrUpdate( RTSPHeaderTransport.NewInterleavedTransportHeader() );
+                        request.Headers.TryAddOrUpdate( RTSPHeaderTransport.NewInterleavedTransportHeader() );
                     }
 
                     if ( _deliveryMode == RTSPDeliveryMode.Udp )
                     {
-                        request.Headers.AddOrUpdate( RTSPHeaderTransport.NewUnicastUdpTransportHeader( _unicastPort ) );
+                        request.Headers.TryAddOrUpdate( RTSPHeaderTransport.NewUnicastUdpTransportHeader( _unicastPort ) );
                     }
 
                     if ( _deliveryMode == RTSPDeliveryMode.Multicast )
                     {
-                        request.Headers.AddOrUpdate( RTSPHeaderTransport.NewMulticastUdpTransportHeader( _multicastAddress , _multicastPort , _ttl ) );
+                        request.Headers.TryAddOrUpdate( RTSPHeaderTransport.NewMulticastUdpTransportHeader( _multicastAddress , _multicastPort , _ttl ) );
                     }
                 }
 
                 if ( !_headers.IsEmpty )
                 {
-                    request.Headers.AddRange( _headers );
+                    request.Headers.TryAddRange( _headers );
                 }
 
                 if ( _body.Length > 0 )
                 {
-                    request.Headers.AddOrUpdate( new RTSPHeaderContentLength( _body.Length ) );
+                    request.Headers.TryAddOrUpdate( new RTSPHeaderContentLength( _body.Length ) );
 
                     request.Body.Value = _body.ToString();
                 }
 
                 if (!string.IsNullOrWhiteSpace(_acceptHeader))
                 {
-                    request.Headers.AddOrUpdate(new RTSPHeaderAccept(_acceptHeader));
+                    request.Headers.TryAddOrUpdate(new RTSPHeaderAccept(_acceptHeader));
                 }
 
                 if ( !string.IsNullOrWhiteSpace( _contentType ) )
                 {
-                    request.Headers.AddOrUpdate( new RTSPHeaderContentType( _contentType ) );
+                    request.Headers.TryAddOrUpdate( new RTSPHeaderContentType( _contentType ) );
                 }
 
                 return request;

@@ -8,24 +8,28 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message header list
     /// </summary>
-    public sealed class RTSPHeaderList : IEnumerable<RTSPHeader>
+    public sealed class RTSPHeaderList
+        : IEnumerable
+        , IEnumerable<RTSPHeader>
+  //      , ICollection
+  //      , ICollection<RTSPHeader>
     {
         /// <summary>
         /// Represent the maximum of elements
         /// </summary>
-        public  const    int                                   Maximum     = 1000;
+        public const int Maximum = 1000;
 
 
 
         /// <summary>
         /// The lock
         /// </summary>
-        private readonly object                                _lock       = new object();
+        private readonly object _lock = new object();
 
         /// <summary>
         /// The collection
         /// </summary>
-        private readonly IDictionary<string,RTSPHeader> _collection = new Dictionary<string,RTSPHeader>( StringComparer.OrdinalIgnoreCase );
+        private readonly IDictionary<string, RTSPHeader> _collection = new Dictionary<string, RTSPHeader>(StringComparer.OrdinalIgnoreCase);
 
 
 
@@ -44,9 +48,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPHeaderList( IEnumerable<RTSPHeader> collection )
+        public RTSPHeaderList(IEnumerable<RTSPHeader> collection)
         {
-            AddRange( collection ?? throw new ArgumentNullException( nameof( collection ) ) );
+            TryAddRange(collection);
         }
 
 
@@ -61,32 +65,64 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         public RTSPHeader this[int index]
         {
-            get => GetAt( index );
+            get => GetAt(index);
         }
 
         /// <summary>
         /// Gets a header
         /// </summary>
-        /// <param name="name">the element name</param>
+        /// <param name="name">the header name</param>
         /// <returns>returns an instance</returns>
         public RTSPHeader this[string name]
         {
-            get => GetByName( name );
+            get => GetByName(name);
         }
 
 
 
 
 
+        /// <summary>
+        /// Gets the sync root
+        /// </summary>
+        public object SyncRoot
+        {
+            get
+            {
+                return _lock;
+            }
+        }
 
         /// <summary>
-        /// Gets the number of elements
+        /// Check if it is thread safe. It returns true.
+        /// </summary>
+        public bool IsSynchronized
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Check if the collection is readonly or not. It returns true.
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Gets the number of headers.
         /// </summary>
         public int Count
         {
             get
             {
-                lock ( _lock )
+                lock (_lock)
                 {
                     return _collection.Count;
                 }
@@ -94,13 +130,13 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Check if the collection contains some elements
+        /// Check if the collection contains some headers
         /// </summary>
         public bool IsEmpty
         {
             get
             {
-                lock ( _lock )
+                lock (_lock)
                 {
                     return _collection.Count <= 0;
                 }
@@ -114,7 +150,7 @@ namespace RabbitOM.Net.Rtsp
         {
             get
             {
-                lock ( _lock )
+                lock (_lock)
                 {
                     return _collection.Count >= Maximum;
                 }
@@ -132,7 +168,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 return _collection.Values.ToList().GetEnumerator();
             }
@@ -144,7 +180,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         public IEnumerator<RTSPHeader> GetEnumerator()
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 return _collection.Values.ToList().GetEnumerator();
             }
@@ -156,7 +192,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Any()
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 return _collection.Count > 0;
             }
@@ -169,9 +205,9 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Any<THeader>() where THeader : RTSPHeader
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Values.Any( x => x is THeader );
+                return _collection.Values.Any(x => x is THeader);
             }
         }
 
@@ -181,18 +217,18 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="predicate">the predicate</param>
         /// <returns>returns true for a success, otherwise false</returns>
         /// <exception cref="ArgumentNullException"/>
-        public bool Any( Func<RTSPHeader , bool> predicate )
+        public bool Any(Func<RTSPHeader, bool> predicate)
         {
-            if ( predicate == null )
+            if (predicate == null)
             {
-                throw new ArgumentNullException( nameof( predicate ) );
+                throw new ArgumentNullException(nameof(predicate));
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                foreach ( var element in _collection.Values )
+                foreach (var element in _collection.Values)
                 {
-                    if ( element != null && predicate( element ) )
+                    if (element != null && predicate(element))
                     {
                         return true;
                     }
@@ -203,162 +239,249 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Checks if an element exists
+        /// Checks if a header exists
         /// </summary>
-        /// <param name="name">the element name</param>
+        /// <param name="name">the header name</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool ContainsKey( string name )
+        public bool ContainsKey(string name)
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.ContainsKey( name ?? string.Empty );
+                return _collection.ContainsKey(name ?? string.Empty);
             }
         }
 
         /// <summary>
-        /// Checks if an element exists
+        /// Checks if a header exists
         /// </summary>
-        /// <param name="element">the element</param>
+        /// <param name="header">the element</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Contains( RTSPHeader element )
+        public bool Contains(RTSPHeader header)
         {
-            if ( element == null )
+            if (header == null)
             {
                 return false;
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Values.Contains( element );
+                return _collection.Values.Contains(header);
+            }
+        }
+
+		/// <summary>
+		/// Add a header
+		/// </summary>
+		/// <param name="header">the header</param>
+		/// <exception cref="ArgumentNullException"/>
+		/// <exception cref="ArgumentException"/>
+		/// <exception cref="InvalidOperationException"/>
+		public void Add(RTSPHeader header)
+		{
+			if (header == null)
+			{
+				throw new ArgumentNullException(nameof(header));
+			}
+
+			if (RTSPHeader.IsUnDefined(header))
+			{
+				throw new ArgumentException(nameof(header));
+			}
+
+			lock (_lock)
+			{
+				if (_collection.Count >= Maximum)
+				{
+					throw new InvalidOperationException("Collection is full");
+				}
+
+				_collection.Add(header.Name, header);
+			}
+		}
+
+        /// <summary>
+        /// Add or update a header
+        /// </summary>
+        /// <param name="header">the header</param>
+        /// <exception cref="ArgumentNullException"/>
+		/// <exception cref="ArgumentException"/>
+		/// <exception cref="InvalidOperationException"/>
+		public void AddOrUpdate(RTSPHeader header)
+        {
+            if (header == null)
+            {
+                throw new ArgumentNullException(nameof(header));
+            }
+
+            if (RTSPHeader.IsUnDefined(header))
+            {
+                throw new ArgumentException(nameof(header));
+            }
+
+            lock (_lock)
+            {
+                if (_collection.ContainsKey(header.Name))
+                {
+                    _collection[header.Name] = header;
+                    return;
+                }
+
+                if (_collection.Count < Maximum)
+                {
+                    _collection[header.Name] = header;
+                }
+                
+                throw new InvalidOperationException("Collection is full");
             }
         }
 
         /// <summary>
-        /// Add an element
+        /// Try to add elements
         /// </summary>
-        /// <param name="element">the element name</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Add( RTSPHeader element )
+        /// <param name="collection">the collection of headers</param>
+        /// <param name="result">the number of headers added</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        public void AddRange(IEnumerable<RTSPHeader> collection, out int result)
         {
-            if ( RTSPHeader.IsUnDefined( element ) )
+            result = 0;
+
+            if (collection == null)
             {
-                return false;
+                throw new ArgumentNullException( nameof(collection) );
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                if ( _collection.ContainsKey( element.Name ) )
+                foreach (var element in collection)
                 {
-                    return false;
-                }
-
-                if ( _collection.Count >= Maximum )
-                {
-                    return false;
-                }
-
-                _collection[element.Name] = element;
-
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Add or update an element
-        /// </summary>
-        /// <param name="element">the element name</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool AddOrUpdate( RTSPHeader element )
-        {
-            if ( RTSPHeader.IsUnDefined( element ) )
-            {
-                return false;
-            }
-
-            lock ( _lock )
-            {
-                if ( _collection.ContainsKey( element.Name ) )
-                {
-                    _collection[element.Name] = element;
-
-                    return true;
-                }
-
-                if ( _collection.Count >= Maximum )
-                {
-                    return false;
-                }
-
-                _collection[element.Name] = element;
-
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Add elements
-        /// </summary>
-        /// <param name="collection">the collection of elements</param>
-        /// <returns>returns the number of element added</returns>
-        public int AddRange( IEnumerable<RTSPHeader> collection )
-        {
-            if ( collection == null )
-            {
-                return 0;
-            }
-
-            lock ( _lock )
-            {
-                int results = 0;
-
-                foreach ( var element in collection )
-                {
-                    if ( _collection.Count >= Maximum )
+                    if (_collection.Count >= Maximum)
                     {
                         break;
                     }
 
-                    if ( RTSPHeader.IsUnDefined( element ) )
+                    if (RTSPHeader.IsUnDefined(element))
+                    {
+                        throw new ArgumentException( "bad header" );
+                    }
+
+                    _collection.Add( element.Name , element );
+                }
+            }
+        }
+
+        /// <summary>
+        /// Add a header
+        /// </summary>
+        /// <param name="header">the element name</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAdd(RTSPHeader header)
+        {
+            if (RTSPHeader.IsUnDefined(header))
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                if (_collection.Count >= Maximum)
+                {
+                    return false;
+                }
+
+                if (_collection.ContainsKey(header.Name))
+                {
+                    return false;
+                }
+
+                _collection[header.Name] = header;
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Add or update a header
+        /// </summary>
+        /// <param name="header">the header</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddOrUpdate(RTSPHeader header)
+        {
+            if (RTSPHeader.IsUnDefined(header))
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                if (_collection.ContainsKey(header.Name))
+                {
+                    _collection[header.Name] = header;
+
+                    return true;
+                }
+
+                if (_collection.Count >= Maximum)
+                {
+                    return false;
+                }
+
+                _collection[header.Name] = header;
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Try to add elements
+        /// </summary>
+        /// <param name="collection">the collection of elements</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddRange(IEnumerable<RTSPHeader> collection)
+        {
+            return TryAddRange(collection, out int result);
+        }
+
+        /// <summary>
+        /// Try to add elements
+        /// </summary>
+        /// <param name="collection">the collection of elements</param>
+        /// <param name="result">the number of headers added</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddRange(IEnumerable<RTSPHeader> collection, out int result)
+        {
+            result = 0;
+
+            if (collection == null)
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                foreach (var element in collection)
+                {
+                    if (_collection.Count >= Maximum)
+                    {
+                        break;
+                    }
+
+                    if (RTSPHeader.IsUnDefined(element))
                     {
                         continue;
                     }
 
-                    if ( _collection.ContainsKey( element.Name ) )
+                    if (_collection.ContainsKey(element.Name))
                     {
                         continue;
                     }
 
                     _collection[element.Name] = element;
 
-                    ++results;
+                    ++result;
                 }
 
-                return results;
-            }
-        }
-
-        /// <summary>
-        /// Update the header if it already exists
-        /// </summary>
-        /// <param name="element">the header</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Update( RTSPHeader element )
-        {
-            if ( RTSPHeader.IsUnDefined( element ) )
-            {
-                return false;
-            }
-
-            lock ( _lock )
-            {
-                if ( !_collection.ContainsKey( element.Name ) )
-                {
-                    return false;
-                }
-
-                _collection[element.Name] = element;
-
-                return true;
+                return result > 0;
             }
         }
 
@@ -369,23 +492,10 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public THeader Find<THeader>() where THeader : RTSPHeader
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Values.FirstOrDefault( x => x is THeader ) as THeader;
+                return _collection.Values.FirstOrDefault(x => x is THeader) as THeader;
             }
-        }
-
-        /// <summary>
-        /// Gets a header
-        /// </summary>
-        /// <typeparam name="THeader">the type of the header</typeparam>
-        /// <param name="result">the output result</param>
-        /// <returns>returns an instance, otherwise null</returns>
-        public bool Find<THeader>( out THeader result ) where THeader : RTSPHeader
-        {
-            result = Find<THeader>();
-
-            return result != null;
         }
 
         /// <summary>
@@ -393,11 +503,11 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="name">the element name</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public RTSPHeader FindByName( string name )
+        public RTSPHeader FindByName(string name)
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.TryGetValue( name ?? string.Empty , out RTSPHeader result ) ? result : null;
+                return _collection.TryGetValue(name ?? string.Empty, out RTSPHeader result) ? result : null;
             }
         }
 
@@ -407,11 +517,11 @@ namespace RabbitOM.Net.Rtsp
         /// <typeparam name="THeader">the type of the header</typeparam>
         /// <param name="name">the element name</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public THeader FindByName<THeader>( string name ) where THeader : RTSPHeader
+        public THeader FindByName<THeader>(string name) where THeader : RTSPHeader
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.TryGetValue( name ?? string.Empty , out RTSPHeader result ) ? result as THeader : null;
+                return _collection.TryGetValue(name ?? string.Empty, out RTSPHeader result) ? result as THeader : null;
             }
         }
 
@@ -420,11 +530,11 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public RTSPHeader FindAt( int index )
+        public RTSPHeader FindAt(int index)
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Values.ElementAtOrDefault( index );
+                return _collection.Values.ElementAtOrDefault(index);
             }
         }
 
@@ -433,9 +543,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="name">the element name</param>
         /// <returns>returns an instance</returns>
-        public RTSPHeader GetByName( string name )
+        public RTSPHeader GetByName(string name)
         {
-            return FindByName( name ) ?? RTSPHeaderNull.Value;
+            return FindByName(name) ?? RTSPHeaderNull.Value;
         }
 
         /// <summary>
@@ -443,9 +553,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
-        public RTSPHeader GetAt( int index )
+        public RTSPHeader GetAt(int index)
         {
-            return FindAt( index ) ?? RTSPHeaderNull.Value;
+            return FindAt(index) ?? RTSPHeaderNull.Value;
         }
 
         /// <summary>
@@ -454,7 +564,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a collection</returns>
         public IList<RTSPHeader> GetAll()
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 return _collection.Values.ToList();
             }
@@ -466,16 +576,16 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="predicate">the predicate</param>
         /// <returns>returns a collection</returns>
         /// <exception cref="ArgumentNullException"/>
-        public IList<RTSPHeader> GetAll( Func<RTSPHeader , bool> predicate )
+        public IList<RTSPHeader> GetAll(Func<RTSPHeader, bool> predicate)
         {
-            if ( predicate == null )
+            if (predicate == null)
             {
-                throw new ArgumentNullException( nameof( predicate ) );
+                throw new ArgumentNullException(nameof(predicate));
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Values.Where( predicate ).ToList();
+                return _collection.Values.Where(predicate).ToList();
             }
         }
 
@@ -486,7 +596,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a collection</returns>
         public IList<THeader> GetAll<THeader>() where THeader : RTSPHeader
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 return _collection.Values.Cast<THeader>().ToList();
             }
@@ -499,16 +609,16 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="predicate">the predicate</param>
         /// <returns>returns a collection</returns>
         /// <exception cref="ArgumentNullException"/>
-        public IList<THeader> GetAll<THeader>( Func<THeader , bool> predicate ) where THeader : RTSPHeader
+        public IList<THeader> GetAll<THeader>(Func<THeader, bool> predicate) where THeader : RTSPHeader
         {
-            if ( predicate == null )
+            if (predicate == null)
             {
-                throw new ArgumentNullException( nameof( predicate ) );
+                throw new ArgumentNullException(nameof(predicate));
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Values.Cast<THeader>().Where( predicate ).ToList();
+                return _collection.Values.Cast<THeader>().Where(predicate).ToList();
             }
         }
 
@@ -517,11 +627,11 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="name">the element name</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove( string name )
+        public bool Remove(string name)
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Remove( name ?? string.Empty );
+                return _collection.Remove(name ?? string.Empty);
             }
         }
 
@@ -530,18 +640,18 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="element">the element to be removed</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove( RTSPHeader element )
+        public bool Remove(RTSPHeader element)
         {
-            if ( RTSPHeader.IsUnDefined( element ) )
+            if (RTSPHeader.IsUnDefined(element))
             {
                 return false;
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                if ( _collection.Values.Contains( element ) ) // the instance should be present
+                if (_collection.Values.Contains(element)) // the instance should be present
                 {
-                    return _collection.Remove( element.Name );
+                    return _collection.Remove(element.Name);
                 }
 
                 return false;
@@ -553,9 +663,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="names">a collection of names</param>
         /// <returns>returns the number of element removed</returns>
-        public int RemoveRange( params string[] names )
+        public int RemoveRange(params string[] names)
         {
-            return RemoveRange( names as IEnumerable<string> );
+            return RemoveRange(names as IEnumerable<string>);
         }
 
         /// <summary>
@@ -563,20 +673,20 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">a collection of names</param>
         /// <returns>returns the number of element removed</returns>
-        public int RemoveRange( IEnumerable<string> collection )
+        public int RemoveRange(IEnumerable<string> collection)
         {
-            if ( collection == null )
+            if (collection == null)
             {
                 return 0;
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
                 int results = 0;
 
-                foreach ( var name in collection )
+                foreach (var name in collection)
                 {
-                    if ( _collection.Remove( name ?? string.Empty) )
+                    if (_collection.Remove(name ?? string.Empty))
                     {
                         ++results;
                     }
@@ -591,9 +701,32 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public void Clear()
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 _collection.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Copy elements to a target array
+        /// </summary>
+        /// <param name="array">the target array</param>
+        /// <param name="index">the array index</param>
+        public void CopyTo(Array array, int index)
+        {
+            CopyTo( array as RTSPHeader[] , index );
+        }
+
+        /// <summary>
+        /// Copy elements to a target array
+        /// </summary>
+        /// <param name="array">the target array</param>
+        /// <param name="arrayIndex">the array index</param>
+        public void CopyTo(RTSPHeader[] array, int arrayIndex)
+        {
+            lock (_lock)
+            {
+                _collection.Values.CopyTo(array, arrayIndex);
             }
         }
     }

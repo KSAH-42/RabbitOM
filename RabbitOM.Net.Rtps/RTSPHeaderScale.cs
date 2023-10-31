@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header
     /// </summary>
-    public sealed class RTSPHeaderScale : RTSPMessageHeader<float>
+    public sealed class RTSPHeaderScale : RTSPHeader, IRTSPHeaderValue<float>
     {
         private float _value = 0;
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the value
         /// </summary>
-        public override float Value
+        public float Value
         {
             get => _value;
             set => _value = value;

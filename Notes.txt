@@ -1,0 +1,91 @@
+RabbitOM.Rtsp
+RabbitOM.Rtsp.Clients
+RabbitOM.Rtsp.Clients.Messaging
+RabbitOM.Rtsp.Clients.Messaging.Serialization
+RabbitOM.Rtsp.Clients.Remoting
+RabbitOM.Rtsp.Clients.Remoting.Invokers
+
+RabbitOM.Media.Rtsp
+RabbitOM.Media.Rtsp.Clients
+RabbitOM.Media.Rtsp.Sockets
+RabbitOM.Media.Rtsp.Remoting
+RabbitOM.Media.Rtsp.Remoting.Invokers
+RabbitOM.Media.Rtsp.Threading
+
+public abstract class Client : IClient , IDispose
+{
+    public sealed class ClientRunner : IDispose
+    {
+        private readonly Client _client;
+
+        public ClientRunner( Client client )
+        {
+            _client = client;
+            _client.OnCommunicationStarted(...);
+        }
+
+        public void Run()
+        {
+            try
+            {
+                if ( ! _client.IsConnected )
+                {
+                    _client.DoConnect();
+                    _client.DoDescribe();
+                    _client.DoSetup();
+                    _client.DoPlay();
+                    _client.OnConnected(...);
+                }
+                else
+                {
+                    _client.Ping();
+                }
+            }
+            catch(Exception ex)
+            {
+              if ( _client.IsConnected )
+              {
+                 _client.Close();
+                 _client.OnClose();
+              }
+              _client.OnException( ex );
+            }
+
+            _client.DoIdle();
+        }
+
+        public void Dispose()
+        {
+            _client.OnCommunicationStopped(...);
+        }
+    }
+
+    public abstract bool IsConnected {get; }
+    public abstract bool IsCommunicationStarted { get; }
+    public abstract void Start();
+    public abstract void Stop();
+
+    protected abstract TimeSpan GetIdleTimeout();
+    protected abstract TimeSpan GetRetryTimeout();
+    protected abstract bool DoWaitCancelation(TimeSpan span);
+    protected abstract void DoShutdown();
+    protected abstract void DoConnect();
+    protected abstract void DoDisconnect();
+    protected abstract void DoSetup();
+    protected abstract void DoPlay();
+    protected abstract void DoIdle();
+
+    protected virtual void OnConnect() { }
+    protected virtual void OnShutdown() { }
+    protected virtual void OnDisconnect() { }
+    protected virtual void OnSetup() { }
+    protected virtual void OnTransportOpened() { }
+    protected virtual void OnTransportClosed() { }
+    protected virtual void OnPlay() { }
+    protected virtual void OnTransportError() { }
+
+
+    protected virtual void OnStarted(EventArgs e){ }
+    protected virtual void OnStopped(EventArgs e) { }
+
+}

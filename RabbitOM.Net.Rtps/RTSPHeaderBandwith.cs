@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header
     /// </summary>
-    public sealed class RTSPHeaderBandwith : RTSPMessageHeader<long>
+    public sealed class RTSPHeaderBandwith : RTSPHeader
     {
         private long _value = 0;
 
@@ -42,7 +42,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the value
         /// </summary>
-        public override long Value
+        public long Value
         {
             get => _value;
             set => _value = value > 0 ? value : 0;

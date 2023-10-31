@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header
     /// </summary>
-    public sealed class RTSPHeaderCustom : RTSPMessageHeader<string>
+    public sealed class RTSPHeaderCustom : RTSPHeader, IRTSPHeaderValue<string>
     {
         private readonly string _name  = string.Empty;
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Net.Rtsp
                 throw new ArgumentNullException( nameof( name ) );
             }
 
-            _name = RTSPDataFilter.Trim( name );
+            _name  = RTSPDataFilter.Trim( name );
             _value = RTSPDataFilter.Trim( value );
         }
 
@@ -43,7 +43,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the value
         /// </summary>
-        public override string Value
+        public string Value
         {
             get => _value;
             set => _value = RTSPDataFilter.Trim( value );

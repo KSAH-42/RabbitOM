@@ -34,7 +34,7 @@ namespace RabbitOM.Net.Rtsp
 
                     foreach ( var header in reader.GetHeaders() )
                     {
-                        response.Headers.Add( RTSPHeaderFactory.CreateHeader( header.Key , header.Value ) );
+                        response.Headers.TryAdd( RTSPHeaderFactory.CreateHeader( header.Key , header.Value ) );
                     }
 
                     response.Body.Value = reader.GetBody();

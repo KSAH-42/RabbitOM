@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header
     /// </summary>
-    public sealed class RTSPHeaderIfModifiedSince : RTSPMessageHeader<DateTime>
+    public sealed class RTSPHeaderIfModifiedSince : RTSPHeader, IRTSPHeaderValue<DateTime>
     {
         private DateTime _value = DateTime.MinValue;
 
@@ -42,7 +42,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the value
         /// </summary>
-        public override DateTime Value
+        public DateTime Value
         {
             get => _value;
             set => _value = value.ToUniversalTime();

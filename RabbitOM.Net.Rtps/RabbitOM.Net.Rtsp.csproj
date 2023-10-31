@@ -152,6 +152,7 @@
     <Compile Include="RTSPEventQueue.cs" />
     <Compile Include="RTSPEventWaitHandle.cs" />
     <Compile Include="RTSPHashAlgorithm.cs" />
+    <Compile Include="IRTSPHeaderValue.cs" />
     <Compile Include="RTSPHeader.cs" />
     <Compile Include="RTSPHeaderAccept.cs" />
     <Compile Include="RTSPHeaderAcceptEncoding.cs" />
@@ -196,7 +197,6 @@
     <Compile Include="RTSPHeaderServer.cs" />
     <Compile Include="RTSPHeaderSession.cs" />
     <Compile Include="RTSPHeaderSpeed.cs" />
-    <Compile Include="RTSPHeaderT.cs" />
     <Compile Include="RTSPHeaderTransport.cs" />
     <Compile Include="RTSPHeaderUserAgent.cs" />
     <Compile Include="RTSPHeaderVary.cs" />

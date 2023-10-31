@@ -98,27 +98,27 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                 if ( _factory.CanCreateBasicAuthorization() )
                 {
-                    return request.Headers.AddOrUpdate( _factory.CreateBasicAuthorization( credentials ) );
+                    return request.Headers.TryAddOrUpdate( _factory.CreateBasicAuthorization( credentials ) );
                 }
 
                 if ( _factory.CanCreateDigestAuthorization() )
                 {
                     if ( _factory.CanCreateDigestMD5Authorization() )
                     {
-                        return request.Headers.AddOrUpdate( _factory.CreateDigestMD5Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestMD5Authorization( credentials , request.Method , uri.ToString() ) );
                     }
 
                     if ( _factory.CanCreateDigestSHA256Authorization() )
                     {
-                        return request.Headers.AddOrUpdate( _factory.CreateDigestSHA256Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA256Authorization( credentials , request.Method , uri.ToString() ) );
                     }
 
                     if ( _factory.CanCreateDigestSHA512Authorization() )
                     {
-                        return request.Headers.AddOrUpdate( _factory.CreateDigestSHA512Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA512Authorization( credentials , request.Method , uri.ToString() ) );
                     }
 
-                    return request.Headers.AddOrUpdate( _factory.CreateDigestAuthorization( credentials , request.Method , uri.ToString() ) );
+                    return request.Headers.TryAddOrUpdate( _factory.CreateDigestAuthorization( credentials , request.Method , uri.ToString() ) );
                 }
 
                 return false;

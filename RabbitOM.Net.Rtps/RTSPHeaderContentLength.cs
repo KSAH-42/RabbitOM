@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header
     /// </summary>
-    public sealed class RTSPHeaderContentLength : RTSPMessageHeader<long>
+    public sealed class RTSPHeaderContentLength : RTSPHeader, IRTSPHeaderValue<long>
     {
         private long _value = 0;
 
@@ -40,7 +40,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the value
         /// </summary>
-        public override long Value
+        public long Value
         {
             get => _value;
             set => _value = value > 0 ? value : 0;
