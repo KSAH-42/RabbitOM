@@ -1,13 +1,49 @@
 ﻿using RabbitOM.Net.Rtsp;
 using RabbitOM.Net.Rtsp.Clients;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
 	class Program
     {
-        // TODO: Force header class to be immutable: used constructor or method factory and pass setters to private
+        static void Main(string[] args)
+        {
+            var arguments = new Dictionary<string, string>();
 
+            #region MENU
+
+            arguments["uri"] = args.ElementAtOrDefault(0);
+            arguments["-u"]  = args.ElementAtOrDefault(args.NextIndexOf(x => x == "-u"));
+            arguments["-p"]  = args.ElementAtOrDefault(args.NextIndexOf(x => x == "-p"));
+
+            if (string.IsNullOrWhiteSpace(arguments["uri"]))
+            {
+                string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
+
+                Console.WriteLine("Receiving packet from a rtsp source ");
+                Console.WriteLine("Usage: ");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"{processName} rtsp://127.0.0.1/toy.mp4");
+                Console.WriteLine($"{processName} rtsp://127.0.0.1/toy.mp4  -u admin -p camera123");
+                Console.WriteLine($"{processName} rtsp://127.0.0.1:554/toy.mp4");
+                Console.WriteLine($"{processName} rtsp://127.0.0.1:554/toy.mp4 -u admin -p camera123");
+                Console.WriteLine();
+                Console.WriteLine("-u: the username");
+                Console.WriteLine("-p: the password");
+                Console.ForegroundColor = ConsoleColor.White;
+                return;
+            }
+           
+            #endregion
+
+			Run(arguments["uri"], arguments["-u"], arguments["-p"]);
+        }
+
+        // TODO: Force header class to be immutable: used constructor or method factory and pass setters to private
 
         // TODO: On the connection class, remove the error handler and replace it by the differents event handler, in this case, avoid unification using strategy pattern
         // TODO: A dispose method on the client object
@@ -29,7 +65,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
         // TODO: Use some the lastest feature of C# 9.0 like record type for configuration classes
         //       and remove factory methods => it must be done at the end of the final release.
-        
+
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
         // Make sure that the ports are not blocked
         // Use the vendor configuration tool to activate the rtsp protocol especially the port
@@ -38,7 +74,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
         // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
-        static void Main(string[] args)
+
+        static void Run(string uri, string userName, string password)
         {
             var client = new RTSPClient();
 
@@ -71,22 +108,22 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Error += (sender, e) =>
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Client Error: " + e.Code );
+                Console.WriteLine("Client Error: " + e.Code);
             };
 
             client.PacketReceived += (sender, e) =>
             {
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("DataReceived {0}", e.Packet.Data.Length );
+                Console.WriteLine("DataReceived {0}", e.Packet.Data.Length);
             };
 
             #endregion
 
             // Please note, that rtsp uri is not the same from a camera to another
-            
-            client.Configuration.Uri = Constants.LocalServer_Source_3;
-            client.Configuration.UserName = Constants.UserName;
-            client.Configuration.Password = Constants.Password;
+
+            client.Configuration.Uri = uri;
+            client.Configuration.UserName = userName;
+            client.Configuration.Password = password;
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
@@ -100,4 +137,5 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.StopCommunication(TimeSpan.FromSeconds(3));
         }
     }
+
 }
