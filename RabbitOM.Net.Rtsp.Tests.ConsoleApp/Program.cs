@@ -92,8 +92,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
 
             client.StartCommunication();
-            
-            Console.BufferHeight = 1000;
 
             Console.WriteLine("Press any keys to close the application");
 
