@@ -18,7 +18,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             if ( source == null )
                 throw new ArgumentNullException( nameof(source) );
 
-            if (predicate == null )
+            if ( predicate == null )
                 throw new ArgumentNullException(nameof(predicate));
 
             int index = -1;

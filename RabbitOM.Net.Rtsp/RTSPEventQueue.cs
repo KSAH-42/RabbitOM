@@ -254,7 +254,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool Enqueue( EventArgs eventArgs )
         {
-            if ( eventArgs == null || object.ReferenceEquals( eventArgs , EventArgs.Empty ) )
+            if ( eventArgs == null )
             {
                 return false;
             }
