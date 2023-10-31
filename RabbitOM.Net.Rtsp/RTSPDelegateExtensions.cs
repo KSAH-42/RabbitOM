@@ -5,8 +5,33 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an helper class used to safely invoke event handler multicast delegate
     /// </summary>
-    public static class RTSPEventHandlerExtensions
+    public static class RTSPDelegateExtensions
     {
+        /// <summary>
+        /// Try to invoke an action
+        /// </summary>
+        /// <param name="action">the action</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryInvoke( this Action action )
+        {
+            if ( action == null )
+            {
+                return false;
+            }
+
+			try
+			{
+                action.Invoke();
+                return true;
+			}
+			catch (Exception ex)
+			{
+                System.Diagnostics.Debug.WriteLine( ex );
+			}
+
+            return false;
+        }
+
         /// <summary>
         /// Raise an event handler
         /// </summary>

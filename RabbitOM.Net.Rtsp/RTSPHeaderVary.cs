@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPHeaderVary : RTSPHeader
     {
-        private readonly RTSPStringList _headerNames = null;
+        private readonly RTSPStringCollection _headerNames = null;
 
 
 
@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         public RTSPHeaderVary()
-            : this( new RTSPStringList() )
+            : this( new RTSPStringCollection() )
         {
         }
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="headerNames">the header names</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPHeaderVary( RTSPStringList headerNames )
+        public RTSPHeaderVary( RTSPStringCollection headerNames )
         {
             _headerNames = headerNames ?? throw new ArgumentNullException( nameof( headerNames ) );
         }
@@ -44,7 +44,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the header names
         /// </summary>
-        public RTSPStringList HeaderNames
+        public RTSPStringCollection HeaderNames
         {
             get => _headerNames;
         }

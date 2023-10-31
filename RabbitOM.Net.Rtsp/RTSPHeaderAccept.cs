@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPHeaderAccept : RTSPHeader
     {
-        private readonly RTSPStringList _mimes = null;
+        private readonly RTSPStringCollection _mimes = null;
 
 
 
@@ -18,7 +18,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
 		public RTSPHeaderAccept( string value )
 		{
-            _mimes = new RTSPStringList();
+            _mimes = new RTSPStringCollection();
             _mimes.TryAdd(value);
         }
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         public RTSPHeaderAccept()
-            : this( new RTSPStringList() )
+            : this( new RTSPStringCollection() )
         {
 
         }
@@ -36,7 +36,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPHeaderAccept( RTSPStringList collection )
+        public RTSPHeaderAccept( RTSPStringCollection collection )
         {
             _mimes = collection ?? throw new ArgumentNullException( nameof( collection ) );
         }
@@ -55,7 +55,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the mime types
         /// </summary>
-        public RTSPStringList Mimes
+        public RTSPStringCollection Mimes
         {
             get => _mimes;
         }

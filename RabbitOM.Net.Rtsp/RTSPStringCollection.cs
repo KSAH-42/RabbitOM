@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message method list
     /// </summary>
-    public sealed class RTSPStringList : IEnumerable , IEnumerable<string> , ICollection, ICollection<string>
+    public sealed class RTSPStringCollection : IEnumerable , IEnumerable<string> , ICollection, ICollection<string>
     {
         /// <summary>
         /// Represent the maximum of element
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPStringList()
+        public RTSPStringCollection()
         {
         }
 
@@ -50,7 +50,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPStringList( IEnumerable<string> collection )
+        public RTSPStringCollection( IEnumerable<string> collection )
         {
             AddRange( collection );
         }

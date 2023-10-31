@@ -4,11 +4,13 @@ using System.Collections.Generic;
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent a parser class
+    /// Represent a class used to perform actions when the dispose method is called or after the using scope.
     /// </summary>
     public sealed class RTSPDisposeScope : IDisposable
     {
         private readonly List<Action> _actions = new List<Action>();
+
+
 
 
 
@@ -31,17 +33,16 @@ namespace RabbitOM.Net.Rtsp
 
 
 
+
+
+
+
         /// <summary>
         /// Add an action
         /// </summary>
         /// <param name="action">the action</param>
         public void PushBack( Action action )
         {
-            if ( action == null )
-            {
-                return;
-            }
-
             _actions.Add( action );
         }
 
@@ -51,11 +52,6 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="action">the action</param>
         public void PushFront( Action action )
         {
-            if ( action == null )
-            {
-                return;
-            }
-
             _actions.Insert( 0 , action );
         }
 
@@ -74,14 +70,7 @@ namespace RabbitOM.Net.Rtsp
         {
             foreach ( var action in _actions )
             {
-                try
-                {
-                    action.Invoke();
-                }
-                catch ( Exception ex )
-                {
-                    System.Diagnostics.Debug.WriteLine( ex );
-                }
+                action?.TryInvoke();
             }
         }
     }

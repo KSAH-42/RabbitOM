@@ -147,7 +147,7 @@
     <Compile Include="RTSPDigestAlgorithmType.cs" />
     <Compile Include="RTSPDigestAlgorithmTypeConverter.cs" />
     <Compile Include="RTSPDisposeScope.cs" />
-    <Compile Include="RTSPEventHandlerExtensions.cs" />
+    <Compile Include="RTSPDelegateExtensions.cs" />
     <Compile Include="RTSPEventQueue.Scope.cs" />
     <Compile Include="RTSPEventQueue.cs" />
     <Compile Include="RTSPEventWaitHandle.cs" />
@@ -239,7 +239,7 @@
     <Compile Include="RTSPSocketUdpReceiverAsync.cs" />
     <Compile Include="RTSPStatusCode.cs" />
     <Compile Include="RTSPStatusHandle.cs" />
-    <Compile Include="RTSPStringList.cs" />
+    <Compile Include="RTSPStringCollection.cs" />
     <Compile Include="Alpha\RTSPClientConfigurationValidator.cs" />
     <Compile Include="RTSPStringPair.cs" />
     <Compile Include="RTSPStringReader.cs" />

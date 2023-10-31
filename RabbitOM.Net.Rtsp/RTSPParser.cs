@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtsp
 
         private string                  _firstElement        = string.Empty;
 
-        private readonly RTSPStringList _headers             = new RTSPStringList();
+        private readonly RTSPStringCollection _headers             = new RTSPStringCollection();
 
 
 
@@ -96,7 +96,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the parsed headers
         /// </summary>
         /// <returns>returns a collection of headers</returns>
-        public RTSPStringList GetParsedHeaders()
+        public RTSPStringCollection GetParsedHeaders()
         {
             return _headers;
         }
