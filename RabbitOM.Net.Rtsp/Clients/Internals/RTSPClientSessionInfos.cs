@@ -273,7 +273,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <returns>return true for a success, otherwise false</returns>
         public bool AddSupportedMethod( RTSPMethodType method )
         {
-            return _supportedMethods.Add( method );
+            return _supportedMethods.TryAdd( method );
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <returns>return true for a success, otherwise false</returns>
         public bool AddSupportedMethods( IEnumerable<RTSPMethodType> methods )
         {
-            return _supportedMethods.AddRange( methods ) > 0;
+            return _supportedMethods.TryAddRange( methods );
         }
 
         /// <summary>

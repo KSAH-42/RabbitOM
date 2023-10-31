@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp
     {
         /// <summary>
         /// Represent the maximum of elements
-        /// </summary>
+        /// </summary>                
         public const int Maximum = 1000;
 
 
@@ -47,7 +47,7 @@ namespace RabbitOM.Net.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public RTSPHeaderCollection(IEnumerable<RTSPHeader> collection)
         {
-            TryAddRange(collection);
+            AddRange(collection);
         }
 
 
@@ -336,13 +336,10 @@ namespace RabbitOM.Net.Rtsp
         /// Try to add elements
         /// </summary>
         /// <param name="collection">the collection of headers</param>
-        /// <param name="result">the number of headers added</param>
         /// <exception cref="ArgumentNullException"/>
         /// <exception cref="ArgumentException"/>
-        public void AddRange(IEnumerable<RTSPHeader> collection, out int result)
+        public void AddRange(IEnumerable<RTSPHeader> collection)
         {
-            result = 0;
-
             if (collection == null)
             {
                 throw new ArgumentNullException( nameof(collection) );
@@ -364,121 +361,6 @@ namespace RabbitOM.Net.Rtsp
 
                     _collection.Add( element.Name , element );
                 }
-            }
-        }
-
-        /// <summary>
-        /// Add a header
-        /// </summary>
-        /// <param name="header">the element name</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAdd(RTSPHeader header)
-        {
-            if (RTSPHeader.IsUnDefined(header))
-            {
-                return false;
-            }
-
-            lock (_lock)
-            {
-                if (_collection.Count >= Maximum)
-                {
-                    return false;
-                }
-
-                if (_collection.ContainsKey(header.Name))
-                {
-                    return false;
-                }
-
-                _collection[header.Name] = header;
-
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Add or update a header
-        /// </summary>
-        /// <param name="header">the header</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddOrUpdate(RTSPHeader header)
-        {
-            if (RTSPHeader.IsUnDefined(header))
-            {
-                return false;
-            }
-
-            lock (_lock)
-            {
-                if (_collection.ContainsKey(header.Name))
-                {
-                    _collection[header.Name] = header;
-
-                    return true;
-                }
-
-                if (_collection.Count >= Maximum)
-                {
-                    return false;
-                }
-
-                _collection[header.Name] = header;
-
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Try to add elements
-        /// </summary>
-        /// <param name="collection">the collection of elements</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddRange(IEnumerable<RTSPHeader> collection)
-        {
-            return TryAddRange(collection, out int result);
-        }
-
-        /// <summary>
-        /// Try to add elements
-        /// </summary>
-        /// <param name="collection">the collection of elements</param>
-        /// <param name="result">the number of headers added</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddRange(IEnumerable<RTSPHeader> collection, out int result)
-        {
-            result = 0;
-
-            if (collection == null)
-            {
-                return false;
-            }
-
-            lock (_lock)
-            {
-                foreach (var element in collection)
-                {
-                    if (_collection.Count >= Maximum)
-                    {
-                        break;
-                    }
-
-                    if (RTSPHeader.IsUnDefined(element))
-                    {
-                        continue;
-                    }
-
-                    if (_collection.ContainsKey(element.Name))
-                    {
-                        continue;
-                    }
-
-                    _collection[element.Name] = element;
-
-                    ++result;
-                }
-
-                return result > 0;
             }
         }
 
@@ -635,20 +517,20 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Remove an existing element
         /// </summary>
-        /// <param name="element">the element to be removed</param>
+        /// <param name="header">the element to be removed</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove(RTSPHeader element)
+        public bool Remove(RTSPHeader header)
         {
-            if (RTSPHeader.IsUnDefined(element))
+            if (RTSPHeader.IsUnDefined(header))
             {
                 return false;
             }
 
             lock (_lock)
             {
-                if (_collection.Values.Contains(element)) // the instance should be present
+                if (_collection.Values.Contains(header)) // the instance should be present
                 {
-                    return _collection.Remove(element.Name);
+                    return _collection.Remove(header.Name);
                 }
 
                 return false;
@@ -724,6 +606,121 @@ namespace RabbitOM.Net.Rtsp
             lock (_lock)
             {
                 _collection.Values.CopyTo(array, arrayIndex);
+            }
+        }
+
+        /// <summary>
+        /// Add a header
+        /// </summary>
+        /// <param name="header">the header name</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAdd(RTSPHeader header)
+        {
+            if (RTSPHeader.IsUnDefined(header))
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                if (_collection.Count >= Maximum)
+                {
+                    return false;
+                }
+
+                if (_collection.ContainsKey(header.Name))
+                {
+                    return false;
+                }
+
+                _collection[header.Name] = header;
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Add or update a header
+        /// </summary>
+        /// <param name="header">the header</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddOrUpdate(RTSPHeader header)
+        {
+            if (RTSPHeader.IsUnDefined(header))
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                if (_collection.ContainsKey(header.Name))
+                {
+                    _collection[header.Name] = header;
+
+                    return true;
+                }
+
+                if (_collection.Count >= Maximum)
+                {
+                    return false;
+                }
+
+                _collection[header.Name] = header;
+
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Try to add elements
+        /// </summary>
+        /// <param name="collection">the collection of elements</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddRange(IEnumerable<RTSPHeader> collection)
+        {
+            return TryAddRange(collection, out int result);
+        }
+
+        /// <summary>
+        /// Try to add elements
+        /// </summary>
+        /// <param name="collection">the collection of elements</param>
+        /// <param name="result">the number of headers added</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddRange(IEnumerable<RTSPHeader> collection, out int result)
+        {
+            result = 0;
+
+            if (collection == null)
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                foreach (var element in collection)
+                {
+                    if (_collection.Count >= Maximum)
+                    {
+                        break;
+                    }
+
+                    if (RTSPHeader.IsUnDefined(element))
+                    {
+                        continue;
+                    }
+
+                    if (_collection.ContainsKey(element.Name))
+                    {
+                        continue;
+                    }
+
+                    _collection[element.Name] = element;
+
+                    ++result;
+                }
+
+                return result > 0;
             }
         }
     }

@@ -103,7 +103,7 @@ namespace RabbitOM.Net.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.Methods.Add( RTSPMethodTypeConverter.Convert( reader.GetElement() ) );
+                    result.Methods.TryAdd( RTSPMethodTypeConverter.Convert( reader.GetElement() ) );
                 }
 
                 return true;

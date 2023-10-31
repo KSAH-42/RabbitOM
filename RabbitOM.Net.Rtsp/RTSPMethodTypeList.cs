@@ -8,11 +8,16 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message method list
     /// </summary>
-    public sealed class RTSPMethodTypeList : IEnumerable<RTSPMethodType>
+    public sealed class RTSPMethodTypeList : IEnumerable , IEnumerable<RTSPMethodType> , ICollection , ICollection<RTSPMethodType>
     {
         private readonly object                _lock      = new object();
 
         private readonly ISet<RTSPMethodType> _collection = new HashSet<RTSPMethodType>();
+
+
+
+
+
 
 
 
@@ -30,8 +35,14 @@ namespace RabbitOM.Net.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public RTSPMethodTypeList( IEnumerable<RTSPMethodType> collection )
         {
-            AddRange( collection ?? throw new ArgumentNullException( nameof( collection ) ) );
+            AddRange( collection );
         }
+
+
+
+
+
+
 
 
 
@@ -46,6 +57,36 @@ namespace RabbitOM.Net.Rtsp
         }
 
 
+
+
+
+
+
+
+
+        /// <summary>
+        /// Gets the sync root
+        /// </summary>
+        public object SyncRoot
+        {
+            get => _lock;
+        }
+
+        /// <summary>
+        /// Returns true
+        /// </summary>
+        public bool IsSynchronized
+        {
+            get => true;
+        }
+
+        /// <summary>
+        /// Returns false
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get => false;
+        }
 
         /// <summary>
         /// Gets the number of elements
@@ -75,13 +116,19 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
+		
 
 
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>returns an instance</returns>
-        IEnumerator IEnumerable.GetEnumerator()
+
+
+
+
+
+		/// <summary>
+		/// Gets the enumerator
+		/// </summary>
+		/// <returns>returns an instance</returns>
+		IEnumerator IEnumerable.GetEnumerator()
         {
             lock ( _lock )
             {
@@ -130,17 +177,20 @@ namespace RabbitOM.Net.Rtsp
         /// Add an element
         /// </summary>
         /// <param name="element">the element name</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Add( RTSPMethodType element )
+        /// <exception cref="ArgumentException"/>
+        public void Add(RTSPMethodType element)
         {
-            if ( element == RTSPMethodType.UnDefined )
+            if (element == RTSPMethodType.UnDefined)
             {
-                return false;
+                throw new ArgumentException( nameof(element) );
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Add( element );
+                if ( ! _collection.Add(element) )
+                {
+                    throw new ArgumentException( "Duplicated value" );
+                }
             }
         }
 
@@ -148,32 +198,29 @@ namespace RabbitOM.Net.Rtsp
         /// Add elements
         /// </summary>
         /// <param name="collection">the collection of elements</param>
-        /// <returns>returns the number of element added</returns>
-        public int AddRange( IEnumerable<RTSPMethodType> collection )
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        public void AddRange(IEnumerable<RTSPMethodType> collection)
         {
-            if ( collection == null )
+            if (collection == null)
             {
-                return 0;
+                throw new ArgumentNullException( nameof(collection) );
             }
 
-            lock ( _lock )
+            lock (_lock)
             {
-                int results = 0;
-
-                foreach ( var element in collection )
+                foreach (var element in collection)
                 {
-                    if ( element == RTSPMethodType.UnDefined )
+                    if (element == RTSPMethodType.UnDefined)
                     {
-                        continue;
+                        throw new ArgumentException("Bad element");
                     }
 
-                    if ( _collection.Add( element ) )
+                    if ( ! _collection.Add(element))
                     {
-                        ++results;
+                        throw new ArgumentException("Duplicated value");
                     }
                 }
-
-                return results;
             }
         }
 
@@ -257,6 +304,91 @@ namespace RabbitOM.Net.Rtsp
             lock ( _lock )
             {
                 _collection.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Copy to a target array
+        /// </summary>
+        /// <param name="array">the target array</param>
+        /// <param name="index">the index</param>
+        public void CopyTo(Array array, int index)
+        {
+            CopyTo(array as RTSPMethodType[], index);
+        }
+
+        /// <summary>
+        /// Copy to a target array
+        /// </summary>
+        /// <param name="array">the target array</param>
+        /// <param name="arrayIndex">the index</param>
+        public void CopyTo(RTSPMethodType[] array, int arrayIndex)
+        {
+            lock (_lock)
+            {
+                _collection.CopyTo(array, arrayIndex);
+            }
+        }
+
+        /// <summary>
+        /// Add an element
+        /// </summary>
+        /// <param name="element">the element name</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAdd(RTSPMethodType element)
+        {
+            if (element == RTSPMethodType.UnDefined)
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                return _collection.Add(element);
+            }
+        }
+
+        /// <summary>
+        /// Add elements
+        /// </summary>
+        /// <param name="collection">the collection of elements</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddRange(IEnumerable<RTSPMethodType> collection)
+        {
+            return TryAddRange(collection, out int result);
+        }
+
+        /// <summary>
+        /// Add elements
+        /// </summary>
+        /// <param name="collection">the collection of elements</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddRange(IEnumerable<RTSPMethodType> collection, out int result)
+        {
+            result = default;
+
+            if (collection == null)
+            {
+                return false;
+            }
+
+            lock (_lock)
+            {
+                foreach (var element in collection)
+                {
+                    if (element == RTSPMethodType.UnDefined)
+                    {
+                        continue;
+                    }
+
+                    if (_collection.Add(element))
+                    {
+                        ++result;
+                    }
+                }
+
+                return result > 0;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtsp
 		public RTSPHeaderAccept( string value )
 		{
             _mimes = new RTSPStringList();
-            _mimes.Add(value);
+            _mimes.TryAdd(value);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace RabbitOM.Net.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.Mimes.Add( reader.GetElement() );
+                    result.Mimes.TryAdd( reader.GetElement() );
                 }
 
                 return true;

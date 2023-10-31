@@ -110,7 +110,7 @@ namespace RabbitOM.Net.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.HeaderNames.Add( reader.GetElement() );
+                    result.HeaderNames.TryAdd( reader.GetElement() );
                 }
 
                 return true;

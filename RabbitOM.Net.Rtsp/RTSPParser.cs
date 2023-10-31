@@ -123,7 +123,7 @@ namespace RabbitOM.Net.Rtsp
 
             foreach ( string token in tokens )
             {
-                _headers.Add( token.Trim() );
+                _headers.TryAdd( token.Trim() );
             }
 
             return _headers.Any();
