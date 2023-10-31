@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp
 
         private readonly StringBuilder           _body            = new StringBuilder();
 
-        private readonly RTSPHeaderList          _headers         = new RTSPHeaderList();
+        private readonly RTSPHeaderCollection          _headers         = new RTSPHeaderCollection();
 
 
 

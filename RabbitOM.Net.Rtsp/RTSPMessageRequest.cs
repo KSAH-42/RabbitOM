@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Rtsp
 
         private readonly string                         _uri      = string.Empty;
 
-        private readonly RTSPHeaderList                 _headers  = null;
+        private readonly RTSPHeaderCollection                 _headers  = null;
 
         private readonly RTSPMessageBody                _body     = null;
 
@@ -46,7 +46,7 @@ namespace RabbitOM.Net.Rtsp
 
             _method = method;
             _uri = RTSPDataFilter.Trim( uri );
-            _headers = new RTSPHeaderList();
+            _headers = new RTSPHeaderCollection();
             _body = new RTSPMessageBody();
             _version = version;
         }
@@ -74,7 +74,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the headers
         /// </summary>
-        public override RTSPHeaderList Headers
+        public override RTSPHeaderCollection Headers
         {
             get => _headers;
         }

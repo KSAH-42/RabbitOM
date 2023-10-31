@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     {
         private readonly RTSPMessageStatus     _status      = null;
 
-        private readonly RTSPHeaderList        _headers     = null;
+        private readonly RTSPHeaderCollection        _headers     = null;
 
         private readonly RTSPMessageBody       _body        = null;
 
@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp
         {
             _status = status ?? throw new ArgumentNullException( nameof( status ) );
             _version = version ?? throw new ArgumentNullException( nameof( version ) );
-            _headers = new RTSPHeaderList();
+            _headers = new RTSPHeaderCollection();
             _body = new RTSPMessageBody();
         }
 
@@ -55,7 +55,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the headers
         /// </summary>
-        public override RTSPHeaderList Headers
+        public override RTSPHeaderCollection Headers
         {
             get => _headers;
         }

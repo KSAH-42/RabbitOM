@@ -180,7 +180,7 @@
     <Compile Include="RTSPHeaderIfMatch.cs" />
     <Compile Include="RTSPHeaderIfModifiedSince.cs" />
     <Compile Include="RTSPHeaderLastModified.cs" />
-    <Compile Include="RTSPHeaderList.cs" />
+    <Compile Include="RTSPHeaderCollection.cs" />
     <Compile Include="RTSPHeaderLocation.cs" />
     <Compile Include="RTSPHeaderNames.cs" />
     <Compile Include="RTSPHeaderNull.cs" />

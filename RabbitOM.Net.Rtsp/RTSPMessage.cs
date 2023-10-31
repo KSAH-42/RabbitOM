@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the headers
         /// </summary>
-        public abstract RTSPHeaderList Headers
+        public abstract RTSPHeaderCollection Headers
         {
             get;
         }

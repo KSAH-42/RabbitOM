@@ -6,18 +6,15 @@ using System.Linq;
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent the message header list
+    /// Represent the message header collection
     /// </summary>
-    public sealed class RTSPHeaderList
-        : IEnumerable
-        , IEnumerable<RTSPHeader>
-  //      , ICollection
-  //      , ICollection<RTSPHeader>
+    public sealed class RTSPHeaderCollection : IEnumerable , IEnumerable<RTSPHeader> , ICollection , ICollection<RTSPHeader>
     {
         /// <summary>
         /// Represent the maximum of elements
         /// </summary>
         public const int Maximum = 1000;
+
 
 
 
@@ -39,7 +36,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPHeaderList()
+        public RTSPHeaderCollection()
         {
         }
 
@@ -48,7 +45,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPHeaderList(IEnumerable<RTSPHeader> collection)
+        public RTSPHeaderCollection(IEnumerable<RTSPHeader> collection)
         {
             TryAddRange(collection);
         }
