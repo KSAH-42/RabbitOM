@@ -51,7 +51,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RabbitOM.Net.Rtps\RabbitOM.Net.Rtsp.csproj">
+    <ProjectReference Include="..\RabbitOM.Net.Rtsp\RabbitOM.Net.Rtsp.csproj">
       <Project>{caea566d-6aa9-460e-9bfa-8ce0e2fe7646}</Project>
       <Name>RabbitOM.Net.Rtsp</Name>
     </ProjectReference>
