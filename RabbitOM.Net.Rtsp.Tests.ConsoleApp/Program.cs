@@ -16,8 +16,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
-            arguments["-u"]  = args.ElementAtOrDefault(args.NextIndexOf(x => x == "-u"));
-            arguments["-p"]  = args.ElementAtOrDefault(args.NextIndexOf(x => x == "-p"));
+            arguments["-u"]  = args.ElementAtOrDefault(args.IndexAfter(x => x == "-u"));
+            arguments["-p"]  = args.ElementAtOrDefault(args.IndexAfter(x => x == "-p"));
 
             if (string.IsNullOrWhiteSpace(arguments["uri"]))
             {

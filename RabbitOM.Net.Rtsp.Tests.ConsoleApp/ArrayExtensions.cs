@@ -6,11 +6,11 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
 	public static class ArrayExtensions
     {
-        public static int NextIndexOf<TSource>(this IEnumerable<TSource> source, Func<TSource, bool> predicate)
+        public static int IndexAfter<TSource>( this IEnumerable<TSource> source , Func<TSource,bool> predicate)
         {
             int index = IndexOf( source , predicate );
 
-            return index >= 0 ? index + 1 : -1;
+            return index >= 0 ? ++ index : -1;
         }
 
         public static int IndexOf<TSource>( this IEnumerable<TSource> source , Func<TSource,bool> predicate )
