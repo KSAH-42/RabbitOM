@@ -83,10 +83,10 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public override bool Validate()
+        public override bool TryValidate()
         {
             return _status.Validate()
-                && _version.Validate()
+                && _version.TryValidate()
                 && _headers.ContainsKey( RTSPHeaderNames.CSeq );
         }
 

@@ -83,7 +83,7 @@ namespace RabbitOM.Net.Rtsp
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        internal bool Validate()
+        internal bool TryValidate()
         {
             if ( _majorNumber == 0 && _minorNumber == 0 )
             {

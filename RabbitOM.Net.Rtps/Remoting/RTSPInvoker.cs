@@ -644,7 +644,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
             bool succeed = false;
 
-            if ( request != null && request.Validate() && response != null && response.Validate() )
+            if ( request != null && request.TryValidate() && response != null && response.TryValidate() )
             {
                 if ( response.Status.Code == RTSPStatusCode.OK
                   || response.Status.Code == RTSPStatusCode.Continue

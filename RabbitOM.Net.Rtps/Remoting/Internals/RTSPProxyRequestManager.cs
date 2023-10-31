@@ -104,7 +104,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             response = null;
 
-            if ( request == null || ! request.Validate() )
+            if ( request == null || ! request.TryValidate() )
             {
                 return false;
             }
@@ -144,7 +144,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
                         return false;
                     }
 
-                    if ( handler.Response == null || !handler.Response.Validate() )
+                    if ( handler.Response == null || !handler.Response.TryValidate() )
                     {
                         return false;
                     }

@@ -146,7 +146,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             _response = response;
 
-            if ( _response == null || !_response.Validate() )
+            if ( _response == null || !_response.TryValidate() )
             {
                 return;
             }
