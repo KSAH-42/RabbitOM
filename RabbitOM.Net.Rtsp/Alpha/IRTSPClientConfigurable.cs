@@ -16,5 +16,13 @@ namespace RabbitOM.Net.Rtsp.Alpha
         {
             get;
         }
+
+        /// <summary>
+        /// Change the configuration
+        /// </summary>
+        /// <param name="configuration">the configuration</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="InvalidOperationException"/>
+        void Configure( TConfiguration configuration );
     }
 }

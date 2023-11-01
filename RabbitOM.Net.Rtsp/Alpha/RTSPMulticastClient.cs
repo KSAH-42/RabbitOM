@@ -65,6 +65,17 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
         /// <summary>
+        /// Change the configuration
+        /// </summary>
+        /// <param name="configuration">the configuration</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="InvalidOperationException"/>
+        public void Configure(RTSPMulticastClientConfiguration configuration)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Start the communication
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
