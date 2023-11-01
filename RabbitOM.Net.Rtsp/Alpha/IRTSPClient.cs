@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
     /// <summary>
     /// Represent the client
     /// </summary>
-    public interface IRTSPClient
+    public interface IRTSPClient : IDisposable
     {
         /// <summary>
         /// Raised when the communication has been started

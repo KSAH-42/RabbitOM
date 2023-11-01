@@ -41,6 +41,18 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
+        /// <summary>
+        /// Finalizer
+        /// </summary>
+        ~RTSPClient()
+        {
+            Dispose( false );
+        }
+
+
+
+
+
 
 
         /// <summary>
@@ -66,6 +78,28 @@ namespace RabbitOM.Net.Rtsp.Alpha
         {
             get;
         }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">true when the dispose method is explictly call</param>
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                StopCommunication();
+            }
+        }
+
 
 
 
