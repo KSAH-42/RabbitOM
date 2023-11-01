@@ -12,14 +12,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
             var arguments = new Dictionary<string, string>();
-
+            
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
             arguments["-u"]  = args.ElementAtOrDefault(args.IndexAfter(x => x == "-u"));
             arguments["-p"]  = args.ElementAtOrDefault(args.IndexAfter(x => x == "-p"));
 
-            if (string.IsNullOrWhiteSpace(arguments["uri"]))
+            if ( string.IsNullOrEmpty(arguments["uri"]) || args.Contains( "/?") ) 
             {
                 string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
 
