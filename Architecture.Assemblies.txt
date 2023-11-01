@@ -1,4 +1,0 @@
-RabbitOM.Net.Sdp.dll
-RabbitOM.Net.Sdp.Tests.dll
-RabbitOM.Net.Sdp.Tests.ConsoleApp
-
