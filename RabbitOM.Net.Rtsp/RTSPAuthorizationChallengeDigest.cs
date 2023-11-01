@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    public abstract class RTSPAuthorizationChallengeDigest : RTSPAuthorizationChallenge
+    internal abstract class RTSPAuthorizationChallengeDigest : RTSPAuthorizationChallenge
     {
         private RTSPMethodType           _method      = RTSPMethodType.UnDefined;
 

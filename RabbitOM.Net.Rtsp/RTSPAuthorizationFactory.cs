@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a authorization factory used to create message authorization header in case an authentication is required when the server response ask to the client to include an authorization header on it's message request.
     /// </summary>
-    public sealed class RTSPAuthorizationFactory
+    internal sealed class RTSPAuthorizationFactory
     {
         private RTSPHeaderWWWAuthenticate _header = null;
 

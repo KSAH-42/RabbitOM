@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    public sealed class RTSPAuthorizationChallengeBasic : RTSPAuthorizationChallenge
+    internal sealed class RTSPAuthorizationChallengeBasic : RTSPAuthorizationChallenge
     {
         private readonly RTSPCredentials _credentials = null;
 

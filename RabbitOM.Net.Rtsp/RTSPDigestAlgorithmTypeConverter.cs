@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent type converter class
     /// </summary>
-    public static class RTSPDigestAlgorithmTypeConverter
+    internal static class RTSPDigestAlgorithmTypeConverter
     {
         /// <summary>
         /// Perform a convertion

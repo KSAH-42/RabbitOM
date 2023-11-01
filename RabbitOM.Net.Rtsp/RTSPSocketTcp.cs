@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a socket tcp
     /// </summary>
-    public sealed class RTSPSocketTcp : IDisposable
+    internal sealed class RTSPSocketTcp : IDisposable
     {
         private readonly Action<Exception>  _errorHandler = null;
 

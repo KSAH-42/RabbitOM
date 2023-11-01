@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a tolerant memory stream
     /// </summary>
-    public sealed class RTSPMemoryStream : IDisposable
+    internal sealed class RTSPMemoryStream : IDisposable
     {
         private const int              DefaultSize =  8096 * 8 * 2;
 

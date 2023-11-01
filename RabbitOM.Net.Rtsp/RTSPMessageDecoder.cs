@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the proxy decoder
     /// </summary>
-    public sealed class RTSPMessageDecoder
+    internal sealed class RTSPMessageDecoder
     {
         private readonly object           _lock              = null;
 

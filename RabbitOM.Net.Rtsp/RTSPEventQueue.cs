@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a event circular queue
     /// </summary>
-    public sealed partial class RTSPEventQueue : IEnumerable<EventArgs>
+    internal sealed partial class RTSPEventQueue : IEnumerable<EventArgs>
     {
         /// <summary>
         /// Represent the maximum of events

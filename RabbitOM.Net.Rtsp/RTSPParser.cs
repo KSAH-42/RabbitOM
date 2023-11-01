@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a parser class
     /// </summary>
-    public sealed class RTSPParser
+    internal sealed class RTSPParser
     {
         private RTSPSeparator           _headerSeparator     = RTSPSeparator.Comma;
 

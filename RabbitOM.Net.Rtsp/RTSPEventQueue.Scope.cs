@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a event circular queue
     /// </summary>
-    public sealed partial class RTSPEventQueue 
+    internal sealed partial class RTSPEventQueue 
     {
         /// <summary>
         /// This class is used to update the internal event handle

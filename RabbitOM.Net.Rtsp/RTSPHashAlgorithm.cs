@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a class used to generate a digest value using MD5 algorithm
     /// </summary>
-    public static class RTSPHashAlgorithm
+    internal static class RTSPHashAlgorithm
     {
         /// <summary>
         /// Create a hash

@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    public sealed class RTSPAuthorizationChallengeSHA512 : RTSPAuthorizationChallengeDigest
+    internal sealed class RTSPAuthorizationChallengeSHA512 : RTSPAuthorizationChallengeDigest
     {
         /// <summary>
         /// Constructor

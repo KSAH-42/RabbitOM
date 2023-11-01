@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    public abstract class RTSPAuthorizationChallenge
+    internal abstract class RTSPAuthorizationChallenge
     {
         /// <summary>
         /// Gets the credentials
