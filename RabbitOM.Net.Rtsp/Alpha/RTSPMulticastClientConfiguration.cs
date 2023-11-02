@@ -188,6 +188,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <param name="uri">the uri</param>
         /// <param name="address">the address</param>
         /// <param name="port">the port</param>
+        /// <param name="ttl">the ttl</param>
         /// <param name="userName">the username</param>
         /// <param name="password">the password</param>
         /// <param name="keepAliveType">the keep alive type</param>
@@ -201,6 +202,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             string uri, 
             string address,
             int port ,
+            byte ttl,
             string userName, 
             string password, 
             RTSPKeepAliveType keepAliveType, 
@@ -216,6 +218,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 Uri = uri,  
                 Address = address,
                 Port = port,
+                TTL = ttl,
                 UserName = userName,
                 Password = password ,
                 KeepAliveType = keepAliveType,
