@@ -46,6 +46,7 @@
     <Compile Include="Alpha\Events\RTSPClientConnectedEventArgs.cs" />
     <Compile Include="Alpha\Events\RTSPClientDisconnectedEventArgs.cs" />
     <Compile Include="Alpha\Events\RTSPClientErrorEventArgs.cs" />
+    <Compile Include="Alpha\RTSPClientConfigurationBag.cs" />
     <Compile Include="Alpha\RTSPMulticastClient.cs" />
     <Compile Include="Alpha\RTSPTcpClient.cs" />
     <Compile Include="Alpha\RTSPUdpClient.cs" />

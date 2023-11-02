@@ -43,6 +43,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 			Run(arguments["uri"], arguments["-u"], arguments["-p"]);
         }
 
+        // ----> don't forget to use <inheritdoc/> for comments
+
         // TODO: Force header class to be immutable: used constructor or method factory and pass setters to private
 
         // TODO: On the connection class, remove the error handler and replace it by the differents event handler, in this case, avoid unification using strategy pattern
