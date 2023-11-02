@@ -42,7 +42,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         {
             get
             {
-                lock (_lock)
+                lock ( _lock )
                 {
                     return _configuration ?? throw new InvalidOperationException("the configuration member can not be null");
                 }
@@ -64,9 +64,30 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 throw new ArgumentNullException( nameof( configuration ) );
             }
 
-            lock (_lock)
+            lock ( _lock )
             {
                 _configuration = configuration;
+            }
+        }
+
+        /// <summary>
+        /// Set the configuration
+        /// </summary>
+        /// <param name="configuration">the configuration</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryChange(TConfiguration configuration)
+        {
+            if ( configuration == null )
+            {
+                return false;
+            }
+
+            lock ( _lock )
+            {
+                _configuration = configuration;
+
+                return true;
             }
         }
 

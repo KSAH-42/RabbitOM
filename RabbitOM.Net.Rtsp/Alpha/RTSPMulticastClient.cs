@@ -72,12 +72,22 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
         /// <summary>
-        /// Change the configuration
+        /// Change the configuration only when the current instance is not running
         /// </summary>
         /// <param name="configuration">the configuration</param>
         /// <exception cref="ArgumentNullException"/>
         /// <exception cref="InvalidOperationException"/>
         public void Configure(RTSPMulticastClientConfiguration configuration)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Change the configuration only when the current instance is not running
+        /// </summary>
+        /// <param name="configuration">the configuration</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryConfigure(RTSPMulticastClientConfiguration configuration)
         {
             throw new NotImplementedException();
         }
