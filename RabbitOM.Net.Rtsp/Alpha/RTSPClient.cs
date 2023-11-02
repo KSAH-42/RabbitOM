@@ -41,6 +41,16 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
+
+
+        private bool _isDisposed;
+
+
+
+
+
+
+
         /// <summary>
         /// Finalizer
         /// </summary>
@@ -80,26 +90,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         /// <summary>
-        /// Dispose
+        /// Check if the object has been disposed
         /// </summary>
-        public void Dispose()
+        public bool IsDiposed
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
+            get => _isDisposed;
         }
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        /// <param name="disposing">true when the dispose method is explictly call</param>
-        protected virtual void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                StopCommunication();
-            }
-        }
-
 
 
 
@@ -147,6 +143,41 @@ namespace RabbitOM.Net.Rtsp.Alpha
         ///     <para>And it will returns true when the communication is connected or already connected.</para>
         /// </remarks>
         public abstract bool WaitForConnection(TimeSpan timeout);
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">true when the dispose method is explictly call</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                StopCommunication();
+            }
+
+            _isDisposed = true;
+        }
+
+        /// <summary>
+        /// Throw an exception if the object is already disposed
+        /// </summary>
+        /// <exception cref="ObjectDisposedException"/>
+        protected void EnsureNotDispose()
+        {
+            if (_isDisposed)
+            {
+                throw new ObjectDisposedException(nameof(RTSPClient));
+            }
+        }
 
 
 
