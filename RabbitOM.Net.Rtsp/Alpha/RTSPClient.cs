@@ -123,6 +123,103 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <param name="shutdownTimeout">the shutdown timeout</param>
         public abstract void StopCommunication( TimeSpan shutdownTimeout );
 
+        /// <summary>
+        /// This method will block the call thread until the client has establish the connection
+        /// </summary>
+        /// <param name="timeout">the time to wait in milliseconds</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        /// <remarks>
+        ///     <para>This method will returns false in case the communication is not established.</para>
+        ///     <para>And it will returns true when the communication is connected or already connected.</para>
+        /// </remarks>
+        public bool WaitForConnection(int timeout)
+        {
+            return WaitForConnection( TimeSpan.FromSeconds(timeout) );
+        }
+
+        /// <summary>
+        /// This method will block the call thread until the client has establish the connection
+        /// </summary>
+        /// <param name="timeout">the time to wait</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        /// <remarks>
+        ///     <para>This method will returns false in case the communication is not established.</para>
+        ///     <para>And it will returns true when the communication is connected or already connected.</para>
+        /// </remarks>
+        public abstract bool WaitForConnection(TimeSpan timeout);
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Gets the idle timeout
+        /// </summary>
+        /// <returns>returns a value</returns>
+        protected abstract TimeSpan GetIdleTimeout();
+
+        /// <summary>
+        /// Gets the retry timeout
+        /// </summary>
+        /// <returns>returns a value</returns>
+        protected abstract TimeSpan GetRetryTimeout();
+
+        /// <summary>
+        /// Wait the cancelation
+        /// </summary>
+        /// <param name="span">the time span</param>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoWaitCancelation(TimeSpan span);
+        
+        /// <summary>
+        /// Process a shutdown
+        /// </summary>
+        protected abstract bool DoShutdown();
+
+        /// <summary>
+        /// Process a connect operation
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoConnect();
+
+        /// <summary>
+        /// Process a disconnect operation
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoDisconnect();
+
+        /// <summary>
+        /// Process a get options operaiton
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoGetOptions();
+
+        /// <summary>
+        /// Process a setup operation
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoSetup();
+
+        /// <summary>
+        /// Process a play operation
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoPlay();
+
+        /// <summary>
+        /// Process a teardown operation
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoTeardown();
+
+        /// <summary>
+        /// Process a ping operation used to maintain the network communication with the remote rtsp source
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoHeartBeat();
 
 
 
@@ -181,6 +278,54 @@ namespace RabbitOM.Net.Rtsp.Alpha
         protected virtual void OnError( RTSPClientErrorEventArgs e )
         {
             Error?.TryInvoke( this , e );
+        }
+
+        /// <summary>
+        /// Occurs when during a successfull operation
+        /// </summary>
+        /// <param name="e">the event args</param>
+        protected virtual void OnGetOptions(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when during a successfull operation
+        /// </summary>
+        /// <param name="e">the event args</param>
+        protected virtual void OnDescribe(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when during a successfull operation
+        /// </summary>
+        /// <param name="e">the event args</param>
+        protected virtual void OnSetup(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when during a successfull operation
+        /// </summary>
+        /// <param name="e">the event args</param>
+        protected virtual void OnPlay(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when during a successfull operation
+        /// </summary>
+        /// <param name="e">the event args</param>
+        protected virtual void OnTearDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when during a successfull operation
+        /// </summary>
+        /// <param name="e">the event args</param>
+        protected virtual void OnHeartBeat(EventArgs e)
+        {
         }
     }
 }

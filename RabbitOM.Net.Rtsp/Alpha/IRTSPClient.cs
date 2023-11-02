@@ -83,5 +83,27 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// </summary>
         /// <param name="shutdownTimeout">the shutdown timeout</param>
         void StopCommunication( TimeSpan shutdownTimeout );
+
+        /// <summary>
+        /// This method will block the call thread until the client has establish the connection
+        /// </summary>
+        /// <param name="timeout">the time to wait in milliseconds</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        /// <remarks>
+        ///     <para>This method will returns false in case the communication is not established.</para>
+        ///     <para>And it will returns true when the communication is connected or already connected.</para>
+        /// </remarks>
+        bool WaitForConnection(int timeout);
+
+        /// <summary>
+        /// This method will block the call thread until the client has establish the connection
+        /// </summary>
+        /// <param name="timeout">the time to wait</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        /// <remarks>
+        ///     <para>This method will returns false in case the communication is not established.</para>
+        ///     <para>And it will returns true when the communication is connected or already connected.</para>
+        /// </remarks>
+        bool WaitForConnection( TimeSpan timeout );
     }
 }
