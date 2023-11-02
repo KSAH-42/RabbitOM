@@ -9,6 +9,13 @@ namespace RabbitOM.Net.Rtsp.Alpha
         : RTSPClient
         , IRTSPClientConfigurable<RTSPTcpClientConfiguration>
     {
+        /// <summary>
+        /// Initialize an new instance of the client
+        /// </summary>
+        public RTSPTcpClient()
+		{
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Initialize an new instance of the client
