@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <summary>
         /// Check if the object has been disposed
         /// </summary>
-        public bool IsDiposed
+        public bool IsDisposed
         {
             get => _isDisposed;
         }
