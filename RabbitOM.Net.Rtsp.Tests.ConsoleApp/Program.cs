@@ -139,5 +139,4 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.StopCommunication(TimeSpan.FromSeconds(3));
         }
     }
-
 }

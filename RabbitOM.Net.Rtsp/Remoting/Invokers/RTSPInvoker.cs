@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 
-namespace RabbitOM.Net.Rtsp.Remoting
+namespace RabbitOM.Net.Rtsp.Remoting.Invokers
 {
     /// <summary>
     /// Represent the request invoker manipulated by a connection object <see cref="RTSPConnection"/>
@@ -661,6 +662,16 @@ namespace RabbitOM.Net.Rtsp.Remoting
             }
 
             return new RTSPInvokerResult( succeed , new RTSPInvokerResultRequest( request ?? RTSPMessageRequest.CreateUnDefinedRequest() ) , new RTSPInvokerResultResponse( response ?? RTSPMessageResponse.CreateUnDefinedResponse() ) );
+        }
+
+        /// <summary>
+        /// Invoke a specific RTSP method on the remote device or computer
+        /// </summary>
+        /// <param name="invoker">the connection</param>
+        /// <returns>returns an invoker result</returns>
+        public async Task<RTSPInvokerResult> InvokeAsync()
+        {
+            return await Task.Run(() => Invoke());
         }
 
         /// <summary>

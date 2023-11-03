@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Remoting
 {
@@ -346,5 +347,11 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         RTSPInvokerResult Invoke();
+
+        /// <summary>
+        /// Invoke a specific RTSP method on the remote device or computer
+        /// </summary>
+        /// <returns>returns an invoker result</returns>
+        Task<RTSPInvokerResult> InvokeAsync();
     }
 }
