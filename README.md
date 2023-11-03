@@ -68,6 +68,10 @@ client.StopCommunication();
 
 ~~~~
 
+# About the Alpha namespace
+
+This namepsace contains classes for experimentations. And theses classes will replace all classes present in the clients namespaces.
+
 # About Real Time Streaming Protocol
 
 Where RTSP are used ?
