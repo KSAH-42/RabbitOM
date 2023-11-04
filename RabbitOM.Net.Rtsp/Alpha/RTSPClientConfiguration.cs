@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private RTSPKeepAliveType   _keepAliveType     = RTSPKeepAliveType.Options;
 
-        private RTSPMediaFormatType _mediaFormat       = RTSPMediaFormatType.Video;
+        private RTSPMediaFormat _mediaFormat       = RTSPMediaFormat.Video;
 
 
 
@@ -256,7 +256,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <summary>
         /// Gets the media format type
         /// </summary>
-        public RTSPMediaFormatType MediaFormat
+        public RTSPMediaFormat MediaFormat
         {
             get
             {

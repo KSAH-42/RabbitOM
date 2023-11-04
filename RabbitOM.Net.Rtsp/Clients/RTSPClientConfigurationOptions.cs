@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private TimeSpan             _keepAliveInteval      = DefaultKeepAliveInterval;
        
-        private RTSPMediaFormatType  _mediaFormat           = RTSPMediaFormatType.Video;
+        private RTSPMediaFormat  _mediaFormat           = RTSPMediaFormat.Video;
 
         private RTSPDeliveryMode     _deliveryMode          = RTSPDeliveryMode.Tcp;
 
@@ -109,7 +109,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
         /// Gets / Sets the media format type
         /// </summary>
-        public RTSPMediaFormatType MediaFormat
+        public RTSPMediaFormat MediaFormat
         {
             get
             {
@@ -250,7 +250,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 _retriesInterval   = DefaultRetriesInterval;
                 _keepAliveInteval  = DefaultKeepAliveInterval;
-                _mediaFormat       = RTSPMediaFormatType.Video;
+                _mediaFormat       = RTSPMediaFormat.Video;
                 _deliveryMode      = RTSPDeliveryMode.Tcp;
                 _unicastPort       = DefaultPort;
                 _multicastPort     = DefaultPort + 1;

@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             string userName, 
             string password, 
             RTSPKeepAliveType keepAliveType, 
-            RTSPMediaFormatType mediaFormat, 
+            RTSPMediaFormat mediaFormat, 
             TimeSpan receiveTimeout,
             TimeSpan sendTimeout,
             TimeSpan retriesInterval,

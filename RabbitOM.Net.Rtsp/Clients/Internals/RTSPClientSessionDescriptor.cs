@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="mediaFormat">the media format</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool SelectTrack( RTSPMediaFormatType mediaFormat )
+        public bool SelectTrack( RTSPMediaFormat mediaFormat )
         {
             lock ( _lock )
             {
@@ -107,11 +107,11 @@ namespace RabbitOM.Net.Rtsp.Clients
                 
                 switch ( mediaFormat )
                 {
-                    case RTSPMediaFormatType.Audio:
+                    case RTSPMediaFormat.Audio:
                         mediaTrack = _sdp.SelectAudioMediaTracks().FirstOrDefault();
                         break;
 
-                    case RTSPMediaFormatType.Video:
+                    case RTSPMediaFormat.Video:
                         mediaTrack = _sdp.SelectVideoMediaTracks().FirstOrDefault();
                         break;
                 }
@@ -137,12 +137,12 @@ namespace RabbitOM.Net.Rtsp.Clients
                     mediaTrack.Format.PPS = CodecInfo.Default_H264_PPS;
                 }
 
-                if ( mediaFormat == RTSPMediaFormatType.Audio )
+                if ( mediaFormat == RTSPMediaFormat.Audio )
                 {
                     _selectedTrack = RTSPTrackInfo.NewAudioTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId );
                 }
 
-                if ( mediaFormat == RTSPMediaFormatType.Video )
+                if ( mediaFormat == RTSPMediaFormat.Video )
                 {
                     _selectedTrack = RTSPTrackInfo.NewVideoTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId , mediaTrack.Format.SPS , mediaTrack.Format.PPS );
                 }

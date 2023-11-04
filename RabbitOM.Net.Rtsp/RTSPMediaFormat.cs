@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the media format type
     /// </summary>
-    public enum RTSPMediaFormatType
+    public enum RTSPMediaFormat
     {
         /// <summary>
         /// Video

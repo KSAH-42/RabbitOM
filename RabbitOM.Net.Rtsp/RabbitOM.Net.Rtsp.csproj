@@ -209,7 +209,7 @@
     <Compile Include="RTSPHeaderWriter.cs" />
     <Compile Include="RTSPHeaderWWWAuthenticate.cs" />
     <Compile Include="RTSPKeepAliveType.cs" />
-    <Compile Include="RTSPMediaFormatType.cs" />
+    <Compile Include="RTSPMediaFormat.cs" />
     <Compile Include="RTSPMemoryStream.cs" />
     <Compile Include="RTSPMessage.cs" />
     <Compile Include="RTSPMessageBody.cs" />
