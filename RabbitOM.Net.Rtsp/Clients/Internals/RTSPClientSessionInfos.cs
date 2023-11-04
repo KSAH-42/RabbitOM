@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private readonly RTSPClientSessionDescriptor _descriptor       = new RTSPClientSessionDescriptor();
 
-        private readonly RTSPMethodTypeList          _supportedMethods = new RTSPMethodTypeList();
+        private readonly RTSPMethodList          _supportedMethods = new RTSPMethodList();
 
         private string                               _sessionId        = string.Empty;
 
@@ -83,9 +83,9 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
         /// Gets the supported methods
         /// </summary>
-        public RTSPMethodTypeReadonlyList SupportedMethods
+        public RTSPMethodReadonlyList SupportedMethods
         {
-            get => new RTSPMethodTypeReadonlyList( _supportedMethods );
+            get => new RTSPMethodReadonlyList( _supportedMethods );
         }
 
         
@@ -271,7 +271,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="method">the method</param>
         /// <returns>return true for a success, otherwise false</returns>
-        public bool AddSupportedMethod( RTSPMethodType method )
+        public bool AddSupportedMethod( RTSPMethod method )
         {
             return _supportedMethods.TryAdd( method );
         }
@@ -281,7 +281,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="methods">a collection of methods</param>
         /// <returns>return true for a success, otherwise false</returns>
-        public bool AddSupportedMethods( IEnumerable<RTSPMethodType> methods )
+        public bool AddSupportedMethods( IEnumerable<RTSPMethod> methods )
         {
             return _supportedMethods.TryAddRange( methods );
         }

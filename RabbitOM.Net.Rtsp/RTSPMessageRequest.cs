@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPMessageRequest : RTSPMessage
     {
-        private readonly RTSPMethodType                 _method   = RTSPMethodType.UnDefined;
+        private readonly RTSPMethod                 _method   = RTSPMethod.UnDefined;
 
         private readonly string                         _uri      = string.Empty;
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="method">the status code</param>
         /// <param name="uri">the uri</param>
-        public RTSPMessageRequest( RTSPMethodType method , string uri )
+        public RTSPMessageRequest( RTSPMethod method , string uri )
             : this( method , uri , RTSPMessageVersion.Version_1_0 )
         {
         }
@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="uri">the uri</param>
         /// <param name="version">the version</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPMessageRequest( RTSPMethodType method , string uri , RTSPMessageVersion version )
+        public RTSPMessageRequest( RTSPMethod method , string uri , RTSPMessageVersion version )
         {
             if ( version == null )
             {
@@ -58,7 +58,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the method
         /// </summary>
-        public RTSPMethodType Method
+        public RTSPMethod Method
         {
             get => _method;
         }
@@ -104,7 +104,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( _method == RTSPMethodType.UnDefined )
+            if ( _method == RTSPMethod.UnDefined )
             {
                 return false;
             }
@@ -129,7 +129,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         public static RTSPMessageRequest CreateUnDefinedRequest()
         {
-            return new RTSPMessageRequest( RTSPMethodType.UnDefined , string.Empty );
+            return new RTSPMessageRequest( RTSPMethod.UnDefined , string.Empty );
         }
     }
 }

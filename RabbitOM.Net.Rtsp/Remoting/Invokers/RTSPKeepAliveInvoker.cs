@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// </summary>
         /// <param name="proxy">the proxy</param>
         /// <param name="method">the method</param>
-        internal RTSPKeepAliveInvoker( RTSPProxy proxy , RTSPMethodType method )
+        internal RTSPKeepAliveInvoker( RTSPProxy proxy , RTSPMethod method )
             : base( proxy , method )
         {
         }

@@ -20,7 +20,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// <param name="proxy">the proxy</param>
         /// <param name="method">the method</param>
         /// <exception cref="ArgumentNullException"/>
-        internal RTSPInvoker( RTSPProxy proxy , RTSPMethodType method )
+        internal RTSPInvoker( RTSPProxy proxy , RTSPMethod method )
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 

@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// </summary>
         /// <param name="proxy">the proxy</param>
         internal RTSPDescribeInvoker( RTSPProxy proxy )
-            : base( proxy , RTSPMethodType.Describe )
+            : base( proxy , RTSPMethod.Describe )
         {
         }
 

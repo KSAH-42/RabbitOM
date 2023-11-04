@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Rtsp
     {
         private readonly object                  _lock            = new object();
 
-        private readonly RTSPMethodType          _method          = RTSPMethodType.UnDefined;
+        private readonly RTSPMethod          _method          = RTSPMethod.UnDefined;
 
         private readonly string                  _uri             = string.Empty;
 
@@ -48,9 +48,9 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <exception cref="ArgumentException"/>
-        public RTSPMessageRequestBuilder( RTSPMethodType method , string uri )
+        public RTSPMessageRequestBuilder( RTSPMethod method , string uri )
         {
-            if ( method == RTSPMethodType.UnDefined )
+            if ( method == RTSPMethod.UnDefined )
             {
                 throw new ArgumentException( nameof( method ) );
             }
@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the method
         /// </summary>
-        public RTSPMethodType Method
+        public RTSPMethod Method
         {
             get
             {

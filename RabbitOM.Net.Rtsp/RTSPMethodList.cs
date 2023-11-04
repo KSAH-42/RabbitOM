@@ -8,11 +8,11 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message method list
     /// </summary>
-    public sealed class RTSPMethodTypeList : IEnumerable , IEnumerable<RTSPMethodType> , ICollection , ICollection<RTSPMethodType>
+    public sealed class RTSPMethodList : IEnumerable , IEnumerable<RTSPMethod> , ICollection , ICollection<RTSPMethod>
     {
         private readonly object                _lock      = new object();
 
-        private readonly ISet<RTSPMethodType> _collection = new HashSet<RTSPMethodType>();
+        private readonly ISet<RTSPMethod> _collection = new HashSet<RTSPMethod>();
 
 
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPMethodTypeList()
+        public RTSPMethodList()
         {
         }
 
@@ -33,7 +33,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPMethodTypeList( IEnumerable<RTSPMethodType> collection )
+        public RTSPMethodList( IEnumerable<RTSPMethod> collection )
         {
             AddRange( collection );
         }
@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
-        public RTSPMethodType this[int index]
+        public RTSPMethod this[int index]
         {
             get => GetAt( index );
         }
@@ -140,7 +140,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the enumerator
         /// </summary>
         /// <returns>returns an instance</returns>
-        public IEnumerator<RTSPMethodType> GetEnumerator()
+        public IEnumerator<RTSPMethod> GetEnumerator()
         {
             lock ( _lock )
             {
@@ -165,7 +165,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="element">the element</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Contains( RTSPMethodType element )
+        public bool Contains( RTSPMethod element )
         {
             lock ( _lock )
             {
@@ -178,9 +178,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="element">the element name</param>
         /// <exception cref="ArgumentException"/>
-        public void Add(RTSPMethodType element)
+        public void Add(RTSPMethod element)
         {
-            if (element == RTSPMethodType.UnDefined)
+            if (element == RTSPMethod.UnDefined)
             {
                 throw new ArgumentException( nameof(element) );
             }
@@ -200,7 +200,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="collection">the collection of elements</param>
         /// <exception cref="ArgumentNullException"/>
         /// <exception cref="ArgumentException"/>
-        public void AddRange(IEnumerable<RTSPMethodType> collection)
+        public void AddRange(IEnumerable<RTSPMethod> collection)
         {
             if (collection == null)
             {
@@ -211,7 +211,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 foreach (var element in collection)
                 {
-                    if (element == RTSPMethodType.UnDefined)
+                    if (element == RTSPMethod.UnDefined)
                     {
                         throw new ArgumentException("Bad element");
                     }
@@ -229,7 +229,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public RTSPMethodType? FindAt( int index )
+        public RTSPMethod? FindAt( int index )
         {
             lock ( _lock )
             {
@@ -247,16 +247,16 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
-        public RTSPMethodType GetAt( int index )
+        public RTSPMethod GetAt( int index )
         {
-            return FindAt( index ) ?? RTSPMethodType.UnDefined;
+            return FindAt( index ) ?? RTSPMethod.UnDefined;
         }
 
         /// <summary>
         /// Gets all elements
         /// </summary>
         /// <returns>returns a collection</returns>
-        public IList<RTSPMethodType> GetAll()
+        public IList<RTSPMethod> GetAll()
         {
             lock ( _lock )
             {
@@ -270,7 +270,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="predicate">the predicate</param>
         /// <returns>returns a collection</returns>
         /// <exception cref="ArgumentNullException"/>
-        public IList<RTSPMethodType> GetAll( Func<RTSPMethodType , bool> predicate )
+        public IList<RTSPMethod> GetAll( Func<RTSPMethod , bool> predicate )
         {
             if ( predicate == null )
             {
@@ -288,7 +288,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="element">the element to be removed</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove( RTSPMethodType element )
+        public bool Remove( RTSPMethod element )
         {
             lock ( _lock )
             {
@@ -314,7 +314,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="index">the index</param>
         public void CopyTo(Array array, int index)
         {
-            CopyTo(array as RTSPMethodType[], index);
+            CopyTo(array as RTSPMethod[], index);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="array">the target array</param>
         /// <param name="arrayIndex">the index</param>
-        public void CopyTo(RTSPMethodType[] array, int arrayIndex)
+        public void CopyTo(RTSPMethod[] array, int arrayIndex)
         {
             lock (_lock)
             {
@@ -335,9 +335,9 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="element">the element name</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAdd(RTSPMethodType element)
+        public bool TryAdd(RTSPMethod element)
         {
-            if (element == RTSPMethodType.UnDefined)
+            if (element == RTSPMethod.UnDefined)
             {
                 return false;
             }
@@ -353,7 +353,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection of elements</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddRange(IEnumerable<RTSPMethodType> collection)
+        public bool TryAddRange(IEnumerable<RTSPMethod> collection)
         {
             return TryAddRange(collection, out int result);
         }
@@ -364,7 +364,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="collection">the collection of elements</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddRange(IEnumerable<RTSPMethodType> collection, out int result)
+        public bool TryAddRange(IEnumerable<RTSPMethod> collection, out int result)
         {
             result = default;
 
@@ -377,7 +377,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 foreach (var element in collection)
                 {
-                    if (element == RTSPMethodType.UnDefined)
+                    if (element == RTSPMethod.UnDefined)
                     {
                         continue;
                     }

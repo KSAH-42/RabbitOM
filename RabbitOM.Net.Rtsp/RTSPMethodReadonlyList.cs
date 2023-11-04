@@ -8,9 +8,9 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message method list
     /// </summary>
-    public sealed class RTSPMethodTypeReadonlyList : IEnumerable<RTSPMethodType>
+    public sealed class RTSPMethodReadonlyList : IEnumerable<RTSPMethod>
     {
-        private readonly RTSPMethodTypeList _collection = null;
+        private readonly RTSPMethodList _collection = null;
 
 
 
@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPMethodTypeReadonlyList( RTSPMethodTypeList collection )
+        public RTSPMethodReadonlyList( RTSPMethodList collection )
         {
             _collection = collection ?? throw new ArgumentNullException( nameof( collection ) );
         }
@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
-        public RTSPMethodType this[int index]
+        public RTSPMethod this[int index]
         {
             get => _collection[ index ];
         }
@@ -69,7 +69,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the enumerator
         /// </summary>
         /// <returns>returns an instance</returns>
-        public IEnumerator<RTSPMethodType> GetEnumerator()
+        public IEnumerator<RTSPMethod> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
@@ -88,7 +88,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="element">the element</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Contains( RTSPMethodType element )
+        public bool Contains( RTSPMethod element )
         {
             return _collection.Contains( element );
         }
@@ -98,7 +98,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public RTSPMethodType? FindAt( int index )
+        public RTSPMethod? FindAt( int index )
         {
             return _collection.FindAt( index );
         }
@@ -108,7 +108,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
-        public RTSPMethodType GetAt( int index )
+        public RTSPMethod GetAt( int index )
         {
             return _collection.GetAt( index );
         }
@@ -117,7 +117,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets all elements
         /// </summary>
         /// <returns>returns a collection</returns>
-        public IList<RTSPMethodType> GetAll()
+        public IList<RTSPMethod> GetAll()
         {
             return _collection.GetAll();
         }
@@ -127,7 +127,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="predicate">the predicate</param>
         /// <returns>returns a collection</returns>
-        public IList<RTSPMethodType> GetAll( Func<RTSPMethodType , bool> predicate )
+        public IList<RTSPMethod> GetAll( Func<RTSPMethod , bool> predicate )
         {
             return _collection.GetAll( predicate );
         }

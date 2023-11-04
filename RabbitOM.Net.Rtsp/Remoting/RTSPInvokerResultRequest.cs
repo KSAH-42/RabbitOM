@@ -40,7 +40,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Gets the method
         /// </summary>
         /// <returns>return the value</returns>
-        public RTSPMethodType GetMethod()
+        public RTSPMethod GetMethod()
         {
             return _message.Method;
         }

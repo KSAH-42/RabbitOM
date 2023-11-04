@@ -107,9 +107,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Gets the methods list
         /// </summary>
         /// <returns>returns a collection of supported method</returns>
-        public RTSPMethodTypeList GetHeaderPublicOptions()
+        public RTSPMethodList GetHeaderPublicOptions()
         {
-            return _message.Headers.FindByName<RTSPHeaderPublic>( RTSPHeaderNames.Public )?.Methods ?? new RTSPMethodTypeList();
+            return _message.Headers.FindByName<RTSPHeaderPublic>( RTSPHeaderNames.Public )?.Methods ?? new RTSPMethodList();
         }
 
         /// <summary>

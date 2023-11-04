@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     internal abstract class RTSPAuthorizationChallengeDigest : RTSPAuthorizationChallenge
     {
-        private RTSPMethodType           _method      = RTSPMethodType.UnDefined;
+        private RTSPMethod           _method      = RTSPMethod.UnDefined;
 
         private string                   _uri         = string.Empty;
 
@@ -36,7 +36,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets / Sets the method
         /// </summary>
-        public RTSPMethodType Method
+        public RTSPMethod Method
         {
             get => _method;
             set => _method = value;
@@ -86,7 +86,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( _method == RTSPMethodType.UnDefined )
+            if ( _method == RTSPMethod.UnDefined )
             {
                 return false;
             }

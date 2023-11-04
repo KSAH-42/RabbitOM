@@ -79,7 +79,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns for a success, otherwise false</returns>
         public bool ConfigureAuthorization( RTSPMessageRequest request )
         {
-            if ( request == null || request.Method == RTSPMethodType.UnDefined )
+            if ( request == null || request.Method == RTSPMethod.UnDefined )
             {
                 return false;
             }

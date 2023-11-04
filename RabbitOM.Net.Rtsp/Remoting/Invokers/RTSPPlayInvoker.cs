@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// </summary>
         /// <param name="proxy">the proxy</param>
         internal RTSPPlayInvoker( RTSPProxy proxy )
-            : base( proxy , RTSPMethodType.Play )
+            : base( proxy , RTSPMethod.Play )
         {
         }
 

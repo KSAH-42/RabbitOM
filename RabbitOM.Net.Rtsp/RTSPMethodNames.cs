@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the RTSP method type
     /// </summary>
-    public static class RTSPMethodTypeNames
+    public static class RTSPMethodNames
     {
         /// <summary>
         /// Represent a method name

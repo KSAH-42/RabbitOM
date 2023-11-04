@@ -17,14 +17,14 @@ namespace RabbitOM.Net.Rtsp
         /// </remarks>
         public static string Serialize( RTSPMessageRequest request )
         {
-            if ( request == null || request.Method == RTSPMethodType.UnDefined )
+            if ( request == null || request.Method == RTSPMethod.UnDefined )
             {
                 return string.Empty;
             }
 
             var builder = new StringBuilder();
 
-            builder.Append( RTSPMethodTypeConverter.Convert( request.Method ) );
+            builder.Append( RTSPMethodConverter.Convert( request.Method ) );
             builder.Append( " " );
             builder.Append( request.Uri );
             builder.Append( " " );

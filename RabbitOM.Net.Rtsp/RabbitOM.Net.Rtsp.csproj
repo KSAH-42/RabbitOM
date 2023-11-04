@@ -222,11 +222,11 @@
     <Compile Include="RTSPMessageResponseSerializer.cs" />
     <Compile Include="RTSPMessageStatus.cs" />
     <Compile Include="RTSPMessageVersion.cs" />
-    <Compile Include="RTSPMethodType.cs" />
-    <Compile Include="RTSPMethodTypeConverter.cs" />
-    <Compile Include="RTSPMethodTypeList.cs" />
-    <Compile Include="RTSPMethodTypeNames.cs" />
-    <Compile Include="RTSPMethodTypeReadonlyList.cs" />
+    <Compile Include="RTSPMethod.cs" />
+    <Compile Include="RTSPMethodConverter.cs" />
+    <Compile Include="RTSPMethodList.cs" />
+    <Compile Include="RTSPMethodNames.cs" />
+    <Compile Include="RTSPMethodReadonlyList.cs" />
     <Compile Include="RTSPMimeType.cs" />
     <Compile Include="RTSPOperator.cs" />
     <Compile Include="RTSPPacket.cs" />

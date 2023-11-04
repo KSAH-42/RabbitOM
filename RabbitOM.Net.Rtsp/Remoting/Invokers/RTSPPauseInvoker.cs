@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// </summary>
         /// <param name="proxy">the proxy</param>
         internal RTSPPauseInvoker( RTSPProxy proxy )
-            : base( proxy , RTSPMethodType.Pause )
+            : base( proxy , RTSPMethod.Pause )
         {
         }
 

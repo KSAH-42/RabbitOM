@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPHeaderPublic : RTSPHeader
     {
-        private readonly RTSPMethodTypeList _methods = null;
+        private readonly RTSPMethodList _methods = null;
 
 
 
@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         public RTSPHeaderPublic()
-            : this( new RTSPMethodTypeList() )
+            : this( new RTSPMethodList() )
         {
         }
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="methods">the method list</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPHeaderPublic( RTSPMethodTypeList methods )
+        public RTSPHeaderPublic( RTSPMethodList methods )
         {
             _methods = methods ?? throw new ArgumentNullException( nameof( methods ) );
         }
@@ -42,7 +42,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the methods
         /// </summary>
-        public RTSPMethodTypeList Methods
+        public RTSPMethodList Methods
         {
             get => _methods;
         }
@@ -74,7 +74,7 @@ namespace RabbitOM.Net.Rtsp
                     writer.WriteSpace();
                 }
 
-                writer.Write( RTSPMethodTypeConverter.Convert( method ) );
+                writer.Write( RTSPMethodConverter.Convert( method ) );
             }
 
             return writer.Output;
@@ -103,7 +103,7 @@ namespace RabbitOM.Net.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.Methods.TryAdd( RTSPMethodTypeConverter.Convert( reader.GetElement() ) );
+                    result.Methods.TryAdd( RTSPMethodConverter.Convert( reader.GetElement() ) );
                 }
 
                 return true;

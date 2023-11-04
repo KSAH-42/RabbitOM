@@ -119,7 +119,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         /// <summary>
-        /// This method will block the call thread until the client has establish the connection
+        /// This method will block the calling thread until the client has establish the connection
         /// </summary>
         /// <param name="timeout">the time to wait</param>
         /// <returns>returns true for a success, otherwise false</returns>

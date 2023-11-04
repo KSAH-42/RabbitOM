@@ -7,23 +7,23 @@ namespace RabbitOM.Net.Rtsp.Alpha
     /// </summary>
     public class RTSPMethodProtocolErrorEventArgs : RTSPProtocolErrorEventArgs
     {
-        private readonly RTSPMethodType _methodType;
+        private readonly RTSPMethod _method;
 
         /// <summary>
         /// Initialize an instance of event args class
         /// </summary>
-        /// <param name="methodType">the method type</param>
-		public RTSPMethodProtocolErrorEventArgs(RTSPMethodType methodType)
+        /// <param name="method">the method type</param>
+		public RTSPMethodProtocolErrorEventArgs(RTSPMethod method)
         {
-            _methodType = methodType;
+            _method = method;
         }
 
         /// <summary>
-        /// Gets the method type
+        /// Gets the method who has failed
         /// </summary>
-        public RTSPMethodType MethodType
+        public RTSPMethod Method
         {
-            get => _methodType;
+            get => _method;
         }
     }
 }

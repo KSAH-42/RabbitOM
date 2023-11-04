@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the RTSP method type
     /// </summary>
-    public enum RTSPMethodType
+    public enum RTSPMethod
     {
         /// <summary>
         /// Unknown

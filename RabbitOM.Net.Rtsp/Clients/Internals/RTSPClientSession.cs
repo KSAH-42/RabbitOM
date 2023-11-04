@@ -89,7 +89,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
         /// Gets the supported methods
         /// </summary>
-        public RTSPMethodTypeReadonlyList SupportedMethods
+        public RTSPMethodReadonlyList SupportedMethods
         {
             get => _informations.SupportedMethods;
         }

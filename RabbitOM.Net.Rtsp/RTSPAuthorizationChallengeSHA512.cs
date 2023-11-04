@@ -22,7 +22,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a value</returns>
         public override string CreateAuthorization()
         {
-            string method    = RTSPMethodTypeConverter.Convert( Method );
+            string method    = RTSPMethodConverter.Convert( Method );
             string hashA1    = RTSPHashAlgorithm.ComputeSHA512Hash( Credentials.UserName + ":" + Realm + ":" + Credentials.Password );
             string hashA2    = RTSPHashAlgorithm.ComputeSHA512Hash( method + ":" + Uri  );
             string response  = RTSPHashAlgorithm.ComputeSHA512Hash( hashA1 + ":" + Nonce + ":" + hashA2 );

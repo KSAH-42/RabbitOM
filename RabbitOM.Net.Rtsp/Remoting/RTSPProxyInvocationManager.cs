@@ -105,17 +105,17 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             if (keepAliveType == RTSPKeepAliveType.Options)
 			{
-                return new RTSPKeepAliveInvoker( _proxy , RTSPMethodType.Options );
+                return new RTSPKeepAliveInvoker( _proxy , RTSPMethod.Options );
 			}
 
             if ( keepAliveType == RTSPKeepAliveType.GetParameter )
 			{
-                return new RTSPKeepAliveInvoker(_proxy, RTSPMethodType.GetParameter);
+                return new RTSPKeepAliveInvoker(_proxy, RTSPMethod.GetParameter);
             }
 
             if ( keepAliveType == RTSPKeepAliveType.SetParameter )
 			{
-                return new RTSPKeepAliveInvoker(_proxy, RTSPMethodType.SetParameter);
+                return new RTSPKeepAliveInvoker(_proxy, RTSPMethod.SetParameter);
             }
 
             throw new ArgumentException( "Unknow type" , nameof( keepAliveType ) );
