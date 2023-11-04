@@ -10,22 +10,22 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <summary>
         /// Raised when the communication has been started
         /// </summary>
-        public event EventHandler<RTSPClientCommunicationStartedEventArgs> CommunicationStarted;
+        public event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
 
         /// <summary>
         /// Raised when the communication has been stopped
         /// </summary>
-        public event EventHandler<RTSPClientCommunicationStoppedEventArgs> CommunicationStopped;
+        public event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
 
         /// <summary>
         /// Raised when the client is connected
         /// </summary>
-        public event EventHandler<RTSPClientConnectedEventArgs> Connected;
+        public event EventHandler<RTSPConnectedEventArgs> Connected;
 
         /// <summary>
         /// Raised when the client is disconnected
         /// </summary>
-        public event EventHandler<RTSPClientDisconnectedEventArgs> Disconnected;
+        public event EventHandler<RTSPDisconnectedEventArgs> Disconnected;
 
         /// <summary>
         /// Raise when an data has been received
@@ -33,9 +33,29 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived;
 
         /// <summary>
+        /// Raise when the streaming is running
+        /// </summary>
+        public event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
+
+        /// <summary>
+        /// Raise when the streaming is stopped
+        /// </summary>
+        public event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
+
+        /// <summary>
         /// Raise when an error occurs
         /// </summary>
-        public event EventHandler<RTSPClientErrorEventArgs> Error;
+        public event EventHandler<RTSPConnectionErrorEventArgs> ConnectionError;
+
+        /// <summary>
+        /// Raise when an error occurs
+        /// </summary>
+        public event EventHandler<RTSPAuthenticationErrorEventArgs> AuthenticationError;
+
+        /// <summary>
+        /// Raise when an error occurs
+        /// </summary>
+        public event EventHandler<RTSPProtocolErrorEventArgs> ProtocolError;
 
 
 
@@ -261,7 +281,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Occurs when the communication has been started
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnCommunicationStarted( RTSPClientCommunicationStartedEventArgs e )
+        protected virtual void OnCommunicationStarted( RTSPCommunicationStartedEventArgs e )
         {
             CommunicationStarted?.TryInvoke( this , e );
         }
@@ -270,7 +290,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Occurs when the communication has been stopped
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnCommunicationStopped( RTSPClientCommunicationStoppedEventArgs e )
+        protected virtual void OnCommunicationStopped( RTSPCommunicationStoppedEventArgs e )
         {
             CommunicationStopped?.TryInvoke( this , e );
         }
@@ -279,7 +299,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Occurs when the client is connected
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnConnected( RTSPClientConnectedEventArgs e )
+        protected virtual void OnConnected( RTSPConnectedEventArgs e )
         {
             Connected?.TryInvoke( this ,e );
         }
@@ -288,7 +308,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Occurs when the client is disconnected
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnDisconnected( RTSPClientDisconnectedEventArgs e )
+        protected virtual void OnDisconnected( RTSPDisconnectedEventArgs e )
         {
             Disconnected?.TryInvoke( this , e );
         }
@@ -303,60 +323,48 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         /// <summary>
-        /// Occurs when an error occurs
+        /// Occurs when the streaming is started
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnError( RTSPClientErrorEventArgs e )
+        protected virtual void OnStreamingStarted(RTSPStreamingStartedEventArgs e)
         {
-            Error?.TryInvoke( this , e );
+            StreamingStarted?.TryInvoke(this, e);
         }
 
         /// <summary>
-        /// Occurs when during a successfull operation
+        /// Occurs when the streaming is stopped
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnGetOptions(EventArgs e)
+        protected virtual void OnStreamingStopped(RTSPStreamingStoppedEventArgs e)
         {
+            StreamingStopped?.TryInvoke(this, e);
         }
 
         /// <summary>
-        /// Occurs when during a successfull operation
+        /// Occurs when the connection has failed
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnDescribe(EventArgs e)
+        protected virtual void OnConnectionError(RTSPConnectionErrorEventArgs e)
         {
+            ConnectionError?.TryInvoke(this, e);
         }
 
         /// <summary>
-        /// Occurs when during a successfull operation
+        /// Occurs when the authentication has failed
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnSetup(EventArgs e)
+        protected virtual void OnAuthenticationError( RTSPAuthenticationErrorEventArgs e )
         {
+            AuthenticationError?.TryInvoke( this , e );
         }
 
         /// <summary>
-        /// Occurs when during a successfull operation
+        /// Occurs when a protocol error has been detected
         /// </summary>
         /// <param name="e">the event args</param>
-        protected virtual void OnPlay(EventArgs e)
+        protected virtual void OnProtocolError(RTSPProtocolErrorEventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Occurs when during a successfull operation
-        /// </summary>
-        /// <param name="e">the event args</param>
-        protected virtual void OnTearDown(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Occurs when during a successfull operation
-        /// </summary>
-        /// <param name="e">the event args</param>
-        protected virtual void OnHeartBeat(EventArgs e)
-        {
+            ProtocolError?.TryInvoke(this, e);
         }
     }
 }

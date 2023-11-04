@@ -10,22 +10,22 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// <summary>
         /// Raised when the communication has been started
         /// </summary>
-        event EventHandler<RTSPClientCommunicationStartedEventArgs> CommunicationStarted;
+        event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
 
         /// <summary>
         /// Raised when the communication has been stopped
         /// </summary>
-        event EventHandler<RTSPClientCommunicationStoppedEventArgs> CommunicationStopped;
+        event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
 
         /// <summary>
         /// Raised when the client is connected
         /// </summary>
-        event EventHandler<RTSPClientConnectedEventArgs> Connected;
+        event EventHandler<RTSPConnectedEventArgs> Connected;
 
         /// <summary>
         /// Raised when the client is disconnected
         /// </summary>
-        event EventHandler<RTSPClientDisconnectedEventArgs> Disconnected;
+        event EventHandler<RTSPDisconnectedEventArgs> Disconnected;
 
         /// <summary>
         /// Raise when an data has been received
@@ -33,9 +33,29 @@ namespace RabbitOM.Net.Rtsp.Alpha
         event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived;
 
         /// <summary>
+        /// Raise when the streaming is running
+        /// </summary>
+        event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
+
+        /// <summary>
+        /// Raise when the streaming is stopped
+        /// </summary>
+        event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
+
+        /// <summary>
         /// Raise when an error occurs
         /// </summary>
-        event EventHandler<RTSPClientErrorEventArgs> Error;
+        event EventHandler<RTSPConnectionErrorEventArgs> ConnectionError;
+
+        /// <summary>
+        /// Raise when an error occurs
+        /// </summary>
+        event EventHandler<RTSPAuthenticationErrorEventArgs> AuthenticationError;
+
+        /// <summary>
+        /// Raise when an error occurs
+        /// </summary>
+        event EventHandler<RTSPProtocolErrorEventArgs> ProtocolError;
 
 
 

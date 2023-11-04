@@ -41,11 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alpha\Events\RTSPClientCommunicationStartedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPClientCommunicationStoppedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPClientConnectedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPClientDisconnectedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPClientErrorEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPCommunicationStartedEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPCommunicationStoppedEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPConnectedEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPDisconnectedEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPConnectionErrorEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPTransportProtocolErrorEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPMethodProtocolErrorEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPStreamingStoppedEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPStreamingStartedEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPProtocolErrorEventArgs.cs" />
+    <Compile Include="Alpha\Events\RTSPAuthenticationErrorEventArgs.cs" />
     <Compile Include="Alpha\RTSPClientConfigurationBag.cs" />
     <Compile Include="Alpha\RTSPMulticastClient.cs" />
     <Compile Include="Alpha\RTSPTcpClient.cs" />
@@ -57,7 +63,6 @@
     <Compile Include="Alpha\RTSPUdpClientConfiguration.cs" />
     <Compile Include="Alpha\RTSPTcpClientConfiguration.cs" />
     <Compile Include="Alpha\RTSPClientConfiguration.cs" />
-    <Compile Include="Alpha\RTSPClientErrorCode.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientConnectedEventArgs.cs" />

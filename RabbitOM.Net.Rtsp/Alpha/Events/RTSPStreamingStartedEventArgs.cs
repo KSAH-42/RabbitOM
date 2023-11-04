@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
     /// <summary>
     /// Represent an event args
     /// </summary>
-    public class RTSPClientConnectedEventArgs : EventArgs
+    public class RTSPStreamingStartedEventArgs : EventArgs
     {
         private readonly RTSPTrackInfo _trackInfo = null;
 
@@ -14,9 +14,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// </summary>
         /// <param name="trackInfo">the track infos</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPClientConnectedEventArgs( RTSPTrackInfo trackInfo )
+        public RTSPStreamingStartedEventArgs(RTSPTrackInfo trackInfo)
         {
-            _trackInfo = trackInfo ?? throw new ArgumentNullException( nameof( trackInfo ) );
+            _trackInfo = trackInfo ?? throw new ArgumentNullException(nameof(trackInfo));
         }
 
         /// <summary>

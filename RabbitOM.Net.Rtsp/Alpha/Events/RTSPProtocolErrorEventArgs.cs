@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
     /// <summary>
     /// Represent an event args
     /// </summary>
-    public class RTSPClientDisconnectedEventArgs : EventArgs
+    public class RTSPProtocolErrorEventArgs : EventArgs
     {
     }
 }

@@ -1,3 +1,17 @@
+client.CommunicationStarted
+client.CommunicationStopped
+client.Connected
+client.Disconnected
+client.ConnectionFailed
+client.AuthenticationFailed
+client.DescribeError
+client.SetupError
+client.SetupError
+client.Event
+client.StreamingStarted
+client.StreamingStopped
+client.PacketReceived
+
 RabbitOM.Rtsp
 RabbitOM.Rtsp.Clients
 RabbitOM.Rtsp.Clients.Messaging
