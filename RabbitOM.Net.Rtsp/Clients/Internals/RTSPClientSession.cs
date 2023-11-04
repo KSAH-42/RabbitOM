@@ -356,7 +356,8 @@ namespace RabbitOM.Net.Rtsp.Clients
                 if (_connection.IsOpened)
                 {
                     _connection.Close();
-                    _dispatcher.DispatchEvent(new RTSPClientDisconnectedEventArgs());
+                    
+                   _dispatcher.DispatchEvent(new RTSPClientDisconnectedEventArgs());
                 }
             }
             catch (Exception ex)
@@ -394,7 +395,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                 // I am convinced that the client class must totaly refactored not the connection class !
                 // The client must provided other event handler and provide the parse of rtp packet and deliver statistics infos
 
-                if (_connection.IsOpened)
+                if (_connection.IsConnected)
                 {
                     _dispatcher.DispatchEvent(new RTSPClientDisconnectedEventArgs());
                 }
