@@ -17,6 +17,16 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns a value</returns>
+        public static bool CanConvertToInteger(string value)
+        {
+            return int.TryParse(value ?? string.Empty, out int result) ;
+        }
+
+        /// <summary>
+        /// Convert a value
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns a value</returns>
         public static string ConvertToString( bool value )
         {
             return value.ToString();
