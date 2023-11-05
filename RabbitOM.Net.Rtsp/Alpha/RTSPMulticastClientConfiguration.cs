@@ -163,6 +163,50 @@ namespace RabbitOM.Net.Rtsp.Alpha
         /// Create the configuration
         /// </summary>
         /// <param name="uri">the uri</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
+        /// <param name="address">the multicast address</param>
+        /// <param name="port">the port</param>
+        /// <returns>returns an instance</returns>
+        public static RTSPMulticastClientConfiguration CreateConfiguration(string uri, string userName , string password, string address, int port)
+        {
+            return new RTSPMulticastClientConfiguration()
+            {
+                Uri = uri,
+                UserName = userName,
+                Password = password,
+                Address = address,
+                Port = port,
+            };
+        }
+
+        /// <summary>
+        /// Create the configuration
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
+        /// <param name="address">the multicast address</param>
+        /// <param name="port">the port</param>
+        /// <param name="ttl">the ttl</param>
+        /// <returns>returns an instance</returns>
+        public static RTSPMulticastClientConfiguration CreateConfiguration(string uri, string userName, string password, string address, int port , byte ttl )
+        {
+            return new RTSPMulticastClientConfiguration()
+            {
+                Uri = uri,
+                UserName = userName,
+                Password = password,
+                Address = address,
+                Port = port,
+                TTL = ttl,
+            };
+        }
+
+        /// <summary>
+        /// Create the configuration
+        /// </summary>
+        /// <param name="uri">the uri</param>
         /// <param name="address">the address</param>
         /// <param name="port">the port</param>
         /// <param name="ttl">the ttl</param>
