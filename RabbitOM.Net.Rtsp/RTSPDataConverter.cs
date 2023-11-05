@@ -13,10 +13,10 @@ namespace RabbitOM.Net.Rtsp
     public static class RTSPDataConverter
     {
         /// <summary>
-        /// Convert a value
+        /// Check if a value can be converted
         /// </summary>
         /// <param name="value">the value</param>
-        /// <returns>returns a value</returns>
+        /// <returns>returns true for a success, otherwise false.</returns>
         public static bool CanConvertToInteger(string value)
         {
             return int.TryParse(value ?? string.Empty, out int result) ;
