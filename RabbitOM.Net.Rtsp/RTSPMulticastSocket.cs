@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Represent the socket buffer size
         /// </summary>
-        public const int DefaultReceiveBufferSize = 8096*3;
+        public const int DefaultReceiveBufferSize = ushort.MaxValue;
 
 
 
@@ -21,8 +21,9 @@ namespace RabbitOM.Net.Rtsp
 
         private IPEndPoint  _groupEP         = null;
 
-        private UdpClient   _udpClient       = null;
+        private Socket      _socket          = null;
 
+        private byte[]      _buffer          = null;
 
 
 
@@ -32,7 +33,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public bool IsOpened
         {
-            get => _udpClient != null;
+            get => _socket != null;
         }
 
 
@@ -54,32 +55,44 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
-            if ( _udpClient != null )
+            if ( _socket != null )
             {
                 return false;
             }
 
-            if ( !IPAddress.TryParse( ipAddress , out IPAddress address ) || address == null )
+            if ( !IPAddress.TryParse( ipAddress , out _ipAddress ) || _ipAddress == null )
             {
                 return false;
             }
 
             try
             {
-                var groupEP = new IPEndPoint( IPAddress.Any , port );
+                _buffer = new byte[DefaultReceiveBufferSize];
 
-                var udpClient = new UdpClient();
+                _groupEP = new IPEndPoint( IPAddress.Any , port );
+                
+                _socket = new Socket(_ipAddress.AddressFamily , SocketType.Dgram , ProtocolType.Udp );
 
-                udpClient.ExclusiveAddressUse = false;
-                udpClient.Client.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
-                udpClient.Client.ReceiveTimeout = (int) receiveTimeout.TotalMilliseconds;
-                udpClient.Client.ReceiveBufferSize = DefaultReceiveBufferSize;
-                udpClient.JoinMulticastGroup( address , ttl );
-                udpClient.Client.Bind( groupEP );
+                _socket.ExclusiveAddressUse = false;
+                _socket.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
+                _socket.ReceiveTimeout = (int) receiveTimeout.TotalMilliseconds;
+                _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
 
-                _udpClient = udpClient;
-                _groupEP = groupEP;
-                _ipAddress = address;
+                if ( _ipAddress.AddressFamily == AddressFamily.InterNetwork )
+                {
+                    _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption( _ipAddress ));
+                    _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, ttl);
+                }
+
+                if (_ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
+                {
+                    _socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.AddMembership, new IPv6MulticastOption(_ipAddress));
+                    _socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.MulticastTimeToLive, ttl);
+                }
+
+                _socket.SetSocketOption(_ipAddress.AddressFamily == AddressFamily.InterNetwork ? SocketOptionLevel.IP : SocketOptionLevel.IPv6 , SocketOptionName.MulticastTimeToLive , ttl );
+
+                _socket.Bind(_groupEP);
 
                 return true;
             }
@@ -87,6 +100,8 @@ namespace RabbitOM.Net.Rtsp
             {
                 OnError( ex );
             }
+
+            Close();
 
             return false;
         }
@@ -98,9 +113,17 @@ namespace RabbitOM.Net.Rtsp
         {
             try
             {
-                if ( _udpClient != null && _ipAddress != null )
+                if ( _socket != null && _ipAddress != null )
                 {
-                    _udpClient.DropMulticastGroup( _ipAddress );
+                    if (_ipAddress.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership, new MulticastOption(_ipAddress));
+                    }
+
+                    if (_ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
+                    {
+                        _socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.DropMembership, new IPv6MulticastOption(_ipAddress));
+                    }
                 }
             }
             catch ( Exception ex )
@@ -108,22 +131,12 @@ namespace RabbitOM.Net.Rtsp
                 OnError( ex );
             }
 
-            try
-            {
-                if ( _udpClient != null )
-                {
-                    _udpClient.Close();
-                    _udpClient.Dispose();
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            _udpClient = null;
+            _socket?.Close();
+            _socket?.Dispose();
+            _socket = null;
             _groupEP = null;
             _ipAddress = null;
+            _buffer = null;
         }
 
         /// <summary>
@@ -141,14 +154,14 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>return true for a success, otherwise false</returns>
         public bool PollReceive( TimeSpan timeout )
         {
-            if ( _udpClient == null )
+            if ( _socket == null )
             {
                 return false;
             }
 
             try
             {
-                return _udpClient.Client.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead );
+                return _socket.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead );
             }
             catch ( Exception ex )
             {
@@ -164,14 +177,31 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an array of bytes, otherwise null</returns>
         public byte[] Receive()
         {
-            if ( _udpClient == null || _groupEP == null )
+            if ( _socket == null || _buffer == null || _buffer.Length <= 0 )
             {
                 return null;
             }
 
+            var endpoint = _groupEP as EndPoint;
+
+            if (endpoint == null )
+            {
+                return null;
+            }
+
+
             try
             {
-                return _udpClient.Receive( ref _groupEP );
+                var bytesReceived = _socket.ReceiveFrom(_buffer , ref endpoint);
+
+                if ( bytesReceived > 0 )
+                {
+                    var buffer = new byte[bytesReceived];
+
+                    Buffer.BlockCopy(_buffer , 0 , buffer , 0 , buffer.Length );
+
+                    return buffer;
+                }
             }
             catch ( Exception ex )
             {
@@ -180,6 +210,8 @@ namespace RabbitOM.Net.Rtsp
 
             return null;
         }
+
+
 
 
 

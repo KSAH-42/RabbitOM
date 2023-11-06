@@ -105,21 +105,10 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public void Close()
         {
+            _socket?.Close();
+            _socket?.Dispose();
             _groupEP = null;
             _buffer = null;
-
-            try
-            {
-                if ( _socket != null )
-                {
-                    _socket.Close();
-                    _socket = null;
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
         }
 
         /// <summary>

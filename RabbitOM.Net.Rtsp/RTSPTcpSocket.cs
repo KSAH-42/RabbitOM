@@ -158,18 +158,17 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public void Close()
         {
-            try
-            {
-                if ( _socket != null )
-                {
-                    _socket.Close();
-                    _socket = null;
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
+            _socket?.Close();
+            _socket?.Dispose();
+            _socket = null;
+        }
+
+        /// <summary>
+        /// Release internal resources
+        /// </summary>
+        public void Dispose()
+        {
+            Close();
         }
 
         /// <summary>
@@ -190,14 +189,6 @@ namespace RabbitOM.Net.Rtsp
             {
                 OnError( ex );
             }
-        }
-
-        /// <summary>
-        /// Release internal resources
-        /// </summary>
-        public void Dispose()
-        {
-            Close();
         }
 
         /// <summary>
