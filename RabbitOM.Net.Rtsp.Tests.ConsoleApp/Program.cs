@@ -37,10 +37,10 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.ForegroundColor = ConsoleColor.White;
                 return;
             }
-           
+
             #endregion
 
-			Run(arguments["uri"], arguments["-u"], arguments["-p"]);
+            Run(arguments["uri"], arguments["-u"], arguments["-p"]);
         }
 
         // ----> don't forget to use <inheritdoc/> for comments

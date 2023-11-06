@@ -20,7 +20,7 @@ namespace RabbitOM.Net.Rtsp
 
         private IPEndPoint                  _groupEP      = null;   
         
-        private byte[]                      _buffer       = new byte[DefaultReceiveBufferSize];
+        private byte[]                      _buffer       = null;
 
 
 
@@ -79,11 +79,13 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
+                _buffer = new byte[DefaultReceiveBufferSize];
+
                 _groupEP = new IPEndPoint(IPAddress.Any, port);
 
                 _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                _socket.ReceiveBufferSize = 500000;
+                _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
                 _socket.Bind(_groupEP);
 
                 return true;
@@ -104,6 +106,7 @@ namespace RabbitOM.Net.Rtsp
         public void Close()
         {
             _groupEP = null;
+            _buffer = null;
 
             try
             {
@@ -125,8 +128,6 @@ namespace RabbitOM.Net.Rtsp
         public void Dispose()
         {
             Close();
-
-            _buffer = null;
         }
 
         /// <summary>
