@@ -82,8 +82,8 @@
     <Compile Include="Clients\Internals\RTSPClientSessionHost.cs" />
     <Compile Include="Clients\Internals\RTSPClientSessionInfos.cs" />
     <Compile Include="Clients\Internals\RTSPClientSessionTransport.cs" />
-    <Compile Include="Clients\Internals\RTSPClientSessionTransportMulticast.cs" />
-    <Compile Include="Clients\Internals\RTSPClientSessionTransportUdp.cs" />
+    <Compile Include="Clients\Internals\RTSPClientSessionMulticastTransport.cs" />
+    <Compile Include="Clients\Internals\RTSPClientSessionUdpTransport.cs" />
     <Compile Include="Codecs\AACCodecInfo.cs" />
     <Compile Include="Codecs\AudioCodecInfo.cs" />
     <Compile Include="Codecs\CodecInfo.cs" />
