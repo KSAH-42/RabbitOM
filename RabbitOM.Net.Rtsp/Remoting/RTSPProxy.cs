@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
         private readonly object                   _lock                  = null;
 
-        private readonly RTSPSocketTcp            _socket                = null;
+        private readonly RTSPTcpSocket            _socket                = null;
 
         private readonly RTSPProxyInformations    _informations          = null;
 
@@ -83,7 +83,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public RTSPProxy()
         {
             _lock = new object();
-            _socket = new RTSPSocketTcp( e => OnError( new RTSPConnectionErrorEventArgs( e ) ) );
+            _socket = new RTSPTcpSocket( e => OnError( new RTSPConnectionErrorEventArgs( e ) ) );
             _informations = new RTSPProxyInformations();
             _requestManager = new RTSPProxyRequestManager( this);
 			_securityManager = new RTSPProxySecurityManager(this);
@@ -380,6 +380,8 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public void Dispose()
         {
             Close();
+            _requestManager.Dispose();
+
             GC.SuppressFinalize( this );
         }
 

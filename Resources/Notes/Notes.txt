@@ -1,3 +1,63 @@
+RabbitOM.Net.Streaming.dll
+{
+    RabbitOM.Net.Streaming { class CodecInfo {} , etc...  }
+    RabbitOM.Net.Streaming.Rtcp
+    RabbitOM.Net.Streaming.Rtcp.Clients
+    RabbitOM.Net.Streaming.Rtp
+    RabbitOM.Net.Streaming.Rtp.Clients
+    RabbitOM.Net.Streaming.Rtsp
+    RabbitOM.Net.Streaming.Rtsp.Clients
+    RabbitOM.Net.Streaming.Rtsp.Clients.Transports
+    RabbitOM.Net.Streaming.Rtsp.Servers
+    RabbitOM.Net.Streaming.Rtsp.Servers.Transports
+    RabbitOM.Net.Streaming.Sdp
+    RabbitOM.Net.Streaming.Sdp.Extensions
+    RabbitOM.Net.Streaming.Sdp.Serialization
+    RabbitOM.Net.Streaming.Sdp.Serialization.Formatters
+    RabbitOM.Net.Streaming.Sdp.Validations
+    RabbitOM.Net.Streaming.Sip
+    RabbitOM.Net.Streaming.Sip.Clients
+    RabbitOM.Net.Streaming.Sip.Clients.Transports
+    RabbitOM.Net.Streaming.HLS
+    RabbitOM.Net.Streaming.HLS.Clients
+}
+
+RabbitOM.Devices
+RabbitOM.Devices.Cameras.dll
+RabbitOM.Devices.Cameras.Hik.dll
+RabbitOM.Devices.Cameras.Verint.dll
+RabbitOM.Devices.Cameras.Acti.dll
+RabbitOM.Devices.Cameras.IndigoVision.dll
+RabbitOM.Devices.Cameras.Bosch.dll
+RabbitOM.Devices.Cameras.Pelco.dll
+RabbitOM.Devices.Cameras.Axis.dll
+RabbitOM.Devices.Cameras.Teleste.dll
+RabbitOM.Devices.Cameras.UniView.dll
+RabbitOM.Devices.Cameras.Dahua.dll
+RabbitOM.Devices.Cameras.Survision.dll
+RabbitOM.Devices.Cameras.Onvif.dll
+RabbitOM.Devices.Encoders.dll
+RabbitOM.Devices.Encoders.Verint.dll
+RabbitOM.Devices.Encoders.Nice.dll
+RabbitOM.Devices.Decoders.dll
+RabbitOM.Devices.Decoders.Verint.dll
+RabbitOM.Devices.Decoders.Planar.dll
+RabbitOM.Devices.Captures.dll
+RabbitOM.Devices.Captures.WebCam.dll
+RabbitOM.Devices.Captures.DShow.dll
+RabbitOM.Devices.Captures.Gutebruck.dll
+RabbitOM.Devices.Dvr.dll
+RabbitOM.Devices.Dvr.Bosch.dll
+RabbitOM.Devices.Dvr.Bosch.Divar.dll
+RabbitOM.Devices.Nvr.dll
+RabbitOM.Devices.Nvr.Dahua.dll
+RabbitOM.Devices.Nvr.Hik.dll
+RabbitOM.Devices.Intercoms.dll
+RabbitOM.Devices.Intercoms.Commend.dll
+RabbitOM.Devices.Intercoms.Commend.Icx.dll
+RabbitOM.Devices.Intercoms.Castel.dll
+RabbitOM.Devices.Intercoms.Castel.Maylis.dll
+
 client.CommunicationStarted
 client.CommunicationStopped
 client.Connected

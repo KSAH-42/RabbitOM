@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Net.Sockets;
 
 namespace RabbitOM.Net.Rtsp
@@ -6,18 +7,28 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a socket tcp
     /// </summary>
-    internal sealed class RTSPSocketTcp : IDisposable
+    internal sealed class RTSPUdpSocket : IDisposable
     {
+        public const int DefaultReceiveBufferSize = ushort.MaxValue;
+
+
+
+
         private readonly Action<Exception>  _errorHandler = null;
 
         private Socket                      _socket       = null;
+
+        private IPEndPoint                  _groupEP      = null;   
+        
+        private byte[]                      _buffer       = new byte[DefaultReceiveBufferSize];
+
 
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPSocketTcp()
+        public RTSPUdpSocket()
         {
         }
 
@@ -25,7 +36,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="errorHandler">the error handler</param>
-        public RTSPSocketTcp( Action<Exception> errorHandler )
+        public RTSPUdpSocket( Action<Exception> errorHandler )
         {
             _errorHandler = errorHandler;
         }
@@ -50,68 +61,6 @@ namespace RabbitOM.Net.Rtsp
             get => _socket != null;
         }
 
-        /// <summary>
-        /// Check if the socket is connected
-        /// </summary>
-        public bool IsConnected
-        {
-            get
-            {
-                try
-                {
-                    return _socket?.Connected ?? false;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Check if the read operation is supported
-        /// </summary>
-        public bool CanRead
-        {
-            get
-            {
-                return _socket != null;
-            }
-        }
-
-        /// <summary>
-        /// Check if the write operation is supported
-        /// </summary>
-        public bool CanWrite
-        {
-            get
-            {
-                return _socket != null;
-            }
-        }
-
-        /// <summary>
-        /// Check if some data are available
-        /// </summary>
-        public bool DataAvailable
-        {
-            get
-            {
-                try
-                {
-                    return _socket != null && _socket.Available != 0;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return false;
-            }
-        }
-
 
 
 
@@ -120,35 +69,31 @@ namespace RabbitOM.Net.Rtsp
         /// Open
         /// </summary>
         /// <param name="ipAddress">the end point</param>
-        /// <param name="port">the port</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Open( string ipAddress , int port )
+        public bool Open(int port)
         {
-            if ( string.IsNullOrWhiteSpace( ipAddress ) || port < 0 )
-            {
-                return false;
-            }
-
-            if ( _socket != null )
+            if (_socket != null)
             {
                 return false;
             }
 
             try
             {
-                _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
+                _groupEP = new IPEndPoint(IPAddress.Any, port);
 
-                _socket.Connect(ipAddress, port);
+                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
                 _socket.ReceiveBufferSize = 500000;
+                _socket.Bind(_groupEP);
 
                 return true;
             }
-            catch ( Exception ex )
+            catch (Exception ex)
             {
-                OnError( ex );
+                OnError(ex);
             }
 
-            Close(); // in case an exception
+            Close();
 
             return false;
         }
@@ -158,6 +103,8 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public void Close()
         {
+            _groupEP = null;
+
             try
             {
                 if ( _socket != null )
@@ -173,31 +120,13 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Shutdown
-        /// </summary>
-        public void Shutdown()
-        {
-            if ( _socket == null )
-            {
-                return;
-            }
-
-            try
-            {
-                _socket.Shutdown( SocketShutdown.Both );
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-        }
-
-        /// <summary>
         /// Release internal resources
         /// </summary>
         public void Dispose()
         {
             Close();
+
+            _buffer = null;
         }
 
         /// <summary>
@@ -249,14 +178,14 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
-            if ( _socket == null )
+            if ( _socket == null || _groupEP == null )
             {
                 return false;
             }
 
             try
             {
-                return _socket.Send(buffer, buffer.Length , SocketFlags.None ) > 0;
+                return _socket.SendTo( buffer, SocketFlags.None , _groupEP ) > 0;
             }
             catch ( Exception ex )
             {
@@ -264,6 +193,26 @@ namespace RabbitOM.Net.Rtsp
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Receive data
+        /// </summary>
+        /// <returns>returns a buffer, otherwise null.</returns>
+        public byte[] Receive()
+        {
+            var bytesReceived = Receive( _buffer , 0 , _buffer.Length );
+
+            if ( bytesReceived <=0 )
+            {
+                return null;
+            }
+
+            var buffer = new byte[ bytesReceived ];
+
+            Buffer.BlockCopy( _buffer , 0 , buffer , 0 , buffer.Length );
+
+            return buffer;
         }
 
         /// <summary>
@@ -290,9 +239,17 @@ namespace RabbitOM.Net.Rtsp
                 return 0;
             }
 
+            EndPoint endpoint = _groupEP as EndPoint;
+
+            if ( endpoint == null )
+            {
+                return 0;
+            }
+
             try
             {
-                return _socket.Receive(buffer, offset , buffer.Length , SocketFlags.None );
+                
+                return _socket.ReceiveFrom( buffer, offset , buffer.Length , SocketFlags.None , ref endpoint );
             }
             catch ( Exception ex )
             {
@@ -390,33 +347,6 @@ namespace RabbitOM.Net.Rtsp
             try
             {
                 _socket.SendTimeout = (int) value.TotalMilliseconds;
-
-                return true;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Set the linger state
-        /// </summary>
-        /// <param name="status">the status</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool SetLingerState( bool status , TimeSpan timeout )
-        {
-            if ( _socket == null )
-            {
-                return false;
-            }
-
-            try
-            {
-                _socket.LingerState = new LingerOption( status , (int) timeout.TotalSeconds );
 
                 return true;
             }

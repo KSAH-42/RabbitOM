@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
             var arguments = new Dictionary<string, string>();
-            
+
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
@@ -129,6 +129,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
+           // client.Options.DeliveryMode = RTSPDeliveryMode.Udp;
+           // client.Options.UnicastPort = 4456;
 
             client.StartCommunication();
 

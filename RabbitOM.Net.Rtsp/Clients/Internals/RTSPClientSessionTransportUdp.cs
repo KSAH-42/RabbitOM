@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// </summary>
     internal sealed class RTSPClientSessionTransportUdp : RTSPClientSessionTransport
     {
-        private readonly RTSPSocketUdpReceiver _socket    = null;
+        private readonly RTSPUdpSocket         _socket    = null;
 
         private readonly int                   _port      = 0;
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="timeout">the timeout</param>
         public RTSPClientSessionTransportUdp( int port , TimeSpan timeout )
         {
-            _socket  = new RTSPSocketUdpReceiver();
+            _socket  = new RTSPUdpSocket();
             _port    = port;
             _timeout = timeout;
         }

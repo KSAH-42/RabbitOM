@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// </summary>
     internal sealed class RTSPClientSessionTransportMulticast : RTSPClientSessionTransport
     {
-        private readonly RTSPSocketMulticastReceiver _socket    = null;
+        private readonly RTSPMulticastSocket _socket    = null;
         
         private readonly string                      _address   = string.Empty;
 
@@ -32,7 +32,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="timeout">the timeout</param>
         public RTSPClientSessionTransportMulticast( string addresss , int port , byte ttl , TimeSpan timeout )
         {
-            _socket  = new RTSPSocketMulticastReceiver();
+            _socket  = new RTSPMulticastSocket();
             _address = addresss ?? string.Empty;
             _port    = port;
             _ttl     = ttl;

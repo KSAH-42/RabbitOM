@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
         private readonly RTSPProxyRequestHandlerList  _requestHandlers       = null;
 
-        private readonly byte[]                       _buffer                = null;
+        private byte[]                                _buffer                = null;
 
 
 
@@ -89,6 +89,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public void Dispose()
         {
             Stop();
+            _buffer = null;
         }
 
         /// <summary>
