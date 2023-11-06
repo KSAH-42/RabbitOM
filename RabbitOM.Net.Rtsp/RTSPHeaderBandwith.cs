@@ -76,6 +76,13 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public static bool TryParse( string value , out RTSPHeaderBandwith result )
         {
+            result = null;
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
             result = new RTSPHeaderBandwith()
             {
                 Value = RTSPDataConverter.ConvertToLong( value )

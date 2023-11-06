@@ -1,62 +1,106 @@
-RabbitOM.Net.Streaming.dll
+Rtsp
+Rtsp.Clients
+Rtsp.Clients.Transports
+Rtsp.Servers
+Rtsp.Servers.Transports
+
+Todo => Change the current architecture
+
+
+and move to this one:
+Check if we can move to a namespace like this:
+
+Rabbit.Streaming.Server.exe
 {
-    RabbitOM.Net.Streaming { class CodecInfo {} , etc...  }
-    RabbitOM.Net.Streaming.Rtcp
-    RabbitOM.Net.Streaming.Rtcp.Clients
-    RabbitOM.Net.Streaming.Rtp
-    RabbitOM.Net.Streaming.Rtp.Clients
-    RabbitOM.Net.Streaming.Rtsp
-    RabbitOM.Net.Streaming.Rtsp.Clients
-    RabbitOM.Net.Streaming.Rtsp.Clients.Transports
-    RabbitOM.Net.Streaming.Rtsp.Servers
-    RabbitOM.Net.Streaming.Rtsp.Servers.Transports
-    RabbitOM.Net.Streaming.Sdp
-    RabbitOM.Net.Streaming.Sdp.Extensions
-    RabbitOM.Net.Streaming.Sdp.Serialization
-    RabbitOM.Net.Streaming.Sdp.Serialization.Formatters
-    RabbitOM.Net.Streaming.Sdp.Validations
-    RabbitOM.Net.Streaming.Sip
-    RabbitOM.Net.Streaming.Sip.Clients
-    RabbitOM.Net.Streaming.Sip.Clients.Transports
-    RabbitOM.Net.Streaming.HLS
-    RabbitOM.Net.Streaming.HLS.Clients
+    Rabbit.Streaming.dll
+    Rabbit.Streaming.Engine.dll
+    Rabbit.Streaming.Devices.dll
+    Rabbit.Streaming.Devices.Cameras.dll
+    etc...
 }
 
-RabbitOM.Devices
-RabbitOM.Devices.Cameras.dll
-RabbitOM.Devices.Cameras.Hik.dll
-RabbitOM.Devices.Cameras.Verint.dll
-RabbitOM.Devices.Cameras.Acti.dll
-RabbitOM.Devices.Cameras.IndigoVision.dll
-RabbitOM.Devices.Cameras.Bosch.dll
-RabbitOM.Devices.Cameras.Pelco.dll
-RabbitOM.Devices.Cameras.Axis.dll
-RabbitOM.Devices.Cameras.Teleste.dll
-RabbitOM.Devices.Cameras.UniView.dll
-RabbitOM.Devices.Cameras.Dahua.dll
-RabbitOM.Devices.Cameras.Survision.dll
-RabbitOM.Devices.Cameras.Onvif.dll
-RabbitOM.Devices.Encoders.dll
-RabbitOM.Devices.Encoders.Verint.dll
-RabbitOM.Devices.Encoders.Nice.dll
-RabbitOM.Devices.Decoders.dll
-RabbitOM.Devices.Decoders.Verint.dll
-RabbitOM.Devices.Decoders.Planar.dll
-RabbitOM.Devices.Captures.dll
-RabbitOM.Devices.Captures.WebCam.dll
-RabbitOM.Devices.Captures.DShow.dll
-RabbitOM.Devices.Captures.Gutebruck.dll
-RabbitOM.Devices.Dvr.dll
-RabbitOM.Devices.Dvr.Bosch.dll
-RabbitOM.Devices.Dvr.Bosch.Divar.dll
-RabbitOM.Devices.Nvr.dll
-RabbitOM.Devices.Nvr.Dahua.dll
-RabbitOM.Devices.Nvr.Hik.dll
-RabbitOM.Devices.Intercoms.dll
-RabbitOM.Devices.Intercoms.Commend.dll
-RabbitOM.Devices.Intercoms.Commend.Icx.dll
-RabbitOM.Devices.Intercoms.Castel.dll
-RabbitOM.Devices.Intercoms.Castel.Maylis.dll
+Final ??? Much more cleaner ? -> must be split in different libs
+ 
+Rabbit.Streaming.dll 
+{
+    Rabbit.Streaming
+    Rabbit.Streaming.IO
+    Rabbit.Streaming.IO.Containers
+    Rabbit.Streaming.IO.Compressions
+    Rabbit.Streaming.IO.Compressions.Interop
+    Rabbit.Streaming.Devices
+    Rabbit.Streaming.Net.Rtcp
+    Rabbit.Streaming.Net.Rtcp.Clients
+    Rabbit.Streaming.Net.Rtp
+    Rabbit.Streaming.Net.Rtp.Clients
+    Rabbit.Streaming.Net.Rtsp
+    Rabbit.Streaming.Net.Rtsp.Clients
+    Rabbit.Streaming.Net.Rtsp.Clients.Transports
+    Rabbit.Streaming.Net.Rtsp.Servers
+    Rabbit.Streaming.Net.Rtsp.Servers.Transports
+    Rabbit.Streaming.Net.Sdp
+    Rabbit.Streaming.Net.Sdp.Extensions
+    Rabbit.Streaming.Net.Sdp.Serialization
+    Rabbit.Streaming.Net.Sdp.Serialization.Formatters
+    Rabbit.Streaming.Net.Sdp.Validations
+    Rabbit.Streaming.Net.Sip
+    Rabbit.Streaming.Net.Sip.Clients
+    Rabbit.Streaming.Net.Sip.Clients.Transports
+    Rabbit.Streaming.Net.Web.Hls
+    Rabbit.Streaming.Net.Web.Hls.Clients
+    Rabbit.Streaming.Net.Web.Rtc
+    Rabbit.Streaming.Net.Web.Rtc.Clients
+    Rabbit.Streaming.Net.Onvif
+    Rabbit.Streaming.Net.Onvif.WS
+    Rabbit.Streaming.Net.Onvif.WS.Ptz
+    Rabbit.Streaming.Net.Onvif.WS.Io
+    Rabbit.Streaming.Net.Onvif.WS.Media
+    Rabbit.Streaming.Net.Onvif.WS.Device
+    Rabbit.Streaming.Net.Onvif.WS.Events
+    Rabbit.Streaming.Net.Onvif.Clients
+    Rabbit.Streaming.Net.Psia
+    Rabbit.Streaming.Net.Psia.Clients
+    Rabbit.Streaming.Windows
+    Rabbit.Streaming.Windows.Controls
+    Rabbit.Streaming.Windows.Controls.Views
+    Rabbit.Streaming.Windows.Controls.ViewsModels
+}
+
+Rabbit.Devices.dll
+Rabbit.Devices.Cameras.dll
+Rabbit.Devices.Cameras.Hik.dll
+Rabbit.Devices.Cameras.Verint.dll
+Rabbit.Devices.Cameras.Acti.dll
+Rabbit.Devices.Cameras.IndigoVision.dll
+Rabbit.Devices.Cameras.Bosch.dll
+Rabbit.Devices.Cameras.Pelco.dll
+Rabbit.Devices.Cameras.Axis.dll
+Rabbit.Devices.Cameras.Teleste.dll
+Rabbit.Devices.Cameras.UniView.dll
+Rabbit.Devices.Cameras.Dahua.dll
+Rabbit.Devices.Cameras.Survision.dll
+Rabbit.Devices.Cameras.Onvif    .dll
+Rabbit.Devices.Encoders.dll
+Rabbit.Devices.Encoders.Verint.dll
+Rabbit.Devices.Encoders.Nice.dll
+Rabbit.Devices.Decoders.dll
+Rabbit.Devices.Decoders.Verint.dll
+Rabbit.Devices.Decoders.Planar.dll
+Rabbit.Devices.Captures.dll
+Rabbit.Devices.Captures.WebCam.dll
+Rabbit.Devices.Captures.DShow.dll
+Rabbit.Devices.Captures.Gutebruck.dll
+Rabbit.Devices.Dvr.dll
+Rabbit.Devices.Dvr.Bosch.dll
+Rabbit.Devices.Dvr.Bosch.Divar.dll
+Rabbit.Devices.Nvr.dll
+Rabbit.Devices.Nvr.Dahua.dll
+Rabbit.Devices.Nvr.Hik.dll
+Rabbit.Devices.Intercoms.dll
+Rabbit.Devices.Intercoms.Commend.dll
+Rabbit.Devices.Intercoms.Commend.Icx.dll
+Rabbit.Devices.Intercoms.Castel.dll
+Rabbit.Devices.Intercoms.Castel.Maylis.dll
 
 client.CommunicationStarted
 client.CommunicationStopped
@@ -72,19 +116,19 @@ client.StreamingStarted
 client.StreamingStopped
 client.PacketReceived
 
-RabbitOM.Rtsp
-RabbitOM.Rtsp.Clients
-RabbitOM.Rtsp.Clients.Messaging
-RabbitOM.Rtsp.Clients.Messaging.Serialization
-RabbitOM.Rtsp.Clients.Remoting
-RabbitOM.Rtsp.Clients.Remoting.Invokers
+Rabbit.Rtsp
+Rabbit.Rtsp.Clients
+Rabbit.Rtsp.Clients.Messaging
+Rabbit.Rtsp.Clients.Messaging.Serialization
+Rabbit.Rtsp.Clients.Remoting
+Rabbit.Rtsp.Clients.Remoting.Invokers
 
-RabbitOM.Media.Rtsp
-RabbitOM.Media.Rtsp.Clients
-RabbitOM.Media.Rtsp.Sockets
-RabbitOM.Media.Rtsp.Remoting
-RabbitOM.Media.Rtsp.Remoting.Invokers
-RabbitOM.Media.Rtsp.Threading
+Rabbit.Media.Rtsp
+Rabbit.Media.Rtsp.Clients
+Rabbit.Media.Rtsp.Sockets
+Rabbit.Media.Rtsp.Remoting
+Rabbit.Media.Rtsp.Remoting.Invokers
+Rabbit.Media.Rtsp.Threading
 
 public abstract class Client : IClient , IDispose
 {
