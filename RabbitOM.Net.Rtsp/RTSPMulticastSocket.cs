@@ -5,7 +5,7 @@ using System.Net.Sockets;
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent an udp socket
+    /// Represent an multicast socket
     /// </summary>
     internal sealed class RTSPMulticastSocket : IDisposable
     {
@@ -188,7 +188,6 @@ namespace RabbitOM.Net.Rtsp
             {
                 return null;
             }
-
 
             try
             {

@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
             var arguments = new Dictionary<string, string>();
-			
+
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
@@ -123,17 +123,27 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             // Please note, that rtsp uri is not the same from a camera to another
 
-            client.Configuration.Uri = uri;
+            client.Configuration.Uri = uri; 
             client.Configuration.UserName = userName;
             client.Configuration.Password = password;
             client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
             client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
             client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
-            
+
+            // For multicast settings, please make sure
+            // that the camera or the video source support multicast
+            // For instance, the happy RTSP server does not support multicast
+            // AND make sure that your are used a switch not a hub, very is difference between them
+            // And activate igmp snooping on the switch
+
+            // client.Options.DeliveryMode = RTSPDeliveryMode.Multicast;
+            // client.Options.MulticastAddress = "229.0.0.1";
+            // client.Options.MulticastPort = 55000;
+
             client.StartCommunication();
 
+            Console.BufferHeight = 1000;
             Console.WriteLine("Press any keys to close the application");
-
             Console.ReadKey();
 
             client.StopCommunication(TimeSpan.FromSeconds(3));

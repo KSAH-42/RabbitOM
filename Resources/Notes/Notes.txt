@@ -1,11 +1,23 @@
-Rtsp
-Rtsp.Clients
-Rtsp.Clients.Transports
-Rtsp.Servers
-Rtsp.Servers.Transports
+Simplify the dispatcher mecanism, or find something to avoid potential timeout on callbacks/event handler subscribptions
+especially if we are using udp protocol, datagram can be lost if a timeout occurs after receiving packets.
+
+The actual dispatch, could be nice, to track every things. and all reliable recorders use ring buffer. It's a basic thing.
+
+RabbitOM.Net.Alpha
+RabbitOM.Net.Alpha.Transports 
+{
+    add sockets extensions class here
+    add transport layer for receiving data. Find a good name for this class.
+      => the problem is that a receiver classes must used a thread and so namespace must be changed...
+        And some one are thinking about the same thing : https://www.codeproject.com/Articles/884583/Advanced-TCP-Socket-Programming-with-NET
+        AFAIK transport layer class should be not a simple abstract socket wrapper 
+         => is must expose send/receive using message objects not buffer !
+         => and serialization is handled by this kind of class
+        so i must find a different name!!! and i don't want to introduce rtp packet in this namespace level.
+        otherwise remove transports namespace and expose it on the camera device implementation that expose rtp packet, and i don't think that is a good to expose frame or rtp packet for recorder implementation due for performance reasons. for render usercontrols, it's correct, not for a recorder application. 
+}
 
 Todo => Change the current architecture
-
 
 and move to this one:
 Check if we can move to a namespace like this:
