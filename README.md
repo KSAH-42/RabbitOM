@@ -3,7 +3,7 @@
 Hey Folks ! now these .net assemblies can be used for receiving raw video streams, and works with your H264 and H265 decoders. I am actually adding many improvements. If you don't have any cameras, you can download the RTSP Happy server.
 After recforing the clients, I will add the rtp layers which already exists, but i need to refactors something before to publish it.
 
-The classes used for decoding already implemented but it will not be published today.
+The classes used for decoding was already implemented but it will not be published today.
 
 If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
