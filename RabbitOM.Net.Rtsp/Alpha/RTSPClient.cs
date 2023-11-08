@@ -243,10 +243,16 @@ namespace RabbitOM.Net.Rtsp.Alpha
         protected abstract bool DoDisconnect();
 
         /// <summary>
-        /// Process a get options operaiton
+        /// Process a get options operation
         /// </summary>
         /// <returns>returns true for a sucess, otherwise false</returns>
         protected abstract bool DoGetOptions();
+
+        /// <summary>
+        /// Process a describe operation
+        /// </summary>
+        /// <returns>returns true for a sucess, otherwise false</returns>
+        protected abstract bool DoDescribe();
 
         /// <summary>
         /// Process a setup operation

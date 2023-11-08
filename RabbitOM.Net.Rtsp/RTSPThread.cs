@@ -90,6 +90,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="action">the action</param>
         /// <returns>returns true for a success, otherwise false</returns>
+        /// <exception cref="ArgumentNullException"/>
         public bool Start( Action action )
         {
             if ( action == null )
@@ -169,6 +170,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
+        /// <exception cref="InvalidOperationException"/>
         public bool Join( TimeSpan timeout )
         {
             var thread = _thread;
@@ -200,6 +202,7 @@ namespace RabbitOM.Net.Rtsp
         /// Alert the thread to leave/stop it's execution
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
+        /// <exception cref="InvalidOperationException"/>
         public bool Shutdown()
         {
             var thread = _thread;

@@ -37,9 +37,11 @@ Rabbit.Streaming.dll
 {
     Rabbit.Streaming
     Rabbit.Streaming.IO
-    Rabbit.Streaming.IO.Containers
+    Rabbit.Streaming.IO.Containers { Container , AviContainer , etc that support bookmark }
     Rabbit.Streaming.IO.Compressions
-    Rabbit.Streaming.IO.Compressions.Interop
+    Rabbit.Streaming.IO.Compressions.Interop  => Add C++ COM Wrapper 
+    Rabbit.Streaming.Logging
+    Rabbit.Streaming.Logging.Appenders { RollingFileAppender , etc.. }
     Rabbit.Streaming.Devices
     Rabbit.Streaming.Net.Rtcp
     Rabbit.Streaming.Net.Rtcp.Clients

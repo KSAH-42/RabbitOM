@@ -45,6 +45,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
         // ----> don't forget to use <inheritdoc/> for comments
 
+        // TODO: About namespace: keep it flatten, don't use headers namespace but move the remoting namespace into the clients namespaces
+
         // TODO: Force header class to be immutable: used constructor or method factory and pass setters to private
 
         // TODO: On the connection class, remove the error handler and replace it by the differents event handler, in this case, avoid unification using strategy pattern

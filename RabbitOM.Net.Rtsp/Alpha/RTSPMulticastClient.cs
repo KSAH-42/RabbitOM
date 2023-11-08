@@ -194,7 +194,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         /// <summary>
-        /// Process a get options operaiton
+        /// Process a get options operation
         /// </summary>
         /// <returns>returns true for a sucess, otherwise false</returns>
         protected override bool DoGetOptions()
@@ -203,9 +203,18 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         /// <summary>
-        /// Process a setup operation
+        /// Process a describe operation
         /// </summary>
         /// <returns>returns true for a sucess, otherwise false</returns>
+        protected override bool DoDescribe()
+        {
+            throw new NotImplementedException();
+        }
+        
+        /// <summary>
+         /// Process a setup operation
+         /// </summary>
+         /// <returns>returns true for a sucess, otherwise false</returns>
         protected override bool DoSetup()
         {
             throw new NotImplementedException();
