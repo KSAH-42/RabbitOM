@@ -38,8 +38,8 @@ Rabbit.Streaming.dll
     Rabbit.Streaming
     Rabbit.Streaming.IO
     Rabbit.Streaming.IO.Containers { Container , AviContainer , etc that support bookmark }
-    Rabbit.Streaming.IO.Compressions
-    Rabbit.Streaming.IO.Compressions.Interop  => Add C++ COM Wrapper 
+    Rabbit.Streaming.IO.Compression
+    Rabbit.Streaming.IO.Compression.Interop  => or used Add C++ COM Wrapper that used safearray or handle to a pointer
     Rabbit.Streaming.Logging
     Rabbit.Streaming.Logging.Appenders { RollingFileAppender , etc.. }
     Rabbit.Streaming.Devices
