@@ -247,7 +247,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Post an element
         /// </summary>
-        /// <param name="chunk">the event args</param>
+        /// <param name="chunk">the chunk</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool Enqueue(byte[] chunk )
         {
@@ -273,7 +273,7 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Dequeue a packet
+        /// Dequeue a chunk
         /// </summary>
         /// <returns>must returns an instance</returns>
         public byte[] Dequeue()

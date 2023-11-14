@@ -141,6 +141,8 @@
     <Compile Include="RTSPAuthorizationChallengeSHA256.cs" />
     <Compile Include="RTSPAuthorizationChallengeSHA512.cs" />
     <Compile Include="RTSPAuthorizationFactory.cs" />
+    <Compile Include="RTSPActionQueue.cs" />
+    <Compile Include="RTSPActionQueue.Scope.cs" />
     <Compile Include="RTSPChunkQueue.Scope.cs" />
     <Compile Include="RTSPChunkQueue.cs" />
     <Compile Include="RTSPCredentials.cs" />

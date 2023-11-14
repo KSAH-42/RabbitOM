@@ -7,24 +7,15 @@ using System.Threading;
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent a packet circular queue
+    /// Represent an action queue
     /// </summary>
-    internal sealed partial class RTSPPacketQueue : IEnumerable<RTSPPacket>
+    internal sealed partial class RTSPActionQueue : IEnumerable<Action>
     {
-        /// <summary>
-        /// The default packets numbers
-        /// </summary>
-        public const int                     DefaultMaximumOfPackets  = 32000;
-
-
-
         private readonly object              _lock              = null;
 
         private readonly RTSPEventWaitHandle _handle            = null;
 
-        private readonly Queue<RTSPPacket>   _collection             = null;
-
-        private readonly int                 _maximumOfpackets  = 0;
+        private readonly Queue<Action>       _collection        = null;
 
         private readonly Scope               _scope             = null;
 
@@ -37,23 +28,12 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPPacketQueue()
-            : this( DefaultMaximumOfPackets )
+        public RTSPActionQueue()
         {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="maximumOfpackets">the maximum of packets allowed</param>
-        /// <exception cref="ArgumentOutOfRangeException"/>
-        public RTSPPacketQueue( int maximumOfpackets )
-        {
-            _maximumOfpackets = maximumOfpackets <= 0 ? maximumOfpackets : throw new ArgumentOutOfRangeException( nameof( maximumOfpackets ) );
-            _lock = new object();
-            _collection = new Queue<RTSPPacket>( maximumOfpackets );
-            _handle = new RTSPEventWaitHandle();
-            _scope = new Scope( this );
+            _lock            = new object();
+            _collection      = new Queue<Action>();
+            _handle          = new RTSPEventWaitHandle();
+            _scope           = new Scope( this );
         }
 
 
@@ -112,19 +92,13 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-
-
-
-
-
-
         /// <summary>
         /// Wait until an element has been push to the queue
         /// </summary>
         /// <param name="queue">the queue</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue)
+        public static bool Wait(RTSPActionQueue queue)
         {
             if (queue == null)
             {
@@ -141,7 +115,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue, int timeout)
+        public static bool Wait(RTSPActionQueue queue, int timeout)
         {
             if (queue == null)
             {
@@ -158,7 +132,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue, EventWaitHandle cancellationHandle)
+        public static bool Wait(RTSPActionQueue queue, EventWaitHandle cancellationHandle)
         {
             if (queue == null)
             {
@@ -176,7 +150,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue, int timeout, EventWaitHandle cancellationHandle)
+        public static bool Wait(RTSPActionQueue queue, int timeout, EventWaitHandle cancellationHandle)
         {
             if (queue == null)
             {
@@ -190,13 +164,6 @@ namespace RabbitOM.Net.Rtsp
 
             return queue.Handle.Wait(timeout, cancellationHandle);
         }
-
-
-
-
-
-
-
 
 
 
@@ -221,7 +188,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the enumerator
         /// </summary>
         /// <returns>returns an enumerator</returns>
-        public IEnumerator<RTSPPacket> GetEnumerator()
+        public IEnumerator<Action> GetEnumerator()
         {
             lock ( _lock )
             {
@@ -242,27 +209,22 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Enqueue a packet
+        /// Post an element
         /// </summary>
-        /// <param name="packet">the packet</param>
+        /// <param name="action">the action</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Enqueue( RTSPPacket packet )
+        public bool Enqueue( Action action )
         {
-            if ( packet == null || ! packet.TryValidate() )
-            {
+            if ( action == null )
+			{
                 return false;
-            }
-
+			}
+        
             lock ( _lock )
             {
-                using ( _scope )
+                using (_scope )
                 {
-                    while (_collection.Count >= _maximumOfpackets)
-                    {
-                        _collection.Dequeue();
-                    }
-
-                    _collection.Enqueue(packet);
+                    _collection.Enqueue( action );
 
                     return true;
                 }
@@ -270,10 +232,10 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Dequeue a packet
+        /// Dequeue an action
         /// </summary>
         /// <returns>must returns an instance</returns>
-        public RTSPPacket Dequeue()
+        public Action Dequeue()
         {
             lock ( _lock )
             {
@@ -285,19 +247,19 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Dequeue an element
+        /// Dequeue an action
         /// </summary>
-        /// <param name="packet">the packet</param>
+        /// <param name="action">the action</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool TryDequeue( out RTSPPacket packet )
+        public bool TryDequeue( out Action action )
         {
             lock ( _lock )
             {
                 using ( _scope )
                 {
-                    packet = _collection.Count > 0 ? _collection.Dequeue() : null;
-                    
-                    return packet != null;
+                    action = _collection.Count > 0 ? _collection.Dequeue() : null;
+
+                    return action != null;
                 }
             }
         }
