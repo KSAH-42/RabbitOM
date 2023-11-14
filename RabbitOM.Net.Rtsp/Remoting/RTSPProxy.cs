@@ -381,8 +381,6 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             Close();
             _requestManager.Dispose();
-
-            GC.SuppressFinalize( this );
         }
 
         /// <summary>

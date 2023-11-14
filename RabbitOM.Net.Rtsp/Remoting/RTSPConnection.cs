@@ -5,29 +5,10 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// <summary>
     /// Represent a proxy used to interact with a remote RTSP server
     /// </summary>
-    public class RTSPConnection : IRTSPConnection
+    public sealed class RTSPConnection : IRTSPConnection
     {
-        private readonly RTSPProxy _proxy = null;
+        private readonly RTSPProxy _proxy = new RTSPProxy();
 
-
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RTSPConnection()
-		{
-			_proxy = new RTSPProxy(); 
-		}
-
-		/// <summary>
-		/// Finalizer
-		/// </summary>
-		~RTSPConnection()
-        {
-            Dispose( false );
-        }
 
 
 
@@ -128,7 +109,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Check if the connection is still active
         /// </summary>
-        public virtual bool IsConnected
+        public bool IsConnected
         {
             get => _proxy.IsConnected;
         }
@@ -136,7 +117,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Check if the underlaying connection has been opened
         /// </summary>
-        public virtual bool IsOpened
+        public bool IsOpened
         {
             get => _proxy.IsOpened;
         }
@@ -175,7 +156,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="uri">the uri</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool TryOpen( string uri )
+        public bool TryOpen( string uri )
         {
             return _proxy.TryOpen( uri );
         }
@@ -186,7 +167,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="uri">the uri</param>
         /// <param name="credentials">the credentials</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool TryOpen( string uri , RTSPCredentials credentials )
+        public bool TryOpen( string uri , RTSPCredentials credentials )
         {
             return _proxy.TryOpen( uri , credentials );
         }
@@ -194,7 +175,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Close the connection
         /// </summary>
-        public virtual void Close()
+        public void Close()
         {
             _proxy.Close();
         }
@@ -202,7 +183,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Abort the connection
         /// </summary>
-        public virtual void Abort()
+        public void Abort()
         {
             _proxy.Abort();
         }
@@ -212,7 +193,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <exception cref="Exception"/>
-        public virtual void ConfigureTimeouts(TimeSpan timeout)
+        public void ConfigureTimeouts(TimeSpan timeout)
         {
             _proxy.ConfigureTimeouts(timeout);
         }
@@ -223,7 +204,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="receiveTimeout">the receive timeout</param>
         /// <param name="sendTimeout">the send timeout</param>
         /// <exception cref="Exception"/>
-        public virtual void ConfigureTimeouts(TimeSpan receiveTimeout, TimeSpan sendTimeout)
+        public void ConfigureTimeouts(TimeSpan receiveTimeout, TimeSpan sendTimeout)
         {
             _proxy.ConfigureTimeouts(receiveTimeout, sendTimeout);
         }
@@ -233,7 +214,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool TryConfigureTimeouts( TimeSpan timeout )
+        public bool TryConfigureTimeouts( TimeSpan timeout )
         {
             return _proxy.TryConfigureTimeouts( timeout );
         }
@@ -244,7 +225,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="receiveTimeout">the receive timeout</param>
         /// <param name="sendTimeout">the send timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
+        public bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
         {
             return _proxy.TryConfigureTimeouts( receiveTimeout , sendTimeout );
         }
@@ -253,7 +234,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Gets the next sequence identifier
         /// </summary>
         /// <returns></returns>
-        public virtual int GetNextSequenceId()
+        public int GetNextSequenceId()
         {
             return _proxy.GetNextSequenceId();
         }
@@ -264,7 +245,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="request">the request</param>
         /// <param name="response">the response</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool SendRequest( RTSPMessageRequest request , out RTSPMessageResponse response )
+        public bool SendRequest( RTSPMessageRequest request , out RTSPMessageResponse response )
         {
             return _proxy.RequestManager.SendRequest( request , out response );
         }
@@ -274,7 +255,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public virtual bool WaitConnectionSucceed( TimeSpan timeout )
+        public bool WaitConnectionSucceed( TimeSpan timeout )
         {
             return _proxy.WaitConnectionSucceed( timeout );
         }
@@ -283,7 +264,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the options method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker GetOptions()
+        public IRTSPInvoker GetOptions()
         {
             return _proxy.InvokeManager.CreateGetOptionsInvoker();
         }
@@ -292,7 +273,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the describe method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Describe()
+        public IRTSPInvoker Describe()
         {
             return _proxy.InvokeManager.CreateDescribeInvoker();
         }
@@ -301,7 +282,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the setup method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Setup()
+        public IRTSPInvoker Setup()
         {
             return _proxy.InvokeManager.CreateSetupInvoker();
         }
@@ -310,7 +291,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the play method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Play()
+        public IRTSPInvoker Play()
         {
             return _proxy.InvokeManager.CreatePlayInvoker();
         }
@@ -319,7 +300,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the pause method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Pause()
+        public IRTSPInvoker Pause()
         {
             return _proxy.InvokeManager.CreatePauseInvoker();
         }
@@ -328,7 +309,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the teardown method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker TearDown()
+        public IRTSPInvoker TearDown()
         {
             return _proxy.InvokeManager.CreateTearDownInvoker();
         }
@@ -337,7 +318,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the get parameter
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker GetParameter()
+        public IRTSPInvoker GetParameter()
         {
             return _proxy.InvokeManager.CreateGetParameterInvoker();
         }
@@ -346,7 +327,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the set parameter
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker SetParameter()
+        public IRTSPInvoker SetParameter()
         {
             return _proxy.InvokeManager.CreateSetParameterInvoker();
         }
@@ -355,7 +336,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the announce method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Announce()
+        public IRTSPInvoker Announce()
         {
             return _proxy.InvokeManager.CreateAnnounceInvoker();
         }
@@ -364,7 +345,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the redirect method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Redirect()
+        public IRTSPInvoker Redirect()
         {
             return _proxy.InvokeManager.CreateRedirectInvoker();
         }
@@ -373,7 +354,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the record method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public virtual IRTSPInvoker Record()
+        public IRTSPInvoker Record()
         {
             return _proxy.InvokeManager.CreateRecordInvoker();
         }
@@ -402,20 +383,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         public void Dispose()
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        /// <summary>
-        /// Release internal resources
-        /// </summary>
-        /// <param name="disposing">the dispose calling status</param>
-        protected virtual void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                _proxy.Dispose();
-            }
+            _proxy.Dispose();
         }
     }
 }

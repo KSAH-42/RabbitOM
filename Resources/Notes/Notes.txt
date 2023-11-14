@@ -1,3 +1,7 @@
+About deep namespace and flat namespace 
+  => stay on flatten namespace like the Data Dog sdk. it is better.
+
+
 public class Dispatcher
 {
     public bool IsRunning {get;}
@@ -25,6 +29,24 @@ public abstract class RTSPSession : IDisposable
         public abstract bool IsOpened {get;}
         public abstract bool IsClosed {get;}
 
+        // these functions can be reused on the childs classes
+        // and to avoid duplicated codes and solve the issue
+        // that i don't want to have a wrapper around this class
+        // We should reduce the number of classes
+
+        // See after this class 
+
+        protected readonly RTSPConnection _connection = new RTSPConnection();
+
+        protected static bool DoConnect( RTSPConnection connection );
+        protected static bool DoGetOptions( RTSPConnection connection );
+        protected static bool DoDescribe( RTSPConnection connection );
+        protected static bool DoSetup( RTSPConnection connection );
+        protected static bool DoSetupAsUdp( RTSPConnection connection ,int port );
+        protected static bool DoSetupAsMulticast( RTSPConnection connection ,string address, int port, byte ttl );
+        protected static bool DoTearDown( RTSPConnection connection );
+        protected static bool DoKeepAlive( RTSPConnection connection );
+        
         public static void StartEventLoop( Session session );
         public static void StopEventLoop( Session session );
         public static void DoEvents( Session session );
@@ -94,3 +116,322 @@ public abstract class RTSPSession : IDisposable
             ProtocolError?.TryInvoke(this, e);
         }
 }
+
+public abstract class Client
+{
+	protected static void DoConnect( Connection connection ) 
+    {
+        connection.Open();
+        connection.Describe();
+        connection.XXXX();
+    }
+	protected static void DoClose(Connection connection) 
+    {
+        connection.YYYY();
+        connection.TearDown();
+        connection.Close();
+    }
+
+	public abstract void Connect();
+	public abstract void Close();
+}
+
+public class Client1 : Client
+{
+	private readonly Connection _connection = new Connection();
+    private readonly EventRepository _repository = new EventRepository();
+
+	public override void Connect()
+	{
+		try
+        {
+            _repository.AddEvent( new ConnectingEvent() );
+
+			DoConnect( _connection );
+
+            _repository.AddEvent( new ConnectedEvent() );
+        }
+        finaly
+        {
+            _repository.SaveChanges();
+        }
+	}
+
+	public override void Close()
+	{
+		try
+        {
+            _repository.AddEvent( new ClosingEvent() );
+
+			DoClose( _connection );
+
+            _repository.AddEvent( new ClosedEvent() );
+        }
+        finaly
+        {
+            _repository.SaveChanges();
+        }
+
+		// do something...
+	}
+}
+
+public class Client2 : Client
+{
+	private readonly Connection _connection = new Connection();
+    private readonly Logger _logger = new Logger();
+
+	public override void Connect()
+	{
+		_logger.Info( "Connecting... ");
+
+		DoConnect( _connection );
+
+		_logger.Info( "Connected");
+	}
+
+	public override void Close()
+	{
+		_logger.Info( "Closing... ");
+
+		DoClose( _connection );
+
+        _logger.Info( "Closed ");
+
+		// do something...
+	}
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+    Simplify the dispatcher mecanism, or find something to avoid potential timeout on callbacks/event handler subscribptions
+especially if we are using udp protocol, datagram can be lost if a timeout occurs after receiving packets.
+
+The actual dispatch, could be nice, to track every things. and all reliable recorders use ring buffer. It's a basic thing.
+
+RabbitOM.Net.Alpha
+RabbitOM.Net.Alpha.Transports 
+{
+    add sockets extensions class here
+    add transport layer for receiving data. Find a good name for this class.
+      => the problem is that a receiver classes must used a thread and so namespace must be changed...
+        And some one are thinking about the same thing : https://www.codeproject.com/Articles/884583/Advanced-TCP-Socket-Programming-with-NET
+        AFAIK transport layer class should be not a simple abstract socket wrapper 
+         => is must expose send/receive using message objects not buffer !
+         => and serialization is handled by this kind of class
+        so i must find a different name!!! and i don't want to introduce rtp packet in this namespace level.
+        otherwise remove transports namespace and expose it on the camera device implementation that expose rtp packet, and i don't think that is a good to expose frame or rtp packet for recorder implementation due for performance reasons. for render usercontrols, it's correct, not for a recorder application. 
+}
+
+Todo => Change the current architecture
+
+and move to this one:
+Check if we can move to a namespace like this:
+
+Rabbit.Streaming.Server.exe
+{
+    Rabbit.Streaming.dll
+    Rabbit.Streaming.Engine.dll
+    Rabbit.Streaming.Devices.dll
+    Rabbit.Streaming.Devices.Cameras.dll
+    etc...
+}
+
+Final ??? Much more cleaner ? -> must be split in different libs
+ 
+Rabbit.Streaming.dll 
+{
+    Rabbit.Streaming
+    Rabbit.Streaming.IO
+    Rabbit.Streaming.IO.Containers { Container , AviContainer , etc that support bookmark }
+    Rabbit.Streaming.IO.Compressions
+    Rabbit.Streaming.IO.Compressions.Interop  => Add C++ COM Wrapper 
+    Rabbit.Streaming.Logging
+    Rabbit.Streaming.Logging.Appenders { RollingFileAppender , etc.. }
+    Rabbit.Streaming.Devices
+    Rabbit.Streaming.Net.Rtcp
+    Rabbit.Streaming.Net.Rtcp.Clients
+    Rabbit.Streaming.Net.Rtp
+    Rabbit.Streaming.Net.Rtp.Clients
+    Rabbit.Streaming.Net.Rtsp
+    Rabbit.Streaming.Net.Rtsp.Clients
+    Rabbit.Streaming.Net.Rtsp.Clients.Transports
+    Rabbit.Streaming.Net.Rtsp.Servers
+    Rabbit.Streaming.Net.Rtsp.Servers.Transports
+    Rabbit.Streaming.Net.Sdp
+    Rabbit.Streaming.Net.Sdp.Extensions
+    Rabbit.Streaming.Net.Sdp.Serialization
+    Rabbit.Streaming.Net.Sdp.Serialization.Formatters
+    Rabbit.Streaming.Net.Sdp.Validations
+    Rabbit.Streaming.Net.Sip
+    Rabbit.Streaming.Net.Sip.Clients
+    Rabbit.Streaming.Net.Sip.Clients.Transports
+    Rabbit.Streaming.Net.Web.Hls
+    Rabbit.Streaming.Net.Web.Hls.Clients
+    Rabbit.Streaming.Net.Web.Rtc
+    Rabbit.Streaming.Net.Web.Rtc.Clients
+    Rabbit.Streaming.Net.Onvif
+    Rabbit.Streaming.Net.Onvif.WS
+    Rabbit.Streaming.Net.Onvif.WS.Ptz
+    Rabbit.Streaming.Net.Onvif.WS.Io
+    Rabbit.Streaming.Net.Onvif.WS.Media
+    Rabbit.Streaming.Net.Onvif.WS.Device
+    Rabbit.Streaming.Net.Onvif.WS.Events
+    Rabbit.Streaming.Net.Onvif.Clients
+    Rabbit.Streaming.Net.Psia
+    Rabbit.Streaming.Net.Psia.Clients
+    Rabbit.Streaming.Windows
+    Rabbit.Streaming.Windows.Controls
+    Rabbit.Streaming.Windows.Controls.Views
+    Rabbit.Streaming.Windows.Controls.ViewsModels
+}
+
+Rabbit.Devices.dll
+Rabbit.Devices.Cameras.dll
+Rabbit.Devices.Cameras.Hik.dll
+Rabbit.Devices.Cameras.Verint.dll
+Rabbit.Devices.Cameras.Acti.dll
+Rabbit.Devices.Cameras.IndigoVision.dll
+Rabbit.Devices.Cameras.Bosch.dll
+Rabbit.Devices.Cameras.Pelco.dll
+Rabbit.Devices.Cameras.Axis.dll
+Rabbit.Devices.Cameras.Teleste.dll
+Rabbit.Devices.Cameras.UniView.dll
+Rabbit.Devices.Cameras.Dahua.dll
+Rabbit.Devices.Cameras.Survision.dll
+Rabbit.Devices.Cameras.Onvif    .dll
+Rabbit.Devices.Encoders.dll
+Rabbit.Devices.Encoders.Verint.dll
+Rabbit.Devices.Encoders.Nice.dll
+Rabbit.Devices.Decoders.dll
+Rabbit.Devices.Decoders.Verint.dll
+Rabbit.Devices.Decoders.Planar.dll
+Rabbit.Devices.Captures.dll
+Rabbit.Devices.Captures.WebCam.dll
+Rabbit.Devices.Captures.DShow.dll
+Rabbit.Devices.Captures.Gutebruck.dll
+Rabbit.Devices.Dvr.dll
+Rabbit.Devices.Dvr.Bosch.dll
+Rabbit.Devices.Dvr.Bosch.Divar.dll
+Rabbit.Devices.Nvr.dll
+Rabbit.Devices.Nvr.Dahua.dll
+Rabbit.Devices.Nvr.Hik.dll
+Rabbit.Devices.Intercoms.dll
+Rabbit.Devices.Intercoms.Commend.dll
+Rabbit.Devices.Intercoms.Commend.Icx.dll
+Rabbit.Devices.Intercoms.Castel.dll
+Rabbit.Devices.Intercoms.Castel.Maylis.dll
+
+client.CommunicationStarted
+client.CommunicationStopped
+client.Connected
+client.Disconnected
+client.ConnectionFailed
+client.AuthenticationFailed
+client.DescribeError
+client.SetupError
+client.SetupError
+client.Event
+client.StreamingStarted
+client.StreamingStopped
+client.PacketReceived
+
+Rabbit.Rtsp
+Rabbit.Rtsp.Clients
+Rabbit.Rtsp.Clients.Messaging
+Rabbit.Rtsp.Clients.Messaging.Serialization
+Rabbit.Rtsp.Clients.Remoting
+Rabbit.Rtsp.Clients.Remoting.Invokers
+
+Rabbit.Media.Rtsp
+Rabbit.Media.Rtsp.Clients
+Rabbit.Media.Rtsp.Sockets
+Rabbit.Media.Rtsp.Remoting
+Rabbit.Media.Rtsp.Remoting.Invokers
+Rabbit.Media.Rtsp.Threading
+
+public abstract class Client : IClient , IDispose
+{
+    public sealed class ClientRunner : IDispose
+    {
+        private readonly Client _client;
+
+        public ClientRunner( Client client )
+        {
+            _client = client;
+            _client.OnCommunicationStarted(...);
+        }
+
+        public void Run()
+        {
+            try
+            {
+                if ( ! _client.IsConnected )
+                {
+                    _client.DoConnect();
+                    _client.DoDescribe();
+                    _client.DoSetup();
+                    _client.DoPlay();
+                    _client.OnConnected(...);
+                }
+                else
+                {
+                    _client.Ping();
+                }
+            }
+            catch(Exception ex)
+            {
+              if ( _client.IsConnected )
+              {
+                 _client.Close();
+                 _client.OnClose();
+              }
+              _client.OnException( ex );
+            }
+
+            _client.DoIdle();
+        }
+
+        public void Dispose()
+        {
+            _client.OnCommunicationStopped(...);
+        }
+    }
+
+    public abstract bool IsConnected {get; }
+    public abstract bool IsCommunicationStarted { get; }
+    public abstract void Start();
+    public abstract void Stop();
+
+    protected abstract TimeSpan GetIdleTimeout();
+    protected abstract TimeSpan GetRetryTimeout();
+    protected abstract bool DoWaitCancelation(TimeSpan span);
+    protected abstract void DoShutdown();
+    protected abstract void DoConnect();
+    protected abstract void DoDisconnect();
+    protected abstract void DoSetup();
+    protected abstract void DoPlay();
+    protected abstract void DoIdle();
+
+    protected virtual void OnConnect() { }
+    protected virtual void OnShutdown() { }
+    protected virtual void OnDisconnect() { }
+    protected virtual void OnSetup() { }
+    protected virtual void OnTransportOpened() { }
+    protected virtual void OnTransportClosed() { }
+    protected virtual void OnPlay() { }
+    protected virtual void OnTransportError() { }
+
+
+    protected virtual void OnStarted(EventArgs e){ }
+    protected virtual void OnStopped(EventArgs e) { }
+
+}
+
