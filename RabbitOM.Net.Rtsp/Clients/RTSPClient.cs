@@ -164,8 +164,6 @@ namespace RabbitOM.Net.Rtsp.Clients
                 _session.Abort();
             }
 
-            _session.AbortHandle.Set();
-
             _thread.Stop();
         }
     }

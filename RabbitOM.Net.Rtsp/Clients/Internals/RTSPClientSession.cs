@@ -22,8 +22,6 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private readonly RTSPClientSessionDispatcher                       _dispatcher             = null;
 
-        private readonly RTSPEventWaitHandle                               _abortHandle            = null;
-
         private RTSPClientSessionTransport                                 _transport              = null;
         
 
@@ -44,7 +42,6 @@ namespace RabbitOM.Net.Rtsp.Clients
             _connection      = new RTSPConnection();
             _informations    = new RTSPClientSessionInfos();
             _dispatcher      = new RTSPClientSessionDispatcher();
-            _abortHandle     = new RTSPEventWaitHandle();
         }
         
 
@@ -164,14 +161,6 @@ namespace RabbitOM.Net.Rtsp.Clients
 		public bool IsConnected
         {
             get => _connection.IsConnected;
-        }
-
-        /// <summary>
-        /// Get abort handle
-        /// </summary>
-        public RTSPEventWaitHandle AbortHandle
-        {
-            get => _abortHandle;
         }
 
 
