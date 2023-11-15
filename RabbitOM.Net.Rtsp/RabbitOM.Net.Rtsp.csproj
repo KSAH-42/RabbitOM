@@ -135,11 +135,11 @@
     <Compile Include="Remoting\RTSPProxyStatus.cs" />
     <Compile Include="RTSPAuthenticationType.cs" />
     <Compile Include="RTSPAuthorizationChallenge.cs" />
-    <Compile Include="RTSPAuthorizationChallengeBasic.cs" />
-    <Compile Include="RTSPAuthorizationChallengeDigest.cs" />
-    <Compile Include="RTSPAuthorizationChallengeMD5.cs" />
-    <Compile Include="RTSPAuthorizationChallengeSHA256.cs" />
-    <Compile Include="RTSPAuthorizationChallengeSHA512.cs" />
+    <Compile Include="RTSPBasicAuthorizationChallenge.cs" />
+    <Compile Include="RTSPDigestAuthorizationChallenge.cs" />
+    <Compile Include="RTSPMD5AuthorizationChallenge.cs" />
+    <Compile Include="RTSPSHA256AuthorizationChallenge.cs" />
+    <Compile Include="RTSPSHA512AuthorizationChallenge.cs" />
     <Compile Include="RTSPAuthorizationFactory.cs" />
     <Compile Include="RTSPActionQueue.cs" />
     <Compile Include="RTSPActionQueue.Scope.cs" />

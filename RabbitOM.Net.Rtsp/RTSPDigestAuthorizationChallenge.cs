@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    internal abstract class RTSPAuthorizationChallengeDigest : RTSPAuthorizationChallenge
+    internal abstract class RTSPDigestAuthorizationChallenge : RTSPAuthorizationChallenge
     {
         private RTSPMethod           _method      = RTSPMethod.UnDefined;
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="credentials">the credentials</param>
         /// <exception cref="ArgumentNullException"/>
-        protected RTSPAuthorizationChallengeDigest( RTSPCredentials credentials )
+        protected RTSPDigestAuthorizationChallenge( RTSPCredentials credentials )
         {
             _credentials = credentials ?? throw new ArgumentNullException( nameof( credentials ) );
         }

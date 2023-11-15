@@ -91,7 +91,7 @@ namespace RabbitOM.Net.Rtsp
                 return null;
             }
 
-            var challenge = new RTSPAuthorizationChallengeBasic( credentials );
+            var challenge = new RTSPBasicAuthorizationChallenge( credentials );
 
             if ( !challenge.TryValidate() )
             {
@@ -114,7 +114,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a header, otherwise null</returns>
         public RTSPHeader CreateDigestAuthorization( RTSPCredentials credentials , RTSPMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RTSPAuthorizationChallengeMD5( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RTSPMD5AuthorizationChallenge( credentials ) , method , uri );
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a header, otherwise null</returns>
         public RTSPHeader CreateDigestMD5Authorization( RTSPCredentials credentials , RTSPMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RTSPAuthorizationChallengeMD5( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RTSPMD5AuthorizationChallenge( credentials ) , method , uri );
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a header, otherwise null</returns>
         public RTSPHeader CreateDigestSHA256Authorization( RTSPCredentials credentials , RTSPMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RTSPAuthorizationChallengeSHA256( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RTSPSHA256AuthorizationChallenge( credentials ) , method , uri );
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a header, otherwise null</returns>
         public RTSPHeader CreateDigestSHA512Authorization( RTSPCredentials credentials , RTSPMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RTSPAuthorizationChallengeSHA512( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RTSPSHA512AuthorizationChallenge( credentials ) , method , uri );
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="uri">the uri</param>
         /// <param name="challenge">the authorization value generator</param>
         /// <returns>returns a header, otherwise null</returns>
-        private RTSPHeader CreateDigestAuthorization( RTSPAuthorizationChallengeDigest challenge , RTSPMethod method , string uri )
+        private RTSPHeader CreateDigestAuthorization( RTSPDigestAuthorizationChallenge challenge , RTSPMethod method , string uri )
         {
             if ( _header == null || challenge == null )
             {

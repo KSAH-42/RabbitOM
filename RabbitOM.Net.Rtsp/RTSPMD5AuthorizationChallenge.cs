@@ -5,13 +5,13 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    internal sealed class RTSPAuthorizationChallengeMD5 : RTSPAuthorizationChallengeDigest
+    internal sealed class RTSPMD5AuthorizationChallenge : RTSPDigestAuthorizationChallenge
     {
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="credentials">the credentials</param>
-        public RTSPAuthorizationChallengeMD5( RTSPCredentials credentials )
+        public RTSPMD5AuthorizationChallenge( RTSPCredentials credentials )
             : base( credentials )
         {
         }

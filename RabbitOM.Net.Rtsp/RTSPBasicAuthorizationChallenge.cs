@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    internal sealed class RTSPAuthorizationChallengeBasic : RTSPAuthorizationChallenge
+    internal sealed class RTSPBasicAuthorizationChallenge : RTSPAuthorizationChallenge
     {
         private readonly RTSPCredentials _credentials = null;
 
@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="credentials">the credentials</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPAuthorizationChallengeBasic( RTSPCredentials credentials )
+        public RTSPBasicAuthorizationChallenge( RTSPCredentials credentials )
         {
             _credentials = credentials ?? throw new ArgumentNullException( nameof( credentials ) );
         }

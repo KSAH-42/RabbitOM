@@ -5,13 +5,13 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an authorization token generator
     /// </summary>
-    internal sealed class RTSPAuthorizationChallengeSHA512 : RTSPAuthorizationChallengeDigest
+    internal sealed class RTSPSHA256AuthorizationChallenge : RTSPDigestAuthorizationChallenge
     {
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="credentials">the credentials</param>
-        public RTSPAuthorizationChallengeSHA512( RTSPCredentials credentials )
+        public RTSPSHA256AuthorizationChallenge( RTSPCredentials credentials )
             : base( credentials )
         {
         }
@@ -23,9 +23,9 @@ namespace RabbitOM.Net.Rtsp
         public override string CreateAuthorization()
         {
             string method    = RTSPMethodConverter.Convert( Method );
-            string hashA1    = RTSPHashAlgorithm.ComputeSHA512Hash( Credentials.UserName + ":" + Realm + ":" + Credentials.Password );
-            string hashA2    = RTSPHashAlgorithm.ComputeSHA512Hash( method + ":" + Uri  );
-            string response  = RTSPHashAlgorithm.ComputeSHA512Hash( hashA1 + ":" + Nonce + ":" + hashA2 );
+            string hashA1    = RTSPHashAlgorithm.ComputeSHA256Hash( Credentials.UserName + ":" + Realm + ":" + Credentials.Password );
+            string hashA2    = RTSPHashAlgorithm.ComputeSHA256Hash( method + ":" + Uri  );
+            string response  = RTSPHashAlgorithm.ComputeSHA256Hash( hashA1 + ":" + Nonce + ":" + hashA2 );
 
             return response;
         }
