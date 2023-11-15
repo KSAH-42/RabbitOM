@@ -1,3 +1,55 @@
+
+// appear on the base class
+client.Configuration.Uri
+client.Configuration.RetryTimeout
+client.Configuration.ReceiveTimeout
+client.Configuration.SendTimeout
+client.Configuration.UserName
+client.Configuration.Password
+
+client.Options.MulticastAddress // appear on multicast client
+client.Options.MutlicatPort // appear on multicast client
+client.Options.Ttl // appear on multicast client
+
+client.Configure( Configuration configuration ); // appear on the base class
+client.Configure( Options options ); // appear on multicast client
+
+client.StartCommunication();
+client.StopCommunication()
+
+client.IsCommunicationStarted
+client.IsConnected
+client.IsReceivingPackets
+client.IsStreamingStarted
+
+client.StartStreaming()
+client.StartStreamingAync()
+client.StopStreaming()
+client.StopStreamingAsync()
+
+client.CommunicationStarterd += (sender,e) =>
+{
+    client.StartStreaming();
+};
+
+or :
+
+client.Dispatch( () => client.StartStreaming() );
+
+problems: a developper can write this code which are a none sense but possible
+
+client.ProtocolError += (sender,e) =>
+{
+    client.StartStreaming();
+};
+
+do we need to change the class name by using ReceiverClass and remove the StartStreaming methods ? 
+ => there is a high probability to say yes.
+ => so, todo: make a choice this week and we close the implemtation and start the cli project.
+ 
+
+
+
 About deep namespace and flat namespace 
   => stay on flatten namespace like the Data Dog sdk. it is better.
 
@@ -25,6 +77,8 @@ public abstract class RTSPSession : IDisposable
         public event EventHandler<RTSPAuthenticationErrorEventArgs> AuthenticationError;
         public event EventHandler<RTSPProtocolErrorEventArgs> ProtocolError;
 
+        public abstract Configuration Configuration {get;}
+
         public abstract bool IsDisposed {get;}
         public abstract bool IsOpened {get;}
         public abstract bool IsClosed {get;}
@@ -38,15 +92,6 @@ public abstract class RTSPSession : IDisposable
 
         protected readonly RTSPConnection _connection = new RTSPConnection();
 
-        protected static bool DoConnect( RTSPConnection connection );
-        protected static bool DoGetOptions( RTSPConnection connection );
-        protected static bool DoDescribe( RTSPConnection connection );
-        protected static bool DoSetup( RTSPConnection connection );
-        protected static bool DoSetupAsUdp( RTSPConnection connection ,int port );
-        protected static bool DoSetupAsMulticast( RTSPConnection connection ,string address, int port, byte ttl );
-        protected static bool DoTearDown( RTSPConnection connection );
-        protected static bool DoKeepAlive( RTSPConnection connection );
-        
         public static void StartEventLoop( Session session );
         public static void StopEventLoop( Session session );
         public static void DoEvents( Session session );
@@ -115,91 +160,6 @@ public abstract class RTSPSession : IDisposable
         {
             ProtocolError?.TryInvoke(this, e);
         }
-}
-
-public abstract class Client
-{
-	protected static void DoConnect( Connection connection ) 
-    {
-        connection.Open();
-        connection.Describe();
-        connection.XXXX();
-    }
-	protected static void DoClose(Connection connection) 
-    {
-        connection.YYYY();
-        connection.TearDown();
-        connection.Close();
-    }
-
-	public abstract void Connect();
-	public abstract void Close();
-}
-
-public class Client1 : Client
-{
-	private readonly Connection _connection = new Connection();
-    private readonly EventRepository _repository = new EventRepository();
-
-	public override void Connect()
-	{
-		try
-        {
-            _repository.AddEvent( new ConnectingEvent() );
-
-			DoConnect( _connection );
-
-            _repository.AddEvent( new ConnectedEvent() );
-        }
-        finaly
-        {
-            _repository.SaveChanges();
-        }
-	}
-
-	public override void Close()
-	{
-		try
-        {
-            _repository.AddEvent( new ClosingEvent() );
-
-			DoClose( _connection );
-
-            _repository.AddEvent( new ClosedEvent() );
-        }
-        finaly
-        {
-            _repository.SaveChanges();
-        }
-
-		// do something...
-	}
-}
-
-public class Client2 : Client
-{
-	private readonly Connection _connection = new Connection();
-    private readonly Logger _logger = new Logger();
-
-	public override void Connect()
-	{
-		_logger.Info( "Connecting... ");
-
-		DoConnect( _connection );
-
-		_logger.Info( "Connected");
-	}
-
-	public override void Close()
-	{
-		_logger.Info( "Closing... ");
-
-		DoClose( _connection );
-
-        _logger.Info( "Closed ");
-
-		// do something...
-	}
 }
 
 
@@ -434,4 +394,5 @@ public abstract class Client : IClient , IDispose
     protected virtual void OnStopped(EventArgs e) { }
 
 }
+
 

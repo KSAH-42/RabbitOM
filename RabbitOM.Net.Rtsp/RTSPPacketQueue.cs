@@ -287,17 +287,17 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Dequeue an element
         /// </summary>
-        /// <param name="packet">the packet</param>
+        /// <param name="result">the packet</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool TryDequeue( out RTSPPacket packet )
+        public bool TryDequeue( out RTSPPacket result )
         {
             lock ( _lock )
             {
                 using ( _scope )
                 {
-                    packet = _collection.Count > 0 ? _collection.Dequeue() : null;
+                    result = _collection.Count > 0 ? _collection.Dequeue() : null;
                     
-                    return packet != null;
+                    return result != null;
                 }
             }
         }

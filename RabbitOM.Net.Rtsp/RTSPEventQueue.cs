@@ -293,17 +293,17 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Dequeue an event
         /// </summary>
-        /// <param name="eventArgs">the event args</param>
+        /// <param name="result">the event args</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool TryDequeue( out EventArgs eventArgs )
+        public bool TryDequeue( out EventArgs result )
         {
             lock ( _lock )
             {
                 using ( _scope )
                 {
-                    eventArgs = _collection.Count > 0 ? _collection.Dequeue() : null;
+                    result = _collection.Count > 0 ? _collection.Dequeue() : null;
 
-                    return eventArgs != null;
+                    return result != null;
                 }
             }
         }

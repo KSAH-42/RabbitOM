@@ -395,7 +395,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( bool value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( char value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( sbyte value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToHexString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToHexString( value ) );
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( byte value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToHexString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToHexString( value ) );
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( short value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( ushort value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( int value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( uint value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( long value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( ulong value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -485,7 +485,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( decimal value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( float value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( double value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( DateTime value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -522,7 +522,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="format">the format</param>
         public void WriteBody( DateTime value , string format )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value , format ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value , format ) );
         }
 
         /// <summary>
@@ -531,7 +531,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( TimeSpan value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( Guid value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToString( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToString( value ) );
         }
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBody( string value )
         {
-            InternalWriteBody( value );
+            BaseWriteBody( value );
         }
 
         /// <summary>
@@ -565,7 +565,7 @@ namespace RabbitOM.Net.Rtsp
                 return;
             }
 
-            InternalWriteBody( string.Format( format , parameters ) );
+            BaseWriteBody( string.Format( format , parameters ) );
         }
 
         /// <summary>
@@ -574,7 +574,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBodyAsBase64( string value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToBase64( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToBase64( value ) );
         }
 
         /// <summary>
@@ -583,14 +583,14 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the value</param>
         public void WriteBodyAsBase64( byte[] value )
         {
-            InternalWriteBody( RTSPDataConverter.ConvertToBase64( value ) );
+            BaseWriteBody( RTSPDataConverter.ConvertToBase64( value ) );
         }
 
         /// <summary>
         /// Write a value
         /// </summary>
         /// <param name="value">the value</param>
-        private void InternalWriteBody( string value )
+        private void BaseWriteBody( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
