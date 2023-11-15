@@ -1,7 +1,6 @@
-# RabbitOM : a reliable RTSP Lib in pure .net
+# RabbitOM : a reliable RTSP in .net
 
-Hey Folks ! now these .net assemblies can be used for receiving raw video streams, and works with your H264 and H265 decoders. I am actually adding many improvements. If you don't have any cameras, you can download the RTSP Happy server.
-After recfactoring the clients, I will add the rtp layers which already exists, but i need to something before to publish it.
+A .net assemblies which can be used for receiving raw video streams. After recfactoring the clients, I will add the rtp layers which already exists, but i need to something before to publish it.
 
 Theses classes used for decoding was already implemented but not present in repository at this moment.
 
