@@ -223,16 +223,6 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns a value</returns>
-        public static string ConvertToString<TEnum>( TEnum value ) where TEnum : struct
-        {
-            return value.ToString();
-        }
-
-        /// <summary>
-        /// Convert a value
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns a value</returns>
         public static string ConvertToStringUTF8( byte[] value )
         {
             if ( value == null || value.Length <= 0 )
@@ -283,6 +273,55 @@ namespace RabbitOM.Net.Rtsp
 
                     ptrString = IntPtr.Zero;
                 }
+            }
+
+            return string.Empty;
+        }
+
+
+        /// <summary>
+        /// Convert a value
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns a value</returns>
+        public static string ConvertToString<TEnum>(TEnum value) where TEnum : struct
+        {
+            return value.ToString();
+        }
+
+        /// <summary>
+        /// Perform a convertion
+        /// </summary>
+        /// <param name="streamingMode">the streaming mode</param>
+        /// <returns>returns a string value</returns>
+        public static string ConvertToString(RTSPTransmissionType streamingMode)
+        {
+            switch (streamingMode)
+            {
+                case RTSPTransmissionType.Unicast:
+                    return RTSPHeaderFieldNames.Unicast;
+
+                case RTSPTransmissionType.Multicast:
+                    return RTSPHeaderFieldNames.Multicast;
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Perform a convertion
+        /// </summary>
+        /// <param name="transportType">the transport type</param>
+        /// <returns>returns a string value</returns>
+        public static string ConvertToString(RTSPTransportType transportType)
+        {
+            switch (transportType)
+            {
+                case RTSPTransportType.RTP_AVP_TCP:
+                    return RTSPHeaderFieldNames.RtpAvpTcp;
+
+                case RTSPTransportType.RTP_AVP_UDP:
+                    return RTSPHeaderFieldNames.RtpAvp;
             }
 
             return string.Empty;
@@ -514,40 +553,6 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns a value</returns>
-        public static TEnum ConvertToEnum<TEnum>( string value ) where TEnum : struct
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return default;
-            }
-
-            return Enum.TryParse<TEnum>( value.Trim() , true , out TEnum result ) ? result : default;
-        }
-
-        /// <summary>
-        /// Convert a value
-        /// </summary>
-        /// <typeparam name="TEnum">the type of enum</typeparam>
-        /// <param name="values">the collection of values</param>
-        /// <returns>returns a value</returns>
-        public static IEnumerable<TEnum> ConvertToEnum<TEnum>( IEnumerable<string> values ) where TEnum : struct
-        {
-            if ( values == null )
-            {
-                yield break;
-            }
-
-            foreach ( var value in values )
-            {
-                yield return ConvertToEnum<TEnum>( value );
-            }
-        }
-
-        /// <summary>
-        /// Convert a value
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns a value</returns>
         public static byte[] ConvertToBytes( string value )
         {
             return ConvertToBytes( value , false );
@@ -756,6 +761,101 @@ namespace RabbitOM.Net.Rtsp
             result.MakeReadOnly();
 
             return result;
+        }
+
+        /// <summary>
+        /// Convert a value
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns a value</returns>
+        public static TEnum ConvertToEnum<TEnum>(string value) where TEnum : struct
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return default;
+            }
+
+            return Enum.TryParse<TEnum>(value.Trim(), true, out TEnum result) ? result : default;
+        }
+
+        /// <summary>
+        /// Convert a value
+        /// </summary>
+        /// <typeparam name="TEnum">the type of enum</typeparam>
+        /// <param name="values">the collection of values</param>
+        /// <returns>returns a value</returns>
+        public static IEnumerable<TEnum> ConvertToEnum<TEnum>(IEnumerable<string> values) where TEnum : struct
+        {
+            if (values == null)
+            {
+                yield break;
+            }
+
+            foreach (var value in values)
+            {
+                yield return ConvertToEnum<TEnum>(value);
+            }
+        }
+
+        /// <summary>
+        /// Perform a convertion
+        /// </summary>
+        /// <param name="streamingMode">the streaming mode</param>
+        /// <returns>returns a string value</returns>
+        public static RTSPTransmissionType ConvertToTransmissionType(string streamingMode)
+        {
+            if (string.IsNullOrWhiteSpace(streamingMode))
+            {
+                return RTSPTransmissionType.Unknown;
+            }
+
+            var method = streamingMode.Trim();
+            var ignoreCase = true;
+
+            if (string.Compare(RTSPHeaderFieldNames.Unicast, method, ignoreCase) == 0)
+            {
+                return RTSPTransmissionType.Unicast;
+            }
+
+            if (string.Compare(RTSPHeaderFieldNames.Multicast, method, ignoreCase) == 0)
+            {
+                return RTSPTransmissionType.Multicast;
+            }
+
+            return RTSPTransmissionType.Unknown;
+        }
+
+        /// <summary>
+        /// Perform a convertion
+        /// </summary>
+        /// <param name="transportType">the transportType type</param>
+        /// <returns>returns a string value</returns>
+        public static RTSPTransportType ConvertToTransportType(string transportType)
+        {
+            if (string.IsNullOrWhiteSpace(transportType))
+            {
+                return RTSPTransportType.Unknown;
+            }
+
+            var method = transportType.Trim();
+            var ignoreCase = true;
+
+            if (string.Compare(RTSPHeaderFieldNames.RtpAvp, method, ignoreCase) == 0)
+            {
+                return RTSPTransportType.RTP_AVP_UDP;
+            }
+
+            if (string.Compare(RTSPHeaderFieldNames.RtpAvpUdp, method, ignoreCase) == 0)
+            {
+                return RTSPTransportType.RTP_AVP_UDP;
+            }
+
+            if (string.Compare(RTSPHeaderFieldNames.RtpAvpTcp, method, ignoreCase) == 0)
+            {
+                return RTSPTransportType.RTP_AVP_TCP;
+            }
+
+            return RTSPTransportType.Unknown;
         }
     }
 }

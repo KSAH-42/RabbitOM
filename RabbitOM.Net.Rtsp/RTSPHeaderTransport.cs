@@ -277,10 +277,10 @@ namespace RabbitOM.Net.Rtsp
 
             var writer = new RTSPHeaderWriter( RTSPSeparator.SemiColon , RTSPOperator.Equality );
 
-            writer.Write( RTSPTransportTypeConverter.Convert( _type ) );
+            writer.Write( RTSPDataConverter.ConvertToString( _type ) );
             writer.WriteSeparator();
 
-            writer.Write( RTSPTransmissionTypeConverter.Convert( _transmissionType ) );
+            writer.Write( RTSPDataConverter.ConvertToString( _transmissionType ) );
 
             if ( !string.IsNullOrWhiteSpace( _destination ) )
             {
