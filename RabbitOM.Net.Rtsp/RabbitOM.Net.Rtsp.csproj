@@ -151,7 +151,6 @@
     <Compile Include="RTSPDateTimeFormatType.cs" />
     <Compile Include="RTSPDeliveryMode.cs" />
     <Compile Include="RTSPDigestAlgorithmType.cs" />
-    <Compile Include="RTSPDigestAlgorithmTypeConverter.cs" />
     <Compile Include="RTSPDisposeScope.cs" />
     <Compile Include="RTSPDelegateExtensions.cs" />
     <Compile Include="RTSPEventQueue.Scope.cs" />

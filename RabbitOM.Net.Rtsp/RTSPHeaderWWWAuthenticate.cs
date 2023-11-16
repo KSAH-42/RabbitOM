@@ -146,7 +146,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 writer.WriteSeparator();
                 writer.WriteSpace();
-                writer.WriteField( RTSPHeaderFieldNames.Algorithm , RTSPDigestAlgorithmTypeConverter.Convert( _algorithm ) );
+                writer.WriteField( RTSPHeaderFieldNames.Algorithm , RTSPDataConverter.ConvertToString( _algorithm ) );
             }
 
             if ( !string.IsNullOrWhiteSpace( _stale ) )
@@ -219,7 +219,7 @@ namespace RabbitOM.Net.Rtsp
 
                         if ( reader.IsAlgorithmElementType )
                         {
-                            result.Algorithm = RTSPDigestAlgorithmTypeConverter.Convert( reader.GetElementValue() );
+                            result.Algorithm = RTSPDataConverter.ConvertToDigestAlgorithmType( reader.GetElementValue() );
                         }
 
                         if ( reader.IsStaleElementType )
