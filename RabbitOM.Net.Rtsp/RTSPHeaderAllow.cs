@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Rtsp
                     writer.WriteSpace();
                 }
 
-                writer.Write( RTSPMethodConverter.Convert( method ) );
+                writer.Write(RTSPDataConverter.ConvertToString( method ) );
             }
 
             return writer.Output;
@@ -101,7 +101,7 @@ namespace RabbitOM.Net.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.Methods.TryAdd( RTSPMethodConverter.Convert( reader.GetElement() ) );
+                    result.Methods.TryAdd( RTSPDataConverter.ConvertToEnumMethod( reader.GetElement() ) );
                 }
 
                 return true;

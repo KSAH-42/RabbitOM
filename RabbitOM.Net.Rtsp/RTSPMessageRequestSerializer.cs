@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp
 
             var builder = new StringBuilder();
 
-            builder.Append( RTSPMethodConverter.Convert( request.Method ) );
+            builder.Append(RTSPDataConverter.ConvertToString( request.Method ) );
             builder.Append( " " );
             builder.Append( request.Uri );
             builder.Append( " " );

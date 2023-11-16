@@ -219,7 +219,7 @@ namespace RabbitOM.Net.Rtsp
 
                         if ( reader.IsAlgorithmElementType )
                         {
-                            result.Algorithm = RTSPDataConverter.ConvertToDigestAlgorithmType( reader.GetElementValue() );
+                            result.Algorithm = RTSPDataConverter.ConvertToEnumDigestAlgorithmType( reader.GetElementValue() );
                         }
 
                         if ( reader.IsStaleElementType )

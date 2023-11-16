@@ -223,7 +223,6 @@
     <Compile Include="RTSPMessageStatus.cs" />
     <Compile Include="RTSPMessageVersion.cs" />
     <Compile Include="RTSPMethod.cs" />
-    <Compile Include="RTSPMethodConverter.cs" />
     <Compile Include="RTSPMethodList.cs" />
     <Compile Include="RTSPMethodNames.cs" />
     <Compile Include="RTSPMethodReadonlyList.cs" />
