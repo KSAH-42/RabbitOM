@@ -1,4 +1,4 @@
-# RabbitOM : a reliable RTSP in .net
+# RabbitOM : a reliable RTSP client in .net
 
 A .net assemblies which can be used for receiving raw video streams. After recfactoring the clients, I will add the rtp layers which already exists, but i need to something before to publish it.
 
