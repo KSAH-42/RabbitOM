@@ -12,6 +12,12 @@ namespace RabbitOM.Net.Rtsp
 		/// </summary>
 		public static readonly RTSPTrackInfo Empty = new RTSPTrackInfo();
 
+
+
+
+
+
+
 		private readonly byte _payloadType;
 
 		private readonly string _encoder = string.Empty;
@@ -28,46 +34,13 @@ namespace RabbitOM.Net.Rtsp
 
 		private readonly string _vps = string.Empty;
 
-		/// <summary>
-		/// Gets the payload type
-		/// </summary>
-		public byte PayloadType => _payloadType;
+		
+		
 
-		/// <summary>
-		/// Gets the encoder
-		/// </summary>
-		public string Encoder => _encoder;
 
-		/// <summary>
-		/// Gets the clock rate
-		/// </summary>
-		public uint ClockRate => _clockRate;
 
-		/// <summary>
-		/// Gets the control uri
-		/// </summary>
-		public string ControlUri => _controlUri;
-
-		/// <summary>
-		/// Gets the profile identifier
-		/// </summary>
-		public string ProfileId => _profileId;
-
-		/// <summary>
-		/// Gets the SPS
-		/// </summary>
-		public string SPS => _sps;
-
-		/// <summary>
-		/// Gets the pps
-		/// </summary>
-		public string PPS => _pps;
-
-		/// <summary>
-		/// Gets the vps
-		/// </summary>
-		public string VPS => _vps;
-
+		
+		
 		/// <summary>
 		/// Initialize a new instance of track information object
 		/// </summary>
@@ -89,14 +62,91 @@ namespace RabbitOM.Net.Rtsp
 		public RTSPTrackInfo(byte payloadType, string encoder, uint clockRate, string controlUri, string profileId, string sps, string pps, string vps)
 		{
 			_payloadType = payloadType;
-			_encoder = (encoder ?? string.Empty);
-			_clockRate = clockRate;
-			_controlUri = (controlUri ?? string.Empty);
-			_profileId = (profileId ?? string.Empty);
+			_encoder     = (encoder ?? string.Empty);
+			_clockRate   = clockRate;
+			_controlUri  = (controlUri ?? string.Empty);
+			_profileId   = (profileId ?? string.Empty);
 			_sps = (sps ?? string.Empty);
 			_pps = (pps ?? string.Empty);
 			_vps = (vps ?? string.Empty);
 		}
+
+
+
+
+
+
+
+
+		/// <summary>
+		/// Gets the payload type
+		/// </summary>
+		public byte PayloadType 
+		{
+			get => _payloadType;
+		}
+
+		/// <summary>
+		/// Gets the encoder
+		/// </summary>
+		public string Encoder
+		{
+			get => _encoder;
+		}
+
+		/// <summary>
+		/// Gets the clock rate
+		/// </summary>
+		public uint ClockRate
+		{
+			get => _clockRate;
+		}
+
+		/// <summary>
+		/// Gets the control uri
+		/// </summary>
+		public string ControlUri
+		{
+			get => _controlUri;
+		}
+
+		/// <summary>
+		/// Gets the profile identifier
+		/// </summary>
+		public string ProfileId
+		{
+			get => _profileId;
+		}
+
+		/// <summary>
+		/// Gets the SPS
+		/// </summary>
+		public string SPS
+		{
+			get => _sps;
+		}
+
+		/// <summary>
+		/// Gets the pps
+		/// </summary>
+		public string PPS
+		{
+			get => _pps;
+		}
+
+		/// <summary>
+		/// Gets the vps
+		/// </summary>
+		public string VPS
+		{
+			get => _vps;
+		}
+
+
+
+
+
+
 
 		/// <summary>
 		/// Create an new video track info
@@ -145,24 +195,33 @@ namespace RabbitOM.Net.Rtsp
 			return new RTSPTrackInfo(payloadType, encoder, clockRate, controlUri, profileId, string.Empty, string.Empty, string.Empty);
 		}
 
+		
+		
+		
+		
+		
+		
 		/// <summary>
 		/// Validate the internal members
 		/// </summary>
 		/// <returns>returns true for a success, otherwise false.</returns>
 		public bool TryValidate()
 		{
-			if (_clockRate == 0)
+			if ( _clockRate == 0)
 			{
 				return false;
 			}
+
 			if (string.IsNullOrWhiteSpace(_encoder))
 			{
 				return false;
 			}
+
 			if (string.IsNullOrWhiteSpace(_controlUri))
 			{
 				return false;
 			}
+
 			return true;
 		}
 	}
