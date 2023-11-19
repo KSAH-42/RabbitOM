@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Rtsp
         public string Product
         {
             get => _product;
-            set => _product = RTSPDataFilter.Trim( value );
+            set => _product = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace RabbitOM.Net.Rtsp
         public string Version
         {
             get => _version;
-            set => _version = RTSPDataFilter.Trim( value );
+            set => _version = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace RabbitOM.Net.Rtsp
         public string Comments
         {
             get => _comments;
-            set => _comments = RTSPDataFilter.Trim( value );
+            set => _comments = RTSPDataConverter.Trim( value );
         }
 
 

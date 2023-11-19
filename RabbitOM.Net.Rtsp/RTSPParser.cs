@@ -67,7 +67,7 @@ namespace RabbitOM.Net.Rtsp
         public string Text
         {
             get => _text;
-            set => _text = RTSPDataFilter.Trim( value );
+            set => _text = RTSPDataConverter.Trim( value );
         }
 
 
@@ -115,11 +115,6 @@ namespace RabbitOM.Net.Rtsp
             }
 
             var tokens = _text.Split( new char[] { (char) _headerSeparator } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( tokens == null || tokens.Length <= 0 )
-            {
-                return false;
-            }
 
             foreach ( string token in tokens )
             {

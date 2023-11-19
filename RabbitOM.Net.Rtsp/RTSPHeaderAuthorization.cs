@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Rtsp
         public string UserName
         {
             get => _userName;
-            set => _userName = RTSPDataFilter.Trim( value );
+            set => _userName = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace RabbitOM.Net.Rtsp
         public string Realm
         {
             get => _realm;
-            set => _realm = RTSPDataFilter.Trim( value );
+            set => _realm = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtsp
         public string Nonce
         {
             get => _nonce;
-            set => _nonce = RTSPDataFilter.Trim( value );
+            set => _nonce = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace RabbitOM.Net.Rtsp
         public string Domain
         {
             get => _domain;
-            set => _domain = RTSPDataFilter.Trim( value );
+            set => _domain = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtsp
         public string Opaque
         {
             get => _opaque;
-            set => _opaque = RTSPDataFilter.Trim( value );
+            set => _opaque = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace RabbitOM.Net.Rtsp
         public string Uri
         {
             get => _uri;
-            set => _uri = RTSPDataFilter.Trim( value );
+            set => _uri = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace RabbitOM.Net.Rtsp
         public string Response
         {
             get => _response;
-            set => _response = RTSPDataFilter.Trim( value );
+            set => _response = RTSPDataConverter.Trim( value );
         }
 
 

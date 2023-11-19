@@ -198,7 +198,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _collection.Contains( RTSPDataFilter.Trim( element ) );
+                return _collection.Contains( RTSPDataConverter.Trim( element ) );
             }
         }
 
@@ -222,7 +222,7 @@ namespace RabbitOM.Net.Rtsp
                     throw new InvalidOperationException();
                 }
 
-                if ( ! _collection.Add( RTSPDataFilter.Trim( element ) ) )
+                if ( ! _collection.Add( RTSPDataConverter.Trim( element ) ) )
                 {
                     throw new ArgumentException( "Duplicated value" );
                 }
@@ -256,7 +256,7 @@ namespace RabbitOM.Net.Rtsp
                         throw new ArgumentException( "Bad element" );
                     }
 
-                    if ( !  _collection.Add( RTSPDataFilter.Trim( element ) ) )
+                    if ( !  _collection.Add( RTSPDataConverter.Trim( element ) ) )
                     {
                         throw new ArgumentException("Duplicated value");
                     }
@@ -322,7 +322,7 @@ namespace RabbitOM.Net.Rtsp
         {
             lock ( _lock )
             {
-                return _collection.Remove( RTSPDataFilter.Trim( element ) );
+                return _collection.Remove( RTSPDataConverter.Trim( element ) );
             }
         }
 
@@ -379,7 +379,7 @@ namespace RabbitOM.Net.Rtsp
                     return false;
                 }
 
-                return _collection.Add(RTSPDataFilter.Trim(element));
+                return _collection.Add( RTSPDataConverter.Trim( element ) );
             }
         }
 
@@ -412,7 +412,7 @@ namespace RabbitOM.Net.Rtsp
                         continue;
                     }
 
-                    if (_collection.Add(RTSPDataFilter.Trim(element)))
+                    if (_collection.Add( RTSPDataConverter.Trim( element ) ) )
                     {
                         ++result;
                     }

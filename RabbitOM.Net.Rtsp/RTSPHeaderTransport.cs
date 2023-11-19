@@ -174,7 +174,7 @@ namespace RabbitOM.Net.Rtsp
         public string Source
         {
             get => _source;
-            set => _source = RTSPDataFilter.Trim( value );
+            set => _source = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace RabbitOM.Net.Rtsp
         public string Destination
         {
             get => _destination;
-            set => _destination = RTSPDataFilter.Trim( value );
+            set => _destination = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace RabbitOM.Net.Rtsp
         public string SSRC
         {
             get => _ssrc;
-            set => _ssrc = RTSPDataFilter.Trim( value );
+            set => _ssrc = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace RabbitOM.Net.Rtsp
         public string Mode
         {
             get => _mode;
-            set => _mode = RTSPDataFilter.Trim( value );
+            set => _mode = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>

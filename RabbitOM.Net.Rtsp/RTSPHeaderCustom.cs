@@ -26,8 +26,8 @@ namespace RabbitOM.Net.Rtsp
                 throw new ArgumentNullException( nameof( name ) );
             }
 
-            _name  = RTSPDataFilter.Trim( name );
-            _value = RTSPDataFilter.Trim( value );
+            _name  = RTSPDataConverter.Trim( name );
+            _value = RTSPDataConverter.Trim( value );
         }
 
 
@@ -46,7 +46,7 @@ namespace RabbitOM.Net.Rtsp
         public string Value
         {
             get => _value;
-            set => _value = RTSPDataFilter.Trim( value );
+            set => _value = RTSPDataConverter.Trim( value );
         }
 
 

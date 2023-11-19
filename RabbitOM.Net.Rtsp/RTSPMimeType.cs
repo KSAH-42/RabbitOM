@@ -60,8 +60,8 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="subType">the sub type</param>
         public RTSPMimeType( string type , string subType )
         {
-            _type = RTSPDataFilter.Trim( type );
-            _subType = RTSPDataFilter.Trim( subType );
+            _type    = RTSPDataConverter.Trim( type );
+            _subType = RTSPDataConverter.Trim( subType );
         }
 
 

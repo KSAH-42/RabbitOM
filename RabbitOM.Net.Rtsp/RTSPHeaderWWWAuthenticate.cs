@@ -44,7 +44,7 @@ namespace RabbitOM.Net.Rtsp
         public string Realm
         {
             get => _realm;
-            set => _realm = RTSPDataFilter.Trim( value );
+            set => _realm = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace RabbitOM.Net.Rtsp
         public string Nonce
         {
             get => _nonce;
-            set => _nonce = RTSPDataFilter.Trim( value );
+            set => _nonce = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace RabbitOM.Net.Rtsp
         public string Opaque
         {
             get => _opaque;
-            set => _opaque = RTSPDataFilter.Trim( value );
+            set => _opaque = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace RabbitOM.Net.Rtsp
         public string Stale
         {
             get => _stale;
-            set => _stale = RTSPDataFilter.Trim( value );
+            set => _stale = RTSPDataConverter.Trim( value );
         }
 
 

@@ -44,7 +44,7 @@ namespace RabbitOM.Net.Rtsp
         public string Value
         {
             get => _value;
-            set => _value = RTSPDataFilter.Trim( value );
+            set => _value = RTSPDataConverter.Trim( value );
         }
 
 

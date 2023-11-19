@@ -71,7 +71,7 @@ namespace RabbitOM.Net.Rtsp
         public string Url
         {
             get => _url;
-            set => _url = RTSPDataFilter.Trim( value );
+            set => _url = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>

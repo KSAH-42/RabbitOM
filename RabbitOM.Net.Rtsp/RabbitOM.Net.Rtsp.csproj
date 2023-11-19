@@ -147,7 +147,6 @@
     <Compile Include="RTSPChunkQueue.cs" />
     <Compile Include="RTSPCredentials.cs" />
     <Compile Include="RTSPDataConverter.cs" />
-    <Compile Include="RTSPDataFilter.cs" />
     <Compile Include="RTSPDateTimeFormatType.cs" />
     <Compile Include="RTSPDeliveryMode.cs" />
     <Compile Include="RTSPDigestAlgorithmType.cs" />

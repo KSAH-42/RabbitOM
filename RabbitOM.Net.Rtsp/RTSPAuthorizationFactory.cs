@@ -156,9 +156,9 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create an authorization header
         /// </summary>
+        /// <param name="challenge">the authorization value generator</param>
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
-        /// <param name="challenge">the authorization value generator</param>
         /// <returns>returns a header, otherwise null</returns>
         private RTSPHeader CreateDigestAuthorization( RTSPDigestAuthorizationChallenge challenge , RTSPMethod method , string uri )
         {

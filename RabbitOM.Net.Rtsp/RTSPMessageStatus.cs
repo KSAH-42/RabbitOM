@@ -39,8 +39,8 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="reason">the status details</param>
         public RTSPMessageStatus( RTSPStatusCode code , string reason )
         {
-            _code = code;
-            _reason = RTSPDataFilter.Trim( reason );
+            _code   = code;
+            _reason = RTSPDataConverter.Trim( reason );
         }
 
 

@@ -947,14 +947,14 @@ namespace RabbitOM.Net.Rtsp
             }
 
             if (string.Compare("SHA-256", method, ignoreCase) == 0 ||
-                 string.Compare("SHA256", method, ignoreCase) == 0
+                string.Compare("SHA256", method, ignoreCase) == 0
                 )
             {
                 return RTSPDigestAlgorithmType.SHA_256;
             }
 
             if (string.Compare("SHA-512", method, ignoreCase) == 0 ||
-                 string.Compare("SHA512", method, ignoreCase) == 0
+                string.Compare("SHA512", method, ignoreCase) == 0
                 )
             {
                 return RTSPDigestAlgorithmType.SHA_512;
@@ -1044,6 +1044,51 @@ namespace RabbitOM.Net.Rtsp
             }
 
             return RTSPMethod.UnDefined;
+        }
+
+        /// <summary>
+        /// Convert a value
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns a value</returns>
+        public static string Trim(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return string.Empty;
+            }
+
+            return value.Trim();
+        }
+
+        /// <summary>
+        /// Adapt the value in case where the value is outside the specified range
+        /// </summary>
+        /// <typeparam name="TValue">the type of the value</typeparam>
+        /// <param name="value">the value</param>
+        /// <param name="minimum">the minimum range</param>
+        /// <param name="maximum">the maximum range</param>
+        /// <returns>returns a valye</returns>
+        /// <exception cref="ArgumentException"/>
+        public static TValue Adapt<TValue>(TValue value, TValue minimum, TValue maximum)
+            where TValue : struct, IComparable<TValue>
+        {
+            if (minimum.CompareTo(maximum) >= 0)
+            {
+                throw new ArgumentException(nameof(minimum));
+            }
+
+            if (value.CompareTo(minimum) < 0)
+            {
+                return minimum;
+            }
+
+            if (value.CompareTo(maximum) > 0)
+            {
+                return maximum;
+            }
+
+            return value;
         }
     }
 }

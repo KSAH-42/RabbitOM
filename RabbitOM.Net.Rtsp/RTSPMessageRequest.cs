@@ -44,10 +44,10 @@ namespace RabbitOM.Net.Rtsp
                 throw new ArgumentNullException( nameof( version ) );
             }
 
-            _method = method;
-            _uri = RTSPDataFilter.Trim( uri );
+            _method  = method;
+            _uri     = RTSPDataConverter.Trim( uri );
             _headers = new RTSPHeaderCollection();
-            _body = new RTSPMessageBody();
+            _body    = new RTSPMessageBody();
             _version = version;
         }
 

@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtsp
         public string First
         {
             get => _first;
-            set => _first = RTSPDataFilter.Trim( value );
+            set => _first = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace RabbitOM.Net.Rtsp
         public string Second
         {
             get => _second;
-            set => _second = RTSPDataFilter.Trim( value );
+            set => _second = RTSPDataConverter.Trim( value );
         }
 
 

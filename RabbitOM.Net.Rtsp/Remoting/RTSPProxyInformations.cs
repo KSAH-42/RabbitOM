@@ -99,7 +99,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             lock ( _lock )
             {
-                _sessionId = RTSPDataFilter.Trim( value );
+                _sessionId = RTSPDataConverter.Trim( value );
             }
         }
 

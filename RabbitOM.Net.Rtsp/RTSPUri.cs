@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtsp
         public string UserName
         {
             get => _userName;
-            set => _userName = RTSPDataFilter.Trim( value );
+            set => _userName = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace RabbitOM.Net.Rtsp
         public string Password
         {
             get => _password;
-            set => _password = RTSPDataFilter.Trim( value );
+            set => _password = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtsp
         public string Host
         {
             get => _host;
-            set => _host = RTSPDataFilter.Trim( value );
+            set => _host = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace RabbitOM.Net.Rtsp
         public int Port
         {
             get => _port;
-            set => _port = RTSPDataFilter.Adapt( value , 1 , ushort.MaxValue );
+            set => _port = RTSPDataConverter.Adapt( value , 1 , ushort.MaxValue );
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace RabbitOM.Net.Rtsp
         public string Path
         {
             get => _path;
-            set => _path = RTSPDataFilter.Trim( value );
+            set => _path = RTSPDataConverter.Trim( value );
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace RabbitOM.Net.Rtsp
         public string Query
         {
             get => _query;
-            set => _query = RTSPDataFilter.Trim( value ).Replace( "?" , "" );
+            set => _query = RTSPDataConverter.Trim( value ).Replace( "?" , "" );
         }
 
 
