@@ -7,13 +7,13 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     internal sealed class RTSPParser
     {
-        private RTSPSeparator           _headerSeparator     = RTSPSeparator.Comma;
+        private RTSPSeparator                 _headerSeparator     = RTSPSeparator.Comma;
 
-        private RTSPOperator            _fieldOperator       = RTSPOperator.Equality;
+        private RTSPOperator                  _fieldOperator       = RTSPOperator.Equality;
 
-        private string                  _text                = string.Empty;
+        private string                        _text                = string.Empty;
 
-        private string                  _firstElement        = string.Empty;
+        private string                        _firstElement        = string.Empty;
 
         private readonly RTSPStringCollection _headers             = new RTSPStringCollection();
 
@@ -87,7 +87,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the first parsed element
         /// </summary>
         /// <returns>returns a string</returns>
-        public RTSPAuthenticationType GetFirstElementParsedAsAuthenticationType()
+        public RTSPAuthenticationType FirstAuthenticationTypeOrDefault()
         {
             return RTSPDataConverter.ConvertToEnum<RTSPAuthenticationType>( _firstElement );
         }
@@ -161,7 +161,12 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool RemoveFirstSequence( string sequence )
         {
-            if ( string.IsNullOrWhiteSpace( sequence ) || string.IsNullOrWhiteSpace( _text ) )
+            if ( string.IsNullOrWhiteSpace( sequence ) )
+            {
+                return false;
+            }
+
+            if ( string.IsNullOrWhiteSpace( _text ) )
             {
                 return false;
             }

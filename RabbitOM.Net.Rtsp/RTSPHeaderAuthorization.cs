@@ -207,7 +207,7 @@ namespace RabbitOM.Net.Rtsp
 
             if ( parser.ParseFirstElement() )
             {
-                var type = parser.GetFirstElementParsedAsAuthenticationType();
+                var type = parser.FirstAuthenticationTypeOrDefault();
 
                 if ( !parser.RemoveFirstSequence( type.ToString() ) )
                 {

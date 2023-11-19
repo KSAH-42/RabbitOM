@@ -1,4 +1,3 @@
-
 // appear on the base class
 client.Configuration.Uri
 client.Configuration.RetryTimeout
@@ -394,5 +393,6 @@ public abstract class Client : IClient , IDispose
     protected virtual void OnStopped(EventArgs e) { }
 
 }
+
 
 

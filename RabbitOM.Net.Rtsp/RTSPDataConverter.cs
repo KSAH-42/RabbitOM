@@ -931,7 +931,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="algorithmType">the algorithm type</param>
         /// <returns>returns a string value</returns>
-        public static RTSPDigestAlgorithmType ConvertToEnumDigestAlgorithmType(string algorithmType)
+        internal static RTSPDigestAlgorithmType ConvertToEnumDigestAlgorithmType(string algorithmType)
         {
             if (string.IsNullOrWhiteSpace(algorithmType))
             {
