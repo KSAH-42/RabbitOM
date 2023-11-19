@@ -233,7 +233,6 @@
     <Compile Include="RTSPPacketQueue.cs" />
     <Compile Include="RTSPPacketReceivedEventArgs.cs" />
     <Compile Include="RTSPParser.cs" />
-    <Compile Include="RTSPPortManager.cs" />
     <Compile Include="RTSPPortPair.cs" />
     <Compile Include="RTSPSeparator.cs" />
     <Compile Include="RTSPMulticastSocket.cs" />
