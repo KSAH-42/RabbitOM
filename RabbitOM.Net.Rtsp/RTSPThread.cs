@@ -143,10 +143,7 @@ namespace RabbitOM.Net.Rtsp
                 return;
             }
 
-            if (thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
-            {
-                throw new InvalidOperationException();
-            }
+            EnsureCallingThread( thread );
 
             try
             {
@@ -180,10 +177,7 @@ namespace RabbitOM.Net.Rtsp
                 return true;
             }
 
-            if ( thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId)
-            {
-                throw new InvalidOperationException();
-            }
+            EnsureCallingThread( thread );
 
             try
             {
@@ -212,10 +206,7 @@ namespace RabbitOM.Net.Rtsp
                 return true;
             }
 
-            if ( thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId)
-            {
-                throw new InvalidOperationException();
-            }
+            EnsureCallingThread( thread );
 
             try
             {
@@ -241,10 +232,7 @@ namespace RabbitOM.Net.Rtsp
                 return;
             }
 
-            if ( thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
-            {             
-                throw new InvalidOperationException();
-            }
+            EnsureCallingThread( thread );
 
             try
             {
@@ -317,6 +305,33 @@ namespace RabbitOM.Net.Rtsp
                 _exception = ex;
             }
         }
+
+
+
+
+
+        /// <summary>
+        /// Ensure that we are not make a call the specific thread.
+        /// For instance, this method ensure that we are not invoking the stop method inside the thread, like a thread that want to stop it self using the public method of this class.
+        /// </summary>
+        /// <param name="thread">the thread</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="InvalidOperationException"/>
+        private static void EnsureCallingThread( Thread thread )
+        {
+            if (thread == null)
+            {
+                throw new ArgumentNullException( nameof( thread ) );
+            }
+
+            if (thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId)
+            {
+                throw new InvalidOperationException();
+            }
+        }
+
+
+
 
 
 
