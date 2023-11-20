@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		public object SyncRoot
 		{
-			get => this;
+			get => _collection;
 		}
 
 		/// <summary>
