@@ -14,14 +14,31 @@ namespace RabbitOM.Net.Sdp.Serialization
 
 
 
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		/// <param name="input">the input value</param>
+		/// <param name="input">the input</param>
 		public SessionDescriptorReader(string input)
+			: this( StringPair.ParseAll( input ) )
 		{
-			_textFields = StringPair.ParseAll(input).GetEnumerator();
 		}
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="fields">the fields</param>
+		/// <exception cref="ArgumentNullException"/>
+		public SessionDescriptorReader( IEnumerable<StringPair> fields )
+		{
+			if ( fields == null )
+			{
+				throw new ArgumentNullException( nameof( fields ) );
+			}
+
+			_textFields = fields.GetEnumerator();
+		}
+
 
 
 
