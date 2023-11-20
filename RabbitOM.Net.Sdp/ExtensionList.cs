@@ -23,7 +23,6 @@ namespace RabbitOM.Net.Sdp
 
 
 
-
 		/// <summary>
 		/// The collection
 		/// </summary>
@@ -61,7 +60,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance</returns>
 		public string this[int index]
 		{
-			get => GetAt(index);
+			get => _collection[index];
 		}
 
 
@@ -120,21 +119,58 @@ namespace RabbitOM.Net.Sdp
 
 
 		/// <summary>
-		/// Gets the enumerator
+		/// Add an element
 		/// </summary>
-		/// <returns>returns an instance</returns>
-		IEnumerator IEnumerable.GetEnumerator()
+		/// <param name="element">the element name</param>
+		/// <exception cref="ArgumentNullException"/>
+		/// <exception cref="ArgumentException"/>
+		/// <exception cref="InvalidOperationException"/>
+		public void Add(string element)
 		{
-			return _collection.GetEnumerator();
+			if (element == null)
+			{
+				throw new ArgumentNullException(nameof(element));
+			}
+
+			if (string.IsNullOrWhiteSpace(element))
+			{
+				throw new ArgumentException(nameof(element));
+			}
+
+			if (_collection.Count >= Maximum)
+			{
+				throw new InvalidOperationException();
+			}
+
+			_collection.Add(DataConverter.Filter(element));
 		}
 
 		/// <summary>
-		/// Gets the enumerator
+		/// Add elements
 		/// </summary>
-		/// <returns>returns an instance</returns>
-		public IEnumerator<string> GetEnumerator()
+		/// <param name="collection">the collection of elements</param>
+		/// <exception cref="ArgumentNullException"/>
+		/// <exception cref="ArgumentException"/>
+		/// <exception cref="InvalidOperationException"/>
+		public void AddRange(IEnumerable<string> collection)
 		{
-			return _collection.GetEnumerator();
+			if (collection == null)
+			{
+				throw new ArgumentNullException(nameof(collection));
+			}
+
+			foreach (var element in collection)
+			{
+				Add(element);
+			}
+		}
+
+		/// <summary>
+		/// Remove all elements
+		/// </summary>
+		public void Clear()
+		{
+			_collection.Clear();
 		}
 
 		/// <summary>
@@ -198,74 +234,31 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Add an element
-		/// </summary>
-		/// <param name="element">the element name</param>
-		/// <exception cref="ArgumentNullException"/>
-		/// <exception cref="ArgumentException"/>
-		/// <exception cref="InvalidOperationException"/>
-		public void Add(string element)
-		{
-			if (element == null)
-			{
-				throw new ArgumentNullException(nameof(element));
-			}
-
-			if (string.IsNullOrWhiteSpace(element))
-			{
-				throw new ArgumentException(nameof(element));
-			}
-
-			if (_collection.Count >= Maximum)
-			{
-				throw new InvalidOperationException();
-			}
-
-			_collection.Add(DataConverter.Filter(element));
-		}
-
-		/// <summary>
-		/// Add elements
-		/// </summary>
-		/// <param name="collection">the collection of elements</param>
-		/// <exception cref="ArgumentNullException"/>
-		/// <exception cref="ArgumentException"/>
-		/// <exception cref="InvalidOperationException"/>
-		public void AddRange(IEnumerable<string> collection)
-		{
-			if (collection == null)
-			{
-				throw new ArgumentNullException(nameof(collection));
-			}
-
-			foreach (var element in collection)
-			{
-				Add(element);
-			}
-		}
-
-		/// <summary>
-		/// Get an element
+		/// Returns element or an empty string if the element is not found
 		/// </summary>
 		/// <param name="index">the index</param>
-		/// <returns>returns an instance, otherwise null</returns>
-		/// <exception cref="ArgumentOutOfRangeException"/>
-		/// <exception cref="InvalidOperationException"/>
-		public string GetAt(int index)
-		{
-			var result = _collection.ElementAt(index);
-
-			return !string.IsNullOrWhiteSpace(result) ? result : throw new InvalidOperationException("The extension value is empty");
-		}
-
-		/// <summary>
-		/// Get an element
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance, otherwise null</returns>
-		public string FindAt(int index)
+		/// <returns>returns a string value</returns>
+		public string ElementAtOrDefault(int index)
 		{
 			return _collection.ElementAtOrDefault(index) ?? string.Empty;
+		}
+
+		/// <summary>
+		/// Gets the enumerator
+		/// </summary>
+		/// <returns>returns an instance</returns>
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return _collection.GetEnumerator();
+		}
+
+		/// <summary>
+		/// Gets the enumerator
+		/// </summary>
+		/// <returns>returns an instance</returns>
+		public IEnumerator<string> GetEnumerator()
+		{
+			return _collection.GetEnumerator();
 		}
 
 		/// <summary>
@@ -285,15 +278,14 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool RemoveAt(int index)
 		{
-			return Remove(FindAt(index));
-		}
+			if (index < 0 || index >= _collection.Count)
+			{
+				return false;
+			}
 
-		/// <summary>
-		/// Remove all elements
-		/// </summary>
-		public void Clear()
-		{
-			_collection.Clear();
+			_collection.RemoveAt(index);
+
+			return true;
 		}
 
 
@@ -335,7 +327,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns the number of element added</returns>
 		public bool TryAddRange(IEnumerable<string> collection, out int result)
 		{
-			result = collection?.Where(TryAdd).Count() ?? 0;	 
+			result = collection?.Where(TryAdd).Count() ?? 0;
 
 			return result > 0;
 		}
@@ -350,7 +342,7 @@ namespace RabbitOM.Net.Sdp
 		{
 			result = _collection.ElementAtOrDefault(index) ?? string.Empty;
 
-			return !string.IsNullOrEmpty(result);
+			return !string.IsNullOrWhiteSpace(result);
 		}
 	}
 }
