@@ -69,7 +69,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         public string this[int index]
         {
-            get => GetAt( index );
+            get => ElementAt( index );
         }
 
 
@@ -154,55 +154,6 @@ namespace RabbitOM.Net.Rtsp
 
 
 		/// <summary>
-		/// Gets the enumerator
-		/// </summary>
-		/// <returns>returns an instance</returns>
-		IEnumerator IEnumerable.GetEnumerator()
-        {
-            lock ( _lock )
-            {
-                return _collection.ToList().GetEnumerator();
-            }
-        }
-
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>returns an instance</returns>
-        public IEnumerator<string> GetEnumerator()
-        {
-            lock ( _lock )
-            {
-                return _collection.ToList().GetEnumerator();
-            }
-        }
-
-        /// <summary>
-        /// Check if the collection contains some elements
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Any()
-        {
-            lock ( _lock )
-            {
-                return _collection.Count > 0;
-            }
-        }
-
-        /// <summary>
-        /// Checks if an element exists
-        /// </summary>
-        /// <param name="element">the element</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Contains( string element )
-        {
-            lock ( _lock )
-            {
-                return _collection.Contains( RTSPDataConverter.Trim( element ) );
-            }
-        }
-
-        /// <summary>
         /// Add an element
         /// </summary>
         /// <param name="element">the element name</param>
@@ -265,64 +216,14 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Get an element
+        /// Check if the collection contains some elements
         /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance, otherwise null</returns>
-        public string GetAt( int index )
-        {
-            lock ( _lock )
-            {
-                if ( index < 0 || index >= _collection.Count )
-                {
-                    return string.Empty;
-                }
-
-                return _collection.ElementAt( index ) ?? string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Gets all elements
-        /// </summary>
-        /// <returns>returns a collection</returns>
-        public IList<string> GetAll()
-        {
-            lock ( _lock )
-            {
-                return _collection.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets all elements
-        /// </summary>
-        /// <param name="predicate">the predicate</param>
-        /// <returns>returns a collection</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public IList<string> GetAll( Func<string , bool> predicate )
-        {
-            if ( predicate == null )
-            {
-                throw new ArgumentNullException( nameof( predicate ) );
-            }
-
-            lock ( _lock )
-            {
-                return _collection.Where( predicate ).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Remove an element
-        /// </summary>
-        /// <param name="element">the element to be removed</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove( string element )
+        public bool Any()
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Remove( RTSPDataConverter.Trim( element ) );
+                return _collection.Count > 0;
             }
         }
 
@@ -334,6 +235,19 @@ namespace RabbitOM.Net.Rtsp
             lock ( _lock )
             {
                 _collection.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Checks if an element exists
+        /// </summary>
+        /// <param name="element">the element</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool Contains(string element)
+        {
+            lock (_lock)
+            {
+                return _collection.Contains(RTSPDataConverter.Trim(element));
             }
         }
 
@@ -359,12 +273,76 @@ namespace RabbitOM.Net.Rtsp
                 _collection.CopyTo(array, arrayIndex);
             }
         }
-        
+
         /// <summary>
-         /// Add an element
-         /// </summary>
-         /// <param name="element">the element name</param>
-         /// <returns>returns true for a success, otherwise false</returns>
+        /// Get an element at the desired index otherwise throw an exception
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns an instance, otherwise null</returns>
+        /// <exception cref="ArgumentOutOfRangeException"/>
+        public string ElementAt(int index)
+        {
+            lock (_lock)
+            {
+                return _collection.ElementAt(index) ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Get an element at the desired index
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns an instance, otherwise null</returns>
+        public string ElementAtOrDefault(int index)
+        {
+            lock (_lock)
+            {
+                return _collection.ElementAtOrDefault(index) ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+		/// Gets the enumerator
+		/// </summary>
+		/// <returns>returns an instance</returns>
+		IEnumerator IEnumerable.GetEnumerator()
+        {
+            lock (_lock)
+            {
+                return _collection.ToList().GetEnumerator();
+            }
+        }
+
+        /// <summary>
+        /// Gets the enumerator
+        /// </summary>
+        /// <returns>returns an instance</returns>
+        public IEnumerator<string> GetEnumerator()
+        {
+            lock (_lock)
+            {
+                return _collection.ToList().GetEnumerator();
+            }
+        }
+
+        /// <summary>
+        /// Remove an element
+        /// </summary>
+        /// <param name="element">the element to be removed</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool Remove(string element)
+        {
+            lock (_lock)
+            {
+                return _collection.Remove(RTSPDataConverter.Trim(element));
+            }
+        }
+
+        /// <summary>
+        /// Add an element
+        /// </summary>
+        /// <param name="element">the element name</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryAdd(string element)
         {
             if (string.IsNullOrWhiteSpace(element))
