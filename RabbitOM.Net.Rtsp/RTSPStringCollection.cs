@@ -63,7 +63,7 @@ namespace RabbitOM.Net.Rtsp
 
 
         /// <summary>
-        /// Gets a header
+        /// Gets a value
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
