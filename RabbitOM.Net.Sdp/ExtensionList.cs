@@ -166,6 +166,15 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
+		/// Check if the collection is not empty
+		/// </summary>
+		/// <returns>returns true for a success, otherwise false.</returns>
+		public bool Any()
+		{
+			return _collection.Count > 0;
+		}
+
+		/// <summary>
 		/// Remove all elements
 		/// </summary>
 		public void Clear()
