@@ -31,7 +31,6 @@ namespace RabbitOM.Net.Sdp
 		{
 		}
 
-
 		/// <summary>
 		/// Initialize a new instance of the collection
 		/// </summary>
