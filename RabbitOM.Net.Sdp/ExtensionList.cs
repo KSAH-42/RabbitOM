@@ -9,10 +9,11 @@ namespace RabbitOM.Net.Sdp
 	/// Represent the extension list that allow duplicated field values
 	/// </summary>
 	public sealed class ExtensionList
-		: ICollection<string>
-		, ICollection
+		: IEnumerable
 		, IEnumerable<string>
-		, IEnumerable
+		, ICollection
+		, ICollection<string>
+		, IReadOnlyCollection<string>
 	{
 		/// <summary>
 		/// Represent the maximum of element
