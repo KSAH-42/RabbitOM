@@ -9,10 +9,15 @@ namespace RabbitOM.Net.Sdp
 	/// Represent the base fiel collection class
 	/// </summary>
 	/// <typeparam name="TField">the type of the field</typeparam>
-	public sealed class FieldCollectionInternal<TField> : ICollection, ICollection<TField>, IEnumerable<TField>, IEnumerable
+	internal sealed class FieldCollectionInternal<TField> 
+		: IEnumerable
+		, IEnumerable<TField>
+		, ICollection
+		, ICollection<TField>
+
 		where TField : BaseField
 	{
-		private readonly ISet<TField> _collection = new HashSet<TField>();
+		private readonly IList<TField> _collection = new List<TField>();
 
 
 
@@ -46,7 +51,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns an instance</returns>
 		public TField this[int index]
 		{
-			get => GetAt(index);
+			get => _collection[ index ];
 		}
 
 
@@ -110,10 +115,12 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentNullException(nameof(field));
 			}
 
-			if (!_collection.Add(field))
+			if (_collection.Contains( field ) )
 			{
 				throw new ArgumentException("The element already exist", nameof(field));
 			}
+
+			_collection.Add( field );
 		}
 
 		/// <summary>
@@ -130,7 +137,7 @@ namespace RabbitOM.Net.Sdp
 
 			foreach (var field in fields)
 			{
-				Add(field);
+				Add( field );
 			}
 		}
 
@@ -262,12 +269,12 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Find all fields
+		/// Get all fields
 		/// </summary>
 		/// <param name="predicate">the predicate used for selection</param>
 		/// <returns>returns a collection of field</returns>
 		/// <exception cref="ArgumentNullException"/>
-		public IEnumerable<TField> FindAll(Predicate<TField> predicate)
+		public IEnumerable<TField> GetAll(Predicate<TField> predicate)
 		{
 			if (predicate == null)
 			{
@@ -284,12 +291,14 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool TryAdd(TField field)
 		{
-			if (field == null)
+			if ( field == null || _collection.Contains( field ) )
 			{
 				return false;
 			}
 
-			return _collection.Add(field);
+			_collection.Add(field);
+
+			return true;
 		}
 
 		/// <summary>

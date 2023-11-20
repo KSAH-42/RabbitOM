@@ -187,33 +187,13 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Gets a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance</returns>
-		public override PhoneField GetAt(int index)
-		{
-			return _collection.GetAt(index);
-		}
-
-		/// <summary>
-		/// Find a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance, otherwise null is return</returns>
-		public override PhoneField FindAt(int index)
-		{
-			return _collection.FindAt(index);
-		}
-
-		/// <summary>
-		/// Find all fields
+		/// Get all fields
 		/// </summary>
 		/// <param name="predicate">the predicate used for selection</param>
 		/// <returns>returns a collection of field</returns>
-		public override IEnumerable<PhoneField> FindAll(Predicate<PhoneField> predicate)
+		public override IEnumerable<PhoneField> GetAll(Predicate<PhoneField> predicate)
 		{
-			return _collection.FindAll(predicate);
+			return _collection.GetAll(predicate);
 		}
 
 		/// <summary>

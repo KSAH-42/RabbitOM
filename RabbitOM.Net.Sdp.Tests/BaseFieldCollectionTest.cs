@@ -52,29 +52,25 @@ namespace RabbitOM.Net.Sdp.Tests
 		}
 
 		[TestMethod]
-		public void GetAt_Except_Exception()
-		{
-			Assert.ThrowsException<ArgumentOutOfRangeException>(() => _collection.GetAt(-1));
-		}
-
-		[TestMethod]
-		public void FindAt_Returns_Null()
-		{
-			Assert.IsNull( _collection.FindAt(-1) );
-		}
-		
-		[TestMethod]
 		public void FindAll_Exception_Empty()
 		{
-			Assert.IsTrue(_collection.FindAll( x => true ).Count() == 0 );
+			Assert.IsTrue(_collection.GetAll( x => true ).Count() == 0 );
 		}
 
 		[TestMethod]
 		public void Add_Except_NotException()
 		{
-			Assert.ThrowsException<Exception>(() => _collection.Add(new AttributeField("A", "1")));
-			Assert.ThrowsException<Exception>(() => _collection.Add(new AttributeField("B", "2")));
-			Assert.ThrowsException<Exception>(() => _collection.Add(new AttributeField("C", "3")));
+			try
+			{
+				_collection.Add(new AttributeField("A", "1"));
+				_collection.Add(new AttributeField("B", "2"));
+				_collection.Add(new AttributeField("C", "3"));
+				_collection.Add(new AttributeField("C", "3"));
+			}
+			catch (Exception ex)
+			{
+				Assert.Fail( ex?.ToString() );
+			}
 		}
 	}
 }

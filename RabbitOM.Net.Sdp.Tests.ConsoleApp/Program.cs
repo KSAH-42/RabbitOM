@@ -13,7 +13,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 		{
 			var descriptor = new SessionDescriptor();
 
-			
+
 			descriptor.Origin.UserName = "John";
 			descriptor.Origin.Address = "192.168.1.23";
 			descriptor.Origin.AddressType = AddressType.IPV4;
@@ -33,7 +33,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			descriptor.Emails.Add(new EmailField("rabbit1@hole.com", "rabbit1"));
 			descriptor.Emails.Add(new EmailField("rabbit2@hole.com", "rabbit2"));
 			descriptor.Emails.Add(new EmailField("rabbit3@hole.com", "rabbit3"));
-			
+
 			for ( int i = 1; i <= 10; ++ i )
 			{
 				var mediaDescription = new MediaDescriptionField();

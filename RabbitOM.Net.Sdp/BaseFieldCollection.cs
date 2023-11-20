@@ -210,27 +210,7 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Gets a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance</returns>
-		public override BaseField GetAt(int index)
-		{
-			return _collection.GetAt(index);
-		}
-
-		/// <summary>
-		/// Find a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance, otherwise null is return</returns>
-		public override BaseField FindAt(int index)
-		{
-			return _collection.FindAt(index);
-		}
-
-		/// <summary>
-		/// Find all fields
+		/// Get all fields
 		/// </summary>
 		/// <typeparam name="TField">the type of field</typeparam>
 		/// <returns>returns a collection of field</returns>
@@ -244,7 +224,7 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Find all fields
+		/// Get all fields
 		/// </summary>
 		/// <typeparam name="TField">the type of field</typeparam>
 		/// <param name="predicate">the predicate used for selection</param>
@@ -264,13 +244,13 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Find all fields
+		/// Get all fields
 		/// </summary>
 		/// <param name="predicate">the predicate used for selection</param>
 		/// <returns>returns a collection of field</returns>
-		public override IEnumerable<BaseField> FindAll(Predicate<BaseField> predicate)
+		public override IEnumerable<BaseField> GetAll(Predicate<BaseField> predicate)
 		{
-			return _collection.FindAll(predicate);
+			return _collection.GetAll(predicate);
 		}
 
 		/// <summary>

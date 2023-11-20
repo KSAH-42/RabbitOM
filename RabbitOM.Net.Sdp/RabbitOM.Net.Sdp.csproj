@@ -57,7 +57,7 @@
     <Compile Include="Serialization\Formatters\ConnectionFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\BandwithFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\AttributeFieldFormatter.cs" />
-    <Compile Include="FieldCollectionInternal.cs" />
+    <Compile Include="InternalFieldCollection.cs" />
     <Compile Include="FieldCollection.cs" />
     <Compile Include="BaseFieldCollection.cs" />
     <Compile Include="AttributeFieldFactory.cs" />

@@ -145,25 +145,11 @@ namespace RabbitOM.Net.Sdp
 		public abstract IEnumerator<TField> GetEnumerator();
 
 		/// <summary>
-		/// Gets a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance</returns>
-		public abstract TField GetAt(int index);
-
-		/// <summary>
-		/// Find a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance, otherwise null is return</returns>
-		public abstract TField FindAt(int index);
-
-		/// <summary>
-		/// Find all fields
+		/// Get all fields
 		/// </summary>
 		/// <param name="predicate">the predicate used for selection</param>
 		/// <returns>returns a collection of field</returns>
-		public abstract IEnumerable<TField> FindAll(Predicate<TField> predicate);
+		public abstract IEnumerable<TField> GetAll(Predicate<TField> predicate);
 
 		/// <summary>
 		/// Try to add a field
