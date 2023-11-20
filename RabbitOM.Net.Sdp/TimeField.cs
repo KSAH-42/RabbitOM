@@ -4,7 +4,7 @@ using System;
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
-	/// Represent the sdp field
+	/// Represent a sdp field
 	/// </summary>
 	public sealed class TimeField : BaseField, ICopyable<TimeField>
 	{

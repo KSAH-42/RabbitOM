@@ -3,7 +3,7 @@
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
-	/// Represent the sdp field
+	/// Represent a sdp field
 	/// </summary>
 	/// <remarks>
 	/// <para>This class has been introduce to act as a value object AND to avoid the primitive type obsession</para>

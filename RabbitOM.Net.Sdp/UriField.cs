@@ -3,7 +3,7 @@
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
-	/// Represent the sdp field
+	/// Represent a sdp field
 	/// </summary>
 	public sealed class UriField : BaseField, ICopyable<UriField>
 	{

@@ -4,7 +4,7 @@ using System.Linq;
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
-	/// Represent the sdp field
+	/// Represent a value object
 	/// </summary>
 	public struct ValueTime
 	{

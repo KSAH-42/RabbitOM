@@ -4,7 +4,7 @@ using System.Text;
 namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
-	/// Represent the sdp field factory
+	/// Represent a sdp field factory
 	/// </summary>
 	public static class AttributeFieldFactory
 	{
