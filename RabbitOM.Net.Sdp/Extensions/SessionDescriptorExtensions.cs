@@ -78,6 +78,11 @@ namespace RabbitOM.Net.Sdp.Extensions
         /// <exception cref="ArgumentNullException"/>
         private static IEnumerable<MediaTrack> SelectMediaTracks( this SessionDescriptor descriptor , Func<MediaDescriptionField , bool> predicate )
         {
+            if ( descriptor == null )
+            {
+                throw new ArgumentNullException(nameof(descriptor));
+            }
+
             if ( predicate == null )
             {
                 throw new ArgumentNullException( nameof( predicate ) );
