@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="AddressType.cs" />
     <Compile Include="AttributeField.cs" />
+    <Compile Include="Extensions\AttributeFieldCollectionExtensions.cs" />
+    <Compile Include="FieldCollection.cs" />
     <Compile Include="Extensions\SessionDescriptorExtensions.cs" />
     <Compile Include="Serialization\Formatters\TimeFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\RtpMapAttributeValueFormatter.cs" />
@@ -57,8 +59,6 @@
     <Compile Include="Serialization\Formatters\ConnectionFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\BandwithFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\AttributeFieldFormatter.cs" />
-    <Compile Include="InternalFieldCollection.cs" />
-    <Compile Include="FieldCollection.cs" />
     <Compile Include="BaseFieldCollection.cs" />
     <Compile Include="AttributeFieldFactory.cs" />
     <Compile Include="AttributeNames.cs" />

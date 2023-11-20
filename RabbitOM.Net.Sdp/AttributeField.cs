@@ -17,9 +17,13 @@ namespace RabbitOM.Net.Sdp
 
 
 
+
+
 		private string _name  = string.Empty;
 
 		private string _value = string.Empty;
+
+
 
 
 
@@ -55,6 +59,8 @@ namespace RabbitOM.Net.Sdp
 
 
 
+
+
 		/// <summary>
 		/// Gets the type name
 		/// </summary>
@@ -80,6 +86,43 @@ namespace RabbitOM.Net.Sdp
 			get => _value;
 			set => _value = SessionDescriptorDataConverter.Filter(value);
 		}
+
+
+
+
+
+
+
+		/// <summary>
+		/// Field name equality check
+		/// </summary>
+		/// <param name="field">the field</param>
+		/// <param name="name">the name</param>
+		/// <returns>returns true for a success, otherwise false</returns>
+		public static bool Equals(AttributeField field, string name )
+		{
+			return Equals( field , name , true );
+		}
+
+		/// <summary>
+		/// Field name equality check
+		/// </summary>
+		/// <param name="field">the field</param>
+		/// <param name="name">the name</param>
+		/// <param name="ignoreCase">set true ignore the case</param>
+		/// <returns>returns true for a success, otherwise false</returns>
+		public static bool Equals(AttributeField field , string name , bool ignoreCase )
+		{
+			if ( field == null )
+			{
+				return false;
+			}
+
+			return string.Compare( field.Name ?? string.Empty , name ?? string.Empty , ignoreCase ) == 0 ;
+		}
+
+
+
 
 
 
