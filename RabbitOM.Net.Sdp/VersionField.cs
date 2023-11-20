@@ -144,7 +144,7 @@ namespace RabbitOM.Net.Sdp
 		{
 			result = new VersionField()
 			{
-				Value = SessionDescriptorDataConverter.ConvertToLong(value)
+				Value = DataConverter.ConvertToLong(value)
 			};
 
 			return true;

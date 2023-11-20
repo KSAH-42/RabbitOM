@@ -25,8 +25,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			builder.AppendFormat(
 				  "{0} {1} {2}"
-				, SessionDescriptorDataConverter.ConvertToString(field.NetworkType)
-				, SessionDescriptorDataConverter.ConvertToString(field.AddressType)
+				, DataConverter.ConvertToString(field.NetworkType)
+				, DataConverter.ConvertToString(field.AddressType)
 				, field.Address
 				);
 
@@ -63,10 +63,10 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new ConnectionField()
 			{
-				NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(0) ?? string.Empty),
-				AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(1) ?? string.Empty),
+				NetworkType = DataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(0) ?? string.Empty),
+				AddressType = DataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(1) ?? string.Empty),
 				Address     = tokens.ElementAtOrDefault(2),
-				TTL         = SessionDescriptorDataConverter.ConvertToByteFromTTLFormat(tokens.ElementAtOrDefault(2)),
+				TTL         = DataConverter.ConvertToByteFromTTLFormat(tokens.ElementAtOrDefault(2)),
 			};
 
 			return true;

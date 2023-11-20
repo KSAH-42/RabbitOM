@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Sdp
 		public string Address
 		{
 			get => _address;
-			set => _address = SessionDescriptorDataConverter.Filter(value);
+			set => _address = DataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace RabbitOM.Net.Sdp
 		public string Name
 		{
 			get => _name;
-			set => _name = SessionDescriptorDataConverter.FilterAsEmailFormat(value);
+			set => _name = DataConverter.FilterAsEmailFormat(value);
 		}
 
 

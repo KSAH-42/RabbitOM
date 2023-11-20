@@ -65,7 +65,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new RtpMapAttributeValue()
 			{
-				PayloadType = SessionDescriptorDataConverter.ConvertToByte(tokens.FirstOrDefault())
+				PayloadType = DataConverter.ConvertToByte(tokens.FirstOrDefault())
 			};
 
 			if (tokens.Length > 1)
@@ -76,7 +76,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 				if (elements.Length > 1)
 				{
-					result.ClockRate = SessionDescriptorDataConverter.ConvertToUInt(elements.ElementAtOrDefault(1));
+					result.ClockRate = DataConverter.ConvertToUInt(elements.ElementAtOrDefault(1));
 				}
 			}
 

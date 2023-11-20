@@ -117,7 +117,7 @@ namespace RabbitOM.Net.Sdp
 				return false;
 			}
 
-			result = new ValueTime(SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0)), SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)));
+			result = new ValueTime(DataConverter.ConvertToLong(tokens.ElementAtOrDefault(0)), DataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)));
 
 			return true;
 		}

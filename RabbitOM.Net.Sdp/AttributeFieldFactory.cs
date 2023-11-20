@@ -141,13 +141,13 @@ namespace RabbitOM.Net.Sdp
 
 			var builder = new StringBuilder();
 
-			builder.Append(SessionDescriptorDataConverter.ConvertToString(type));
+			builder.Append(DataConverter.ConvertToString(type));
 			builder.Append(" ");
 			builder.Append(port);
 			builder.Append(" ");
-			builder.Append(SessionDescriptorDataConverter.ConvertToString(protocol));
+			builder.Append(DataConverter.ConvertToString(protocol));
 			builder.Append(" ");
-			builder.Append(SessionDescriptorDataConverter.ConvertToString(profile));
+			builder.Append(DataConverter.ConvertToString(profile));
 			builder.Append(" ");
 			builder.Append(format);
 

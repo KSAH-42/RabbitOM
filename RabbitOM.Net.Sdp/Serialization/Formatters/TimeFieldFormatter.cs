@@ -47,8 +47,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new TimeField()
 			{
-				StartTime = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty),
-				StopTime  = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty),
+				StartTime = DataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty),
+				StopTime  = DataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty),
 			};
 
 			return true;

@@ -144,7 +144,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool Contains(string element)
 		{
-			return _collection.Contains(SessionDescriptorDataConverter.Filter(element));
+			return _collection.Contains(DataConverter.Filter(element));
 		}
 
 		/// <summary>
@@ -221,7 +221,7 @@ namespace RabbitOM.Net.Sdp
 				throw new InvalidOperationException();
 			}
 
-			_collection.Add(SessionDescriptorDataConverter.Filter(element));
+			_collection.Add(DataConverter.Filter(element));
 		}
 
 		/// <summary>
@@ -275,7 +275,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public bool Remove(string element)
 		{
-			return _collection.Remove(SessionDescriptorDataConverter.Filter(element));
+			return _collection.Remove(DataConverter.Filter(element));
 		}
 
 		/// <summary>
@@ -312,7 +312,7 @@ namespace RabbitOM.Net.Sdp
 				return false;
 			}
 
-			_collection.Add(SessionDescriptorDataConverter.Filter(element));
+			_collection.Add(DataConverter.Filter(element));
 
 			return true;
 		}

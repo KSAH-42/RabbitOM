@@ -105,13 +105,13 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 				{
 					result = new FormatAttributeValue()
 					{
-						PayloadType = SessionDescriptorDataConverter.ConvertToByte(tokens.FirstOrDefault() ?? string.Empty),
+						PayloadType = DataConverter.ConvertToByte(tokens.FirstOrDefault() ?? string.Empty),
 					};
 				}
 
 				if (string.Compare(pair.First, AttributeNames.FormatPayload, true) == 0)
 				{
-					result.PayloadType = SessionDescriptorDataConverter.ConvertToByte(pair.Second);
+					result.PayloadType = DataConverter.ConvertToByte(pair.Second);
 				}
 
 				else
@@ -125,7 +125,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 				if (string.Compare(pair.First, FormatAttributeValue.TypePacketizationMode, true) == 0)
 				{
-					result.PacketizationMode = SessionDescriptorDataConverter.ConvertToLong(pair.Second);
+					result.PacketizationMode = DataConverter.ConvertToLong(pair.Second);
 				}
 
 				else
@@ -152,21 +152,21 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 				if (string.Compare(pair.First, FormatAttributeValue.TypeSizeLength, true) == 0)
 				{
-					result.SizeLength = SessionDescriptorDataConverter.ConvertToNullableLong(pair.Second);
+					result.SizeLength = DataConverter.ConvertToNullableLong(pair.Second);
 				}
 
 				else
 
 				if (string.Compare(pair.First, FormatAttributeValue.TypeIndexLength, true) == 0)
 				{
-					result.IndexLength = SessionDescriptorDataConverter.ConvertToNullableLong(pair.Second);
+					result.IndexLength = DataConverter.ConvertToNullableLong(pair.Second);
 				}
 
 				else
 
 				if (string.Compare(pair.First, FormatAttributeValue.TypeIndexDeltaLength, true) == 0)
 				{
-					result.IndexDeltaLength = SessionDescriptorDataConverter.ConvertToNullableLong(pair.Second);
+					result.IndexDeltaLength = DataConverter.ConvertToNullableLong(pair.Second);
 				}
 
 				else

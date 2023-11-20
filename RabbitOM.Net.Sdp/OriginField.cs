@@ -47,7 +47,7 @@ namespace RabbitOM.Net.Sdp
 		public string UserName
 		{
 			get => _userName;
-			set => _userName = SessionDescriptorDataConverter.Filter(value);
+			set => _userName = DataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -56,7 +56,7 @@ namespace RabbitOM.Net.Sdp
 		public string SessionId
 		{
 			get => _sessionId;
-			set => _sessionId = SessionDescriptorDataConverter.Filter(value);
+			set => _sessionId = DataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -65,7 +65,7 @@ namespace RabbitOM.Net.Sdp
 		public string Version
 		{
 			get => _version;
-			set => _version = SessionDescriptorDataConverter.Filter(value);
+			set => _version = DataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Sdp
 		public string Address
 		{
 			get => _address;
-			set => _address = SessionDescriptorDataConverter.ConvertToIPAddress(value);
+			set => _address = DataConverter.ConvertToIPAddress(value);
 		}
 
 

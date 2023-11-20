@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent a tolerant data type converter that doesn't raise any exceptions and also returns default value in cases of failures.
 	/// </summary>
-	public static class SessionDescriptorDataConverter
+	internal static class DataConverter
 	{
 		/// <summary>
 		/// Convert a value

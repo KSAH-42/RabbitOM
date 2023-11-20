@@ -63,7 +63,7 @@ namespace RabbitOM.Net.Sdp
 		public string Address
 		{
 			get => _address;
-			set => _address = SessionDescriptorDataConverter.ConvertToIPAddress(value);
+			set => _address = DataConverter.ConvertToIPAddress(value);
 		}
 
 		/// <summary>

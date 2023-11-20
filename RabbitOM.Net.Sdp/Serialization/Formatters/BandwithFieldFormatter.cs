@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 			result = new BandwithField()
 			{
 				Modifier  = tokens.ElementAtOrDefault(0),
-				Value     = SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)),
+				Value     = DataConverter.ConvertToLong(tokens.ElementAtOrDefault(1)),
 			};
 
 			return true;

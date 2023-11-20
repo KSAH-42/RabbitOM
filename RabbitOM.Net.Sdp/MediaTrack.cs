@@ -57,7 +57,7 @@ namespace RabbitOM.Net.Sdp
 		public string ControlUri
 		{
 			get => _controlUri;
-			set => _controlUri = SessionDescriptorDataConverter.Filter(value);
+			set => _controlUri = DataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Sdp
 		public string MimeType
 		{
 			get => _mimeType;
-			set => _mimeType = SessionDescriptorDataConverter.Filter(value);
+			set => _mimeType = DataConverter.Filter(value);
 		}
 
 		/// <summary>
@@ -75,7 +75,7 @@ namespace RabbitOM.Net.Sdp
 		public string Address
 		{
 			get => _address;
-			set => _address = SessionDescriptorDataConverter.Filter(value);
+			set => _address = DataConverter.Filter(value);
 		}
 
 		/// <summary>

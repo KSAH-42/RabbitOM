@@ -28,8 +28,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 			builder.AppendFormat("{0} ", userName);
 			builder.AppendFormat("{0} ", field.SessionId);
 			builder.AppendFormat("{0} ", field.Version);
-			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.NetworkType));
-			builder.AppendFormat("{0} ", SessionDescriptorDataConverter.ConvertToString(field.AddressType));
+			builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.NetworkType));
+			builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.AddressType));
 			builder.AppendFormat("{0} ", field.Address);
 
 			return builder.ToString();
@@ -63,8 +63,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 				SessionId   = tokens.ElementAtOrDefault(1) ?? string.Empty,
 				Version     = tokens.ElementAtOrDefault(2) ?? string.Empty,
 				Address     = tokens.ElementAtOrDefault(5) ?? string.Empty,
-				NetworkType = SessionDescriptorDataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty),
-				AddressType = SessionDescriptorDataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty),
+				NetworkType = DataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty),
+				AddressType = DataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty),
 			};
 
 			return true;

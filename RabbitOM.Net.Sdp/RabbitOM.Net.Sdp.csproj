@@ -97,7 +97,7 @@
     <Compile Include="Serialization\SessionDescriptorSerializer.cs" />
     <Compile Include="Serialization\SessionDescriptorWriter.cs" />
     <Compile Include="SessionDescriptor.cs" />
-    <Compile Include="SessionDescriptorDataConverter.cs" />
+    <Compile Include="DataConverter.cs" />
     <Compile Include="SessionInformationField.cs" />
     <Compile Include="SessionNameField.cs" />
     <Compile Include="StringPair.cs" />

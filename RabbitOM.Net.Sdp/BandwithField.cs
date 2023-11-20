@@ -74,7 +74,7 @@ namespace RabbitOM.Net.Sdp
 		public string Modifier
 		{
 			get => _modifier;
-			set => _modifier = SessionDescriptorDataConverter.Filter(value);
+			set => _modifier = DataConverter.Filter(value);
 		}
 
 		/// <summary>

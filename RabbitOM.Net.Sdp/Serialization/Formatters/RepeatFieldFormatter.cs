@@ -50,8 +50,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			result = new RepeatField()
 			{
-				RepeatInterval = new ValueTime(SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty), SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty)),
-				ActiveDuration = new ValueTime(SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(2) ?? string.Empty), SessionDescriptorDataConverter.ConvertToLong(tokens.ElementAtOrDefault(3) ?? string.Empty)),
+				RepeatInterval = new ValueTime(DataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty), DataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty)),
+				ActiveDuration = new ValueTime(DataConverter.ConvertToLong(tokens.ElementAtOrDefault(2) ?? string.Empty), DataConverter.ConvertToLong(tokens.ElementAtOrDefault(3) ?? string.Empty)),
 			};
 
 			return true;
