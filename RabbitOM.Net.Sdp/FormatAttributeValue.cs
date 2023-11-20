@@ -220,7 +220,7 @@ namespace RabbitOM.Net.Sdp
 			_configuration = info._configuration;
 
 			_extensions.Clear();
-			_extensions.AddRange(info.Extensions);
+			_extensions.TryAddRange(info.Extensions);
 		}
 
 		/// <summary>

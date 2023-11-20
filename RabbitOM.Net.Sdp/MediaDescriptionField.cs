@@ -171,10 +171,10 @@ namespace RabbitOM.Net.Sdp
 			_encryption.CopyFrom(field._encryption);
 
 			_bandwiths.Clear();
-			_bandwiths.AddRange(field._bandwiths);
+			_bandwiths.TryAddRange(field._bandwiths);
 
 			_attributes.Clear();
-			_attributes.AddRange(field._attributes);
+			_attributes.TryAddRange(field._attributes);
 		}
 
 		/// <summary>
