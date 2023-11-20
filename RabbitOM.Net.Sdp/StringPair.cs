@@ -24,9 +24,6 @@ namespace RabbitOM.Net.Sdp
 
 
 
-
-
-
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -44,9 +41,6 @@ namespace RabbitOM.Net.Sdp
 			_first  = first  ?? string.Empty;
 			_second = second ?? string.Empty;
 		}
-
-
-
 
 
 
@@ -70,8 +64,47 @@ namespace RabbitOM.Net.Sdp
 
 
 
+		/// <summary>
+		/// Extract the headers with their own value for a sdp 
+		/// </summary>
+		/// <param name="input">the input</param>
+		/// <returns>return a collection</returns>
+		public static IEnumerable<StringPair> ParseAll( string input )
+		{
+			return ParseAll( input , '=' );
+		}
+		
+		/// <summary>
+		/// Extract the headers with their own value for a sdp 
+		/// </summary>
+		/// <param name="input">the input</param>
+		/// <param name="separator">the seperator</param>
+		/// <returns>return a collection</returns>
+		public static IEnumerable<StringPair> ParseAll(string input , char separator )
+		{
+			if (string.IsNullOrWhiteSpace(input))
+			{
+				yield break;
+			}
 
+			using (var reader = new StringReader(input))
+			{
+				while (true)
+				{
+					string line = reader.ReadLine();
 
+					if ( line == null )
+					{
+						yield break;
+					}
+
+					if ( StringPair.TryParse( line , separator , out StringPair pair ) )
+					{
+						yield return pair;
+					}
+				}
+			}
+		}
 
 		/// <summary>
 		/// Extract a field as a key pair value
@@ -126,53 +159,20 @@ namespace RabbitOM.Net.Sdp
 		{
 			result = null;
 
-			if ( separators == null )
+			if (separators == null)
 			{
 				return false;
 			}
 
-			foreach ( var seperator in separators )
+			foreach (var seperator in separators)
 			{
-				if ( TryParse( text , seperator , out result ) )
+				if (TryParse(text, seperator, out result))
 				{
 					return true;
 				}
 			}
 
 			return false;
-		}
-
-		/// <summary>
-		/// Extract the headers with their own value for a sdp 
-		/// </summary>
-		/// <param name="input">the input</param>
-		/// <returns>return a collection</returns>
-		public static IEnumerable<StringPair> ParseAll(string input)
-		{
-			if (string.IsNullOrWhiteSpace(input))
-			{
-				yield break;
-			}
-
-			using (var reader = new StringReader(input))
-			{
-				while (true)
-				{
-					string line = reader.ReadLine();
-
-					if (line == null)
-					{
-						yield break;
-					}
-
-					if (!StringPair.TryParse(line, '=', out StringPair pair))
-					{
-						continue;
-					}
-
-					yield return pair;
-				}
-			}
 		}
 	}
 }
