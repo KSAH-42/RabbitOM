@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Sdp
 	/// <summary>
 	/// Represent the extension list that allow duplicated field values
 	/// </summary>
-	public sealed class ExtensionList
+	public sealed class StringList
 		: IEnumerable
 		, IEnumerable<string>
 		, ICollection
@@ -35,7 +35,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public ExtensionList()
+		public StringList()
 		{
 		}
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		/// <param name="collection">the collection</param>
 		/// <exception cref="ArgumentNullException"/>
-		public ExtensionList(IEnumerable<string> collection)
+		public StringList(IEnumerable<string> collection)
 		{
 			AddRange(collection ?? throw new ArgumentNullException(nameof(collection)));
 		}

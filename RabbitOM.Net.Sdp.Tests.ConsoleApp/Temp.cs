@@ -69,9 +69,9 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp.Sigma
 			'/' , '\\'
 		};
 
-		private readonly ExtensionList _values = new ExtensionList();
+		private readonly StringList _values = new StringList();
 
-		public ExtensionList Values
+		public StringList Values
 		{
 			get => _values;
 		}

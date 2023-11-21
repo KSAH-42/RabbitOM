@@ -78,7 +78,7 @@
     <Compile Include="EmailField.cs" />
     <Compile Include="EncoderTypes.cs" />
     <Compile Include="EncryptionField.cs" />
-    <Compile Include="ExtensionList.cs" />
+    <Compile Include="StringList.cs" />
     <Compile Include="FormatAttributeValue.cs" />
     <Compile Include="ICopyable.cs" />
     <Compile Include="MediaDescriptionField.cs" />

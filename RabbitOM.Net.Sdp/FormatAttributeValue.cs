@@ -72,7 +72,7 @@ namespace RabbitOM.Net.Sdp
 
 		private string _configuration = string.Empty;
 
-		private readonly ExtensionList _extensions = new ExtensionList();
+		private readonly StringList _extensions = new StringList();
 
 
 
@@ -171,7 +171,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets the extensions data
 		/// </summary>
-		public ExtensionList Extensions
+		public StringList Extensions
 		{
 			get => _extensions;
 		}

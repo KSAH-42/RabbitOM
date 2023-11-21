@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Sdp
 
 		private uint                   _clockRate    = 0;
 
-		private readonly ExtensionList _extensions   = new ExtensionList();
+		private readonly StringList _extensions   = new StringList();
 
 
 
@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Gets the extensions data
 		/// </summary>
-		public ExtensionList Extensions
+		public StringList Extensions
 		{
 			get => _extensions;
 		}
