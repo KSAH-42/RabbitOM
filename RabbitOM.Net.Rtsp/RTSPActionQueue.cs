@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an action queue
     /// </summary>
-    internal sealed partial class RTSPActionQueue : IEnumerable<Action>
+    internal sealed partial class RTSPActionQueue : IEnumerable , IEnumerable<Action>
     {
         private readonly object              _lock              = null;
 

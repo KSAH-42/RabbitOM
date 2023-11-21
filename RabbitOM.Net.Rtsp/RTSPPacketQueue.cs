@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a packet circular queue
     /// </summary>
-    internal sealed partial class RTSPPacketQueue : IEnumerable<RTSPPacket>
+    internal sealed partial class RTSPPacketQueue : IEnumerable , IEnumerable<RTSPPacket>
     {
         /// <summary>
         /// The default packets numbers

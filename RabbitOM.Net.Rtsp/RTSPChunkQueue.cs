@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a chunk circular queue
     /// </summary>
-    internal sealed partial class RTSPChunkQueue : IEnumerable<byte[]>
+    internal sealed partial class RTSPChunkQueue : IEnumerable , IEnumerable<byte[]>
     {
         /// <summary>
         /// The default maximum size
