@@ -22,11 +22,12 @@ namespace RabbitOM.Net.Rtsp
 			try
 			{
                 action.Invoke();
+
                 return true;
 			}
-			catch (Exception ex)
+			catch ( Exception ex )
 			{
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
 			}
 
             return false;
@@ -56,7 +57,7 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
@@ -85,10 +86,29 @@ namespace RabbitOM.Net.Rtsp
             }
             catch ( Exception ex )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                OnException( ex );
             }
 
             return false;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Occurs when an exception is triggered
+        /// </summary>
+        /// <param name="ex">the exception</param>
+        private static void OnException( Exception ex )
+        {
+            if ( ex == null )
+            {
+                return;
+            }
+
+            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }

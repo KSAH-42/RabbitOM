@@ -73,15 +73,6 @@ namespace RabbitOM.Net.Rtsp
             get => _thread != null;
         }
 
-        /// <summary>
-        /// Gets / Sets a custom object to associate to the thread instance
-        /// </summary>
-        public object Tag
-        {
-            get;
-            set;
-        }
-
 
 
 
@@ -117,7 +108,7 @@ namespace RabbitOM.Net.Rtsp
                 };
 
                 _routine = action;
-                _thread = thread;
+                _thread  = thread;
 
                 _thread.Start();
 
