@@ -15,47 +15,47 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         static RTSPHeaderFactory()
         {
-            s_factories[RTSPHeaderNames.Accept] = new Func<string , RTSPHeader>( value => CreateHeaderAccept( value ) );
-            s_factories[RTSPHeaderNames.AcceptEncoding] = new Func<string , RTSPHeader>( value => CreateHeaderAcceptEncoding( value ) );
-            s_factories[RTSPHeaderNames.AcceptLanguage] = new Func<string , RTSPHeader>( value => CreateHeaderAcceptLanguage( value ) );
-            s_factories[RTSPHeaderNames.Allow] = new Func<string , RTSPHeader>( value => CreateHeaderAllow( value ) );
-            s_factories[RTSPHeaderNames.Authorization] = new Func<string , RTSPHeader>( value => CreateHeaderAuthorization( value ) );
-            s_factories[RTSPHeaderNames.Bandwith] = new Func<string , RTSPHeader>( value => CreateHeaderBandwith( value ) );
-            s_factories[RTSPHeaderNames.BlockSize] = new Func<string , RTSPHeader>( value => CreateHeaderBlockSize( value ) );
-            s_factories[RTSPHeaderNames.CacheControl] = new Func<string , RTSPHeader>( value => CreateHeaderCacheControl( value ) );
-            s_factories[RTSPHeaderNames.Conference] = new Func<string , RTSPHeader>( value => CreateHeaderConference( value ) );
-            s_factories[RTSPHeaderNames.Connection] = new Func<string , RTSPHeader>( value => CreateHeaderConnection( value ) );
-            s_factories[RTSPHeaderNames.ContentBase] = new Func<string , RTSPHeader>( value => CreateHeaderContentBase( value ) );
-            s_factories[RTSPHeaderNames.ContentEncoding] = new Func<string , RTSPHeader>( value => CreateHeaderContentEncoding( value ) );
-            s_factories[RTSPHeaderNames.ContentLanguage] = new Func<string , RTSPHeader>( value => CreateHeaderContentLanguage( value ) );
-            s_factories[RTSPHeaderNames.ContentLength] = new Func<string , RTSPHeader>( value => CreateHeaderContentLength( value ) );
-            s_factories[RTSPHeaderNames.ContentLocation] = new Func<string , RTSPHeader>( value => CreateHeaderContentLocation( value ) );
-            s_factories[RTSPHeaderNames.ContentType] = new Func<string , RTSPHeader>( value => CreateHeaderContentType( value ) );
-            s_factories[RTSPHeaderNames.CSeq] = new Func<string , RTSPHeader>( value => CreateHeaderCSeq( value ) );
-            s_factories[RTSPHeaderNames.Date] = new Func<string , RTSPHeader>( value => CreateHeaderDate( value ) );
-            s_factories[RTSPHeaderNames.Expires] = new Func<string , RTSPHeader>( value => CreateHeaderExpires( value ) );
-            s_factories[RTSPHeaderNames.From] = new Func<string , RTSPHeader>( value => CreateHeaderFrom( value ) );
-            s_factories[RTSPHeaderNames.IfMatch] = new Func<string , RTSPHeader>( value => CreateHeaderIfMatch( value ) );
-            s_factories[RTSPHeaderNames.IfModifiedSince] = new Func<string , RTSPHeader>( value => CreateHeaderIfModifiedSince( value ) );
-            s_factories[RTSPHeaderNames.LastModified] = new Func<string , RTSPHeader>( value => CreateHeaderLastModified( value ) );
-            s_factories[RTSPHeaderNames.Location] = new Func<string , RTSPHeader>( value => CreateHeaderLocation( value ) );
-            s_factories[RTSPHeaderNames.ProxyAuthenticate] = new Func<string , RTSPHeader>( value => CreateHeaderProxyAuthenticate( value ) );
-            s_factories[RTSPHeaderNames.ProxyRequire] = new Func<string , RTSPHeader>( value => CreateHeaderProxyRequire( value ) );
-            s_factories[RTSPHeaderNames.Public] = new Func<string , RTSPHeader>( value => CreateHeaderPublic( value ) );
-            s_factories[RTSPHeaderNames.Range] = new Func<string , RTSPHeader>( value => CreateHeaderRange( value ) );
-            s_factories[RTSPHeaderNames.Referer] = new Func<string , RTSPHeader>( value => CreateHeaderReferer( value ) );
-            s_factories[RTSPHeaderNames.Require] = new Func<string , RTSPHeader>( value => CreateHeaderRequire( value ) );
-            s_factories[RTSPHeaderNames.RetryAfter] = new Func<string , RTSPHeader>( value => CreateHeaderRetryAfter( value ) );
-            s_factories[RTSPHeaderNames.RtpInfo] = new Func<string , RTSPHeader>( value => CreateHeaderRtpInfo( value ) );
-            s_factories[RTSPHeaderNames.Scale] = new Func<string , RTSPHeader>( value => CreateHeaderScale( value ) );
-            s_factories[RTSPHeaderNames.Server] = new Func<string , RTSPHeader>( value => CreateHeaderServer( value ) );
-            s_factories[RTSPHeaderNames.Session] = new Func<string , RTSPHeader>( value => CreateHeaderSession( value ) );
-            s_factories[RTSPHeaderNames.Speed] = new Func<string , RTSPHeader>( value => CreateHeaderSpeed( value ) );
-            s_factories[RTSPHeaderNames.Transport] = new Func<string , RTSPHeader>( value => CreateHeaderTransport( value ) );
-            s_factories[RTSPHeaderNames.UserAgent] = new Func<string , RTSPHeader>( value => CreateHeaderUserAgent( value ) );
-            s_factories[RTSPHeaderNames.Vary] = new Func<string , RTSPHeader>( value => CreateHeaderVary( value ) );
-            s_factories[RTSPHeaderNames.Via] = new Func<string , RTSPHeader>( value => CreateHeaderVia( value ) );
-            s_factories[RTSPHeaderNames.WWWAuthenticate] = new Func<string , RTSPHeader>( value => CreateHeaderWWWAuthenticate( value ) );
+            s_factories[RTSPHeaderNames.Accept] = CreateHeaderAccept;
+            s_factories[RTSPHeaderNames.AcceptEncoding] = CreateHeaderAcceptEncoding;
+            s_factories[RTSPHeaderNames.AcceptLanguage] = CreateHeaderAcceptLanguage;
+            s_factories[RTSPHeaderNames.Allow] = CreateHeaderAllow;
+            s_factories[RTSPHeaderNames.Authorization] = CreateHeaderAuthorization;
+            s_factories[RTSPHeaderNames.Bandwith] = CreateHeaderBandwith;
+            s_factories[RTSPHeaderNames.BlockSize] = CreateHeaderBlockSize;
+            s_factories[RTSPHeaderNames.CacheControl] = CreateHeaderCacheControl;
+            s_factories[RTSPHeaderNames.Conference] = CreateHeaderConference;
+            s_factories[RTSPHeaderNames.Connection] = CreateHeaderConnection;
+            s_factories[RTSPHeaderNames.ContentBase] = CreateHeaderContentBase;
+            s_factories[RTSPHeaderNames.ContentEncoding] = CreateHeaderContentEncoding;
+            s_factories[RTSPHeaderNames.ContentLanguage] = CreateHeaderContentLanguage;
+            s_factories[RTSPHeaderNames.ContentLength] = CreateHeaderContentLength;
+            s_factories[RTSPHeaderNames.ContentLocation] = CreateHeaderContentLocation;
+            s_factories[RTSPHeaderNames.ContentType] = CreateHeaderContentType;
+            s_factories[RTSPHeaderNames.CSeq] = CreateHeaderCSeq;
+            s_factories[RTSPHeaderNames.Date] = CreateHeaderDate;
+            s_factories[RTSPHeaderNames.Expires] = CreateHeaderExpires;
+            s_factories[RTSPHeaderNames.From] = CreateHeaderFrom;
+            s_factories[RTSPHeaderNames.IfMatch] = CreateHeaderIfMatch;
+            s_factories[RTSPHeaderNames.IfModifiedSince] = CreateHeaderIfModifiedSince;
+            s_factories[RTSPHeaderNames.LastModified] = CreateHeaderLastModified;
+            s_factories[RTSPHeaderNames.Location] = CreateHeaderLocation;
+            s_factories[RTSPHeaderNames.ProxyAuthenticate] = CreateHeaderProxyAuthenticate;
+            s_factories[RTSPHeaderNames.ProxyRequire] = CreateHeaderProxyRequire;
+            s_factories[RTSPHeaderNames.Public] = CreateHeaderPublic;
+            s_factories[RTSPHeaderNames.Range] = CreateHeaderRange;
+            s_factories[RTSPHeaderNames.Referer] = CreateHeaderReferer;
+            s_factories[RTSPHeaderNames.Require] = CreateHeaderRequire;
+            s_factories[RTSPHeaderNames.RetryAfter] = CreateHeaderRetryAfter;
+            s_factories[RTSPHeaderNames.RtpInfo] = CreateHeaderRtpInfo;
+            s_factories[RTSPHeaderNames.Scale] = CreateHeaderScale;
+            s_factories[RTSPHeaderNames.Server] = CreateHeaderServer;
+            s_factories[RTSPHeaderNames.Session] = CreateHeaderSession;
+            s_factories[RTSPHeaderNames.Speed] = CreateHeaderSpeed;
+            s_factories[RTSPHeaderNames.Transport] = CreateHeaderTransport;
+            s_factories[RTSPHeaderNames.UserAgent] = CreateHeaderUserAgent;
+            s_factories[RTSPHeaderNames.Vary] = CreateHeaderVary;
+            s_factories[RTSPHeaderNames.Via] = CreateHeaderVia;
+            s_factories[RTSPHeaderNames.WWWAuthenticate] = CreateHeaderWWWAuthenticate;
         }
 
         /// <summary>
@@ -494,19 +494,19 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool CanCreateHeader( string entireHeader , string headerName )
         {
-            if ( string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( headerName ) )
+            if ( string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( headerName ) )
             {
                 return false;
             }
 
             var tokens = entireHeader.Split( new char[] { ':' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 1 )
+            if ( tokens.Length <= 1 )
             {
                 return false;
             }
 
-            var header = tokens[ 0 ].Trim();
+            var header = tokens[ 0 ]?.Trim() ?? string.Empty;
 
             return string.Compare( header , headerName.Trim() , true ) == 0;
         }
@@ -523,26 +523,19 @@ namespace RabbitOM.Net.Rtsp
         /// </remarks>
         public static RTSPHeader CreateHeader( string entireHeader )
         {
-            if ( string.IsNullOrWhiteSpace( entireHeader ) || string.IsNullOrWhiteSpace( entireHeader ) )
+            if ( string.IsNullOrWhiteSpace( entireHeader ) )
             {
                 return null;
             }
 
             var tokens = entireHeader.Split( new char[] { ':' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 1 )
+            if ( tokens.Length <= 1 )
             {
                 return null;
             }
 
-            var header = tokens[ 0 ].Trim();
-
-            if ( s_factories.TryGetValue( header , out Func<string , RTSPHeader> factory ) && factory != null )
-            {
-                return factory.Invoke( tokens[1] );
-            }
-
-            return CreateHeaderCustom( header , tokens[1] );
+            return CreateHeader( tokens[0] , tokens[1] );
         }
 
         /// <summary>
