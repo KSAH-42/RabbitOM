@@ -8,9 +8,14 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message method list
     /// </summary>
-    public sealed class RTSPMethodList : IEnumerable , IEnumerable<RTSPMethod> , ICollection , ICollection<RTSPMethod>
+    public sealed class RTSPMethodList 
+        : IEnumerable 
+        , IEnumerable<RTSPMethod> 
+        , ICollection 
+        , ICollection<RTSPMethod>
+        , IReadOnlyCollection<RTSPMethod>
     {
-        private readonly object                _lock      = new object();
+        private readonly object           _lock       = new object();
 
         private readonly ISet<RTSPMethod> _collection = new HashSet<RTSPMethod>();
 
@@ -46,15 +51,15 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-        /// <summary>
-        /// Gets a header
-        /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance</returns>
-        public RTSPMethod this[int index]
-        {
-            get => GetAt( index );
-        }
+		/// <summary>
+		/// Gets a header at the desired index
+		/// </summary>
+		/// <param name="index">the index</param>
+		/// <returns>returns an instance</returns>
+		public RTSPMethod this[int index]
+		{
+			get => ElementAt( index );
+		}
 
 
 
@@ -64,10 +69,10 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-        /// <summary>
-        /// Gets the sync root
-        /// </summary>
-        public object SyncRoot
+		/// <summary>
+		/// Gets the sync root
+		/// </summary>
+		public object SyncRoot
         {
             get => _lock;
         }
@@ -149,31 +154,6 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Check if the collection contains some elements
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Any()
-        {
-            lock ( _lock )
-            {
-                return _collection.Count > 0;
-            }
-        }
-
-        /// <summary>
-        /// Checks if an element exists
-        /// </summary>
-        /// <param name="element">the element</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Contains( RTSPMethod element )
-        {
-            lock ( _lock )
-            {
-                return _collection.Contains( element );
-            }
-        }
-
-        /// <summary>
         /// Add an element
         /// </summary>
         /// <param name="element">the element name</param>
@@ -185,7 +165,7 @@ namespace RabbitOM.Net.Rtsp
                 throw new ArgumentException( nameof(element) );
             }
 
-            lock (_lock)
+            lock ( _lock )
             {
                 if ( ! _collection.Add(element) )
                 {
@@ -225,74 +205,14 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Finds an element
+        /// Check if the collection contains some elements
         /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance, otherwise null</returns>
-        public RTSPMethod? FindAt( int index )
-        {
-            lock ( _lock )
-            {
-                if ( index < 0 || index >= _collection.Count )
-                {
-                    return null;
-                }
-
-                return _collection.ElementAt( index );
-            }
-        }
-
-        /// <summary>
-        /// Gets an element
-        /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance</returns>
-        public RTSPMethod GetAt( int index )
-        {
-            return FindAt( index ) ?? RTSPMethod.UnDefined;
-        }
-
-        /// <summary>
-        /// Gets all elements
-        /// </summary>
-        /// <returns>returns a collection</returns>
-        public IList<RTSPMethod> GetAll()
-        {
-            lock ( _lock )
-            {
-                return _collection.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Gets all elements
-        /// </summary>
-        /// <param name="predicate">the predicate</param>
-        /// <returns>returns a collection</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public IList<RTSPMethod> GetAll( Func<RTSPMethod , bool> predicate )
-        {
-            if ( predicate == null )
-            {
-                throw new ArgumentNullException( nameof( predicate ) );
-            }
-
-            lock ( _lock )
-            {
-                return _collection.Where( predicate ).ToList();
-            }
-        }
-
-        /// <summary>
-        /// Remove an element
-        /// </summary>
-        /// <param name="element">the element to be removed</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Remove( RTSPMethod element )
+        public bool Any()
         {
-            lock ( _lock )
+            lock (_lock)
             {
-                return _collection.Remove( element );
+                return _collection.Count > 0;
             }
         }
 
@@ -301,9 +221,22 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public void Clear()
         {
-            lock ( _lock )
+            lock (_lock)
             {
                 _collection.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Checks if an element exists
+        /// </summary>
+        /// <param name="element">the element</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool Contains(RTSPMethod element)
+        {
+            lock (_lock)
+            {
+                return _collection.Contains(element);
             }
         }
 
@@ -327,6 +260,63 @@ namespace RabbitOM.Net.Rtsp
             lock (_lock)
             {
                 _collection.CopyTo(array, arrayIndex);
+            }
+        }
+
+        /// <summary>
+        /// Get an element at the desired index or throw an exception
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns a value</returns>
+        public RTSPMethod ElementAt(int index)
+        {
+            lock (_lock)
+            {
+                return _collection.ElementAt(index);
+            }
+        }
+
+        /// <summary>
+        /// Get an element at the desired index or the default value
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns a value</returns>
+        public RTSPMethod ElementAtOrDefault(int index)
+        {
+            lock (_lock)
+            {
+                return _collection.ElementAtOrDefault(index);
+            }
+        }
+
+        /// <summary>
+        /// Finds an element
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns an instance, otherwise null</returns>
+        public RTSPMethod? FindAt( int index )
+        {
+            lock ( _lock )
+            {
+                if ( index < 0 || index >= _collection.Count )
+                {
+                    return null;
+                }
+
+                return _collection.ElementAt( index );
+            }
+        }
+
+        /// <summary>
+        /// Remove an element
+        /// </summary>
+        /// <param name="element">the element to be removed</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool Remove( RTSPMethod element )
+        {
+            lock ( _lock )
+            {
+                return _collection.Remove( element );
             }
         }
 

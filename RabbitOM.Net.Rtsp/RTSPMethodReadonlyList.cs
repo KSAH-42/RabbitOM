@@ -8,9 +8,15 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the message method list
     /// </summary>
-    public sealed class RTSPMethodReadonlyList : IEnumerable<RTSPMethod>
+    public sealed class RTSPMethodReadonlyList
+        : IEnumerable
+        , IEnumerable<RTSPMethod>
+        , IReadOnlyCollection<RTSPMethod>
     {
         private readonly RTSPMethodList _collection = null;
+
+
+
 
 
 
@@ -26,8 +32,12 @@ namespace RabbitOM.Net.Rtsp
 
 
 
+
+
+
+
         /// <summary>
-        /// Gets a header
+        /// Gets a value at the desired index
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance</returns>
@@ -35,6 +45,11 @@ namespace RabbitOM.Net.Rtsp
         {
             get => _collection[ index ];
         }
+
+
+
+
+
 
 
 
@@ -53,6 +68,12 @@ namespace RabbitOM.Net.Rtsp
         {
             get => _collection.IsEmpty;
         }
+
+
+
+
+
+
 
 
 
@@ -94,42 +115,33 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
+        /// Gets an element at the desired index of throw an exception
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns an instance</returns>
+        public RTSPMethod ElementAt( int index )
+        {
+            return _collection.ElementAt( index );
+        }
+
+        /// <summary>
+        /// Gets an element at the desired index or returns the default value
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns an instance</returns>
+        public RTSPMethod ElementAtOrDefault(int index)
+        {
+            return _collection.ElementAtOrDefault(index);
+        }
+
+        /// <summary>
         /// Finds an element
         /// </summary>
         /// <param name="index">the index</param>
         /// <returns>returns an instance, otherwise null</returns>
-        public RTSPMethod? FindAt( int index )
+        public RTSPMethod? FindAt(int index)
         {
-            return _collection.FindAt( index );
-        }
-
-        /// <summary>
-        /// Gets an element
-        /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance</returns>
-        public RTSPMethod GetAt( int index )
-        {
-            return _collection.GetAt( index );
-        }
-
-        /// <summary>
-        /// Gets all elements
-        /// </summary>
-        /// <returns>returns a collection</returns>
-        public IList<RTSPMethod> GetAll()
-        {
-            return _collection.GetAll();
-        }
-
-        /// <summary>
-        /// Gets all elements
-        /// </summary>
-        /// <param name="predicate">the predicate</param>
-        /// <returns>returns a collection</returns>
-        public IList<RTSPMethod> GetAll( Func<RTSPMethod , bool> predicate )
-        {
-            return _collection.GetAll( predicate );
+            return _collection.FindAt(index);
         }
     }
 }

@@ -138,6 +138,7 @@
     <Compile Include="RTSPBasicAuthorizationChallenge.cs" />
     <Compile Include="RTSPDigestAuthorizationChallenge.cs" />
     <Compile Include="RTSPMD5AuthorizationChallenge.cs" />
+    <Compile Include="RTSPMethodReadonlyList.cs" />
     <Compile Include="RTSPSHA256AuthorizationChallenge.cs" />
     <Compile Include="RTSPSHA512AuthorizationChallenge.cs" />
     <Compile Include="RTSPAuthorizationFactory.cs" />
@@ -224,7 +225,6 @@
     <Compile Include="RTSPMethod.cs" />
     <Compile Include="RTSPMethodList.cs" />
     <Compile Include="RTSPMethodNames.cs" />
-    <Compile Include="RTSPMethodReadonlyList.cs" />
     <Compile Include="RTSPMimeType.cs" />
     <Compile Include="RTSPOperator.cs" />
     <Compile Include="RTSPPacket.cs" />
