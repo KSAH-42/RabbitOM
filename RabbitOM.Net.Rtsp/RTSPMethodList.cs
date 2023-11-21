@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Rtsp
 
 
 		/// <summary>
-		/// Gets a header at the desired index
+		/// Gets an element at the desired index
 		/// </summary>
 		/// <param name="index">the index</param>
 		/// <returns>returns an instance</returns>
