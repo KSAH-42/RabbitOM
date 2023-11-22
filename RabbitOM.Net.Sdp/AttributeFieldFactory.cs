@@ -42,12 +42,25 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentNullException"/>
 		public static AttributeField NewControlAttribute(Uri uri)
 		{
-			if (uri == null)
+			if ( uri == null )
 			{
-				throw new ArgumentNullException(nameof(uri));
+				throw new ArgumentNullException( nameof(uri) );
 			}
 
-			return new AttributeField(AttributeNames.Control, uri.ToString());
+			return NewControlAttributeAsString( uri.ToString() );
+		}
+
+		/// <summary>
+		/// Create an attribute
+		/// </summary>
+		/// <param name="uri">the uri</param>
+		/// <returns>returns an instance</returns>
+		/// <exception cref="ArgumentNullException"/>
+		public static AttributeField NewControlAttributeAsString(string uri)
+		{
+			var uriValue = ! string.IsNullOrWhiteSpace( uri ) ? uri.Trim() : "*";
+
+			return new AttributeField(AttributeNames.Control, uriValue);
 		}
 
 		/// <summary>
