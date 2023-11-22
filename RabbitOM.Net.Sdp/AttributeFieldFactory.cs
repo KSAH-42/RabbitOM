@@ -101,57 +101,5 @@ namespace RabbitOM.Net.Sdp
 
 			return new AttributeField(AttributeNames.RTPMap, $"{payload} {encoding}/{clockRate}");
 		}
-
-		/// <summary>
-		/// Create an attribute
-		/// </summary>
-		/// <param name="type">the type</param>
-		/// <param name="port">the port</param>
-		/// <param name="protocol">the protocol</param>
-		/// <param name="profile">the profile</param>
-		/// <param name="format">the format</param>
-		/// <returns>returns an instance</returns>
-		/// <exception cref="ArgumentException"/>
-		public static AttributeField NewMediaAttribute(MediaType type, int port, ProtocolType protocol, ProfileType profile, int format)
-		{
-			if (type == MediaType.None)
-			{
-				throw new ArgumentException(nameof(type));
-			}
-
-			if (port < 0)
-			{
-				throw new ArgumentException(nameof(port));
-			}
-
-			if (protocol == ProtocolType.None)
-			{
-				throw new ArgumentException(nameof(protocol));
-			}
-
-			if (profile == ProfileType.None)
-			{
-				throw new ArgumentException(nameof(profile));
-			}
-
-			if (format < 0)
-			{
-				throw new ArgumentException(nameof(format));
-			}
-
-			var builder = new StringBuilder();
-
-			builder.Append(DataConverter.ConvertToString(type));
-			builder.Append(" ");
-			builder.Append(port);
-			builder.Append(" ");
-			builder.Append(DataConverter.ConvertToString(protocol));
-			builder.Append(" ");
-			builder.Append(DataConverter.ConvertToString(profile));
-			builder.Append(" ");
-			builder.Append(format);
-
-			return new AttributeField(builder.ToString());
-		}
 	}
 }
