@@ -14,8 +14,6 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <returns>returns a string</returns>
 		public static string Format(PhoneField field)
 		{
-			// TODO: ideally this class must format and fill properties the phone prefix like +33 
-
 			return string.Format("{0}" , field?.Value ?? string.Empty );
 		}
 
@@ -27,8 +25,6 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 		/// <returns>returns true for a success, otherwise false</returns>
 		public static bool TryParse(string value, out PhoneField result)
 		{
-			// TODO: Ideally this class must parse using the dot and the phone prefix like +33 
-
 			result = new PhoneField()
 			{
 				Value = value
