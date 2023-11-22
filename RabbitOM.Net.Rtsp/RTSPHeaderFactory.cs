@@ -546,7 +546,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RTSPHeader CreateHeader( string headerName , string headerValue )
         {
-            if ( string.IsNullOrWhiteSpace( headerValue ) || string.IsNullOrWhiteSpace( headerValue ) )
+            if ( string.IsNullOrWhiteSpace( headerName ) || string.IsNullOrWhiteSpace( headerValue ) )
             {
                 return null;
             }
