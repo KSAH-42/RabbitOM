@@ -124,7 +124,6 @@ The actual implementation provide a strong type objects. I found many implementa
 To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
 
 This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
-The implemtation is not truely finished. I except to add distinct Value Objects/Content Value objects.
 
 Usage:
 
