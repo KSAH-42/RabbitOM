@@ -197,6 +197,46 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
+		/// Gets a field at the desired index
+		/// </summary>
+		/// <param name="index">the index</param>
+		/// <returns>returns an instance</returns>
+		/// <exception cref="ArgumentOutOfRangeException"/>
+		/// <exception cref="InvalidOperationException"/>
+		public TField ElementAt(int index)
+		{
+			return _collection.ElementAt(index) ?? throw new InvalidOperationException("The returns field is null");
+		}
+
+		/// <summary>
+		/// Find a field at the desired index
+		/// </summary>
+		/// <param name="index">the index</param>
+		/// <returns>returns an instance, otherwise null is return</returns>
+		public TField ElementAtOrDefault(int index)
+		{
+			return _collection.ElementAtOrDefault(index);
+		}
+
+		/// <summary>
+		/// Gets the enumerator
+		/// </summary>
+		/// <returns>returns an enumerator</returns>
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return this.GetEnumerator();
+		}
+
+		/// <summary>
+		/// Gets the enumerator
+		/// </summary>
+		/// <returns>returns an enumerator</returns>
+		public IEnumerator<TField> GetEnumerator()
+		{
+			return _collection.GetEnumerator();
+		}
+
+		/// <summary>
 		/// Remove an existing field
 		/// </summary>
 		/// <param name="field">the field</param>
@@ -231,7 +271,7 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="predicate">the predicate that select the fields to be removed</param>
 		/// <returns>returns the number of fields removed</returns>
 		/// <exception cref="ArgumentNullException"/>
-		public int RemoveAll(Predicate<TField> predicate)
+		public int RemoveAll( Func<TField,bool> predicate )
 		{
 			if (predicate == null)
 			{
@@ -239,66 +279,10 @@ namespace RabbitOM.Net.Sdp
 			}
 
 			return _collection
-				.Where(field => predicate(field))
+				.Where( predicate )
 				.ToList()
-				.Where(_collection.Remove)
+				.Where( _collection.Remove )
 				.Count();
-		}
-
-		/// <summary>
-		/// Gets the enumerator
-		/// </summary>
-		/// <returns>returns an enumerator</returns>
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
-
-		/// <summary>
-		/// Gets the enumerator
-		/// </summary>
-		/// <returns>returns an enumerator</returns>
-		public IEnumerator<TField> GetEnumerator()
-		{
-			return _collection.GetEnumerator();
-		}
-
-		/// <summary>
-		/// Gets a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance</returns>
-		/// <exception cref="ArgumentOutOfRangeException"/>
-		/// <exception cref="InvalidOperationException"/>
-		public TField GetAt(int index)
-		{
-			return _collection.ElementAt(index) ?? throw new InvalidOperationException("The returns field is null");
-		}
-
-		/// <summary>
-		/// Find a field at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance, otherwise null is return</returns>
-		public TField FindAt(int index)
-		{
-			return _collection.ElementAtOrDefault(index);
-		}
-
-		/// <summary>
-		/// Get all fields
-		/// </summary>
-		/// <param name="predicate">the predicate used for selection</param>
-		/// <returns>returns a collection of field</returns>
-		/// <exception cref="ArgumentNullException"/>
-		public IEnumerable<TField> GetAll(Predicate<TField> predicate)
-		{
-			if (predicate == null)
-			{
-				throw new ArgumentNullException(nameof(predicate));
-			}
-
-			return _collection.Where(field => predicate(field)).ToList();
 		}
 
 		/// <summary>
