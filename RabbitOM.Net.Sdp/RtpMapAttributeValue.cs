@@ -8,11 +8,11 @@ namespace RabbitOM.Net.Sdp
 	/// </summary>
 	public sealed class RtpMapAttributeValue : AttributeValue, ICopyable<RtpMapAttributeValue>
 	{
-		private string                 _encoding     = string.Empty;
+		private string              _encoding     = string.Empty;
 
-		private byte                   _payloadType  = 0;
+		private byte                _payloadType  = 0;
 
-		private uint                   _clockRate    = 0;
+		private uint                _clockRate    = 0;
 
 		private readonly StringList _extensions   = new StringList();
 
