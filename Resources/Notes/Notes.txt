@@ -1,3 +1,238 @@
+public abstract class RtspTransportOptions
+{
+	public abstract int Type {get; }
+}
+
+public class RtspReceiverOptions
+{
+}
+
+public class RtspUdpReceiverOptions : RtspReceiverOptions
+{
+    public string Address { get; }
+    public int Port {get; }
+}
+
+public class RtspMulticastReceiverOptions : RtspReceiverOptions
+{
+    public string Address { get; }
+    public int Port { get; }
+    public byte TTL { get; }
+}
+
+public sealed class RtspReceiverConfiguration
+{
+    public bool AutoStartStreaming { get; set; }
+    public string Uri { get; set; }
+    public string UserName { get; set; }
+    public string Password { get; set; }
+    public TimeSpan ReceiveTimeout { get; set; }
+    public TimeSpan SendTimeout { get; set; }
+    public TimeSpan RetryInterval { get; set; }
+    public TimeSpan RetryDelay { get; set; }
+    public Guid MediaFormat { get; set; }
+    public int KeepAliveMode { get; set; }
+    public RtspReceiverOptions TransportOptions {get; set; }
+}
+
+public abstract class RtspReceiverConfigurer
+{
+    public abstract void Configure();
+}
+
+public abstract class RtspClient : IDisposable
+{
+    public event EventHandler CommunicationStarted;
+    public event EventHandler CommunicationStopped;
+    public event EventHandler Connected;
+    public event EventHandler Disconnected;
+    public event EventHandler StreamingStarted;
+    public event EventHandler StreamingStopped;
+    public event EventHandler DataReceived;
+    public event EventHandler Error;
+
+    public abstract object SyncRoot {get; }
+    public abstract bool IsCommunicationStarted {get; }
+    public abstract bool IsConnected { get; }
+    public abstract bool IsReceivingData { get; }
+    public abstract bool IsStreamingStarted { get; }
+    public abstract bool IsDisposed { get; }
+    public abstract RtspReceiverConfiguration Configuration { get; }
+    public abstract RTSPHeaderCollection OptionsHeaders { get; }
+    public abstract RTSPHeaderCollection DescribeHeaders { get; }
+    public abstract RTSPHeaderCollection SetupHeaders { get;}
+    public abstract RTSPHeaderCollection PlayHeaders { get; }
+    public abstract RTSPHeaderCollection TearDownHeaders { get;}
+
+    public abstract bool StartCommunication();
+    public abstract void StopCommunication();
+    public abstract void Shutdown();
+    public abstract bool Shutdown(TimeSpan timeout);
+    public abstract bool WaitConnectionSucceed();
+    public abstract bool StartStreaming();
+    public abstract void StopStreaming();
+    public abstract void Dispatch(Action action );
+    public abstract void Dispose();
+
+    protected void RaiseEvent( EventArgs e){}
+
+    protected virtual void OnCommunicationStarted(EventArgs e ) { }
+    protected virtual void OnCommunicationStopped(EventArgs e) { }
+    protected virtual void OnConnected(EventArgs e) { }
+    protected virtual void OnDisconnected(EventArgs e) { }
+    protected virtual void OnStreamingStarted(EventArgs e) { }
+    protected virtual void OnStreamingStopped(EventArgs e) { }
+    protected virtual void OnConnectionError(EventArgs e) { }
+    protected virtual void OnAuthenticationError(EventArgs e) { }
+    protected virtual void OnProtocolError(EventArgs e) { }
+    protected virtual void OnTransportError(EventArgs e) { }
+}
+
+public class RtspMediaReceiver : RtspReceiver
+{
+    private readonly RtspMediaSession _session;
+
+    public RtspMediaReceiver()
+    {
+        _session = new RtspMediaSession( this );
+    }
+
+	public override object SyncRoot 
+        => _session.SyncRoot;
+
+	public override bool IsCommunicationStarted 
+        => _session.IsCommunicationStarted ;
+    
+    public override bool IsConnected 
+        => _session.IsConnected;
+
+    public override bool IsReceivingData 
+        => _session.IsReceivingData;
+
+    public override bool IsStreamingStarted 
+        => _session.IsStreamingStarted;
+
+    public override bool IsDisposed 
+        => _session.IsDisposed;
+
+    public override RtspReceiverConfiguration Configuration 
+        => _session.Configuration;
+
+    public override RTSPHeaderCollection OptionsHeaders 
+        => _session.OptionsHeaders;
+
+    public override RTSPHeaderCollection DescribeHeaders
+        => _session.DescribeHeaders;
+
+    public override RTSPHeaderCollection SetupHeaders 
+        => _session.SetupHeaders;
+
+    public override RTSPHeaderCollection PlayHeaders 
+        => _session.PlayHeaders;
+
+    public override RTSPHeaderCollection TearDownHeaders 
+        => _session.TearDownHeaders;
+
+    public override void Dispatch(Action action)
+	{
+        _session.Dispatch( action );
+	}
+
+	public override void Dispose()
+	{
+        _session.Dispose();
+	}
+
+	public override void Shutdown()
+	{
+        _session.Shutdown();
+	}
+
+	public override bool Shutdown(TimeSpan timeout)
+	{
+        return _session.Shutdown( timeout );
+    }
+
+	public override bool StartCommunication()
+	{
+		return _session.StartCommunication();
+	}
+
+	public override bool StartStreaming()
+	{
+        return _session.StartStreaming();
+    }
+
+	public override void StopCommunication()
+	{
+        _session.StopCommunication()
+	}
+
+	public override void StopStreaming()
+	{
+        _session.StopStreaming()
+	}
+
+	public override bool WaitConnectionSucceed()
+	{
+        return _session.WaitConnectionSucceed();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // appear on the base class
 client.Configuration.Uri
 client.Configuration.RetryTimeout
