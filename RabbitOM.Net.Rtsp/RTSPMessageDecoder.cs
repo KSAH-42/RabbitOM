@@ -314,7 +314,7 @@ namespace RabbitOM.Net.Rtsp
 					return false;
 				}
 
-				_interleavedPacket = new RTSPPacketInterleaved(channel, buffer);
+				_interleavedPacket = new RTSPInterleavedPacket(channel, buffer);
 
 				return true; 
 			}
