@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
     /// </summary>
     public sealed class RTSPInvokerResultRequest
     {
-        private readonly RTSPMessageRequest _message = null;
+        private readonly RTSPRequest _message = null;
 
 
 
@@ -17,7 +17,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="message">the message request</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPInvokerResultRequest( RTSPMessageRequest message )
+        public RTSPInvokerResultRequest( RTSPRequest message )
         {
             _message = message ?? throw new ArgumentNullException( nameof( message ) );
         }
@@ -28,7 +28,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Gets the message
         /// </summary>
-        public RTSPMessageRequest Message
+        public RTSPRequest Message
         {
             get => _message;
         }

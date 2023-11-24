@@ -509,7 +509,7 @@ Rabbit.Devices.Decoders.Verint.dll
 Rabbit.Devices.Decoders.Planar.dll
 Rabbit.Devices.Captures.dll
 Rabbit.Devices.Captures.WebCam.dll
-Rabbit.Devices.Captures.DShow.dll
+Rabbit.Devices.Captures.DirectShow.dll
 Rabbit.Devices.Captures.Gutebruck.dll
 Rabbit.Devices.Dvr.dll
 Rabbit.Devices.Dvr.Bosch.dll

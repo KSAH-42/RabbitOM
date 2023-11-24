@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
     {
         private readonly RTSPProxy                 _proxy      = null;
 
-        private readonly RTSPMessageRequestBuilder _builder    = null;
+        private readonly RTSPRequestBuilder _builder    = null;
 
 
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
-            _builder = new RTSPMessageRequestBuilder( method , proxy.Uri );
+            _builder = new RTSPRequestBuilder( method , proxy.Uri );
         }
 
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// <summary>
         /// Gets the builder
         /// </summary>
-        protected RTSPMessageRequestBuilder Builder
+        protected RTSPRequestBuilder Builder
         {
             get => _builder;
         }
@@ -615,8 +615,8 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// <returns>returns true for a success, otherwise false</returns>
         public virtual RTSPInvokerResult Invoke()
         {
-            RTSPMessageRequest  request  = CreateRequest();
-            RTSPMessageResponse response = null;
+            RTSPRequest  request  = CreateRequest();
+            RTSPResponse response = null;
 
             for ( int i = 0 ; i < 3 ; ++i )
             {
@@ -625,7 +625,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
                     break;
 				}
 
-                if ( ! _proxy.RequestManager.SendRequest( request , out response ) || response == null )
+                if ( ! _proxy.RequestManager.TrySendRequest( request , out response ) || response == null )
                 {
                     // Sequence is not incremented in case of retransmission
                     // See: https://datatracker.ietf.org/doc/html/rfc2326#page-50
@@ -661,7 +661,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
 				}
             }
 
-            return new RTSPInvokerResult( succeed , new RTSPInvokerResultRequest( request ?? RTSPMessageRequest.CreateUnDefinedRequest() ) , new RTSPInvokerResultResponse( response ?? RTSPMessageResponse.CreateUnDefinedResponse() ) );
+            return new RTSPInvokerResult( succeed , new RTSPInvokerResultRequest( request ?? RTSPRequest.CreateUnDefinedRequest() ) , new RTSPInvokerResultResponse( response ?? RTSPResponse.CreateUnDefinedResponse() ) );
         }
 
         /// <summary>
@@ -678,7 +678,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// Create the request
         /// </summary>
         /// <returns>returns a request object</returns>
-        protected virtual RTSPMessageRequest CreateRequest()
+        protected virtual RTSPRequest CreateRequest()
         {
             _builder.SequenceId = _proxy.GetNextSequenceId();
 

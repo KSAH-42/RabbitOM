@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a response deserializer
     /// </summary>
-    public static class RTSPMessageResponseSerializer
+    public static class RTSPResponseSerializer
     {
         /// <summary>
         /// Deserialize a response
@@ -15,14 +15,14 @@ namespace RabbitOM.Net.Rtsp
         /// <remarks>
         ///   <para>Please, note that this method doesn't make any validations, this class only deserialize an object</para>
         /// </remarks>
-        public static RTSPMessageResponse Deserialize( string input )
+        public static RTSPResponse Deserialize( string input )
         {
             if ( string.IsNullOrWhiteSpace( input ) )
             {
                 return null;
             }
 
-            using ( var reader = new RTSPMessageResponseReader( input ) )
+            using ( var reader = new RTSPResponseReader( input ) )
             {
                 if ( reader.ReadLineStatus() )
                 {
@@ -30,7 +30,7 @@ namespace RabbitOM.Net.Rtsp
                     reader.ReadLine();
                     reader.ReadBody();
 
-                    var response = new RTSPMessageResponse( new RTSPMessageStatus( reader.GetStatusCode() , reader.GetStatusReason() ) , new RTSPMessageVersion( reader.GetMajorVersion() , reader.GetMinorVersion() ) );
+                    var response = new RTSPResponse( new RTSPMessageStatus( reader.GetStatusCode() , reader.GetStatusReason() ) , new RTSPMessageVersion( reader.GetMajorVersion() , reader.GetMinorVersion() ) );
 
                     foreach ( var header in reader.GetHeaders() )
                     {

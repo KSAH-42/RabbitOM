@@ -245,9 +245,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="request">the request</param>
         /// <param name="response">the response</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool SendRequest( RTSPMessageRequest request , out RTSPMessageResponse response )
+        public bool SendRequest( RTSPRequest request , out RTSPResponse response )
         {
-            return _proxy.RequestManager.SendRequest( request , out response );
+            return _proxy.RequestManager.TrySendRequest( request , out response );
         }
 
         /// <summary>

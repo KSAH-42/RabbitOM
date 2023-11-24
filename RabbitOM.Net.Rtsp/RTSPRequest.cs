@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message request
     /// </summary>
-    public sealed class RTSPMessageRequest : RTSPMessage
+    public sealed class RTSPRequest : RTSPMessage
     {
         private readonly RTSPMethod                 _method   = RTSPMethod.UnDefined;
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="method">the status code</param>
         /// <param name="uri">the uri</param>
-        public RTSPMessageRequest( RTSPMethod method , string uri )
+        public RTSPRequest( RTSPMethod method , string uri )
             : this( method , uri , RTSPMessageVersion.Version_1_0 )
         {
         }
@@ -37,7 +37,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="uri">the uri</param>
         /// <param name="version">the version</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPMessageRequest( RTSPMethod method , string uri , RTSPMessageVersion version )
+        public RTSPRequest( RTSPMethod method , string uri , RTSPMessageVersion version )
         {
             if ( version == null )
             {
@@ -127,9 +127,9 @@ namespace RabbitOM.Net.Rtsp
         /// Create an undefined request
         /// </summary>
         /// <returns>returns an instance</returns>
-        public static RTSPMessageRequest CreateUnDefinedRequest()
+        public static RTSPRequest CreateUnDefinedRequest()
         {
-            return new RTSPMessageRequest( RTSPMethod.UnDefined , string.Empty );
+            return new RTSPRequest( RTSPMethod.UnDefined , string.Empty );
         }
     }
 }

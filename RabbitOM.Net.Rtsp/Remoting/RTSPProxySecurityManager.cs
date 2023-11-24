@@ -64,7 +64,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Setup the authentication before to build the authorization response 
         /// </summary>
         /// <param name="response">the client response which can hold an authentication header need to build our response</param>
-        public void SetupAuthentication( RTSPMessageResponse response )
+        public void SetupAuthentication( RTSPResponse response )
         {
             lock ( _lock )
             {
@@ -77,7 +77,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="request">the request</param>
         /// <returns>returns for a success, otherwise false</returns>
-        public bool ConfigureAuthorization( RTSPMessageRequest request )
+        public bool ConfigureAuthorization( RTSPRequest request )
         {
             if ( request == null || request.Method == RTSPMethod.UnDefined )
             {
