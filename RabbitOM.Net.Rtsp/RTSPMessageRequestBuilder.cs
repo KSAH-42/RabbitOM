@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message request builder
     /// </summary>
-    public sealed class RTSPRequestBuilder
+    public sealed class RTSPMessageRequestBuilder
     {
         private readonly object                  _lock            = new object();
 
@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <exception cref="ArgumentException"/>
-        public RTSPRequestBuilder( RTSPMethod method , string uri )
+        public RTSPMessageRequestBuilder( RTSPMethod method , string uri )
         {
             if ( method == RTSPMethod.UnDefined )
             {
@@ -974,11 +974,11 @@ namespace RabbitOM.Net.Rtsp
         /// Build a request
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public RTSPRequest BuildRequest()
+        public RTSPMessageRequest BuildRequest()
         {
             lock ( _lock )
             {
-                RTSPRequest request = null;
+                RTSPMessageRequest request = null;
 
                 RTSPUri uri = new RTSPUri( _uri );
 
@@ -986,11 +986,11 @@ namespace RabbitOM.Net.Rtsp
 
                 if ( string.IsNullOrWhiteSpace( _controlUri ) )
                 {
-                    request = new RTSPRequest( _method , uri.ToString() );
+                    request = new RTSPMessageRequest( _method , uri.ToString() );
                 }
                 else
                 {
-                    request = new RTSPRequest( _method , uri.ToControlUri( _controlUri ) );
+                    request = new RTSPMessageRequest( _method , uri.ToControlUri( _controlUri ) );
                 }
 
                 request.Headers.TryAddOrUpdate( new RTSPHeaderCSeq( _sequenceId ) );

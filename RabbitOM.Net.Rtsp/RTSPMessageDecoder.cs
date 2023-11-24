@@ -18,7 +18,7 @@ namespace RabbitOM.Net.Rtsp
 
         private RTSPPacket                _interleavedPacket = null;
 
-        private RTSPResponse       _response          = null;
+        private RTSPMessageResponse       _response          = null;
 
         private int                       _valueByte         = -1; // The name contains byte keywork but this is int value and not a byte value type. Please refer to microsoft stream implementation and definition of the method called ReadByte which returns a int and a byte. For only this case, strongly prefer this instead of using nullable value
 
@@ -379,7 +379,7 @@ namespace RabbitOM.Net.Rtsp
 
 				builder.Append(body);
 
-				_response = RTSPResponseSerializer.Deserialize(builder.ToString());
+				_response = RTSPMessageResponseSerializer.Deserialize(builder.ToString());
 
 				return _response != null; 
 			}
@@ -401,7 +401,7 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the response
         /// </summary>
         /// <returns>returns an instance, otherwise null</returns>
-        public RTSPResponse GetResponse()
+        public RTSPMessageResponse GetResponse()
         {
 			lock ( _lock )
 			{

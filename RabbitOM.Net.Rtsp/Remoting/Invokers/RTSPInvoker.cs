@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
     {
         private readonly RTSPProxy                 _proxy      = null;
 
-        private readonly RTSPRequestBuilder _builder    = null;
+        private readonly RTSPMessageRequestBuilder _builder    = null;
 
 
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
-            _builder = new RTSPRequestBuilder( method , proxy.Uri );
+            _builder = new RTSPMessageRequestBuilder( method , proxy.Uri );
         }
 
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// <summary>
         /// Gets the builder
         /// </summary>
-        protected RTSPRequestBuilder Builder
+        protected RTSPMessageRequestBuilder Builder
         {
             get => _builder;
         }
@@ -615,8 +615,8 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// <returns>returns true for a success, otherwise false</returns>
         public virtual RTSPInvokerResult Invoke()
         {
-            RTSPRequest  request  = CreateRequest();
-            RTSPResponse response = null;
+            RTSPMessageRequest  request  = CreateRequest();
+            RTSPMessageResponse response = null;
 
             for ( int i = 0 ; i < 3 ; ++i )
             {
@@ -661,7 +661,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
 				}
             }
 
-            return new RTSPInvokerResult( succeed , new RTSPInvokerResultRequest( request ?? RTSPRequest.CreateUnDefinedRequest() ) , new RTSPInvokerResultResponse( response ?? RTSPResponse.CreateUnDefinedResponse() ) );
+            return new RTSPInvokerResult( succeed , new RTSPInvokerResultRequest( request ?? RTSPMessageRequest.CreateUnDefinedRequest() ) , new RTSPInvokerResultResponse( response ?? RTSPMessageResponse.CreateUnDefinedResponse() ) );
         }
 
         /// <summary>
@@ -678,7 +678,7 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
         /// Create the request
         /// </summary>
         /// <returns>returns a request object</returns>
-        protected virtual RTSPRequest CreateRequest()
+        protected virtual RTSPMessageRequest CreateRequest()
         {
             _builder.SequenceId = _proxy.GetNextSequenceId();
 

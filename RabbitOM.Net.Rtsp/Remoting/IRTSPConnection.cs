@@ -155,7 +155,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="request">the request</param>
         /// <param name="response">the response</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool SendRequest( RTSPRequest request , out RTSPResponse response );
+        bool SendRequest( RTSPMessageRequest request , out RTSPMessageResponse response );
 
         /// <summary>
         /// Wait the connection succeed

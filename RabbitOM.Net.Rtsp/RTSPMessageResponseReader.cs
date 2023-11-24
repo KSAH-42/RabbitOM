@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a response data reader
     /// </summary>
-    public sealed class RTSPResponseReader : IDisposable
+    public sealed class RTSPMessageResponseReader : IDisposable
     {
         private string                              _fullVersion    = string.Empty;
 
@@ -32,7 +32,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="input">the input string</param>
-        public RTSPResponseReader( string input )
+        public RTSPMessageResponseReader( string input )
         {
             _reader = new RTSPStringReader( input );
             _headers = new Dictionary<string , string>( StringComparer.OrdinalIgnoreCase );

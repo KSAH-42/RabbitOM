@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message response
     /// </summary>
-    public sealed class RTSPResponse : RTSPMessage
+    public sealed class RTSPMessageResponse : RTSPMessage
     {
         private readonly RTSPMessageStatus     _status      = null;
 
@@ -22,7 +22,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="status">the status code</param>
-        public RTSPResponse( RTSPMessageStatus status )
+        public RTSPMessageResponse( RTSPMessageStatus status )
             : this( status , RTSPMessageVersion.Version_1_0 )
         {
         }
@@ -33,7 +33,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="status">the status code</param>
         /// <param name="version"></param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPResponse( RTSPMessageStatus status , RTSPMessageVersion version )
+        public RTSPMessageResponse( RTSPMessageStatus status , RTSPMessageVersion version )
         {
             _status = status ?? throw new ArgumentNullException( nameof( status ) );
             _version = version ?? throw new ArgumentNullException( nameof( version ) );
@@ -94,9 +94,9 @@ namespace RabbitOM.Net.Rtsp
         /// Create an undefined message
         /// </summary>
         /// <returns>returns an instance</returns>
-        public static RTSPResponse CreateUnDefinedResponse()
+        public static RTSPMessageResponse CreateUnDefinedResponse()
         {
-            return new RTSPResponse( RTSPMessageStatus.UnDefined );
+            return new RTSPMessageResponse( RTSPMessageStatus.UnDefined );
         }
     }
 }

@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a request serializer
     /// </summary>
-    public static class RTSPRequestSerializer
+    public static class RTSPMessageRequestSerializer
     {
         /// <summary>
         /// Serialize a request
@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtsp
         /// <remarks>
         ///   <para>Please, note that this method doesn't make any validations before to perform a serialization</para>
         /// </remarks>
-        public static string Serialize( RTSPRequest request )
+        public static string Serialize( RTSPMessageRequest request )
         {
             if ( request == null || request.Method == RTSPMethod.UnDefined )
             {

@@ -15,9 +15,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
         private readonly RTSPEventWaitHandle   _completionHandle   = null;
 
-        private readonly RTSPRequest    _request            = null;
+        private readonly RTSPMessageRequest    _request            = null;
 
-        private RTSPResponse            _response           = null;
+        private RTSPMessageResponse            _response           = null;
 
 
 
@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="request">the request</param>
         /// <exception cref="ArgumentNullException"/>
-        public RTSPProxyRequestHandler( RTSPRequest request )
+        public RTSPProxyRequestHandler( RTSPMessageRequest request )
         {
             _request = request ?? throw new ArgumentNullException( nameof( request ) );
             _lock = new object();
@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Gets the response
         /// </summary>
-        public RTSPResponse Response
+        public RTSPMessageResponse Response
         {
             get => _response;
         }
@@ -127,7 +127,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Handle the response
         /// </summary>
         /// <param name="response">the response</param>
-        public void HandleResponse( RTSPResponse response )
+        public void HandleResponse( RTSPMessageResponse response )
         {
             if ( _response != null || _completionHandle.Wait( TimeSpan.Zero ) )
             {
@@ -142,7 +142,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Update internal member according to the response value
         /// </summary>
         /// <param name="response">the response</param>
-        private void InternalHandleResponse( RTSPResponse response )
+        private void InternalHandleResponse( RTSPMessageResponse response )
         {
             _response = response;
 

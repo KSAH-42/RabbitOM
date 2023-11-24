@@ -101,7 +101,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <remarks>
         /// <para>This method try to send a request and wait a response using message correlation pattern</para>
         /// </remarks>
-        public bool TrySendRequest( RTSPRequest request , out RTSPResponse response )
+        public bool TrySendRequest( RTSPMessageRequest request , out RTSPMessageResponse response )
         {
             response = null;
 
@@ -133,7 +133,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                 using ( var scope = new RTSPDisposeScope( () => _requestHandlers.Remove( handler ) ) )
                 {
-                    if ( ! _proxy.Send( RTSPRequestSerializer.Serialize( request ) ) )
+                    if ( ! _proxy.Send( RTSPMessageRequestSerializer.Serialize( request ) ) )
                     {
                         return false;
                     }
@@ -298,7 +298,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Occurs when a message has been received
         /// </summary>
         /// <param name="response">the response</param>
-        private void OnResponseReceived( RTSPResponse response )
+        private void OnResponseReceived( RTSPMessageResponse response )
         {
             if ( response == null )
             {
