@@ -127,11 +127,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>return a string</returns>
         public override string ToString()
         {
-            return string.IsNullOrEmpty( _first  ) ? _second
-                 : string.IsNullOrEmpty( _second ) ? _first
-
-                 : $"{_first}-{_second}"
-                 ;
+            return $"{_first}-{_second}";
         }
     }
 }
