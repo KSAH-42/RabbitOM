@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RabbitOM.Net.Rtsp
 {
@@ -7,14 +8,31 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPHeaderRange : RTSPHeader
     {
-        private readonly RTSPStringPair _npt   = new RTSPStringPair();
+        private readonly RTSPStringPair _npt;
 
-        private readonly RTSPStringPair _clock = new RTSPStringPair();
+        private readonly RTSPStringPair _clock;
 
-        private readonly RTSPStringPair _time  = new RTSPStringPair();
+        private readonly RTSPStringPair _time;
 
 
+        
+        
+        /// <summary>
+        /// Intialize an new instance of header range class
+        /// </summary>
+        /// <param name="ntp">the ntp</param>
+        /// <param name="clock">the clock</param>
+        /// <param name="time">the time</param>
+        public RTSPHeaderRange( RTSPStringPair ntp , RTSPStringPair clock , RTSPStringPair time )
+		{
+            _npt   = ntp   ?? RTSPStringPair.Empty;
+            _clock = clock ?? RTSPStringPair.Empty;
+            _time  = time  ?? RTSPStringPair.Empty;
+        }
 
+
+       
+        
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -48,16 +66,20 @@ namespace RabbitOM.Net.Rtsp
         }
 
 
-
+        
+        
         /// <summary>
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return _npt.TryValidate() || _clock.TryValidate() || _time.TryValidate();
-        }
-
+            return ! RTSPStringPair.IsNullOrEmpty( _npt )
+                || ! RTSPStringPair.IsNullOrEmpty( _clock )
+                || ! RTSPStringPair.IsNullOrEmpty( _time )
+                ;
+        }       
+        
         /// <summary>
         /// Returns an empty string
         /// </summary>
@@ -66,12 +88,12 @@ namespace RabbitOM.Net.Rtsp
         {
             var writer = new RTSPHeaderWriter( RTSPSeparator.SemiColon , RTSPOperator.Equality );
 
-            if ( _npt.TryValidate() )
+            if ( ! RTSPStringPair.IsNullOrEmpty( _npt ) )
             {
                 writer.WriteField( RTSPHeaderFieldNames.Npt , _npt.ToString() );
             }
 
-            if ( _clock.TryValidate() )
+            if ( ! RTSPStringPair.IsNullOrEmpty( _clock ) )
             {
                 if ( writer.IsAppended )
                 {
@@ -81,7 +103,7 @@ namespace RabbitOM.Net.Rtsp
                 writer.WriteField( RTSPHeaderFieldNames.Clock , _clock.ToString() );
             }
 
-            if ( _time.TryValidate() )
+            if ( ! RTSPStringPair.IsNullOrEmpty( _time ) )
             {
                 if ( writer.IsAppended )
                 {
@@ -94,6 +116,9 @@ namespace RabbitOM.Net.Rtsp
             return writer.Output;
         }
 
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -102,20 +127,20 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public static bool TryParse( string value , out RTSPHeaderRange result )
         {
-            result = new RTSPHeaderRange();
+            result = null;
 
             var parser = new RTSPParser( value , RTSPSeparator.SemiColon );
 
-            if ( !parser.ParseHeaders() )
+            if ( ! parser.ParseHeaders() )
             {
                 return false;
             }
 
+            var pairs = new RTSPStringPair[3];
+
             using ( var reader = new RTSPHeaderReader( parser.GetParsedHeaders() ) )
             {
                 reader.Operator = RTSPOperator.Equality;
-
-                result = new RTSPHeaderRange();
 
                 while ( reader.Read() )
                 {
@@ -126,19 +151,26 @@ namespace RabbitOM.Net.Rtsp
 
                     if ( reader.IsNptTimeElementType )
                     {
-                        RTSPStringPair.TryDecode( result.Npt , reader.GetElementValue() );
+                        RTSPStringPair.TryParse( reader.GetElementValue() , out pairs[0] );
                     }
 
                     if ( reader.IsClockElementType )
                     {
-                        RTSPStringPair.TryDecode( result.Clock , reader.GetElementValue() ); 
+                        RTSPStringPair.TryParse( reader.GetElementValue() , out pairs[1] ); 
                     }
 
                     if ( reader.IsTimeElementType )
                     {
-                        RTSPStringPair.TryDecode( result.Time, reader.GetElementValue() );
+                        RTSPStringPair.TryParse( reader.GetElementValue() , out pairs[2] );
                     }
                 }
+
+                if ( pairs.All( RTSPStringPair.IsNullOrEmpty ) )
+                {
+                    return false;
+                }
+
+                result = new RTSPHeaderRange( pairs[0] , pairs[1] , pairs[2] );
 
                 return true;
             }
