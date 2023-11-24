@@ -7,15 +7,15 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPMessageRequest : RTSPMessage
     {
-        private readonly RTSPMethod                 _method   = RTSPMethod.UnDefined;
+        private readonly RTSPMethod             _method   = RTSPMethod.UnDefined;
 
-        private readonly string                         _uri      = string.Empty;
+        private readonly string                 _uri      = string.Empty;
 
-        private readonly RTSPHeaderCollection                 _headers  = null;
+        private readonly RTSPHeaderCollection   _headers  = null;
 
-        private readonly RTSPMessageBody                _body     = null;
+        private readonly RTSPMessageBody        _body     = null;
 
-        private readonly RTSPMessageVersion             _version  = null;
+        private readonly RTSPMessageVersion     _version  = null;
 
 
 
@@ -127,7 +127,7 @@ namespace RabbitOM.Net.Rtsp
         /// Create an undefined request
         /// </summary>
         /// <returns>returns an instance</returns>
-        public static RTSPMessageRequest CreateUnDefinedRequest()
+        internal static RTSPMessageRequest CreateUnDefinedRequest()
         {
             return new RTSPMessageRequest( RTSPMethod.UnDefined , string.Empty );
         }

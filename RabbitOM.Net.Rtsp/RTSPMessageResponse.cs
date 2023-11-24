@@ -94,7 +94,7 @@ namespace RabbitOM.Net.Rtsp
         /// Create an undefined message
         /// </summary>
         /// <returns>returns an instance</returns>
-        public static RTSPMessageResponse CreateUnDefinedResponse()
+        internal static RTSPMessageResponse CreateUnDefinedResponse()
         {
             return new RTSPMessageResponse( RTSPMessageStatus.UnDefined );
         }
