@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
 
         /// <summary>
-        /// Gets a header
+        /// Gets a handler
         /// </summary>
         /// <param name="sequenceId">the sequence identifier</param>
         /// <returns>returns an instance otherwise throw an exception</returns>
