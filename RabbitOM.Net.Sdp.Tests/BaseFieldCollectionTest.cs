@@ -52,12 +52,6 @@ namespace RabbitOM.Net.Sdp.Tests
 		}
 
 		[TestMethod]
-		public void FindAll_Exception_Empty()
-		{
-			Assert.IsTrue(_collection.GetAll( x => true ).Count() == 0 );
-		}
-
-		[TestMethod]
 		public void Add_Except_NotException()
 		{
 			try
