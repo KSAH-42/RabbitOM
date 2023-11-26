@@ -198,7 +198,7 @@ namespace RabbitOM.Net.Sdp
 				return IPAddress.Loopback.ToString();
 			}
 
-			if (type == AddressType.IPV6)
+			if ( type == AddressType.IPV6 )
 			{
 				return IPAddress.IPv6Loopback.ToString();
 			}

@@ -23,16 +23,18 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			var builder = new StringBuilder();
 
+			var address = DataConverter.ConvertToLoopBackIfEmpty(field.Address, field.AddressType);
+
 			builder.AppendFormat(
 				  "{0} {1} {2}"
 				, DataConverter.ConvertToString(field.NetworkType)
 				, DataConverter.ConvertToString(field.AddressType)
-				, DataConverter.ConvertToLoopBackIfEmpty(field.Address,field.AddressType)
+				, address 
 				);
 
-			if (field.TTL > 0)
+			if ( ! string.IsNullOrWhiteSpace( address ) )
 			{
-				builder.AppendFormat("/{0}", field.TTL);
+				builder.AppendFormat( "/{0}" , field.TTL );
 			}
 
 			return builder.ToString();
