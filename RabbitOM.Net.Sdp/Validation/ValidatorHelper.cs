@@ -15,6 +15,11 @@ namespace RabbitOM.Net.Sdp.Validation
 		/// <param name="address">the address</param>
 		/// <param name="addressType">the address type</param>
 		/// <returns>returns true for a success, otherwise false.</returns>
+		/// <remarks>
+		///		<para>The address type and the network type must be defined</para>
+		///		<para>The ip address value must be well formed</para>
+		///		<para>Empty ip addresss are allowed and are considered as loopback address</para>
+		/// </remarks>
 		public static bool TryValidateAddress( string address, AddressType addressType )
 		{
 			if ( addressType == AddressType.None )

@@ -167,8 +167,12 @@ namespace RabbitOM.Net.Sdp
 
 
 		/// <summary>
-		/// Just perform a validation only on mandatory fields
+		/// Just perform a minimal validation
 		/// </summary>
+		/// <remarks>
+		///		<para>this method does not validate all the fields</para>
+		///		<para>use custom validation instead</para>
+		/// </remarks>
 		public void Validate()
 		{
 			Validate(SessionDescriptorValidator.DefaultValidator);
@@ -190,9 +194,13 @@ namespace RabbitOM.Net.Sdp
 		}
 
 		/// <summary>
-		/// Just perform a validation only on mandatory fields
+		/// Just perform a minimal validation
 		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
+		/// <remarks>
+		///		<para>this method does not validate all the fields</para>
+		///		<para>use custom validation instead</para>
+		/// </remarks>
 		public bool TryValidate()
 		{
 			return TryValidate(SessionDescriptorValidator.DefaultValidator);

@@ -97,24 +97,12 @@ namespace RabbitOM.Net.Sdp
 		/// Validate
 		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
-		/// <remarks>
-		///		<para>The address type and the network type must be defined</para>
-		///		<para>The ip address value must be well formed</para>
-		///		<para>Empty ip addresss are allowed and are considered as loopback address</para>
-		/// </remarks>
 		public override bool TryValidate()
 		{
-			if ( _addressType == AddressType.None )
-			{
-				return false;
-			}
-
-			if ( _networkType == NetworkType.None )
-			{
-				return false;
-			}
-
-			return ValidatorHelper.TryValidateAddress( _address , _addressType );
+			return _addressType != AddressType.None 
+				&& _networkType != NetworkType.None
+				
+				&& ValidatorHelper.TryValidateAddress( _address , _addressType );
 		}
 
 		/// <summary>

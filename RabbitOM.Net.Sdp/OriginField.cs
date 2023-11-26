@@ -1,4 +1,5 @@
 ﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using RabbitOM.Net.Sdp.Validation;
 using System;
 
 namespace RabbitOM.Net.Sdp
@@ -116,12 +117,13 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
-			return !string.IsNullOrWhiteSpace(_sessionId)
-				&& !string.IsNullOrWhiteSpace(_version)
-				&& !string.IsNullOrWhiteSpace(_address)
-
-				&& _networkType != NetworkType.None
+			return _networkType != NetworkType.None
 				&& _addressType != AddressType.None
+
+				&& !string.IsNullOrWhiteSpace(_sessionId)
+				&& !string.IsNullOrWhiteSpace(_version)
+
+				&& ValidatorHelper.TryValidateAddress( _address , _addressType )
 				;
 		}
 
