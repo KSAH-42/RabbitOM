@@ -132,7 +132,6 @@
 						builder.AddAttribute(reader.CurrentHeaderValue);
 					}
 
-
 					if (reader.IsUnderMediaSection)
 					{
 						do

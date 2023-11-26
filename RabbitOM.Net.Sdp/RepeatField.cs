@@ -35,7 +35,7 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		/// <param name="repeatInterval">the repeat time</param>
 		/// <param name="activeInterval">the active time</param>
-		public RepeatField(ValueTime repeatInterval, ValueTime activeInterval)
+		public RepeatField( ValueTime repeatInterval , ValueTime activeInterval )
 		{
 			_repeatInterval = repeatInterval;
 			_activeDuration = activeInterval;
@@ -78,7 +78,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="Exception"/>
 		public override void Validate()
 		{
-			if (!TryValidate())
+			if ( !TryValidate() )
 			{
 				throw new Exception("Validation failed");
 			}
@@ -90,8 +90,8 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{
-			return _repeatInterval.Validate()
-				&& _activeDuration.Validate();
+			return _repeatInterval.TryValidate()
+				&& _activeDuration.TryValidate();
 		}
 
 		/// <summary>
@@ -115,7 +115,7 @@ namespace RabbitOM.Net.Sdp
 		/// <returns>retuns a value</returns>
 		public override string ToString()
 		{
-			return RepeatFieldFormatter.Format(this);
+			return RepeatFieldFormatter.Format( this );
 		}
 
 
@@ -129,19 +129,19 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentException"/>
 		/// <exception cref="ArgumentNullException"/>
 		/// <exception cref="FormatException"/>
-		public static RepeatField Parse(string value)
+		public static RepeatField Parse( string value )
 		{
-			if (value == null)
+			if ( value == null )
 			{
-				throw new ArgumentNullException(nameof(value));
+				throw new ArgumentNullException( nameof( value ) );
 			}
 
-			if (string.IsNullOrWhiteSpace(value))
+			if ( string.IsNullOrWhiteSpace( value ) )
 			{
-				throw new ArgumentException(nameof(value));
+				throw new ArgumentException( nameof( value ) );
 			}
 
-			return RepeatFieldFormatter.TryParse(value, out RepeatField result) ? result : throw new FormatException();
+			return RepeatFieldFormatter.TryParse( value, out RepeatField result ) ? result : throw new FormatException();
 		}
 
 		/// <summary>
@@ -150,9 +150,9 @@ namespace RabbitOM.Net.Sdp
 		/// <param name="value">the value</param>
 		/// <param name="result">the field result</param>
 		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse(string value, out RepeatField result)
+		public static bool TryParse( string value , out RepeatField result )
 		{
-			return RepeatFieldFormatter.TryParse(value, out result);
+			return RepeatFieldFormatter.TryParse( value , out result );
 		}
 	}
 }

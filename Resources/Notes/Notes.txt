@@ -1,3 +1,7 @@
+Rabbit.Streaming.Rtsp
+Rabbit.Streaming.Rtsp.Headers
+
+
 public abstract class RtspTransportOptions
 {
 	public abstract int Type {get; }
