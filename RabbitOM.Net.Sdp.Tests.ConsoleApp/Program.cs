@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 {
@@ -68,10 +63,6 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			{
 				Console.WriteLine("Ok");
 			}
-
-			SessionDescriptor.ListAllFields(descriptor);
-
-
 		}
 	}
 }
