@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Sdp.Validation
 	/// <summary>
 	/// Represent a validator help class
 	/// </summary>
-	public static class ValidatorHelper
+	internal static class ValidatorHelper
 	{
 		/// <summary>
 		/// Try validate

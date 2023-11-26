@@ -54,6 +54,5 @@ namespace RabbitOM.Net.Sdp.Validation
 
 			return true;
 		}
-
 	}
 }
