@@ -40,7 +40,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 				mediaDescription.Payload = 1 + i;
 				mediaDescription.Port = 10 + i;
-				mediaDescription.Profile = ProfileType.AVP;
+				mediaDescription.Profile = ProfileType.SAVP;
 				mediaDescription.Protocol = ProtocolType.RTP;
 				mediaDescription.Type = MediaType.Video;
 
@@ -58,9 +58,11 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 				descriptor.MediaDescriptions.Add(mediaDescription);
 			}
 			
-			Console.WriteLine(descriptor.ToString());
+			var text = descriptor.ToString();
 
-			if ( SessionDescriptor.TryParse( descriptor.ToString() , out SessionDescriptor sdp ) )
+			Console.WriteLine(text);
+
+			if ( SessionDescriptor.TryParse( text , out SessionDescriptor sdp ) )
 			{
 				Console.WriteLine("Ok");
 			}			

@@ -25,7 +25,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
 			builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.Type));
 			builder.AppendFormat("{0} ", field.Port);
-			builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.Protocol));
+			builder.AppendFormat("{0}/", DataConverter.ConvertToString(field.Protocol));
 			builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.Profile));
 			builder.AppendFormat("{0} ", field.Payload);
 
