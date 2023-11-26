@@ -70,6 +70,7 @@
     <Compile Include="BandwithFieldCollection.cs" />
     <Compile Include="EmailFieldCollection.cs" />
     <Compile Include="PhoneFieldCollection.cs" />
+    <Compile Include="Validation\FullSessionDescriptorValidator.cs" />
     <Compile Include="Validation\DefaultSessionDescriptorValidator.cs" />
     <Compile Include="Validation\SessionDescriptorValidator.cs" />
     <Compile Include="TimeFieldCollection.cs" />

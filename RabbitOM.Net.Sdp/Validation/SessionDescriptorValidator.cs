@@ -10,6 +10,11 @@
 		/// </summary>
 		public readonly static SessionDescriptorValidator DefaultValidator = new DefaultSessionDescriptorValidator();
 
+		/// <summary>
+		/// Represent the full validator
+		/// </summary>
+		public readonly static SessionDescriptorValidator FullValidator    = new FullSessionDescriptorValidator();
+
 
 		/// <summary>
 		/// Validate

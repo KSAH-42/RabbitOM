@@ -1,6 +1,7 @@
 ﻿using RabbitOM.Net.Sdp.Validation;
 using RabbitOM.Net.Sdp.Serialization;
 using System;
+using System.Collections;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -279,6 +280,46 @@ namespace RabbitOM.Net.Sdp
 			}
 
 			return false;
+		}
+
+		/// <summary>
+		/// List all fields present in the descriptor
+		/// </summary>
+		/// <param name="descriptor">the descriptor</param>
+		/// <returns>returns true for a success, otherwise false.</returns>
+		public static BaseFieldCollection ListAllFields( SessionDescriptor descriptor )
+		{
+			if ( descriptor == null )
+			{
+				throw new ArgumentNullException( nameof( descriptor ) );
+			}
+
+			var fields = new BaseFieldCollection();
+
+			foreach (var property in descriptor.GetType().GetProperties())
+			{
+				if (property.PropertyType.IsSubclassOf(typeof(BaseField)))
+				{
+					fields.TryAdd( property.GetValue(descriptor) as BaseField );
+				}
+
+				else
+
+				if (typeof(IEnumerable).IsAssignableFrom( property.PropertyType ) )
+				{
+					var collection = property.GetValue(descriptor) as IEnumerable;
+
+					if ( collection != null )
+					{
+						foreach ( var element in collection )
+						{
+							fields.TryAdd( element as BaseField );
+						}
+					}
+				}
+			}
+
+			return fields;
 		}
 	}
 }

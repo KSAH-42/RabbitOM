@@ -13,7 +13,6 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 		{
 			var descriptor = new SessionDescriptor();
 
-
 			descriptor.Origin.UserName = "John";
 			descriptor.Origin.Address = "192.168.1.23";
 			descriptor.Origin.AddressType = AddressType.IPV6;
@@ -34,6 +33,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			descriptor.Emails.Add(new EmailField("rabbit1@hole.com", "rabbit1"));
 			descriptor.Emails.Add(new EmailField("rabbit2@hole.com", "rabbit2"));
 			descriptor.Emails.Add(new EmailField("rabbit3@hole.com", "rabbit3"));
+			descriptor.Emails.Add(new EmailField("rabbit4@hole.com", "rabbit4"));
 
 			for ( int i = 1; i <= 10; ++ i )
 			{
@@ -67,7 +67,11 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 			if ( SessionDescriptor.TryParse( text , out SessionDescriptor sdp ) )
 			{
 				Console.WriteLine("Ok");
-			}			
+			}
+
+			SessionDescriptor.ListAllFields(descriptor);
+
+
 		}
 	}
 }
