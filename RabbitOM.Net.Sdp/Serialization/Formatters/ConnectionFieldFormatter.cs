@@ -27,9 +27,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 				  "{0} {1} {2}"
 				, DataConverter.ConvertToString(field.NetworkType)
 				, DataConverter.ConvertToString(field.AddressType)
-				, field.Address
+				, DataConverter.ConvertToLoopBackIfEmpty(field.Address,field.AddressType)
 				);
-
 
 			if (field.TTL > 0)
 			{

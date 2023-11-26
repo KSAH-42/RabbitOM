@@ -104,6 +104,7 @@
     <Compile Include="TimeField.cs" />
     <Compile Include="TimeZoneField.cs" />
     <Compile Include="UriField.cs" />
+    <Compile Include="Validation\ValidatorHelper.cs" />
     <Compile Include="ValueTime.cs" />
     <Compile Include="VersionField.cs" />
   </ItemGroup>

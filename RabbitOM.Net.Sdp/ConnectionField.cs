@@ -1,4 +1,5 @@
 ﻿using RabbitOM.Net.Sdp.Serialization.Formatters;
+using RabbitOM.Net.Sdp.Validation;
 using System;
 
 namespace RabbitOM.Net.Sdp
@@ -63,7 +64,7 @@ namespace RabbitOM.Net.Sdp
 		public string Address
 		{
 			get => _address;
-			set => _address = DataConverter.ConvertToIPAddress(value);
+			set => _address = DataConverter.FirstPartOf(value);
 		}
 
 		/// <summary>
@@ -79,7 +80,7 @@ namespace RabbitOM.Net.Sdp
 
 
 
-
+		
 		/// <summary>
 		/// Validate
 		/// </summary>
@@ -96,12 +97,24 @@ namespace RabbitOM.Net.Sdp
 		/// Validate
 		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
+		/// <remarks>
+		///		<para>The address type and the network type must be defined</para>
+		///		<para>The ip address value must be well formed</para>
+		///		<para>Empty ip addresss are allowed and are considered as loopback address</para>
+		/// </remarks>
 		public override bool TryValidate()
 		{
-			return !string.IsNullOrWhiteSpace(_address)
+			if ( _addressType == AddressType.None )
+			{
+				return false;
+			}
 
-				&& _addressType != AddressType.None
-				&& _networkType != NetworkType.None;
+			if ( _networkType == NetworkType.None )
+			{
+				return false;
+			}
+
+			return ValidatorHelper.TryValidateAddress( _address , _addressType );
 		}
 
 		/// <summary>

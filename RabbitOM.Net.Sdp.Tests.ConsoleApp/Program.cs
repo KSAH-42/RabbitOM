@@ -49,6 +49,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 				mediaDescription.Connection.Address = "192.168.0."+i.ToString();
 				mediaDescription.Connection.AddressType = AddressType.IPV4;
 				mediaDescription.Connection.NetworkType = NetworkType.Internet;
+				mediaDescription.Connection.TTL = 1;
 				mediaDescription.Bandwiths.Add(new BandwithField("modifier", i));
 				mediaDescription.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
 				mediaDescription.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
@@ -64,7 +65,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
 			if ( SessionDescriptor.TryParse( text , out SessionDescriptor sdp ) )
 			{
-				Console.WriteLine("Ok");
+				Console.WriteLine(sdp.MediaDescriptions.First().Connection.ToString() );
 			}			
 		}
 	}

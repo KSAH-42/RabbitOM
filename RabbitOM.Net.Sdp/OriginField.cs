@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Sdp
 		public string Address
 		{
 			get => _address;
-			set => _address = DataConverter.ConvertToIPAddress(value);
+			set => _address = DataConverter.FirstPartOf(value);
 		}
 
 

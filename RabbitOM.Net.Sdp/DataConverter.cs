@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -182,6 +183,32 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Convert
 		/// </summary>
+		/// <param name="address">the ip address</param>
+		/// <param name="type">the type</param>
+		/// <returns>returns a string</returns>
+		public static string ConvertToLoopBackIfEmpty( string address , AddressType type)
+		{
+			if ( ! string.IsNullOrWhiteSpace( address ) )
+			{
+				return address;
+			}
+
+			if ( type == AddressType.IPV4 )
+			{
+				return IPAddress.Loopback.ToString();
+			}
+
+			if (type == AddressType.IPV6)
+			{
+				return IPAddress.IPv6Loopback.ToString();
+			}
+
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// Convert
+		/// </summary>
 		/// <param name="value">the value</param>
 		/// <returns>returns a value</returns>
 		public static AddressType ConvertToAddressType(string value)
@@ -319,22 +346,6 @@ namespace RabbitOM.Net.Sdp
 			return ProtocolType.None;
 		}
 
-
-		/// <summary>
-		/// Convert to a string value
-		/// </summary>
-		/// <param name="value">the value</param>
-		/// <returns>returns a trimed value</returns>
-		public static string ConvertToIPAddress(string value)
-		{
-			if (string.IsNullOrWhiteSpace(value))
-			{
-				return string.Empty;
-			}
-
-			return value.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
-		}
-
 		/// <summary>
 		/// Convert to a byte value
 		/// </summary>
@@ -424,6 +435,33 @@ namespace RabbitOM.Net.Sdp
 			}
 
 			return text;
+		}
+
+		/// <summary>
+		/// Convert to a string value
+		/// </summary>
+		/// <param name="value">the value</param>
+		/// <param name="separator">the separator</param>
+		/// <returns>returns a trimed value</returns>
+		public static string FirstPartOf( string value )
+		{
+			return FirstPartOf( value , '/' );
+		}
+
+		/// <summary>
+		/// Convert to a string value
+		/// </summary>
+		/// <param name="value">the value</param>
+		/// <param name="separator">the separator</param>
+		/// <returns>returns a trimed value</returns>
+		public static string FirstPartOf( string value , char separator )
+		{
+			if (string.IsNullOrWhiteSpace(value))
+			{
+				return string.Empty;
+			}
+
+			return value.Split(new char[] { separator }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
 		}
 	}
 }
