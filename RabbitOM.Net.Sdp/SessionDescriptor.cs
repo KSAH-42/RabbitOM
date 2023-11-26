@@ -294,32 +294,25 @@ namespace RabbitOM.Net.Sdp
 				throw new ArgumentNullException( nameof( descriptor ) );
 			}
 
-			var fields = new BaseFieldCollection();
+			var result = new BaseFieldCollection();
 
-			foreach (var property in descriptor.GetType().GetProperties())
-			{
-				if (property.PropertyType.IsSubclassOf(typeof(BaseField)))
-				{
-					fields.TryAdd( property.GetValue(descriptor) as BaseField );
-				}
+			result.TryAdd( descriptor.Version );
+			result.TryAdd( descriptor.SessionName );
+			result.TryAdd( descriptor.SessionInformation );
+			result.TryAdd( descriptor.Uri );
+			result.TryAdd( descriptor.Origin );
+			result.TryAddRange( descriptor.Emails );
+			result.TryAddRange( descriptor.Phones );
+			result.TryAdd( descriptor.Connection );
+			result.TryAddRange( descriptor.Bandwiths );
+			result.TryAddRange( descriptor.Times );
+			result.TryAddRange( descriptor.Repeats );
+			result.TryAdd( descriptor.TimeZone );
+			result.TryAdd( descriptor.Encryption );
+			result.TryAddRange( descriptor.Attributes );
+			result.TryAddRange( descriptor.MediaDescriptions );
 
-				else
-
-				if (typeof(IEnumerable).IsAssignableFrom( property.PropertyType ) )
-				{
-					var collection = property.GetValue(descriptor) as IEnumerable;
-
-					if ( collection != null )
-					{
-						foreach ( var element in collection )
-						{
-							fields.TryAdd( element as BaseField );
-						}
-					}
-				}
-			}
-
-			return fields;
+			return result;
 		}
 	}
 }
