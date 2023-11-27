@@ -25,8 +25,8 @@ namespace RabbitOM.Net.Sdp.Validation
 			{
 				throw new ArgumentNullException( nameof( descriptor ) );
 			}
-
-			foreach ( var field in SessionDescriptor.ListAllFields( descriptor ) )
+												  
+			foreach ( var field in SessionDescriptor.EnumerateFields( descriptor ) )
 			{
 				field.Validate();
 			}
@@ -44,7 +44,7 @@ namespace RabbitOM.Net.Sdp.Validation
 				return false;
 			}
 
-			foreach (var field in SessionDescriptor.ListAllFields( descriptor ) )
+			foreach (var field in SessionDescriptor.EnumerateFields( descriptor ) )
 			{
 				if ( ! field.TryValidate() )
 				{

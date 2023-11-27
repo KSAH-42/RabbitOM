@@ -46,7 +46,7 @@ namespace RabbitOM.Net.Sdp
 		/// <exception cref="ArgumentNullException"/>
 		public StringList(IEnumerable<string> collection)
 		{
-			AddRange(collection ?? throw new ArgumentNullException(nameof(collection)));
+			AddRange( collection ?? throw new ArgumentNullException(nameof(collection)));
 		}
 
 
@@ -351,7 +351,7 @@ namespace RabbitOM.Net.Sdp
 		{
 			result = _collection.ElementAtOrDefault(index) ?? string.Empty;
 
-			return !string.IsNullOrWhiteSpace(result);
+			return ! string.IsNullOrWhiteSpace( result );
 		}
 	}
 }

@@ -76,18 +76,6 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
-		/// <exception cref="Exception"/>
-		public override void Validate()
-		{
-			if (!TryValidate())
-			{
-				throw new Exception("Validation failed");
-			}
-		}
-
-		/// <summary>
-		/// Validate
-		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		public override bool TryValidate()
 		{

@@ -47,6 +47,7 @@
     <Compile Include="Extensions\AttributeFieldCollectionExtensions.cs" />
     <Compile Include="FieldCollection.cs" />
     <Compile Include="Extensions\SessionDescriptorExtensions.cs" />
+    <Compile Include="ValidationException.cs" />
     <Compile Include="Serialization\Formatters\TimeFieldFormatter.cs" />
     <Compile Include="Serialization\Formatters\RtpMapAttributeValueFormatter.cs" />
     <Compile Include="Serialization\Formatters\RepeatFieldFormatter.cs" />

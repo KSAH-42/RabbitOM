@@ -1,7 +1,6 @@
 ﻿using RabbitOM.Net.Sdp.Validation;
 using RabbitOM.Net.Sdp.Serialization;
 using System;
-using System.Collections;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -287,7 +286,8 @@ namespace RabbitOM.Net.Sdp
 		/// </summary>
 		/// <param name="descriptor">the descriptor</param>
 		/// <returns>returns true for a success, otherwise false.</returns>
-		public static BaseFieldCollection ListAllFields( SessionDescriptor descriptor )
+		/// <exception cref="ArgumentNullException"/>
+		public static BaseFieldCollection EnumerateFields( SessionDescriptor descriptor )
 		{
 			if ( descriptor == null )
 			{

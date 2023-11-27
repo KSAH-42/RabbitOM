@@ -59,25 +59,13 @@ namespace RabbitOM.Net.Sdp
 		/// <summary>
 		/// Validate
 		/// </summary>
-		/// <exception cref="Exception"/>
-		public override void Validate()
-		{
-			if ( ! TryValidate() )
-			{
-				throw new Exception("Validation failed");
-			}
-		}
-
-		/// <summary>
-		/// Validate
-		/// </summary>
 		/// <returns>returns true for a success, otherwise false</returns>
 		/// <remarks>
 		///   <para>a payload value with a null value is considered as valid value</para>
 		/// </remarks>
 		public override bool TryValidate()
 		{
-			return !string.IsNullOrWhiteSpace(_encoding) && _clockRate > 0;
+			return ! string.IsNullOrWhiteSpace( _encoding ) && _clockRate > 0;
 		}
 
 		/// <summary>

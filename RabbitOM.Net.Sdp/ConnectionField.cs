@@ -80,19 +80,7 @@ namespace RabbitOM.Net.Sdp
 
 
 
-		
-		/// <summary>
-		/// Validate
-		/// </summary>
-		/// <exception cref="Exception"/>
-		public override void Validate()
-		{
-			if (!TryValidate())
-			{
-				throw new Exception("Validation failed");
-			}
-		}
-		
+
 		/// <summary>
 		/// Validate
 		/// </summary>
