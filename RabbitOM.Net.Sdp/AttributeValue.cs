@@ -1,4 +1,7 @@
-﻿namespace RabbitOM.Net.Sdp
+﻿using RabbitOM.Net.Sdp.Validation;
+using System;
+
+namespace RabbitOM.Net.Sdp
 {
 	/// <summary>
 	/// Represent the sdp value content

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Sdp
+namespace RabbitOM.Net.Sdp.Validation
 {
 	/// <summary>
 	/// Represent a validation exception

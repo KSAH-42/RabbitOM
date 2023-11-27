@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Net.Sdp.Validation;
+using System;
 
 namespace RabbitOM.Net.Sdp
 {
