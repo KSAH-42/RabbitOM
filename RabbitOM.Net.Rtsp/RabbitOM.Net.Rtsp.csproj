@@ -133,6 +133,8 @@
     <Compile Include="Remoting\RTSPProxySecurityManager.cs" />
     <Compile Include="Remoting\RTSPProxySettings.cs" />
     <Compile Include="Remoting\RTSPProxyStatus.cs" />
+    <Compile Include="RTSPBaseQueue.cs" />
+    <Compile Include="RTSPBaseQueue.Scope.cs" />
     <Compile Include="RTSPAuthenticationType.cs" />
     <Compile Include="RTSPAuthorizationChallenge.cs" />
     <Compile Include="RTSPBasicAuthorizationChallenge.cs" />
@@ -144,8 +146,6 @@
     <Compile Include="RTSPSHA512AuthorizationChallenge.cs" />
     <Compile Include="RTSPAuthorizationFactory.cs" />
     <Compile Include="RTSPActionQueue.cs" />
-    <Compile Include="RTSPActionQueue.Scope.cs" />
-    <Compile Include="RTSPChunkQueue.Scope.cs" />
     <Compile Include="RTSPChunkQueue.cs" />
     <Compile Include="RTSPCredentials.cs" />
     <Compile Include="RTSPDataConverter.cs" />
@@ -154,7 +154,6 @@
     <Compile Include="RTSPDigestAlgorithmType.cs" />
     <Compile Include="RTSPDisposeScope.cs" />
     <Compile Include="RTSPDelegateExtensions.cs" />
-    <Compile Include="RTSPEventQueue.Scope.cs" />
     <Compile Include="RTSPEventQueue.cs" />
     <Compile Include="RTSPEventWaitHandle.cs" />
     <Compile Include="RTSPHashAlgorithm.cs" />
@@ -230,7 +229,6 @@
     <Compile Include="RTSPOperator.cs" />
     <Compile Include="RTSPPacket.cs" />
     <Compile Include="RTSPInterleavedPacket.cs" />
-    <Compile Include="RTSPPacketQueue.Scope.cs" />
     <Compile Include="RTSPPacketQueue.cs" />
     <Compile Include="RTSPPacketReceivedEventArgs.cs" />
     <Compile Include="RTSPParser.cs" />

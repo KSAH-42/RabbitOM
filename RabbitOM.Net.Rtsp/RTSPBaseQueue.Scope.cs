@@ -3,23 +3,23 @@
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent a event circular queue
+    /// Represent the base generic
     /// </summary>
-    internal sealed partial class RTSPEventQueue 
+    internal partial class RTSPBaseQueue<TElement>
     {
         /// <summary>
         /// This class is used to update the internal event handle
         /// </summary>
-        sealed class Scope : IDisposable
+        public sealed class Scope : IDisposable
         {
-            private readonly RTSPEventQueue _queue;
+            private readonly RTSPBaseQueue<TElement> _queue;
 
             /// <summary>
             /// Initialize new instance of the scope class
             /// </summary>
             /// <param name="queue">the queue</param>
             /// <exception cref="ArgumentNullException"/>
-	    public Scope(RTSPEventQueue queue)
+	        public Scope(RTSPBaseQueue<TElement> queue)
             {
                 _queue = queue ?? throw new ArgumentNullException(nameof(queue));
             }

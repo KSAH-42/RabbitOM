@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a event circular queue
     /// </summary>
-    internal sealed partial class RTSPEventQueue : IEnumerable , IEnumerable<EventArgs>
+    internal sealed class RTSPEventQueue : RTSPBaseQueue<EventArgs>
     {
         /// <summary>
         /// Represent the maximum of events
@@ -65,7 +65,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the sync root
         /// </summary>
-        public object SyncRoot
+        public override object SyncRoot
         {
             get => _lock;
         }
@@ -73,7 +73,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the number of elements
         /// </summary>
-        public int Count
+        public override int Count
         {
             get
             {
@@ -87,7 +87,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Check if the queue is empty
         /// </summary>
-        public bool IsEmpty
+        public override bool IsEmpty
         {
             get
             {
@@ -115,7 +115,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the handle
         /// </summary>
-        private RTSPEventWaitHandle Handle
+        protected override RTSPEventWaitHandle Handle
         {
             get => _handle;
         }
@@ -129,105 +129,10 @@ namespace RabbitOM.Net.Rtsp
 
 
         /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPEventQueue queue)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            return queue.Handle.Wait();
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPEventQueue queue, int timeout)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            return queue.Handle.Wait(timeout);
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPEventQueue queue, EventWaitHandle cancellationHandle)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            return queue.Handle.Wait(cancellationHandle);
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="timeout">the timeout</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPEventQueue queue, int timeout, EventWaitHandle cancellationHandle)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-            
-            if (cancellationHandle == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationHandle));
-            }
-
-            return queue.Handle.Wait(timeout, cancellationHandle);
-        }
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
         /// Gets the enumerator
         /// </summary>
         /// <returns>returns an enumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            lock ( _lock )
-            {
-                return _collection.ToList().GetEnumerator();
-            }
-        }
-
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>returns an enumerator</returns>
-        public IEnumerator<EventArgs> GetEnumerator()
+        protected override IEnumerator<EventArgs> BaseGetEnumerator()
         {
             lock ( _lock )
             {
@@ -239,7 +144,7 @@ namespace RabbitOM.Net.Rtsp
         /// Check if the queue contains some elements
         /// </summary>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Any()
+        public override bool Any()
         {
             lock ( _lock )
             {
@@ -252,7 +157,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="eventArgs">the event args</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Enqueue( EventArgs eventArgs )
+        public override bool Enqueue( EventArgs eventArgs )
         {
             if ( eventArgs == null )
             {
@@ -279,7 +184,7 @@ namespace RabbitOM.Net.Rtsp
         /// Dequeue an event
         /// </summary>
         /// <returns>returns an instance, otherwise null</returns>
-        public EventArgs Dequeue()
+        public override EventArgs Dequeue()
         {
             lock ( _lock )
             {
@@ -295,7 +200,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="result">the event args</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool TryDequeue( out EventArgs result )
+        public override bool TryDequeue( out EventArgs result )
         {
             lock ( _lock )
             {
@@ -311,7 +216,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Clear the queue
         /// </summary>
-        public void Clear()
+        public override void Clear()
         {
             lock ( _lock )
             {

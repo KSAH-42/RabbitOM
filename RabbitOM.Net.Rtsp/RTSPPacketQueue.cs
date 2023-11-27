@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a packet circular queue
     /// </summary>
-    internal sealed partial class RTSPPacketQueue : IEnumerable , IEnumerable<RTSPPacket>
+    internal sealed class RTSPPacketQueue : RTSPBaseQueue<RTSPPacket>
     {
         /// <summary>
         /// The default packets numbers
@@ -65,7 +65,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the sync root
         /// </summary>
-        public object SyncRoot
+        public override object SyncRoot
         {
             get => _lock;
         }
@@ -73,7 +73,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the number of elements
         /// </summary>
-        public int Count
+        public override int Count
         {
             get
             {
@@ -87,7 +87,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Check if the queue is empty
         /// </summary>
-        public bool IsEmpty
+        public override bool IsEmpty
         {
             get
             {
@@ -101,7 +101,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the handle
         /// </summary>
-        private RTSPEventWaitHandle Handle
+        protected override RTSPEventWaitHandle Handle
         {
             get => _handle;
         }
@@ -119,109 +119,10 @@ namespace RabbitOM.Net.Rtsp
 
 
         /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            return queue.Handle.Wait();
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue, int timeout)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            return queue.Handle.Wait(timeout);
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue, EventWaitHandle cancellationHandle)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            return queue.Handle.Wait(cancellationHandle);
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="timeout">the timeout</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPPacketQueue queue, int timeout, EventWaitHandle cancellationHandle)
-        {
-            if (queue == null)
-            {
-                throw new ArgumentNullException(nameof(queue));
-            }
-
-            if (cancellationHandle == null)
-            {
-                throw new ArgumentNullException(nameof(cancellationHandle));
-            }
-
-            return queue.Handle.Wait(timeout, cancellationHandle);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
         /// Gets the enumerator
         /// </summary>
         /// <returns>returns an enumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            lock ( _lock )
-            {
-                return _collection.ToList().GetEnumerator();
-            }
-        }
-
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>returns an enumerator</returns>
-        public IEnumerator<RTSPPacket> GetEnumerator()
+        protected override IEnumerator<RTSPPacket> BaseGetEnumerator()
         {
             lock ( _lock )
             {
@@ -233,7 +134,7 @@ namespace RabbitOM.Net.Rtsp
         /// Check if the queue contains some elements
         /// </summary>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Any()
+        public override bool Any()
         {
             lock ( _lock )
             {
@@ -246,7 +147,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="packet">the packet</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Enqueue( RTSPPacket packet )
+        public override bool Enqueue( RTSPPacket packet )
         {
             if ( packet == null || ! packet.TryValidate() )
             {
@@ -273,7 +174,7 @@ namespace RabbitOM.Net.Rtsp
         /// Dequeue a packet
         /// </summary>
         /// <returns>must returns an instance</returns>
-        public RTSPPacket Dequeue()
+        public override RTSPPacket Dequeue()
         {
             lock ( _lock )
             {
@@ -289,7 +190,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="result">the packet</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool TryDequeue( out RTSPPacket result )
+        public override bool TryDequeue( out RTSPPacket result )
         {
             lock ( _lock )
             {
@@ -305,7 +206,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Clear the queue
         /// </summary>
-        public void Clear()
+        public override void Clear()
         {
             lock ( _lock )
             {
