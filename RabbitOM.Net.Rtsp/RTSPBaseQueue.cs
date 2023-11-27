@@ -13,6 +13,9 @@ namespace RabbitOM.Net.Rtsp
         : IEnumerable 
         , IEnumerable<TElement>
         , IReadOnlyCollection<TElement>
+        
+        where TElement : class
+
     {
         /// <summary>
         /// Gets the sync root
