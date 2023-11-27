@@ -12,8 +12,6 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -28,12 +26,8 @@ namespace RabbitOM.Net.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public RTSPDisposeScope( Action action )
         {
-            PushFront( action ?? throw new ArgumentNullException( nameof( action ) ) );
+            AddAction( action ?? throw new ArgumentNullException( nameof( action ) ) );
         }
-
-
-
-
 
 
 
@@ -41,24 +35,15 @@ namespace RabbitOM.Net.Rtsp
         /// Add an action
         /// </summary>
         /// <param name="action">the action</param>
-        public void PushBack( Action action )
-        {
-            _actions.Add( action );
-        }
-
-        /// <summary>
-        /// Add an action
-        /// </summary>
-        /// <param name="action">the action</param>
-        public void PushFront( Action action )
+        public void AddAction( Action action )
         {
             _actions.Insert( 0 , action );
         }
 
         /// <summary>
-        /// Clear all pending actions
+        /// Remove all pending actions
         /// </summary>
-        public void Clear()
+        public void RemoveAllActions()
         {
             _actions.Clear();
         }
@@ -72,6 +57,8 @@ namespace RabbitOM.Net.Rtsp
             {
                 action?.TryInvoke();
             }
+
+            _actions.Clear();
         }
     }
 }
