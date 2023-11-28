@@ -133,8 +133,8 @@
     <Compile Include="Remoting\RTSPProxySecurityManager.cs" />
     <Compile Include="Remoting\RTSPProxySettings.cs" />
     <Compile Include="Remoting\RTSPProxyStatus.cs" />
-    <Compile Include="RTSPBaseQueue.cs" />
-    <Compile Include="RTSPBaseQueue.Scope.cs" />
+    <Compile Include="RTSPQueue.cs" />
+    <Compile Include="RTSPQueue.Scope.cs" />
     <Compile Include="RTSPAuthenticationType.cs" />
     <Compile Include="RTSPAuthorizationChallenge.cs" />
     <Compile Include="RTSPBasicAuthorizationChallenge.cs" />
