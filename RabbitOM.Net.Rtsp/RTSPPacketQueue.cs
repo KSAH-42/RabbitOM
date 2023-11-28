@@ -38,7 +38,7 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Occurs during before adding an element
+        /// Occurs before adding an element
         /// </summary>
         /// <param name="packet">the packet</param>
         protected override void OnEnqueue( RTSPPacket packet )

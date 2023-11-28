@@ -13,6 +13,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         {
 			var arguments = new Dictionary<string, string>();
 
+            
+
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
@@ -42,8 +44,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             Run(arguments["uri"], arguments["-u"], arguments["-p"]);
         }
-
-        // Add two disctinct class: RTSPQueue and RTSPCircularQueue
 
         // ----> don't forget to use <inheritdoc/> for comments
 

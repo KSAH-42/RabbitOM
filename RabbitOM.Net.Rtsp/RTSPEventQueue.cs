@@ -38,7 +38,7 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Occurs during before adding an element
+        /// Occurs before adding an element
         /// </summary>
         /// <param name="eventArgs">the event args</param>
         protected override void OnEnqueue( EventArgs eventArgs )

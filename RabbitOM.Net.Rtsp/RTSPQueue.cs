@@ -333,7 +333,7 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Occurs during before adding an element
+        /// Occurs before adding an element
         /// </summary>
         /// <param name="element">the element</param>
         protected virtual void OnEnqueue( TElement element )
