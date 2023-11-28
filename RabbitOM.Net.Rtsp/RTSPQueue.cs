@@ -13,6 +13,7 @@ namespace RabbitOM.Net.Rtsp
     internal partial class RTSPQueue<TElement> 
         : IEnumerable 
         , IEnumerable<TElement>
+        , ICollection
         , IReadOnlyCollection<TElement>
     {
         private readonly object _lock;
@@ -108,18 +109,31 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
-
-
-
-
-
         /// <summary>
-        /// Wait until an element has been push to the queue
+        /// Gets the inner collection
         /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait( RTSPQueue<TElement> queue )
+        protected Queue<TElement> Items
+        {
+            get
+            {
+                return _collection;
+            }
+        }
+
+		public bool IsSynchronized => throw new NotImplementedException();
+
+
+
+
+
+
+		/// <summary>
+		/// Wait until an element has been push to the queue
+		/// </summary>
+		/// <param name="queue">the queue</param>
+		/// <returns>returns true for a success, otherwise false.</returns>
+		/// <exception cref="ArgumentNullException"/>
+		public static bool Wait( RTSPQueue<TElement> queue )
         {
             if ( queue == null )
             {
@@ -228,6 +242,19 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
+        /// Copy the element to the targe array
+        /// </summary>
+        /// <param name="array">the target array</param>
+        /// <param name="index">the index</param>
+        public void CopyTo(Array array, int index)
+        {
+            lock ( _lock )
+            {
+                _collection.CopyTo( array as TElement[] , index );
+            }
+        }
+
+        /// <summary>
         /// Enqueue an element
         /// </summary>
         /// <param name="element">the element</param>
@@ -306,17 +333,6 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
-        /// <summary>
-        /// Gets the inner collection
-        /// </summary>
-        protected Queue<TElement> Items
-        {
-            get
-            {
-                return _collection;
-            }
-        }
-
 
 
 
@@ -339,5 +355,5 @@ namespace RabbitOM.Net.Rtsp
         protected virtual void OnEnqueue( TElement element )
         {
         }
-    }
+	}
 }

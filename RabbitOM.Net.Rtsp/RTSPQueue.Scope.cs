@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Rtsp
     internal partial class RTSPQueue<TElement>
     {
         /// <summary>
-        /// This class is used to update the internal event handle
+        /// This class is used for updating the internal event handle during add and remove operations
         /// </summary>
         sealed class Scope : IDisposable
         {
