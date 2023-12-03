@@ -120,26 +120,26 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
-	/// <summary>
+	    /// <summary>
         /// Returns false
         /// </summary>
         public bool IsSynchronized
-	{
+	    {
             get => false;
- 	}
+ 	    }
 
 
 
 
 
 
-	/// <summary>
-	/// Wait until an element has been push to the queue
-	/// </summary>
-	/// <param name="queue">the queue</param>
-	/// <returns>returns true for a success, otherwise false.</returns>
-	/// <exception cref="ArgumentNullException"/>
-	public static bool Wait( RTSPQueue<TElement> queue )
+        /// <summary>
+        /// Wait until an element has been push to the queue
+        /// </summary>
+        /// <param name="queue">the queue</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static bool Wait( RTSPQueue<TElement> queue )
         {
             if ( queue == null )
             {
@@ -267,15 +267,15 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool Enqueue( TElement element )
         {
-            if ( ! OnValidate( element ) )
-            {
-                return false;
-            }
-
             lock ( _lock )
             {
                 using ( _scope )
                 {
+                    if ( ! OnValidate( element ) )
+                    {
+                        return false;
+                    }
+
                     OnEnqueue( element );
 
                     _collection.Enqueue( element );

@@ -7,45 +7,12 @@ using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
-    public class Element {
-        string _name;
-        public Element(string name){_name = name; }
-		public override string ToString()
-		{
-			return _name;
-		}
-	}
-	public class QueueTest : ICollection
-	{
-        private readonly Queue<Element> _collection = new Queue<Element>();
-
-		public int Count => throw new NotImplementedException();
-
-		public object SyncRoot => throw new NotImplementedException();
-
-		public bool IsSynchronized => throw new NotImplementedException();
-
-		public void CopyTo(Array array, int index)
-		{
-			_collection.CopyTo( array as Element[], index );
-		}
-
-		public IEnumerator GetEnumerator()
-		{
-			throw new NotImplementedException();
-		}
-
-		internal void Enqueue(Element element)
-		{
-			_collection.Enqueue( element );
-		}
-	}
-	class Program
+    class Program
     {
         static void Main(string[] args)
         {
 			var arguments = new Dictionary<string, string>();
-
+            
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
