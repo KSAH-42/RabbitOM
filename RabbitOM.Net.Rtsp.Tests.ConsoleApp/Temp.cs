@@ -134,7 +134,7 @@ namespace RabbitOM.Net.Rtsp.Beta
             get;
         }
 
-        public abstract bool IsDispose
+        public abstract bool IsDisposed
         {
             get;
         }
