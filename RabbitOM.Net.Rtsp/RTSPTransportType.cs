@@ -3,7 +3,7 @@
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent the transport lower types
+    /// Represent the transport layer types
     /// </summary>
     public enum RTSPTransportType
     {
