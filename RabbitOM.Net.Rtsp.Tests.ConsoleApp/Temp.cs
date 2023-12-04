@@ -26,7 +26,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         public TimeSpan ReceiveTransportTimeout { get; set; }
         public string MulticastAddress { get; set; }
         public int RtpPort { get; set; }
-        public byte TTL { get; set; }
+        public byte TimeToLive { get; set; }
         public bool AutoStartStreaming { get; set; }
         public RTSPMediaFormat MediaFormat { get; set; }
         public RTSPKeepAliveType KeepAliveType { get; set; }
@@ -35,7 +35,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         public RTSPHeaderCollection DescribeHeaders { get; set; }
         public RTSPHeaderCollection SetupHeaders { get; set; }
         public RTSPHeaderCollection PlayHeaders { get; set; }
-        public RTSPHeaderCollection TeardownHeaders { get; set; }
+        public RTSPHeaderCollection TearDownHeaders { get; set; }
         public RTSPHeaderCollection PingHeaders { get; set; }
     }
 

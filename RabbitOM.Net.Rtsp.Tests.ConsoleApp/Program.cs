@@ -12,6 +12,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
 			var arguments = new Dictionary<string, string>();
+
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
