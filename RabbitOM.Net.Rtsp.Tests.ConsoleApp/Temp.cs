@@ -48,7 +48,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         public string UserName { get; set; }
         public string Password { get; set; }
         public TimeSpan ReceiveTimeout { get; set; }
-        public TimeSpan WriteTimeout { get;set; }
+        public TimeSpan SendTimeout { get;set; }
         public TimeSpan PingInterval { get; set; }
         public TimeSpan RetriesDelay { get; set; }
         public TimeSpan ReceiveTransportTimeout { get; set; }
@@ -227,40 +227,98 @@ namespace RabbitOM.Net.Rtsp.Beta
 
 namespace RabbitOM.Net.Rtsp.Beta
 {
-    public abstract class RTSPClientConfigurer
+    public interface IRTSPClientConfigurer
     {
+        void Configure();
+    }
+
+    public abstract class RTSPClientConfigurer : IRTSPClientConfigurer
+    {
+        protected readonly IRTSPClient _client;
+
+		protected RTSPClientConfigurer( IRTSPClient client )
+		{
+            _client = client;
+        }
+
         public string Uri { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public bool PreventIfStarted { get; set; }
-
-        public abstract void Configure();
-        public abstract bool TryConfigure();
+       
+        public virtual void Configure()
+        {
+            _client.Configuration.Uri = Uri;
+            _client.Configuration.UserName = UserName;
+            _client.Configuration.Password = Password;
+            _client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 15 );
+            _client.Configuration.SendTimeout = TimeSpan.FromSeconds(15);
+            _client.Configuration.RetriesDelay = TimeSpan.FromSeconds(15);
+            _client.Configuration.PingInterval = TimeSpan.FromSeconds(15);
+            _client.Configuration.RetriesTransportTimeout = TimeSpan.FromSeconds(15);
+        }
     }
 
     public sealed class RTSPClientTcpConfigurer : RTSPClientConfigurer
     {
-        public override void Configure() => throw new NotImplementedException();
-        public override bool TryConfigure() => throw new NotImplementedException();
+        public RTSPClientTcpConfigurer(IRTSPClient client)
+            : base( client )
+        {
+        }
+
+        public override void Configure()
+        {
+            _client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
+
+            base.Configure();
+        }
     }
 
     public sealed class RTSPClientUdpConfigurer : RTSPClientConfigurer
     {
-        public string IPAddress { get; set; }
-        public int RtpPort {get; set; }
+        public RTSPClientUdpConfigurer(IRTSPClient client)
+            : base(client)
+        {
+        }
+
+        public int RtpPort {get; set; } = 34001;
+        public TimeSpan ReceiveTransportTimeout { get; set; } = TimeSpan.FromSeconds(15);
+        public TimeSpan RetriesTransportTimeout { get; set; } = TimeSpan.FromSeconds(15);
         
-        public override void Configure() => throw new NotImplementedException();
-        public override bool TryConfigure() => throw new NotImplementedException();
+        public override void Configure()
+        {
+            _client.Configuration.DeliveryMode = RTSPDeliveryMode.Udp;
+            _client.Configuration.ReceiveTransportTimeout = ReceiveTransportTimeout;
+            _client.Configuration.RetriesTransportTimeout = RetriesTransportTimeout;
+            _client.Configuration.RtpPort = RtpPort;
+
+            base.Configure();
+        }
     }
 
     public sealed class RTSPClientMulticastConfigurer : RTSPClientConfigurer
     {
-        public string IPAddress {get;set; }
-        public int RtpPort { get; set; }
-        public byte TimeToLive { get; set; }
+        public RTSPClientMulticastConfigurer(IRTSPClient client)
+            : base(client)
+        {
+        }
 
-        public override void Configure() => throw new NotImplementedException();
-        public override bool TryConfigure() => throw new NotImplementedException();
+        public string IPAddress {get;set; } = "224.0.0.1";
+        public int RtpPort { get; set; } = 35001;
+        public byte TimeToLive { get; set; } = 16;
+        public TimeSpan ReceiveTransportTimeout { get; set; } = TimeSpan.FromSeconds(15);
+        public TimeSpan RetriesTransportTimeout { get; set; } = TimeSpan.FromSeconds(15);
+
+        public override void Configure()
+        {
+            _client.Configuration.DeliveryMode = RTSPDeliveryMode.Multicast;
+            _client.Configuration.MulticastAddress = IPAddress;
+            _client.Configuration.RtpPort = RtpPort;
+            _client.Configuration.TimeToLive = TimeToLive;
+            _client.Configuration.ReceiveTransportTimeout = ReceiveTransportTimeout;
+            _client.Configuration.RetriesTransportTimeout = RetriesTransportTimeout;
+
+            base.Configure();
+        }
     }
 }
 
@@ -487,7 +545,7 @@ namespace RabbitOM.Net.Rtsp.Beta
                 throw new NotImplementedException();
             }
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }
