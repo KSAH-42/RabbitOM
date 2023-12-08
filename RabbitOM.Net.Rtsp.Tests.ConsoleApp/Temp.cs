@@ -256,7 +256,7 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public abstract bool IsConnected
         {
-            get; // return _channel.IsOpened;
+            get;
         }
 
         public abstract bool IsReceivingPacket
@@ -430,7 +430,7 @@ namespace RabbitOM.Net.Rtsp.Beta
     public interface IRTSPStreamingChannel : IDisposable
     {
         object SyncRoot {get; }
-        IRTSPClientConfiguration Configuration {get; }
+        IRTSPClientConfiguration Configuration { get; }
         bool IsOpened { get; }
         bool IsStreamingStarted { get; }
         bool IsReceivingPacket { get; }
