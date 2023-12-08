@@ -427,14 +427,13 @@ namespace RabbitOM.Net.Rtsp.Beta
 
 namespace RabbitOM.Net.Rtsp.Beta
 {
-    public interface IRTSPStreamingChannel : IDisposable
+    public interface IRTSPChannel : IDisposable
     {
         object SyncRoot {get; }
         IRTSPClientConfiguration Configuration { get; }
         bool IsOpened { get; }
         bool IsStreamingStarted { get; }
         bool IsReceivingPacket { get; }
-        bool HasErrors { get; }
 
         bool Open();
         void Close();
@@ -445,11 +444,11 @@ namespace RabbitOM.Net.Rtsp.Beta
         void WaitForConnection( TimeSpan timeout );
     }
 
-    public abstract class RTSPStreamingChannel : IRTSPStreamingChannel
+    public abstract class RTSPChannel : IRTSPChannel
     {
         private readonly IRTSPEventManager _eventManager;
         
-		protected RTSPStreamingChannel( IRTSPEventManager eventManager )
+		protected RTSPChannel( IRTSPEventManager eventManager )
 		{                     
             _eventManager = eventManager;
         }
@@ -459,7 +458,6 @@ namespace RabbitOM.Net.Rtsp.Beta
         public abstract bool IsOpened { get; }
         public abstract bool IsStreamingStarted { get; }
         public abstract bool IsReceivingPacket { get; }
-        public abstract bool HasErrors { get; }
 
         public abstract bool Open();
         public abstract void Close();
@@ -483,9 +481,9 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPChannelRunner : IDisposable
     {
-        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPChannel _channel;
         
-		public RTSPChannelRunner(IRTSPStreamingChannel channel)
+		public RTSPChannelRunner(IRTSPChannel channel)
 		{
             _channel = channel;
         }
@@ -592,10 +590,10 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPTcpStreamingSession : RTSPStreamingSession
     {
-        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPChannel _channel;
         private readonly IRTSPConnection _connection;
 
-        public RTSPTcpStreamingSession(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
+        public RTSPTcpStreamingSession(IRTSPChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
             : base( eventManager )
 		{
             _channel = channel;
@@ -613,10 +611,10 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPUdpStreamingSession : RTSPStreamingSession
     {
-        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPChannel _channel;
         private readonly IRTSPConnection _connection;
 
-        public RTSPUdpStreamingSession(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
+        public RTSPUdpStreamingSession(IRTSPChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
             : base(eventManager)
 		{
             _channel = channel;
@@ -634,10 +632,10 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPMulticastStreamingSession : RTSPStreamingSession
     {
-        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPChannel _channel;
         private readonly IRTSPConnection _connection;
 
-        public RTSPMulticastStreamingSession(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
+        public RTSPMulticastStreamingSession(IRTSPChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
             : base(eventManager)
 		{
             _channel = channel;
@@ -655,11 +653,11 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPStreamingSessionFactory
     {
-        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPChannel _channel;
         private readonly IRTSPConnection _connection;
         private readonly IRTSPEventManager _eventManager;
 
-        public RTSPStreamingSessionFactory(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager )
+        public RTSPStreamingSessionFactory(IRTSPChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager )
 		{
             _channel = channel;
             _connection = connection;
