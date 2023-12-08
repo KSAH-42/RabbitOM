@@ -63,7 +63,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 		/// </summary>
 		public bool IsSynchronized
         {
-            get => false;
+            get => true;
         }
 
         /// <summary>

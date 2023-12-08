@@ -71,6 +71,14 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
+        /// Returns true
+        /// </summary>
+        public bool IsSynchronized
+        {
+            get => true;
+        }
+
+        /// <summary>
         /// Gets the number of elements
         /// </summary>
         public int Count
@@ -119,14 +127,6 @@ namespace RabbitOM.Net.Rtsp
                 return _collection;
             }
         }
-
-	    /// <summary>
-        /// Returns false
-        /// </summary>
-        public bool IsSynchronized
-	    {
-            get => false;
- 	    }
 
 
 
