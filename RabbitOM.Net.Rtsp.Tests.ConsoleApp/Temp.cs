@@ -550,11 +550,14 @@ namespace RabbitOM.Net.Rtsp.Beta
         }
 
         public abstract string SessionId {get; }
+        public abstract bool IsDescribed { get; }
+        public abstract bool IsSetup { get; }
         public abstract bool IsRunning { get; }
         public abstract bool Describe();
         public abstract bool Setup();
         public abstract bool StartStreaming();
         public abstract void StopStreaming();
+        public abstract bool Ping();
         public abstract void Dispose();
 
         protected void OnStreamingActive(RTSPStreamingActiveEventArgs e) 
@@ -562,6 +565,11 @@ namespace RabbitOM.Net.Rtsp.Beta
             _eventManager.PublishEvent( e );
         }
 
+        protected void OnStreamingInActive(RTSPStreamingInActiveEventArgs e)
+        {
+            _eventManager.PublishEvent(e);
+        }
+        
         protected void OnStreamingStarted(RTSPStreamingStartedEventArgs e)
         {
             _eventManager.PublishEvent(e);
@@ -572,17 +580,12 @@ namespace RabbitOM.Net.Rtsp.Beta
             _eventManager.PublishEvent(e);
         }
 
-        protected void OnStreamingInActive(RTSPStreamingInActiveEventArgs e)
-        {
-            _eventManager.PublishEvent(e);
-        }
-
         protected void OnPacketReceived(RTSPPacketReceivedEventArgs e )
         {
             _eventManager.PublishEvent(e);
         }
 
-        protected void OnTransportError(RTSPTransportErrorEventArgs e)
+        protected void OnError(RTSPErrorEventArgs e)
         {
             _eventManager.PublishEvent(e);
         }
@@ -601,11 +604,14 @@ namespace RabbitOM.Net.Rtsp.Beta
         }
 
         public override string SessionId { get; }
+        public override bool IsDescribed { get; }
+        public override bool IsSetup { get; }
         public override bool IsRunning { get; }
         public override bool Describe() => false;
         public override bool Setup() => false;
         public override bool StartStreaming() => false;
         public override void StopStreaming() { }
+        public override bool Ping() => false;
         public override void Dispose() { }
     }
 
@@ -622,11 +628,14 @@ namespace RabbitOM.Net.Rtsp.Beta
 		}
 
         public override string SessionId { get; }
+        public override bool IsDescribed { get; }
+        public override bool IsSetup { get; }
         public override bool IsRunning { get; }
         public override bool Describe() => false;
         public override bool Setup() => throw new NotImplementedException();
         public override bool StartStreaming() => throw new NotImplementedException();
         public override void StopStreaming() { throw new NotImplementedException(); }
+        public override bool Ping() => false; 
         public override void Dispose() { }
     }
 
@@ -643,11 +652,14 @@ namespace RabbitOM.Net.Rtsp.Beta
 		}
 
         public override string SessionId { get; }
+        public override bool IsDescribed { get; }
+        public override bool IsSetup { get; }
         public override bool IsRunning { get; }
         public override bool Describe() => false;
         public override bool Setup() => throw new NotImplementedException();
         public override bool StartStreaming() => throw new NotImplementedException();
         public override void StopStreaming() { throw new NotImplementedException(); }
+        public override bool Ping() => false; 
         public override void Dispose() { }
     }
 
