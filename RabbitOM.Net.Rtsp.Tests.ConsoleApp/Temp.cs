@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Net.Rtsp.Remoting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,12 @@ namespace RabbitOM.Net.Rtsp.Beta
     {
     }
     public class RTSPDisconnectedEventArgs : EventArgs
+    {
+    }
+    public class RTSPStreamingStartedEventArgs : EventArgs
+    {
+    }
+    public class RTSPStreamingStoppedEventArgs : EventArgs
     {
     }
     public class RTSPStreamingActiveEventArgs : EventArgs
@@ -122,7 +129,33 @@ namespace RabbitOM.Net.Rtsp.Beta
 
 namespace RabbitOM.Net.Rtsp.Beta
 {
-    public sealed class RTSPClientConfiguration
+    public interface IRTSPClientConfiguration
+    {
+        object SyncRoot { get; } 
+        string Uri { get; set; }
+        string UserName { get; set; }
+        string Password { get; set; }
+        TimeSpan ReceiveTimeout { get; set; }
+        TimeSpan SendTimeout { get; set; }
+        TimeSpan PingInterval { get; set; }
+        TimeSpan RetriesDelay { get; set; }
+        TimeSpan ReceiveTransportTimeout { get; set; }
+        TimeSpan RetriesTransportTimeout { get; set; }
+        string MulticastAddress { get; set; }
+        int RtpPort { get; set; }
+        byte TimeToLive { get; set; }
+        RTSPMediaFormat MediaFormat { get; set; }
+        RTSPKeepAliveType KeepAliveType { get; set; }
+        RTSPDeliveryMode DeliveryMode { get; set; }
+        RTSPHeaderCollection OptionsHeaders { get; }
+        RTSPHeaderCollection DescribeHeaders { get; }
+        RTSPHeaderCollection SetupHeaders { get; }
+        RTSPHeaderCollection PlayHeaders { get; }
+        RTSPHeaderCollection TearDownHeaders { get; }
+        RTSPHeaderCollection PingHeaders { get; } 
+    }
+
+    public sealed class RTSPClientConfiguration : IRTSPClientConfiguration
     {
         public object SyncRoot { get; } = new object();
         public string Uri { get;set; }
@@ -154,6 +187,8 @@ namespace RabbitOM.Net.Rtsp.Beta
         event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
         event EventHandler<RTSPConnectedEventArgs> Connected;
         event EventHandler<RTSPDisconnectedEventArgs> Disconnected;
+        event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
+        event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
         event EventHandler<RTSPStreamingActiveEventArgs> StreamingActive;
         event EventHandler<RTSPStreamingInActiveEventArgs> StreamingInActive;
         event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived;
@@ -187,7 +222,6 @@ namespace RabbitOM.Net.Rtsp.Beta
         bool StartCommunication();
         void StopCommunication();
         void StopCommunication(TimeSpan shutdownTimeout);
-        bool WaitForConnection();
         bool WaitForConnection(TimeSpan timeout);
     }
 
@@ -197,6 +231,8 @@ namespace RabbitOM.Net.Rtsp.Beta
         public event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
         public event EventHandler<RTSPConnectedEventArgs> Connected;
         public event EventHandler<RTSPDisconnectedEventArgs> Disconnected;
+        public event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
+        public event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
         public event EventHandler<RTSPStreamingActiveEventArgs> StreamingActive;
         public event EventHandler<RTSPStreamingInActiveEventArgs> StreamingInActive;
         public event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived;
@@ -220,7 +256,7 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public abstract bool IsConnected
         {
-            get;
+            get; // return _channel.IsOpened;
         }
 
         public abstract bool IsReceivingPacket
@@ -236,7 +272,6 @@ namespace RabbitOM.Net.Rtsp.Beta
         public abstract bool StartCommunication();
         public abstract void StopCommunication();
         public abstract void StopCommunication(TimeSpan shutdownTimeout);
-        public abstract bool WaitForConnection();
         public abstract bool WaitForConnection(TimeSpan timeout);
         public abstract void Dispose();
 
@@ -259,6 +294,16 @@ namespace RabbitOM.Net.Rtsp.Beta
         protected virtual void OnDisconnected(RTSPDisconnectedEventArgs e)
         {
             Disconnected?.TryInvoke(this, e);
+        }
+
+        protected virtual void OnStreamingStarted(RTSPStreamingStartedEventArgs e)
+        {
+            StreamingStarted?.TryInvoke(this,e);
+        }
+
+        protected virtual void OnStreamingStopped(RTSPStreamingStoppedEventArgs e)
+        {
+            StreamingStopped?.TryInvoke(this, e);
         }
 
         protected virtual void OnStreamingActive(RTSPStreamingActiveEventArgs e)
@@ -382,14 +427,14 @@ namespace RabbitOM.Net.Rtsp.Beta
 
 namespace RabbitOM.Net.Rtsp.Beta
 {
-    public interface IRTSPChannel : IDisposable
+    public interface IRTSPStreamingChannel : IDisposable
     {
         object SyncRoot {get; }
-        RTSPClientConfiguration Configuration { get; }
-        bool IsStreamingStarted { get; }
-        bool IsReceivingPacket {get; }
-        bool HasErrors { get; }
+        IRTSPClientConfiguration Configuration {get; }
         bool IsOpened { get; }
+        bool IsStreamingStarted { get; }
+        bool IsReceivingPacket { get; }
+        bool HasErrors { get; }
 
         bool Open();
         void Close();
@@ -397,14 +442,50 @@ namespace RabbitOM.Net.Rtsp.Beta
         bool StartStreaming();
         void StopStreaming();
         bool Ping();
-        void WaitForConnection( TimeSpan timeout);
+        void WaitForConnection( TimeSpan timeout );
     }
 
-    public sealed class RTSPClientChannelRunner : IDisposable
+    public abstract class RTSPStreamingChannel : IRTSPStreamingChannel
     {
-        private readonly IRTSPChannel _channel;
+        private readonly IRTSPEventManager _eventManager;
         
-		public RTSPClientChannelRunner(IRTSPChannel channel, IRTSPEventManager eventManager)
+		protected RTSPStreamingChannel( IRTSPEventManager eventManager )
+		{                     
+            _eventManager = eventManager;
+        }
+
+        public abstract object SyncRoot { get; }
+        public abstract IRTSPClientConfiguration Configuration { get; }
+        public abstract bool IsOpened { get; }
+        public abstract bool IsStreamingStarted { get; }
+        public abstract bool IsReceivingPacket { get; }
+        public abstract bool HasErrors { get; }
+
+        public abstract bool Open();
+        public abstract void Close();
+        public abstract void Dispose();
+        public abstract void Abort();
+        public abstract bool StartStreaming();
+        public abstract void StopStreaming();
+        public abstract bool Ping();
+        public abstract void WaitForConnection(TimeSpan timeout);
+
+        protected virtual void OnOpen()
+        {
+            _eventManager.PublishEvent( new RTSPConnectedEventArgs() );
+        }
+
+        protected virtual void OnClose()
+        {
+            _eventManager.PublishEvent(new RTSPDisconnectedEventArgs());
+        }
+    }
+
+    public sealed class RTSPChannelRunner : IDisposable
+    {
+        private readonly IRTSPStreamingChannel _channel;
+        
+		public RTSPChannelRunner(IRTSPStreamingChannel channel)
 		{
             _channel = channel;
         }
@@ -470,7 +551,9 @@ namespace RabbitOM.Net.Rtsp.Beta
             _eventManager = eventManager;
         }
 
+        public abstract string SessionId {get; }
         public abstract bool IsRunning { get; }
+        public abstract bool Describe();
         public abstract bool Setup();
         public abstract bool StartStreaming();
         public abstract void StopStreaming();
@@ -479,6 +562,16 @@ namespace RabbitOM.Net.Rtsp.Beta
         protected void OnStreamingActive(RTSPStreamingActiveEventArgs e) 
         {
             _eventManager.PublishEvent( e );
+        }
+
+        protected void OnStreamingStarted(RTSPStreamingStartedEventArgs e)
+        {
+            _eventManager.PublishEvent(e);
+        }
+
+        protected void OnStreamingStopped(RTSPStreamingStoppedEventArgs e)
+        {
+            _eventManager.PublishEvent(e);
         }
 
         protected void OnStreamingInActive(RTSPStreamingInActiveEventArgs e)
@@ -497,17 +590,21 @@ namespace RabbitOM.Net.Rtsp.Beta
         }
     }
 
-    public sealed class RTSPInterleavedStreamingSession : RTSPStreamingSession
+    public sealed class RTSPTcpStreamingSession : RTSPStreamingSession
     {
-        private readonly IRTSPChannel _channel;
+        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPConnection _connection;
 
-        public RTSPInterleavedStreamingSession(IRTSPChannel channel, IRTSPEventManager eventManager)
-            : base(eventManager)
+        public RTSPTcpStreamingSession(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
+            : base( eventManager )
 		{
             _channel = channel;
-		}
+            _connection = connection;
+        }
 
+        public override string SessionId { get; }
         public override bool IsRunning { get; }
+        public override bool Describe() => false;
         public override bool Setup() => false;
         public override bool StartStreaming() => false;
         public override void StopStreaming() { }
@@ -516,15 +613,19 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPUdpStreamingSession : RTSPStreamingSession
     {
-        private readonly IRTSPChannel _channel;
+        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPConnection _connection;
 
-        public RTSPUdpStreamingSession(IRTSPChannel channel, IRTSPEventManager eventManager)
+        public RTSPUdpStreamingSession(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
             : base(eventManager)
 		{
             _channel = channel;
+            _connection = connection;
 		}
 
+        public override string SessionId { get; }
         public override bool IsRunning { get; }
+        public override bool Describe() => false;
         public override bool Setup() => throw new NotImplementedException();
         public override bool StartStreaming() => throw new NotImplementedException();
         public override void StopStreaming() { throw new NotImplementedException(); }
@@ -533,15 +634,19 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPMulticastStreamingSession : RTSPStreamingSession
     {
-        private readonly IRTSPChannel _channel;
+        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPConnection _connection;
 
-        public RTSPMulticastStreamingSession(IRTSPChannel channel, IRTSPEventManager eventManager)
+        public RTSPMulticastStreamingSession(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager)
             : base(eventManager)
 		{
             _channel = channel;
+            _connection = connection;
 		}
 
+        public override string SessionId { get; }
         public override bool IsRunning { get; }
+        public override bool Describe() => false;
         public override bool Setup() => throw new NotImplementedException();
         public override bool StartStreaming() => throw new NotImplementedException();
         public override void StopStreaming() { throw new NotImplementedException(); }
@@ -550,12 +655,14 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPStreamingSessionFactory
     {
-        private readonly IRTSPChannel _channel;
+        private readonly IRTSPStreamingChannel _channel;
+        private readonly IRTSPConnection _connection;
         private readonly IRTSPEventManager _eventManager;
 
-        public RTSPStreamingSessionFactory(IRTSPChannel channel, IRTSPEventManager eventManager )
+        public RTSPStreamingSessionFactory(IRTSPStreamingChannel channel, IRTSPConnection connection, IRTSPEventManager eventManager )
 		{
             _channel = channel;
+            _connection = connection;
             _eventManager = eventManager;
         }
 
@@ -563,20 +670,20 @@ namespace RabbitOM.Net.Rtsp.Beta
         {
             if (_channel.Configuration.DeliveryMode == RTSPDeliveryMode.Tcp )
             {
-                throw new NotImplementedException();
+                return new RTSPTcpStreamingSession( _channel , _connection , _eventManager );
             }
 
             if (_channel.Configuration.DeliveryMode == RTSPDeliveryMode.Udp)
             {
-                throw new NotImplementedException();
+                return new RTSPUdpStreamingSession( _channel , _connection , _eventManager );
             }
 
             if (_channel.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast)
             {
-                throw new NotImplementedException();
+                return new RTSPMulticastStreamingSession( _channel , _connection , _eventManager );
             }
 
-            throw new NotSupportedException();
+            throw new NotSupportedException( $"The streaming session using {_channel.Configuration.DeliveryMode} is not supported");
         }
     }
 }
