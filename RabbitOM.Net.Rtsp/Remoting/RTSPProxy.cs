@@ -380,6 +380,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public void Dispose()
         {
             Close();
+
             _requestManager.Dispose();
         }
 
@@ -425,35 +426,26 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
         {
-            try
+            lock (_lock)
             {
-                lock ( _lock )
+                bool succeed = false;
+
+                if (_socket.SetReceiveTimeout(receiveTimeout))
                 {
-                    bool succeed = false;
+                    _settings.ReceiveTimeout = receiveTimeout;
 
-                    if ( _socket.SetReceiveTimeout( receiveTimeout ) )
-                    {
-                        _settings.ReceiveTimeout = receiveTimeout;
-
-                        succeed = true;
-                    }
-
-                    if ( _socket.SetSendTimeout( sendTimeout ) )
-                    {
-                        _settings.SendTimeout = sendTimeout;
-
-                        succeed = true;
-                    }
-
-                    return succeed;
+                    succeed = true;
                 }
-            }
-            catch ( Exception ex )
-            {
-                OnError( new RTSPConnectionErrorEventArgs( ex ) );
-            }
 
-            return false;
+                if (_socket.SetSendTimeout(sendTimeout))
+                {
+                    _settings.SendTimeout = sendTimeout;
+
+                    succeed = true;
+                }
+
+                return succeed;
+            }
         }
 
         /// <summary>
@@ -463,16 +455,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( string text )
         {
-            try
-            {
-                return _socket.Send( text );
-            }
-            catch ( Exception ex )
-            {
-                OnError( new RTSPConnectionErrorEventArgs( ex ) );
-            }
-
-            return false;
+            return _socket.Send( text );
         }
 
         /// <summary>
@@ -482,16 +465,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte[] buffer )
         {
-            try
-            {
-                return _socket.Send( buffer );
-            }
-            catch ( Exception ex )
-            {
-                OnError( new RTSPConnectionErrorEventArgs( ex ) );
-            }
-
-            return false;
+            return _socket.Send(buffer);
         }
 
         /// <summary>
