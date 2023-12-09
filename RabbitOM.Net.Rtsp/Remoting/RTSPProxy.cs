@@ -224,8 +224,6 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <exception cref="Exception"/>
         public void Open(string uri, RTSPCredentials credentials)
         {
-            // TODO: Code refactoring here
-
             if (uri == null)
             {
                 throw new ArgumentNullException(nameof(uri));
@@ -477,16 +475,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte[] buffer , int offset , int count )
         {
-            try
-            {
-                return _socket.Send( buffer , offset , count );
-            }
-            catch ( Exception ex )
-            {
-                OnError( new RTSPConnectionErrorEventArgs( ex ) );
-            }
-
-            return false;
+            return _socket.Send(buffer, offset, count);
         }
 
         /// <summary>
@@ -498,16 +487,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns the number of bytes read</returns>
         public int Receive( byte[] buffer , int offset , int count )
         {
-            try
-            {
-                return _socket.Receive( buffer , offset , count );
-            }
-            catch ( Exception ex )
-            {
-                OnError( new RTSPConnectionErrorEventArgs( ex ) );
-            }
-
-            return -1;
+            return _socket.Receive(buffer, offset, count);
         }
 
         /// <summary>
