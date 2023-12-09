@@ -1,7 +1,5 @@
 ﻿using System;
 
-// TODO: Code refactoring for the exception handling: we lose the socket exception, it must be bubbled
-
 namespace RabbitOM.Net.Rtsp.Remoting
 {
     /// <summary>
@@ -579,7 +577,6 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             _informations.ResetAll();
             _securityManager.Initialize();
-
 
             _eventListener.Start( () =>
             {
