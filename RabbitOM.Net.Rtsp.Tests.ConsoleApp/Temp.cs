@@ -370,9 +370,9 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public override void Configure()
         {
-            _client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
-
             base.Configure();
+
+            _client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
         }
     }
 
@@ -389,12 +389,12 @@ namespace RabbitOM.Net.Rtsp.Beta
         
         public override void Configure()
         {
+            base.Configure();
+
             _client.Configuration.DeliveryMode = RTSPDeliveryMode.Udp;
             _client.Configuration.ReceiveTransportTimeout = ReceiveTransportTimeout;
             _client.Configuration.RetriesTransportTimeout = RetriesTransportTimeout;
             _client.Configuration.RtpPort = RtpPort;
-
-            base.Configure();
         }
     }
 
@@ -413,14 +413,14 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public override void Configure()
         {
+            base.Configure();
+
             _client.Configuration.DeliveryMode = RTSPDeliveryMode.Multicast;
             _client.Configuration.MulticastAddress = IPAddress;
             _client.Configuration.RtpPort = RtpPort;
             _client.Configuration.TimeToLive = TimeToLive;
             _client.Configuration.ReceiveTransportTimeout = ReceiveTransportTimeout;
             _client.Configuration.RetriesTransportTimeout = RetriesTransportTimeout;
-
-            base.Configure();
         }
     }
 }
