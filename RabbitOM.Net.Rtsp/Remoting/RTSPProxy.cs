@@ -10,12 +10,12 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised when the connection has been opened
         /// </summary>
-        public event EventHandler<RTSPConnectionOpenedEventArgs>                Opened                = null;
+        public event EventHandler<RTSPConnectionOpenedEventArgs>      Opened                = null;
 
         /// <summary>
         /// Raised when the connection has been closed
         /// </summary>
-        public event EventHandler<RTSPConnectionClosedEventArgs>                Closed                = null;
+        public event EventHandler<RTSPConnectionClosedEventArgs>      Closed                = null;
 
         /// <summary>
         /// Raised when a message has been sended
@@ -30,12 +30,12 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Raised the data has been received
         /// </summary>
-        public event EventHandler<RTSPPacketReceivedEventArgs>                  DataReceived          = null;
+        public event EventHandler<RTSPPacketReceivedEventArgs>        DataReceived          = null;
 
         /// <summary>
         /// Raised when an error occurs
         /// </summary>
-        public event EventHandler<RTSPConnectionErrorEventArgs>                 Error                 = null;
+        public event EventHandler<RTSPConnectionErrorEventArgs>       Error                 = null;
 
         /// <summary>
         /// Raised when the authentication has failed
@@ -83,7 +83,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
             _lock = new object();
             _socket = new RTSPTcpSocket( e => OnError( new RTSPConnectionErrorEventArgs( e ) ) );
             _informations = new RTSPProxyInformations();
-            _requestManager = new RTSPProxyRequestManager( this);
+            _requestManager = new RTSPProxyRequestManager(this);
 			_securityManager = new RTSPProxySecurityManager(this);
             _invokeManager = new RTSPProxyInvocationManager(this);
             _eventQueue = new RTSPEventQueue();

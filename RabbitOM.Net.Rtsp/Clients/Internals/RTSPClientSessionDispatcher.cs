@@ -41,9 +41,26 @@ namespace RabbitOM.Net.Rtsp.Clients
         
 
 
-        private readonly RTSPThread     _eventListener       = new RTSPThread( "RTSP - Event listener" );
+        private readonly RTSPThread     _eventListener;
 
-        private readonly RTSPEventQueue _eventQueue          = new RTSPEventQueue();
+        private readonly RTSPEventQueue _eventQueue;
+
+        private readonly object         _sender;
+
+
+
+
+        /// <summary>
+        /// Initialize a new instance of the dispatcher
+        /// </summary>
+        /// <param name="sender">the sender</param>
+        /// <exception cref="ArgumentNullException"/>
+		internal RTSPClientSessionDispatcher( object sender )
+		{
+            _sender = sender ?? throw new ArgumentNullException( nameof( sender ) );
+            _eventListener = new RTSPThread("RTSP - Event listener");
+            _eventQueue = new RTSPEventQueue();
+		}
         
 
         
@@ -213,7 +230,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnCommunicationStarted( RTSPClientCommunicationStartedEventArgs e )
         {
-            CommunicationStarted?.TryInvoke( this , e );
+            CommunicationStarted?.TryInvoke(_sender , e );
         }
 
         /// <summary>
@@ -222,7 +239,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnCommunicationStopped( RTSPClientCommunicationStoppedEventArgs e )
         {
-            CommunicationStopped?.Invoke( this , e );
+            CommunicationStopped?.Invoke(_sender , e );
         }
 
         /// <summary>
@@ -231,7 +248,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnConnected( RTSPClientConnectedEventArgs e )
         {
-            Connected?.TryInvoke( this, e );
+            Connected?.TryInvoke(_sender , e );
         }
 
         /// <summary>
@@ -240,7 +257,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnDisconnected( RTSPClientDisconnectedEventArgs e )
         {
-            Disconnected?.TryInvoke( this, e );
+            Disconnected?.TryInvoke(_sender , e );
         }
 
         /// <summary>
@@ -249,7 +266,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnPacketReceived(RTSPPacketReceivedEventArgs e )
         {
-            PacketReceived?.TryInvoke( this, e );
+            PacketReceived?.TryInvoke(_sender , e );
         }
 
         /// <summary>
@@ -258,7 +275,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="e">the event args</param>
         private void OnError( RTSPClientErrorEventArgs e )
         {
-            Error?.TryInvoke( this, e );
+            Error?.TryInvoke( _sender , e );
         }
     }
 }

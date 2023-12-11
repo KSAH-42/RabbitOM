@@ -7,9 +7,9 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// </summary>
     public class RTSPClient : IRTSPClient
     {
-        private readonly RTSPClientSession _session = new RTSPClientSession();
+        private readonly RTSPClientSession _session;
 
-        private readonly RTSPThread        _thread  = new RTSPThread( "RTSP - client thread" );
+        private readonly RTSPThread        _thread;
 
 
 
@@ -18,6 +18,8 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         public RTSPClient()
         {
+            _session = new RTSPClientSession( this );
+            _thread = new RTSPThread("RTSP - client thread");
         }
 
 

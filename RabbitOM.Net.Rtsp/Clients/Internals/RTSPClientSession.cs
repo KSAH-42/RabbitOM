@@ -34,14 +34,15 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPClientSession()
+        /// <param name="sender">the sender</param>
+        internal RTSPClientSession( object sender )
         {
             _lock            = new object();
             _configuration   = new RTSPClientConfiguration();
             _options         = new RTSPClientConfigurationOptions();
             _connection      = new RTSPConnection();
             _informations    = new RTSPClientSessionInfos();
-            _dispatcher      = new RTSPClientSessionDispatcher();
+            _dispatcher      = new RTSPClientSessionDispatcher( sender );
         }
         
 
