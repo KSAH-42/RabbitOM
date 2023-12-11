@@ -1,18 +1,17 @@
 ﻿using RabbitOM.Net.Rtsp;
 using RabbitOM.Net.Rtsp.Clients;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
-    class Program
+	class Program
     {
         static void Main(string[] args)
         {
 			var arguments = new Dictionary<string, string>();
-
+            
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);

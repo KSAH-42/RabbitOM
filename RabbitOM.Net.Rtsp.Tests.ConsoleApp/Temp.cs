@@ -2,11 +2,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 
 /// <summary>
 /// Prototypes
 /// </summary>
+/// 
+/// Add MulticastClient , UdpClient, etc... ?
+/// 
 namespace RabbitOM.Net.Rtsp.Beta
 {
     public class RTSPCommunicationStartedEventArgs : EventArgs
@@ -50,16 +54,14 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPClientEventManager : IRTSPEventManager
     {
-        private readonly object _lock;
         private readonly RTSPActionQueue _actions;
-        private readonly Dictionary<Type,object> _handlers;
+        private readonly System.Collections.Concurrent.ConcurrentDictionary<Type,object> _handlers;
         private readonly RTSPThread _thread;
        
 		public RTSPClientEventManager()
 		{
-            _lock = new object();
             _actions = new RTSPActionQueue();
-            _handlers = new Dictionary<Type, object>();
+            _handlers = new System.Collections.Concurrent.ConcurrentDictionary<Type, object>();
             _thread = new RTSPThread("RTSP - Event Manager");
             _thread.Start( ProcessActions );
         }
@@ -68,10 +70,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         {
             object handler;
 
-            lock ( _lock )
-            {
-                _handlers.TryGetValue(typeof(TEventArgs), out handler );
-            }
+            _handlers.TryGetValue(typeof(TEventArgs), out handler);
 
             if ( handler is Action<TEventArgs> eventHandler )
             {
@@ -81,22 +80,16 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public void RegisterEvent<TEventArgs>( Action<TEventArgs> handler )
         {
-            lock ( _lock )
-            {
-                _handlers[typeof(TEventArgs)] = handler ?? throw new ArgumentNullException();
-            }
+            _handlers[typeof(TEventArgs)] = handler ?? throw new ArgumentNullException();
         }
 
         public void UnRegisterEvent<TEventArgs>(Action<TEventArgs> handler)
         {
-            lock ( _lock )
-            {
-                var element = _handlers.FirstOrDefault( x => (x.Value as Action<TEventArgs>) != null );
+            var element = _handlers.FirstOrDefault(x => (x.Value as Action<TEventArgs>) != null);
 
-                if ( element.Key != null && element.Value != null )
-                {
-                    _handlers.Remove( element.Key );
-                }
+            if (element.Key != null && element.Value != null)
+            {
+                _handlers.TryRemove(element.Key, out object result);
             }
         }
 
@@ -199,7 +192,7 @@ namespace RabbitOM.Net.Rtsp.Beta
             get;
         }
 
-        RTSPClientConfiguration Configuration
+        IRTSPClientConfiguration Configuration
         {
             get;
         }
@@ -244,7 +237,7 @@ namespace RabbitOM.Net.Rtsp.Beta
             get;
         }
 
-        public abstract RTSPClientConfiguration Configuration
+        public abstract IRTSPClientConfiguration Configuration
         {
             get;
         }
@@ -697,3 +690,303 @@ namespace RabbitOM.Net.Rtsp.Beta
         }
     }
 }
+
+
+
+//////////////////////////////////////////////////
+
+
+
+
+namespace RabbitOM.Net.Rtsp.Streaming
+{
+    public interface IRTSPConfiguration
+    {
+        object SyncRoot { get; }
+        string Uri { get; set; }
+        string UserName { get; set; }
+        string Password { get; set; }
+        TimeSpan ReceiveTimeout { get; set; }
+        TimeSpan SendTimeout { get; set; }
+        RTSPKeepAliveType KeepAliveType { get; set; }
+    }
+
+    public interface IRTSPClient
+    {
+        event EventHandler CommunicationStarted;
+        event EventHandler CommunicationStopped;
+        event EventHandler Connected;
+        event EventHandler Disconnected;
+        event EventHandler StreamingStarted;
+        event EventHandler StreamingStopped;
+        event EventHandler PacketReceived;
+        event EventHandler Error;
+
+        object SyncRoot { get; }
+        IRTSPConfiguration Configuration { get; }
+        bool IsCommunicationStarted { get; }
+        bool IsConnected { get; }
+        bool IsReceivingPacket { get; }
+        bool IsStreamingStarted { get; }
+
+        bool StartCommunication();
+        void StopCommunication();
+        void StopCommunication(TimeSpan shutdownTimeout);
+        bool WaitForConnection(TimeSpan shutdownTimeout);
+    }
+
+    public abstract class RTSPClient : IRTSPClient
+    {
+        public event EventHandler CommunicationStarted;
+        public event EventHandler CommunicationStopped;
+        public event EventHandler Connected;
+        public event EventHandler Disconnected;
+        public event EventHandler StreamingStarted;
+        public event EventHandler StreamingStopped;
+        public event EventHandler PacketReceived;
+        public event EventHandler Error;
+
+        public abstract object SyncRoot { get; }
+        public abstract IRTSPConfiguration Configuration { get; }
+        public abstract bool IsCommunicationStarted { get; }
+        public abstract bool IsConnected { get; }
+        public abstract bool IsReceivingPacket { get; }
+        public abstract bool IsStreamingStarted { get; }
+
+        public abstract bool StartCommunication();
+        public abstract void StopCommunication();
+        public abstract void StopCommunication(TimeSpan shutdownTimeout);
+        public abstract bool WaitForConnection(TimeSpan shutdownTimeout);
+
+        protected void RaiseEvent(EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual void OnCommunicationStarted(EventArgs e)
+            => CommunicationStarted.TryInvoke(this, e);
+        protected virtual void OnCommunicationStopped(EventArgs e)
+            => CommunicationStopped.TryInvoke(this, e);
+        protected virtual void OnConnected(EventArgs e)
+            => Connected.TryInvoke(this, e);
+        protected virtual void OnDisconnected(EventArgs e)
+            => Disconnected.TryInvoke(this, e);
+        protected virtual void OnStreamingStarted(EventArgs e)
+            => StreamingStarted.TryInvoke(this, e);
+        protected virtual void OnStreamingStopped(EventArgs e)
+            => StreamingStopped.TryInvoke(this, e);
+        protected virtual void OnPacketReceived(EventArgs e)
+            => PacketReceived.TryInvoke(this, e);
+        protected virtual void OnError(EventArgs e)
+            => Error.TryInvoke(this, e);
+    }
+
+    public sealed class RTSPEventManager : IDisposable
+    {
+        private readonly Action<EventArgs> _handler;
+        private readonly RTSPEventQueue _queue;
+        private readonly RTSPThread _thread;
+
+		public RTSPEventManager( Action<EventArgs> handler )
+		{
+            _handler = handler;
+            _queue = new RTSPEventQueue();
+            _thread = new RTSPThread( "EventLoop" );
+        }
+
+        public void DispatchEvent( EventArgs e )
+        {
+            _queue.Enqueue( e );
+        }
+
+        public void RaiseEvent(EventArgs e)
+        {
+            _handler.Invoke( e );
+        }
+
+        public void Start()
+        {
+            _thread.Start(DoEvents);
+        }
+
+        public void Stop()
+        {
+            _thread.Stop();
+        }
+
+        public void Dispose()
+        {
+            Stop();
+        }
+
+        private void DoEvents()
+        {
+            var pumpEvents = new Action( () =>
+            {
+                while ( _queue.TryDequeue( out EventArgs e ) )
+                {
+                    _handler.Invoke( e );
+                }
+            });
+
+            while ( RTSPEventQueue.Wait( _queue , _thread.ExitHandle ) )
+            {
+                pumpEvents();
+            }
+
+            pumpEvents();
+        }
+    }
+
+    public class RTSPMediaClient : RTSPClient
+    {
+        private readonly RTSPThread _thread;
+        private readonly RTSPMediaChannel _channel;
+
+        public override object SyncRoot { get => _channel.SyncRoot; }
+        public override IRTSPConfiguration Configuration { get => _channel.Configuration; }
+        public override bool IsCommunicationStarted { get => _thread.IsStarted; }
+        public override bool IsConnected { get => _channel.IsConnected; }
+        public override bool IsReceivingPacket { get => _channel.IsReceivingPacket; }
+        public override bool IsStreamingStarted { get => _channel.IsStreamingStarted; }
+
+        public override bool StartCommunication()
+        {
+            return _thread.Start(() =>
+            {
+                OnCommunicationStarted(EventArgs.Empty);
+
+                using (var runner = new RTSPMediaChannelRunner(_channel))
+                {
+                    while (_thread.CanContinue(runner.IdleTimeout))
+                    {
+                        runner.Run();
+                    }
+                }
+
+                OnCommunicationStopped(EventArgs.Empty);
+            });
+        }
+
+        public override void StopCommunication()
+        {
+            _thread.Stop();
+        }
+
+        public override void StopCommunication(TimeSpan shutdownTimeout)
+        {
+            if (!_thread.Join(shutdownTimeout))
+            {
+                _channel.Abort();
+            }
+
+            _thread.Stop();
+        }
+
+        public override bool WaitForConnection(TimeSpan shutdownTimeout)
+        {
+            return _channel.WaitForConnection(shutdownTimeout);
+        }
+    }
+
+    // RTSPClient
+    // RTSPMediaClient
+    // RTSPMediaChannel
+    // RTSPMediaChannelRunner
+    // RTSPMediaTransport
+    // RTSPMediaTransportTcp
+    // RTSPMediaTransportUdp
+    // RTSPMediaTransportMutlticast
+
+    public sealed class RTSPMediaChannelRunner : IDisposable
+    {
+        private readonly RTSPMediaChannel _channel;
+
+        public RTSPMediaChannelRunner(RTSPMediaChannel channel)
+        {
+            _channel = channel;
+            _channel.EventManager.Start();
+        }
+
+        public TimeSpan IdleTimeout { get; private set; }
+
+        public void Run()
+        {
+            if (!_channel.IsConnected)
+            {
+                if (!_channel.Connect())
+                {
+                    return;
+                }
+
+                if (!_channel.StartStreaming())
+                {
+                    _channel.Close();
+                }
+            }
+            else
+            {
+                if (!_channel.Ping())
+                {
+                    _channel.Close();
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_channel.IsConnected)
+            {
+                if (_channel.IsStreamingStarted)
+                {
+                    _channel.StopStreaming();
+                }
+
+                _channel.Close();
+            }
+
+            _channel.EventManager.Stop();
+        }
+
+        public void AddHook<TEventArgs>(Action<TEventArgs> action) { }
+        public void RemoveEventHandler<TEventArgs>(Action<TEventArgs> action) { }
+    }
+
+    public sealed class RTSPMediaChannel : IDisposable
+    {
+        public object SyncRoot
+            => throw new NotImplementedException();
+        public IRTSPConfiguration Configuration
+            => throw new NotImplementedException();
+        public RTSPEventManager EventManager
+            => throw new NotImplementedException();
+        public bool IsConnected
+            => throw new NotImplementedException();
+        public bool IsReceivingPacket
+            => throw new NotImplementedException();
+        public bool IsStreamingStarted 
+            => throw new NotImplementedException();
+
+        public bool Connect()
+            => throw new NotImplementedException();
+        public bool Close()
+            => throw new NotImplementedException();
+        public void Dispose()
+            => throw new NotImplementedException();
+        public void Abort()
+            => throw new NotImplementedException();
+        public bool StartStreaming()
+            => throw new NotImplementedException();
+        public bool StopStreaming()
+            => throw new NotImplementedException();
+        public bool Ping()
+            => throw new NotImplementedException();
+        public bool WaitForConnection(TimeSpan shutdownTimeout)
+            => throw new NotImplementedException();
+    }
+}
+
+
+
+
+
