@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Sdp.Validation
 	/// <summary>
 	/// Represent a validation exception
 	/// </summary>
-	[System.Serializable] public sealed class ValidationException : Exception
+	[Serializable] public sealed class ValidationException : Exception
 	{
 		/// <summary>
 		/// Initialize an new instance of the validation exception
