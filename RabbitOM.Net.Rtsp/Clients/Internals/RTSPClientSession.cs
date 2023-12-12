@@ -197,7 +197,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                     throw new RTSPClientException( RTSPClientErrorCode.ConnectionFailed , "Failed to configure the timeout" );
                 }
 
-                RTSPInvokerResult optionsResult = _connection.GetOptions().Invoke();
+                RTSPInvokerResult optionsResult = _connection.Options().Invoke();
 
                 if ( optionsResult == null || ! optionsResult.Succeed )
                 {
@@ -416,7 +416,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                 }
                 else
                 {
-                    result = _connection.GetOptions().Invoke();
+                    result = _connection.Options().Invoke();
                 }
 
                 if ( result == null || ! result.Succeed )

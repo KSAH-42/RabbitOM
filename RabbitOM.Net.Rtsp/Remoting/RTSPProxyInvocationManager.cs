@@ -36,9 +36,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Create an invoker
         /// </summary>
         /// <returns>returns an instance</returns>
-        public IRTSPInvoker CreateGetOptionsInvoker()
+        public IRTSPInvoker CreateOptionsInvoker()
         {
-            return new RTSPGetOptionsInvoker(_proxy);
+            return new RTSPOptionsInvoker(_proxy);
         }
 
         /// <summary>

@@ -264,9 +264,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the options method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        public IRTSPInvoker GetOptions()
+        public IRTSPInvoker Options()
         {
-            return _proxy.InvokeManager.CreateGetOptionsInvoker();
+            return _proxy.InvokeManager.CreateOptionsInvoker();
         }
 
         /// <summary>

@@ -84,7 +84,7 @@
     <Compile Include="Remoting\Extensions\RTSPConnectionExtensions.cs" />
     <Compile Include="Remoting\Invokers\RTSPAnnounceInvoker.cs" />
     <Compile Include="Remoting\Invokers\RTSPDescribeInvoker.cs" />
-    <Compile Include="Remoting\Invokers\RTSPGetOptionsInvoker.cs" />
+    <Compile Include="Remoting\Invokers\RTSPOptionsInvoker.cs" />
     <Compile Include="Remoting\Invokers\RTSPGetParameterInvoker.cs" />
     <Compile Include="Remoting\Invokers\RTSPKeepAliveInvoker.cs" />
     <Compile Include="Remoting\Invokers\RTSPPauseInvoker.cs" />

@@ -168,7 +168,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Call the options method
         /// </summary>
         /// <returns>returns an invoker</returns>
-        IRTSPInvoker GetOptions();
+        IRTSPInvoker Options();
 
         /// <summary>
         /// Call the describe method
