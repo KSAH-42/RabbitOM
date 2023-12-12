@@ -258,7 +258,7 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public void Dispose()
         {
-            => throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool WaitForConnection(TimeSpan shutdownTimeout)
