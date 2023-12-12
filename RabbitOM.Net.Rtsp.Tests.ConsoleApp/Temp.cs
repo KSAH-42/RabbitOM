@@ -9,6 +9,11 @@ namespace RabbitOM.Net.Rtsp.Beta
 {
     using RabbitOM.Net.Rtsp.Remoting;
 
+    public enum RTSPStreamingStatus
+    {
+        InActive = 0 , Active
+    }
+
     public class RTSPCommunicationStartedEventArgs : EventArgs
     {
     }
@@ -29,6 +34,7 @@ namespace RabbitOM.Net.Rtsp.Beta
     }
     public class RTSPStreamingStatusChangedEventArgs : EventArgs
     {
+        public RTSPStreamingStatus Status { get; private set; }
     }
     public class RTSPPacketReceivedEventArgs : EventArgs
     {
@@ -38,6 +44,12 @@ namespace RabbitOM.Net.Rtsp.Beta
     }
     public class RTSPTransportErrorEventArgs : RTSPErrorEventArgs
     {
+    }
+    public class RTSPMessageReceivedEventArgs : EventArgs
+    {
+        public bool Canceled { get; set; }
+        public RTSPMessageRequest Request { get; private set; }
+        public RTSPMessageResponse Response { get; private set; }
     }
 
     public interface IRTSPClientConfiguration
