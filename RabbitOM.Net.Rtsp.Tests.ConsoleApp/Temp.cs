@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Beta
 {
@@ -34,7 +35,7 @@ namespace RabbitOM.Net.Rtsp.Beta
     }
     public class RTSPStreamingStatusChangedEventArgs : EventArgs
     {
-        public RTSPStreamingStatus Status { get; private set; }
+        public RTSPStreamingStatus Status { get; private set; } 
     }
     public class RTSPPacketReceivedEventArgs : EventArgs
     {
@@ -130,6 +131,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         void StopCommunication();
         void StopCommunication(TimeSpan shutdownTimeout);
         bool WaitForConnection(TimeSpan shutdownTimeout);
+        Task<bool> WaitForConnectionAsync(TimeSpan shutdownTimeout);
     }
 
     public interface IRTSPClientDispatcher
@@ -214,7 +216,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         private readonly RTSPMediaChannel _channel; 
         private readonly RTSPClientDispatcher _dispatcher;
 
-		protected RTSPClient()
+		public RTSPClient()
 		{
             _dispatcher = new RTSPClientDispatcher( RaiseEvent );
             _channel = new RTSPMediaChannel(_dispatcher);
@@ -293,6 +295,11 @@ namespace RabbitOM.Net.Rtsp.Beta
         public bool WaitForConnection(TimeSpan shutdownTimeout)
         {
             return _channel.WaitForConnection( shutdownTimeout );
+        }
+
+        public async Task<bool> WaitForConnectionAsync(TimeSpan shutdownTimeout)
+        {
+            return await Task.Run( () => _channel.WaitForConnection( shutdownTimeout ) );
         }
 
         protected void RaiseEvent(EventArgs e)
