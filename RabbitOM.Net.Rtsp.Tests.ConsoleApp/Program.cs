@@ -12,17 +12,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         {
 			var arguments = new Dictionary<string, string>();
 
-            using ( var client = new Rtsp.Beta.RTSPClient() )
-            {
-                client.Configuration.DeliveryMode = RTSPDeliveryMode.Multicast;
-                client.Configuration.MulticastAddress = "224.0.0.1";
-                client.Configuration.RtpPort = 123;
-                client.MessageReceived+=(sender,e)=>
-                {
-                    
-                };
-            }
-
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
