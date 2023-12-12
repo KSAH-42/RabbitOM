@@ -383,6 +383,8 @@ namespace RabbitOM.Net.Rtsp.Beta
         {
             if (!_channel.IsConnected)
             {
+                IdleTimeout = _channel.Configuration.RetriesDelay;
+
                 if (!_channel.Connect())
                 {
                     return;
@@ -392,19 +394,23 @@ namespace RabbitOM.Net.Rtsp.Beta
                 {
                     _channel.Close();
                 }
+
+                IdleTimeout = _channel.Configuration.PingInterval;
             }
             else
             {
                 if (!_channel.Ping())
                 {
                     _channel.Close();
+
+                    IdleTimeout = _channel.Configuration.RetriesDelay;
                 }
             }
         }
 
         public void Dispose()
         {
-            if (_channel.IsConnected)
+            if ( _channel.IsConnected )
             {
                 if (_channel.IsStreamingStarted)
                 {
