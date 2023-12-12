@@ -78,7 +78,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         public RTSPDeliveryMode DeliveryMode { get; set; }
     }
 
-    public interface IRTSPClient
+    public interface IRTSPClient : IDisposable
     {
         event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
         event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
@@ -92,10 +92,12 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         object SyncRoot { get; }
         IRTSPClientConfiguration Configuration { get; }
+        bool IsDisposed { get; }
         bool IsConnected { get; }
         bool IsReceivingPacket { get; }
         bool IsStreamingStarted { get; }
         bool IsCommunicationStarted { get; }
+        
 
         bool StartCommunication();
         void StopCommunication();
@@ -197,6 +199,9 @@ namespace RabbitOM.Net.Rtsp.Beta
         public IRTSPClientConfiguration Configuration 
             => _channel.Configuration;
 
+        public bool IsDisposed 
+            => throw new NotImplementedException();
+
         public bool IsConnected
             => _channel.IsConnected;
 
@@ -249,6 +254,11 @@ namespace RabbitOM.Net.Rtsp.Beta
 
             _thread.Stop();
             _dispatcher.Stop();
+        }
+
+        public void Dispose()
+        {
+            => throw new NotImplementedException();
         }
 
         public bool WaitForConnection(TimeSpan shutdownTimeout)
