@@ -1,12 +1,14 @@
-﻿using RabbitOM.Net.Rtsp.Remoting;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Threading;
 
 namespace RabbitOM.Net.Rtsp.Beta
 {
+    using RabbitOM.Net.Rtsp.Remoting;
+
     public class RTSPCommunicationStartedEventArgs : EventArgs
     {
     }
@@ -56,6 +58,12 @@ namespace RabbitOM.Net.Rtsp.Beta
         RTSPMediaFormat MediaFormat { get; set; }
         RTSPKeepAliveType KeepAliveType { get; set; }
         RTSPDeliveryMode DeliveryMode { get; set; }
+        RTSPHeaderCollection OptionsHeaders {get; }
+        RTSPHeaderCollection DescribeHeaders { get; }
+        RTSPHeaderCollection SetupHeaders { get; }
+        RTSPHeaderCollection PlayHeaders { get; }
+        RTSPHeaderCollection TearDownHeaders { get; }
+        RTSPHeaderCollection PingHeaders { get; }
     }
 
     public sealed class RTSPClientConfiguration : IRTSPClientConfiguration
@@ -76,6 +84,12 @@ namespace RabbitOM.Net.Rtsp.Beta
         public RTSPMediaFormat MediaFormat { get; set; }
         public RTSPKeepAliveType KeepAliveType { get; set; }
         public RTSPDeliveryMode DeliveryMode { get; set; }
+        public RTSPHeaderCollection OptionsHeaders { get; }
+        public RTSPHeaderCollection DescribeHeaders { get; }
+        public RTSPHeaderCollection SetupHeaders { get; }
+        public RTSPHeaderCollection PlayHeaders { get; }
+        public RTSPHeaderCollection TearDownHeaders { get; }
+        public RTSPHeaderCollection PingHeaders { get; }
     }
 
     public interface IRTSPClient : IDisposable
@@ -87,6 +101,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
         event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
         event EventHandler<RTSPStreamingStatusChangedEventArgs> StreamingStatusChanged;
+        event EventHandler<RTSPMessageReceivedEventArgs> MessageReceived;
         event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived;
         event EventHandler<RTSPErrorEventArgs> Error;
 
@@ -178,6 +193,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         public event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
         public event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
         public event EventHandler<RTSPStreamingStatusChangedEventArgs> StreamingStatusChanged;
+        public event EventHandler<RTSPMessageReceivedEventArgs> MessageReceived; 
         public event EventHandler<RTSPPacketReceivedEventArgs> PacketReceived;
         public event EventHandler<RTSPErrorEventArgs> Error;
 
@@ -200,7 +216,7 @@ namespace RabbitOM.Net.Rtsp.Beta
             => _channel.Configuration;
 
         public bool IsDisposed 
-            => throw new NotImplementedException();
+            => _channel.IsDisposed;
 
         public bool IsConnected
             => _channel.IsConnected;
@@ -258,7 +274,8 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            StopCommunication();
+            _channel.Dispose();
         }
 
         public bool WaitForConnection(TimeSpan shutdownTimeout)
@@ -271,6 +288,10 @@ namespace RabbitOM.Net.Rtsp.Beta
             if ( e is RTSPPacketReceivedEventArgs )
             {
                 OnPacketReceived( e as RTSPPacketReceivedEventArgs );
+            }
+            else if (e is RTSPMessageReceivedEventArgs)
+            {
+                OnMessageReceived(e as RTSPMessageReceivedEventArgs);
             }
             else if ( e is RTSPCommunicationStartedEventArgs )
             {
@@ -320,6 +341,8 @@ namespace RabbitOM.Net.Rtsp.Beta
             => StreamingStopped.TryInvoke(this, e);
         protected virtual void OnStreamingStatusChanged(RTSPStreamingStatusChangedEventArgs e)
             => StreamingStatusChanged.TryInvoke(this, e);
+        protected virtual void OnMessageReceived(RTSPMessageReceivedEventArgs e)
+            => MessageReceived.TryInvoke(this, e);
         protected virtual void OnPacketReceived(RTSPPacketReceivedEventArgs e)
             => PacketReceived.TryInvoke(this, e);
         protected virtual void OnError(RTSPErrorEventArgs e)
@@ -411,6 +434,8 @@ namespace RabbitOM.Net.Rtsp.Beta
         public bool IsReceivingPacket
             => throw new NotImplementedException();
         public bool IsStreamingStarted 
+            => throw new NotImplementedException();
+        public bool IsDisposed
             => throw new NotImplementedException();
 
         public bool Connect()
@@ -574,9 +599,34 @@ namespace RabbitOM.Net.Rtsp.Beta
         public override void Dispose()
             => throw new NotImplementedException();
     }
+
+    public sealed class RTSPMediaTransportFactory
+    {
+        private readonly IRTSPMediaChannel _channel;
+
+		public RTSPMediaTransportFactory( IRTSPMediaChannel channel )
+		{
+            _channel = channel;
+		}
+
+        public RTSPMediaTransport NewTransport()
+        {
+            if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Tcp )
+            {
+                return new RTSPTcpMediaTransport( _channel );
+            }
+
+            if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Udp )
+            {
+                return new RTSPUdpMediaTransport( _channel );
+            }
+
+            if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast )
+            {
+                return new RTSPMulticastMediaTransport( _channel );
+            }
+
+            throw new NotSupportedException();
+        }
+    }
 }
-
-
-
-
-
