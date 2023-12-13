@@ -723,5 +723,54 @@ namespace RabbitOM.Net.Rtsp
                 return result > 0;
             }
         }
+
+        /// <summary>
+        /// Add or update a header range collection
+        /// </summary>
+        /// <param name="collection">the collection</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddOrUpdateRange( IEnumerable<RTSPHeader> collection )
+        {
+            return TryAddOrUpdateRange( collection , out int result );
+        }
+
+        /// <summary>
+        /// Add or update a header range collection
+        /// </summary>
+        /// <param name="collection">the collection</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddOrUpdateRange( IEnumerable<RTSPHeader> collection , out int result )
+        {
+            result = 0;
+
+            lock (_lock)
+            {
+                foreach ( var header in collection )
+                {
+                    if ( RTSPHeader.IsUnDefined( header ) )
+                    {
+                        continue;
+                    }
+            
+                    if ( _collection.ContainsKey( header.Name ) )
+                    {
+                        _collection[ header.Name ] = header;
+
+                        return true;
+                    }
+
+                    if ( _collection.Count >= Maximum )
+                    {
+                        return false;
+                    }
+
+                    _collection[ header.Name ] = header;
+
+                    result ++;
+                }
+                
+                return result > 0;
+            }
+        }
     }
 }

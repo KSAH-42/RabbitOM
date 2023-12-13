@@ -25,6 +25,6 @@ namespace RabbitOM.Net.Rtsp.Apha
         RTSPHeaderCollection SetupHeaders { get; }
         RTSPHeaderCollection PlayHeaders { get; }
         RTSPHeaderCollection TearDownHeaders { get; }
-        RTSPHeaderCollection PingHeaders { get; }
+        RTSPHeaderCollection KeepAliveHeaders { get; }
     }
 }

@@ -47,7 +47,7 @@ namespace RabbitOM.Net.Rtsp.Apha
         
         private readonly RTSPHeaderCollection _tearDownHeaders = new RTSPHeaderCollection();
         
-        private readonly RTSPHeaderCollection _pingHeaders = new RTSPHeaderCollection();
+        private readonly RTSPHeaderCollection _keepAliveHeaders = new RTSPHeaderCollection();
 
 
 
@@ -368,9 +368,9 @@ namespace RabbitOM.Net.Rtsp.Apha
             get => _tearDownHeaders;
         }
 
-        public RTSPHeaderCollection PingHeaders
+        public RTSPHeaderCollection KeepAliveHeaders
         {
-            get => _pingHeaders;
+            get => _keepAliveHeaders;
         }
     }
 }
