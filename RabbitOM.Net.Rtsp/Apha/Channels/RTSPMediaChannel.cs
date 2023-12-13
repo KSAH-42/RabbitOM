@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Net.Rtsp.Remoting;
+using System;
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
@@ -6,13 +7,16 @@ namespace RabbitOM.Net.Rtsp.Apha
     {
         private readonly IRTSPClientDispatcher _dispatcher;
 
+        private readonly IRTSPConnection _connection;
 
 
 
 
-        public RTSPMediaChannel(IRTSPClientDispatcher dispatcher)
+
+        public RTSPMediaChannel( IRTSPClientDispatcher dispatcher )
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
+            _connection = new RTSPConnection();
         }
 
 
@@ -20,7 +24,9 @@ namespace RabbitOM.Net.Rtsp.Apha
 
 
         public object SyncRoot
-            => throw new NotImplementedException();
+        {
+            get => _connection.SyncRoot;
+        }
         
         public IRTSPClientConfiguration Configuration
             => throw new NotImplementedException();

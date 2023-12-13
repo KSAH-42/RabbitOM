@@ -9,11 +9,11 @@ namespace RabbitOM.Net.Rtsp.Apha
         string UserName { get; set; }
         string Password { get; set; }
         TimeSpan ReceiveTimeout { get; set; }
-        TimeSpan SendTimeout { get; set; }
-        TimeSpan PingInterval { get; set; }
-        TimeSpan RetriesDelay { get; set; }
         TimeSpan ReceiveTransportTimeout { get; set; }
-        TimeSpan RetriesTransportTimeout { get; set; }
+        TimeSpan SendTimeout { get; set; }
+        TimeSpan KeepAliveInterval { get; set; }
+        TimeSpan RetriesInterval { get; set; }
+        TimeSpan RetriesTransportInterval { get; set; }
         string MulticastAddress { get; set; }
         int RtpPort { get; set; }
         byte TimeToLive { get; set; }

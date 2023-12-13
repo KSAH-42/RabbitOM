@@ -34,7 +34,7 @@ namespace RabbitOM.Net.Rtsp.Apha
         {
             if ( ! _channel.IsConnected )
             {
-                _idleTimeout = _channel.Configuration.RetriesDelay;
+                _idleTimeout = _channel.Configuration.RetriesInterval;
 
                 if ( ! _channel.Connect() )
                 {
@@ -46,7 +46,7 @@ namespace RabbitOM.Net.Rtsp.Apha
                     _channel.Disconnect();
                 }
 
-                _idleTimeout = _channel.Configuration.PingInterval;
+                _idleTimeout = _channel.Configuration.KeepAliveInterval;
             }
             else
             {
@@ -62,7 +62,7 @@ namespace RabbitOM.Net.Rtsp.Apha
 
                 _channel.Disconnect();
 
-                _idleTimeout = _channel.Configuration.RetriesDelay;
+                _idleTimeout = _channel.Configuration.RetriesInterval;
             }
         }
 

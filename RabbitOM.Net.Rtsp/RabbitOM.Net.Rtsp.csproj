@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Apha\Channels\RTSPMediaChannel.cs" />
     <Compile Include="Apha\Channels\RTSPMediaChannelRunner.cs" />
+    <Compile Include="Apha\RTSPClientConfiguration.cs" />
     <Compile Include="Apha\RTSPClient.cs" />
     <Compile Include="Apha\RTSPClientDispatcher.cs" />
     <Compile Include="Apha\IRTSPMediaChannel.cs" />
