@@ -18,10 +18,10 @@ namespace RabbitOM.Net.Rtsp.Apha
         }
 
         public RTSPProtocolErrorEventArgs( RTSPMethod method , string message )
-		{
+        {
             _method  = method;
             _message = message ?? string.Empty;
-		}
+        }
 
 
 
