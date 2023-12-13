@@ -112,78 +112,6 @@ By essence, RTSP is very similar to http message except important things:
 
 All these things are handle by this implementation.
 
-# About Session Description Protocol
-
-What is SDP ?
-
-SDP is a protocol used to describe a streaming session configuration, and contains important informations like the control/track uri and the keys/parameterSet used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the SDP "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used not only by security cameras but also used by device that support SIP protocols like VoIP systems.
-
-About the implementation
-
-The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. I have already encountred this situation on some others projects, and I think it is really to start early a code refactoring. So using a simple dictionary can introduce an anti pattern called "primitive obsession".
-
-To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
-
-This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
-
-Usage:
-
-~~~~C#
-
-var sessionDescriptor = new SessionDescriptor();
-
-sessionDescriptor.Origin.UserName = "John";
-sessionDescriptor.Origin.Address = "192.168.1.23";
-sessionDescriptor.Origin.AddressType = AddressType.IPV4;
-sessionDescriptor.Origin.NetworkType = NetworkType.Internet;
-sessionDescriptor.Origin.Version = "V1";
-sessionDescriptor.Origin.SessionId = "123456789";
-sessionDescriptor.Version.Value = 1;
-sessionDescriptor.SessionName.Value = "My session name";
-sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
-sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
-sessionDescriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
-sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
-sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
-
-sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
-sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-sessionDescriptor.Uri.Value = "rtsp://192.168.1.11:554/video/channel/1";
-
-for ( int i = 1; i <= 10; ++ i )
-{
-    var mediaDescription = new MediaDescriptionField();
-
-    mediaDescription.Payload = 1 + i;
-    mediaDescription.Port = 10 + i;
-    mediaDescription.Profile = ProfileType.AVP;
-    mediaDescription.Protocol = ProtocolType.RTP;
-    mediaDescription.Type = MediaType.Video;
-
-    mediaDescription.Encryption.Key = "myKey"+i.ToString();
-    mediaDescription.Encryption.Method = "myMethod"+i.ToString();
-    mediaDescription.Connection.Address = "192.168.1."+i.ToString();
-    mediaDescription.Connection.AddressType = AddressType.IPV4;
-    mediaDescription.Connection.NetworkType = NetworkType.Internet;
-    mediaDescription.Bandwiths.Add(new BandwithField("modifier", i));
-    mediaDescription.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
-    mediaDescription.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
-    mediaDescription.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
-    mediaDescription.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
-
-    sessionDescriptor.MediaDescriptions.Add(mediaDescription);
-}
-
-Console.WriteLine(sessionDescriptor.ToString());
-
-if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
-{
-    Console.WriteLine("Parsed by Batman");
-}
-
-~~~~
-
-
 # About the implementation of RTSP classes
 
 I have already build this class, but I will commit in another moment after a code refactoring.
@@ -260,170 +188,74 @@ var bodyResult =
 
 You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
 
-Actual, I am "redesigning" the objects related to the rtsp communication layer, the final connection will be similar to the following code:
+# About Session Description Protocol
+
+What is SDP ?
+
+SDP is a protocol used to describe a streaming session configuration, and contains important informations like the control/track uri and the keys/parameterSet used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the SDP "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used not only by security cameras but also used by device that support SIP protocols like VoIP systems.
+
+About the implementation
+
+The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. I have already encountred this situation on some others projects, and I think it is really to start early a code refactoring. So using a simple dictionary can introduce an anti pattern called "primitive obsession".
+
+To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
+
+This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
+
+Usage:
 
 ~~~~C#
 
-public enum RTSPConnectionState { Closed , Opening , Opened, Broken, }
+var sessionDescriptor = new SessionDescriptor();
 
-public interface IRtspConnection : IDisposable
+sessionDescriptor.Origin.UserName = "John";
+sessionDescriptor.Origin.Address = "192.168.1.23";
+sessionDescriptor.Origin.AddressType = AddressType.IPV4;
+sessionDescriptor.Origin.NetworkType = NetworkType.Internet;
+sessionDescriptor.Origin.Version = "V1";
+sessionDescriptor.Origin.SessionId = "123456789";
+sessionDescriptor.Version.Value = 1;
+sessionDescriptor.SessionName.Value = "My session name";
+sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(1, 2), new ValueTime(3, 4)));
+sessionDescriptor.Repeats.Add(new RepeatField(new ValueTime(10, 20), new ValueTime(30, 40)));
+sessionDescriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
+sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
+sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
+
+sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
+sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
+sessionDescriptor.Uri.Value = "rtsp://192.168.1.11:554/video/channel/1";
+
+for ( int i = 1; i <= 10; ++ i )
 {
-	event EventHandler<RtspOpenedEventArgs> Opened;
-	event EventHandler<RtspClosedEventArgs> Closed; // The close eventargs will contains the reason why the connection has been closed
+    var mediaDescription = new MediaDescriptionField();
 
-	event EventHandler<RtspAuthenticationFailedEventArgs> AuthenticationFailed;
+    mediaDescription.Payload = 1 + i;
+    mediaDescription.Port = 10 + i;
+    mediaDescription.Profile = ProfileType.AVP;
+    mediaDescription.Protocol = ProtocolType.RTP;
+    mediaDescription.Type = MediaType.Video;
 
-	event EventHandler<RtspMessageEventArgs> MessageReceived;
-	event EventHandler<RtspMessageEventArgs> MessageSended;
+    mediaDescription.Encryption.Key = "myKey"+i.ToString();
+    mediaDescription.Encryption.Method = "myMethod"+i.ToString();
+    mediaDescription.Connection.Address = "192.168.1."+i.ToString();
+    mediaDescription.Connection.AddressType = AddressType.IPV4;
+    mediaDescription.Connection.NetworkType = NetworkType.Internet;
+    mediaDescription.Bandwiths.Add(new BandwithField("modifier", i));
+    mediaDescription.Bandwiths.Add(new BandwithField("modifier"+i.ToString(), i+i));
+    mediaDescription.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
+    mediaDescription.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
+    mediaDescription.Attributes.Add(new AttributeField("myAttribute3", "myValue3"));
 
-	event EventHandler<RtspDataReceiveEventArgs> DataReceived;
-
-	event EventHandler<RtspErrorEventArg> ReceivedError;
-	event EventHandler<RtspErrorEventArg> SendedError;
-
-	event EventHandler<RtspErrorEventArg> OpenedFailed;
-
-	event EventHandler<RtspSessionEventArg> SessionCreated;
-	event EventHandler<RtspSessionEventArg> SessionClosed;
-	event EventHandler<RtspErrorEventArg> SessionError;
-
-
-	string Uri { get; }    // store the uri without the credentials
-	string Server { get; } // hostname or ip stored on the uri
-	int Port { get; }      // the port on the uri
-	TimeSpan ConnectionTimeout { get; }
-	TimeSpan ReceiveTimeout { get; }
-	TimeSpan SendTimeout { get; }
-	int CurrentSequenceId { get;}
-	RTSPConnectionState Status { get; }
-
-	IReadOnlyCollection<RtspSessionInfo> Sessions { get; } // the collection will updated internal by some classes like the differents implementation of invokers
-
-	void Open(string uri);
-	void Open(string uri,TimeSpan openTimeout);
-	void Open(string uri,TimeSpan openTimeout , string userName , string password );
-	void Open(string uri,TimeSpan openTimeout , string userName , SecureString password );
-	void Close();
-	void ConfigureTimeouts(TimeSpan ioTimeout);
-	void ConfigureTimeouts(TimeSpan receiveTimeout,TimeSpan sendTimeout);
-	
-	IRtspInvoker GetOptions(); // Gets the default invoker used to call the OPTIONS method
-	IRtspInvoker Describe();   // Gets the describe invoker blablabla
-	IRtspInvoker Setup();      // Gets the setup invoker blablabla
-//	IRtspInvoker Setup(string trackUri); move as abstract method into the abstract class RtspClient{}
-	IRtspInvoker Play(); // Get the default play invoker
-//	IRtspInvoker Play(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
-	IRtspInvoker Pause(); // blablabla
-//	IRtspInvoker Pause(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
-	IRtspInvoker TearDown();
-//	IRtspInvoker TearDown(string sessionId); // Throw exception if session id does not exist and add the correspondings headers
-	IRtspInvoker Record();
-	IRtspInvoker Announce();
-	IRtspInvoker GetParameter();
-	IRtspInvoker SetParameter();
-
-	// I will move these methods below on the class implementation
-	// Or move it on seperate interface using segregation patterns
-	
-	TInvoker CreateInvoker<TInvoker>() where TInvoker : class, IRtspInvoker;
-	IRtspInvoker CreateInvoker(string method);
-	IRtspInvoker CreateInvoker(string method, IDictionary<string,string> headers);
-	IRtspInvoker CreateInvoker(string method, IEnumerable<KeyValuePair<string,string>> headers);
-	IRtspInvoker CreateMutlicastSessionInvoker(string trackUri,string address, int port);
-	IRtspInvoker CreateMutlicastSessionInvoker(string trackUri,string address, int port,int ttl);
-	IRtspInvoker CreateUnicastSessionInvoker(string trackUri);
-	IRtspInvoker CreateUnicastSessionInvoker(string trackUri,string address);
-	IRtspInvoker CreateUnicastSessionInvoker(string trackUri,string address,int port);
-	IRtspInvoker KeepAlive(); // implement the common ping strategy
-	IRtspInvoker KeepAlive(int keepAliveMode); 
+    sessionDescriptor.MediaDescriptions.Add(mediaDescription);
 }
 
-public interface IRtspInvoker
+Console.WriteLine(sessionDescriptor.ToString());
+
+if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
 {
-	IRtspInvoker AddHeader(string name, byte[] value);
-	IRtspInvoker AddHeader(string name, string value);
-	IRtspInvoker AddHeader(string name, string format, params object[] parameters);
-	IRtspInvoker WriteBody();
-	IRtspInvoker WriteBody(string value);
-	IRtspInvoker WriteBody(string value,string format);
-	IRtspInvoker WriteBody(byte[] value);
-	RtspInvokerResult Invoke();
-	
-}
-
-public sealed class RtspInvokerResult
-{
-	public RtspInvokerResult( bool succeed, RtspInvokerRequest request , RtspInvokerResponse response ) {
-		Succeed = succeed;
-		Request = request;
-		Response = response;
-	}
-
-	public bool Succeed { get; private set;}
-	public RtspInvokerRequest Request { get; private set; }
-	public RtspInvokerResponse Response { get; private set; }
-}
-
-// A possible implementation of session info class
-// This session info will be created by the SetupInvoker class 
-public sealed class RtspSessionInfo
-{
-	public string UniqueId { get; private set; }
-	public string TrackUri { get; private set; }
-	public DateTime CreationTime { get; private set; }
-	public TimeSpan Timeout { get; private set; }
-	public TimeSpan ExpirationTimeout { get; private set; }
-	public DateTime TimeStamp { get; private set; }
-	public bool IsPlaying { get; private set; }
-	public bool IsPaused { get; private set; }
-
-	public string Address { get; private set; }
-	public int Port { get; private set; }
-	public int TTL { get; private set; }
-	public Guid ProtocolType { get; private set; }
-	public Guid MediaType { get; private set; }
-
-	public object Tag { get; set; }
-
-	public bool HasExpired() {
-	  	return TimeStamp.Add( ExpirationTimeout ) < DateTime.Now;
-	}
-
-	internal void KeepAlive() {
-		TimeStamp = DateTime.Now;
-	}
-
-	internal bool CanChangePlayStatus( bool status ) {
-		throw new NotImplementedException()
-	}
-
-	internal void ChangePlayStatus( bool status ) {
-		throw new NotImplementedException()
-	}
-
-	internal bool CanChangePauseStatus( bool status ) {
-		throw new NotImplementedException()
-	}
-
-	internal void ChangePauseStatus( bool status ) {
-		throw new NotImplementedException()
-	}
-
-	internal static RtspSessionInfo CreateInterleavedSessionInfo( /* string id , Guid mediaType .... */ ) {
-		throw new NotImplementedException()
-	}
-
-	internal static RtspSessionInfo CreateMulticastSessionInfo( /* string id , Guid mediaType .... */ ){
-		throw new NotImplementedException()
-	}
-
-	internal static RtspSessionInfo CreateUnicastSessionInfo( /* string id , Guid mediaType .... */ ){
-		throw new NotImplementedException()
-	}
-
-	internal static RtspSessionInfo CreateXXXXXSessionInfo( /* string id , Guid mediaType .... */ ){
-		throw new NotImplementedException()
-	}
+    Console.WriteLine("Parsed by Batman");
 }
 
 ~~~~
+
