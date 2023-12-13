@@ -101,7 +101,7 @@ RTSP is a protocol used to control and to receive video/audio streams. RTSP is v
 
 Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predefined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
 AFAIK, some standards/RFC ask to use GET_PARAMETER for a keepalive/ping and not using the options. I see manufacturer that use the OPTIONS method, because OPTIONS must be implemented unlike the GET_PARAMETER and SET_PARAMETER are optional.  
-So I recommand to ask to camera manufacturer to be sure about the keepalive method.
+So I recommand to ask to the camera manufacturer to be sure about the keepalive method.
 
 By essence, RTSP is very similar to http message except important things:
 
