@@ -32,18 +32,18 @@ namespace RabbitOM.Net.Rtsp.Apha
 
         public void Run()
         {
-            if ( ! _channel.IsConnected )
+            if ( ! _channel.IsOpened )
             {
                 _idleTimeout = _channel.Configuration.RetriesInterval;
 
-                if ( ! _channel.Connect() )
+                if ( ! _channel.Open() )
                 {
                     return;
                 }
 
                 if ( ! _channel.StartStreaming() )
                 {
-                    _channel.Disconnect();
+                    _channel.Close();
                 }
 
                 _idleTimeout = _channel.Configuration.KeepAliveInterval;
@@ -60,7 +60,7 @@ namespace RabbitOM.Net.Rtsp.Apha
                     _channel.StopStreaming();
                 }
 
-                _channel.Disconnect();
+                _channel.Close();
 
                 _idleTimeout = _channel.Configuration.RetriesInterval;
             }
@@ -73,7 +73,7 @@ namespace RabbitOM.Net.Rtsp.Apha
                 _channel.StopStreaming();
             }
 
-            _channel.Disconnect();
+            _channel.Close();
         }
     }
 }

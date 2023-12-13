@@ -85,11 +85,6 @@ namespace RabbitOM.Net.Rtsp.Apha
             get => _thread.IsStarted;
         }
 
-        protected RTSPClientDispatcher Dispatcher
-        {
-            get => _dispatcher;
-        }
-
 
 
 
@@ -117,6 +112,7 @@ namespace RabbitOM.Net.Rtsp.Apha
         public void StopCommunication()
         {
             _thread.Stop();
+
             _dispatcher.Stop();
         }
 

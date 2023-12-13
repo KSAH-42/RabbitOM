@@ -46,11 +46,16 @@ namespace RabbitOM.Net.Rtsp.Apha
             get => _dispatcher;
         }
 
-        public bool IsConnected
+        public bool IsOpened
         {
             get => _connection.IsOpened;
         }
-        
+
+        public bool IsConnected
+        {
+            get => _connection.IsConnected;
+        }
+
         public bool IsReceivingPacket
             => throw new NotImplementedException();
         
@@ -64,10 +69,10 @@ namespace RabbitOM.Net.Rtsp.Apha
 
 
 
-        public bool Connect()
+        public bool Open()
             => throw new NotImplementedException();
         
-        public bool Disconnect()
+        public bool Close()
             => throw new NotImplementedException();
         
         public void Dispose()

@@ -7,13 +7,14 @@ namespace RabbitOM.Net.Rtsp.Apha
         object SyncRoot { get; }
         IRTSPClientConfiguration Configuration { get; }
         IRTSPClientDispatcher Dispatcher { get; }
+        bool IsOpened { get; }
         bool IsConnected { get; }
         bool IsReceivingPacket { get; }
         bool IsStreamingStarted { get; }
 
 
-        bool Connect();
-        bool Disconnect();
+        bool Open();
+        bool Close();
         void Abort();
         bool StartStreaming();
         bool StopStreaming();
