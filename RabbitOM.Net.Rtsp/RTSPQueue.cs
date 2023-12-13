@@ -303,8 +303,7 @@ namespace RabbitOM.Net.Rtsp
         /// Enqueue an element
         /// </summary>
         /// <param name="element">the element</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Enqueue( TElement element )
+        public void Enqueue( TElement element )
         {
             lock ( _lock )
             {
@@ -312,14 +311,12 @@ namespace RabbitOM.Net.Rtsp
                 {
                     if ( ! OnValidate( element ) )
                     {
-                        return false;
+                        return;
                     }
 
                     OnEnqueue( element );
 
                     _collection.Enqueue( element );
-
-                    return true;
                 }
             }
         }
