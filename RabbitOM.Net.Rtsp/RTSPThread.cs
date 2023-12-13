@@ -8,15 +8,15 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     internal sealed class RTSPThread
     {
-        private readonly string           _name        = string.Empty;
+        private readonly string              _name        = string.Empty;
 
-        private readonly EventWaitHandle  _eventExit   = null;
+        private readonly RTSPEventWaitHandle _eventExit   = null;
 
-        private Thread                    _thread      = null;
+        private Thread                       _thread      = null;
 
-        private Action                    _routine     = null;
+        private Action                       _routine     = null;
 
-        private Exception                 _exception   = null;
+        private Exception                    _exception   = null;
 
 
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Net.Rtsp
             }
 
             _name = name;
-            _eventExit = new EventWaitHandle( false , EventResetMode.ManualReset );
+            _eventExit = new RTSPEventWaitHandle();
         }
 
 
@@ -60,7 +60,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the exit handle
         /// </summary>
-        public EventWaitHandle ExitHandle
+        public RTSPEventWaitHandle ExitHandle
         {
             get => _eventExit;
         }
@@ -94,13 +94,13 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
+            if ( !_eventExit.Reset() )
+            {
+                return false;
+            }
+
             try
             {
-                if ( !_eventExit.Reset() )
-                {
-                    return false;
-                }
-
                 var thread = new Thread( Processing )
                 {
                     Name         = _name,
@@ -136,9 +136,10 @@ namespace RabbitOM.Net.Rtsp
 
             EnsureCallingThread( thread );
 
+            _eventExit.Set();
+
             try
             {
-                _eventExit.Set();
                 thread.Join();
             }
             catch ( Exception ex )
@@ -170,9 +171,10 @@ namespace RabbitOM.Net.Rtsp
 
             EnsureCallingThread( thread );
 
+            _eventExit.Set();
+
             try
             {
-                _eventExit.Set();
                 return thread.Join( timeout );
             }
             catch (Exception ex)
@@ -199,16 +201,7 @@ namespace RabbitOM.Net.Rtsp
 
             EnsureCallingThread( thread );
 
-            try
-            {
-                return _eventExit.Set();
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
-            }
-
-            return false;
+            return _eventExit.Set();
         }
 
         /// <summary>
@@ -224,6 +217,8 @@ namespace RabbitOM.Net.Rtsp
             }
 
             EnsureCallingThread( thread );
+
+            _eventExit.Set();
 
             try
             {
@@ -270,16 +265,7 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
-            try
-            {
-                return !_eventExit.WaitOne( timeout );
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
+            return ! _eventExit.Wait( timeout );
         }
 
         /// <summary>

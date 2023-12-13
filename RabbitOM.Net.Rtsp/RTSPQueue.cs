@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 namespace RabbitOM.Net.Rtsp
 {
@@ -173,7 +172,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPQueue<TElement> queue, TimeSpan timeout)
+        public static bool Wait( RTSPQueue<TElement> queue , TimeSpan timeout )
         {
             if (queue == null)
             {
@@ -190,7 +189,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait( RTSPQueue<TElement> queue , EventWaitHandle cancellationHandle )
+        public static bool Wait( RTSPQueue<TElement> queue , RTSPEventWaitHandle cancellationHandle )
         {
             if ( queue == null )
             {
@@ -208,7 +207,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPQueue<TElement> queue, int timeout, EventWaitHandle cancellationHandle)
+        public static bool Wait(RTSPQueue<TElement> queue, int timeout, RTSPEventWaitHandle cancellationHandle)
         {
             if ( queue == null )
             {
@@ -231,7 +230,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RTSPQueue<TElement> queue, TimeSpan timeout, EventWaitHandle cancellationHandle)
+        public static bool Wait(RTSPQueue<TElement> queue, TimeSpan timeout, RTSPEventWaitHandle cancellationHandle)
         {
             if (queue == null)
             {

@@ -85,7 +85,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Wait( EventWaitHandle cancellationHandle )
+        public bool Wait( RTSPEventWaitHandle cancellationHandle )
         {
             if ( cancellationHandle == null )
             {
@@ -96,7 +96,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 var handles = new EventWaitHandle[]
                 {
-                    cancellationHandle , _handle
+                    cancellationHandle._handle , _handle
                 };
 
                 return EventWaitHandle.WaitAny( handles ) == 1;
@@ -153,7 +153,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="timeout">the timeout</param>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( int timeout , EventWaitHandle cancellationHandle )
+        public bool Wait( int timeout , RTSPEventWaitHandle cancellationHandle )
         {
             if ( cancellationHandle == null )
             {
@@ -164,7 +164,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 var handles = new EventWaitHandle[]
                 {
-                    cancellationHandle , _handle
+                    cancellationHandle._handle , _handle
                 };
 
                 return EventWaitHandle.WaitAny( handles , timeout ) == 1;
@@ -183,7 +183,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="timeout">the timeout</param>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( TimeSpan timeout , EventWaitHandle cancellationHandle )
+        public bool Wait( TimeSpan timeout , RTSPEventWaitHandle cancellationHandle )
         {
             if ( cancellationHandle == null )
             {
@@ -194,7 +194,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 var handles = new EventWaitHandle[]
                 {
-                    cancellationHandle , _handle
+                    cancellationHandle._handle , _handle
                 };
 
                 return EventWaitHandle.WaitAny( handles , timeout ) == 1;
