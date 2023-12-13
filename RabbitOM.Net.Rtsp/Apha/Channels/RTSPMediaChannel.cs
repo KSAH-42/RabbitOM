@@ -5,18 +5,26 @@ namespace RabbitOM.Net.Rtsp.Apha
 {
     public sealed class RTSPMediaChannel : IRTSPMediaChannel
     {
-        private readonly IRTSPClientDispatcher _dispatcher;
-
         private readonly IRTSPConnection _connection;
 
+        private readonly IRTSPClientConfiguration _configuration;
+
+        private readonly IRTSPClientDispatcher _dispatcher;
 
 
 
 
-        public RTSPMediaChannel( IRTSPClientDispatcher dispatcher )
+
+		public RTSPMediaChannel( IRTSPClientDispatcher dispatcher )
+            : this ( dispatcher , new RTSPClientConfiguration() , new RTSPConnection() )
         {
+		}
+
+        public RTSPMediaChannel( IRTSPClientDispatcher dispatcher , IRTSPClientConfiguration configuration , IRTSPConnection connection )
+        {
+            _connection = connection ?? throw new ArgumentNullException( nameof( connection ) );
+            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
             _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
-            _connection = new RTSPConnection();
         }
 
 
@@ -29,13 +37,19 @@ namespace RabbitOM.Net.Rtsp.Apha
         }
         
         public IRTSPClientConfiguration Configuration
-            => throw new NotImplementedException();
+        {
+            get => _configuration;
+        }
         
         public IRTSPClientDispatcher Dispatcher
-            => throw new NotImplementedException();
-        
+        {
+            get => _dispatcher;
+        }
+
         public bool IsConnected
-            => throw new NotImplementedException();
+        {
+            get => _connection.IsOpened;
+        }
         
         public bool IsReceivingPacket
             => throw new NotImplementedException();
