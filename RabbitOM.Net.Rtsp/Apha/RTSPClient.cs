@@ -145,30 +145,16 @@ namespace RabbitOM.Net.Rtsp.Apha
 
         private void RaiseEvent( EventArgs e )
         {
-            if (e is RTSPPacketReceivedEventArgs)
+            if ( e is RTSPPacketReceivedEventArgs )
             {
-                OnPacketReceived(e as RTSPPacketReceivedEventArgs);
+                OnPacketReceived( e as RTSPPacketReceivedEventArgs );
             }
-            else if (e is RTSPMessageReceivedEventArgs)
+            
+            else if ( e is RTSPMessageReceivedEventArgs )
             {
-                OnMessageReceived(e as RTSPMessageReceivedEventArgs);
+                OnMessageReceived( e as RTSPMessageReceivedEventArgs );
             }
-            else if (e is RTSPCommunicationStartedEventArgs)
-            {
-                OnCommunicationStarted(e as RTSPCommunicationStartedEventArgs);
-            }
-            else if (e is RTSPCommunicationStoppedEventArgs)
-            {
-                OnCommunicationStopped(e as RTSPCommunicationStoppedEventArgs);
-            }
-            else if (e is RTSPConnectedEventArgs)
-            {
-                OnConnected(e as RTSPConnectedEventArgs);
-            }
-            else if (e is RTSPDisconnectedEventArgs)
-            {
-                OnDisconnected(e as RTSPDisconnectedEventArgs);
-            }
+
             else if (e is RTSPStreamingStartedEventArgs)
             {
                 OnStreamingStarted(e as RTSPStreamingStartedEventArgs);
@@ -181,9 +167,26 @@ namespace RabbitOM.Net.Rtsp.Apha
             {
                 OnStreamingStatusChanged(e as RTSPStreamingStatusChangedEventArgs);
             }
-            else if (e is RTSPErrorEventArgs)
+            
+            else if ( e is RTSPCommunicationStartedEventArgs )
             {
-                OnError(e as RTSPErrorEventArgs);
+                OnCommunicationStarted( e as RTSPCommunicationStartedEventArgs );
+            }
+            else if ( e is RTSPCommunicationStoppedEventArgs )
+            {
+                OnCommunicationStopped( e as RTSPCommunicationStoppedEventArgs );
+            }
+            else if ( e is RTSPConnectedEventArgs )
+            {
+                OnConnected( e as RTSPConnectedEventArgs );
+            }
+            else if ( e is RTSPDisconnectedEventArgs )
+            {
+                OnDisconnected( e as RTSPDisconnectedEventArgs );
+            }
+            else if ( e is RTSPErrorEventArgs )
+            {
+                OnError( e as RTSPErrorEventArgs );
             }
         }
 
