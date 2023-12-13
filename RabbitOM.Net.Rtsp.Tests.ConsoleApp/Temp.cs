@@ -525,13 +525,16 @@ namespace RabbitOM.Net.Rtsp.Beta
     public abstract class RTSPMediaTransport : IDisposable
     {
         private readonly IRTSPMediaChannel _channel;
+        private readonly IRTSPConnection _connection;
 
-		protected RTSPMediaTransport(IRTSPMediaChannel channel )
+        protected RTSPMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
 		{
             _channel = channel;
+            _connection = connection;
         }
 
         protected IRTSPMediaChannel Channel { get => _channel; }
+        protected IRTSPConnection Connection { get => _connection; }
 
         public abstract object SyncRoot { get; }
         public abstract bool HasOptions { get; }
@@ -574,8 +577,8 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPTcpMediaTransport : RTSPMediaTransport
     {
-        public RTSPTcpMediaTransport(IRTSPMediaChannel channel)
-            : base( channel )
+        public RTSPTcpMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
+            : base( channel , connection )
         {
         }
 
@@ -611,8 +614,8 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPUdpMediaTransport : RTSPMediaTransport
     {
-        public RTSPUdpMediaTransport(IRTSPMediaChannel channel)
-            : base(channel)
+        public RTSPUdpMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
+            : base(channel,connection)
         {
         }
 
@@ -643,8 +646,8 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPMulticastMediaTransport : RTSPMediaTransport
     {
-        public RTSPMulticastMediaTransport(IRTSPMediaChannel channel)
-            : base(channel)
+        public RTSPMulticastMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
+            : base(channel,connection)
         {
         }
 
@@ -676,30 +679,27 @@ namespace RabbitOM.Net.Rtsp.Beta
     public sealed class RTSPMediaTransportFactory
     {
         private readonly IRTSPMediaChannel _channel;
+        private readonly IRTSPConnection _connection;
 
-		public RTSPMediaTransportFactory( IRTSPMediaChannel channel )
+		public RTSPMediaTransportFactory( IRTSPMediaChannel channel , IRTSPConnection connection )
 		{
             _channel = channel;
+            _connection = connection;
 		}
 
-        public RTSPMediaTransport NewTransport()
+        public RTSPMediaTransport CreateMediaTransport()
         {
-            if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Tcp )
-            {
-                return new RTSPTcpMediaTransport( _channel );
-            }
-
             if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Udp )
             {
-                return new RTSPUdpMediaTransport( _channel );
+                return new RTSPUdpMediaTransport( _channel , _connection );
             }
 
             if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast )
             {
-                return new RTSPMulticastMediaTransport( _channel );
+                return new RTSPMulticastMediaTransport( _channel , _connection );
             }
 
-            throw new NotSupportedException();
+            return new RTSPTcpMediaTransport( _channel , _connection );
         }
     }
 }
