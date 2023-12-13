@@ -110,7 +110,7 @@ By essence, RTSP is very similar to http message except important things:
 * Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means when you open a tcp socket client and you send a request it may possible that the server can send a request to the client on the same socket during you request operation.
 * Using HTTP, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
 
-All these things are handle by the lib, and it's also support the lastest digest authentication used by the lastest professional security cameras.
+All these things are handle by this implementation.
 
 # About Session Description Protocol
 
