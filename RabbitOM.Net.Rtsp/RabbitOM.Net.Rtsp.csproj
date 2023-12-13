@@ -46,7 +46,7 @@
     <Compile Include="Apha\Events\RTSPProtocolErrorEventArgs.cs" />
     <Compile Include="Apha\RTSPClientConfiguration.cs" />
     <Compile Include="Apha\RTSPClient.cs" />
-    <Compile Include="Apha\RTSPClientDispatcher.cs" />
+    <Compile Include="Apha\Events\RTSPEventDispatcher.cs" />
     <Compile Include="Apha\IRTSPMediaChannel.cs" />
     <Compile Include="Apha\Events\RTSPStreamingStatus.cs" />
     <Compile Include="Apha\Events\RTSPStreamingStatusChangedEventArgs.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="Apha\Events\RTSPCommunicationStartedEventArgs.cs" />
     <Compile Include="Apha\IRTSPClientConfiguration.cs" />
     <Compile Include="Apha\IRTSPClient.cs" />
-    <Compile Include="Apha\IRTSPClientDispatcher.cs" />
+    <Compile Include="Apha\Events\IRTSPEventDispatcher.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientConnectedEventArgs.cs" />

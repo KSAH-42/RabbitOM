@@ -9,18 +9,18 @@ namespace RabbitOM.Net.Rtsp.Apha
 
         private readonly IRTSPClientConfiguration _configuration;
 
-        private readonly IRTSPClientDispatcher _dispatcher;
+        private readonly IRTSPEventDispatcher _dispatcher;
 
 
 
 
 
-		public RTSPMediaChannel( IRTSPClientDispatcher dispatcher )
+		public RTSPMediaChannel( IRTSPEventDispatcher dispatcher )
             : this ( dispatcher , new RTSPClientConfiguration() , new RTSPConnection() )
         {
 		}
 
-        public RTSPMediaChannel( IRTSPClientDispatcher dispatcher , IRTSPClientConfiguration configuration , IRTSPConnection connection )
+        public RTSPMediaChannel( IRTSPEventDispatcher dispatcher , IRTSPClientConfiguration configuration , IRTSPConnection connection )
         {
             _connection = connection ?? throw new ArgumentNullException( nameof( connection ) );
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp.Apha
             get => _configuration;
         }
         
-        public IRTSPClientDispatcher Dispatcher
+        public IRTSPEventDispatcher Dispatcher
         {
             get => _dispatcher;
         }

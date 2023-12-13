@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
-    public sealed class RTSPClientDispatcher : IRTSPClientDispatcher, IDisposable
+    public sealed class RTSPEventDispatcher : IRTSPEventDispatcher, IDisposable
     {
         private readonly RTSPEventQueue _queue;
 
@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Rtsp.Apha
 
 
 
-        public RTSPClientDispatcher( Action<EventArgs> handler )
+        public RTSPEventDispatcher( Action<EventArgs> handler )
         {
             _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
 

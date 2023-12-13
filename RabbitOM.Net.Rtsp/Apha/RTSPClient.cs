@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp.Apha
 
 
 
-        private readonly RTSPClientDispatcher _dispatcher;
+        private readonly RTSPEventDispatcher _dispatcher;
        
         private readonly RTSPMediaChannel _channel;
         
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp.Apha
 
         public RTSPClient()
         {
-            _dispatcher = new RTSPClientDispatcher( RaiseEvent );
+            _dispatcher = new RTSPEventDispatcher( RaiseEvent );
             _channel = new RTSPMediaChannel( _dispatcher );
             _thread = new RTSPThread( "RTSP - Client thread" );
         }

@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp.Apha
     {
         object SyncRoot { get; }
         IRTSPClientConfiguration Configuration { get; }
-        IRTSPClientDispatcher Dispatcher { get; }
+        IRTSPEventDispatcher Dispatcher { get; }
         bool IsOpened { get; }
         bool IsConnected { get; }
         bool IsReceivingPacket { get; }
