@@ -254,7 +254,7 @@ Console.WriteLine(sessionDescriptor.ToString());
 
 if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
 {
-    Console.WriteLine("Parsed by Batman");
+    Console.WriteLine("Session descriptor parsed");
 }
 
 ~~~~
