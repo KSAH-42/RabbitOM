@@ -37,9 +37,6 @@ namespace RabbitOM.Net.Rtsp.Beta
     {
         public RTSPStreamingStatus Status { get; private set; } 
     }
-    public class RTSPPacketReceivedEventArgs : EventArgs
-    {
-    }
     public class RTSPErrorEventArgs : EventArgs
     {
     }

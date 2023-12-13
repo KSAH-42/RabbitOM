@@ -41,6 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apha\IRTSPMediaChannel.cs" />
+    <Compile Include="Apha\Events\RTSPStreamingStatus.cs" />
+    <Compile Include="Apha\Events\RTSPStreamingStatusChangedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPMessageReceivedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPStreamingStoppedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPStreamingStartedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPErrorEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPDisconnectedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPConnectedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPCommunicationStoppedEventArgs.cs" />
+    <Compile Include="Apha\Events\RTSPCommunicationStartedEventArgs.cs" />
+    <Compile Include="Apha\IRTSPClientConfiguration.cs" />
+    <Compile Include="Apha\IRTSPClient.cs" />
+    <Compile Include="Apha\IRTSPClientDispatcher.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientConnectedEventArgs.cs" />
