@@ -68,7 +68,7 @@ namespace RabbitOM.Net.Rtsp.Apha
 
             while ( RTSPEventQueue.Wait( _queue , _thread.ExitHandle ) )
             {
-                pumpEvents();
+				pumpEvents();
             }
 
             pumpEvents();
