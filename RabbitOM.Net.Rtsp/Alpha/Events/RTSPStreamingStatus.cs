@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtsp.Apha
+namespace RabbitOM.Net.Rtsp.Alpha
 {
     public enum RTSPStreamingStatus
     {

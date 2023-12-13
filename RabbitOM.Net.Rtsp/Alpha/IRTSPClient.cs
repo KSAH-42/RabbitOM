@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace RabbitOM.Net.Rtsp.Apha
+namespace RabbitOM.Net.Rtsp.Alpha
 {
     public interface IRTSPClient : IDisposable
     {

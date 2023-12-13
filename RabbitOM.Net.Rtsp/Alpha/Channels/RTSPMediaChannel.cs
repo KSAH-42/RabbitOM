@@ -1,7 +1,7 @@
 ﻿using RabbitOM.Net.Rtsp.Remoting;
 using System;
 
-namespace RabbitOM.Net.Rtsp.Apha
+namespace RabbitOM.Net.Rtsp.Alpha
 {
     public sealed class RTSPMediaChannel : IRTSPMediaChannel
     {
