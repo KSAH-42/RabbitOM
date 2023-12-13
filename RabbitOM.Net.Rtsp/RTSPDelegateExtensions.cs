@@ -19,16 +19,16 @@ namespace RabbitOM.Net.Rtsp
                 return false;
             }
 
-			try
-			{
+            try
+            {
                 action.Invoke();
 
                 return true;
-			}
-			catch ( Exception ex )
-			{
+            }
+            catch ( Exception ex )
+            {
                 OnException( ex );
-			}
+            }
 
             return false;
         }

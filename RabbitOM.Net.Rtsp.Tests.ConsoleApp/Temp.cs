@@ -141,10 +141,10 @@ namespace RabbitOM.Net.Rtsp.Beta
     {
         private readonly IRTSPClientDispatcher _dispatcher;
 
-		public RTSPEventManagerManager(IRTSPClientDispatcher dispatcher)
-		{
+        public RTSPEventManagerManager(IRTSPClientDispatcher dispatcher)
+        {
             _dispatcher = dispatcher;
-		}
+        }
 
         public void NotifyCommunicationStarted( RTSPCommunicationStartedEventArgs e )
         {
@@ -170,8 +170,8 @@ namespace RabbitOM.Net.Rtsp.Beta
         private readonly RTSPEventQueue _queue;
         private readonly RTSPThread _thread;
 
-		public RTSPClientDispatcher( Action<EventArgs> handler )
-		{
+        public RTSPClientDispatcher( Action<EventArgs> handler )
+        {
             _handler = handler;
             _queue = new RTSPEventQueue();
             _thread = new RTSPThread( "RTSP - Dispatcher thread" );
@@ -240,8 +240,8 @@ namespace RabbitOM.Net.Rtsp.Beta
         private readonly RTSPMediaChannel _channel; 
         private readonly RTSPClientDispatcher _dispatcher;
 
-		public RTSPClient()
-		{
+        public RTSPClient()
+        {
             _dispatcher = new RTSPClientDispatcher( RaiseEvent );
             _channel = new RTSPMediaChannel(_dispatcher);
             _thread = new RTSPThread( "RTSP - Client thread" );
@@ -470,10 +470,10 @@ namespace RabbitOM.Net.Rtsp.Beta
     {
         private readonly IRTSPClientDispatcher _dispatcher;
 
-		public RTSPMediaChannel(IRTSPClientDispatcher dispatcher)
-		{
+        public RTSPMediaChannel(IRTSPClientDispatcher dispatcher)
+        {
             _dispatcher = dispatcher;
-		}
+        }
 
         public object SyncRoot
             => throw new NotImplementedException();
@@ -525,7 +525,7 @@ namespace RabbitOM.Net.Rtsp.Beta
         private readonly IRTSPConnection _connection;
 
         protected RTSPMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
-		{
+        {
             _channel = channel;
             _connection = connection;
         }
@@ -603,11 +603,11 @@ namespace RabbitOM.Net.Rtsp.Beta
         public override void Dispose() 
             => throw new NotImplementedException();
 
-		protected override void OnPacketReceived(RTSPPacketReceivedEventArgs e)
-		{
+        protected override void OnPacketReceived(RTSPPacketReceivedEventArgs e)
+        {
             Channel.Dispatcher.RaiseEvent( e );
-		}
-	}
+        }
+    }
 
     public sealed class RTSPUdpMediaTransport : RTSPMediaTransport
     {
@@ -678,11 +678,11 @@ namespace RabbitOM.Net.Rtsp.Beta
         private readonly IRTSPMediaChannel _channel;
         private readonly IRTSPConnection _connection;
 
-		public RTSPMediaTransportFactory( IRTSPMediaChannel channel , IRTSPConnection connection )
-		{
+        public RTSPMediaTransportFactory( IRTSPMediaChannel channel , IRTSPConnection connection )
+        {
             _channel = channel;
             _connection = connection;
-		}
+        }
 
         public RTSPMediaTransport CreateMediaTransport()
         {

@@ -51,15 +51,15 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-		/// <summary>
-		/// Gets an element at the desired index
-		/// </summary>
-		/// <param name="index">the index</param>
-		/// <returns>returns an instance</returns>
-		public RTSPMethod this[int index]
-		{
-			get => ElementAt( index );
-		}
+        /// <summary>
+        /// Gets an element at the desired index
+        /// </summary>
+        /// <param name="index">the index</param>
+        /// <returns>returns an instance</returns>
+        public RTSPMethod this[int index]
+        {
+            get => ElementAt( index );
+        }
 
 
 
@@ -69,10 +69,10 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-		/// <summary>
-		/// Gets the sync root
-		/// </summary>
-		public object SyncRoot
+        /// <summary>
+        /// Gets the sync root
+        /// </summary>
+        public object SyncRoot
         {
             get => _lock;
         }
@@ -121,7 +121,7 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
-		
+        
 
 
 
@@ -129,11 +129,11 @@ namespace RabbitOM.Net.Rtsp
 
 
 
-		/// <summary>
-		/// Gets the enumerator
-		/// </summary>
-		/// <returns>returns an instance</returns>
-		IEnumerator IEnumerable.GetEnumerator()
+        /// <summary>
+        /// Gets the enumerator
+        /// </summary>
+        /// <returns>returns an instance</returns>
+        IEnumerator IEnumerable.GetEnumerator()
         {
             lock ( _lock )
             {

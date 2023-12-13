@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtsp
             /// </summary>
             /// <param name="queue">the queue</param>
             /// <exception cref="ArgumentNullException"/>
-	        public Scope(RTSPQueue<TElement> queue)
+            public Scope(RTSPQueue<TElement> queue)
             {
                 _queue = queue ?? throw new ArgumentNullException(nameof(queue));
             }

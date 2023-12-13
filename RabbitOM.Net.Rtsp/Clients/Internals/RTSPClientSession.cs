@@ -157,9 +157,9 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
-		/// Check if the connection is still active
-		/// </summary>
-		public bool IsConnected
+        /// Check if the connection is still active
+        /// </summary>
+        public bool IsConnected
         {
             get => _connection.IsConnected;
         }
@@ -311,9 +311,9 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
-		/// Close the underlaying connection
-		/// </summary>
-		public void Close()
+        /// Close the underlaying connection
+        /// </summary>
+        public void Close()
         {
             try
             {
@@ -420,9 +420,9 @@ namespace RabbitOM.Net.Rtsp.Clients
                 }
 
                 if ( result == null || ! result.Succeed )
-			    {
+                {
                     throw new Exception( "Failed to ping the session" );
-			    }
+                }
 
                 return true;
             }
@@ -461,9 +461,9 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
         protected virtual void OnDataReceived(object sender, RTSPPacketReceivedEventArgs e )
-		{
+        {
             _dispatcher.DispatchEvent( e );
-		}
+        }
 
 
         /// <summary>

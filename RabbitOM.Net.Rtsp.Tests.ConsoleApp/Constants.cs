@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
-	public static class Constants
-	{
+    public static class Constants
+    {
         public const string LocalServer_Source_1 = "rtsp://127.0.0.1/city1.mp4";
         public const string LocalServer_Source_2 = "rtsp://127.0.0.1/city2.mp4";
         public const string LocalServer_Source_3 = "rtsp://127.0.0.1/city3.mp4";

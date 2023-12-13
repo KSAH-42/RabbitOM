@@ -23,9 +23,9 @@ namespace RabbitOM.Net.Rtsp.Codecs
         public const string Default_H264_PPS = "aO48gA==";
 
         /// <summary>
-	    /// Represent the start marker vector
-	    /// </summary>
-	    public static readonly byte[] H265StartMarker = { 0, 0, 0, 1 };
+        /// Represent the start marker vector
+        /// </summary>
+        public static readonly byte[] H265StartMarker = { 0, 0, 0, 1 };
 
         /// <summary>
         /// Represent the default SPS for H265 encoder

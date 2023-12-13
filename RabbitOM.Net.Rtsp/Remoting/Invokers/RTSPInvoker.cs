@@ -621,9 +621,9 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
             for ( int i = 0 ; i < 3 ; ++i )
             {
                 if ( ! _proxy.IsOpened )
-				{
+                {
                     break;
-				}
+                }
 
                 if ( ! _proxy.RequestManager.TrySendRequest( request , out response ) || response == null )
                 {
@@ -656,9 +656,9 @@ namespace RabbitOM.Net.Rtsp.Remoting.Invokers
                 }
 
                 if ( response.Status.Code == RTSPStatusCode.UnAuthorized )
-				{
+                {
                     _proxy.DispatchEvent( new RTSPAuthenticationFailedEventArgs() );
-				}
+                }
             }
 
             return new RTSPInvokerResult( succeed , new RTSPInvokerResultRequest( request ?? RTSPMessageRequest.CreateUnDefinedRequest() ) , new RTSPInvokerResultResponse( response ?? RTSPMessageResponse.CreateUnDefinedResponse() ) );

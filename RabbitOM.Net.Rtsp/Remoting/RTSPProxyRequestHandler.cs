@@ -177,7 +177,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Dispose
         /// </summary>
         public void Dispose()
-		{
+        {
             _completionHandle.Dispose();
         }
 

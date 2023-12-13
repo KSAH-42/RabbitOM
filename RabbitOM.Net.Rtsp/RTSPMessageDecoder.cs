@@ -58,9 +58,9 @@ namespace RabbitOM.Net.Rtsp
         /// Gets the sync root
         /// </summary>
         public object SyncRoot
-		{
+        {
             get => _lock;
-		}
+        }
 
         /// <summary>
         /// Check if the internal memory stream has reach the limi
@@ -68,12 +68,12 @@ namespace RabbitOM.Net.Rtsp
         public bool HasReachSizeLimit
         {
             get
-			{
+            {
                 lock ( _lock )
-				{
+                {
                     return _limit <= _stream.Length;
                 }
-			}
+            }
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace RabbitOM.Net.Rtsp
         public bool CompareValue( byte value )
         {
             lock ( _lock )
-			{
+            {
                 return _valueByte >= 0 && _valueByte == value;
             }
         }
@@ -133,7 +133,7 @@ namespace RabbitOM.Net.Rtsp
         public bool CompareValueAsProtocolChar()
         {
             lock ( _lock )
-			{
+            {
                 return char.IsLetterOrDigit((char)_valueByte);
             }
         }
@@ -157,7 +157,7 @@ namespace RabbitOM.Net.Rtsp
         public bool CompareValueString( string value , bool ignoreCase )
         {
             lock ( _lock )
-			{
+            {
                 return string.Compare(_valueString.ToString(), value, ignoreCase) == 0;
             }
         }
@@ -168,7 +168,7 @@ namespace RabbitOM.Net.Rtsp
         public void ClearValues()
         {
             lock ( _lock )
-			{
+            {
                 _valueByte   = -1;
                 _valueString.Clear();
             }
@@ -181,7 +181,7 @@ namespace RabbitOM.Net.Rtsp
         public bool IsInitialized()
         {
             lock ( _lock )
-			{
+            {
                 return _stream.IsCreated();
             }
         }
@@ -193,7 +193,7 @@ namespace RabbitOM.Net.Rtsp
         public bool Initialize()
         {
             lock ( _lock )
-			{
+            {
                 return _stream.Create();
             }
         }
@@ -204,7 +204,7 @@ namespace RabbitOM.Net.Rtsp
         public void UnInitialize()
         {
             lock ( _lock )
-			{
+            {
                 _stream.Close();
                 _valueString.Clear();
             }
@@ -216,7 +216,7 @@ namespace RabbitOM.Net.Rtsp
         public void Discard()
         {
             lock ( _lock )
-			{
+            {
                 _stream.Discard();
             }
         }
@@ -227,7 +227,7 @@ namespace RabbitOM.Net.Rtsp
         public void PrepareWrite()
         {
             lock ( _lock )
-			{
+            {
                 _stream.SeekToEnd();
             }
         }
@@ -242,7 +242,7 @@ namespace RabbitOM.Net.Rtsp
         public bool Write( byte[] buffer , int offset , int count )
         {
             lock ( _lock )
-			{
+            {
                 return _stream.Write(buffer, offset, count);
             }
         }
@@ -253,7 +253,7 @@ namespace RabbitOM.Net.Rtsp
         public void PrepareRead()
         {
             lock ( _lock )
-			{
+            {
                 ClearValues();
 
                 _stream.SeekToBegin();
@@ -267,7 +267,7 @@ namespace RabbitOM.Net.Rtsp
         public bool Read()
         {
             lock ( _lock )
-			{
+            {
                 _valueByte = _stream.ReadByte();
 
                 if (_valueByte > 0)
@@ -285,39 +285,39 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool DecodeInterleaved()
         {
-			lock ( _lock )
-			{
-				_interleavedPacket = null;
+            lock ( _lock )
+            {
+                _interleavedPacket = null;
 
-				if (!_stream.ReadByte(out byte channel))
-				{
-					return false;
-				}
+                if (!_stream.ReadByte(out byte channel))
+                {
+                    return false;
+                }
 
-				if (!_stream.ReadUInt16(out ushort length))
-				{
-					return false;
-				}
+                if (!_stream.ReadUInt16(out ushort length))
+                {
+                    return false;
+                }
 
                 if (_stream.Length < length )
-				{
+                {
                     _stream.SeekBackward();
                     return false;
-				}
+                }
                 
                 var buffer = new byte[length];
 
-				int bytesRead = _stream.Read(buffer, 0, buffer.Length);
+                int bytesRead = _stream.Read(buffer, 0, buffer.Length);
 
-				if (bytesRead != buffer.Length)
-				{
-					return false;
-				}
+                if (bytesRead != buffer.Length)
+                {
+                    return false;
+                }
 
-				_interleavedPacket = new RTSPInterleavedPacket(channel, buffer);
+                _interleavedPacket = new RTSPInterleavedPacket(channel, buffer);
 
-				return true; 
-			}
+                return true; 
+            }
         }
 
         /// <summary>
@@ -326,63 +326,63 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool DecodeResponse()
         {
-			lock (_lock)
-			{
-				_response = null;
+            lock (_lock)
+            {
+                _response = null;
 
-				if (!_stream.SeekRelative("RTSP".Length * -1))
-				{
-					return false;
-				}
+                if (!_stream.SeekRelative("RTSP".Length * -1))
+                {
+                    return false;
+                }
 
-				var builder = new StringBuilder();
+                var builder = new StringBuilder();
 
-				long   length = 0;
-				string body   = string.Empty;
+                long   length = 0;
+                string body   = string.Empty;
 
-				while (_stream.ReadLine(out string line))
-				{
-					builder.AppendLine(line);
+                while (_stream.ReadLine(out string line))
+                {
+                    builder.AppendLine(line);
 
-					if (string.IsNullOrEmpty(line))
-					{
-						break;
-					}
+                    if (string.IsNullOrEmpty(line))
+                    {
+                        break;
+                    }
                     
                     if (RTSPHeaderFactory.CanCreateHeader(line, RTSPHeaderNames.ContentLength))
-					{
-						var header = RTSPHeaderFactory.CreateHeader(line) as RTSPHeaderContentLength;
+                    {
+                        var header = RTSPHeaderFactory.CreateHeader(line) as RTSPHeaderContentLength;
 
-						if (header != null)
-						{
-							length = header.Value;
-						}
-					}
-				}
+                        if (header != null)
+                        {
+                            length = header.Value;
+                        }
+                    }
+                }
 
-				string messageHead = builder.ToString();
+                string messageHead = builder.ToString();
 
-				if (string.IsNullOrWhiteSpace(messageHead) || !messageHead.Contains("\r\n\r\n"))
-				{
-					return false;
-				}
+                if (string.IsNullOrWhiteSpace(messageHead) || !messageHead.Contains("\r\n\r\n"))
+                {
+                    return false;
+                }
 
-				if (length > 0 && !_stream.ReadString((int)length, out body))
-				{
-					return false;
-				}
+                if (length > 0 && !_stream.ReadString((int)length, out body))
+                {
+                    return false;
+                }
 
-				if (length != body.Length)
-				{
-					return false;
-				}
+                if (length != body.Length)
+                {
+                    return false;
+                }
 
-				builder.Append(body);
+                builder.Append(body);
 
-				_response = RTSPMessageResponseSerializer.Deserialize(builder.ToString());
+                _response = RTSPMessageResponseSerializer.Deserialize(builder.ToString());
 
-				return _response != null; 
-			}
+                return _response != null; 
+            }
         }
 
         /// <summary>
@@ -391,10 +391,10 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public RTSPPacket GetInterleavedPacket()
         {
-			lock (_lock)
-			{
-				return _interleavedPacket; 
-			}
+            lock (_lock)
+            {
+                return _interleavedPacket; 
+            }
         }
 
         /// <summary>
@@ -403,10 +403,10 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public RTSPMessageResponse GetResponse()
         {
-			lock ( _lock )
-			{
-				return _response; 
-			}
+            lock ( _lock )
+            {
+                return _response; 
+            }
         }
     }
 }

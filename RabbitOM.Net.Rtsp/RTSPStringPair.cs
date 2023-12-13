@@ -36,7 +36,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="first">the first</param>
         /// <param name="second">the second</param>
         public RTSPStringPair( string first , string second )
-		{
+        {
             _first  = RTSPDataConverter.Trim( first );
             _second = RTSPDataConverter.Trim( second );
         }

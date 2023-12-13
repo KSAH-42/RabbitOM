@@ -16,8 +16,8 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="value">the value</param>
-		public RTSPHeaderAccept( string value )
-		{
+        public RTSPHeaderAccept( string value )
+        {
             _mimes = new RTSPStringCollection();
             _mimes.TryAdd(value);
         }

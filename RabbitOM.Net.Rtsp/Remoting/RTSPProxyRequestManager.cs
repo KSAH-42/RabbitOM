@@ -30,7 +30,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <exception cref="ArgumentNullException"/>
         public RTSPProxyRequestManager( RTSPProxy proxy )
         {
-			_proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
+            _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
             _chunkListenerThread = new RTSPThread( "RTSP - proxy request manager - chunk listener" );
             _requestListenerThread = new RTSPThread( "RTSP - proxy request manager - listener " );
@@ -174,7 +174,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Cancel the pending requests
         /// </summary>
         public void CancelPendingRequests()
-		{
+        {
             _requestHandlers.ForEach( handler => handler.Cancel() );
         }
 
@@ -192,7 +192,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     return;
                 }
 
-				var data = new byte[ bytesReceived ];
+                var data = new byte[ bytesReceived ];
 
                 Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
 

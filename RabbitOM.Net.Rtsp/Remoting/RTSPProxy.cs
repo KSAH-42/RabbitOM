@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
             _socket = new RTSPTcpSocket( e => OnError( new RTSPConnectionErrorEventArgs( e ) ) );
             _informations = new RTSPProxyInformations();
             _requestManager = new RTSPProxyRequestManager(this);
-			_securityManager = new RTSPProxySecurityManager(this);
+            _securityManager = new RTSPProxySecurityManager(this);
             _invokeManager = new RTSPProxyInvocationManager(this);
             _eventQueue = new RTSPEventQueue();
             _mediaEventQueue = new RTSPEventQueue();
@@ -159,17 +159,17 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// Gets the invocation manager
         /// </summary>
         public RTSPProxyInvocationManager InvokeManager
-		{
+        {
             get => _invokeManager;
-		}
+        }
 
         /// <summary>
         /// Gets the session identifier
         /// </summary>
         public string SessionId
-		{
+        {
             get => _informations.SessionId;
-		}
+        }
 
         /// <summary>
         /// Check the connection is opened

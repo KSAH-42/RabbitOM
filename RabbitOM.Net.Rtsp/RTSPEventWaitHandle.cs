@@ -18,7 +18,7 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public RTSPEventWaitHandle()
         {
-			_handle = new EventWaitHandle( false , EventResetMode.ManualReset );
+            _handle = new EventWaitHandle( false , EventResetMode.ManualReset );
         }
 
 
@@ -211,7 +211,7 @@ namespace RabbitOM.Net.Rtsp
         /// Release internal resources
         /// </summary>
         public void Dispose()
-		{
+        {
             this._handle.Dispose();
         }
 

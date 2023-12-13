@@ -160,9 +160,9 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="shutdownTimeout">the shutdown timeout</param>
         public void StopCommunication(TimeSpan shutdownTimeout)
-		{
+        {
             if ( ! _thread.Join( shutdownTimeout ) )
-			{
+            {
                 _session.Abort();
             }
 

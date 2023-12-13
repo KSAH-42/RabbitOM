@@ -340,7 +340,7 @@ namespace RabbitOM.Net.Rtsp
                     int bufferSize = (int)(_stream.Length - position);
 
                     if (_buffer == null || _buffer.Length < bufferSize )
-					{
+                    {
                         _buffer = new byte[bufferSize];
                     }
 
@@ -348,7 +348,7 @@ namespace RabbitOM.Net.Rtsp
                     _stream.SetLength(0);
                     _stream.Write(_buffer, 0, bufferSize);
                     _stream.Seek(0, SeekOrigin.Begin);
-				}
+                }
             }
             catch ( Exception ex )
             {

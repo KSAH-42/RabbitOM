@@ -851,7 +851,7 @@ namespace RabbitOM.Net.Rtsp
             lock (_lock)
             {
                 if ( ! string.IsNullOrEmpty( value ) )
-				{
+                {
                     _body.Append(value);
                 }
 

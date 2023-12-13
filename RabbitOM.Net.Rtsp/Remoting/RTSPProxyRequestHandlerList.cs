@@ -59,17 +59,17 @@ namespace RabbitOM.Net.Rtsp.Remoting
         }
 
         /// <summary>
-		/// Check if the collection is thread safe
-		/// </summary>
-		public bool IsSynchronized
+        /// Check if the collection is thread safe
+        /// </summary>
+        public bool IsSynchronized
         {
             get => true;
         }
 
         /// <summary>
-		/// Check if the collection is just a read only collection
-		/// </summary>
-		public bool IsReadOnly
+        /// Check if the collection is just a read only collection
+        /// </summary>
+        public bool IsReadOnly
         {
             get => false;
         }
@@ -334,9 +334,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 if ( _collection.Values.Contains( handler ) )
                 {
                     if ( dispose )
-					{
+                    {
                         handler.Dispose();
-					}
+                    }
 
                     return _collection.Remove( handler.RequestId );
                 }
@@ -401,5 +401,5 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 return _collection.TryGetValue( sequenceId , out result );
             }
         }
-	}
+    }
 }

@@ -266,44 +266,44 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
-		/// <summary>
-		/// Add a header
-		/// </summary>
-		/// <param name="header">the header</param>
-		/// <exception cref="ArgumentNullException"/>
-		/// <exception cref="ArgumentException"/>
-		/// <exception cref="InvalidOperationException"/>
-		public void Add(RTSPHeader header)
-		{
-			if (header == null)
-			{
-				throw new ArgumentNullException(nameof(header));
-			}
+        /// <summary>
+        /// Add a header
+        /// </summary>
+        /// <param name="header">the header</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="InvalidOperationException"/>
+        public void Add(RTSPHeader header)
+        {
+            if (header == null)
+            {
+                throw new ArgumentNullException(nameof(header));
+            }
 
-			if (RTSPHeader.IsUnDefined(header))
-			{
-				throw new ArgumentException(nameof(header));
-			}
+            if (RTSPHeader.IsUnDefined(header))
+            {
+                throw new ArgumentException(nameof(header));
+            }
 
-			lock (_lock)
-			{
-				if (_collection.Count >= Maximum)
-				{
-					throw new InvalidOperationException("Collection is full");
-				}
+            lock (_lock)
+            {
+                if (_collection.Count >= Maximum)
+                {
+                    throw new InvalidOperationException("Collection is full");
+                }
 
-				_collection.Add(header.Name, header);
-			}
-		}
+                _collection.Add(header.Name, header);
+            }
+        }
 
         /// <summary>
         /// Add or update a header
         /// </summary>
         /// <param name="header">the header</param>
         /// <exception cref="ArgumentNullException"/>
-		/// <exception cref="ArgumentException"/>
-		/// <exception cref="InvalidOperationException"/>
-		public void AddOrUpdate(RTSPHeader header)
+        /// <exception cref="ArgumentException"/>
+        /// <exception cref="InvalidOperationException"/>
+        public void AddOrUpdate(RTSPHeader header)
         {
             if (header == null)
             {

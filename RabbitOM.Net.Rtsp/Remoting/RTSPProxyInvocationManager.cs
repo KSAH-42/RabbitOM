@@ -22,10 +22,10 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <param name="proxy">the proxy</param>
         /// <exception cref="ArgumentNullException"/>
-		public RTSPProxyInvocationManager( RTSPProxy proxy )
-		{
+        public RTSPProxyInvocationManager( RTSPProxy proxy )
+        {
             _proxy = proxy ?? throw new ArgumentNullException(nameof(proxy));
-		}
+        }
 
 
 
@@ -91,9 +91,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <returns>returns an instance</returns>
         public IRTSPInvoker CreateKeepAliveInvoker()
-		{
+        {
             return CreateKeepAliveInvoker(RTSPKeepAliveType.Options);
-		}
+        }
 
         /// <summary>
         /// Create an invoker
@@ -104,17 +104,17 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public IRTSPInvoker CreateKeepAliveInvoker(RTSPKeepAliveType keepAliveType )
         {
             if (keepAliveType == RTSPKeepAliveType.Options)
-			{
+            {
                 return new RTSPKeepAliveInvoker( _proxy , RTSPMethod.Options );
-			}
+            }
 
             if ( keepAliveType == RTSPKeepAliveType.GetParameter )
-			{
+            {
                 return new RTSPKeepAliveInvoker(_proxy, RTSPMethod.GetParameter);
             }
 
             if ( keepAliveType == RTSPKeepAliveType.SetParameter )
-			{
+            {
                 return new RTSPKeepAliveInvoker(_proxy, RTSPMethod.SetParameter);
             }
 
@@ -162,8 +162,8 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         /// <returns>returns an instance</returns>
         public IRTSPInvoker CreateRedirectInvoker()
-		{
+        {
             return new RTSPRedirectInvoker(_proxy);
-		}
+        }
     }
 }

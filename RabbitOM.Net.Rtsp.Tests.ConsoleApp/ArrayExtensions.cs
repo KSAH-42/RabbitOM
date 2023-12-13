@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
-	public static class ArrayExtensions
+    public static class ArrayExtensions
     {
-		public static int IndexAfter<TSource>( this IEnumerable<TSource> source , Func<TSource,bool> predicate)
+        public static int IndexAfter<TSource>( this IEnumerable<TSource> source , Func<TSource,bool> predicate)
         {
             int index = IndexOf( source , predicate );
 
@@ -32,5 +32,5 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             return -1;
         }
-	}
+    }
 }

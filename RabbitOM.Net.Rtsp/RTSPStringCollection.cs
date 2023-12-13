@@ -146,14 +146,14 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
-		
+        
 
 
 
 
 
 
-		/// <summary>
+        /// <summary>
         /// Add an element
         /// </summary>
         /// <param name="element">the element name</param>
@@ -302,10 +302,10 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-		/// Gets the enumerator
-		/// </summary>
-		/// <returns>returns an instance</returns>
-		IEnumerator IEnumerable.GetEnumerator()
+        /// Gets the enumerator
+        /// </summary>
+        /// <returns>returns an instance</returns>
+        IEnumerator IEnumerable.GetEnumerator()
         {
             lock (_lock)
             {
@@ -399,5 +399,5 @@ namespace RabbitOM.Net.Rtsp
                 return result > 0;
             }
         }
-	}
+    }
 }

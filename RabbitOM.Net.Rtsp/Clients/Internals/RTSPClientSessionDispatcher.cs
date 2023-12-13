@@ -55,12 +55,12 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="sender">the sender</param>
         /// <exception cref="ArgumentNullException"/>
-		internal RTSPClientSessionDispatcher( object sender )
-		{
+        internal RTSPClientSessionDispatcher( object sender )
+        {
             _sender = sender ?? throw new ArgumentNullException( nameof( sender ) );
             _eventListener = new RTSPThread("RTSP - Event listener");
             _eventQueue = new RTSPEventQueue();
-		}
+        }
         
 
         

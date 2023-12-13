@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="clock">the clock</param>
         /// <param name="time">the time</param>
         public RTSPHeaderRange( RTSPStringPair ntp , RTSPStringPair clock , RTSPStringPair time )
-		{
+        {
             _npt   = ntp   ?? RTSPStringPair.Empty;
             _clock = clock ?? RTSPStringPair.Empty;
             _time  = time  ?? RTSPStringPair.Empty;
