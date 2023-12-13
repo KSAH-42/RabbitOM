@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
-	public class RTSPStreamingStoppedEventArgs : EventArgs
-	{
-	}
+    public class RTSPStreamingStoppedEventArgs : EventArgs
+    {
+    }
 }

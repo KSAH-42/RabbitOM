@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
-	public class RTSPConnectedEventArgs : EventArgs
-	{
-	}
+    public class RTSPConnectedEventArgs : EventArgs
+    {
+    }
 }

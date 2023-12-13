@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
-	public interface IRTSPClient : IDisposable
-	{
+    public interface IRTSPClient : IDisposable
+    {
         event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
         event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
         event EventHandler<RTSPConnectedEventArgs> Connected;

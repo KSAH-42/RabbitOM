@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
-	public class RTSPClient : IRTSPClient
-	{
+    public class RTSPClient : IRTSPClient
+    {
         public event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
         
         public event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;

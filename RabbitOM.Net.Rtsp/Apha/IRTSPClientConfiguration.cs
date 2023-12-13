@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Net.Rtsp.Apha
 {
-	public interface IRTSPClientConfiguration
-	{
+    public interface IRTSPClientConfiguration
+    {
         object SyncRoot { get; }
         string Uri { get; set; }
         string UserName { get; set; }
