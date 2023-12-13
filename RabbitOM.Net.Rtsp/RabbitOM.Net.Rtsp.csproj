@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apha\Channels\RTSPMediaChannelRunner.cs" />
     <Compile Include="Apha\RTSPClientDispatcher.cs" />
     <Compile Include="Apha\IRTSPMediaChannel.cs" />
     <Compile Include="Apha\Events\RTSPStreamingStatus.cs" />

@@ -13,11 +13,11 @@ namespace RabbitOM.Net.Rtsp.Apha
 
 
         bool Connect();
-        bool Close();
+        bool Disconnect();
         void Abort();
         bool StartStreaming();
         bool StopStreaming();
-        bool Ping();
+        bool KeepAlive();
         bool WaitForConnection(TimeSpan shutdownTimeout);
     }
 }
