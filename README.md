@@ -14,6 +14,7 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
 * Support multiple authentications: Basic, MD5, SHA256, SHA512
 * Support auto reconnection in case of network failures
 * Support message reordering when multiple requests are sended and responses arrive in a different order
+* Provide Event Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
 * Thread safe
 * Handle large streams like 50 MBits/seconds
