@@ -42,35 +42,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             Run(arguments["uri"], arguments["-u"], arguments["-p"]);
         }
 
-        // ----> don't forget to use <inheritdoc/> for comments
-
-        // TODO: About namespace: keep it flatten, don't use headers namespace but move the remoting namespace into the clients namespaces
-
-        // TODO: Force header class to be immutable: used constructor or method factory and pass setters to private
-
-        // TODO: Remove some locks on the messaging layer
-
-        // TODO: On the connection class, remove the error handler and replace it by the differents event handler, in this case, avoid unification using strategy pattern
-        // TODO: A dispose method on the client object
-        // TODO: Code review on the SDP layer
-        // TODO: Write an efficient memory buffer for replacing the RTSPMemoryStream class
-        // TODO: Remove the client class
-        // TODO: Goal: write individual client class with it respective configuration
-        // TODO: Write a client receiver class for tcp streaming
-        // TODO: Write a client receiver class for udp streaming
-        // TODO: Write a client receiver class for multicast streaming
-        // TODO: Refactor the configuration class make it fully immutable/readonly and remove the lock
-        // TODO: Then inject the configuration class on each receiver constructor
-        // TODO: Secure password using SecureString 
-        // TODO: Duplicated code: unify scope classes 
-        // TODO: Reduce memory allocations
-        //         => use a small memory pool ?
-        // TODO: Introduce complete frame objects 
-        // TODO: Pass all class to internals which are not supposed to be used by the developper who want to used the assembly
-
-        // TODO: Use some the lastest feature of C# 9.0 like record type for configuration classes
-        //       and remove factory methods => it must be done at the end of the final release.
-
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
         // Make sure that the ports are not blocked
         // Use the vendor configuration tool to activate the rtsp protocol especially the port

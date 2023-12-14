@@ -12,7 +12,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
         bool IsReceivingPacket { get; }
         bool IsStreamingStarted { get; }
 
-
         bool Open();
         bool Close();
         void Abort();

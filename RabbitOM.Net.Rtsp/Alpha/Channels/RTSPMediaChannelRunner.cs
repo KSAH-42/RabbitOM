@@ -44,6 +44,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 if ( ! _channel.StartStreaming() )
                 {
                     _channel.Close();
+                    return;
                 }
 
                 _idleTimeout = _channel.Configuration.KeepAliveInterval;
