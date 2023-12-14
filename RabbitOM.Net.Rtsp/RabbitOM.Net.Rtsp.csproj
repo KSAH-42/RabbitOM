@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Alpha\Channels\RTSPMediaChannel.cs" />
     <Compile Include="Alpha\Channels\RTSPMediaChannelRunner.cs" />
-    <Compile Include="Alpha\Events\RTSPProtocolErrorEventArgs.cs" />
     <Compile Include="Alpha\RTSPClientConfiguration.cs" />
     <Compile Include="Alpha\RTSPClient.cs" />
     <Compile Include="Alpha\Events\RTSPEventDispatcher.cs" />

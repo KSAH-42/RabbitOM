@@ -2,7 +2,8 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public abstract class RTSPErrorEventArgs : EventArgs
+    public class RTSPErrorEventArgs : EventArgs
     {
-    }
+        
+	}
 }
