@@ -158,7 +158,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <summary>
         /// Gets the invocation manager
         /// </summary>
-        public RTSPProxyInvocationManager InvokeManager
+        public RTSPProxyInvocationManager InvocationManager
         {
             get => _invokeManager;
         }

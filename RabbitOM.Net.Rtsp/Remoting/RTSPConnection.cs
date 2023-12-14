@@ -266,7 +266,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Options()
         {
-            return _proxy.InvokeManager.CreateOptionsInvoker();
+            return _proxy.InvocationManager.CreateOptionsInvoker();
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Describe()
         {
-            return _proxy.InvokeManager.CreateDescribeInvoker();
+            return _proxy.InvocationManager.CreateDescribeInvoker();
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Setup()
         {
-            return _proxy.InvokeManager.CreateSetupInvoker();
+            return _proxy.InvocationManager.CreateSetupInvoker();
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Play()
         {
-            return _proxy.InvokeManager.CreatePlayInvoker();
+            return _proxy.InvocationManager.CreatePlayInvoker();
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Pause()
         {
-            return _proxy.InvokeManager.CreatePauseInvoker();
+            return _proxy.InvocationManager.CreatePauseInvoker();
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker TearDown()
         {
-            return _proxy.InvokeManager.CreateTearDownInvoker();
+            return _proxy.InvocationManager.CreateTearDownInvoker();
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker GetParameter()
         {
-            return _proxy.InvokeManager.CreateGetParameterInvoker();
+            return _proxy.InvocationManager.CreateGetParameterInvoker();
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker SetParameter()
         {
-            return _proxy.InvokeManager.CreateSetParameterInvoker();
+            return _proxy.InvocationManager.CreateSetParameterInvoker();
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Announce()
         {
-            return _proxy.InvokeManager.CreateAnnounceInvoker();
+            return _proxy.InvocationManager.CreateAnnounceInvoker();
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Redirect()
         {
-            return _proxy.InvokeManager.CreateRedirectInvoker();
+            return _proxy.InvocationManager.CreateRedirectInvoker();
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker Record()
         {
-            return _proxy.InvokeManager.CreateRecordInvoker();
+            return _proxy.InvocationManager.CreateRecordInvoker();
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker KeepAlive()
         {
-            return _proxy.InvokeManager.CreateKeepAliveInvoker();
+            return _proxy.InvocationManager.CreateKeepAliveInvoker();
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns an invoker</returns>
         public IRTSPInvoker KeepAlive( RTSPKeepAliveType type )
         {
-            return _proxy.InvokeManager.CreateKeepAliveInvoker(type);
+            return _proxy.InvocationManager.CreateKeepAliveInvoker(type);
         }
 
         /// <summary>
