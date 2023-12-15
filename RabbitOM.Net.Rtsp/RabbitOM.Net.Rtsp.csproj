@@ -44,13 +44,13 @@
     <Compile Include="Alpha\Channels\RTSPMediaChannelService.cs" />
     <Compile Include="Alpha\Channels\RTSPMediaChannel.cs" />
     <Compile Include="Alpha\Channels\RTSPMediaChannelRunner.cs" />
-    <Compile Include="Alpha\Channels\RTSPUdpMulticastMediaReceiver.cs" />
-    <Compile Include="Alpha\Channels\RTSPUdpMediaReceiver.cs" />
-    <Compile Include="Alpha\Channels\RTSPMediaReceiver.cs" />
+    <Compile Include="Alpha\Channels\RTSPMulticastMediaChannelReceiver.cs" />
+    <Compile Include="Alpha\Channels\RTSPUdpMediaChannelReceiver.cs" />
+    <Compile Include="Alpha\Channels\RTSPMediaChannelReceiver.cs" />
     <Compile Include="Alpha\RTSPClientConfiguration.cs" />
     <Compile Include="Alpha\RTSPClient.cs" />
     <Compile Include="Alpha\Events\RTSPEventDispatcher.cs" />
-    <Compile Include="Alpha\IRTSPMediaChannel.cs" />
+    <Compile Include="Alpha\Channels\IRTSPMediaChannel.cs" />
     <Compile Include="Alpha\Events\RTSPStreamingStatus.cs" />
     <Compile Include="Alpha\Events\RTSPStreamingStatusChangedEventArgs.cs" />
     <Compile Include="Alpha\Events\RTSPMessageReceivedEventArgs.cs" />
@@ -254,5 +254,6 @@
       <Name>RabbitOM.Net.Sdp</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

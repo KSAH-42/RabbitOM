@@ -49,7 +49,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => throw new NotImplementedException();
         public bool SetupAsUdp()
             => throw new NotImplementedException();
-        public bool SetupAsUdpMulticast()
+        public bool SetupAsMulticast()
             => throw new NotImplementedException();
         public bool Play()
             => throw new NotImplementedException();

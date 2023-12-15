@@ -50,7 +50,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
             if (_service.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast)
             {
-                return _service.SetupAsUdpMulticast();
+                return _service.SetupAsMulticast();
             }
 
             return _service.SetupAsTcp();
