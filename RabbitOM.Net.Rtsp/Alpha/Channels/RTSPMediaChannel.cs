@@ -4,10 +4,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 {
     public sealed class RTSPMediaChannel : IRTSPMediaChannel
     {
-        private readonly RTSPMediaChannelService _service;
+        private readonly RTSPMediaService _service;
 
         public RTSPMediaChannel(IRTSPEventDispatcher dispatcher)
-           => _service = new RTSPMediaChannelService(dispatcher);
+           => _service = new RTSPMediaService(dispatcher);
 
         public object SyncRoot
             => _service.SyncRoot;
@@ -25,7 +25,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => _service.IsStreamingStarted;
         public bool IsPlaying
             => _service.IsStreamingStarted;
-
         public bool IsDisposed
             => _service.IsDisposed;
 

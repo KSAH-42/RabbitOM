@@ -92,7 +92,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool StartCommunication()
         {
             _dispatcher.Start();
-
+            
             return _thread.Start( () =>
             {
                 OnCommunicationStarted( new RTSPCommunicationStartedEventArgs() );

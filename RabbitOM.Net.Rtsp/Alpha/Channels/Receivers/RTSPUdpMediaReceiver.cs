@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPUdpMediaChannelReceiver : RTSPMediaTransport
+    public sealed class RTSPUdpMediaReceiver : RTSPMediaReceiver
     {
-        public RTSPUdpMediaChannelReceiver( RTSPMediaChannelService service )
+        public RTSPUdpMediaReceiver( RTSPMediaService service )
             : base( service )
 		{
 		}

@@ -2,16 +2,16 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public abstract class RTSPMediaTransport 
+    public abstract class RTSPMediaReceiver 
     {
-        private readonly RTSPMediaChannelService _service;
+        private readonly RTSPMediaService _service;
 
-		public RTSPMediaTransport( RTSPMediaChannelService service )
+		public RTSPMediaReceiver( RTSPMediaService service )
 		{
             _service = service ?? throw new ArgumentNullException( nameof( service ) );
 		}
 
-        protected RTSPMediaChannelService Service
+        protected RTSPMediaService Service
             => _service;
       
         public abstract bool IsStarted { get; }

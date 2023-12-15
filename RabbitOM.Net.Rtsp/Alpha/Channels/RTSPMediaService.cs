@@ -3,11 +3,11 @@ using System;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPMediaChannelService : IDisposable
+    public sealed class RTSPMediaService : IDisposable
     {
         private readonly IRTSPEventDispatcher _dispatcher;
 
-        public RTSPMediaChannelService( IRTSPEventDispatcher dispatcher )
+        public RTSPMediaService( IRTSPEventDispatcher dispatcher )
         {
             _dispatcher = dispatcher;
         }
@@ -63,10 +63,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => throw new NotImplementedException();
         public bool WaitForConnection(TimeSpan shutdownTimeout)
             => throw new NotImplementedException();
-
         public void SetStreamingStatus(bool status)
             => throw new NotImplementedException();
-
         public void SetReceivingStatus(bool status)
             => throw new NotImplementedException();
     }
