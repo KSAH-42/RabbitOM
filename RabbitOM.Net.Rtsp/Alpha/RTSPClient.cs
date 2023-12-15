@@ -196,52 +196,52 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         protected virtual void OnCommunicationStarted( RTSPCommunicationStartedEventArgs e )
         {
-            CommunicationStarted.TryInvoke( this , e );
+            CommunicationStarted?.TryInvoke( this , e );
         }
 
         protected virtual void OnCommunicationStopped( RTSPCommunicationStoppedEventArgs e )
         {
-            CommunicationStopped.TryInvoke( this , e );
+            CommunicationStopped?.TryInvoke( this , e );
         }
 
         protected virtual void OnConnected( RTSPConnectedEventArgs e )
         {
-            Connected.TryInvoke( this , e );
+            Connected?.TryInvoke( this , e );
         }
 
         protected virtual void OnDisconnected( RTSPDisconnectedEventArgs e )
         {
-            Disconnected.TryInvoke( this , e );
+            Disconnected?.TryInvoke( this , e );
         }
 
         protected virtual void OnStreamingStarted( RTSPStreamingStartedEventArgs e )
         {
-            StreamingStarted.TryInvoke( this , e );
+            StreamingStarted?.TryInvoke( this , e );
         }
 
         protected virtual void OnStreamingStopped( RTSPStreamingStoppedEventArgs e )
         {
-            StreamingStopped.TryInvoke( this , e );
+            StreamingStopped?.TryInvoke( this , e );
         }
 
         protected virtual void OnStreamingStatusChanged( RTSPStreamingStatusChangedEventArgs e )
         {
-            StreamingStatusChanged.TryInvoke( this , e );
+            StreamingStatusChanged?.TryInvoke( this , e );
         }
 
         protected virtual void OnMessageReceived( RTSPMessageReceivedEventArgs e )
         {
-            MessageReceived.TryInvoke( this , e );
+            MessageReceived?.TryInvoke( this , e );
         }
 
         protected virtual void OnPacketReceived( RTSPPacketReceivedEventArgs e )
         {
-            PacketReceived.TryInvoke( this , e );
+            PacketReceived?.TryInvoke( this , e );
         }
 
         protected virtual void OnError( RTSPErrorEventArgs e )
         {
-            Error.TryInvoke( this , e );
+            Error?.TryInvoke( this , e );
         }
     }
 }

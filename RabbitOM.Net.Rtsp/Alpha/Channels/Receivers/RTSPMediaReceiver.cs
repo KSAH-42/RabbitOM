@@ -20,14 +20,19 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public abstract void Stop();
         public abstract void Dispose();
 
-        protected virtual void OnStreamingStarted( RTSPStreamingStartedEventArgs e )
+        protected void OnStreamingStarted( RTSPStreamingStartedEventArgs e )
         {
             _service.Dispatcher.Dispatch( e );
         }
 
-        protected virtual void OnStreamingStopped( RTSPStreamingStoppedEventArgs e )
+        protected void OnStreamingStopped( RTSPStreamingStoppedEventArgs e )
         {
-            _service.Dispatcher.Dispatch(e);
+            _service.Dispatcher.Dispatch( e );
+        }
+
+        protected void OnPacketReceived( RTSPPacketReceivedEventArgs e )
+        {
+            _service.Dispatcher.Dispatch( e );
         }
     }
 }

@@ -6,40 +6,67 @@ namespace RabbitOM.Net.Rtsp.Alpha
     {
         private readonly RTSPMediaService _service;
 
-        public RTSPMediaChannel(IRTSPEventDispatcher dispatcher)
-           => _service = new RTSPMediaService(dispatcher);
+
+
+
+
+        public RTSPMediaChannel( IRTSPEventDispatcher dispatcher )
+           => _service = new RTSPMediaService( dispatcher );
+
+
+
+
 
         public object SyncRoot
             => _service.SyncRoot;
+        
         public IRTSPClientConfiguration Configuration
             => _service.Configuration;
+        
         public IRTSPEventDispatcher Dispatcher
             => _service.Dispatcher;
+       
         public bool IsConnected
             => _service.IsConnected;
+        
         public bool IsOpened
             => _service.IsOpened;
+       
         public bool IsReceivingPacket
             => _service.IsReceivingPacket;
+        
         public bool IsSetup
             => _service.IsSetup;
+        
         public bool IsPlaying
             => _service.IsStreamingStarted;
+        
         public bool IsDisposed
             => _service.IsDisposed;
 
+        
+        
+        
+        
+        
         public bool Open()
             => _service.Open();
+
         public bool Close()
             => _service.Close();
+
         public void Dispose()
             => _service.Dispose();
+
         public void Abort()
             => _service.Abort();
+
         public bool Options()
             => _service.Options();
+        
         public bool Describe()
             => _service.Describe();
+       
         public bool Setup()
         {
             if (_service.Configuration.DeliveryMode == RTSPDeliveryMode.Udp)
