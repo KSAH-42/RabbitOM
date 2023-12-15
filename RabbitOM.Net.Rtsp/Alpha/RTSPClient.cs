@@ -77,7 +77,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public bool IsStreamingStarted
         {
-            get => _channel.IsStreamingStarted;
+            get => _channel.IsPlaying;
         }
 
         public bool IsCommunicationStarted

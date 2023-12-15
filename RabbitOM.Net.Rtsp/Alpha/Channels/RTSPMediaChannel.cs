@@ -1,120 +1,83 @@
-﻿using RabbitOM.Net.Rtsp.Remoting;
-using System;
+﻿using System;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
     public sealed class RTSPMediaChannel : IRTSPMediaChannel
     {
-        private readonly IRTSPConnection _connection;
+        private readonly RTSPMediaChannelService _service;
 
-        private readonly IRTSPClientConfiguration _configuration;
-
-        private readonly IRTSPEventDispatcher _dispatcher;
-
-
-
-
-
-		public RTSPMediaChannel( IRTSPEventDispatcher dispatcher )
-            : this ( dispatcher , new RTSPClientConfiguration() , new RTSPConnection() )
-        {
-		}
-
-        public RTSPMediaChannel( IRTSPEventDispatcher dispatcher , IRTSPClientConfiguration configuration , IRTSPConnection connection )
-        {
-            _connection = connection ?? throw new ArgumentNullException( nameof( connection ) );
-            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
-            _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
-        }
-
-
-
-
+        public RTSPMediaChannel(IRTSPEventDispatcher dispatcher)
+           => _service = new RTSPMediaChannelService(dispatcher);
 
         public object SyncRoot
-        {
-            get => _connection.SyncRoot;
-        }
-        
+            => _service.SyncRoot;
         public IRTSPClientConfiguration Configuration
-        {
-            get => _configuration;
-        }
-        
+            => _service.Configuration;
         public IRTSPEventDispatcher Dispatcher
-        {
-            get => _dispatcher;
-        }
-
-        public bool IsOpened
-        {
-            get => _connection.IsOpened;
-        }
-
+            => _service.Dispatcher;
         public bool IsConnected
-        {
-            get => _connection.IsConnected;
-        }
-
+            => _service.IsConnected;
+        public bool IsOpened
+            => _service.IsOpened;
         public bool IsReceivingPacket
-            => throw new NotImplementedException();
-        
-        public bool IsStreamingStarted
-            => throw new NotImplementedException();
-        
+            => _service.IsReceivingPacket;
+        public bool IsSetup
+            => _service.IsStreamingStarted;
+        public bool IsPlaying
+            => _service.IsStreamingStarted;
+
         public bool IsDisposed
-            => throw new NotImplementedException();
-
-
-
-
+            => _service.IsDisposed;
 
         public bool Open()
-            => throw new NotImplementedException();
-        
+            => _service.Open();
         public bool Close()
-            => throw new NotImplementedException();
-        
+            => _service.Close();
         public void Dispose()
-            => throw new NotImplementedException();
-        
+            => _service.Dispose();
         public void Abort()
-            => throw new NotImplementedException();
-        
-        public bool StartStreaming()
-            => throw new NotImplementedException();
-        
-        public bool StopStreaming()
-            => throw new NotImplementedException();
-        
+            => _service.Abort();
+        public bool Options()
+            => _service.Options();
+        public bool Describe()
+            => _service.Describe();
+        public bool Setup()
+        {
+            if (_service.Configuration.DeliveryMode == RTSPDeliveryMode.Udp)
+            {
+                return _service.SetupAsUdp();
+            }
+
+            if (_service.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast)
+            {
+                return _service.SetupAsUdpMulticast();
+            }
+
+            return _service.SetupAsTcp();
+        }
+
+        public bool Play()
+            => _service.Play();
+
+        public void TearDown()
+            => _service.TearDown();
+
         public bool KeepAlive()
-            => throw new NotImplementedException();
-        
+        {
+            if ( _service.Configuration.KeepAliveType == RTSPKeepAliveType.GetParameter )
+            {
+                return _service.KeepAliveAsGetParameter();
+            }
+
+            if (_service.Configuration.KeepAliveType == RTSPKeepAliveType.SetParameter)
+            {
+                return _service.KeepAliveAsSetParameter();
+            }
+
+            return _service.KeepAliveAsOptions();
+        }
+
         public bool WaitForConnection(TimeSpan shutdownTimeout)
-            => throw new NotImplementedException();
-
-
-
-
-
-        private void OnConnected( RTSPConnectedEventArgs e )
-        {
-            _dispatcher.Dispatch( e );
-        }
-
-        private void OnDisconnected( RTSPDisconnectedEventArgs e )
-        {
-            _dispatcher.Dispatch( e );
-        }
-
-        private void OnMessageReceived( RTSPMessageReceivedEventArgs e )
-        {
-            _dispatcher.Dispatch( e );
-        }
-
-        private void OnError( RTSPErrorEventArgs e )
-        {
-            _dispatcher.Dispatch( e );
-        }
+            => _service.WaitForConnection(shutdownTimeout);
     }
 }

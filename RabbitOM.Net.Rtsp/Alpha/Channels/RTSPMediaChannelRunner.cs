@@ -41,10 +41,21 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     return;
                 }
 
-                if ( ! _channel.StartStreaming() )
+                using ( var scope = new RTSPDisposeScope( () => _channel.Close() ) )
                 {
-                    _channel.Close();
-                    return;
+                    if ( _channel.Options() )
+                        return;
+                    if ( _channel.Describe() )
+                        return;
+                    if ( _channel.Setup() )
+                        return;
+                    
+                    scope.AddAction( () => _channel.TearDown() );
+                    
+                    if ( ! _channel.Play() )
+                        return;
+                    
+                    scope.ClearActions();
                 }
 
                 _idleTimeout = _channel.Configuration.KeepAliveInterval;
@@ -56,9 +67,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     return;
                 }
 
-                if ( _channel.IsStreamingStarted )
+                if ( _channel.IsSetup)
                 {
-                    _channel.StopStreaming();
+                    _channel.TearDown();
                 }
 
                 _channel.Close();
@@ -69,9 +80,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public void Dispose()
         {
-            if ( _channel.IsStreamingStarted )
+            if ( _channel.IsSetup)
             {
-                _channel.StopStreaming();
+                _channel.TearDown();
             }
 
             _channel.Close();

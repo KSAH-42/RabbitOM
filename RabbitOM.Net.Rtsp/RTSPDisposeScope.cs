@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     public sealed class RTSPDisposeScope : IDisposable
     {
-        private readonly List<Action> _actions = new List<Action>();
+        private readonly Stack<Action> _actions = new Stack<Action>();
 
 
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Net.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public RTSPDisposeScope( Action action )
         {
-            AddAction( action ?? throw new ArgumentNullException( nameof( action ) ) );
+            AddAction( action );
         }
 
 
@@ -35,15 +35,21 @@ namespace RabbitOM.Net.Rtsp
         /// Add an action
         /// </summary>
         /// <param name="action">the action</param>
+        /// <exception cref="ArgumentNullException"/>
         public void AddAction( Action action )
         {
-            _actions.Insert( 0 , action );
+            if ( action == null )
+            {
+                throw new ArgumentNullException( nameof( action ) );
+            }
+
+            _actions.Push( action );
         }
 
         /// <summary>
         /// Remove all pending actions
         /// </summary>
-        public void RemoveAllActions()
+        public void ClearActions()
         {
             _actions.Clear();
         }
@@ -53,12 +59,12 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public void Dispose()
         {
-            foreach ( var action in _actions )
+            while ( _actions.Count > 0 )
             {
-                action?.TryInvoke();
-            }
+                var action = _actions.Pop();
 
-            _actions.Clear();
+                action.TryInvoke();
+            }
         }
     }
 }

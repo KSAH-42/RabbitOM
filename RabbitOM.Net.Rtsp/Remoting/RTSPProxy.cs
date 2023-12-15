@@ -289,7 +289,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                         _socket.SetLingerState( true , TimeSpan.FromSeconds( 5 ) );
 
-                        scope.RemoveAllActions();
+                        scope.ClearActions();
                     }
 
                     Initialize();

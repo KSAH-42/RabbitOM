@@ -13,7 +13,7 @@ namespace RabbitOM.Net.Rtsp.Beta
     public enum RTSPStreamingStatus
     {
         InActive = 0 , Active
-    }
+    } 
 
     public class RTSPCommunicationStartedEventArgs : EventArgs
     {
@@ -257,13 +257,13 @@ namespace RabbitOM.Net.Rtsp.Beta
             => _channel.IsDisposed;
 
         public bool IsConnected
-            => _channel.IsConnected;
+            => _channel.IsOpened;
 
         public bool IsReceivingPacket
             => _channel.IsReceivingPacket;
 
         public bool IsStreamingStarted
-            => _channel.IsStreamingStarted;
+            => _channel.IsSetup;
 
         public bool IsCommunicationStarted
             => _thread.IsStarted;
@@ -405,44 +405,63 @@ namespace RabbitOM.Net.Rtsp.Beta
 
         public void Run()
         {
-            if (!_channel.IsConnected)
+            if (!_channel.IsOpened)
             {
                 IdleTimeout = _channel.Configuration.RetriesDelay;
 
-                if (!_channel.Connect())
-                {
+                if ( !_channel.Open() )
                     return;
-                }
-
-                if (!_channel.StartStreaming())
+              
+                using ( var scope = new RTSPDisposeScope( () => _channel.Close() ) )
                 {
-                    _channel.Close();
+                    if ( _channel.Options() )
+                        return;
+                    if ( _channel.Describe() )
+                        return;
+                    if ( _channel.Setup() )
+                        return;
+                    
+                    scope.AddAction( () => _channel.TearDown() );
+                    
+                    if ( ! _channel.Play() )
+                        return;
+                    
+                    scope.ClearActions();
                 }
 
                 IdleTimeout = _channel.Configuration.PingInterval;
             }
             else
             {
-                if (!_channel.Ping())
+                if ( _channel.KeepAlive( ))
                 {
-                    _channel.Close();
-
-                    IdleTimeout = _channel.Configuration.RetriesDelay;
+                    return;
                 }
+
+                if ( _channel.IsSetup )
+                {
+                    _channel.TearDown();
+                }
+
+                _channel.Close();
+
+                IdleTimeout = _channel.Configuration.RetriesDelay;
             }
         }
 
         public void Dispose()
         {
-            if ( _channel.IsConnected )
+            if ( ! _channel.IsOpened )
             {
-                if (_channel.IsStreamingStarted)
-                {
-                    _channel.StopStreaming();
-                }
-
-                _channel.Close();
+                return;
             }
+
+            if (_channel.IsSetup)
+            {
+                _channel.TearDown();
+            }
+
+            _channel.Close();
         }
     }
 
@@ -452,14 +471,18 @@ namespace RabbitOM.Net.Rtsp.Beta
         IRTSPClientConfiguration Configuration { get; }
         IRTSPClientDispatcher Dispatcher { get; }
         bool IsConnected { get; }
+        bool IsOpened { get; }
         bool IsReceivingPacket { get; }
-        bool IsStreamingStarted { get; }
-        bool Connect();
+        bool IsSetup { get; }
+        bool Open();
         bool Close();
         void Abort();
-        bool StartStreaming();
-        bool StopStreaming();
-        bool Ping();
+        bool Options();
+        bool Describe();
+        bool Setup();
+        bool Play();
+        void TearDown();
+        bool KeepAlive();
         bool WaitForConnection(TimeSpan shutdownTimeout);
     }
 
@@ -468,9 +491,70 @@ namespace RabbitOM.Net.Rtsp.Beta
 
     public sealed class RTSPMediaChannel : IRTSPMediaChannel
     {
-        private readonly IRTSPClientDispatcher _dispatcher;
+        private readonly RTSPMediaChannelService _service;
 
         public RTSPMediaChannel(IRTSPClientDispatcher dispatcher)
+           => _service = new RTSPMediaChannelService( dispatcher );
+
+        public object SyncRoot
+            => _service.SyncRoot;
+        public IRTSPClientConfiguration Configuration
+            => _service.Configuration;
+        public IRTSPClientDispatcher Dispatcher 
+            => _service.Dispatcher;
+        public bool IsConnected
+            => _service.IsConnected;
+        public bool IsOpened
+            => _service.IsOpened;
+        public bool IsReceivingPacket
+            => _service.IsReceivingPacket;
+        public bool IsSetup
+            => _service.IsStreamingStarted;
+        public bool IsDisposed
+            => _service.IsDisposed;
+
+        public bool Open()
+            => _service.Open();
+        public bool Close()
+            => _service.Close();
+        public void Dispose()
+            => _service.Dispose();
+        public void Abort()
+            => _service.Abort();
+        public bool Options()
+            => _service.Options();
+        public bool Describe()
+            => _service.Describe();
+        public bool Setup()
+        {
+            if ( _service.Configuration.DeliveryMode == RTSPDeliveryMode.Udp )
+            {
+                return _service.SetupAsUdp();
+            }
+
+            if (_service.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast)
+            {
+                return _service.SetupAsUdpMulticast();
+            }
+
+            return _service.SetupAsTcp();
+        }
+
+        public bool Play()
+            => _service.Play();
+        public void TearDown()
+            => _service.TearDown();
+        public bool KeepAlive()
+            => _service.KeepAlive();
+        public bool WaitForConnection(TimeSpan shutdownTimeout)
+            => _service.WaitForConnection( shutdownTimeout );
+    }
+
+    public sealed class RTSPMediaChannelService : IDisposable
+    {
+        private readonly IRTSPClientDispatcher _dispatcher;
+
+        public RTSPMediaChannelService(IRTSPClientDispatcher dispatcher)
         {
             _dispatcher = dispatcher;
         }
@@ -479,18 +563,22 @@ namespace RabbitOM.Net.Rtsp.Beta
             => throw new NotImplementedException();
         public IRTSPClientConfiguration Configuration
             => throw new NotImplementedException();
-        public IRTSPClientDispatcher Dispatcher 
+        public IRTSPClientDispatcher Dispatcher
             => throw new NotImplementedException();
         public bool IsConnected
             => throw new NotImplementedException();
+        public bool IsOpened
+            => throw new NotImplementedException();
         public bool IsReceivingPacket
             => throw new NotImplementedException();
-        public bool IsStreamingStarted 
+        public bool IsStreamingStarted
             => throw new NotImplementedException();
         public bool IsDisposed
             => throw new NotImplementedException();
+        public string SessionId
+            => throw new NotImplementedException();
 
-        public bool Connect()
+        public bool Open()
             => throw new NotImplementedException();
         public bool Close()
             => throw new NotImplementedException();
@@ -498,205 +586,83 @@ namespace RabbitOM.Net.Rtsp.Beta
             => throw new NotImplementedException();
         public void Abort()
             => throw new NotImplementedException();
-        public bool StartStreaming()
+        public bool Options()
             => throw new NotImplementedException();
-        public bool StopStreaming()
+        public bool Describe()
             => throw new NotImplementedException();
-        public bool Ping()
+        public bool SetupAsTcp()
+            => throw new NotImplementedException();
+        public bool SetupAsUdp()
+            => throw new NotImplementedException();
+        public bool SetupAsUdpMulticast()
+            => throw new NotImplementedException();
+        public bool Play()
+            => throw new NotImplementedException();
+        public bool TearDown()
+            => throw new NotImplementedException();
+        public bool KeepAlive()
             => throw new NotImplementedException();
         public bool WaitForConnection(TimeSpan shutdownTimeout)
             => throw new NotImplementedException();
 
+        public void SetStreamingStatus( bool status )
+            => throw new NotImplementedException();
 
-
-        private void OnConnected(RTSPConnectedEventArgs e)
-            => _dispatcher.Dispatch( e );
-        private void OnDisconnected(RTSPDisconnectedEventArgs e)
-            => _dispatcher.Dispatch(e);
-        private void OnMessageReceived(RTSPMessageReceivedEventArgs e)
-            => _dispatcher.RaiseEvent(e);
-        private void OnError(RTSPErrorEventArgs e)
-            => _dispatcher.Dispatch(e);
+        public void SetReceivingStatus(bool status)
+            => throw new NotImplementedException();
     }
 
-    public abstract class RTSPMediaTransport : IDisposable
+    public abstract class RTSPMediaReceiver : IDisposable
     {
-        private readonly IRTSPMediaChannel _channel;
-        private readonly IRTSPConnection _connection;
-
-        protected RTSPMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
-        {
-            _channel = channel;
-            _connection = connection;
-        }
-
-        protected IRTSPMediaChannel Channel { get => _channel; }
-        protected IRTSPConnection Connection { get => _connection; }
-
-        public abstract object SyncRoot { get; }
-        public abstract bool HasOptions { get; }
-        public abstract bool IsDescribed { get; }
-        public abstract bool IsSetup { get; }
         public abstract bool IsStarted { get; }
+        public abstract bool IsReceivingPacket { get; }
 
-        public abstract bool Options();
-        public abstract bool Describe();
-        public abstract bool Setup();
-        public abstract bool Play();
-        public abstract void TearDown();
+        public abstract bool Start();
+        public abstract void Stop();
         public abstract void Dispose();
-
-        protected virtual void OnStreamingStarted(RTSPStreamingStartedEventArgs e )
-        {
-            _channel.Dispatcher.Dispatch( e );
-        }
-
-        protected virtual void OnStreamingStopped(RTSPStreamingStoppedEventArgs e)
-        {
-            _channel.Dispatcher.Dispatch( e );
-        }
-
-        protected virtual void OnStreamingStatusChanged(RTSPStreamingStatusChangedEventArgs e)
-        {
-            _channel.Dispatcher.Dispatch(e);
-        }
-
-        protected virtual void OnPacketReceived(RTSPPacketReceivedEventArgs e)
-        {
-            _channel.Dispatcher.Dispatch(e);
-        }
-
-        protected virtual void OnError(RTSPErrorEventArgs e)
-        {
-            _channel.Dispatcher.Dispatch(e);
-        }
     }
 
-    public sealed class RTSPTcpMediaTransport : RTSPMediaTransport
+    public sealed class RTSPUdpMediaReceiver : RTSPMediaReceiver
     {
-        public RTSPTcpMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
-            : base( channel , connection )
-        {
+        private readonly RTSPMediaChannelService _service;
+
+		public RTSPUdpMediaReceiver(RTSPMediaChannelService service)
+		{
+            _service = service;
         }
 
-        public override object SyncRoot
-            => throw new NotImplementedException();
-        public override bool HasOptions
-            => throw new NotImplementedException();
-        public override bool IsDescribed
-            => throw new NotImplementedException();
-        public override bool IsSetup
-            => throw new NotImplementedException();
-        public override bool IsStarted
-            => throw new NotImplementedException();
+        public override bool IsStarted { get; }
+        public override bool IsReceivingPacket { get; }
 
-        public override bool Options()
-             => throw new NotImplementedException();
-        public override bool Describe()
-            => throw new NotImplementedException();
-        public override bool Setup()
-            => throw new NotImplementedException();
-        public override bool Play()
-            => throw new NotImplementedException();
-        public override void TearDown()
-            => throw new NotImplementedException();
-        public override void Dispose() 
-            => throw new NotImplementedException();
-
-        protected override void OnPacketReceived(RTSPPacketReceivedEventArgs e)
-        {
-            Channel.Dispatcher.RaiseEvent( e );
+        public override bool Start()
+            => false;
+        public override void Stop()
+        { 
         }
-    }
-
-    public sealed class RTSPUdpMediaTransport : RTSPMediaTransport
-    {
-        public RTSPUdpMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
-            : base(channel,connection)
-        {
-        }
-
-        public override object SyncRoot
-            => throw new NotImplementedException();
-        public override bool HasOptions
-            => throw new NotImplementedException();
-        public override bool IsDescribed
-            => throw new NotImplementedException();
-        public override bool IsSetup
-            => throw new NotImplementedException();
-        public override bool IsStarted
-            => throw new NotImplementedException();
-
-        public override bool Options()
-             => throw new NotImplementedException();
-        public override bool Describe()
-            => throw new NotImplementedException();
-        public override bool Setup()
-            => throw new NotImplementedException();
-        public override bool Play()
-            => throw new NotImplementedException();
-        public override void TearDown()
-            => throw new NotImplementedException();
         public override void Dispose()
-            => throw new NotImplementedException();
-    }
-
-    public sealed class RTSPMulticastMediaTransport : RTSPMediaTransport
-    {
-        public RTSPMulticastMediaTransport(IRTSPMediaChannel channel, IRTSPConnection connection)
-            : base(channel,connection)
         {
         }
+    }
 
-        public override object SyncRoot
-            => throw new NotImplementedException();
-        public override bool HasOptions
-            => throw new NotImplementedException();
-        public override bool IsDescribed
-            => throw new NotImplementedException();
-        public override bool IsSetup
-            => throw new NotImplementedException();
-        public override bool IsStarted
-            => throw new NotImplementedException();
+    public sealed class RTSPUdpMulticastMediaReceiver : RTSPMediaReceiver
+    {
+        private readonly RTSPMediaChannelService _service;
 
-        public override bool Options()
-             => throw new NotImplementedException();
-        public override bool Describe()
-             => throw new NotImplementedException();
-        public override bool Setup()
-            => throw new NotImplementedException();
-        public override bool Play()
-            => throw new NotImplementedException();
-        public override void TearDown()
-            => throw new NotImplementedException();
+        public RTSPUdpMulticastMediaReceiver(RTSPMediaChannelService service)
+        {
+            _service = service;
+        }
+
+        public override bool IsStarted { get; }
+        public override bool IsReceivingPacket { get; }
+
+        public override bool Start()
+            => false;
+        public override void Stop()
+        {
+        }
         public override void Dispose()
-            => throw new NotImplementedException();
-    }
-
-    public sealed class RTSPMediaTransportFactory
-    {
-        private readonly IRTSPMediaChannel _channel;
-        private readonly IRTSPConnection _connection;
-
-        public RTSPMediaTransportFactory( IRTSPMediaChannel channel , IRTSPConnection connection )
         {
-            _channel = channel;
-            _connection = connection;
-        }
-
-        public RTSPMediaTransport CreateMediaTransport()
-        {
-            if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Udp )
-            {
-                return new RTSPUdpMediaTransport( _channel , _connection );
-            }
-
-            if ( _channel.Configuration.DeliveryMode == RTSPDeliveryMode.Multicast )
-            {
-                return new RTSPMulticastMediaTransport( _channel , _connection );
-            }
-
-            return new RTSPTcpMediaTransport( _channel , _connection );
         }
     }
 }
