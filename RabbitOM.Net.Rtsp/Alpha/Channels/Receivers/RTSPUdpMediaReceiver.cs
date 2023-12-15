@@ -4,21 +4,42 @@ namespace RabbitOM.Net.Rtsp.Alpha
 {
     public sealed class RTSPUdpMediaReceiver : RTSPMediaReceiver
     {
-        public RTSPUdpMediaReceiver( RTSPMediaService service )
+        private readonly RTSPThread _thread;
+
+        private readonly RTSPTrackInfo _trackInfo;
+
+        public RTSPUdpMediaReceiver( RTSPMediaService service , RTSPTrackInfo trackInfo )
             : base( service )
 		{
-		}
+            if ( trackInfo == null )
+            {
+                throw new ArgumentNullException( nameof( trackInfo ) );
+            }
+
+            _trackInfo = trackInfo;
+
+            _thread = new RTSPThread( "RTSP - UDP Receiver" );
+        }
 
         public override bool IsStarted 
-            => throw new NotImplementedException();
-        public override bool IsReceivingPacket
-            => throw new NotImplementedException();
+            => _thread.IsStarted;
 
         public override bool Start()
-            => throw new NotImplementedException();
+            => _thread.Start( () =>
+            {
+                OnStreamingStarted( new RTSPStreamingStartedEventArgs( _trackInfo ) );
+
+                while ( _thread.CanContinue( 100 ) )
+                {
+                }
+
+                OnStreamingStopped( new RTSPStreamingStoppedEventArgs() );
+            });
+
         public override void Stop()
-            => throw new NotImplementedException();
+            => _thread.Stop();
+
         public override void Dispose()
-            => throw new NotImplementedException();
+            => Stop();
     }
 }
