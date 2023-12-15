@@ -5,33 +5,82 @@ namespace RabbitOM.Net.Rtsp.Alpha
 {
     public sealed class RTSPMediaService : IDisposable
     {
+        private readonly object _lock = new object();
+
         private readonly IRTSPEventDispatcher _dispatcher;
+
+        private readonly IRTSPClientConfiguration _configuration;
+
+        private readonly IRTSPConnection _connection;
+
+        private readonly RTSPValueBag<bool> _receivingStatus;
+
+        private readonly RTSPValueBag<bool> _setupStatus;
+
+        private readonly RTSPValueBag<bool> _playingStatus;
+
+        private readonly RTSPValueBag<bool> _streamingStatus;
+
+        private readonly RTSPValueBag<string> _sessionId;
+
+
+
+
 
         public RTSPMediaService( IRTSPEventDispatcher dispatcher )
         {
             _dispatcher = dispatcher;
+
+            _configuration = new RTSPClientConfiguration();
+            _connection = new RTSPConnection();
+            _receivingStatus = new RTSPValueBag<bool>();
+            _setupStatus = new RTSPValueBag<bool>();
+            _playingStatus = new RTSPValueBag<bool>();
+            _sessionId = new RTSPValueBag<string>();
+            _streamingStatus = new RTSPValueBag<bool>();
         }
 
+
+
+
         public object SyncRoot
-            => throw new NotImplementedException();
+            => _lock;
+       
         public IRTSPClientConfiguration Configuration
-            => throw new NotImplementedException();
+            => _configuration;
+        
         public IRTSPEventDispatcher Dispatcher
-            => throw new NotImplementedException();
+            => _dispatcher;
+
+        public string SessionId
+            => _sessionId.Value ?? string.Empty;
+
         public bool IsConnected
-            => throw new NotImplementedException();
+            => _connection.IsConnected;
+       
         public bool IsOpened
-            => throw new NotImplementedException();
+            => _connection.IsOpened;
+       
         public bool IsReceivingPacket
-            => throw new NotImplementedException();
-        public bool IsStreamingStarted
-            => throw new NotImplementedException();
+            => _receivingStatus.Value;
+        
+        public bool IsSetup
+            => _setupStatus.Value;
+       
         public bool IsPlaying
-            => throw new NotImplementedException();
+            => _playingStatus.Value;
+        
+        public bool IsStreamingStarted
+            => _streamingStatus.Value;
+        
         public bool IsDisposed
             => throw new NotImplementedException();
-        public string SessionId
-            => throw new NotImplementedException();
+
+
+
+
+
+
 
         public bool Open()
             => throw new NotImplementedException();
@@ -62,10 +111,20 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool KeepAliveAsSetParameter()
             => throw new NotImplementedException();
         public bool WaitForConnection(TimeSpan shutdownTimeout)
-            => throw new NotImplementedException();
-        public void SetStreamingStatus(bool status)
-            => throw new NotImplementedException();
-        public void SetReceivingStatus(bool status)
-            => throw new NotImplementedException();
+            => _connection.WaitConnectionSucceed( shutdownTimeout );
+
+        public void ChangeReceivingStatus(bool status)
+        {
+            // TODO: add check + fire events
+
+            _receivingStatus.Value = status;
+        }
+
+        public void ChangeStreamingStatus(bool status)
+        {
+            // TODO: add check + fire events
+
+            _receivingStatus.Value = status;
+        }
     }
 }

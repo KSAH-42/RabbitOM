@@ -22,7 +22,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool IsReceivingPacket
             => _service.IsReceivingPacket;
         public bool IsSetup
-            => _service.IsStreamingStarted;
+            => _service.IsSetup;
         public bool IsPlaying
             => _service.IsStreamingStarted;
         public bool IsDisposed
