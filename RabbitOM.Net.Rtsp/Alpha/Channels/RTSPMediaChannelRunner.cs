@@ -43,11 +43,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
                 using ( var scope = new RTSPDisposeScope( () => _channel.Close() ) )
                 {
-                    if ( _channel.Options() )
+                    if ( ! _channel.Options() )
                         return;
-                    if ( _channel.Describe() )
+                    if ( ! _channel.Describe() )
                         return;
-                    if ( _channel.Setup() )
+                    if ( ! _channel.Setup() )
                         return;
                     
                     scope.AddAction( () => _channel.TearDown() );

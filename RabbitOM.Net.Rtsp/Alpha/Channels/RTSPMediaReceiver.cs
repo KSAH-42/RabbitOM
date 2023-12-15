@@ -12,10 +12,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
 		}
 
         protected RTSPMediaChannelService Service
-        {
-            get => _service;
-        }
-
+            => _service;
+      
         public abstract bool IsStarted { get; }
         public abstract bool IsReceivingPacket { get; }
 
