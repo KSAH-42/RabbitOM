@@ -74,7 +74,10 @@ namespace RabbitOM.Net.Rtsp
         /// </summary>
         public bool IsSynchronized
         {
-            get => true;
+            get
+            {
+                return true;
+            }
         }
 
         /// <summary>
@@ -106,17 +109,6 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Gets the handle
-        /// </summary>
-        private RTSPEventWaitHandle Handle
-        {
-            get
-            {
-                return _handle;
-            }
-        }
-
-        /// <summary>
         /// Gets the inner collection
         /// </summary>
         protected Queue<TElement> Items
@@ -124,6 +116,17 @@ namespace RabbitOM.Net.Rtsp
             get
             {
                 return _collection;
+            }
+        }
+
+        /// <summary>
+        /// Gets the handle
+        /// </summary>
+        private RTSPEventWaitHandle Handle
+        {
+            get
+            {
+                return _handle;
             }
         }
 
