@@ -132,7 +132,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         {
             StopCommunication();
 
-            _channel.Dispose();
+            _channel.Dispose();   // this method should not dispose the dispatch because we used agregation pattern: the object is passed to constructor so the may be reused after releasing the channel object.
             _dispatcher.Dispose();
         }
 
