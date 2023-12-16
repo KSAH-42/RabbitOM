@@ -12,7 +12,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public event EventHandler<RTSPConnectedEventArgs> Connected;
         
         public event EventHandler<RTSPDisconnectedEventArgs> Disconnected;
-        
+
+        public event EventHandler<RTSPStreamingSetupEventArgs> StreamingSetup;
+
         public event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
         
         public event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
@@ -155,19 +157,23 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 OnMessageReceived( e as RTSPMessageReceivedEventArgs );
             }
 
-            else if (e is RTSPStreamingStartedEventArgs)
+            else if ( e is RTSPStreamingStartedEventArgs )
             {
-                OnStreamingStarted(e as RTSPStreamingStartedEventArgs);
+                OnStreamingStarted( e as RTSPStreamingStartedEventArgs );
             }
-            else if (e is RTSPStreamingStoppedEventArgs)
+            else if ( e is RTSPStreamingStoppedEventArgs )
             {
-                OnStreamingStopped(e as RTSPStreamingStoppedEventArgs);
+                OnStreamingStopped( e as RTSPStreamingStoppedEventArgs );
             }
-            else if (e is RTSPStreamingStatusChangedEventArgs)
+            else if ( e is RTSPStreamingStatusChangedEventArgs )
             {
-                OnStreamingStatusChanged(e as RTSPStreamingStatusChangedEventArgs);
+                OnStreamingStatusChanged( e as RTSPStreamingStatusChangedEventArgs );
             }
-            
+
+            else if ( e is RTSPStreamingSetupEventArgs )
+            {
+                OnStreamingSetup( e as RTSPStreamingSetupEventArgs );
+            }
             else if ( e is RTSPCommunicationStartedEventArgs )
             {
                 OnCommunicationStarted( e as RTSPCommunicationStartedEventArgs );
@@ -212,6 +218,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
         protected virtual void OnDisconnected( RTSPDisconnectedEventArgs e )
         {
             Disconnected?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnStreamingSetup( RTSPStreamingSetupEventArgs e )
+        {
+            StreamingSetup?.TryInvoke( this, e );
         }
 
         protected virtual void OnStreamingStarted( RTSPStreamingStartedEventArgs e )

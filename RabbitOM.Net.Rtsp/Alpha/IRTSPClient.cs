@@ -9,6 +9,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;
         event EventHandler<RTSPConnectedEventArgs> Connected;
         event EventHandler<RTSPDisconnectedEventArgs> Disconnected;
+        event EventHandler<RTSPStreamingSetupEventArgs> StreamingSetup;
         event EventHandler<RTSPStreamingStartedEventArgs> StreamingStarted;
         event EventHandler<RTSPStreamingStoppedEventArgs> StreamingStopped;
         event EventHandler<RTSPStreamingStatusChangedEventArgs> StreamingStatusChanged;
