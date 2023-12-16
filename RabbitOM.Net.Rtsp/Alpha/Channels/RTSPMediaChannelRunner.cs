@@ -28,7 +28,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
-
+        // Inside this method, do we need to use a state machine class instead ?
 
         public void Run()
         {
@@ -67,7 +67,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     return;
                 }
 
-                if ( _channel.IsSetup)
+                if ( _channel.IsSetup )
                 {
                     _channel.TearDown();
                 }
@@ -80,7 +80,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public void Dispose()
         {
-            if ( _channel.IsSetup)
+            if ( _channel.IsSetup )
             {
                 _channel.TearDown();
             }
