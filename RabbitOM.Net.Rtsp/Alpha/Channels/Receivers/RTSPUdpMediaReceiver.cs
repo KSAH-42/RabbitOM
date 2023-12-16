@@ -8,6 +8,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly RTSPTrackInfo _trackInfo;
 
+        private readonly RTSPUdpSocket _socket;
+
+        private TimeSpan _idleTimeout;
+
         public RTSPUdpMediaReceiver( RTSPMediaService service , RTSPTrackInfo trackInfo )
             : base( service )
 		{
@@ -18,6 +22,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
             _trackInfo = trackInfo;
 
+            _socket = new RTSPUdpSocket();
             _thread = new RTSPThread( "RTSP - UDP Receiver" );
         }
 
@@ -29,17 +34,59 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 OnStreamingStarted( new RTSPStreamingStartedEventArgs( _trackInfo ) );
 
-                while ( _thread.CanContinue( 100 ) )
+                _idleTimeout = TimeSpan.Zero;
+
+                while ( _thread.CanContinue( _idleTimeout ) )
                 {
+                    Run();
                 }
 
                 OnStreamingStopped( new RTSPStreamingStoppedEventArgs() );
             });
 
         public override void Stop()
-            => _thread.Stop();
+        {
+            _socket.Close();
+            _thread.Stop();
+        }
 
         public override void Dispose()
-            => Stop();
+        {
+            Stop();
+            _socket.Dispose();
+        }
+
+        private void Run()
+        {
+            if ( ! _socket.IsOpened )
+            {
+                _idleTimeout = Service.Configuration.RetriesTransportInterval;
+
+                if ( ! _socket.Open( Service.Configuration.RtpPort ) )
+                {
+                    return;
+                }
+
+                if ( ! _socket.SetReceiveTimeout( Service.Configuration.ReceiveTransportTimeout ) )
+                {
+                    _socket.Close();
+
+                    return;
+                }
+
+                _idleTimeout = TimeSpan.Zero;
+            }
+            else
+            {
+                var buffer = _socket.Receive();
+
+                if ( null == buffer || buffer.Length <= 0 )
+                {
+                    return;
+                }
+
+                OnPacketReceived( new RTSPPacketReceivedEventArgs( buffer ) );
+            }
+        }
     }
 }
