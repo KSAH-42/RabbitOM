@@ -133,6 +133,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             StopCommunication();
 
             _channel.Dispose();
+            _dispatcher.Dispose();
         }
 
         public bool WaitForConnection( TimeSpan shutdownTimeout )
