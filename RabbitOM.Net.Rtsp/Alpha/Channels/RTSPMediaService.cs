@@ -74,7 +74,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => _streamingStatus.Value;
         
         // Do not dispose the dispatcher, the object is passed to constructor
-        // And it may be reused
+        // And it may be reused elsewhere
         public bool IsDisposed
             => throw new NotImplementedException();
 
