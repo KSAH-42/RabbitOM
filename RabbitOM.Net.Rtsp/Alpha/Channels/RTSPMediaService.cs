@@ -86,7 +86,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => throw new NotImplementedException();
         public bool Close()
             => throw new NotImplementedException();
-        // Do not dispose the dispatcher, the object is passed to constructor
+        // Do not dispose the dispatcher, the object is passed to the constructor
         // And it may be reused elsewhere
         public void Dispose()
             => throw new NotImplementedException();
