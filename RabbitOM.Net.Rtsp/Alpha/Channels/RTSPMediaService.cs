@@ -73,7 +73,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool IsStreamingStarted
             => _streamingStatus.Value;
         
-        // Do not dispose the dispatch, the object is passed to constructor
+        // Do not dispose the dispatcher, the object is passed to constructor
         // And it may be reused
         public bool IsDisposed
             => throw new NotImplementedException();
