@@ -69,6 +69,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     Service.Configuration.ReceiveTransportTimeout )
                     )
                 {
+                    // Call OnTransportError( new ReceiveTransportError() ) ?
                     return;
                 }
 
@@ -78,6 +79,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 if ( ! _socket.PollReceive( Service.Configuration.ReceiveTransportTimeout ) )
                 {
+                    // Call OnTransportError( new ReceiveTransportError() ) ?
+                    // Add in this method update streaming StreamingReceovering/StreamingInActive handler ?
                     return;
                 }
 
@@ -85,6 +88,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
                 if ( null == buffer || buffer.Length <= 0 )
                 {
+                    // Call OnTransportError( new ReceiveTransportError() ) ?
+                    // Add in this method update streaming StreamingReceovering/StreamingInActive handler ?
+
                     return;
                 }
 

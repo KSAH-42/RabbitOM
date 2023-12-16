@@ -64,11 +64,15 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
                 if ( ! _socket.Open( Service.Configuration.RtpPort ) )
                 {
+                    // Call OnTransportError( new ReceiveTransportError() ) ?
+
                     return;
                 }
 
                 if ( ! _socket.SetReceiveTimeout( Service.Configuration.ReceiveTransportTimeout ) )
                 {
+                    // Call OnTransportError( new ReceiveTransportError() ) ?
+
                     _socket.Close();
 
                     return;
@@ -82,6 +86,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
                 if ( null == buffer || buffer.Length <= 0 )
                 {
+                    // Call OnTransportError( new ReceiveTransportError() ) ?
+                    // Add in this method update streaming StreamingReceovering/StreamingInActive handler ?
+
                     return;
                 }
 
