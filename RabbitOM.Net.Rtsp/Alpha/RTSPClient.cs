@@ -147,7 +147,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private void RaiseEvent( EventArgs e )
         {
-            if ( e is RTSPPacketReceivedEventArgs )
+            if ( e is RTSPPacketReceivedEventArgs ) // For performance reason, let this condition statement at this position
             {
                 OnPacketReceived( e as RTSPPacketReceivedEventArgs );
             }
@@ -155,6 +155,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
             else if ( e is RTSPMessageReceivedEventArgs )
             {
                 OnMessageReceived( e as RTSPMessageReceivedEventArgs );
+            }
+
+            else if (e is RTSPStreamingStatusChangedEventArgs)
+            {
+                OnStreamingStatusChanged(e as RTSPStreamingStatusChangedEventArgs);
             }
 
             else if ( e is RTSPStreamingStartedEventArgs )
@@ -165,11 +170,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 OnStreamingStopped( e as RTSPStreamingStoppedEventArgs );
             }
-            else if ( e is RTSPStreamingStatusChangedEventArgs )
-            {
-                OnStreamingStatusChanged( e as RTSPStreamingStatusChangedEventArgs );
-            }
-
             else if ( e is RTSPStreamingSetupEventArgs )
             {
                 OnStreamingSetup( e as RTSPStreamingSetupEventArgs );
