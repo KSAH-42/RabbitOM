@@ -438,7 +438,7 @@ Rabbit.Streaming.Server.exe
     Rabbit.Streaming.dll
     Rabbit.Streaming.Engine.dll
     Rabbit.Streaming.Devices.dll
-    Rabbit.Streaming.Devices.Cameras.dll
+    Rabbit.Streaming.Devices.dll
     etc...
 }
 
@@ -491,41 +491,32 @@ Rabbit.Streaming.dll
     Rabbit.Streaming.Windows.Controls.ViewsModels
 }
 
-Rabbit.Devices.dll
-Rabbit.Devices.Cameras.dll
-Rabbit.Devices.Cameras.Hik.dll
-Rabbit.Devices.Cameras.Verint.dll
-Rabbit.Devices.Cameras.Acti.dll
-Rabbit.Devices.Cameras.IndigoVision.dll
-Rabbit.Devices.Cameras.Bosch.dll
-Rabbit.Devices.Cameras.Pelco.dll
-Rabbit.Devices.Cameras.Axis.dll
-Rabbit.Devices.Cameras.Teleste.dll
-Rabbit.Devices.Cameras.UniView.dll
-Rabbit.Devices.Cameras.Dahua.dll
-Rabbit.Devices.Cameras.Survision.dll
-Rabbit.Devices.Cameras.Onvif    .dll
-Rabbit.Devices.Encoders.dll
-Rabbit.Devices.Encoders.Verint.dll
-Rabbit.Devices.Encoders.Nice.dll
-Rabbit.Devices.Decoders.dll
-Rabbit.Devices.Decoders.Verint.dll
-Rabbit.Devices.Decoders.Planar.dll
-Rabbit.Devices.Captures.dll
-Rabbit.Devices.Captures.WebCam.dll
-Rabbit.Devices.Captures.DirectShow.dll
-Rabbit.Devices.Captures.Gutebruck.dll
-Rabbit.Devices.Dvr.dll
-Rabbit.Devices.Dvr.Bosch.dll
-Rabbit.Devices.Dvr.Bosch.Divar.dll
-Rabbit.Devices.Nvr.dll
-Rabbit.Devices.Nvr.Dahua.dll
-Rabbit.Devices.Nvr.Hik.dll
-Rabbit.Devices.Intercoms.dll
-Rabbit.Devices.Intercoms.Commend.dll
-Rabbit.Devices.Intercoms.Commend.Icx.dll
-Rabbit.Devices.Intercoms.Castel.dll
-Rabbit.Devices.Intercoms.Castel.Maylis.dll
+Rabbit.Recorders
+Rabbit.Recorders.Configuration
+Rabbit.Recorders.Data
+Rabbit.Recorders.Data.Sql
+Rabbit.Recorders.Net
+Rabbit.Recorders.Net.Rpc
+Rabbit.Recorders.Net.Rpc.Services
+Rabbit.Recorders.Net.Rpc.Services.Administration
+Rabbit.Recorders.Net.Rpc.Services.Streaming { class StartStreamingRequest { } }
+Rabbit.Recorders.Devices
+Rabbit.Recorders.Devices.Hik.dll
+Rabbit.Recorders.Devices.Verint.dll
+Rabbit.Recorders.Devices.Acti.dll
+Rabbit.Recorders.Devices.IndigoVision.dll
+Rabbit.Recorders.Devices.Bosch.dll
+Rabbit.Recorders.Devices.Pelco.dll
+Rabbit.Recorders.Devices.Axis.dll
+Rabbit.Recorders.Devices.Teleste.dll
+Rabbit.Recorders.Devices.UniView.dll
+Rabbit.Recorders.Devices.Dahua.dll
+Rabbit.Recorders.Devices.Survision.dll
+Rabbit.Recorders.Devices.Onvif.dll
+Rabbit.Recorders.Devices.Captures.dll
+Rabbit.Recorders.Devices.Captures.WebCam.dll
+Rabbit.Recorders.Devices.Captures.DirectShow.dll
+Rabbit.Recorders.Devices.Captures.Gutebruck.dll
 
 client.CommunicationStarted
 client.CommunicationStopped
