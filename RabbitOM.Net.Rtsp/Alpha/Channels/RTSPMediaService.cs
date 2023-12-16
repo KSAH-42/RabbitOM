@@ -120,7 +120,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _receivingStatus.Value = status;
         }
 
-        public void ChangeStreamingStatus(bool status)
+        public void UpdateStreamingRunningStatus(bool status)
         {
             // TODO: add check + fire events
 
