@@ -22,16 +22,22 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         protected void OnStreamingStarted( RTSPStreamingStartedEventArgs e )
         {
+            _service.ChangeStreamingStatus( false );
+
             _service.Dispatcher.Dispatch( e );
         }
 
         protected void OnStreamingStopped( RTSPStreamingStoppedEventArgs e )
         {
+            _service.ChangeStreamingStatus( false );
+
             _service.Dispatcher.Dispatch( e );
         }
 
         protected void OnPacketReceived( RTSPPacketReceivedEventArgs e )
         {
+            _service.ChangeStreamingStatus( true );
+
             _service.Dispatcher.Dispatch( e );
         }
     }

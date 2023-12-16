@@ -113,7 +113,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool WaitForConnection(TimeSpan shutdownTimeout)
             => _connection.WaitConnectionSucceed( shutdownTimeout );
 
-        public void ChangeReceivingStatus(bool status)
+        public void UpdateReceivingStatus(bool status)
         {
             // TODO: add check + fire events
 
