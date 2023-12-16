@@ -95,7 +95,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 return _service.KeepAliveAsGetParameter();
             }
 
-            if (_service.Configuration.KeepAliveType == RTSPKeepAliveType.SetParameter)
+            if ( _service.Configuration.KeepAliveType == RTSPKeepAliveType.SetParameter )
             {
                 return _service.KeepAliveAsSetParameter();
             }

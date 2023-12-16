@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public interface IRTSPEventDispatcher : IDisposable
+    public interface IRTSPEventDispatcher
     {
         void Dispatch( EventArgs e );
 
