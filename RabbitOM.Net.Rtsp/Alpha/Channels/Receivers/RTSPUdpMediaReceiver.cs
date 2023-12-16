@@ -6,22 +6,13 @@ namespace RabbitOM.Net.Rtsp.Alpha
     {
         private readonly RTSPThread _thread;
 
-        private readonly RTSPTrackInfo _trackInfo;
-
         private readonly RTSPUdpSocket _socket;
 
         private TimeSpan _idleTimeout;
 
-        public RTSPUdpMediaReceiver( RTSPMediaService service , RTSPTrackInfo trackInfo )
+        public RTSPUdpMediaReceiver( RTSPMediaService service )
             : base( service )
 		{
-            if ( trackInfo == null )
-            {
-                throw new ArgumentNullException( nameof( trackInfo ) );
-            }
-
-            _trackInfo = trackInfo;
-
             _socket = new RTSPUdpSocket();
             _thread = new RTSPThread( "RTSP - UDP Receiver" );
         }
@@ -32,7 +23,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public override bool Start()
             => _thread.Start( () =>
             {
-                OnStreamingStarted( new RTSPStreamingStartedEventArgs( _trackInfo ) );
+                OnStreamingStarted( new RTSPStreamingStartedEventArgs() );
 
                 _idleTimeout = TimeSpan.Zero;
 
