@@ -8,8 +8,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly RTSPUdpSocket _socket;
 
-        private TimeSpan _idleTimeout;
-
         public RTSPUdpMediaReceiver( RTSPMediaService service )
             : base( service )
 		{
@@ -25,11 +23,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 OnStreamingStarted( new RTSPStreamingStartedEventArgs() );
 
-                _idleTimeout = TimeSpan.Zero;
+                TimeSpan idleTimeout = TimeSpan.Zero;
 
-                while ( _thread.CanContinue( _idleTimeout ) )
+                while ( _thread.CanContinue( idleTimeout ) )
                 {
-                    Run();
+                    Run( this , ref idleTimeout );
                 }
 
                 OnStreamingStopped( new RTSPStreamingStoppedEventArgs() );
@@ -47,33 +45,33 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _socket.Dispose();
         }
 
-        private void Run()
+        private static void Run( RTSPUdpMediaReceiver receiver, ref TimeSpan idleTimeout )
         {
-            if ( ! _socket.IsOpened )
+            if ( ! receiver._socket.IsOpened )
             {
-                _idleTimeout = Service.Configuration.RetriesTransportInterval;
+                idleTimeout = receiver.Service.Configuration.RetriesTransportInterval;
 
-                if ( ! _socket.Open( Service.Configuration.RtpPort ) )
+                if ( ! receiver._socket.Open( receiver.Service.Configuration.RtpPort ) )
                 {
                     // Call OnTransportError( new ReceiveTransportError() ) ?
 
                     return;
                 }
 
-                if ( ! _socket.SetReceiveTimeout( Service.Configuration.ReceiveTransportTimeout ) )
+                if ( ! receiver._socket.SetReceiveTimeout( receiver.Service.Configuration.ReceiveTransportTimeout ) )
                 {
                     // Call OnTransportError( new ReceiveTransportError() ) ?
 
-                    _socket.Close();
+                    receiver._socket.Close();
 
                     return;
                 }
 
-                _idleTimeout = TimeSpan.Zero;
+                idleTimeout = TimeSpan.Zero;
             }
             else
             {
-                var buffer = _socket.Receive();
+                var buffer = receiver._socket.Receive();
 
                 if ( null == buffer || buffer.Length <= 0 )
                 {
@@ -83,7 +81,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     return;
                 }
 
-                OnPacketReceived( new RTSPPacketReceivedEventArgs( buffer ) );
+                receiver.OnPacketReceived( new RTSPPacketReceivedEventArgs( buffer ) );
             }
         }
     }

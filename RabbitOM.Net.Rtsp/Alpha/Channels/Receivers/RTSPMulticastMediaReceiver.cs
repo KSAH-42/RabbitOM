@@ -8,8 +8,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly RTSPMulticastSocket _socket;
 
-        private TimeSpan _idleTimeout;
-
         public RTSPMulticastMediaReceiver( RTSPMediaService service )
             : base( service )
 		{
@@ -25,11 +23,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 OnStreamingStarted( new RTSPStreamingStartedEventArgs() );
 
-                _idleTimeout = TimeSpan.Zero;
+                TimeSpan idleTimeout = TimeSpan.Zero;
 
-                while ( _thread.CanContinue( _idleTimeout ) )
+                while ( _thread.CanContinue( idleTimeout ) )
                 {
-                    Run();
+                    Run( this , ref idleTimeout );
                 }
 
                 OnStreamingStopped( new RTSPStreamingStoppedEventArgs() );
@@ -47,35 +45,35 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _socket.Dispose();
         }
 
-        private void Run()
+        private static void Run( RTSPMulticastMediaReceiver receiver , ref TimeSpan idleTimeout )
         {
-            if ( ! _socket.IsOpened )
+            if ( ! receiver._socket.IsOpened )
             {
-                _idleTimeout = Service.Configuration.RetriesTransportInterval;
+                idleTimeout = receiver.Service.Configuration.RetriesTransportInterval;
 
-                if ( ! _socket.Open( 
-                    Service.Configuration.MulticastAddress ,
-                    Service.Configuration.RtpPort , 
-                    Service.Configuration.TimeToLive , 
-                    Service.Configuration.ReceiveTransportTimeout )
+                if ( ! receiver._socket.Open(
+                    receiver.Service.Configuration.MulticastAddress ,
+                    receiver.Service.Configuration.RtpPort ,
+                    receiver.Service.Configuration.TimeToLive ,
+                    receiver.Service.Configuration.ReceiveTransportTimeout )
                     )
                 {
                     // Call OnTransportError( new ReceiveTransportError() ) ?
                     return;
                 }
 
-                _idleTimeout = TimeSpan.Zero;
+                idleTimeout = TimeSpan.Zero;
             }
             else
             {
-                if ( ! _socket.PollReceive( Service.Configuration.ReceiveTransportTimeout ) )
+                if ( ! receiver._socket.PollReceive( receiver.Service.Configuration.ReceiveTransportTimeout ) )
                 {
                     // Call OnTransportError( new ReceiveTransportError() ) ?
                     // Add in this method update streaming StreamingReceovering/StreamingInActive handler ?
                     return;
                 }
 
-                var buffer = _socket.Receive();
+                var buffer = receiver._socket.Receive();
 
                 if ( null == buffer || buffer.Length <= 0 )
                 {
@@ -85,7 +83,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     return;
                 }
 
-                OnPacketReceived( new RTSPPacketReceivedEventArgs( buffer ) );
+                receiver.OnPacketReceived( new RTSPPacketReceivedEventArgs( buffer ) );
             }
         }
     }
