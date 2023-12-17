@@ -61,9 +61,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool IsOpened
             => _connection.IsOpened;
        
-        public bool IsReceivingPacket
-            => _receivingStatus.Value;
-        
         public bool IsSetup
             => _setupStatus.Value;
        
@@ -72,7 +69,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
         
         public bool IsStreamingStarted
             => _streamingStatus.Value;
-        
+
+        public bool IsReceivingPacket
+            => _receivingStatus.Value;
+
         public bool IsDisposed
             => throw new NotImplementedException();
 

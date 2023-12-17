@@ -10,9 +10,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         bool IsConnected { get; }
         bool IsOpened { get; }
-        bool IsReceivingPacket { get; }
         bool IsSetup { get; }
         bool IsPlaying { get; }
+        bool IsReceivingPacket { get; }
 
         bool Open();
         bool Close();

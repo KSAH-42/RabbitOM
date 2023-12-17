@@ -62,9 +62,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
             get => _channel.Configuration;
         }
 
-        public bool IsDisposed
+        public bool IsCommunicationStarted
         {
-            get => _channel.IsDisposed;
+            get => _thread.IsStarted;
         }
 
         public bool IsConnected
@@ -72,19 +72,19 @@ namespace RabbitOM.Net.Rtsp.Alpha
             get => _channel.IsConnected;
         }
 
-        public bool IsReceivingPacket
-        {
-            get => _channel.IsReceivingPacket;
-        }
-
         public bool IsStreamingStarted
         {
             get => _channel.IsPlaying;
         }
 
-        public bool IsCommunicationStarted
+        public bool IsReceivingPacket
         {
-            get => _thread.IsStarted;
+            get => _channel.IsReceivingPacket;
+        }
+
+        public bool IsDisposed
+        {
+            get => _channel.IsDisposed;
         }
 
 
@@ -118,7 +118,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _dispatcher.Stop();
         }
 
-        public void StopCommunication(TimeSpan shutdownTimeout)
+        public void StopCommunication( TimeSpan shutdownTimeout )
         {
             if ( _thread.Join( shutdownTimeout ))
             {
@@ -158,23 +158,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 OnMessageReceived( e as RTSPMessageReceivedEventArgs );
             }
 
-            else if (e is RTSPStreamingStatusChangedEventArgs)
-            {
-                OnStreamingStatusChanged(e as RTSPStreamingStatusChangedEventArgs);
-            }
-
-            else if ( e is RTSPStreamingStartedEventArgs )
-            {
-                OnStreamingStarted( e as RTSPStreamingStartedEventArgs );
-            }
-            else if ( e is RTSPStreamingStoppedEventArgs )
-            {
-                OnStreamingStopped( e as RTSPStreamingStoppedEventArgs );
-            }
-            else if ( e is RTSPStreamingSetupEventArgs )
-            {
-                OnStreamingSetup( e as RTSPStreamingSetupEventArgs );
-            }
             else if ( e is RTSPCommunicationStartedEventArgs )
             {
                 OnCommunicationStarted( e as RTSPCommunicationStartedEventArgs );
@@ -190,6 +173,22 @@ namespace RabbitOM.Net.Rtsp.Alpha
             else if ( e is RTSPDisconnectedEventArgs )
             {
                 OnDisconnected( e as RTSPDisconnectedEventArgs );
+            }
+            else if ( e is RTSPStreamingSetupEventArgs )
+            {
+                OnStreamingSetup( e as RTSPStreamingSetupEventArgs );
+            }
+            else if ( e is RTSPStreamingStartedEventArgs )
+            {
+                OnStreamingStarted( e as RTSPStreamingStartedEventArgs );
+            }
+            else if ( e is RTSPStreamingStoppedEventArgs )
+            {
+                OnStreamingStopped( e as RTSPStreamingStoppedEventArgs );
+            }
+            else if ( e is RTSPStreamingStatusChangedEventArgs )
+            {
+                OnStreamingStatusChanged( e as RTSPStreamingStatusChangedEventArgs );
             }
             else if ( e is RTSPErrorEventArgs )
             {

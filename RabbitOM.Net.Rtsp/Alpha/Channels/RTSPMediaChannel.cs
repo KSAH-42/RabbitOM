@@ -32,15 +32,15 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public bool IsOpened
             => _service.IsOpened;
        
-        public bool IsReceivingPacket
-            => _service.IsReceivingPacket;
-        
         public bool IsSetup
             => _service.IsSetup;
         
         public bool IsPlaying
-            => _service.IsStreamingStarted;
-        
+            => _service.IsPlaying;
+
+        public bool IsReceivingPacket
+            => _service.IsReceivingPacket;
+
         public bool IsDisposed
             => _service.IsDisposed;
 

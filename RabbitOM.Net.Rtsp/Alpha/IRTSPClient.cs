@@ -20,10 +20,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         object SyncRoot { get; }
         IRTSPClientConfiguration Configuration { get; }
-        bool IsConnected { get; }
-        bool IsReceivingPacket { get; }
-        bool IsStreamingStarted { get; }
         bool IsCommunicationStarted { get; }
+        bool IsConnected { get; }
+        bool IsStreamingStarted { get; }
+        bool IsReceivingPacket { get; }
         bool IsDisposed { get; }
 
 
