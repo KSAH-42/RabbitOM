@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public RTSPUdpMediaReceiver( RTSPMediaService service )
             : base( service )
-		{
+        {
             _socket = new RTSPUdpSocket();
             _thread = new RTSPThread( "RTSP - UDP Receiver" );
         }

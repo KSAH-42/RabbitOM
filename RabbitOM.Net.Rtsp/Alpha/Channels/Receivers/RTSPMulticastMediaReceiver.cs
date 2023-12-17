@@ -10,10 +10,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public RTSPMulticastMediaReceiver( RTSPMediaService service )
             : base( service )
-		{
+        {
             _socket = new RTSPMulticastSocket();
             _thread = new RTSPThread( "RTSP - Multicast Receiver" );
-		}
+        }
 
         public override bool IsStarted 
             => _thread.IsStarted;

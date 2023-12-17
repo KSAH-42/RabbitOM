@@ -13,10 +13,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
     {
         private readonly RTSPDisconnectReason _reason;
 
-		public RTSPDisconnectedEventArgs( RTSPDisconnectReason reason )
-		{
+        public RTSPDisconnectedEventArgs( RTSPDisconnectReason reason )
+        {
             _reason = reason;
-		}
+        }
 
         public RTSPDisconnectReason Reason
         {

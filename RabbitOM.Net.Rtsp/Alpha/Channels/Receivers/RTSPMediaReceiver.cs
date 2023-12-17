@@ -6,10 +6,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
     {
         private readonly RTSPMediaService _service;
 
-		public RTSPMediaReceiver( RTSPMediaService service )
-		{
+        public RTSPMediaReceiver( RTSPMediaService service )
+        {
             _service = service ?? throw new ArgumentNullException( nameof( service ) );
-		}
+        }
 
         protected RTSPMediaService Service
             => _service;
