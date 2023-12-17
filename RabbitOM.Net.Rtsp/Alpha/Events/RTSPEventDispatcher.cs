@@ -42,14 +42,14 @@ namespace RabbitOM.Net.Rtsp.Alpha
             Stop();
         }
 
-        public void Dispatch(EventArgs e)
+        public void Dispatch( EventArgs e )
         {
-            _queue.Enqueue(e);
+            _queue.Enqueue( e );
         }
 
-        public void RaiseEvent(EventArgs e)
+        public void RaiseEvent( EventArgs e )
         {
-            _handler.Invoke(e);
+            _handler.Invoke( e );
         }
 
 
