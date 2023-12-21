@@ -23,6 +23,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly RTSPValueBag<string> _sessionId;
 
+        private RTSPMediaReceiver _receiver;
+
 
 
 
