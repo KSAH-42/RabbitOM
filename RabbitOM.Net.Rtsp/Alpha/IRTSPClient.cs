@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
@@ -30,7 +29,5 @@ namespace RabbitOM.Net.Rtsp.Alpha
         bool StartCommunication();
         void StopCommunication();
         void StopCommunication(TimeSpan shutdownTimeout);
-        bool WaitForConnection(TimeSpan shutdownTimeout);
-        Task<bool> WaitForConnectionAsync(TimeSpan shutdownTimeout);
     }
 }

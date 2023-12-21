@@ -72,6 +72,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
         private readonly RTSPProxySettings        _settings              = null;
 
+        private bool                              _isDisposed            = false;
 
 
 
@@ -195,6 +196,22 @@ namespace RabbitOM.Net.Rtsp.Remoting
             get => _status.IsActive;
         }
 
+        /// <summary>
+        /// Check if the underlaying connection has been disposed
+        /// </summary>
+        public bool IsDisposed
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _isDisposed;
+                }
+            }
+        }
+
+
+
 
 
 
@@ -220,8 +237,11 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <exception cref="ArgumentNullException"/>
         /// <exception cref="ArgumentException"/>
         /// <exception cref="Exception"/>
+        /// <exception cref="ObjectDisposedException"/>
         public void Open(string uri, RTSPCredentials credentials)
         {
+            EnsureNotDispose();
+
             if (uri == null)
             {
                 throw new ArgumentNullException(nameof(uri));
@@ -244,75 +264,18 @@ namespace RabbitOM.Net.Rtsp.Remoting
         }
 
         /// <summary>
-        /// Open the connection
+        /// Close
         /// </summary>
-        /// <param name="uri">the uri</param>
-        /// <returns>returns true for a success otherwise false</returns>
-        public bool TryOpen( string uri )
+        public void Close()
         {
-            return TryOpen( uri , RTSPCredentials.Empty );
-        }
-
-        /// <summary>
-        /// Open the connection
-        /// </summary>
-        /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
-        /// <returns>returns true for a success otherwise false</returns>
-        public bool TryOpen( string uri , RTSPCredentials credentials )
-        {
-            if ( string.IsNullOrWhiteSpace( uri ) || credentials == null )
-            {
-                return false;
-            }
-
-            try
-            {
-                lock ( _lock )
-                {
-                    if ( _socket.IsOpened )
-                    {
-                        return false;
-                    }
-
-                    _settings.Uri = uri;
-                    _settings.Credentials = credentials;
-
-                    RTSPUri rtspUri = new RTSPUri( uri );
-
-                    using ( var scope = new RTSPDisposeScope( () => _socket.Close() ) )
-                    {
-                        if ( !_socket.Open( rtspUri.Host , rtspUri.Port ) )
-                        {
-                            return false;
-                        }
-
-                        _socket.SetLingerState( true , TimeSpan.FromSeconds( 5 ) );
-
-                        scope.ClearActions();
-                    }
-
-                    Initialize();
-                }
-
-                OnOpened( new RTSPConnectionOpenedEventArgs() );
-
-                return true;
-            }
-            catch ( Exception ex )
-            {
-                UnInitialize();
-
-                OnError( new RTSPConnectionErrorEventArgs( ex ) );
-            }
-
-            return false;
+            Close( false );
         }
 
         /// <summary>
         /// Close
         /// </summary>
-        public void Close()
+        /// <param name="disposing">the disposing status</param>
+        private void Close( bool disposing )
         {
             try
             {
@@ -320,6 +283,8 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                 lock ( _lock )
                 {
+                    _isDisposed = disposing;
+
                     isOpened = _socket.IsOpened;
 
                     _socket.Shutdown();
@@ -375,9 +340,23 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// </summary>
         public void Dispose()
         {
-            Close();
+            Close( true );
 
             _requestManager.Dispose();
+        }
+
+        /// <summary>
+        /// Throw an exception if the current instance is already disposed
+        /// </summary>
+        public void EnsureNotDispose()
+        {
+            lock ( _lock )
+            {
+                if ( _isDisposed )
+                {
+                    throw new ObjectDisposedException( "RTSP Proxy" );
+                }
+            }
         }
 
         /// <summary>
@@ -396,51 +375,14 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <param name="receiveTimeout">the receive timeout</param>
         /// <param name="sendTimeout">the send timeout</param>
         /// <exception cref="Exception"/>
+        /// <exception cref="ObjectDisposedException"/>
         public void ConfigureTimeouts(TimeSpan receiveTimeout, TimeSpan sendTimeout)
         {
+            EnsureNotDispose();
+
             if ( ! TryConfigureTimeouts( receiveTimeout , sendTimeout ) )
             {
                 throw new Exception("Configure timeout failure");
-            }
-        }
-
-        /// <summary>
-        /// Configure the timeout
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryConfigureTimeouts( TimeSpan timeout )
-        {
-            return TryConfigureTimeouts( timeout , timeout );
-        }
-
-        /// <summary>
-        /// Configure the timeout
-        /// </summary>
-        /// <param name="receiveTimeout">the receive timeout</param>
-        /// <param name="sendTimeout">the send timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
-        {
-            lock (_lock)
-            {
-                bool succeed = false;
-
-                if (_socket.SetReceiveTimeout(receiveTimeout))
-                {
-                    _settings.ReceiveTimeout = receiveTimeout;
-
-                    succeed = true;
-                }
-
-                if (_socket.SetSendTimeout(sendTimeout))
-                {
-                    _settings.SendTimeout = sendTimeout;
-
-                    succeed = true;
-                }
-
-                return succeed;
             }
         }
 
@@ -568,6 +510,113 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public void DispatchEvent(RTSPPacketReceivedEventArgs e )
         {
             _mediaEventQueue.Enqueue(e);
+        }
+
+
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <returns>returns true for a success otherwise false</returns>
+        public bool TryOpen( string uri )
+        {
+            return TryOpen( uri , RTSPCredentials.Empty );
+        }
+
+        /// <summary>
+        /// Open the connection
+        /// </summary>
+        /// <param name="uri">the uri</param>
+        /// <param name="credentials">the credentials</param>
+        /// <returns>returns true for a success otherwise false</returns>
+        public bool TryOpen( string uri , RTSPCredentials credentials )
+        {
+            if ( string.IsNullOrWhiteSpace( uri ) || credentials == null )
+            {
+                return false;
+            }
+
+            try
+            {
+                lock ( _lock )
+                {
+                    if ( _socket.IsOpened )
+                    {
+                        return false;
+                    }
+
+                    _settings.Uri = uri;
+                    _settings.Credentials = credentials;
+
+                    RTSPUri rtspUri = new RTSPUri( uri );
+
+                    using ( var scope = new RTSPDisposeScope( () => _socket.Close() ) )
+                    {
+                        if ( !_socket.Open( rtspUri.Host , rtspUri.Port ) )
+                        {
+                            return false;
+                        }
+
+                        _socket.SetLingerState( true , TimeSpan.FromSeconds( 5 ) );
+
+                        scope.ClearActions();
+                    }
+
+                    Initialize();
+                }
+
+                OnOpened( new RTSPConnectionOpenedEventArgs() );
+
+                return true;
+            }
+            catch ( Exception ex )
+            {
+                UnInitialize();
+
+                OnError( new RTSPConnectionErrorEventArgs( ex ) );
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Configure the timeout
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryConfigureTimeouts( TimeSpan timeout )
+        {
+            return TryConfigureTimeouts( timeout , timeout );
+        }
+
+        /// <summary>
+        /// Configure the timeout
+        /// </summary>
+        /// <param name="receiveTimeout">the receive timeout</param>
+        /// <param name="sendTimeout">the send timeout</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
+        {
+            lock ( _lock )
+            {
+                bool succeed = false;
+
+                if ( _socket.SetReceiveTimeout( receiveTimeout ) )
+                {
+                    _settings.ReceiveTimeout = receiveTimeout;
+
+                    succeed = true;
+                }
+
+                if ( _socket.SetSendTimeout( sendTimeout ) )
+                {
+                    _settings.SendTimeout = sendTimeout;
+
+                    succeed = true;
+                }
+
+                return succeed;
+            }
         }
 
         /// <summary>

@@ -108,7 +108,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 }
 
                 OnCommunicationStopped( new RTSPCommunicationStoppedEventArgs() );
-            });
+            } );
         }
 
         public void StopCommunication()
@@ -134,16 +134,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
             _channel.Dispose();   // this method should not dispose the dispatch because we used agregation pattern: the object is passed to constructor so the may be reused after releasing the channel object.
             _dispatcher.Dispose();
-        }
-
-        public bool WaitForConnection( TimeSpan shutdownTimeout )
-        {
-            return _channel.WaitForConnection( shutdownTimeout );
-        }
-
-        public async Task<bool> WaitForConnectionAsync( TimeSpan shutdownTimeout )
-        {
-            return await Task.Run( () => _channel.WaitForConnection( shutdownTimeout ) );
         }
 
         private void RaiseEvent( EventArgs e )

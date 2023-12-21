@@ -8,6 +8,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly RTSPMulticastSocket _socket;
 
+
+
+
+
         public RTSPMulticastMediaReceiver( RTSPMediaService service )
             : base( service )
         {
@@ -15,8 +19,18 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _thread = new RTSPThread( "RTSP - Multicast Receiver" );
         }
 
+
+
+
+
+
         public override bool IsStarted 
             => _thread.IsStarted;
+
+
+
+
+
 
         public override bool Start()
             => _thread.Start( () =>
@@ -45,6 +59,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _socket.Dispose();
         }
 
+
+
+
+
         private static void Run( RTSPMulticastMediaReceiver receiver , ref TimeSpan idleTimeout )
         {
             if ( ! receiver._socket.IsOpened )
@@ -58,7 +76,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     receiver.Service.Configuration.ReceiveTransportTimeout )
                     )
                 {
-                    // Call OnTransportError( new ReceiveTransportError() ) ?
+                    /// receiver.OnError( new RTSPErrorEventArgs( ... )  );
                     return;
                 }
 
@@ -68,18 +86,15 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 if ( ! receiver._socket.PollReceive( receiver.Service.Configuration.ReceiveTransportTimeout ) )
                 {
-                    // Call OnTransportError( new ReceiveTransportError() ) ?
-                    // Add in this method update streaming StreamingReceovering/StreamingInActive handler ?
+                    /// receiver.OnError( new RTSPErrorEventArgs( ... )  );
                     return;
                 }
 
                 var buffer = receiver._socket.Receive();
 
-                if ( null == buffer || buffer.Length <= 0 )
+                if ( buffer == null || buffer.Length <= 0 )
                 {
-                    // Call OnTransportError( new ReceiveTransportError() ) ?
-                    // Add in this method update streaming StreamingReceovering/StreamingInActive handler ?
-
+                    /// receiver.OnError( new RTSPErrorEventArgs( ... )  );
                     return;
                 }
 

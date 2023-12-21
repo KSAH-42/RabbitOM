@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
 {
     public sealed class RTSPMediaService : IDisposable
     {
-        private readonly object _lock = new object();
+        private readonly object _lock;
 
         private readonly IRTSPEventDispatcher _dispatcher;
 
@@ -29,8 +29,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public RTSPMediaService( IRTSPEventDispatcher dispatcher )
         {
-            _dispatcher = dispatcher;
-
+            _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
+            
+            _lock = new object();
             _configuration = new RTSPClientConfiguration();
             _connection = new RTSPConnection();
             _receivingStatus = new RTSPValueBag<bool>();
@@ -74,7 +75,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => _receivingStatus.Value;
 
         public bool IsDisposed
-            => throw new NotImplementedException();
+            => _connection.IsDisposed;
 
 
 
@@ -112,9 +113,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => throw new NotImplementedException();
         public bool KeepAliveAsSetParameter()
             => throw new NotImplementedException();
-        public bool WaitForConnection(TimeSpan shutdownTimeout)
-            => _connection.WaitConnectionSucceed( shutdownTimeout );
-
+        
         public void UpdateReceivingStatus(bool status)
         {
             // TODO: add check + fire events

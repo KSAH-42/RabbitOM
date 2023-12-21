@@ -42,5 +42,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
             _service.Dispatcher.Dispatch( e );
         }
+
+        protected void OnError( RTSPErrorEventArgs e )
+        {
+            _service.Dispatcher.Dispatch( e );
+        }
     }
 }

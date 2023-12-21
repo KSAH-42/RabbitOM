@@ -36,10 +36,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 _idleTimeout = _channel.Configuration.RetriesInterval;
 
-                if ( ! _channel.Open() )
-                {
+                if ( !_channel.Open() )
                     return;
-                }
 
                 using ( var scope = new RTSPDisposeScope( () => _channel.Close() ) )
                 {
@@ -63,14 +61,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
             else
             {
                 if ( _channel.KeepAlive() )
-                {
                     return;
-                }
 
                 if ( _channel.IsSetup )
-                {
                     _channel.TearDown();
-                }
 
                 _channel.Close();
 
@@ -81,9 +75,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public void Dispose()
         {
             if ( _channel.IsSetup )
-            {
                 _channel.TearDown();
-            }
 
             _channel.Close();
         }

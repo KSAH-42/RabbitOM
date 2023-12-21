@@ -1,10 +1,14 @@
 Rabbit.Streaming.Rtsp
-Rabbit.Streaming.Rtsp.Headers
+Rabbit.Streaming.Rtsp.Messages
+Rabbit.Streaming.Rtsp.Messages.Serialization
+Rabbit.Streaming.Rtsp.Clients
+Rabbit.Streaming.Rtsp.Clients.Remoting
+Rabbit.Streaming.Rtsp.Servers
 
 
 public abstract class RtspTransportOptions
 {
-	public abstract int Type {get; }
+	public abstract int Type { get; }
 }
 
 public class RtspReceiverOptions

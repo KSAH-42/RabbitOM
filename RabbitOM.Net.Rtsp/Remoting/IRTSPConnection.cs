@@ -86,6 +86,14 @@ namespace RabbitOM.Net.Rtsp.Remoting
             get;
         }
 
+        /// <summary>
+        /// Check if the underlaying connection has been disposed
+        /// </summary>
+        bool IsDisposed
+        {
+            get;
+        }
+
 
 
 

@@ -102,8 +102,5 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
             return _service.KeepAliveAsOptions();
         }
-
-        public bool WaitForConnection(TimeSpan shutdownTimeout)
-            => _service.WaitForConnection(shutdownTimeout);
     }
 }
