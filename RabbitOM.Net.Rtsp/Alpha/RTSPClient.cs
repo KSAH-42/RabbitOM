@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
@@ -48,6 +47,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _thread = new RTSPThread( "RTSP - Client thread" );
         }
 
+        ~RTSPClient()
+        {
+            Dispose( false );
+        }
 
 
 
@@ -129,6 +132,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
         {
             StopCommunication();
 
