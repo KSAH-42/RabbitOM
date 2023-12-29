@@ -1,8 +1,24 @@
 Rabbit.Streaming.Rtsp
 Rabbit.Streaming.Rtsp.Messages
-Rabbit.Streaming.Rtsp.Messages.Serialization
+Rabbit.Streaming.Rtsp.Messages.Headers
+Rabbit.Streaming.Rtsp.Messages.Serizalization
+Rabbit.Streaming.Rtsp.Messages.Security
+Rabbit.Streaming.Rtsp.Messages.Security.Authent
 Rabbit.Streaming.Rtsp.Clients
-Rabbit.Streaming.Rtsp.Clients.Remoting
+
+
+Rabbit.Streaming.Rtsp
+Rabbit.Streaming.Rtsp.Messaging
+Rabbit.Streaming.Rtsp.Messaging.Requests
+Rabbit.Streaming.Rtsp.Messaging.Requests.Serilization
+Rabbit.Streaming.Rtsp.Messaging.Responses
+Rabbit.Streaming.Rtsp.Messaging.Responses.Serilization
+Rabbit.Streaming.Rtsp.Clients
+
+or
+
+Rabbit.Streaming.Rtsp
+Rabbit.Streaming.Rtsp.Clients
 Rabbit.Streaming.Rtsp.Servers
 
 
@@ -627,6 +643,7 @@ public abstract class Client : IClient , IDispose
     protected virtual void OnStopped(EventArgs e) { }
 
 }
+
 
 
 
