@@ -1,6 +1,6 @@
 # RabbitOM : a resilient RTSP client in .net
 
-A .net assemblies which can be used for receiving raw video streams. After recfactoring the clients, I will add the rtp layers which already exists, but i need to do something before to publish it.
+A .net assemblies which can be used for receiving raw audio/video streams. After recfactoring the clients, I will add the rtp layers which already exists, but i need to do something before to publish it.
 
 Theses classes used for decoding was already implemented but not present in this repository at this moment.
 
