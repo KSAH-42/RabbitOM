@@ -63,6 +63,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 if ( _channel.KeepAlive() )
                     return;
 
+                // In my option if the keepalive fails
+                // in simply means that session was no longuer exists
+                // It could be an necessary to call the tear down
+                // May be we need to a option to force the to call the teardown method ?
+                
                 if ( _channel.IsSetup )
                     _channel.TearDown();
 
@@ -74,10 +79,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public void Dispose()
         {
-            if ( _channel.IsSetup )
+            if ( _channel.IsOpened )
+            {
                 _channel.TearDown();
-
-            _channel.Close();
+                _channel.Close();
+            }
         }
     }
 }

@@ -50,7 +50,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
         // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
-
         static void Run(string uri, string userName, string password)
         {
             using ( var client = new RTSPClient() )
@@ -91,7 +90,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                     Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
                 };
 
-                // Please note, that rtsp uri is not the same from a camera to another
+                // Please note, read the manufacturer's documentation
+                // to get the right uri
 
                 client.Configuration.Uri = uri;
                 client.Configuration.UserName = userName;
