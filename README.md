@@ -33,42 +33,43 @@ Like this :
 
 ~~~~C#
 
-var client = new RTSPClient();
-
-// Fired when a successfull connection or when the communication has been recovered after a lost
-client.Connected += (sender, e) =>
+using ( var client = new RTSPClient() )
 {
-    Console.WriteLine("Client connected - " + client.Configuration.Uri);
-};
+    // Fired when a successfull connection or when the communication has been recovered after a lost
+    client.Connected += (sender, e) =>
+    {
+        Console.WriteLine("Client connected - " + client.Configuration.Uri);
+    };
 
-// Fired when the communication has been lost
-client.Disconnected += (sender, e) =>
-{
-    Console.WriteLine("Client disconnected - " + DateTime.Now);
-};
+    // Fired when the communication has been lost
+    client.Disconnected += (sender, e) =>
+    {
+        Console.WriteLine("Client disconnected - " + DateTime.Now);
+    };
 
-// Fired when a raw media data has been received 
-client.PacketReceived += (sender, e) =>
-{
-    Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length); // raw rtp go here
-};
+    // Fired when a raw media data has been received 
+    client.PacketReceived += (sender, e) =>
+    {
+        Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length); // raw rtp go here
+    };
 
-client.Configuration.Uri = Constants.LocalServer;
-client.Configuration.UserName = Constants.UserName;
-client.Configuration.Password = Constants.Password;
-client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // Please read the vendor documentation to be sure.
-client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // increase the timeout if the camera is located far away 
-client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
+    client.Configuration.Uri = Constants.LocalServer;
+    client.Configuration.UserName = Constants.UserName;
+    client.Configuration.Password = Constants.Password;
+    client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // Please read the vendor documentation to be sure.
+    client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // increase the timeout if the camera is located far away 
+    client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
 
-client.Options.DeliveryMode = RTSPDeliveryMode.Tcp; // Configure the transport layer 
+    client.Options.DeliveryMode = RTSPDeliveryMode.Tcp; // Configure the transport layer 
 
-client.StartCommunication(); // None blocking call: handle the auto reconnection in case of network failure
+    client.StartCommunication(); // None blocking call: handle the auto reconnection in case of network failure
 
-Console.WriteLine("Press any keys to close the application");
+    Console.WriteLine("Press any keys to close the application");
 
-Console.ReadKey();
+    Console.ReadKey();
 
-client.StopCommunication();
+    client.StopCommunication();
+}
 
 ~~~~
 
