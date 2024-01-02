@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         static void Main(string[] args)
         {
             var arguments = new Dictionary<string, string>();
-
+            
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
@@ -53,73 +53,70 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
         static void Run(string uri, string userName, string password)
         {
-            var client = new RTSPClient();
-
-            #region Events
-
-            client.CommunicationStarted += (sender, e) =>
+            using ( var client = new RTSPClient() )
             {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Communication started - " + DateTime.Now);
-            };
+                client.CommunicationStarted += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine( "Communication started - " + DateTime.Now );
+                };
 
-            client.CommunicationStopped += (sender, e) =>
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Communication stopped - " + DateTime.Now);
-            };
+                client.CommunicationStopped += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine( "Communication stopped - " + DateTime.Now );
+                };
 
-            client.Connected += (sender, e) =>
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Client connected - " + client.Configuration.Uri);
-            };
+                client.Connected += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine( "Client connected - " + client.Configuration.Uri );
+                };
 
-            client.Disconnected += (sender, e) =>
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Client disconnected - " + DateTime.Now);
-            };
+                client.Disconnected += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine( "Client disconnected - " + DateTime.Now );
+                };
 
-            client.Error += (sender, e) =>
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Client Error: " + e.Code);
-            };
+                client.Error += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine( "Client Error: " + e.Code );
+                };
 
-            client.PacketReceived += (sender, e) =>
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("DataReceived {0}", e.Packet.Data.Length);
-            };
+                client.PacketReceived += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
+                };
 
-            #endregion
+                // Please note, that rtsp uri is not the same from a camera to another
 
-            // Please note, that rtsp uri is not the same from a camera to another
+                client.Configuration.Uri = uri;
+                client.Configuration.UserName = userName;
+                client.Configuration.Password = password;
+                client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
+                client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 ); // <-- increase the timeout if the camera is located far away 
+                client.Configuration.SendTimeout = TimeSpan.FromSeconds( 5 );
 
-            client.Configuration.Uri = uri; 
-            client.Configuration.UserName = userName;
-            client.Configuration.Password = password;
-            client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
-            client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // <-- increase the timeout if the camera is located far away 
-            client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
-            
-            // For multicast settings, please make sure
-            // that the camera or the video source support multicast
-            // For instance, the happy RTSP server does not support multicast
-            // AND make sure that your are used a switch not a hub, very is difference between them
-            // And activate igmp snooping on the switch
+                // For multicast settings, please make sure
+                // that the camera or the video source support multicast
+                // For instance, the happy RTSP server does not support multicast
+                // AND make sure that your are used a switch not a hub, very is difference between them
+                // And activate igmp snooping on the switch
 
-            // client.Options.DeliveryMode = RTSPDeliveryMode.Multicast;
-            // client.Options.MulticastAddress = "229.0.0.1";
-            // client.Options.MulticastPort = 55000;
+                // client.Options.DeliveryMode = RTSPDeliveryMode.Multicast;
+                // client.Options.MulticastAddress = "229.0.0.1";
+                // client.Options.MulticastPort = 55000;
 
-            client.StartCommunication();
+                client.StartCommunication();
 
-            Console.WriteLine("Press any keys to close the application");
-            Console.ReadKey();
+                Console.WriteLine( "Press any keys to close the application" );
+                Console.ReadKey();
 
-            client.StopCommunication(TimeSpan.FromSeconds(3));
+                client.StopCommunication( TimeSpan.FromSeconds( 3 ) );
+            }
         }
     }
 }
