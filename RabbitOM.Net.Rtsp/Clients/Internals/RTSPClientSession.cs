@@ -8,7 +8,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent a rtsp session
     /// </summary>
-    internal class RTSPClientSession
+    internal sealed class RTSPClientSession : IDisposable
     {
         private readonly object                                            _lock                   = null;
 
@@ -401,6 +401,15 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            Close();
+            _connection.Dispose();
+        }
+
+        /// <summary>
         /// Call the ping method
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
@@ -460,7 +469,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="sender">the sender</param>
         /// <param name="e">the event args</param>
-        protected virtual void OnDataReceived(object sender, RTSPPacketReceivedEventArgs e )
+        private void OnDataReceived(object sender, RTSPPacketReceivedEventArgs e )
         {
             _dispatcher.DispatchEvent( e );
         }
@@ -470,7 +479,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// Occurs when some session exception has been raised
         /// </summary>
         /// <param name="ex">the exception</param>
-        protected virtual void OnException( Exception ex )
+        private void OnException( Exception ex )
         {
             if ( ex == null )
             {

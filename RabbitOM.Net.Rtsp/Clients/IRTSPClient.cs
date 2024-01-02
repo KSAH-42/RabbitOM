@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client
     /// </summary>
-    public interface IRTSPClient : IRTSPClientEvents
+    public interface IRTSPClient : IRTSPClientEvents , IDisposable
     {
         /// <summary>
         /// Gets the sync root

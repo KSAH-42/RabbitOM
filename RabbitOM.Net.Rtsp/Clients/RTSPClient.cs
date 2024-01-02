@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client
     /// </summary>
-    public class RTSPClient : IRTSPClient
+    public sealed class RTSPClient : IRTSPClient
     {
         private readonly RTSPClientSession _session;
 
@@ -20,6 +20,14 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             _session = new RTSPClientSession( this );
             _thread = new RTSPThread("RTSP - client thread");
+        }
+
+        /// <summary>
+        /// Finalizer
+        /// </summary>
+        ~RTSPClient()
+        {
+            Dispose( false );
         }
 
 
@@ -167,6 +175,28 @@ namespace RabbitOM.Net.Rtsp.Clients
             }
 
             _thread.Stop();
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">the disposing</param>
+        private void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                StopCommunication();
+                _session.Dispose();
+            }
         }
     }
 }
