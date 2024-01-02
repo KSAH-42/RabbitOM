@@ -1,10 +1,9 @@
 Rabbit.Streaming.Rtsp
-Rabbit.Streaming.Rtsp.Messages
-Rabbit.Streaming.Rtsp.Messages.Headers
-Rabbit.Streaming.Rtsp.Messages.Serizalization
-Rabbit.Streaming.Rtsp.Messages.Security
-Rabbit.Streaming.Rtsp.Messages.Security.Authent
+Rabbit.Streaming.Rtsp.Headers
 Rabbit.Streaming.Rtsp.Clients
+Rabbit.Streaming.Rtsp.Clients.Transports
+Rabbit.Streaming.Rtsp.Servers
+Rabbit.Streaming.Rtsp.Servers.Transports
 
 
 Rabbit.Streaming.Rtsp
