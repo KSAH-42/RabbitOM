@@ -1,5 +1,10 @@
-﻿using RabbitOM.Net.Rtsp.Remoting;
+﻿using RabbitOM.Net.Sdp;
+using RabbitOM.Net.Sdp.Extensions;
+using RabbitOM.Net.Rtsp.Codecs;
+using RabbitOM.Net.Rtsp.Remoting;
+using RabbitOM.Net.Rtsp.Remoting.Invokers;
 using System;
+using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
@@ -13,17 +18,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly IRTSPConnection _connection;
 
-        private readonly RTSPValueBag<bool> _receivingStatus;
+        private SessionDescriptor _sdp;
 
-        private readonly RTSPValueBag<bool> _setupStatus;
+        private RTSPTrackInfo _trackInfo;
 
-        private readonly RTSPValueBag<bool> _playingStatus;
-
-        private readonly RTSPValueBag<bool> _streamingStatus;
-
-        private readonly RTSPValueBag<string> _sessionId;
-
-        private RTSPMediaReceiver _receiver;
+        private string _sessionId;
 
 
 
@@ -36,11 +35,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _lock = new object();
             _configuration = new RTSPClientConfiguration();
             _connection = new RTSPConnection();
-            _receivingStatus = new RTSPValueBag<bool>();
-            _setupStatus = new RTSPValueBag<bool>();
-            _playingStatus = new RTSPValueBag<bool>();
-            _sessionId = new RTSPValueBag<string>();
-            _streamingStatus = new RTSPValueBag<bool>();
         }
 
 
@@ -55,29 +49,27 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public IRTSPEventDispatcher Dispatcher
             => _dispatcher;
 
-        public string SessionId
-            => _sessionId.Value ?? string.Empty;
-
         public bool IsConnected
             => _connection.IsConnected;
        
         public bool IsOpened
             => _connection.IsOpened;
-       
-        public bool IsSetup
-            => _setupStatus.Value;
-       
-        public bool IsPlaying
-            => _playingStatus.Value;
-        
-        public bool IsStreamingStarted
-            => _streamingStatus.Value;
-
-        public bool IsReceivingPacket
-            => _receivingStatus.Value;
 
         public bool IsDisposed
             => _connection.IsDisposed;
+
+        public bool IsSetup
+            => throw new NotImplementedException();
+       
+        public bool IsPlaying
+            => throw new NotImplementedException();
+
+        public bool IsStreamingStarted
+            => throw new NotImplementedException();
+
+        public bool IsReceivingPacket
+            => throw new NotImplementedException();
+
 
 
 
@@ -86,25 +78,191 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
         public bool Open()
-            => throw new NotImplementedException();
-        public bool Close()
-            => throw new NotImplementedException();
-        // Do not dispose the dispatcher, the object is passed to the constructor
-        // And it may be reused elsewhere
+        {
+            if ( ! _connection.TryOpen( _configuration.Uri ) )
+            {
+                return false;
+            }
+
+            if ( ! _connection.TryConfigureTimeouts( _configuration.ReceiveTimeout , _configuration.SendTimeout ) )
+            {
+                _connection.Close();
+                return false;
+            }
+
+            return true;
+        }
+
+        public void Close()
+        {
+            _connection.Close();
+            ResetMembers();
+        }
+
         public void Dispose()
-            => throw new NotImplementedException();
+        {
+            _connection.Dispose();
+            ResetMembers();
+        }
+
         public void Abort()
-            => throw new NotImplementedException();
+        {
+            _connection.Abort();
+            ResetMembers();
+        }
+
+        // this method don't check the supported methods just ignored them 
+        // because some devices returns an empty list of supported methods....
         public bool Options()
-            => throw new NotImplementedException();
+        {
+            return _connection.Options().Invoke().Succeed;
+        }
+
         public bool Describe()
-            => throw new NotImplementedException();
+        {
+            RTSPInvokerResult result = _connection.Describe().Invoke();
+
+            if ( result == null || ! result.Succeed )
+            {
+                return false;
+            }
+
+            lock ( _lock )
+            {
+                return SessionDescriptor.TryParse( result.Request.GetBody() , out _sdp );
+            }
+        }
+
+        public void PrepareSetup()
+        {
+            lock ( _lock )
+            {
+                _trackInfo = null;
+
+                if ( _sdp == null )
+                {
+                    return;
+                }
+
+                lock ( _configuration.SyncRoot )
+                {
+                    MediaTrack mediaTrack = null;
+
+                    if ( _configuration.MediaFormat == RTSPMediaFormat.Video )
+                    {
+                        mediaTrack = _sdp.SelectVideoMediaTracks().FirstOrDefault();
+                    }
+
+                    if ( _configuration.MediaFormat == RTSPMediaFormat.Audio )
+                    {
+                        mediaTrack = _sdp.SelectAudioMediaTracks().FirstOrDefault();
+                    }
+
+                    if ( mediaTrack != null )
+                    {
+                        if ( _configuration.MediaFormat == RTSPMediaFormat.Video )
+                        {
+                            _trackInfo = RTSPTrackInfo.NewVideoTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId , 
+                                string.IsNullOrWhiteSpace( mediaTrack.Format.SPS ) ? CodecInfo.Default_H264_SPS : mediaTrack.Format.SPS  , 
+                                string.IsNullOrWhiteSpace( mediaTrack.Format.PPS ) ? CodecInfo.Default_H264_PPS : mediaTrack.Format.PPS 
+                                );
+                        }
+
+                        if ( _configuration.MediaFormat == RTSPMediaFormat.Audio )
+                        {
+                            _trackInfo = RTSPTrackInfo.NewAudioTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId );
+                        }
+                    }
+                }
+            }
+        }
+
         public bool SetupAsTcp()
-            => throw new NotImplementedException();
+        {
+            lock ( _lock )
+            {
+                _sessionId = null;
+
+                if ( _trackInfo == null )
+                {
+                    return false;
+                }
+
+                var result = _connection.Setup()
+                    .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Tcp )
+                    .As<RTSPSetupInvoker>().SetTrackUri( _trackInfo.ControlUri )
+                    .Invoke();
+
+                if ( result == null || ! result.Succeed )
+                {
+                    return false;
+                }
+
+                _sessionId = result.Response.GetHeaderSessionId();
+
+                return ! string.IsNullOrWhiteSpace( _sessionId );
+            }
+        }
+
         public bool SetupAsUdp()
-            => throw new NotImplementedException();
+        {
+            lock ( _lock )
+            {
+                _sessionId = null;
+
+                if ( _trackInfo == null )
+                {
+                    return false;
+                }
+
+                var result = _connection.Setup()
+                    .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Udp )
+                    .As<RTSPSetupInvoker>().SetTrackUri( _trackInfo.ControlUri )
+                    .As<RTSPSetupInvoker>().SetUnicastPort( _configuration.RtpPort )
+                    .Invoke();
+
+                if ( result == null || ! result.Succeed )
+                {
+                    return false;
+                }
+
+                _sessionId = result.Response.GetHeaderSessionId();
+
+                return !string.IsNullOrWhiteSpace( _sessionId );
+            }
+        }
+
         public bool SetupAsMulticast()
-            => throw new NotImplementedException();
+        {
+            lock ( _lock )
+            {
+                _sessionId = null;
+
+                if ( _trackInfo == null )
+                {
+                    return false;
+                }
+
+                var result = _connection.Setup()
+                    .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Multicast )
+                    .As<RTSPSetupInvoker>().SetTrackUri( _trackInfo.ControlUri )
+                    .As<RTSPSetupInvoker>().SetMulticastAddress( _configuration.MulticastAddress )
+                    .As<RTSPSetupInvoker>().SetMulticastPort( _configuration.RtpPort )
+                    .As<RTSPSetupInvoker>().SetMulticastTTL( _configuration.TimeToLive )
+                    .Invoke();
+
+                if ( result == null || !result.Succeed )
+                {
+                    return false;
+                }
+
+                _sessionId = result.Response.GetHeaderSessionId();
+
+                return ! string.IsNullOrWhiteSpace( _sessionId );
+            }
+        }
+
+
         public bool Play()
             => throw new NotImplementedException();
         public bool TearDown()
@@ -119,15 +277,21 @@ namespace RabbitOM.Net.Rtsp.Alpha
         public void UpdateReceivingStatus(bool status)
         {
             // TODO: add check + fire events
-
-            _receivingStatus.Value = status;
         }
 
         public void UpdateStreamingRunningStatus(bool status)
         {
             // TODO: add check + fire events
+        }
 
-            _receivingStatus.Value = status;
+        private void ResetMembers()
+        {
+            lock ( _lock )
+            {
+                _sdp = null;
+                _trackInfo = null;
+                _sessionId = null;
+            }
         }
     }
 }

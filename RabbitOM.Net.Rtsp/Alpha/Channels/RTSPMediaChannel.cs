@@ -50,25 +50,39 @@ namespace RabbitOM.Net.Rtsp.Alpha
         
         
         public bool Open()
-            => _service.Open();
+        {
+            return _service.Open();
+        }
 
-        public bool Close()
-            => _service.Close();
+        public void Close()
+        {
+            _service.Close();
+        }
 
         public void Dispose()
-            => _service.Dispose();
+        {
+            _service.Dispose();
+        }
 
         public void Abort()
-            => _service.Abort();
+        {
+            _service.Abort();
+        }
 
         public bool Options()
-            => _service.Options();
+        {
+            return _service.Options();
+        }
         
         public bool Describe()
-            => _service.Describe();
+        {
+            return _service.Describe();
+        }
        
         public bool Setup()
         {
+            _service.PrepareSetup();
+
             if (_service.Configuration.DeliveryMode == RTSPDeliveryMode.Udp)
             {
                 return _service.SetupAsUdp();
@@ -83,10 +97,14 @@ namespace RabbitOM.Net.Rtsp.Alpha
         }
 
         public bool Play()
-            => _service.Play();
+        {
+            return _service.Play();
+        }
 
         public void TearDown()
-            => _service.TearDown();
+        {
+            _service.TearDown();
+        }
 
         public bool KeepAlive()
         {

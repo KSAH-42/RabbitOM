@@ -8,6 +8,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private TValue _value;
 
+
+        public object SyncRoot
+        {
+            get => _lock;
+        }
+
         public TValue Value
         {
             get
@@ -27,5 +33,13 @@ namespace RabbitOM.Net.Rtsp.Alpha
             }
         }
 
+
+        public void ToDefault()
+        {
+            lock ( _lock )
+            {
+                _value = default;
+            } 
+        }
     }
 }

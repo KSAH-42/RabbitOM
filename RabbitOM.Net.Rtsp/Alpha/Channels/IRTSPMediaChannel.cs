@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
         bool IsReceivingPacket { get; }
 
         bool Open();
-        bool Close();
+        void Close();
         void Abort();
         bool Options();
         bool Describe();
