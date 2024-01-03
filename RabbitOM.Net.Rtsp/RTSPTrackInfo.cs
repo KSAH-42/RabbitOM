@@ -105,7 +105,6 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Gets the control uri
         /// </summary>
-        [Obsolete("For security reason, this property will be removed when the next client implementation will be ready")]
         public string ControlUri
         {
             get => _controlUri;
