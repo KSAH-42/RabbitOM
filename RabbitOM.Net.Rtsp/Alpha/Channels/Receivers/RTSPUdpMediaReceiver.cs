@@ -25,7 +25,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
         public override bool IsStarted 
-            => _thread.IsStarted;
+        {
+            get => _thread.IsStarted;
+        }
 
         
 
@@ -33,7 +35,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
         
         
         public override bool Start()
-            => _thread.Start( () =>
+        {
+            return _thread.Start( () =>
             {
                 OnStreamingStarted( new RTSPStreamingStartedEventArgs() );
 
@@ -45,7 +48,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 }
 
                 OnStreamingStopped( new RTSPStreamingStoppedEventArgs() );
-            });
+            } );
+        }
 
         public override void Stop()
         {
