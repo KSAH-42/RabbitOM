@@ -5,9 +5,6 @@
 
 
 
-    Simplify the dispatcher mecanism, or find something to avoid potential timeout on callbacks/event handler subscribptions
-especially if we are using udp protocol, datagram can be lost if a timeout occurs after receiving packets.
-
 The actual dispatch, could be nice, to track every things. and all reliable recorders use ring buffer. It's a basic thing.
 
 RabbitOM.Net.Alpha
