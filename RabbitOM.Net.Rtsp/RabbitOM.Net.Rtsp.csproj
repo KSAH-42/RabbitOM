@@ -48,6 +48,7 @@
     <Compile Include="Alpha\Channels\Receivers\RTSPUdpMediaReceiver.cs" />
     <Compile Include="Alpha\Channels\Receivers\RTSPMediaReceiver.cs" />
     <Compile Include="Alpha\Events\RTSPStreamingSetupEventArgs.cs" />
+    <Compile Include="Alpha\RTSPMediaClient.cs" />
     <Compile Include="Alpha\RTSPClientConfiguration.cs" />
     <Compile Include="Alpha\RTSPClient.cs" />
     <Compile Include="Alpha\Events\RTSPEventDispatcher.cs" />

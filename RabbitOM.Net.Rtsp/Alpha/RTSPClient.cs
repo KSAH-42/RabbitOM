@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public class RTSPClient : IRTSPClient
+    public abstract class RTSPClient : IRTSPClient
     {
         public event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
         
@@ -30,23 +30,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
-        private readonly RTSPEventDispatcher _dispatcher;
-       
-        private readonly RTSPMediaChannel _channel;
-        
-        private readonly RTSPThread _thread;
-
-
-
-
-
-        public RTSPClient()
-        {
-            _dispatcher = new RTSPEventDispatcher( RaiseEvent );
-            _channel = new RTSPMediaChannel( _dispatcher );
-            _thread = new RTSPThread( "RTSP - Client thread" );
-        }
-
         ~RTSPClient()
         {
             Dispose( false );
@@ -55,81 +38,50 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
 
-        public object SyncRoot
+        public abstract object SyncRoot
         {
-            get => _channel.SyncRoot;
+            get;
         }
 
-        public IRTSPClientConfiguration Configuration
+        public abstract IRTSPClientConfiguration Configuration
         {
-            get => _channel.Configuration;
+            get;
         }
 
-        public bool IsCommunicationStarted
+        public abstract bool IsCommunicationStarted
         {
-            get => _thread.IsStarted;
+            get;
         }
 
-        public bool IsConnected
+        public abstract bool IsConnected
         {
-            get => _channel.IsConnected;
+            get;
         }
 
-        public bool IsStreamingStarted
+        public abstract bool IsStreamingStarted
         {
-            get => _channel.IsPlaying;
+            get;
         }
 
-        public bool IsReceivingPacket
+        public abstract bool IsReceivingPacket
         {
-            get => _channel.IsReceivingPacket;
+            get;
         }
 
-        public bool IsDisposed
+        public abstract bool IsDisposed
         {
-            get => _channel.IsDisposed;
+            get;
         }
 
 
 
 
 
-        public bool StartCommunication()
-        {
-            _dispatcher.Start();
-            
-            return _thread.Start( () =>
-            {
-                OnCommunicationStarted( new RTSPCommunicationStartedEventArgs() );
+        public abstract bool StartCommunication();
 
-                using ( var runner = new RTSPMediaChannelRunner( _channel ) )
-                {
-                    while ( _thread.CanContinue( runner.IdleTimeout ) )
-                    {
-                        runner.Run();
-                    }
-                }
+        public abstract void StopCommunication();
 
-                OnCommunicationStopped( new RTSPCommunicationStoppedEventArgs() );
-            } );
-        }
-
-        public void StopCommunication()
-        {
-            _thread.Stop();
-
-            _dispatcher.Stop();
-        }
-
-        public void StopCommunication( TimeSpan shutdownTimeout )
-        {
-            if ( _thread.Join( shutdownTimeout ))
-            {
-                _channel.Abort();
-            }
-
-            StopCommunication();
-        }
+        public abstract void StopCommunication( TimeSpan shutdownTimeout );
 
         public void Dispose()
         {
@@ -139,13 +91,16 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         protected virtual void Dispose( bool disposing )
         {
-            StopCommunication();
-
-            _channel.Dispose();   // this method should not dispose the dispatch because we used agregation pattern: the object is passed to constructor so the may be reused after releasing the channel object.
-            _dispatcher.Dispose();
         }
 
-        private void RaiseEvent( EventArgs e )
+
+
+
+
+
+
+
+        protected void RaiseEvent( EventArgs e )
         {
             if ( e is RTSPPacketReceivedEventArgs ) // For performance reason, let this condition statement at this position
             {
@@ -194,6 +149,9 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 OnError( e as RTSPErrorEventArgs );
             }
         }
+
+
+
 
 
 
