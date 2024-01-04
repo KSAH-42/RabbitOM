@@ -53,8 +53,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _thread.Stop();
         }
 
-        public override void Dispose()
+        protected override void Dispose( bool disposing )
         {
+            if ( ! disposing )
+                return;
+
             Stop();
             _socket.Dispose();
         }

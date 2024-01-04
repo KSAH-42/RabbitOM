@@ -2,13 +2,18 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public abstract class RTSPMediaReceiver 
+    public abstract class RTSPMediaReceiver : IDisposable
     {
         private readonly RTSPMediaService _service;
 
         public RTSPMediaReceiver( RTSPMediaService service )
         {
             _service = service ?? throw new ArgumentNullException( nameof( service ) );
+        }
+
+        ~RTSPMediaReceiver()
+        {
+            Dispose( false );
         }
 
         protected RTSPMediaService Service
@@ -18,7 +23,13 @@ namespace RabbitOM.Net.Rtsp.Alpha
         
         public abstract bool Start();
         public abstract void Stop();
-        public abstract void Dispose();
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize(this);
+        }
+
+        protected abstract void Dispose(bool disposing);
 
         protected void OnStreamingStarted( RTSPStreamingStartedEventArgs e )
         {
