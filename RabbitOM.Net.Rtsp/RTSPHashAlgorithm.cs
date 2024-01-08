@@ -56,18 +56,13 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns a string</returns>
         private static string ComputeHash( HashAlgorithm algorithm , string input )
         {
-            if ( algorithm == null )
+            if ( algorithm == null || string.IsNullOrEmpty( input ) )
             {
                 return string.Empty;
             }
 
             using ( algorithm )
             {
-                if ( string.IsNullOrEmpty( input ) )
-                {
-                    return string.Empty;
-                }
-
                 var plainBytes = System.Text.Encoding.ASCII.GetBytes( input );
 
                 if ( plainBytes == null || plainBytes.Length <= 0 )
