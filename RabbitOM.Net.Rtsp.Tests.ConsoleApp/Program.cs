@@ -57,7 +57,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.BackgroundColor = ConsoleColor.White;
                 return;
             }
-			
+
             using ( var client = new RTSPClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
@@ -99,7 +99,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // Please note, read the manufacturer's documentation
                 // to get the right uri
 
-                client.Configuration.Uri = rtspUri.ToString();
+                client.Configuration.Uri = rtspUri.ToString(true);
                 client.Configuration.UserName = rtspUri.UserName;
                 client.Configuration.Password = rtspUri.Password;
                 client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.

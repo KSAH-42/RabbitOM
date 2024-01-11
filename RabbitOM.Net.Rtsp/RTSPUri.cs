@@ -148,10 +148,14 @@ namespace RabbitOM.Net.Rtsp
                 {
                     Scheme = DefaultScheme ,
                     Host   = _host ,
-                    Port   = _port ,
                     Path   = _path ,
                     Query  = _query
                 };
+
+                if ( _port != DefaultPort )
+                {
+                    builder.Port = _port;
+                }
 
                 if ( ! ignoreCredentials && ! string.IsNullOrWhiteSpace( _userName ) )
                 {
