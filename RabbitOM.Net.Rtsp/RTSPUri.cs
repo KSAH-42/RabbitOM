@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent an uri class
     /// </summary>
-    internal sealed class RTSPUri
+    public sealed class RTSPUri
     {
         /// <summary>
         /// Represent the default scheme
@@ -43,17 +43,6 @@ namespace RabbitOM.Net.Rtsp
         public RTSPUri()
         {
             RTSPUri.TryRegisterUriScheme();
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RTSPUri( string value )
-        {
-            RTSPUri.TryRegisterUriScheme();
-
-            TryParse( value );
         }
 
 
@@ -138,50 +127,20 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Try to parse
+        /// Format 
         /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryParse( string value )
+        /// <returns>returns a string</returns>
+        public override string ToString()
         {
-            ToDefault();
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            try
-            {
-                var builder = new UriBuilder( value );
-
-                if ( string.Compare( builder.Scheme , DefaultScheme , true ) != 0 )
-                {
-                    return false;
-                }
-
-                UserName = builder.UserName;
-                Password = builder.Password;
-                Host = builder.Host;
-                Port = builder.Port;
-                Path = builder.Path;
-                Query = builder.Query;
-
-                return true;
-            }
-            catch ( Exception ex )
-            {
-                System.Diagnostics.Debug.WriteLine( ex );
-            }
-
-            return false;
+            return ToString( false );
         }
 
         /// <summary>
         /// Format 
         /// </summary>
+        /// <param name="ignoreCredentials">set true to ignore credentials</param>
         /// <returns>returns a string</returns>
-        public override string ToString()
+        public string ToString( bool ignoreCredentials )
         {
             try
             {
@@ -194,7 +153,7 @@ namespace RabbitOM.Net.Rtsp
                     Query  = _query
                 };
 
-                if ( !string.IsNullOrWhiteSpace( _userName ) )
+                if ( ! ignoreCredentials && ! string.IsNullOrWhiteSpace( _userName ) )
                 {
                     builder.UserName = _userName;
                     builder.Password = _password;
@@ -316,6 +275,83 @@ namespace RabbitOM.Net.Rtsp
             if ( Uri.IsWellFormedUriString( rtspUri , UriKind.Absolute ) )
             {
                 return rtspUri.StartsWith( DefaultScheme );
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns an instance</returns>
+        public static RTSPUri Create( string value )
+        {
+            return TryParse( value , out RTSPUri result ) ? result : new RTSPUri();
+        }
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns instance of the uri</returns>
+        /// <exception cref="FormatException"/>
+        /// <exception cref="ArgumentNullException"/>
+        public static RTSPUri Parse( string value )
+        {
+            if ( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            return TryParse( value , out RTSPUri uri ) ? uri : throw new FormatException();
+        }
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <param name="result">the uri</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryParse( string value , out RTSPUri result )
+        {
+            result = null;
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            try
+            {
+                result = new RTSPUri();  // call first to invoke RegisterUriScheme
+
+                var builder = new UriBuilder( value );
+
+                if ( string.Compare( builder.Scheme , DefaultScheme , true ) != 0 )
+                {
+                    result = null;
+                    return false;
+                }
+
+                result.UserName = builder.UserName;
+                result.Password = builder.Password;
+                result.Host = builder.Host;
+                result.Port = builder.Port;
+                result.Path = builder.Path;
+                result.Query = builder.Query;
+
+                return true;
+            }
+            catch ( Exception ex )
+            {
+                System.Diagnostics.Debug.WriteLine( ex );
             }
 
             return false;

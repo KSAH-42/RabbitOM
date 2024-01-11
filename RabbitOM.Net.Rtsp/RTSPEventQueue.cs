@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a event circular queue
     /// </summary>
-    internal sealed class RTSPEventQueue : RTSPQueue<EventArgs>
+    public sealed class RTSPEventQueue : RTSPQueue<EventArgs>
     {
         private readonly int _maximum = 0;
 

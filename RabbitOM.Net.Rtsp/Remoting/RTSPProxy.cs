@@ -548,11 +548,11 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     _settings.Uri = uri;
                     _settings.Credentials = credentials;
 
-                    RTSPUri rtspUri = new RTSPUri( uri );
+                    var rtspUri = RTSPUri.Create( uri );
 
                     using ( var scope = new RTSPDisposeScope( () => _socket.Close() ) )
                     {
-                        if ( !_socket.Open( rtspUri.Host , rtspUri.Port ) )
+                        if ( ! _socket.Open( rtspUri.Host , rtspUri.Port ) )
                         {
                             return false;
                         }

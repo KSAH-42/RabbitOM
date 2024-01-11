@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent the base generic
     /// </summary>
-    internal partial class RTSPQueue<TElement>
+    public partial class RTSPQueue<TElement>
     {
         /// <summary>
         /// This class is used for updating the internal event handle during add and remove operations

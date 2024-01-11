@@ -15,9 +15,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             #region MENU
 
             arguments["uri"] = args.ElementAtOrDefault(0);
-            arguments["-u"]  = args.ElementAtOrDefault(args.IndexAfter(x => x == "-u"));
-            arguments["-p"]  = args.ElementAtOrDefault(args.IndexAfter(x => x == "-p"));
-
+            
             if ( string.IsNullOrEmpty(arguments["uri"]) || args.Contains( "/?") ) 
             {
                 string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
@@ -27,9 +25,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{processName} rtsp://127.0.0.1/toy.mp4");
-                Console.WriteLine($"{processName} rtsp://127.0.0.1/toy.mp4  -u admin -p camera123");
+                Console.WriteLine($"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4");
                 Console.WriteLine($"{processName} rtsp://127.0.0.1:554/toy.mp4");
-                Console.WriteLine($"{processName} rtsp://127.0.0.1:554/toy.mp4 -u admin -p camera123");
+                Console.WriteLine($"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
                 Console.WriteLine();
                 Console.WriteLine("-u: the username");
                 Console.WriteLine("-p: the password");
@@ -39,7 +37,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             #endregion
 
-            Run(arguments["uri"], arguments["-u"], arguments["-p"]);
+            Run(arguments["uri"]);
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
@@ -50,8 +48,16 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
         // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
-        static void Run(string uri, string userName, string password)
+        static void Run(string uri)
         {
+            if ( ! RTSPUri.TryParse( uri , out RTSPUri rtspUri) )
+            {
+				Console.BackgroundColor = ConsoleColor.Red;
+				Console.WriteLine("Uri bad format");
+                Console.BackgroundColor = ConsoleColor.White;
+                return;
+            }
+			
             using ( var client = new RTSPClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
@@ -93,9 +99,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // Please note, read the manufacturer's documentation
                 // to get the right uri
 
-                client.Configuration.Uri = uri;
-                client.Configuration.UserName = userName;
-                client.Configuration.Password = password;
+                client.Configuration.Uri = rtspUri.ToString();
+                client.Configuration.UserName = rtspUri.UserName;
+                client.Configuration.Password = rtspUri.Password;
                 client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 ); // <-- increase the timeout if the camera is located far away 
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 5 );

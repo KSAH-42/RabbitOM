@@ -980,7 +980,7 @@ namespace RabbitOM.Net.Rtsp
             {
                 RTSPMessageRequest request = null;
 
-                RTSPUri uri = new RTSPUri( _uri );
+                var uri = RTSPUri.Create( _uri );
 
                 uri.ClearCredentials();
 

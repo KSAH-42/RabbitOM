@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a thread class
     /// </summary>
-    internal sealed class RTSPThread
+    public sealed class RTSPThread
     {
         private readonly string              _name        = string.Empty;
 

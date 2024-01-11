@@ -91,10 +91,14 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     return false;
                 }
 
-                var credentials = _proxy.Credentials ?? RTSPCredentials.Empty;
-                var uri         = new RTSPUri( _proxy.Uri );
+                if ( ! RTSPUri.TryParse( _proxy.Uri , out RTSPUri uri ) || uri == null )
+                {
+                    return false;
+                }
 
                 uri.ClearCredentials();
+                
+                var credentials = _proxy.Credentials ?? RTSPCredentials.Empty;
 
                 if ( _factory.CanCreateBasicAuthorization() )
                 {

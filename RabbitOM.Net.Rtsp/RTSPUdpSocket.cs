@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a socket tcp
     /// </summary>
-    internal sealed class RTSPUdpSocket : IDisposable
+    public sealed class RTSPUdpSocket : IDisposable
     {
         private const int DefaultReceiveBufferSize = ushort.MaxValue;
 
