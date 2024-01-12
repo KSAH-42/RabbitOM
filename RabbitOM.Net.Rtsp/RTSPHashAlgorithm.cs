@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">the input</param>
         /// <returns>returns a string</returns>
         public static string ComputeMD5Hash( string input )
         {
@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">the input</param>
         /// <returns>returns a string</returns>
         public static string ComputeSHA1Hash( string input )
         {
@@ -31,7 +31,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">the input</param>
         /// <returns>returns a string</returns>
         public static string ComputeSHA256Hash( string input )
         {
@@ -41,7 +41,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Create a hash
         /// </summary>
-        /// <param name="input"></param>
+        /// <param name="input">the input</param>
         /// <returns>returns a string</returns>
         public static string ComputeSHA512Hash( string input )
         {
@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Rtsp
         /// Create a hash
         /// </summary>
         /// <param name="algorithm">the algorithm</param>
-        /// <param name="input"></param>
+        /// <param name="input">the input</param>
         /// <returns>returns a string</returns>
         private static string ComputeHash( HashAlgorithm algorithm , string input )
         {
