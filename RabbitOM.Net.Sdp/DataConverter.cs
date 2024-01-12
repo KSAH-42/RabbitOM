@@ -441,7 +441,6 @@ namespace RabbitOM.Net.Sdp
         /// Convert to a string value
         /// </summary>
         /// <param name="value">the value</param>
-        /// <param name="separator">the separator</param>
         /// <returns>returns a trimed value</returns>
         public static string FirstPartOf( string value )
         {

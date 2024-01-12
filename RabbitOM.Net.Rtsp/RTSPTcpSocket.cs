@@ -247,7 +247,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return _socket.Send(buffer, buffer.Length , SocketFlags.None ) > 0;
+                return _socket.Send(buffer, offset , count , SocketFlags.None ) > 0;
             }
             catch ( Exception ex )
             {

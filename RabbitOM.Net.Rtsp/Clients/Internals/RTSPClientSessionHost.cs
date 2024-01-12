@@ -7,12 +7,6 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// </summary>
     internal sealed class RTSPClientSessionHost : IDisposable
     {
-        private const int                   PressureLimit   = 3400000;
-
-
-
-
-
         private TimeSpan                    _idleTimeout    = TimeSpan.Zero;
 
         private readonly RTSPClientSession  _session        = null;

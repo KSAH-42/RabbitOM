@@ -403,7 +403,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte[] buffer )
         {
-            return _socket.Send(buffer);
+            return _socket.Send( buffer );
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte[] buffer , int offset , int count )
         {
-            return _socket.Send(buffer, offset, count);
+            return _socket.Send( buffer , offset , count );
         }
 
         /// <summary>

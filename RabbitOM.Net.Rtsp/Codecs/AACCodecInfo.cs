@@ -24,8 +24,7 @@ namespace RabbitOM.Net.Rtsp.Codecs
         /// <param name="data">the data</param>
         /// <param name="size">the size</param>
         /// <param name="index">the index</param>
-        /// <param name="delta">the delta</param>
-        public AACCodecInfo( byte[] data , int size , int index , int delta )
+        public AACCodecInfo( byte[] data , int size , int index )
         {
             _data  = data ?? new byte[ 0 ];
             _size  = size;
