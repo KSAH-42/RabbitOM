@@ -52,8 +52,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         {
             if ( ! RTSPUri.TryParse( uri , out RTSPUri rtspUri) )
             {
-				Console.BackgroundColor = ConsoleColor.Red;
-				Console.WriteLine("Uri bad format");
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Uri bad format");
                 Console.BackgroundColor = ConsoleColor.White;
                 return;
             }
