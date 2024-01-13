@@ -38,6 +38,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             #endregion
 
             Run(arguments["uri"]);
+
+            Console.BackgroundColor = ConsoleColor.White;
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
@@ -54,7 +56,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("Uri bad format");
-                Console.BackgroundColor = ConsoleColor.White;
                 return;
             }
 
