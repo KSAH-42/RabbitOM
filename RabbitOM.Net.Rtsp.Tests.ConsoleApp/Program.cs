@@ -35,14 +35,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 return;
             }
 
-			#endregion
+            #endregion
 
-			try
-			{
+            try
+            {
                 Run(arguments["uri"]);
-			}
-			finally
-			{
+            }
+            finally
+            {
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
