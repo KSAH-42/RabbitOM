@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             Run(arguments["uri"]);
 
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
@@ -51,10 +51,10 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
         static void Run(string uri)
-        {
+        {         
             if ( ! RTSPUri.TryParse( uri , out RTSPUri rtspUri) )
             {
-                Console.BackgroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Uri bad format");
                 return;
             }

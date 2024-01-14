@@ -312,14 +312,12 @@ namespace RabbitOM.Net.Rtsp
             {
                 using ( _scope )
                 {
-                    if ( ! OnValidate( element ) )
+                    if ( OnValidate( element ) )
                     {
-                        return;
+                        OnEnqueue( element );
+
+                        _collection.Enqueue( element );
                     }
-
-                    OnEnqueue( element );
-
-                    _collection.Enqueue( element );
                 }
             }
         }

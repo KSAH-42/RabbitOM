@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp
             /// </summary>
             public void Dispose()
             {
-                if (_queue.Count > 0)
+                if (_queue.Items.Count > 0)
                 {
                     _queue.Handle.Set();
                 }
