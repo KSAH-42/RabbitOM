@@ -35,11 +35,16 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 return;
             }
 
-            #endregion
+			#endregion
 
-            Run(arguments["uri"]);
-
-            Console.ForegroundColor = ConsoleColor.White;
+			try
+			{
+                Run(arguments["uri"]);
+			}
+			finally
+			{
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
