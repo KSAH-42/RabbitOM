@@ -175,7 +175,7 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                return _socket.SendTo( buffer, SocketFlags.None , _groupEP ) > 0;
+                return _socket.SendTo( buffer, offset , buffer.Length , SocketFlags.None , _groupEP ) > 0;
             }
             catch ( Exception ex )
             {
@@ -229,7 +229,7 @@ namespace RabbitOM.Net.Rtsp
                 return 0;
             }
 
-            EndPoint endpoint = _groupEP as EndPoint;
+            var endpoint = _groupEP as EndPoint;
 
             if ( endpoint == null )
             {

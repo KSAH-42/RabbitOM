@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     {
         private readonly RTSPClientErrorCode _code    = RTSPClientErrorCode.Unknown;
 
-        private string                       _message = string.Empty;
+        private readonly string              _message = string.Empty;
 
         /// <summary>
         /// Constructor

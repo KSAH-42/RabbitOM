@@ -36,7 +36,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             {
                 _idleTimeout = _channel.Configuration.RetriesInterval;
 
-                if ( !_channel.Open() )
+                if ( ! _channel.Open() )
                     return;
 
                 using ( var scope = new RTSPDisposeScope( () => _channel.Close() ) )
@@ -63,14 +63,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                 if ( _channel.KeepAlive() )
                     return;
 
-                // In my option if the keepalive fails
-                // in simply means that session was no longuer exists
-                // It could be an necessary to call the tear down
-                // May be we need to a option to force the to call the teardown method ?
-                
-                if ( _channel.IsSetup )
-                    _channel.TearDown();
-
+                _channel.TearDown();
                 _channel.Close();
 
                 _idleTimeout = _channel.Configuration.RetriesInterval;
