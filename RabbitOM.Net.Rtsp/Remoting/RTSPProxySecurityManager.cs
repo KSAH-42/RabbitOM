@@ -24,14 +24,10 @@ namespace RabbitOM.Net.Rtsp.Remoting
         /// <exception cref="ArgumentNullException"/>
         public RTSPProxySecurityManager( RTSPProxy proxy )
         {
-            if ( proxy == null )
-            {
-                throw new ArgumentNullException( nameof( proxy ) );
-            }
+            _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) ) ;
 
             _lock = new object();
             _factory = new RTSPAuthorizationFactory();
-            _proxy = proxy;
         }
 
 

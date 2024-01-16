@@ -116,17 +116,12 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <exception cref="InvalidOperationException"/>
         public void SetSession( RTSPClientSession session )
         {
-            if ( session == null )
-            {
-                throw new ArgumentNullException( nameof( session ) );
-            }
-
             if ( _session != null )
             {
                 throw new InvalidOperationException( "The session has been already defined" );
             }
 
-            _session = session;
+            _session = session ?? throw new ArgumentNullException( nameof( session ) );
         }
         
 
