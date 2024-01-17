@@ -76,7 +76,6 @@
     <Compile Include="Clients\IRTSPClientEvents.cs" />
     <Compile Include="Clients\RTSPClient.cs" />
     <Compile Include="Clients\RTSPClientConfiguration.cs" />
-    <Compile Include="Clients\RTSPClientConfigurationOptions.cs" />
     <Compile Include="Clients\RTSPClientErrorCode.cs" />
     <Compile Include="Clients\RTSPClientException.cs" />
     <Compile Include="Clients\Internals\RTSPClientSession.cs" />

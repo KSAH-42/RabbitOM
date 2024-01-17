@@ -56,11 +56,11 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             if ( ! _session.IsOpened )
             {
-                _idleTimeout = _session.Options.RetriesInterval;
+                _idleTimeout = _session.Configuration.RetriesInterval;
 
                 if ( _session.Open() )
                 {
-                    _idleTimeout = _session.Options.KeepAliveInterval;
+                    _idleTimeout = _session.Configuration.KeepAliveInterval;
                 }
             }
             else
@@ -69,7 +69,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                 {
                     _session.Close();
                     
-                    _idleTimeout = _session.Options.RetriesInterval;
+                    _idleTimeout = _session.Configuration.RetriesInterval;
                 }
             }
         }

@@ -14,8 +14,6 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private readonly RTSPClientConfiguration                           _configuration          = null;
 
-        private readonly RTSPClientConfigurationOptions                    _options                = null;
-
         private readonly RTSPConnection                                    _connection             = null;
 
         private readonly RTSPClientSessionInfos                            _informations           = null;
@@ -39,7 +37,6 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             _lock            = new object();
             _configuration   = new RTSPClientConfiguration();
-            _options         = new RTSPClientConfigurationOptions();
             _connection      = new RTSPConnection();
             _informations    = new RTSPClientSessionInfos();
             _dispatcher      = new RTSPClientSessionDispatcher( sender );
@@ -66,14 +63,6 @@ namespace RabbitOM.Net.Rtsp.Clients
         public RTSPClientConfiguration Configuration
         {
             get => _configuration;
-        }
-
-        /// <summary>
-        /// Gets the transport configuration options
-        /// </summary>
-        public RTSPClientConfigurationOptions Options
-        {
-            get => _options;
         }
 
         /// <summary>
@@ -216,14 +205,14 @@ namespace RabbitOM.Net.Rtsp.Clients
                     throw new RTSPClientException( RTSPClientErrorCode.DescribeFailed , "Failed to extract / parse the sdp" );
                 }
 
-                if ( ! _informations.Descriptor.SelectTrack( _options.MediaFormat ) )
+                if ( ! _informations.Descriptor.SelectTrack( _configuration.MediaFormat ) )
                 {
                     throw new RTSPClientException( RTSPClientErrorCode.DescribeFailed , "Failed to select a media track" );
                 }
 
                 RTSPInvokerResult setupResult = null;
             
-                switch ( _options.DeliveryMode )
+                switch ( _configuration.DeliveryMode )
                 {
                     case RTSPDeliveryMode.Tcp:
 
@@ -236,28 +225,28 @@ namespace RabbitOM.Net.Rtsp.Clients
 
                     case RTSPDeliveryMode.Udp:
 
-                        _transport = new RTSPClientSessionUdpTransport( _options.UnicastPort , _configuration.ReceiveTimeout );
+                        _transport = new RTSPClientSessionUdpTransport( _configuration.UnicastPort , _configuration.ReceiveTimeout );
                         _transport.SetSession( this );
 
                         setupResult = _connection.Setup()
                             .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Udp )
                             .As<RTSPSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
-                            .As<RTSPSetupInvoker>().SetUnicastPort( _options.UnicastPort )
+                            .As<RTSPSetupInvoker>().SetUnicastPort( _configuration.UnicastPort )
                             .Invoke();
 
                         break;
 
                     case RTSPDeliveryMode.Multicast:
 
-                        _transport = new RTSPClientSessionMulticastTransport( _options.MulticastAddress , _options.MulticastPort , _options.MulticastTTL , _configuration.ReceiveTimeout );
+                        _transport = new RTSPClientSessionMulticastTransport( _configuration.MulticastAddress , _configuration.MulticastPort , _configuration.MulticastTTL , _configuration.ReceiveTimeout );
                         _transport.SetSession( this );
 
                         setupResult = _connection.Setup()
                             .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Multicast )
                             .As<RTSPSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
-                            .As<RTSPSetupInvoker>().SetMulticastAddress( _options.MulticastAddress )
-                            .As<RTSPSetupInvoker>().SetMulticastPort( _options.MulticastPort  )
-                            .As<RTSPSetupInvoker>().SetMulticastTTL( _options.MulticastTTL  )
+                            .As<RTSPSetupInvoker>().SetMulticastAddress( _configuration.MulticastAddress )
+                            .As<RTSPSetupInvoker>().SetMulticastPort( _configuration.MulticastPort  )
+                            .As<RTSPSetupInvoker>().SetMulticastTTL( _configuration.MulticastTTL  )
                             .Invoke();
 
                         break;

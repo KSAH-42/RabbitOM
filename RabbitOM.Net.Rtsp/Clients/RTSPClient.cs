@@ -105,14 +105,6 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
-        /// Gets the options
-        /// </summary>
-        public RTSPClientConfigurationOptions Options
-        {
-            get => _session.Options;
-        }
-
-        /// <summary>
         /// Check if the client is connected
         /// </summary>
         public bool IsConnected

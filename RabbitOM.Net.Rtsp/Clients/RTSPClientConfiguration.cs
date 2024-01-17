@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp.Clients
     /// <summary>
     /// Represent the client configuration
     /// </summary>
-    public class RTSPClientConfiguration : IRTSPClientConfiguration
+    public sealed class RTSPClientConfiguration : IRTSPClientConfiguration
     {
         /// <summary>
         /// Represent the default receive timeout
@@ -16,6 +16,27 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// Represent the default send timeout
         /// </summary>
         public readonly static TimeSpan   DefaultSendTimeout        = TimeSpan.FromSeconds( 15 );
+
+        /// <summary>
+        /// Represent the default keep alive interval
+        /// </summary>
+        public readonly static TimeSpan   DefaultKeepAliveInterval  = TimeSpan.FromSeconds( 15 );
+
+        /// <summary>
+        /// Represent the default retries interval
+        /// </summary>
+        public readonly static TimeSpan   DefaultRetriesInterval    = TimeSpan.FromSeconds( 15 );
+
+        /// <summary>
+        /// Represent the default port
+        /// </summary>
+        public const int                  DefaultPort               = 61024;
+
+        /// <summary>
+        /// Represent the default TTL
+        /// </summary>
+        public const byte                 DefaultTTL                = 5;
+
 
 
 
@@ -36,6 +57,22 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private RTSPKeepAliveType    _keepAliveType     = RTSPKeepAliveType.Options;
 
+        private TimeSpan             _retriesInterval   = DefaultKeepAliveInterval;
+
+        private TimeSpan             _keepAliveInteval  = DefaultKeepAliveInterval;
+       
+        private RTSPMediaFormat      _mediaFormat       = RTSPMediaFormat.Video;
+
+        private RTSPDeliveryMode     _deliveryMode      = RTSPDeliveryMode.Tcp;
+
+        private int                  _unicastPort       = 0;
+
+        private int                  _multicastPort     = 0;
+
+        private byte                 _multicastTTL      = 0;
+
+        private string               _multicastAddress  = string.Empty;
+       
         
 
 
@@ -193,7 +230,183 @@ namespace RabbitOM.Net.Rtsp.Clients
             }
         }
 
-        
+        /// <summary>
+        /// Gets / Sets the retries interval
+        /// </summary>
+        public TimeSpan RetriesInterval
+        {
+            get
+            {
+                lock ( SyncRoot )
+                {
+                    return _retriesInterval;
+                }
+            }
+
+            set
+            {
+                lock ( SyncRoot )
+                {
+                    _retriesInterval = value != TimeSpan.Zero ? value : DefaultRetriesInterval;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the keep alive interval
+        /// </summary>
+        public TimeSpan KeepAliveInterval
+        {
+            get
+            {
+                lock ( SyncRoot )
+                {
+                    return _keepAliveInteval;
+                }
+            }
+
+            set
+            {
+                lock ( SyncRoot )
+                {
+                    _keepAliveInteval = value != TimeSpan.Zero ? value : DefaultKeepAliveInterval;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the media format type
+        /// </summary>
+        public RTSPMediaFormat MediaFormat
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _mediaFormat;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _mediaFormat = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the packet delivery mode
+        /// </summary>
+        public RTSPDeliveryMode DeliveryMode
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _deliveryMode;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _deliveryMode = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the unicast port
+        /// </summary>
+        public int UnicastPort
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _unicastPort;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _unicastPort = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the multicast port
+        /// </summary>
+        public int MulticastPort
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _multicastPort;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _multicastPort = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the multicast TTL
+        /// </summary>
+        public byte MulticastTTL
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _multicastTTL;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _multicastTTL = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the multicast address
+        /// </summary>
+        public string MulticastAddress
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _multicastAddress;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _multicastAddress = value ?? string.Empty;
+                }
+            }
+        }
+
+
 
 
 
@@ -202,7 +415,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
         /// Apply the default parameters
         /// </summary>
-        public virtual void ToDefault()
+        public void ToDefault()
         {
             lock ( _lock )
             {
@@ -212,6 +425,14 @@ namespace RabbitOM.Net.Rtsp.Clients
                 _receiveTimeout   = DefaultReceiveTimeout;
                 _sendTimeout      = DefaultSendTimeout;
                 _keepAliveType    = RTSPKeepAliveType.Options;
+                _retriesInterval  = DefaultRetriesInterval;
+                _keepAliveInteval = DefaultKeepAliveInterval;
+                _mediaFormat      = RTSPMediaFormat.Video;
+                _deliveryMode     = RTSPDeliveryMode.Tcp;
+                _unicastPort      = DefaultPort;
+                _multicastPort    = DefaultPort + 1;
+                _multicastAddress = string.Empty;
+                _multicastTTL     = DefaultTTL;
             }
         }
     }
