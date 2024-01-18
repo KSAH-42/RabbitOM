@@ -131,8 +131,10 @@ RabbitOM.Streaming.Net.Rtsp.Clients.Transports
 RabbitOM.Streaming.Net.Rtsp.Servers
 RabbitOM.Streaming.Net.Rtsp.Servers.Transports
 RabbitOM.Streaming.Net.Rtp
-RabbitOM.Streaming.Net.Rtp.Messaging
-RabbitOM.Streaming.Net.Rtp.Messaging.Serialization
+RabbitOM.Streaming.Net.Rtp.Messaging (Packet,BitStream, Payload,  etc.. )
+RabbitOM.Streaming.Net.Rtp.Messaging.Jpeg (JpjegPayload)
+RabbitOM.Streaming.Net.Rtp.Messaging.H264 (H264Payload,NalUnit,Parser)
+RabbitOM.Streaming.Net.Rtp.Messaging.HVEC (H265Payload,NalUnit,Parser)
 RabbitOM.Streaming.Net.Rtp.Clients
 RabbitOM.Streaming.Net.Rtcp
 RabbitOM.Streaming.Net.Rtcp.Messaging
