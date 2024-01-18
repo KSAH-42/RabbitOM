@@ -119,10 +119,8 @@ RabbitOM.Streaming.IO (IFileSystem, containers etc... )
 RabbitOM.Streaming.IO.Codecs
 RabbitOM.Streaming.IO.Codecs.Interop 
 RabbitOM.Streaming.Collections ( IBuffer,etc.. )
-RabbitOM.Streaming.Diagnostic
-RabbitOM.Streaming.Diagnostic.Metrics
+RabbitOM.Streaming.Diagnostic ( for Metrics, etc.. )
 RabbitOM.Streaming.Diagnostic.Logging
-RabbitOM.Streaming.Diagnostic.Logging.Configuration
 RabbitOM.Streaming.Filters (for building pipelines)
 RabbitOM.Streaming.Net
 RabbitOM.Streaming.Net.Rtsp
@@ -149,11 +147,17 @@ RabbitOM.Streaming.Net.Sip.Messaging
 RabbitOM.Streaming.Net.Sip.Messaging.Headers
 RabbitOM.Streaming.Net.Sip.Clients
 RabbitOM.Streaming.Net.Sip.Clients.Transports
-RabbitOM.Streaming.Net.Web
+RabbitOM.Streaming.Net.Web (HttpMultipartClient, etc.. )
 RabbitOM.Streaming.Net.Web.Hls
+RabbitOM.Streaming.Net.Web.Hls.Messaging
+RabbitOM.Streaming.Net.Web.Hls.Messaging.Serialization
+RabbitOM.Streaming.Net.Web.Hls.Clients
+RabbitOM.Streaming.Net.Web.Hls.Clients.Transports
 RabbitOM.Streaming.Net.Web.Rtc
 RabbitOM.Streaming.Net.Web.Rtc.Messaging
 RabbitOM.Streaming.Net.Web.Rtc.Messaging.Serialization
+RabbitOM.Streaming.Net.Web.Rtc.Clients
+RabbitOM.Streaming.Net.Web.Rtc.Clients.Transports
 RabbitOM.Streaming.Media
 RabbitOM.Streaming.Media.Converters
 RabbitOM.Streaming.Threading
