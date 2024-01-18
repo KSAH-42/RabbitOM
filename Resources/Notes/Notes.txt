@@ -4,7 +4,6 @@
 
 
 
-
 The actual dispatch, could be nice, to track every things. and all reliable recorders use ring buffer. It's a basic thing.
 
 RabbitOM.Net.Alpha
@@ -20,87 +19,146 @@ Todo => Change the current architecture
 and move to this one:
 Check if we can move to a namespace like this:
 
-Rabbit.Streaming.Server.exe
+RabbitOM.Streaming.Server.exe
 {
-    Rabbit.Streaming.dll
-    Rabbit.Streaming.Engine.dll
-    Rabbit.Streaming.Devices.dll
-    Rabbit.Streaming.Devices.dll
+    RabbitOM.Streaming.dll
+    RabbitOM.Streaming.Engine.dll
+    RabbitOM.Streaming.Devices.dll
+    RabbitOM.Streaming.Devices.dll
     etc...
 }
 
 Final ??? Much more cleaner ? -> must be split in different libs
  
-Rabbit.Streaming.dll 
+RabbitOM.Streaming.dll 
 {
-    Rabbit.Streaming
-    Rabbit.Streaming.IO
-    Rabbit.Streaming.IO.Containers { Container , AviContainer , etc that support bookmark }
-    Rabbit.Streaming.IO.Compressions
-    Rabbit.Streaming.IO.Compressions.Interop  => Add C++ COM Wrapper 
-    Rabbit.Streaming.Logging
-    Rabbit.Streaming.Logging.Appenders { RollingFileAppender , etc.. }
-    Rabbit.Streaming.Devices
-    Rabbit.Streaming.Net.Rtcp
-    Rabbit.Streaming.Net.Rtcp.Clients
-    Rabbit.Streaming.Net.Rtp
-    Rabbit.Streaming.Net.Rtp.Clients
-    Rabbit.Streaming.Net.Rtsp
-    Rabbit.Streaming.Net.Rtsp.Clients
-    Rabbit.Streaming.Net.Rtsp.Clients.Transports
-    Rabbit.Streaming.Net.Rtsp.Servers
-    Rabbit.Streaming.Net.Rtsp.Servers.Transports
-    Rabbit.Streaming.Net.Sdp
-    Rabbit.Streaming.Net.Sdp.Extensions
-    Rabbit.Streaming.Net.Sdp.Serialization
-    Rabbit.Streaming.Net.Sdp.Serialization.Formatters
-    Rabbit.Streaming.Net.Sdp.Validations
-    Rabbit.Streaming.Net.Sip
-    Rabbit.Streaming.Net.Sip.Clients
-    Rabbit.Streaming.Net.Sip.Clients.Transports
-    Rabbit.Streaming.Net.Web.Hls
-    Rabbit.Streaming.Net.Web.Hls.Clients
-    Rabbit.Streaming.Net.Web.Rtc
-    Rabbit.Streaming.Net.Web.Rtc.Clients
-    Rabbit.Streaming.Net.Onvif
-    Rabbit.Streaming.Net.Onvif.WS
-    Rabbit.Streaming.Net.Onvif.WS.Ptz
-    Rabbit.Streaming.Net.Onvif.WS.Io
-    Rabbit.Streaming.Net.Onvif.WS.Media
-    Rabbit.Streaming.Net.Onvif.WS.Device
-    Rabbit.Streaming.Net.Onvif.WS.Events
-    Rabbit.Streaming.Net.Onvif.Clients
-    Rabbit.Streaming.Net.Psia
-    Rabbit.Streaming.Net.Psia.Clients
-    Rabbit.Streaming.Windows
-    Rabbit.Streaming.Windows.Controls
-    Rabbit.Streaming.Windows.Controls.Views
-    Rabbit.Streaming.Windows.Controls.ViewsModels
+    RabbitOM.Streaming
+    RabbitOM.Streaming.IO
+    RabbitOM.Streaming.IO.Containers { Container , AviContainer , etc that support bookmark }
+    RabbitOM.Streaming.IO.Compressions
+    RabbitOM.Streaming.IO.Compressions.Interop  => Add C++ COM Wrapper 
+    RabbitOM.Streaming.Logging
+    RabbitOM.Streaming.Logging.Appenders { RollingFileAppender , etc.. }
+    RabbitOM.Streaming.Devices
+    RabbitOM.Streaming.Net.Rtcp
+    RabbitOM.Streaming.Net.Rtcp.Clients
+    RabbitOM.Streaming.Net.Rtp
+    RabbitOM.Streaming.Net.Rtp.Clients
+    RabbitOM.Streaming.Net.Rtsp
+    RabbitOM.Streaming.Net.Rtsp.Clients
+    RabbitOM.Streaming.Net.Rtsp.Clients.Transports
+    RabbitOM.Streaming.Net.Rtsp.Servers
+    RabbitOM.Streaming.Net.Rtsp.Servers.Transports
+    RabbitOM.Streaming.Net.Sdp
+    RabbitOM.Streaming.Net.Sdp.Extensions
+    RabbitOM.Streaming.Net.Sdp.Serialization
+    RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
+    RabbitOM.Streaming.Net.Sdp.Validations
+    RabbitOM.Streaming.Net.Sip
+    RabbitOM.Streaming.Net.Sip.Clients
+    RabbitOM.Streaming.Net.Sip.Clients.Transports
+    RabbitOM.Streaming.Net.Web.Hls
+    RabbitOM.Streaming.Net.Web.Hls.Clients
+    RabbitOM.Streaming.Net.Web.Rtc
+    RabbitOM.Streaming.Net.Web.Rtc.Clients
+    RabbitOM.Streaming.Net.Onvif
+    RabbitOM.Streaming.Net.Onvif.WS
+    RabbitOM.Streaming.Net.Onvif.WS.Ptz
+    RabbitOM.Streaming.Net.Onvif.WS.Io
+    RabbitOM.Streaming.Net.Onvif.WS.Media
+    RabbitOM.Streaming.Net.Onvif.WS.Device
+    RabbitOM.Streaming.Net.Onvif.WS.Events
+    RabbitOM.Streaming.Net.Onvif.Clients
+    RabbitOM.Streaming.Net.Psia
+    RabbitOM.Streaming.Net.Psia.Clients
+    RabbitOM.Streaming.Windows
+    RabbitOM.Streaming.Windows.Controls
+    RabbitOM.Streaming.Windows.Controls.Views
+    RabbitOM.Streaming.Windows.Controls.ViewsModels
 }
 
-Rabbit.Recorders
-Rabbit.Recorders.Configuration
-Rabbit.Recorders.Data
-Rabbit.Recorders.Data.Sql
-Rabbit.Recorders.Net
-Rabbit.Recorders.Net.Rpc
-Rabbit.Recorders.Net.Rpc.Services
-Rabbit.Recorders.Net.Rpc.Services.Administration
-Rabbit.Recorders.Net.Rpc.Services.Streaming { class StartStreamingRequest { } }
-Rabbit.Recorders.Devices
-Rabbit.Recorders.Devices.Hik.dll
-Rabbit.Recorders.Devices.Verint.dll
-Rabbit.Recorders.Devices.Acti.dll
-Rabbit.Recorders.Devices.IndigoVision.dll
-Rabbit.Recorders.Devices.Bosch.dll
-Rabbit.Recorders.Devices.Pelco.dll
-Rabbit.Recorders.Devices.Axis.dll
-Rabbit.Recorders.Devices.Teleste.dll
-Rabbit.Recorders.Devices.UniView.dll
-Rabbit.Recorders.Devices.Dahua.dll
-Rabbit.Recorders.Devices.Survision.dll
-Rabbit.Recorders.Devices.Onvif.dll
-Rabbit.Recorders.Devices.Captures.dll
-Rabbit.Recorders.Devices.Captures.WebCam.dll
-Rabbit.Recorders.Devices.Captures.DirectShow.dll
-Rabbit.Recorders.Devices.Captures.Gutebruck.dll
+RabbitOM.Recorders
+RabbitOM.Recorders.Configuration
+RabbitOM.Recorders.Data
+RabbitOM.Recorders.Data.Sql
+RabbitOM.Recorders.Net
+RabbitOM.Recorders.Net.Rpc
+RabbitOM.Recorders.Net.Rpc.Services
+RabbitOM.Recorders.Net.Rpc.Services.Administration
+RabbitOM.Recorders.Net.Rpc.Services.Streaming { class StartStreamingRequest { } }
+RabbitOM.Recorders.Devices
+RabbitOM.Recorders.Devices.Hik.dll
+RabbitOM.Recorders.Devices.Verint.dll
+RabbitOM.Recorders.Devices.Acti.dll
+RabbitOM.Recorders.Devices.IndigoVision.dll
+RabbitOM.Recorders.Devices.Bosch.dll
+RabbitOM.Recorders.Devices.Pelco.dll
+RabbitOM.Recorders.Devices.Axis.dll
+RabbitOM.Recorders.Devices.Teleste.dll
+RabbitOM.Recorders.Devices.UniView.dll
+RabbitOM.Recorders.Devices.Dahua.dll
+RabbitOM.Recorders.Devices.Survision.dll
+RabbitOM.Recorders.Devices.Onvif.dll
+RabbitOM.Recorders.Devices.Captures.dll
+RabbitOM.Recorders.Devices.Captures.WebCam.dll
+RabbitOM.Recorders.Devices.Captures.DirectShow.dll
+RabbitOM.Recorders.Devices.Captures.Gutebruck.dll
+
+
+
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+May be the final based on .net core
+
+RabbitOM.Streaming (class Attributes ... Common enums )
+RabbitOM.Streaming.Analytics
+RabbitOM.Streaming.IO (IFileSystem, containers etc... )
+RabbitOM.Streaming.IO.Codecs
+RabbitOM.Streaming.IO.Codecs.Interop 
+RabbitOM.Streaming.Collections ( IBuffer,etc.. )
+RabbitOM.Streaming.Diagnostic
+RabbitOM.Streaming.Diagnostic.Metrics
+RabbitOM.Streaming.Diagnostic.Logging
+RabbitOM.Streaming.Diagnostic.Logging.Configuration
+RabbitOM.Streaming.Filters (for building pipelines)
+RabbitOM.Streaming.Net
+RabbitOM.Streaming.Net.Rtsp
+RabbitOM.Streaming.Net.Rtsp.Messaging
+RabbitOM.Streaming.Net.Rtsp.Messaging.Headers
+RabbitOM.Streaming.Net.Rtsp.Clients
+RabbitOM.Streaming.Net.Rtsp.Clients.Transports
+RabbitOM.Streaming.Net.Rtsp.Servers
+RabbitOM.Streaming.Net.Rtsp.Servers.Transports
+RabbitOM.Streaming.Net.Rtp
+RabbitOM.Streaming.Net.Rtp.Messaging
+RabbitOM.Streaming.Net.Rtp.Messaging.Serialization
+RabbitOM.Streaming.Net.Rtp.Clients
+RabbitOM.Streaming.Net.Rtcp
+RabbitOM.Streaming.Net.Rtcp.Messaging
+RabbitOM.Streaming.Net.Rtcp.Messaging.Serialization
+RabbitOM.Streaming.Net.Rtcp.Clients
+RabbitOM.Streaming.Net.Sdp
+RabbitOM.Streaming.Net.Sdp.Serialization
+RabbitOM.Streaming.Net.Sdp.Serialization.Formaters
+RabbitOM.Streaming.Net.Sdp.Validations
+RabbitOM.Streaming.Net.Sip
+RabbitOM.Streaming.Net.Sip.Messaging
+RabbitOM.Streaming.Net.Sip.Messaging.Headers
+RabbitOM.Streaming.Net.Sip.Clients
+RabbitOM.Streaming.Net.Sip.Clients.Transports
+RabbitOM.Streaming.Net.Web
+RabbitOM.Streaming.Net.Web.Hls
+RabbitOM.Streaming.Net.Web.Rtc
+RabbitOM.Streaming.Net.Web.Rtc.Messaging
+RabbitOM.Streaming.Net.Web.Rtc.Messaging.Serialization
+RabbitOM.Streaming.Media
+RabbitOM.Streaming.Media.Converters
+RabbitOM.Streaming.Threading
+RabbitOM.Streaming.Remoting.IPC (for service models)
+RabbitOM.Streaming.UI
+RabbitOM.Streaming.UI.Windows
+RabbitOM.Streaming.UI.Windows.Controls (VideoPlayer,TimeLine,etc...)
+
