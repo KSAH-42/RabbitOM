@@ -64,8 +64,9 @@ using ( var client = new RTSPClient() )
     client.StartCommunication(); 
 
     Console.WriteLine("Press any keys to close the application");
-
     Console.ReadKey();
+
+    client.StopCommunication( TimeSpan.FromSeconds( 3 ) );
 }
 
 ~~~~
