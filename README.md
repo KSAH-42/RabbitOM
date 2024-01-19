@@ -59,8 +59,7 @@ using ( var client = new RTSPClient() )
     client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // Please read the vendor documentation to be sure.
     client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // increase the timeout if the camera is located far away 
     client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
-
-    client.Options.DeliveryMode = RTSPDeliveryMode.Tcp;
+    client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
 
     client.StartCommunication(); // None blocking call: handle the auto reconnection in case of network failure
 
