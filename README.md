@@ -163,7 +163,7 @@ var bodyResult =
 
  connection
 
-        .XxxxxxxMethod() // Some RTSP Method like GetOption, Play
+        .SetParameter() // Some RTSP Method like GetOption, Play
 
         .AddHeader( new RTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
         .AddHeader( "X-Header1" , "my value 1")
@@ -171,13 +171,11 @@ var bodyResult =
         .AddHeader( "X-Header3" , "my value 3")
         .AddHeader( "X-Header4" , "my value 4")
         .AddHeader( "X-Header5" , "my value 5")
-        .AddHeader( "X-Header6" , "port_range={0}-{1];timeout={2};" , 1234 , 4321 , 5000 )
+        .AddHeader( "X-Header6" , "port_range={0}-{1};timeout={2};" , 1234 , 4321 , 5000 )
 
-        .WriteBody( "Parameters")
-        .WriteBodyLine()
-        .WriteBodyLine( "Parameter1:{0}" , DateTime.Now )
-        .WriteBodyLine( "Parameter2:{0}" , Guid.NewGuid() )
-        .WriteBodyLine( "Parameter3:{0}" , System.Environment.Machine )
+        .WriteBodyLine( "timestamp:{0}" , DateTime.Now )
+        .WriteBodyLine( "computer:{0}" , System.Environment.Machine )
+        .WriteBodyLine( "uuid:{0}" , Guid.NewGuid() )
 
         .Invoke()
 	
