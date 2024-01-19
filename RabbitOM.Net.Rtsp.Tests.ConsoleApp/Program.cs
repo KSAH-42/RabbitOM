@@ -111,7 +111,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 ); // <-- increase the timeout if the camera is located far away 
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 5 );
-
+                
                 // For multicast settings, please make sure
                 // that the camera or the video source support multicast
                 // For instance, the happy RTSP server does not support multicast
@@ -121,7 +121,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // client.Configuration.DeliveryMode = RTSPDeliveryMode.Udp;
                 // client.Configuration.RtpPort = 55000;
                 // client.Configuration.MulticastAddress = "229.0.0.1";
-                
+
                 client.StartCommunication();
 
                 Console.WriteLine( "Press any keys to close the application" );
