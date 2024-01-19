@@ -106,27 +106,9 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
-        /// Gets / Sets the unicast port
+        /// Gets / Sets the rtp port
         /// </summary>
-        int UnicastPort
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets / Sets the multicast port
-        /// </summary>
-        int MulticastPort
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets / Sets the multicast TTL
-        /// </summary>
-        byte MulticastTTL
+        int RtpPort
         {
             get;
             set;
@@ -141,6 +123,14 @@ namespace RabbitOM.Net.Rtsp.Clients
             set;
         }
 
+        /// <summary>
+        /// Gets / Sets the TTL
+        /// </summary>
+        byte TimeToLive
+        {
+            get;
+            set;
+        }
 
 
 

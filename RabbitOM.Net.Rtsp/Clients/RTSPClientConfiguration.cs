@@ -65,13 +65,11 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private RTSPDeliveryMode     _deliveryMode      = RTSPDeliveryMode.Tcp;
 
-        private int                  _unicastPort       = 0;
-
-        private int                  _multicastPort     = 0;
-
-        private byte                 _multicastTTL      = 0;
+        private int                  _rtpPort           = 0;
 
         private string               _multicastAddress  = string.Empty;
+
+        private byte                 _timeToLive        = 0;
        
         
 
@@ -319,15 +317,15 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
-        /// Gets / Sets the unicast port
+        /// Gets / Sets the port
         /// </summary>
-        public int UnicastPort
+        public int RtpPort
         {
             get
             {
                 lock ( _lock )
                 {
-                    return _unicastPort;
+                    return _rtpPort;
                 }
             }
 
@@ -335,51 +333,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 lock ( _lock )
                 {
-                    _unicastPort = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets / Sets the multicast port
-        /// </summary>
-        public int MulticastPort
-        {
-            get
-            {
-                lock ( _lock )
-                {
-                    return _multicastPort;
-                }
-            }
-
-            set
-            {
-                lock ( _lock )
-                {
-                    _multicastPort = value;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets / Sets the multicast TTL
-        /// </summary>
-        public byte MulticastTTL
-        {
-            get
-            {
-                lock ( _lock )
-                {
-                    return _multicastTTL;
-                }
-            }
-
-            set
-            {
-                lock ( _lock )
-                {
-                    _multicastTTL = value;
+                    _rtpPort = value;
                 }
             }
         }
@@ -406,6 +360,30 @@ namespace RabbitOM.Net.Rtsp.Clients
             }
         }
 
+        /// <summary>
+        /// Gets / Sets the TTL
+        /// </summary>
+        public byte TimeToLive
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _timeToLive;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _timeToLive = value;
+                }
+            }
+        }
+
+
+
 
 
 
@@ -429,10 +407,9 @@ namespace RabbitOM.Net.Rtsp.Clients
                 _keepAliveInteval = DefaultKeepAliveInterval;
                 _mediaFormat      = RTSPMediaFormat.Video;
                 _deliveryMode     = RTSPDeliveryMode.Tcp;
-                _unicastPort      = DefaultPort;
-                _multicastPort    = DefaultPort + 1;
+                _rtpPort          = DefaultPort + 1;
+                _timeToLive       = DefaultTTL;
                 _multicastAddress = string.Empty;
-                _multicastTTL     = DefaultTTL;
             }
         }
     }

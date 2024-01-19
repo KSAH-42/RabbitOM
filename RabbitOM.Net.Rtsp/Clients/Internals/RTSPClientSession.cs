@@ -225,28 +225,28 @@ namespace RabbitOM.Net.Rtsp.Clients
 
                     case RTSPDeliveryMode.Udp:
 
-                        _transport = new RTSPClientSessionUdpTransport( _configuration.UnicastPort , _configuration.ReceiveTimeout );
+                        _transport = new RTSPClientSessionUdpTransport( _configuration.RtpPort , _configuration.ReceiveTimeout );
                         _transport.SetSession( this );
 
                         setupResult = _connection.Setup()
                             .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Udp )
                             .As<RTSPSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
-                            .As<RTSPSetupInvoker>().SetUnicastPort( _configuration.UnicastPort )
+                            .As<RTSPSetupInvoker>().SetUnicastPort( _configuration.RtpPort )
                             .Invoke();
 
                         break;
 
                     case RTSPDeliveryMode.Multicast:
 
-                        _transport = new RTSPClientSessionMulticastTransport( _configuration.MulticastAddress , _configuration.MulticastPort , _configuration.MulticastTTL , _configuration.ReceiveTimeout );
+                        _transport = new RTSPClientSessionMulticastTransport( _configuration.MulticastAddress , _configuration.RtpPort , _configuration.TimeToLive , _configuration.ReceiveTimeout );
                         _transport.SetSession( this );
 
                         setupResult = _connection.Setup()
                             .As<RTSPSetupInvoker>().SetDeliveryMode( RTSPDeliveryMode.Multicast )
                             .As<RTSPSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
                             .As<RTSPSetupInvoker>().SetMulticastAddress( _configuration.MulticastAddress )
-                            .As<RTSPSetupInvoker>().SetMulticastPort( _configuration.MulticastPort  )
-                            .As<RTSPSetupInvoker>().SetMulticastTTL( _configuration.MulticastTTL  )
+                            .As<RTSPSetupInvoker>().SetMulticastPort( _configuration.RtpPort  )
+                            .As<RTSPSetupInvoker>().SetMulticastTTL( _configuration.TimeToLive  )
                             .Invoke();
 
                         break;

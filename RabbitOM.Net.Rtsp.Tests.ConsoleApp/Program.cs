@@ -118,9 +118,10 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // AND make sure that your are used a switch not a hub, very is difference between them
                 // And activate igmp snooping on the switch
 
-                // client.Options.DeliveryMode = RTSPDeliveryMode.Multicast;
-                // client.Options.MulticastAddress = "229.0.0.1";
-                // client.Options.MulticastPort = 55000;
+                // client.Configuration.DeliveryMode = RTSPDeliveryMode.Udp;
+                // client.Configuration.MulticastAddress = "229.0.0.1";
+                client.Configuration.RtpPort = 55000;
+                
 
                 client.StartCommunication();
 
