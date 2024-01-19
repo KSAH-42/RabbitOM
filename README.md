@@ -56,12 +56,12 @@ using ( var client = new RTSPClient() )
     client.Configuration.Uri = Constants.LocalServer;
     client.Configuration.UserName = Constants.UserName;
     client.Configuration.Password = Constants.Password;
-    client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // Please read the vendor documentation to be sure.
-    client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3); // increase the timeout if the camera is located far away 
-    client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
     client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
+    client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; 
+    client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3);
+    client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
 
-    client.StartCommunication(); // None blocking call: handle the auto reconnection in case of network failure
+    client.StartCommunication(); 
 
     Console.WriteLine("Press any keys to close the application");
 
