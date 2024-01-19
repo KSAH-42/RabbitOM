@@ -119,10 +119,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // And activate igmp snooping on the switch
 
                 // client.Configuration.DeliveryMode = RTSPDeliveryMode.Udp;
+                // client.Configuration.RtpPort = 55000;
                 // client.Configuration.MulticastAddress = "229.0.0.1";
-                client.Configuration.RtpPort = 55000;
                 
-
                 client.StartCommunication();
 
                 Console.WriteLine( "Press any keys to close the application" );
