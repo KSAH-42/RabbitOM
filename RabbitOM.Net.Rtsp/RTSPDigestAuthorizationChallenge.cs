@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     internal abstract class RTSPDigestAuthorizationChallenge : RTSPAuthorizationChallenge
     {
-        private RTSPMethod           _method      = RTSPMethod.UnDefined;
+        private RTSPMethod               _method      = RTSPMethod.UnDefined;
 
         private string                   _uri         = string.Empty;
 
