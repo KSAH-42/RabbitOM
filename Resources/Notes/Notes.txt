@@ -4,11 +4,11 @@ A kind of possible implementation about the sdp expression parser:
 
 XAttribute : expression
 X = <Element> 
-  | <Sperator> 
+  | <Separator> 
   | <Element> 
-  | <Sperator> 
+  | <Separator> 
   | <Element> 
-  | <Sperator>
+  | <Separator>
   | [Sequence:<Element>,<Separator>,<Element>...]
   ;
 
