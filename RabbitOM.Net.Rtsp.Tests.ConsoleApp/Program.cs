@@ -98,6 +98,13 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
                 client.PacketReceived += ( sender , e ) =>
                 {
+                    var interleavedPacket = e.Packet as RTSPInterleavedPacket;
+
+                    if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
+                    {
+                        return;
+                    }
+
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
                 };
