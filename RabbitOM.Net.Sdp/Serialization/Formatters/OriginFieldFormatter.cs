@@ -62,9 +62,9 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
                 UserName    = tokens.ElementAtOrDefault(0) ?? string.Empty,
                 SessionId   = tokens.ElementAtOrDefault(1) ?? string.Empty,
                 Version     = tokens.ElementAtOrDefault(2) ?? string.Empty,
-                Address     = tokens.ElementAtOrDefault(5) ?? string.Empty,
                 NetworkType = DataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty),
                 AddressType = DataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty),
+                Address     = tokens.ElementAtOrDefault(5) ?? string.Empty,
             };
 
             return true;
