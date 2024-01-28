@@ -9,10 +9,11 @@ X = <Element>
   | <Separator> 
   | <Element> 
   | <Separator>
-  | [Sequence:<Element>,<Separator>,<Element>...]
+  | [<Element>,<Separator>,<Element>...]
   ;
 
 where x is the name of attribute like a,m,u,o,v,etc...
+  and [] represent a sequence
 
 x = StringElement1 : NumberElement2 EnumElement/NumberElement
 x = StringElement1 : NumberElement2 EnumElement/NumberElement/XYZElement
