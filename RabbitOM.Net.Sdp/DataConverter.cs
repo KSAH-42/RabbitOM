@@ -482,7 +482,7 @@ namespace RabbitOM.Net.Sdp
         ///     
         ///     <para>The ouput will be similar to: </para>
         ///     
-        ///     <para>audio   1234/2 RTP/AVP 1</para>
+        ///     <para>audio   1234/2    RTP/AVP    1</para>
         ///     <para/>
         ///     <para>At the origin, this method has been introduce to remove space between '/' char between "RTP /    AVP" string and to transform to "RTP/AVP" with no spaces.</para>
         /// </remarks>
@@ -499,7 +499,7 @@ namespace RabbitOM.Net.Sdp
             {
                 if ( builder.Length > 0 )
                 {
-                    builder.Append( "/" );
+                    builder.Append( splitCharacter );
                 }
 
                 builder.Append( token.Trim() );
