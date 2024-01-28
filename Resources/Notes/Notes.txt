@@ -25,6 +25,7 @@ class Expression {
 }
 
 abstract class Element {
+    public string RawValue { get; set; }
     public abstract ElementType Type {get;}
 }
 
