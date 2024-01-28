@@ -27,7 +27,7 @@ Get more power ? I don't like the terms power, but if you want to get more power
 
 This is a set of classes to used to connect, and received video/audio streams from security camera using standard protocols like RTSP/RTP/SDP.
 
-# How to receive raw rtp packets from tcp/udp/multicast using the rtsp client ?
+# How to receive raw rtp packets using the rtsp client ?
 
 Like this :
 
