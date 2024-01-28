@@ -1,7 +1,7 @@
 Sdp next step ?
 
 A kind of possible implementation about the sdp expression parser:
-
+ 
 XAttribute : expression
 X = <Element> 
   | <Separator> 
