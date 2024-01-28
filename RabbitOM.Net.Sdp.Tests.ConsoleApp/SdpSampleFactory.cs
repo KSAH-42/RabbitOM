@@ -18,8 +18,10 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
             builder.AppendLine( " c = IN IP4 224.2.17.12 / 127   " );
             builder.AppendLine( " t = 2873397496 2873404696     " );
             builder.AppendLine( " a = recvonly                   " );
-            builder.AppendLine( " m = audio 49170 RTP / AVP 10  " );
+            builder.AppendLine( " m =audio 49170 RTP / AVP 10  " );
             builder.AppendLine( " m = video 51372 RTP / AVP 99" );
+            builder.AppendLine( " m = video 51373/2 RTP/AVP 99" );
+            builder.AppendLine( " m =      video       51373/     2 RTP    /      AVP 99" );
             builder.AppendLine( " a = rtpmap:99 h263 - 1998 / 90000 " );
 
             return builder.ToString();
