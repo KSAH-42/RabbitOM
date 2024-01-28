@@ -1,4 +1,4 @@
-Sdp next step ?
+Sdp next step ? Maybe this thing can potentially works
 
 A kind of possible implementation about the sdp expression parser:
  
@@ -12,8 +12,8 @@ X = <Element>
   | [<Element>,<Separator>,<Element>...]
   ;
 
-where x is the name of attribute like a,m,u,o,v,etc...
-  and [] represent a sequence
+where X is the name of attribute like a,m,u,o,v,etc...
+  and [] represent a sequence that contains elements
 
 x = StringElement1 : NumberElement2 EnumElement/NumberElement
 x = StringElement1 : NumberElement2 EnumElement/NumberElement/XYZElement
@@ -24,11 +24,11 @@ class Expression {
    public IList<Element> Elements { get; set;}
 }
 
-abstract class class Element {
+abstract class Element {
     public abstract ElementType Type {get;}
 }
 
-abstract class class ValueElement<T> : Element {
+abstract class ValueElement<T> : Element {
     public abstract T Body {get;set;}
     
     // possible methods ? 
@@ -66,9 +66,9 @@ sealed class SequenceElement : Element {
   public IList<Element> Body { get; } = new List<Element>();
 }
 
-The next validation, will rely on two things
+The next validation, will rely on two things :
  * syntax attriute verifier
- * a member attribute validation
+ * member attribute validation
 
 abstract class SyntaxVerifier
 {
@@ -82,9 +82,9 @@ abstract class SyntaxVerifier
    
    // => this method must used a collection of rules 
    // and produce a SyntaxResults which contains Error object, status, etc...
-   // this method must not throw any exception
-
-   public abstract bool TryAnalyze( string expression , out SyntaxResults results );
+   
+   public abstract Results Analyze( string expression );
+   public abstract bool TryAnalyze( string expression , out Results results );
 }
 
 
