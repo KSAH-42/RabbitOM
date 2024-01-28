@@ -50,6 +50,11 @@ using ( var client = new RTSPClient() )
     // Fired when a raw media data has been received 
     client.PacketReceived += (sender, e) =>
     {
+        var interleavedPacket = e.Packet as RTSPInterleavedPacket;
+
+        if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
+             return;
+
         Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length); // raw rtp go here
     };
 
