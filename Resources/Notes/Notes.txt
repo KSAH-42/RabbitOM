@@ -1,3 +1,75 @@
+Sdp next step ?
+
+A kind of possible implementation about the sdp expression parser:
+
+XAttribute : expression
+X = <Element> 
+  | <Sperator> 
+  | <Element> 
+  | <Sperator> 
+  | <Element> 
+  | <Sperator>
+  | [Sequence:<Element>,<Separator>,<Element>...]
+  ;
+
+where x is the name of attribute like a,m,u,o,v,etc...
+
+x = StringElement1 : NumberElement2 EnumElement/NumberElement
+x = StringElement1 : NumberElement2 EnumElement/NumberElement/XYZElement
+x = NumberElement2 EnumElement/NumberElement/XYZElement
+
+
+class Expression {
+   public IList<Element> Elements { get; set;}
+}
+
+abstract class class Element {
+    public abstract ElementType Type {get;}
+}
+
+abstract class class ValueElement<T> : Element {
+    public abstract T Body {get;set;}
+    
+    // possible methods ? 
+    public T Read() { ... }
+    void Write(...){ ... }
+}
+
+sealed class NumberElement : ValueElement {
+  public override ElementType Type { get => Element.Number; }
+  public override int Body {get; set;}
+}
+
+sealed class SeperatorElement : ValueElement {
+  public override ElementType Type { get => Element.Separator; }
+  public override char Body {get; set;}
+}
+
+sealed class EnumElement : ValueElement {
+  public override ElementType Type { get => Element.Enum; }
+  public override Enum Body {get; set;}
+}
+
+sealed class TimeElement : ValueElement {
+  public override ElementType Type { get => Element.Time; }
+  public override long Body {get; set;}
+}
+
+sealed class IPAddressElement : ValueElement {
+  public override ElementType Type { get => Element.IPAddress; }
+  public string Body {get; set;}
+}
+
+sealed class SequenceElement : Element {
+  public override ElementType Type { get => Element.Sequence; }
+  public IList<Element> Body { get; } = new List<Element>();
+}
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////
 
 
