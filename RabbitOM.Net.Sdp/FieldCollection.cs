@@ -336,7 +336,7 @@ namespace RabbitOM.Net.Sdp
         /// <param name="index">the index</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryGetAt(int index, out TField result)
+        public bool TryElementAt(int index, out TField result)
         {
             result = _collection.ElementAtOrDefault(index);
 
