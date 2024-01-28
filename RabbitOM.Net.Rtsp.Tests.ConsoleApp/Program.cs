@@ -102,6 +102,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
                     if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
                     {
+                        // In most of case, avoid this packet
+						Console.WriteLine(" *** Skip this data **** ".PadLeft(50));
                         return;
                     }
 
