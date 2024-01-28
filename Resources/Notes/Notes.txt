@@ -65,6 +65,27 @@ sealed class SequenceElement : Element {
   public IList<Element> Body { get; } = new List<Element>();
 }
 
+The next validation, will rely on two things
+ * syntax attriute verifier
+ * a member attribute validation
+
+abstract class SyntaxVerifier
+{
+   // Build a tree or a list of element from the string expression
+
+   //  rule1 = elements[ n ] != element[n+1] 
+   //  rule2 = elements[ n ].Type == Seperator 
+   //       && elements[ n ].Type == element [ n+1 ].Type
+   //  rule3 = ...
+   //  rule4 = ...
+   
+   // => this method must used a collection of rules 
+   // and produce a SyntaxResults which contains Error object, status, etc...
+   // this method must not throw any exception
+
+   public abstract bool TryAnalyze( string expression , out SyntaxResults results );
+}
+
 
 
 
