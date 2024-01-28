@@ -474,7 +474,7 @@ namespace RabbitOM.Net.Sdp
         ///     <para>the following input:</para>
         ///     <para>audio   1234      / 2      RTP/   AVP    1 </para>
         ///     
-        ///     <para> or</para>
+        ///     <para> or </para>
         ///     
         ///     <para>audio   1234/ 2      RTP  /AVP    1 </para>
         ///     
