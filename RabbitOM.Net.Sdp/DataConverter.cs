@@ -465,11 +465,27 @@ namespace RabbitOM.Net.Sdp
         }
 
         /// <summary>
-        /// Rearrange the string
+        /// Re arrange a string value using a character used to split the sequence
         /// </summary>
         /// <param name="value">the value</param>
         /// <param name="splitCharacter">the split character</param>
         /// <returns>returns a new string value</returns>
+        /// <remarks>
+        ///     <para>the following input:</para>
+        ///     <para>audio   1234      / 2      RTP/   AVP    1 </para>
+        ///     
+        ///     <para> or</para>
+        ///     
+        ///     <para>audio   1234/ 2      RTP  /AVP    1 </para>
+        ///     
+        ///     <para>Where splitcharacter is equals to '/' </para>
+        ///     
+        ///     <para>The ouput will be similar to: </para>
+        ///     
+        ///     <para>audio   1234/2 RTP/AVP 1</para>
+        ///     <para/>
+        ///     <para>At the origin, this method has been introduce to remove space between '/' char between "RTP /    AVP" string and to transform to "RTP/AVP" with no spaces.</para>
+        /// </remarks>
         public static string ReArrange( string value , char splitCharacter )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
