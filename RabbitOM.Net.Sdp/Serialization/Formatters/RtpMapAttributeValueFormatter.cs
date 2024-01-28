@@ -23,7 +23,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             var builder = new StringBuilder();
 
-            builder.AppendFormat("{0}", field.ClockRate);
+            builder.AppendFormat("{0} ", field.PayloadType);
 
             if (!string.IsNullOrWhiteSpace(field.Encoding))
             {
@@ -56,27 +56,26 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
                 return false;
             }
 
-            var tokens = value.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = DataConverter.ReArrange( value , '/' ).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (!tokens.Any())
+            if ( tokens.Length <= 1  )
             {
                 return false;
             }
 
             result = new RtpMapAttributeValue()
             {
-                PayloadType = DataConverter.ConvertToByte(tokens.FirstOrDefault())
+                PayloadType = DataConverter.ConvertToByte( tokens.FirstOrDefault() )
             };
 
-            if (tokens.Length > 1)
+            if ( ! string.IsNullOrWhiteSpace( tokens.ElementAtOrDefault( 1 ) ) )
             {
-                var elements = tokens[1].Split(new char[] { '/' });
+                var encodingTokens = tokens.ElementAtOrDefault( 1 ).Split( new char[] { '/' } , StringSplitOptions.RemoveEmptyEntries );
 
-                result.Encoding = elements.FirstOrDefault();
-
-                if (elements.Length > 1)
+                if ( encodingTokens.Length > 0 )
                 {
-                    result.ClockRate = DataConverter.ConvertToUInt(elements.ElementAtOrDefault(1));
+                    result.Encoding  = encodingTokens.ElementAtOrDefault( 0 );
+                    result.ClockRate = DataConverter.ConvertToUInt( encodingTokens.ElementAtOrDefault( 1 ) );
                 }
             }
 
