@@ -68,7 +68,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             
             return _thread.Start( () =>
             {
-                OnCommunicationStarted( new RTSPCommunicationStartedEventArgs() );
+                _dispatcher.Dispatch( new RTSPCommunicationStartedEventArgs() );
 
                 using ( var runner = new RTSPMediaChannelRunner( _channel ) )
                 {
@@ -78,7 +78,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
                     }
                 }
 
-                OnCommunicationStopped( new RTSPCommunicationStoppedEventArgs() );
+                _dispatcher.Dispatch( new RTSPCommunicationStoppedEventArgs() );
             } );
         }
 
