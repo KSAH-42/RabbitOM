@@ -2,7 +2,7 @@ Sdp next step ? Maybe this thing can potentially works
 
 A kind of possible implementation about the sdp expression parser:
  
-XAttribute : expression
+XAttribute = expression;
 X = <Element> 
   | <Separator> 
   | <Element> 
