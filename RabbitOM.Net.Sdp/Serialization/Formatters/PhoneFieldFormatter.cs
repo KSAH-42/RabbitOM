@@ -25,6 +25,13 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse(string value, out PhoneField result)
         {
+            result = default;
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
             result = new PhoneField()
             {
                 Value = value
