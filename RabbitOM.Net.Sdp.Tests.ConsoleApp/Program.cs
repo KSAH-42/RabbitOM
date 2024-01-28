@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
             descriptor.Emails.Add(new EmailField("rabbit2@hole.com", "rabbit2"));
             descriptor.Emails.Add(new EmailField("rabbit3@hole.com", "rabbit3"));
             descriptor.Emails.Add(new EmailField("rabbit4@hole.com", "rabbit4"));
-
+                                    
             for ( int i = 1; i <= 10; ++ i )
             {
                 var mediaDescription = new MediaDescriptionField();
@@ -59,9 +59,10 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
 
             Console.WriteLine(text);
 
-            if ( SessionDescriptor.TryParse( text , out SessionDescriptor sdp ) )
+            if ( SessionDescriptor.TryParse( SdpSampleFactory.CreateSimpleSdp() , out SessionDescriptor sdp ) )
             {
                 Console.WriteLine("Ok");
+				Console.WriteLine(sdp.ToString());
             }
         }
     }

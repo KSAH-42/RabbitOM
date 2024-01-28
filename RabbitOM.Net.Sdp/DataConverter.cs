@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace RabbitOM.Net.Sdp
 {
@@ -461,6 +462,35 @@ namespace RabbitOM.Net.Sdp
             }
 
             return value.Split(new char[] { separator }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Rearrange the string
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <param name="splitCharacter">the split character</param>
+        /// <returns>returns a new string value</returns>
+        public static string ReArrange( string value , char splitCharacter )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return string.Empty;
+            }
+
+            var builder = new StringBuilder();
+
+            foreach ( var token in value.Split( new char[] { splitCharacter } , StringSplitOptions.RemoveEmptyEntries ) )
+            {
+                if ( builder.Length > 0 )
+                {
+                    builder.Append( "/" );
+                }
+
+                builder.Append( token.Trim() );
+            }
+
+            return builder.ToString();
+
         }
     }
 }

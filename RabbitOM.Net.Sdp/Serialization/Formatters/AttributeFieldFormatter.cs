@@ -43,16 +43,22 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
         {
             result = null;
 
-            if (!StringPair.TryParse(value, ':', out StringPair field))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new AttributeField()
+            result = new AttributeField();
+
+            if ( StringPair.TryParse(value, ':', out StringPair field) )
             {
-                Name = field.First,
-                Value = field.Second
-            };
+                result.Name = field.First;
+                result.Value = field.Second;
+            }
+            else
+            {
+                result.Name = value;
+            }
 
             return true;
         }

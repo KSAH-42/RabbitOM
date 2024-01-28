@@ -55,7 +55,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
                 return false;
             }
 
-            var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = DataConverter.ReArrange( value , '/' ).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (tokens.Length < 3)
             {

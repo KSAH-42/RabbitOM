@@ -20,6 +20,8 @@ namespace RabbitOM.Net.Sdp
 
         private int                               _port         = 0;
 
+        private int                               _portOption   = 0;
+
         private ProtocolType                      _protocol     = ProtocolType.None;
 
         private ProfileType                       _profile      = ProfileType.None;
@@ -61,6 +63,15 @@ namespace RabbitOM.Net.Sdp
         {
             get => _port;
             set => _port = value;
+        }
+
+        /// <summary>
+        /// Gets / Sets the port option
+        /// </summary>
+        public int PortOption
+        {
+            get => _portOption;
+            set => _portOption = value;
         }
 
         /// <summary>
@@ -149,11 +160,12 @@ namespace RabbitOM.Net.Sdp
                 return;
             }
 
-            _type     = field._type;
-            _port     = field._port;
-            _protocol = field._protocol;
-            _profile  = field._profile;
-            _payload  = field._payload;
+            _type       = field._type;
+            _port       = field._port;
+            _portOption = field._portOption;
+            _protocol   = field._protocol;
+            _profile    = field._profile;
+            _payload    = field._payload;
 
             _connection.CopyFrom(field._connection);
             _encryption.CopyFrom(field._encryption);

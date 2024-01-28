@@ -24,7 +24,15 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
             var builder = new StringBuilder();
 
             builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.Type));
-            builder.AppendFormat("{0} ", field.Port);
+            builder.AppendFormat("{0}", field.Port);
+
+            if ( field.PortOption > 0 )
+            {
+                builder.AppendFormat( "/{0}" , field.PortOption );
+            }
+
+            builder.Append( " " );
+
             builder.AppendFormat("{0}/", DataConverter.ConvertToString(field.Protocol));
             builder.AppendFormat("{0} ", DataConverter.ConvertToString(field.Profile));
             builder.AppendFormat("{0} ", field.Payload);
@@ -47,9 +55,16 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
                 return false;
             }
 
-            var tokens = value.Split(new char[] { ' ' });
+            var tokens = DataConverter.ReArrange( value , '/' ).Split(new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
             if (tokens.Length < 4)
+            {
+                return false;
+            }
+
+            var portTokens = tokens[ 1 ].Split( '/' );
+
+            if ( portTokens.Length < 1 )
             {
                 return false;
             }
@@ -63,11 +78,12 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             result = new MediaDescriptionField()
             {
-                Type     = DataConverter.ConvertToMediaType(tokens.ElementAtOrDefault(0) ?? string.Empty),
-                Port     = DataConverter.ConvertToInt(tokens.ElementAtOrDefault(1) ?? string.Empty),
-                Payload  = DataConverter.ConvertToInt(tokens.ElementAtOrDefault(3) ?? string.Empty),
-                Protocol = DataConverter.ConvertToProtocolType(protocolTokens.ElementAtOrDefault(0)),
-                Profile  = DataConverter.ConvertToProfileType(protocolTokens.ElementAtOrDefault(1)),
+                Type       = DataConverter.ConvertToMediaType(tokens.ElementAtOrDefault(0) ?? string.Empty),
+                Port       = DataConverter.ConvertToInt( portTokens.ElementAtOrDefault(0) ?? string.Empty),
+                PortOption = DataConverter.ConvertToInt( portTokens.ElementAtOrDefault(1) ?? string.Empty),
+                Protocol   = DataConverter.ConvertToProtocolType(protocolTokens.ElementAtOrDefault(0)),
+                Profile    = DataConverter.ConvertToProfileType(protocolTokens.ElementAtOrDefault(1)),
+                Payload    = DataConverter.ConvertToInt(tokens.LastOrDefault() ?? string.Empty),
             };
 
             return true;
