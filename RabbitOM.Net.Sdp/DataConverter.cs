@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
-using System.Text;
 
 namespace RabbitOM.Net.Sdp
 {
