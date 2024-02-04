@@ -103,7 +103,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                     if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
                     {
                         // In most of case, avoid this packet
-                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
                         Console.WriteLine("Skipping this data. size: {0}" , e.Packet.Data.Length );
                         return;
                     }
