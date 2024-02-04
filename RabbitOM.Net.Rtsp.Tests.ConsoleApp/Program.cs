@@ -121,6 +121,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; // <--- you must read the protocol documentation of the vendor to be sure.
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 ); // <-- increase the timeout if the camera is located far away 
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 5 );
+                client.Configuration.MediaFormat= RTSPMediaFormat.Video;
                 client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
 
                 // For multicast settings, please make sure
