@@ -493,20 +493,14 @@ namespace RabbitOM.Net.Sdp
                 return string.Empty;
             }
 
-            var builder = new StringBuilder();
+            var tokens = value.Split( new char[] { splitCharacter } , StringSplitOptions.RemoveEmptyEntries ).Select( token => token.Trim() );
 
-            foreach ( var token in value.Split( new char[] { splitCharacter } , StringSplitOptions.RemoveEmptyEntries ) )
+            if ( tokens.Count() <= 0 )
             {
-                if ( builder.Length > 0 )
-                {
-                    builder.Append( splitCharacter );
-                }
-
-                builder.Append( token.Trim() );
+                return value;
             }
 
-            return builder.ToString();
-
+            return string.Join( splitCharacter.ToString() , tokens );
         }
     }
 }
