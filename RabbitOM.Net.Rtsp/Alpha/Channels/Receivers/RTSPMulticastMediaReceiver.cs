@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPMulticastMediaReceiver : RTSPMediaReceiver
+    internal sealed class RTSPMulticastMediaReceiver : RTSPMediaReceiver
     {
         private readonly RTSPThread _thread;
 

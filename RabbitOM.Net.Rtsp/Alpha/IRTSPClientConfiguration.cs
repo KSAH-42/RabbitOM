@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public interface IRTSPClientConfiguration
+    internal interface IRTSPClientConfiguration
     {
         object SyncRoot { get; }
         string Uri { get; set; }

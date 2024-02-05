@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public interface IRTSPClient : IDisposable
+    internal interface IRTSPClient : IDisposable
     {
         event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
         event EventHandler<RTSPCommunicationStoppedEventArgs> CommunicationStopped;

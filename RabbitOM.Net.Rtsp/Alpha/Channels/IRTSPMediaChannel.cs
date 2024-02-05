@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public interface IRTSPMediaChannel : IDisposable
+    internal interface IRTSPMediaChannel : IDisposable
     {
         object SyncRoot { get; }
         IRTSPClientConfiguration Configuration { get; }

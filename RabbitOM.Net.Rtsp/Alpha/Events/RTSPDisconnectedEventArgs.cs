@@ -2,14 +2,14 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public enum RTSPDisconnectReason
+    internal enum RTSPDisconnectReason
     {
         CommunicationClosed = 0 ,
 
         CommunicationLost
     }
 
-    public class RTSPDisconnectedEventArgs : EventArgs
+    internal class RTSPDisconnectedEventArgs : EventArgs
     {
         private readonly RTSPDisconnectReason _reason;
 

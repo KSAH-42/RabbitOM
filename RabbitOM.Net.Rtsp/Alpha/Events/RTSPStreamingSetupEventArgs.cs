@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public class RTSPStreamingSetupEventArgs : EventArgs
+    internal class RTSPStreamingSetupEventArgs : EventArgs
     {
         private readonly RTSPTrackInfo _trackInfo;
 

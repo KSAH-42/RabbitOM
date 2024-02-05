@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public abstract class RTSPClient : IRTSPClient
+    internal abstract class RTSPClient : IRTSPClient
     {
         public event EventHandler<RTSPCommunicationStartedEventArgs> CommunicationStarted;
         

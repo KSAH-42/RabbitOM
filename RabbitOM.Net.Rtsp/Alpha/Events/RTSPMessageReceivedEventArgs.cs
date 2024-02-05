@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public class RTSPMessageReceivedEventArgs : EventArgs
+    internal class RTSPMessageReceivedEventArgs : EventArgs
     {
         private readonly RTSPMessageRequest _request;
 

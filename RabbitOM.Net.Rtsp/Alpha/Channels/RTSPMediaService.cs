@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPMediaService : IDisposable
+    internal sealed class RTSPMediaService : IDisposable
     {
         private readonly object _lock;
 

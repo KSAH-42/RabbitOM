@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPClientConfiguration : IRTSPClientConfiguration
+    internal sealed class RTSPClientConfiguration : IRTSPClientConfiguration
     {
         private readonly object _lock = new object();
 

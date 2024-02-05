@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public class RTSPMediaClient : RTSPClient
+    internal class RTSPMediaClient : RTSPClient
     {
         private readonly RTSPEventDispatcher _dispatcher;
        

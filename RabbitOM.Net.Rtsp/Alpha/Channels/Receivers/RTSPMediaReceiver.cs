@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public abstract class RTSPMediaReceiver : IDisposable
+    internal abstract class RTSPMediaReceiver : IDisposable
     {
         private readonly RTSPMediaService _service;
 

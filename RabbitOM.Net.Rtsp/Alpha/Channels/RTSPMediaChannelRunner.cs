@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPMediaChannelRunner : IDisposable
+    internal sealed class RTSPMediaChannelRunner : IDisposable
     {
         private readonly IRTSPMediaChannel _channel;
 

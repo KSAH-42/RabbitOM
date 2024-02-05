@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public sealed class RTSPEventDispatcher : IRTSPEventDispatcher , IDisposable
+    internal sealed class RTSPEventDispatcher : IRTSPEventDispatcher , IDisposable
     {
         private readonly RTSPEventQueue _queue;
 

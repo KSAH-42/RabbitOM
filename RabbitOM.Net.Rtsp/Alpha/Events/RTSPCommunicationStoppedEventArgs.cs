@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public class RTSPCommunicationStoppedEventArgs : EventArgs
+    internal class RTSPCommunicationStoppedEventArgs : EventArgs
     {
     }
 }

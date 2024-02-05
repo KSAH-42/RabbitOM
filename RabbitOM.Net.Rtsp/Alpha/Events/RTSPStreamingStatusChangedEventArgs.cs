@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public class RTSPStreamingStatusChangedEventArgs : EventArgs
+    internal class RTSPStreamingStatusChangedEventArgs : EventArgs
     {
         private readonly RTSPStreamingStatus _status;
 

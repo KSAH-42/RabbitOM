@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtsp.Alpha
 {
-    public enum RTSPStreamingStatus
+    internal enum RTSPStreamingStatus
     {
         InActive = 0 ,
 
