@@ -185,7 +185,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         {
             try
             {
-                var bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
+                int bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
 
                 if ( bytesReceived <= 0 )
                 {
