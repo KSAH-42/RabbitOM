@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a class used to perform actions when the dispose method is called or after the using scope.
     /// </summary>
-    public sealed class RTSPDisposeScope : IDisposable
+    internal sealed class RTSPDisposeScope : IDisposable
     {
         private readonly Stack<Action> _actions = new Stack<Action>();
 

@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header writer
     /// </summary>
-    public sealed class RTSPHeaderWriter
+    internal sealed class RTSPHeaderWriter
     {
         private RTSPSeparator            _separator      = RTSPSeparator.Comma;
 

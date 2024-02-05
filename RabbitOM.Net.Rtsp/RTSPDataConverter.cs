@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a tolerant value converter
     /// </summary>
-    public static class RTSPDataConverter
+    internal static class RTSPDataConverter
     {
         /// <summary>
         /// Check if a value can be converted

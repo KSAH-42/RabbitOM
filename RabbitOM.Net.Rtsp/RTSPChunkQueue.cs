@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a chunk circular queue
     /// </summary>
-    public sealed class RTSPChunkQueue : RTSPQueue<byte[]>
+    internal sealed class RTSPChunkQueue : RTSPQueue<byte[]>
     {
         private readonly int _maximum = 0;
 

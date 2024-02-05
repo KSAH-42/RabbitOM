@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a tolerant string reader 
     /// </summary>
-    public sealed class RTSPStringReader : IDisposable
+    internal sealed class RTSPStringReader : IDisposable
     {
         private readonly StringReader _reader = null;
 

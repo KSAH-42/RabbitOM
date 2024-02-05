@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a reader class used to read field inside a header
     /// </summary>
-    public sealed class RTSPHeaderReader : IDisposable
+    internal sealed class RTSPHeaderReader : IDisposable
     {
         private string                       _currentElement          = string.Empty;
 

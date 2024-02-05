@@ -5,7 +5,7 @@ namespace RabbitOM.Net.Rtsp
     /// <summary>
     /// Represent a message header seperator
     /// </summary>
-    public enum RTSPSeparator
+    internal enum RTSPSeparator
     {
         /// <summary>
         /// Comma (,)

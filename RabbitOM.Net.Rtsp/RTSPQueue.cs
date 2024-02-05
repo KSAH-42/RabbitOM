@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtsp
     /// Represent the base generic queue
     /// </summary>
     /// <typeparam name="TElement">the element type</typeparam>
-    public partial class RTSPQueue<TElement> 
+    internal partial class RTSPQueue<TElement> 
         : IEnumerable 
         , IEnumerable<TElement>
         , ICollection
