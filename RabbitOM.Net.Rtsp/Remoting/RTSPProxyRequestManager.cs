@@ -154,7 +154,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                     if ( ! _proxy.SecurityManager.IsAuthenticationSetup() )
                     {
-                        _proxy.SecurityManager.SetupAuthentication( handler.Response );
+                        _proxy.SecurityManager.SetupAuthentication( response );
                     }
 
                     OnMessageReceived( response );
