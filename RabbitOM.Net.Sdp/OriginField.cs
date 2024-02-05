@@ -20,9 +20,9 @@ namespace RabbitOM.Net.Sdp
 
         private string      _userName    = string.Empty;
 
-        private string      _sessionId   = string.Empty;
+        private ulong       _sessionId   = 0;
 
-        private string      _version     = string.Empty;
+        private ulong       _version     = 0;
 
         private NetworkType _networkType = NetworkType.None;
 
@@ -45,6 +45,9 @@ namespace RabbitOM.Net.Sdp
         /// <summary>
         /// Gets / Sets the user name
         /// </summary>
+        /// <remarks>
+        ///     <para>the user name must not contains spaces</para>
+        /// </remarks>
         public string UserName
         {
             get => _userName;
@@ -54,19 +57,19 @@ namespace RabbitOM.Net.Sdp
         /// <summary>
         /// Gets / Sets the session identifier
         /// </summary>
-        public string SessionId
+        public ulong SessionId
         {
             get => _sessionId;
-            set => _sessionId = DataConverter.Filter(value);
+            set => _sessionId = value;
         }
 
         /// <summary>
         /// Gets / Sets the session version
         /// </summary>
-        public string Version
+        public ulong Version
         {
             get => _version;
-            set => _version = DataConverter.Filter(value);
+            set => _version = value;
         }
 
         /// <summary>
@@ -105,14 +108,24 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return _networkType != NetworkType.None
-                && _addressType != AddressType.None
+            // the user name must not contains space https://datatracker.ietf.org/doc/html/rfc4566.html#page-11
+            
+            if ( _userName?.Contains( " " ) == true) 
+            {
+                return false;
+            }
 
-                && !string.IsNullOrWhiteSpace(_sessionId)
-                && !string.IsNullOrWhiteSpace(_version)
+            if ( _networkType == NetworkType.None )
+            {
+                return false;
+            }
 
-                && ValidatorHelper.TryValidateAddress( _address , _addressType )
-                ;
+            if ( _addressType == AddressType.None )
+            {
+                return false;
+            }
+
+            return ValidatorHelper.TryValidateAddress( _address , _addressType );
         }
 
         /// <summary>

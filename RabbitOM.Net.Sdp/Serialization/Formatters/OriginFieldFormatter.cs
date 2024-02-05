@@ -52,7 +52,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (!tokens.Any())
+            if ( ! tokens.Any() )
             {
                 return false;
             }
@@ -60,8 +60,8 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
             result = new OriginField()
             {
                 UserName    = tokens.ElementAtOrDefault(0) ?? string.Empty,
-                SessionId   = tokens.ElementAtOrDefault(1) ?? string.Empty,
-                Version     = tokens.ElementAtOrDefault(2) ?? string.Empty,
+                SessionId   = DataConverter.ConvertToULong( tokens.ElementAtOrDefault(1) ),
+                Version     = DataConverter.ConvertToULong( tokens.ElementAtOrDefault(2) ),
                 NetworkType = DataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty),
                 AddressType = DataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty),
                 Address     = tokens.ElementAtOrDefault(5) ?? string.Empty,

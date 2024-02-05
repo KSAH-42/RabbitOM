@@ -63,7 +63,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.WriteLine("Uri bad format");
                 return;
             }
-
+            
             using ( var client = new RTSPClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>

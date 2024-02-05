@@ -84,6 +84,16 @@ namespace RabbitOM.Net.Sdp
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns a value</returns>
+        public static ulong ConvertToULong( string value )
+        {
+            return ulong.TryParse( value ?? string.Empty , out ulong result ) ? result : 0;
+        }
+
+        /// <summary>
+        /// Convert a value
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns a value</returns>
         public static long ConvertToLong(string value)
         {
             return long.TryParse(value ?? string.Empty, out long result) ? result : 0;
