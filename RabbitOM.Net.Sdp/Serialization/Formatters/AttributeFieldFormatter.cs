@@ -53,7 +53,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
             if ( StringPair.TryParse(value, ':', out StringPair field) )
             {
                 result.Name = field.First;
-                result.Value = DataConverter.ReArrange( field.Second , '/' );
+                result.Value = field.Second;
             }
             else
             {
