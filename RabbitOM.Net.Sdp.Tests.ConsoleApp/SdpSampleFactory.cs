@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
             builder.AppendLine( " s = SDP Seminar                                       " );
             builder.AppendLine( "   i = A Seminar on the session description protocol " );
             builder.AppendLine( " u =     http://www.example.com/seminars/sdp.pdf   ; " );
-            builder.AppendLine( " e = j.doe@example.com " );
+            builder.AppendLine( " e = j.doe@example.com  ( John Doe ) " );
             builder.AppendLine( " c = IN IP4 224.2.17.12 / 127   " );
             builder.AppendLine( " t = 2873397496 2873404696     " );
             builder.AppendLine( " a = recvonly : data                   " );

@@ -45,7 +45,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (tokens.Length == 0)
+            if ( ! tokens.Any() )
             {
                 return false;
             }
@@ -53,7 +53,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
             result = new EmailField()
             {
                 Address = tokens.ElementAtOrDefault(0),
-                Name    = tokens.ElementAtOrDefault(1),
+                Name    = string.Join( " " , tokens.Skip(1) ) ,
             };
 
             return true;
