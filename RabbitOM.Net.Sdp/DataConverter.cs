@@ -414,7 +414,7 @@ namespace RabbitOM.Net.Sdp
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns a trimed value</returns>
-        public static string FilterAsEmailFormat(string value)
+        public static string FilterAsName(string value)
         {
             return Filter(RemoveOccurrences(value, '(', ')', '<', '>', '[', ']', '{', '}'));
         }

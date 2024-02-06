@@ -81,7 +81,7 @@ namespace RabbitOM.Net.Sdp
         public string Name
         {
             get => _name;
-            set => _name = DataConverter.FilterAsEmailFormat(value);
+            set => _name = DataConverter.FilterAsName(value);
         }
 
 
