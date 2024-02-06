@@ -8,12 +8,12 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
         {
             var descriptor = new SessionDescriptor();
 
-            descriptor.Origin.UserName = "John";
+			descriptor.Origin.UserName = "John";
             descriptor.Origin.Address = "192.168.1.23";
             descriptor.Origin.AddressType = AddressType.IPV6;
             descriptor.Origin.NetworkType = NetworkType.Internet;
-            descriptor.Origin.Version = "V1";
-            descriptor.Origin.SessionId = "123456789";
+            descriptor.Origin.Version = 1;
+            descriptor.Origin.SessionId = 123456789;
             descriptor.Version.Value = 1;
             descriptor.SessionInformation.Value = "some infos";
             descriptor.SessionName.Value = "My session name";

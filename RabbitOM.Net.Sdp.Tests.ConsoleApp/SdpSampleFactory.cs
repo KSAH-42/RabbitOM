@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Sdp.Tests.ConsoleApp
             var builder = new StringBuilder();
 
             builder.AppendLine( " v=0 " );
-            builder.AppendLine( " o = jdoe 2890844526 2890842807 IN IP4 10.47.16.5   " );
+            builder.AppendLine( " o = jdoe 2890844526 2890842807 IN IP4 10.47.16.5     " );
             builder.AppendLine( " s = SDP Seminar                                       " );
             builder.AppendLine( "   i = A Seminar on the session description protocol " );
             builder.AppendLine( " u = http://www.example.com/seminars/sdp.pdf " );
