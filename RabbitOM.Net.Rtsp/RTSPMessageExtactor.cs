@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Text;
 
+// TODO: this class must be refactor when to handle very large streams
+
 namespace RabbitOM.Net.Rtsp
 {
     /// <summary>
-    /// Represent the proxy decoder
+    /// Represent the message stream extractor
     /// </summary>
-    internal sealed class RTSPMessageDecoder
+    internal sealed class RTSPMessageExtactor : IDisposable
     {
         private readonly object           _lock              = null;
 
@@ -28,7 +30,7 @@ namespace RabbitOM.Net.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        public RTSPMessageDecoder()
+        public RTSPMessageExtactor()
             : this( short.MaxValue )
         {
         }
@@ -37,7 +39,7 @@ namespace RabbitOM.Net.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="limit">the limit</param>
-        public RTSPMessageDecoder( long limit )
+        public RTSPMessageExtactor( long limit )
         {
             if ( limit <= 0 )
             {
@@ -198,15 +200,41 @@ namespace RabbitOM.Net.Rtsp
             }
         }
 
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            UnInitialize( true );
+        }
+
         /// <summary>
         /// Un initialize
         /// </summary>
         public void UnInitialize()
         {
+            UnInitialize( false );
+        }
+
+        /// <summary>
+        /// Un initialize
+        /// </summary>
+        /// <param name="dispose">dispose</param>
+        private void UnInitialize( bool dispose )
+        {
             lock ( _lock )
             {
                 _stream.Close();
+                
+                if ( dispose )
+                {
+                    _stream.Dispose();
+                }
+
                 _valueString.Clear();
+                _interleavedPacket = null;
+                _response = null;
             }
         }
 
@@ -280,10 +308,10 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Decode the interleaved packet
+        /// Extract the interleaved packet
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool DecodeInterleaved()
+        public bool TryExtractInterleaved()
         {
             lock ( _lock )
             {
@@ -321,10 +349,10 @@ namespace RabbitOM.Net.Rtsp
         }
 
         /// <summary>
-        /// Decode a response
+        /// Extract a response
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool DecodeResponse()
+        public bool TryExtractResponse()
         {
             lock (_lock)
             {

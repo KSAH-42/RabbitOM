@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
         private readonly RTSPChunkQueue               _chunks                = null;
 
-        private readonly RTSPMessageDecoder           _decoder               = null;
+        private readonly RTSPMessageExtactor           _extractor               = null;
 
         private readonly RTSPThread                   _chunkListenerThread   = null;
 
@@ -36,7 +36,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
             _requestListenerThread = new RTSPThread( "RTSP - proxy request manager - listener " );
             _requestHandlers = new RTSPProxyRequestHandlerList();
             _chunks = new RTSPChunkQueue();
-            _decoder = new RTSPMessageDecoder();
+            _extractor = new RTSPMessageExtactor();
             _buffer = new byte[8096 * 8 * 2];
         }
 
@@ -79,7 +79,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
             _requestListenerThread.Stop();
             _chunkListenerThread.Stop();
             _chunks.Clear();
-            _decoder.UnInitialize();
+            _extractor.UnInitialize();
             _requestHandlers.Clear();
         }
 
@@ -89,6 +89,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
         public void Dispose()
         {
             Stop();
+            _extractor.Dispose();
             _buffer = null;
         }
 
@@ -238,32 +239,32 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 return;
             }
             
-            if ( _decoder.HasReachSizeLimit )
+            if ( _extractor.HasReachSizeLimit )
             {
-                _decoder.UnInitialize();
+                _extractor.UnInitialize();
             }
 
-            if ( !_decoder.IsInitialized() )
+            if ( !_extractor.IsInitialized() )
             {
-                _decoder.Initialize();
+                _extractor.Initialize();
             }
 
-            _decoder.PrepareWrite();
-            _decoder.Write( chunk , 0 , chunk.Length );
+            _extractor.PrepareWrite();
+            _extractor.Write( chunk , 0 , chunk.Length );
 
-            _decoder.PrepareRead();
+            _extractor.PrepareRead();
             
-            while ( _decoder.Read() )
+            while ( _extractor.Read() )
             {
-                if ( _decoder.IsInterleavedSequence )
+                if ( _extractor.IsInterleavedSequence )
                 {
-                    _decoder.ClearValues();
+                    _extractor.ClearValues();
 
-                    if ( _decoder.DecodeInterleaved() )
+                    if ( _extractor.TryExtractInterleaved() )
                     {
-                        OnDataReceived( _decoder.GetInterleavedPacket() );
+                        OnDataReceived( _extractor.GetInterleavedPacket() );
 
-                        _decoder.Discard();
+                        _extractor.Discard();
                     }
                     else
                     {
@@ -271,15 +272,15 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     }
                 }
 
-                else if ( _decoder.IsMessageSequence )
+                else if ( _extractor.IsMessageSequence )
                 {
-                    _decoder.ClearValues();
+                    _extractor.ClearValues();
 
-                    if ( _decoder.DecodeResponse() )
+                    if ( _extractor.TryExtractResponse() )
                     {
-                        OnResponseReceived( _decoder.GetResponse() );
+                        OnResponseReceived( _extractor.GetResponse() );
 
-                        _decoder.Discard();
+                        _extractor.Discard();
                     }
                     else
                     {
@@ -287,9 +288,9 @@ namespace RabbitOM.Net.Rtsp.Remoting
                     }
                 }
 
-                if ( !_decoder.HasValueProtocolChar )
+                if ( !_extractor.HasValueProtocolChar )
                 {
-                    _decoder.ClearValues();
+                    _extractor.ClearValues();
                 }
             }
         }

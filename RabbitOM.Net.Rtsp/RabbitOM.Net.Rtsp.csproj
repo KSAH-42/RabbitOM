@@ -215,7 +215,7 @@
     <Compile Include="RTSPMemoryStream.cs" />
     <Compile Include="RTSPMessage.cs" />
     <Compile Include="RTSPMessageBody.cs" />
-    <Compile Include="RTSPMessageDecoder.cs" />
+    <Compile Include="RTSPMessageExtactor.cs" />
     <Compile Include="RTSPMessageRequest.cs" />
     <Compile Include="RTSPMessageRequestBuilder.cs" />
     <Compile Include="RTSPMessageRequestSerializer.cs" />
