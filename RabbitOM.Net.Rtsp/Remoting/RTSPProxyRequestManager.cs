@@ -134,7 +134,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
 
                 using ( var scope = new RTSPDisposeScope( () => _requestHandlers.Remove( handler ) ) )
                 {
-                    if ( ! _proxy.Send( RTSPMessageRequestSerializer.Serialize( request ) ) )
+                    if ( ! _proxy.Send( RTSPMessageSerializer.Serialize( request ) ) )
                     {
                         return false;
                     }

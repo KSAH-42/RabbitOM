@@ -407,7 +407,7 @@ namespace RabbitOM.Net.Rtsp
 
                 builder.Append(body);
 
-                _response = RTSPMessageResponseSerializer.Deserialize(builder.ToString());
+                _response = RTSPMessageSerializer.Deserialize(builder.ToString());
 
                 return _response != null; 
             }

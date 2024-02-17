@@ -218,10 +218,9 @@
     <Compile Include="RTSPMessageExtactor.cs" />
     <Compile Include="RTSPMessageRequest.cs" />
     <Compile Include="RTSPMessageRequestBuilder.cs" />
-    <Compile Include="RTSPMessageRequestSerializer.cs" />
     <Compile Include="RTSPMessageResponse.cs" />
     <Compile Include="RTSPMessageResponseReader.cs" />
-    <Compile Include="RTSPMessageResponseSerializer.cs" />
+    <Compile Include="RTSPMessageSerializer.cs" />
     <Compile Include="RTSPMessageStatus.cs" />
     <Compile Include="RTSPMessageVersion.cs" />
     <Compile Include="RTSPMethod.cs" />
