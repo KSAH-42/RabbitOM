@@ -10,29 +10,11 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var arguments = new Dictionary<string, string>();
-            
-            #region MENU
-
             if ( ! args.Any() || args.Contains( "/?") || args.Any( x => x.Contains("help") ) ) 
             {
-                string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
-
-				Console.WriteLine();
-                Console.WriteLine("Receiving packet from a rtsp source ");
-                Console.WriteLine("Usage: ");
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"{processName} rtsp://127.0.0.1/toy.mp4");
-                Console.WriteLine($"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4");
-                Console.WriteLine($"{processName} rtsp://127.0.0.1:554/toy.mp4");
-                Console.WriteLine($"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
-                Console.WriteLine();
-                Console.ForegroundColor = ConsoleColor.White;
+                ShowHelp();
                 return;
             }
-
-            #endregion
 
             try
             {
@@ -42,6 +24,23 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             {
                 Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+
+        static void ShowHelp()
+        {
+            string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
+
+            Console.WriteLine();
+            Console.WriteLine( "Receiving packet from a rtsp source " );
+            Console.WriteLine( "Usage: " );
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine( $"{processName} rtsp://127.0.0.1/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
