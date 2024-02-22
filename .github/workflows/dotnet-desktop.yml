@@ -15,7 +15,7 @@ jobs:
       
     steps:
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@latest
+      uses: NuGet/setup-nuget@V1.0.5
       
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@latest
