@@ -170,6 +170,16 @@ namespace RabbitOM.Net.Rtsp.Clients
         }
 
         /// <summary>
+        /// Just wait for a connection succeed
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>return true for a success, otherwise false</returns>
+        public bool WaitForConnection( TimeSpan timeout )
+        {
+            return _session.WaitForConnection( timeout );
+        }
+
+        /// <summary>
         /// Dispose
         /// </summary>
         public void Dispose()

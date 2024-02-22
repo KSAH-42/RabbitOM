@@ -57,5 +57,12 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// </summary>
         /// <param name="shutdownTimeout">the shutdown timeout</param>
         void StopCommunication( TimeSpan shutdownTimeout );
+
+        /// <summary>
+        /// Just wait for a connection succeed
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>return true for a success, otherwise false</returns>
+        bool WaitForConnection( TimeSpan timeout );
     }
 }

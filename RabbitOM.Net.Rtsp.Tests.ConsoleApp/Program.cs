@@ -119,15 +119,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 client.Configuration.MediaFormat= RTSPMediaFormat.Video;
                 client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
 
-                // For multicast settings, please make sure
-                // that the camera or the video source support multicast
-                // For instance, the happy RTSP server does not support multicast
-                // AND make sure that your are used a switch not a hub, very is difference between them
-                // And activate igmp snooping on the switch
+				// For multicast settings, please make sure
+				// that the camera or the video source support multicast
+				// For instance, the happy RTSP server does not support multicast
+				// AND make sure that your are used a switch not a hub, very is difference between them
+				// And activate igmp snooping on the switch
 
-                // client.Configuration.MulticastAddress = "229.0.0.1";
-                // client.Configuration.RtpPort = 55000;
-
+				// client.Configuration.MulticastAddress = "229.0.0.1";
+				// client.Configuration.RtpPort = 55000;
                 client.StartCommunication();
 
                 Console.WriteLine( "Press any keys to close the application" );
