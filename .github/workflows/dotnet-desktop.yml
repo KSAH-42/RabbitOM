@@ -1,0 +1,28 @@
+name: .NET framework build pipeline
+
+env:
+   SOLUTION_NAME: RabbitOM.sln
+    
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: windows-latest  
+      
+    steps:
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Checkout
+      uses: actions/checkout@master
+
+    - name: Move to workspace directory
+      run: cd $GITHUB_WORKSPACE
+
+    - name: Build
+      run: |
+        msbuild $SOLUTION_NAME /p:Configuration="Release"
