@@ -9,15 +9,8 @@ namespace RabbitOM.Net.Sdp
     /// Represent the base field collection class
     /// </summary>
     /// <typeparam name="TField">the type of the field</typeparam>
-    public class FieldCollection<TField> 
-        : IEnumerable
-        , IEnumerable<TField>
-        , ICollection
-        , ICollection<TField>
-        , IReadOnlyCollection<TField>
-
+    public class FieldCollection<TField>  : IEnumerable , IEnumerable<TField> , ICollection , ICollection<TField> , IReadOnlyCollection<TField> 
         where TField : BaseField
-
     {
         private readonly IList<TField> _collection = new List<TField>();
 
@@ -309,12 +302,7 @@ namespace RabbitOM.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryAddRange(IEnumerable<TField> fields)
         {
-            if (fields == null)
-            {
-                return false;
-            }
-
-            return fields.Where(TryAdd).Count() > 0;
+            return TryAddRange( fields , out int result );
         }
 
         /// <summary>
