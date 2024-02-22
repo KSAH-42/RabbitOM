@@ -14,6 +14,9 @@ jobs:
     runs-on: windows-latest  
       
     steps:
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
@@ -23,6 +26,9 @@ jobs:
     - name: Move to workspace directory
       run: cd $GITHUB_WORKSPACE
 
+    - name: Restore Packages
+      run: nuget restore Sandbox.sln
+        
     - name: Build
       run: |
         msbuild $SOLUTION_NAME /p:Configuration="Release"
