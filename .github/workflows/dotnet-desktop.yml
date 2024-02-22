@@ -1,4 +1,4 @@
-name: .NET framework build pipeline
+name: Build 
 
 env:
    SOLUTION_NAME: RabbitOM.sln
