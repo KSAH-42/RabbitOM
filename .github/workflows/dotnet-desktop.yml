@@ -23,9 +23,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@master
 
-    - name: Move to workspace directory
-      run: cd $GITHUB_WORKSPACE
-
     - name: Restore Packages
       run: nuget restore $SOLUTION_NAME
         
