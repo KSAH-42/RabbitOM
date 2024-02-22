@@ -14,12 +14,11 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             
             #region MENU
 
-            arguments["uri"] = args.ElementAtOrDefault(0);
-            
-            if ( string.IsNullOrEmpty(arguments["uri"]) || args.Contains( "/?") ) 
+            if ( ! args.Any() || args.Contains( "/?") || args.Any( x => x.Contains("help") ) ) 
             {
                 string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
 
+				Console.WriteLine();
                 Console.WriteLine("Receiving packet from a rtsp source ");
                 Console.WriteLine("Usage: ");
                 Console.WriteLine();
@@ -29,8 +28,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.WriteLine($"{processName} rtsp://127.0.0.1:554/toy.mp4");
                 Console.WriteLine($"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
                 Console.WriteLine();
-                Console.WriteLine("-u: the username");
-                Console.WriteLine("-p: the password");
                 Console.ForegroundColor = ConsoleColor.White;
                 return;
             }
@@ -39,7 +36,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             try
             {
-                Run(arguments["uri"]);
+                Run( args.FirstOrDefault() );
             }
             finally
             {
