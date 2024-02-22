@@ -10,7 +10,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     {
         static void Main(string[] args)
         {
-            if ( ! args.Any() || args.Contains( "/?") || args.Any( x => x.Contains("help") ) ) 
+            if ( !args.Any() || args.Contains( "/?" ) || args.Any( x => x.Contains( "help" ) ) )
             {
                 ShowHelp();
                 return;
@@ -32,15 +32,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             Console.WriteLine();
             Console.WriteLine( "Receiving packet from a rtsp source " );
+            Console.WriteLine();
             Console.WriteLine( "Usage: " );
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine( $"{processName} rtsp://127.0.0.1/toy.mp4" );
             Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4" );
             Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
             Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
             Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.White;
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
@@ -100,7 +99,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                     {
                         // In most of case, avoid this packet
                         Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.WriteLine("Skipping this data. size: {0}" , e.Packet.Data.Length );
+                        Console.WriteLine("Skipping some data : size {0}" , e.Packet.Data.Length );
                         return;
                     }
 
