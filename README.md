@@ -72,8 +72,6 @@ using ( var client = new RTSPClient() )
 
 # About the connection class
 
-I have already build this class, but I will commit in another moment after a code refactoring.
-
 The following code demonstrate how to list the supported methods available on a security camera:
 
 ~~~~C#
