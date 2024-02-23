@@ -17,7 +17,7 @@ A .net library for receiving raw audio/video streams. Classes used for decoding 
 * Handle large streams like 50 MBits/seconds without any crashs
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
 
-After recfactoring the client, the rtp layers which already exists will be added, for a next version.
+➡️ The rtp classes which already exists, will be added, for the next version.
 
 # How to receive raw rtp packets using the rtsp client ?
 
