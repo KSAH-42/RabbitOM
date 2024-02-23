@@ -78,7 +78,7 @@ The RTSPConnection class will give you more features and a direct access to the 
 
 ~~~~C#
 
-using ( var connection = new Rtsp.Remoting.RTSPConnection() )
+using ( var connection = new RTSPConnection() )
 {
     // Events subscriptions
 
