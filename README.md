@@ -80,8 +80,6 @@ using ( var client = new RTSPClient() )
 
 I have already build this class, but I will commit in another moment after a code refactoring.
 
-In my previous implementation, I use the fluent OOP approach to perform remote method invocation, I will preserve this approach.
-
 The following code demonstrate how to list the supported methods available on a security camera:
 
 ~~~~C#
@@ -115,8 +113,6 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
 }
 
 ~~~~
-
-Please notes, that if you want to receive video streams, just make some research on google about the "RTSP session state machine" and you will got it.
 
 Below, on the pseudo code, the remote method invocation works like this:
 
