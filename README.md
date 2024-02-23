@@ -76,10 +76,6 @@ using ( var client = new RTSPClient() )
 
 ~~~~
 
-# About the Alpha namespace
-
-This namepsace contains classes for experimentations. And theses classes will replace all classes present in the clients namespaces.
-
 # About the connection class
 
 I have already build this class, but I will commit in another moment after a code refactoring.
