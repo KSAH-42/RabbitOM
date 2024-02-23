@@ -80,45 +80,7 @@ using ( var client = new RTSPClient() )
 
 This namepsace contains classes for experimentations. And theses classes will replace all classes present in the clients namespaces.
 
-# About Real Time Streaming Protocol
-
-Where RTSP are used ?
-
-RTSP are used by security cameras and also used by Miracast technology. A SmartTV start a RTSP client and connect to RTSP server that run on your local machine in order to receive the video of your desktop.
-
-What is RTSP ?
-
-RTSP is a protocol used to control and to receive video/audio streams. RTSP is very similar to the HTTP protocol. Like HTTP protocol, you have some methods like GET/POST/TRACE/DELETE/PUT and so on, and somes headers separated by carriage returns and a message body. Here it is exactly the same thing except that the methods are dedicated for the streaming operations. RTSP proposed the following methods:
-
-| Methods                      | Description                                                                       |
-| ---------------------------- | --------------------------------------------------------------------------------- |
-| OPTIONS                      | List the supported methods (OPTIONS/DESCRIBE/PLAY/SETUP,etc...)                   |
-| DESCRIBE                     | Retrive the SDP                                                                   |
-| SETUP                        | Ask for creating a transport layer used to stream something and create a session or bundle to an existing session |
-| PLAY                         | Start the streaming                                                               |
-| PAUSE                        | Pause the streaming                                                               |
-| STOP                         | Stop the streaming                                                                |
-| GET_PARAMETER                | List customs parameters                                                           |
-| SET_PARAMETER                | Change customs parameters                                                         |
-| TEARDOWN                     | Stop the streaming and destroy the session.  |
-| ANNOUNCE                     | Posts the description of a media                                                  |
-| RECORD                       | Ask for recording                                                                 |
-| REDIRECT                     | This method is used to redirects the traffic                                      |
-
-Depending of cameras, you MUST send periodically a heart beat message using a particular message, otherwise the streaming will be closed by the server. Please notes also, to maintain a session active you must read the documentation of the camera to know which RTSP method is need to keep alive a session. There is no predefined method for all cameras. If you are using Onvif protocol, the Onvif tells that the GetParameter must be used, but in the real world some manufacturer used the GET_PARAMETER or the SET_PARAMETER or the OPTIONS methods. It's depends of the product.
-AFAIK, some standards/RFC ask to use GET_PARAMETER for a keepalive/ping and not using the options. I see manufacturer that use the OPTIONS method, because OPTIONS must be implemented unlike the GET_PARAMETER and SET_PARAMETER are optional.  
-So I recommand to ask to the camera manufacturer to be sure about the keepalive method.
-
-By essence, RTSP is very similar to http message except important things:
-
-* RTSP has some proprietary and mandatory header like CSeq header
-* RTSP works asynchonously. RTSP used message correlation identifier stored on CSeq header used on each request and response and must have the same message identifier. Message identifier increment after each remote method invocation, not during a retry. So, depending to the server, it is possible that you can receive a response of a previous request after receiving a response of the new / actual request. 
-* Unlike HTTP, the RTSP server can send spontaneously a request to the client ON THE SAME TCP Channel, it means when you open a tcp socket client and you send a request it may possible that the server can send a request to the client on the same socket during you request operation.
-* Using HTTP, video stream are push using multipart technics. With RTSP, packets are received on the same client socket where you are sending requests and waiting at the same time the response: This is called interleaved mode.
-
-All these things are handle by this implementation.
-
-# About the implementation of RTSP classes
+# About the connection class
 
 I have already build this class, but I will commit in another moment after a code refactoring.
 
@@ -192,19 +154,9 @@ var bodyResult =
 
 You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
 
-# About Session Description Protocol
+# About Session Description Protocol layer
 
-What is SDP ?
-
-SDP is a protocol used to describe a streaming session configuration, and contains important informations like the control/track uri and the keys/parameterSet used by Codecs, which are NOT accessible using Onvif protocols. Theses keys like VPS, PPS, SPS are mandatories. You can NOT decode video streams just be receiving data from a RTP channel. And theses keys are stored inside the SDP "document" where the SDP are only exchanged during a RTSP session. The SDP protocol are used not only by security cameras but also used by device that support SIP protocols like VoIP systems.
-
-About the implementation
-
-The actual implementation provide a strong type objects. I found many implementation that just implement a SDP using a dictionary of string/string or string/object. In many projects, when people add more and more features, it may difficult to access to the data. I have already encountred this situation on some others projects, and I think it is really to start early a code refactoring. So using a simple dictionary can introduce an anti pattern called "primitive obsession".
-
-To find a solution to this problem, I decided to implement a set of classes that provide a better access to the data located inside the SDP document. And to create distinct classes, in my opinion is more scalable in terms of adding more and more features. 
-
-This implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
+The actual implementation provide a strong type objects. Please notes, that this implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
 
 Usage:
 
