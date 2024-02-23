@@ -17,7 +17,7 @@ A .net library for receiving raw audio/video streams.
 * Handle large streams like 50 MBits/seconds without any crashs
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
 
-➡️ The full rtp layer (rtp sequence, etc...) which already exists, will be added, for the next version. RTP packet is actually only available in the form as bytes array and class. 
+➡️ The full rtp layer (rtp sequencer, etc...) which already exists, will be added, for the next version. RTP packet is actually only available in the form as bytes array and class. 
 
 ➡️ Classes used for decoding was already implemented but not present in this repository at this moment.
 
