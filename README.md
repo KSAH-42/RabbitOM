@@ -8,8 +8,6 @@ Classes used for decoding was already implemented but not present in this reposi
 
 If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
-Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtime compressed packets from a rtsp source. 
-
 # Main features
 
 * Support Unicast TCP / Unicast UDP / Multicast Streaming transports
