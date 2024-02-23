@@ -25,10 +25,6 @@ Look on the project RabbitOM.Net.Rtsp.Tests.ConsoleApp, used to received realtim
  
 Get more power ? I don't like the terms power, but if you want to get more power, use the RTSPConnection class instead of the RTSPClient class, which are more generic. The RTSPConnection class will give you more features and a direct access to the protocol messaging layer. The only thing to known about the connection class is that the current implementation does not support SSL/TLS. But not yet.
 
-# Introduction
-
-This is a set of classes to used to connect, and received video/audio streams from security camera using standard protocols like RTSP/RTP/SDP.
-
 # How to receive raw rtp packets using the rtsp client ?
 
 Like this :
