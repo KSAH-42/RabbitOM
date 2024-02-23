@@ -14,7 +14,7 @@ A .net assemblies which can be used for receiving raw audio/video streams. After
 * Provide Event Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
 * Thread safe
-* Handle large streams like 50 MBits/seconds
+* Handle large streams like 50 MBits/seconds without any crashs
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
  
 
