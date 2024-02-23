@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtp
     /// <summary>
     /// Represent a class used to format and parse data
     /// </summary>
-    public static class RtpPacketFormatter
+    internal static class RtpPacketFormatter
     {
         /// <summary>
         /// Format to string the packet
