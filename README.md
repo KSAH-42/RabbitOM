@@ -4,8 +4,6 @@
 
 A .net assemblies which can be used for receiving raw audio/video streams. After recfactoring the client, I will add the rtp layers which already exists, but i need to do something before to publish it. Classes used for decoding was already implemented but not present in this repository at this moment.
 
-If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
-
 # Main features
 
 * Support Unicast TCP / Unicast UDP / Multicast Streaming transports
@@ -196,3 +194,8 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 ~~~~
 
 ⚠️: Please notes, that this implementation has been tested ONLY with many security cameras models, but NOT with VoIP devices. It may possible with VOIP device, that extra fields has been introduce.
+
+
+# Getting more details ?
+
+If you want to get more details, send me an email to "a.sahnine@netcourrier.com"
