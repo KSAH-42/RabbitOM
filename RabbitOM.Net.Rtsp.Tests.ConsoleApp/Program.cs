@@ -1,9 +1,7 @@
 ﻿using RabbitOM.Net.Rtp;
-using RabbitOM.Net.Rtsp;
 using RabbitOM.Net.Rtsp.Clients;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
@@ -11,36 +9,22 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     {
         static void Main(string[] args)
         {
-            if ( !args.Any() || args.Contains( "/?" ) || args.Any( x => x.Contains( "help" ) ) )
+            var commandLine = new CommandLines( args );
+
+            if ( commandLine.CanShowHelp() )
             {
-                ShowHelp();
+                commandLine.ShowHelp();
                 return;
             }
 
             try
             {
-                Run( args.FirstOrDefault() );
+                Run( commandLine.UriOption );
             }
             finally
             {
                 Console.ForegroundColor = ConsoleColor.White;
             }
-        }
-
-        static void ShowHelp()
-        {
-            string processName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + ".exe";
-
-            Console.WriteLine();
-            Console.WriteLine( "Receiving packet from a rtsp source " );
-            Console.WriteLine();
-            Console.WriteLine( "Usage: " );
-            Console.WriteLine();
-            Console.WriteLine( $"{processName} rtsp://127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
-            Console.WriteLine();
         }
 
         // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
@@ -56,7 +40,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             if ( ! RTSPUri.TryParse( uri , out RTSPUri rtspUri) )
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Uri bad format");
+                Console.WriteLine("Invalid input");
                 return;
             }
             
