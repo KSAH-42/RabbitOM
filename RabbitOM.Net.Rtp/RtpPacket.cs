@@ -157,21 +157,21 @@ namespace RabbitOM.Net.Rtp
         /// Returns minimal informations about the rtp packet like data size, payload type
         /// </summary>
         /// <returns>returns a string value</returns>
-		public override string ToString()
-		{
-			return RtpPacketFormatter.Format( this );
-		}
+        public override string ToString()
+        {
+            return RtpPacketFormatter.Format( this );
+        }
 
 
 
 
-		/// <summary>
-		/// Try to parse
-		/// </summary>
-		/// <param name="buffer">the buffer</param>
-		/// <param name="result">the result</param>
-		/// <returns>returns true for a success, otherwise false</returns>
-		public static bool TryParse( byte[] buffer , out RtpPacket result )
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryParse( byte[] buffer , out RtpPacket result )
         {
             return RtpPacketFormatter.TryParse( buffer , out result );
         }

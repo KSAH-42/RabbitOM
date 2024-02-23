@@ -7,12 +7,12 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     public sealed class CommandLines
     {
         private static readonly string[] DefaultHelpOptions = new string[]
-            {
-                "/?",
-                "-?",
-                "/help",
-                "-help",
-            };
+        {
+            "/?",
+            "-?",
+            "/help",
+            "-help",
+        };
 
 
 
@@ -23,8 +23,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
 
 
-		public CommandLines( string[] args )
-		{
+        public CommandLines( string[] args )
+        {
             _args = args ?? throw new ArgumentNullException( nameof( args ) );
         }
 
