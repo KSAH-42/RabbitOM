@@ -95,7 +95,7 @@ using ( var connection = new Rtsp.Remoting.RTSPConnection() )
             .Response
             .GetHeaderPublicOptions()
             .ToList()
-            .ForEach( supportedMethod => Console.WriteLine(supportedMethod) )
+            .ForEach( Console.WriteLine )
             ;
 }
 
@@ -186,7 +186,7 @@ for ( int i = 1; i <= 10; ++ i )
     sessionDescriptor.MediaDescriptions.Add(mediaDescription);
 }
 
-Console.WriteLine(sessionDescriptor.ToString());
+Console.WriteLine( sessionDescriptor.ToString() );
 
 if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescriptor descriptor ) )
 {
