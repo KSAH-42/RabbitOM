@@ -140,9 +140,7 @@ You will be able to decorate each request by adding customs headers, because som
 
 # About Session Description Protocol layer
 
-The actual implementation provide a strong type objects. Please notes, that this implementation has been tested ONLY with many security cameras models and many RTSP servers, but NOT with VoIP devices.
-
-Usage:
+The actual implementation provide a strong type objects.
 
 ~~~~C#
 
@@ -199,3 +197,4 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 ~~~~
 
+⚠️: Please notes, that this implementation has been tested ONLY with many security cameras models, but NOT with VoIP devices. It may possible with VOIP device, that extra fields has been introduce.
