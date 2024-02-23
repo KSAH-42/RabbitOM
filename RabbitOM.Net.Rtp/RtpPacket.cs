@@ -45,13 +45,16 @@ namespace RabbitOM.Net.Rtp
 
 
 
+
+
+
         /// <summary>
         /// Gets the version
         /// </summary>
         public uint Version
         {
             get => _version;
-            private set => _version = value;
+            internal set => _version = value;
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace RabbitOM.Net.Rtp
         public bool HasPadding
         {
             get => _hasPadding;
-            private set => _hasPadding = value;
+            internal set => _hasPadding = value;
         }
 
         /// <summary>
@@ -69,7 +72,7 @@ namespace RabbitOM.Net.Rtp
         public bool HasExtension
         {
             get => _hasExtension;
-            private set => _hasExtension = value;
+            internal set => _hasExtension = value;
         }
 
         /// <summary>
@@ -78,7 +81,7 @@ namespace RabbitOM.Net.Rtp
         public int NumberOfCSRC
         {
             get => _csrcCount;
-            private set => _csrcCount = value;
+            internal set => _csrcCount = value;
         }
 
         /// <summary>
@@ -87,7 +90,7 @@ namespace RabbitOM.Net.Rtp
         public bool Marker
         {
             get => _marker;
-            private set => _marker = value;
+            internal set => _marker = value;
         }
 
         /// <summary>
@@ -96,7 +99,7 @@ namespace RabbitOM.Net.Rtp
         public int PayloadType
         {
             get => _payloadType;
-            private set => _payloadType = value;
+            internal set => _payloadType = value;
         }
 
         /// <summary>
@@ -105,7 +108,7 @@ namespace RabbitOM.Net.Rtp
         public ushort SequenceNumber
         {
             get => _sequenceNumber;
-            private set => _sequenceNumber = value;
+            internal set => _sequenceNumber = value;
         }
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace RabbitOM.Net.Rtp
         public uint Timestamp
         {
             get => _timestamp;
-            private set => _timestamp = value;
+            internal set => _timestamp = value;
         }
 
         /// <summary>
@@ -123,7 +126,7 @@ namespace RabbitOM.Net.Rtp
         public uint SSRC
         {
             get => _ssrc;
-            private set => _ssrc = value;
+            internal set => _ssrc = value;
         }
 
         /// <summary>
@@ -132,7 +135,7 @@ namespace RabbitOM.Net.Rtp
         public int ExtensionHeaderId
         {
             get => _extensionHeaderId;
-            private set => _extensionHeaderId = value;
+            internal set => _extensionHeaderId = value;
         }
 
         /// <summary>
@@ -141,79 +144,33 @@ namespace RabbitOM.Net.Rtp
         public ArraySegment<byte> Data
         {
             get => _data;
-            private set => _data = value;
+            internal set => _data = value;
         }
 
 
 
 
-
-
         /// <summary>
-        /// Try to parse
+        /// Returns minimal informations about the rtp packet like data size, payload type
         /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( byte[] buffer , out RtpPacket result )
+        /// <returns>returns a string value</returns>
+		public override string ToString()
+		{
+			return RtpPacketFormatter.Format( this );
+		}
+
+
+
+
+		/// <summary>
+		/// Try to parse
+		/// </summary>
+		/// <param name="buffer">the buffer</param>
+		/// <param name="result">the result</param>
+		/// <returns>returns true for a success, otherwise false</returns>
+		public static bool TryParse( byte[] buffer , out RtpPacket result )
         {
-            result = default;
-
-            if ( buffer == null )
-            {
-                return false;
-            }
-
-            result = new RtpPacket();
-
-            if ( buffer.Length < DefaultHeaderSize )
-            {
-                return false;
-            }
-
-            int offset = 0;
-
-            result.Version = (uint) buffer[ offset ] >> 6;
-
-            if ( result.Version != DefaultVersion )
-            {
-                return false;
-            }
-
-            result.HasPadding = ( ( buffer[ offset ] >> 5 ) & 0x1 ) != 0;
-            result.HasExtension = ( ( buffer[ offset ] >> 4 ) & 0x1 ) != 0;
-            result.NumberOfCSRC = buffer[ offset++ ] & 0xF;
-
-            result.Marker = ( ( buffer[ offset ] >> 7 ) & 0x1 ) != 0;
-            result.PayloadType = buffer[ offset++ ] & 0x7F;
-
-            result.SequenceNumber = (ushort) RtpDataConverter.ConvertToInt16( buffer , offset );
-            offset += 2;
-
-            result.Timestamp = RtpDataConverter.ConvertToUInt( buffer , offset );
-            offset += 4;
-
-            result.SSRC = RtpDataConverter.ConvertToUInt( buffer , offset );
-            offset += 4 + 4 * result.NumberOfCSRC;
-
-            if ( result.HasExtension )
-            {
-                result.ExtensionHeaderId = RtpDataConverter.ConvertToInt16( buffer , offset );
-
-                offset += 4;
-                offset += RtpDataConverter.ConvertToInt16( buffer , offset ) * 4;
-            }
-
-            int payloadSize = buffer.Length - offset;
-
-            if ( result.HasPadding )
-            {
-                payloadSize -= buffer[ buffer.Length - 1 ];
-            }
-
-            result.Data = new ArraySegment<byte>( buffer , offset , payloadSize );
-
-            return true;
+            return RtpPacketFormatter.TryParse( buffer , out result );
         }
     }
 }

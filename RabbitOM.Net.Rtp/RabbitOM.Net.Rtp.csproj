@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RtpPacketFormatter.cs" />
     <Compile Include="RtpPacket.cs" />
     <Compile Include="RtpDataConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
