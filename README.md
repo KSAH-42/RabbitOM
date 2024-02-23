@@ -17,7 +17,7 @@ A .net library for receiving raw audio/video streams.
 * Handle large streams like 50 MBits/seconds without any crashs
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
 
-➡️ The rtp classes (rtp sequence, etc...) which already exists, will be added, for the next version. RTP packet is extracted from the stream and are actually only available in the form as bytes array. 
+➡️ The full rtp layer (rtp sequence, etc...) which already exists, will be added, for the next version. RTP packet is actually only available in the form as bytes array and class. 
 
 ➡️ Classes used for decoding was already implemented but not present in this repository at this moment.
 
@@ -46,10 +46,14 @@ using ( var client = new RTSPClient() )
     {
         var interleavedPacket = e.Packet as RTSPInterleavedPacket;
 
-        if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
-             return;
-
-        Console.WriteLine("DataReceived {0} ", e.Packet.Data.Length); // raw rtp go here
+	if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
+	    return;
+	
+	if ( RtpPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
+	{
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+	    Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
+	}
     };
 
     client.Configuration.Uri = Constants.LocalServer;
