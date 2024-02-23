@@ -51,8 +51,7 @@ using ( var client = new RTSPClient() )
 	
 	if ( RtpPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
 	{
-            Console.ForegroundColor = ConsoleColor.DarkGreen;
-	    Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
+            Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
 	}
     };
 
