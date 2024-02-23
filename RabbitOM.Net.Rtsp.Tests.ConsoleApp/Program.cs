@@ -1,4 +1,5 @@
-﻿using RabbitOM.Net.Rtsp;
+﻿using RabbitOM.Net.Rtp;
+using RabbitOM.Net.Rtsp;
 using RabbitOM.Net.Rtsp.Clients;
 using System;
 using System.Collections.Generic;
@@ -103,8 +104,15 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                         return;
                     }
 
+                    if ( ! RtpPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+						Console.WriteLine( "Invalid rtp packet !!!!" );
+                        return;
+                    }
+
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
+                    Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
                 };
 
                 // Please note, read the manufacturer's documentation

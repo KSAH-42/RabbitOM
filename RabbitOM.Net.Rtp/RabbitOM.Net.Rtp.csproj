@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{13BB93C2-5568-40A0-8957-EEFDFFA99023}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>RabbitOM.Net.Rtsp.Tests.ConsoleApp</RootNamespace>
-    <AssemblyName>RabbitOM.Net.Rtsp.Tests.ConsoleApp</AssemblyName>
+    <ProjectGuid>{8BC40A06-1EE6-4ABD-B6CA-29CDF5BFC19C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RabbitOM.Net.Rtp</RootNamespace>
+    <AssemblyName>RabbitOM.Net.Rtp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,15 +21,16 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\RabbitOM.Net.Rtp.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\RabbitOM.Net.Rtp.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,28 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayExtensions.cs" />
-    <Compile Include="Constants.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="RtpPacket.cs" />
+    <Compile Include="RtpDataConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RabbitOM.Net.Rtp\RabbitOM.Net.Rtp.csproj">
-      <Project>{8bc40a06-1ee6-4abd-b6ca-29cdf5bfc19c}</Project>
-      <Name>RabbitOM.Net.Rtp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RabbitOM.Net.Rtsp\RabbitOM.Net.Rtsp.csproj">
-      <Project>{caea566d-6aa9-460e-9bfa-8ce0e2fe7646}</Project>
-      <Name>RabbitOM.Net.Rtsp</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RabbitOM.Net.Sdp\RabbitOM.Net.Sdp.csproj">
-      <Project>{873ffd10-76dc-4920-8750-6acdc29ce594}</Project>
-      <Name>RabbitOM.Net.Sdp</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
