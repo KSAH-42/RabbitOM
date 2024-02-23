@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-A .net assemblies which can be used for receiving raw audio/video streams. After recfactoring the client, I will add the rtp layers which already exists, but i need to do something before to publish it. Classes used for decoding was already implemented but not present in this repository at this moment.
+A .net library for receiving raw audio/video streams. Classes used for decoding was already implemented but not present in this repository at this moment.
 
 # Main features
 
@@ -16,7 +16,8 @@ A .net assemblies which can be used for receiving raw audio/video streams. After
 * Thread safe
 * Handle large streams like 50 MBits/seconds without any crashs
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
- 
+
+After recfactoring the client, the rtp layers which already exists will be added, for a next version.
 
 # How to receive raw rtp packets using the rtsp client ?
 
