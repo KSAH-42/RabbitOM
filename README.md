@@ -17,7 +17,6 @@ A .net assemblies which can be used for receiving raw audio/video streams. After
 * Handle large streams like 50 MBits/seconds
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
  
-Get more power ? I don't like the terms power, but if you want to get more power, use the RTSPConnection class instead of the RTSPClient class, which are more generic. The RTSPConnection class will give you more features and a direct access to the protocol messaging layer. The only thing to known about the connection class is that the current implementation does not support SSL/TLS. But not yet.
 
 # How to receive raw rtp packets using the rtsp client ?
 
@@ -68,7 +67,7 @@ using ( var client = new RTSPClient() )
 
 # About the connection class
 
-The following code demonstrate how to list the supported methods available on a security camera:
+The RTSPConnection class will give you more features and a direct access to the protocol messaging layer. The following code demonstrate how to list the supported methods available on a security camera:
 
 ~~~~C#
 
@@ -133,6 +132,9 @@ var bodyResult =
 ~~~~
 
 You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there the message contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create a streaming session based on RTP multicast channel.
+
+⚠️: The only thing to known about the connection class is that the current implementation does not support SSL/TLS. But not yet.
+
 
 # About Session Description Protocol layer
 
