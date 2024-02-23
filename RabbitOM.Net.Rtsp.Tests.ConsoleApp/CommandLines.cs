@@ -6,30 +6,13 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 {
     public sealed class CommandLines
     {
-        private static readonly string[] DefaultHelpOptions = new string[]
-        {
-            "/?",
-            "-?",
-            "/help",
-            "-help",
-        };
-
-
-
-
         private readonly string[] _args;
-
-
-
 
 
         public CommandLines( string[] args )
         {
             _args = args ?? throw new ArgumentNullException( nameof( args ) );
         }
-
-
-
 
 
         public string UriOption
@@ -40,12 +23,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
 
 
-
-
-
         public bool CanShowHelp()
         {
-            return ! _args.Any() || _args.Intersect( DefaultHelpOptions ).Count() > 0;
+            return ! RTSPUri.TryParse( _args.FirstOrDefault() , out RTSPUri uri );
         }
 
         public void ShowHelp()
