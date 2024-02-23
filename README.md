@@ -4,7 +4,7 @@
 
 A .net assemblies which can be used for receiving raw audio/video streams. After recfactoring the client, I will add the rtp layers which already exists, but i need to do something before to publish it. Classes used for decoding was already implemented but not present in this repository at this moment.
 
-If you want get more details, you can send me an email to "a.sahnine@netcourrier.com"
+If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
 
 # Main features
 
