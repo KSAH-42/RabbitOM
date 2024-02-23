@@ -1,4 +1,4 @@
-# RabbitOM : a resilient RTSP client based on the .net framework
+# A resilient RTSP client based on the .net framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
