@@ -144,7 +144,7 @@ You will be able to decorate each request by adding customs headers, because som
 
 # About Session Description Protocol layer
 
-The actual implementation provide a strong type objects.
+The actual implementation is strong typed.
 
 ~~~~C#
 
