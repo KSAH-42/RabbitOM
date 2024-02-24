@@ -14,7 +14,7 @@ A .net library for receiving raw audio/video streams.
 * Provide Event Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
 * Thread safe
-* Handle large streams like 50 MBits/seconds without any crashs
+* Handle large streams with a hight bitrate like 50 MBits/seconds without any crashs
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
 
 ➡️ The full rtp layer (rtp sequencer, etc...) which already exists, will be added, for the next version. RTP packet is actually accessible in the form as class and raw bytes array and. It will changed after new client implementation.
