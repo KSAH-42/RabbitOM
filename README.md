@@ -50,9 +50,7 @@ using ( var client = new RTSPClient() )
 	    return;
 	
 	if ( RtpPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
-	{
             Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
-	}
     };
 
     client.Configuration.Uri = Constants.LocalServer;
