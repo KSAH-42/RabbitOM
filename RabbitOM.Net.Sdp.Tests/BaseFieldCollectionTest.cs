@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Linq;
 
 namespace RabbitOM.Net.Sdp.Tests
 {
@@ -40,19 +39,19 @@ namespace RabbitOM.Net.Sdp.Tests
         }
 
         [TestMethod]
-        public void Add_Except_ArgumentNullException()
+        public void Add_Throw_ArgumentNullException()
         {
             Assert.ThrowsException<ArgumentNullException>( () => _collection.Add( null));
         }
 
         [TestMethod]
-        public void AddRang_Except_ArgumentNullException()
+        public void AddRang_Throw_ArgumentNullException()
         {
             Assert.ThrowsException<ArgumentNullException>(() => _collection.AddRange(null));
         }
 
         [TestMethod]
-        public void Add_Except_NotException()
+        public void Add_NoThrow_Exception()
         {
             try
             {
