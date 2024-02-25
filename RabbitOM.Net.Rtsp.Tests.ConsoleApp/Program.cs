@@ -9,17 +9,17 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var commandLine = new CommandLines( args );
+            var commandLines = new CommandLines( args );
 
-            if ( commandLine.CanShowHelp() )
+            if ( commandLines.CanShowHelp() )
             {
-                commandLine.ShowHelp();
+                commandLines.ShowHelp();
                 return;
             }
 
             try
             {
-                Run( commandLine.UriOption );
+                Run( commandLines.UriOption );
             }
             finally
             {
