@@ -30,12 +30,12 @@ namespace RabbitOM.Net.Rtsp.Clients
         /// <summary>
         /// Represent the default port
         /// </summary>
-        public const int                  DefaultPort               = 61024;
+        public readonly static int        DefaultPort               = 61024;
 
         /// <summary>
         /// Represent the default TTL
         /// </summary>
-        public const byte                 DefaultTTL                = 5;
+        public readonly static byte       DefaultTTL                = 5;
 
 
 
