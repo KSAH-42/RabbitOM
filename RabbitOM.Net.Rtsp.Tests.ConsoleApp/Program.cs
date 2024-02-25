@@ -43,7 +43,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 Console.WriteLine("Bad uri");
                 return;
             }
-            
+
             using ( var client = new RTSPClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
@@ -120,7 +120,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
                 client.StartCommunication();
-                       
+
+                Console.CancelKeyPress += ( sender , e ) => Console.ForegroundColor = ConsoleColor.White;
+
                 Console.WriteLine( "Press any keys to close the application" );
                 Console.ReadKey();
 
