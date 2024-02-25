@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Rtp
             }
 
             return buffer[    offset ] << 16 |
-                   buffer[ ++ offset ] << 8 |
+                   buffer[ ++ offset ] << 8  |
                    buffer[ ++ offset ];
         }
 
@@ -77,7 +77,7 @@ namespace RabbitOM.Net.Rtp
 
             return (uint) ( buffer[    offset ] << 24 |
                             buffer[ ++ offset ] << 16 |
-                            buffer[ ++ offset ] << 8 |
+                            buffer[ ++ offset ] << 8  |
                             buffer[ ++ offset ] );
         }
 
@@ -92,12 +92,7 @@ namespace RabbitOM.Net.Rtp
         {
             result = default;
 
-            if ( buffer == null )
-            {
-                return false;
-            }
-
-            if ( buffer.Length <= 0 || buffer.Length <= ( offset + 1 ) )
+            if ( buffer == null || buffer.Length <= 0 || buffer.Length <= ( offset + 1 ) )
             {
                 return false;
             }
@@ -118,12 +113,7 @@ namespace RabbitOM.Net.Rtp
         {
             result = default;
 
-            if ( buffer == null )
-            {
-                return false;
-            }
-
-            if ( buffer.Length <= 0 || buffer.Length <= ( offset + 2 ) )
+            if ( buffer == null || buffer.Length <= 0 || buffer.Length <= ( offset + 2 ) )
             {
                 return false;
             }
@@ -146,19 +136,14 @@ namespace RabbitOM.Net.Rtp
         {
             result = default;
 
-            if ( buffer == null )
-            {
-                return false;
-            }
-
-            if ( buffer.Length <= 0 || buffer.Length <= ( offset + 3 ) )
+            if ( buffer == null || buffer.Length <= 0 || buffer.Length <= ( offset + 3 ) )
             {
                 return false;
             }
 
             result = (uint) ( buffer[ offset ] << 24 |
                             buffer[ ++offset ] << 16 |
-                            buffer[ ++offset ] << 8 |
+                            buffer[ ++offset ] << 8  |
                             buffer[ ++offset ] );
 
             return true;
