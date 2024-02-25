@@ -115,7 +115,7 @@ var bodyResult =
 
  connection
 
-        .Play() // Some RTSP Method like GetOption, Play
+        .Play()
 
         .AddHeader( new RTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
         .AddHeader( "X-Header1" , "my value 1")
