@@ -80,5 +80,88 @@ namespace RabbitOM.Net.Rtp
                             buffer[ ++ offset ] << 8 |
                             buffer[ ++ offset ] );
         }
+
+        /// <summary>
+        /// Convert
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="offset">the offset</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryConvertToInt16( byte[] buffer , int offset , out int result )
+        {
+            result = default;
+
+            if ( buffer == null )
+            {
+                return false;
+            }
+
+            if ( buffer.Length <= 0 || buffer.Length <= ( offset + 1 ) )
+            {
+                return false;
+            }
+
+            result = ( buffer[ offset ] << 8 ) | buffer[ ++offset ];
+
+            return true;
+        }
+
+        /// <summary>
+        /// Convert
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="offset">the offset</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryConvertToInt24( byte[] buffer , int offset , out int result )
+        {
+            result = default;
+
+            if ( buffer == null )
+            {
+                return false;
+            }
+
+            if ( buffer.Length <= 0 || buffer.Length <= ( offset + 2 ) )
+            {
+                return false;
+            }
+
+            result = buffer[   offset ] << 16
+                   | buffer[ ++offset ] << 8
+                   | buffer[ ++offset ];
+
+            return true;
+        }
+
+        /// <summary>
+        /// Convert
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="offset">the offset</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryConvertToUInt( byte[] buffer , int offset , out uint result )
+        {
+            result = default;
+
+            if ( buffer == null )
+            {
+                return false;
+            }
+
+            if ( buffer.Length <= 0 || buffer.Length <= ( offset + 3 ) )
+            {
+                return false;
+            }
+
+            result = (uint) ( buffer[ offset ] << 24 |
+                            buffer[ ++offset ] << 16 |
+                            buffer[ ++offset ] << 8 |
+                            buffer[ ++offset ] );
+
+            return true;
+        }
     }
 }

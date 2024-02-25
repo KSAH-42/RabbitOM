@@ -17,7 +17,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
         public string UriOption
         {
-            get => _args.FirstOrDefault() ?? string.Empty;
+            get => _args.FirstOrDefault();
         }
 
 
