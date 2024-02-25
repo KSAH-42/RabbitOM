@@ -238,7 +238,6 @@ namespace RabbitOM.Net.Rtsp
 
             try
             {
-                
                 return _socket.ReceiveFrom( buffer, offset , buffer.Length , SocketFlags.None , ref endpoint );
             }
             catch ( Exception ex )
