@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Sdp
     /// <summary>
     /// Represent the base field collection class
     /// </summary>
-    public class BaseFieldCollection : FieldCollection<BaseField> 
+    public sealed class BaseFieldCollection : FieldCollection<BaseField> 
     { 
         /// <summary>
         /// Initialize a new instance of the collection
