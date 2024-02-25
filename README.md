@@ -204,6 +204,6 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 ⚠️: Please notes, that this implementation has been tested ONLY with many security cameras models, but NOT with VoIP devices. It may possible with VOIP device add extra fields.
 
 
-# Getting more details ?
+# Get more details ?
 
 If you want to get more details, send me an email to "a.sahnine@netcourrier.com"
