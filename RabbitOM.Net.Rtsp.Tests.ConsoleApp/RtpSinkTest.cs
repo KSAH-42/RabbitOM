@@ -120,6 +120,7 @@ namespace RabbitOM.Net.Rtsp.Tests
         private readonly Queue<RTPPacket> _packets = new Queue<RTPPacket>();
         private readonly Queue<int> _sizes = new Queue<int>();
         private RTPPacket _lastPacket;
+        private int _size;
 
         public RTPPacket LastPacket
         {
@@ -142,10 +143,12 @@ namespace RabbitOM.Net.Rtsp.Tests
             lock ( _lock )
             {
                 _packets.Enqueue( packet );
+                _size ++;
 
                 if ( packet.Marker )
                 {
-                    _sizes.Enqueue( _packets.Count );
+                    _sizes.Enqueue( _size );
+                    _size = 0;
                 }
 
                 _lastPacket = packet;
