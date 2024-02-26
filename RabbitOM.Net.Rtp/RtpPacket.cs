@@ -187,13 +187,17 @@ namespace RabbitOM.Net.Rtp
         /// <returns>return true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return _version != DefaultVersion 
-                || _data.Array == null
-                || _data.Count < DefaultHeaderSize
+            if ( _version != DefaultHeaderSize )
+            {
+                return false;
+            }
 
-                ? false
-                : true
-                ;
+            if ( _data.Array == null || _data.Count == 0 )
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -235,7 +239,7 @@ namespace RabbitOM.Net.Rtp
 
             uint version = (uint) buffer[ offset ] >> 6;
 
-            if ( version != RtpPacket.DefaultVersion )
+            if ( version != DefaultVersion )
             {
                 return false;
             }
