@@ -154,7 +154,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             }
 
             using ( var client = new RTSPClient() )
-            using ( var sink = new DefaultRTPSink() )
+            using ( var rtpSink = new DefaultRTPSink() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
                 {
@@ -172,7 +172,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine( "Client connected - " + client.Configuration.Uri );
-                    sink.Reset();
+                    rtpSink.Reset();
                 };
 
                 client.Disconnected += ( sender , e ) =>
@@ -199,16 +199,16 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                         return;
                     }
 
-                    sink.Write( e.Packet.Data );
+                    rtpSink.Write( e.Packet.Data );
                 };
 
-                sink.PacketReceived += ( sender , e ) =>
+                rtpSink.PacketReceived += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine( "Rtp packet received : {0}" , e.Packet.Data.Length );
                 };
 
-                sink.FrameReceived += ( sender , e ) =>
+                rtpSink.FrameReceived += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine( "New Rtp frame - packet_count : {0} " , e.Frame.Packets.Length );
