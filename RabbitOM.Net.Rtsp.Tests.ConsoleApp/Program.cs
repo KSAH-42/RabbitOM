@@ -25,8 +25,6 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             try
             {
-                // see the RtpSinkTest for the follow test
-                
                 if ( commandLines.SinkOption )
                 {
                     RunWithSink( commandLines.UriOption );
