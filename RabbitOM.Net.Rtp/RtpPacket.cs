@@ -11,12 +11,12 @@ namespace RabbitOM.Net.Rtp
         /// <summary>
         /// The default header size
         /// </summary>
-        public const int DefaultHeaderSize = 12;
+        private const int DefaultHeaderSize = 12;
 
         /// <summary>
         /// The default protocol version
         /// </summary>
-        public const int DefaultVersion = 2;
+        private const int DefaultVersion = 2;
 
 
 
