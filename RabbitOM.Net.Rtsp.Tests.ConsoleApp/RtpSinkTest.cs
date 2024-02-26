@@ -146,9 +146,9 @@ namespace RabbitOM.Net.Rtsp.Tests
                 _lastPacket = packet;
 
                 OnPacketAppended( packet );
+            
+                return true;
             }
-
-            return true;
         }
 
         public override bool CanBuildFrame()
