@@ -135,7 +135,7 @@ namespace RabbitOM.Net.Rtsp.Tests
 
         public override bool TryAppendPacket( byte[] buffer )
         {
-            if ( ! RTPPacket.TryParse( buffer , out RTPPacket packet  ) )
+            if ( ! RTPPacket.TryParse( buffer , out RTPPacket packet ) )
             {
                 return false;
             }
@@ -143,15 +143,9 @@ namespace RabbitOM.Net.Rtsp.Tests
             lock ( _lock )
             {
                 _packets.Enqueue( packet );
-                _frameSize ++;
-
-                if ( packet.Marker )
-                {
-                    _sizes.Enqueue( _frameSize );
-                    _frameSize = 0;
-                }
-
                 _lastPacket = packet;
+
+                OnPacketAppended( packet );
             }
 
             return true;
@@ -194,6 +188,17 @@ namespace RabbitOM.Net.Rtsp.Tests
                 _packets.Clear();
                 _sizes.Clear();
                 _lastPacket = null;
+            }
+        }
+
+        private void OnPacketAppended( RTPPacket packet )
+        {
+            _frameSize++;
+
+            if ( packet.Marker )
+            {
+                _sizes.Enqueue( _frameSize );
+                _frameSize = 0;
             }
         }
     }
