@@ -22,6 +22,43 @@ namespace RabbitOM.Net.Rtp
 
 
 
+        /// <summary>
+        /// Initialize a new instance of the rtp packet class
+        /// </summary>
+        private RtpPacket()
+		{
+		}
+
+        /// <summary>
+        /// Initialize a new instance of the rtp packet class
+        /// </summary>
+        /// <param name="version">the version</param>
+        /// <param name="hasPadding">the padding flag</param>
+        /// <param name="hasExtension">the extension flag</param>
+        /// <param name="numberOfcsrc">the number of contributing source</param>
+        /// <param name="marker">the marker</param>
+        /// <param name="payloadType">the payload type</param>
+        /// <param name="sequenceNumber">the sequence number</param>
+        /// <param name="timestamp">the time stamp</param>
+        /// <param name="ssrc">the synchronization source</param>
+        /// <param name="extensionHeaderId">the header extension id</param>
+        /// <param name="data">the data</param>
+		public RtpPacket( uint version, bool hasPadding, bool hasExtension, int numberOfcsrc, bool marker, int payloadType, ushort sequenceNumber, uint timestamp, uint ssrc, int extensionHeaderId, ArraySegment<byte> data )
+        {
+            _version = version;
+            _hasPadding = hasPadding;
+            _hasExtension = hasExtension;
+            _numberOfcsrc = numberOfcsrc;
+            _marker = marker;
+            _payloadType = payloadType;
+            _sequenceNumber = sequenceNumber;
+            _timestamp = timestamp;
+            _ssrc = ssrc;
+            _extensionHeaderId = extensionHeaderId;
+            _data = data;
+        }
+
+
 
 
 
@@ -46,9 +83,6 @@ namespace RabbitOM.Net.Rtp
         private int _extensionHeaderId;
 
         private ArraySegment<byte> _data;
-
-
-
 
 
 
@@ -147,7 +181,20 @@ namespace RabbitOM.Net.Rtp
 
 
 
+        /// <summary>
+        /// Try a validation
+        /// </summary>
+        /// <returns>return true for a success, otherwise false</returns>
+        public bool TryValidate()
+        {
+            return _version != DefaultVersion 
+                || _data.Array == null
+                || _data.Count < DefaultHeaderSize
 
+                ? false
+                : true
+                ;
+        }
 
         /// <summary>
         /// Returns minimal informations about the rtp packet like data size, payload type
@@ -164,9 +211,6 @@ namespace RabbitOM.Net.Rtp
 
             return builder.ToString();
         }
-
-
-
 
 
 
