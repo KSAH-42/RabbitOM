@@ -8,8 +8,8 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Net.Rtsp.Tests
 {
-	public sealed class RTPPacket
-	{
+    public sealed class RTPPacket
+    {
         public byte Version { get; private set; }
         public bool Padding  { get; private set; }
         public bool HasExtension { get; private set; }
@@ -100,7 +100,7 @@ namespace RabbitOM.Net.Rtsp.Tests
         private readonly RTPPacket[] _packets;
 
         public RTPFrame( RTPPacket[] packets )
-		    => _packets = packets;
+            => _packets = packets;
 
         public RTPPacket[] Packets { get => _packets; }
     }
@@ -136,7 +136,7 @@ namespace RabbitOM.Net.Rtsp.Tests
         {
             if ( ! RTPPacket.TryParse( buffer , out RTPPacket packet  ) )
             {
-				return false;
+                return false;
             }
 
             lock ( _lock )
@@ -201,8 +201,8 @@ namespace RabbitOM.Net.Rtsp.Tests
     {
         private readonly RTPPacket _packet;
 
-		public RTPPacketReceivedEventArgs( RTPPacket packet )
-    		=> _packet = packet;
+        public RTPPacketReceivedEventArgs( RTPPacket packet )
+            => _packet = packet;
     
         public RTPPacket Packet { get => _packet; }
     }
