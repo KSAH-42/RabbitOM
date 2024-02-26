@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
     internal interface IRTSPMediaChannel : IDisposable
     {
         object SyncRoot { get; }
+        RTSPPipeLineCollection PipeLines { get; }
         IRTSPClientConfiguration Configuration { get; }
         IRTSPEventDispatcher Dispatcher { get; }
 

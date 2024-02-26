@@ -19,7 +19,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public object SyncRoot
             => _service.SyncRoot;
-        
+
+        public RTSPPipeLineCollection PipeLines
+            => _service.PipeLines;
+
         public IRTSPClientConfiguration Configuration
             => _service.Configuration;
         

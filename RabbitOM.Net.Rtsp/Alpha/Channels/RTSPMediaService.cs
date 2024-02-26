@@ -18,6 +18,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         private readonly IRTSPConnection _connection;
 
+        private readonly RTSPPipeLineCollection _pipeLines;
+
         private SessionDescriptor _sdp;
 
         private RTSPTrackInfo _trackInfo;
@@ -35,6 +37,7 @@ namespace RabbitOM.Net.Rtsp.Alpha
             _lock = new object();
             _configuration = new RTSPClientConfiguration();
             _connection = new RTSPConnection();
+            _pipeLines = new RTSPPipeLineCollection();
         }
 
 
@@ -42,7 +45,10 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public object SyncRoot
             => _lock;
-       
+
+        public RTSPPipeLineCollection PipeLines
+            => _pipeLines;
+
         public IRTSPClientConfiguration Configuration
             => _configuration;
         

@@ -48,6 +48,7 @@
     <Compile Include="Alpha\Channels\Receivers\RTSPUdpMediaReceiver.cs" />
     <Compile Include="Alpha\Channels\Receivers\RTSPMediaReceiver.cs" />
     <Compile Include="Alpha\Events\RTSPStreamingSetupEventArgs.cs" />
+    <Compile Include="Alpha\RTSPPipeLineCollection.cs" />
     <Compile Include="Alpha\RTSPMediaClient.cs" />
     <Compile Include="Alpha\RTSPClientConfiguration.cs" />
     <Compile Include="Alpha\RTSPClient.cs" />
@@ -135,6 +136,10 @@
     <Compile Include="Remoting\RTSPProxySecurityManager.cs" />
     <Compile Include="Remoting\RTSPProxySettings.cs" />
     <Compile Include="Remoting\RTSPProxyStatus.cs" />
+    <Compile Include="Alpha\RTSPPipeLineDataBuffer.cs" />
+    <Compile Include="Alpha\RTSPPipeLineDataQueue.cs" />
+    <Compile Include="Alpha\RTSPPipeLineData.cs" />
+    <Compile Include="Alpha\RTSPPipeLine.cs" />
     <Compile Include="RTSPQueue.cs" />
     <Compile Include="RTSPQueue.Scope.cs" />
     <Compile Include="RTSPAuthenticationType.cs" />

@@ -28,7 +28,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
             get => _channel.SyncRoot;
         }
 
-        public override IRTSPClientConfiguration Configuration
+		public override RTSPPipeLineCollection PipeLines
+        {
+            get => _channel.PipeLines; 
+        }
+
+		public override IRTSPClientConfiguration Configuration
         {
             get => _channel.Configuration;
         }

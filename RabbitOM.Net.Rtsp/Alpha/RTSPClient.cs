@@ -43,6 +43,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
             get;
         }
 
+        public abstract RTSPPipeLineCollection PipeLines 
+        { 
+            get; 
+        }
+
         public abstract IRTSPClientConfiguration Configuration
         {
             get;
