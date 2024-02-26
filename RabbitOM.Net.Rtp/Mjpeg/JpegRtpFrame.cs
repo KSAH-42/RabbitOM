@@ -6,7 +6,7 @@ namespace RabbitOM.Net.Rtp.Mjpeg
     /// <summary>
     /// Represent a MJPEG Frame
     /// </summary>
-    public sealed class JpegRtpFrame : RtpFrame
+    [Obsolete] public sealed class JpegRtpFrame : RtpFrame
     {
         /// <summary>
         /// Initialize a new instance of the jpeg fraùe

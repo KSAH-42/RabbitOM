@@ -25,7 +25,17 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
             try
             {
-                Run( commandLines.UriOption );
+                // see the RtpSinkTest for the follow test
+                
+                if ( commandLines.SinkOption )
+                {
+                    RunWithSink( commandLines.UriOption );
+                }
+                else
+                {
+                    Run( commandLines.UriOption );
+                }
+
             }
             finally
             {
@@ -109,6 +119,107 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 // to get the right uri
 
                 client.Configuration.Uri = rtspUri.ToString(true);
+                client.Configuration.UserName = rtspUri.UserName;
+                client.Configuration.Password = rtspUri.Password;
+                client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
+                client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
+                client.Configuration.KeepAliveType = RTSPKeepAliveType.Options;
+                client.Configuration.MediaFormat = RTSPMediaFormat.Video;
+                client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
+
+                // For multicast settings, please make sure
+                // that the camera or the video source support multicast
+                // For instance, the happy RTSP server does not support multicast
+                // AND make sure that your are used a switch not a hub, very is difference between them
+                // And activate igmp snooping on the switch
+
+                // client.Configuration.MulticastAddress = "229.0.0.1";
+                // client.Configuration.RtpPort = 55000;
+                client.StartCommunication();
+
+                Console.CancelKeyPress += ( sender , e ) => Console.ForegroundColor = ConsoleColor.White;
+
+                Console.WriteLine( "Press any keys to close the application" );
+                Console.ReadKey();
+
+                client.StopCommunication( TimeSpan.FromSeconds( 3 ) );
+            }
+        }
+
+        static void RunWithSink( string uri )
+        {
+            if ( !RTSPUri.TryParse( uri , out RTSPUri rtspUri ) )
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine( "Bad uri" );
+                return;
+            }
+
+            using ( var client = new Clients.RTSPClient() )
+            using ( var sink = new DefaultRTPSink() )
+            {
+                client.CommunicationStarted += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine( "Communication started - " + DateTime.Now );
+                };
+
+                client.CommunicationStopped += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine( "Communication stopped - " + DateTime.Now );
+                };
+
+                client.Connected += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine( "Client connected - " + client.Configuration.Uri );
+                    sink.Reset();
+                };
+
+                client.Disconnected += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine( "Client disconnected - " + DateTime.Now );
+                };
+
+                client.Error += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine( "Client Error: " + e.Code );
+                };
+
+                client.PacketReceived += ( sender , e ) =>
+                {
+                    var interleavedPacket = e.Packet as RTSPInterleavedPacket;
+
+                    if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
+                    {
+                        // In most of case, avoid this packet
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        Console.WriteLine( "Skipping some data : size {0}" , e.Packet.Data.Length );
+                        return;
+                    }
+
+                    sink.Write( e.Packet.Data );
+                };
+
+                sink.PacketReceived += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine( "Rtp packet received : {0}" , e.Packet.Data.Length );
+                };
+
+                sink.FrameReceived += ( sender , e ) =>
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine( "New Rtp frame - packet_count : {0} " , e.Frame.Packets.Length );
+                };
+
+                // Please note, read the manufacturer's documentation
+                // to get the right uri
+
+                client.Configuration.Uri = rtspUri.ToString( true );
                 client.Configuration.UserName = rtspUri.UserName;
                 client.Configuration.Password = rtspUri.Password;
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );

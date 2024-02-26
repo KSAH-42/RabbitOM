@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtp
     /// <summary>
     /// Represent a data converter
     /// </summary>
+    [Obsolete]
     public static class RtpDataConverter
     {
         /// <summary>

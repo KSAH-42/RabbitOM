@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtp.Mjpeg
     /// <summary>
     /// Represent the media payload parser
     /// </summary>
+    [Obsolete]
     public abstract class MediaPayloadParser : IDisposable
     {
         /// <summary>

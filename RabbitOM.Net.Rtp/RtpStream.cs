@@ -4,7 +4,8 @@
 
 namespace RabbitOM.Net.Rtp
 {
-	public sealed class RtpStream
+    [Obsolete]
+    public sealed class RtpStream
 	{
         private readonly object _lock = new object();
 

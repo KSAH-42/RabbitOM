@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtp
     /// <summary>
     /// Represent the media payload parser
     /// </summary>
+    [Obsolete]
     public interface IRtpPayloadParser : IDisposable
     {
         /// <summary>

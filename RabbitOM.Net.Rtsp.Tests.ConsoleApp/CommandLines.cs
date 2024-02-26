@@ -20,6 +20,11 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             get => _args.FirstOrDefault();
         }
 
+        public bool SinkOption
+        {
+            get => _args.Any( x => x == "-sink" );
+        }
+
 
 
 

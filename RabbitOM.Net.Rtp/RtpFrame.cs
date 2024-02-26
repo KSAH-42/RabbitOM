@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtp
     /// <summary>
     /// Represent the base frame class
     /// </summary>
+    [Obsolete]
     public abstract class RtpFrame
     {
         private readonly DateTime _timestamp;

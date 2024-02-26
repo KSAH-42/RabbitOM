@@ -6,6 +6,7 @@ namespace RabbitOM.Net.Rtp
     /// <summary>
     /// Represent a rtp packet
     /// </summary>
+    [Obsolete]
     public sealed class RtpPacket
     {
         /// <summary>

@@ -6,6 +6,7 @@ namespace RabbitOM.Net.Rtp.Mjpeg
     /// <summary>
     /// Represent a MJPEG payload parser
     /// </summary>
+    [Obsolete]
     public sealed class MjpegRtpPayloadParser : MediaPayloadParser
     {
         private readonly MemoryStream _frameStream;

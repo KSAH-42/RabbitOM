@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtp.Mjpeg
     /// <summary>
     /// Represent the MJPEG helpers
     /// </summary>
+    [Obsolete]
     public static class MjpegHelper
     {
         /// <summary>

@@ -5,6 +5,7 @@ namespace RabbitOM.Net.Rtp
     /// <summary>
     /// Represent the array helper
     /// </summary>
+    [Obsolete]
     public static class ArrayHelper
     {
         /// <summary>

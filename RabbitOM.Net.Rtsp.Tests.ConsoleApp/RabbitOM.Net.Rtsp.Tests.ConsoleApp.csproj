@@ -48,6 +48,7 @@
     <Compile Include="CommandLines.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RtpSinkTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
