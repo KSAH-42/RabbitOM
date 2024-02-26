@@ -191,7 +191,7 @@ namespace RabbitOM.Net.Rtp
 
             uint version = (uint) buffer[ offset ] >> 6;
 
-            if ( version != RtpPacket.DefaultVersion2 )
+            if ( version != RtpPacket.DefaultVersion )
             {
                 return false;
             }
