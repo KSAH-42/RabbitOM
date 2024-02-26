@@ -172,9 +172,7 @@ namespace RabbitOM.Net.Rtsp.Tests
 
                 while ( size > 0 )
                 {
-                    packets[ packets.Length - size ] = _packets.Dequeue();
-
-                    size--;
+                    packets[ packets.Length - ( size -- ) ] = _packets.Dequeue();
                 }
 
                 return new RTPFrame( packets );
