@@ -197,9 +197,8 @@ namespace RabbitOM.Net.Rtp.Mjpeg
 
             TryResolveTimestamp( ref _baseTime , timeOffset , out DateTime timestamp );
 
-            var framesBytes = new byte[ _frameStream.Length ];
+            var framesBytes = _frameStream.ToArray();
 
-            _frameStream.Read( framesBytes , 0 , framesBytes.Length );
             _frameStream.SetLength( 0 );
             _frameStream.Position = 0;
 
