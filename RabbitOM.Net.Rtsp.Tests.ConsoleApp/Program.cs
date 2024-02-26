@@ -153,7 +153,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 return;
             }
 
-            using ( var client = new Clients.RTSPClient() )
+            using ( var client = new RTSPClient() )
             using ( var sink = new DefaultRTPSink() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
