@@ -247,7 +247,6 @@ namespace RabbitOM.Net.Rtp
             result._hasPadding = ( ( buffer[ offset ] >> 5 ) & 0x1 ) != 0;
             result._hasExtension = ( ( buffer[ offset ] >> 4 ) & 0x1 ) != 0;
             result._numberOfcsrc = buffer[ offset++ ] & 0xF;
-
             result._marker = ( ( buffer[ offset ] >> 7 ) & 0x1 ) != 0;
             result._payloadType = buffer[ offset++ ] & 0x7F;
 
