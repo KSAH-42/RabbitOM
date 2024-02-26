@@ -16,7 +16,7 @@ namespace RabbitOM.Net.Rtp
         /// <summary>
         /// The default protocol version
         /// </summary>
-        private const int DefaultVersion2 = 2;
+        private const int DefaultVersion = 2;
 
 
 
