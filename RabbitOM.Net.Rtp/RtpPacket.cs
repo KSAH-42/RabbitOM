@@ -16,7 +16,7 @@ namespace RabbitOM.Net.Rtp
         /// <summary>
         /// The default protocol version
         /// </summary>
-        private const int DefaultVersion = 2;
+        private const int DefaultVersion2 = 2;
 
 
 
@@ -191,7 +191,7 @@ namespace RabbitOM.Net.Rtp
 
             uint version = (uint) buffer[ offset ] >> 6;
 
-            if ( version != RtpPacket.DefaultVersion )
+            if ( version != RtpPacket.DefaultVersion2 )
             {
                 return false;
             }
