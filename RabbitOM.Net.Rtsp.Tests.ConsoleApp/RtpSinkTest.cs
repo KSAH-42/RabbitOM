@@ -107,7 +107,7 @@ namespace RabbitOM.Net.Rtsp.Tests
 
     public abstract class RTPFrameBuilder : IDisposable
     {
-        public abstract bool TryAppendPacket( byte[] buffer );
+        public abstract bool TryAddPacket( byte[] buffer );
         public abstract bool CanBuildFrame();
         public abstract RTPFrame BuildFrame();
         public abstract void Dispose();
@@ -133,7 +133,7 @@ namespace RabbitOM.Net.Rtsp.Tests
             }
         }
 
-        public override bool TryAppendPacket( byte[] buffer )
+        public override bool TryAddPacket( byte[] buffer )
         {
             if ( ! RTPPacket.TryParse( buffer , out RTPPacket packet ) )
             {
@@ -249,7 +249,7 @@ namespace RabbitOM.Net.Rtsp.Tests
 
         public override void Write( byte[] packet )
         {
-            if ( ! _builder.TryAppendPacket( packet ) )
+            if ( ! _builder.TryAddPacket( packet ) )
                 return;
 
             OnPacketReceived( new RTPPacketReceivedEventArgs( _builder.LastPacket ) );
