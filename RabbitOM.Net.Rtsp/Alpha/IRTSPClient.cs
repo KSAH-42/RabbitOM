@@ -30,5 +30,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
         bool StartCommunication();
         void StopCommunication();
         void StopCommunication(TimeSpan shutdownTimeout);
+        bool WaitForConnection(TimeSpan timeout);
     }
 }

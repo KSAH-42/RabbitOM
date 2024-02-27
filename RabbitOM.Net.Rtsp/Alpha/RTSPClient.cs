@@ -88,6 +88,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
         public abstract void StopCommunication( TimeSpan shutdownTimeout );
 
+        public abstract bool WaitForConnection( TimeSpan timeout );
+
         public void Dispose()
         {
             Dispose( true );

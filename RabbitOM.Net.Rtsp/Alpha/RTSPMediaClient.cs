@@ -104,6 +104,11 @@ namespace RabbitOM.Net.Rtsp.Alpha
             StopCommunication();
         }
 
+        public override bool WaitForConnection( TimeSpan timeout )
+        {
+            return _channel.WaitForConnection( timeout );
+        }
+
         protected override void Dispose( bool disposing )
         {
             if ( ! disposing )

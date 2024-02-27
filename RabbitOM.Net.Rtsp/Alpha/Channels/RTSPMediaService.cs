@@ -279,7 +279,12 @@ namespace RabbitOM.Net.Rtsp.Alpha
             => throw new NotImplementedException();
         public bool KeepAliveAsSetParameter()
             => throw new NotImplementedException();
-        
+
+        public bool WaitForConnection( TimeSpan timeout )
+        {
+            return _connection.WaitForConnection( timeout );
+        }
+
         public void UpdateReceivingStatus(bool status)
         {
             // TODO: add check + fire events

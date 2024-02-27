@@ -24,5 +24,6 @@ namespace RabbitOM.Net.Rtsp.Alpha
         bool Play();
         void TearDown();
         bool KeepAlive();
+        bool WaitForConnection( TimeSpan timeout );
     }
 }
