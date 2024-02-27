@@ -7,30 +7,49 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     public sealed class CommandLines
     {
         private readonly string[] _args;
+        
+        private readonly string _uriOption;
+        
+        private readonly bool _sinkOption;
+
+
+
+
+
 
 
         public CommandLines( string[] args )
         {
             _args = args ?? throw new ArgumentNullException( nameof( args ) );
+
+            _uriOption = RTSPUri.TryParse( args.FirstOrDefault() , out RTSPUri result ) ? args.FirstOrDefault() : string.Empty;
+            
+            _sinkOption = args.Any( x => x == "-sink" );
         }
+
+
+
+
 
 
         public string UriOption
         {
-            get => _args.FirstOrDefault();
+            get => _uriOption;
         }
 
         public bool SinkOption
         {
-            get => _args.Any( x => x == "-sink" );
+            get => _sinkOption;
         }
+
+
 
 
 
 
         public bool CanShowHelp()
         {
-            return ! RTSPUri.TryParse( _args.FirstOrDefault() , out RTSPUri uri );
+            return ! _args.Any() || string.IsNullOrWhiteSpace( _uriOption );
         }
 
         public void ShowHelp()
