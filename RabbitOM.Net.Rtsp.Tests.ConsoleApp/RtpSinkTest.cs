@@ -149,7 +149,7 @@ namespace RabbitOM.Net.Rtsp.Tests
                 _packets.Enqueue( packet );
                 _lastPacket = packet;
 
-                OnPacketAppended( packet );
+                OnPacketAdded( packet );
             
                 return true;
             }
@@ -196,7 +196,7 @@ namespace RabbitOM.Net.Rtsp.Tests
             }
         }
 
-        private void OnPacketAppended( RTPPacket packet )
+        private void OnPacketAdded( RTPPacket packet )
         {
             _frameSize++;
 
