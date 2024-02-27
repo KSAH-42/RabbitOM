@@ -42,18 +42,18 @@ namespace RabbitOM.Net.Rtsp.Tests
             result.HasExtension    = (byte) ( ( buffer[ 0 ] & 0x10 ) >> 4 ) == 1;
             result.CSRC            = (ushort) ( buffer[ 0 ] & 0x0F );
 
-            result.Marker          = (byte) ( ( buffer[ 1 ] & 0x80 ) ) != 0;
+            result.Marker          = (byte) ((buffer[ 1 ] & 0x80 ) ) != 0;
             result.PayloadType     = (byte) ( buffer[ 1 ] & 0x07F );
-            result.SequenceNumber += ( (uint) buffer[ 2 ] << 8 );
-            result.SequenceNumber += ( (uint) buffer[ 3 ] );
-            result.Timestamp      += ( (uint) buffer[ 4 ] << 24 );
-            result.Timestamp      += ( (uint) buffer[ 5 ] << 16 );
-            result.Timestamp      += ( (uint) buffer[ 6 ] << 8 );
-            result.Timestamp      += ( (uint) buffer[ 7 ] << 0 );
-            result.SSRC           += ( (uint) buffer[ 8 ] << 24 );
-            result.SSRC           += ( (uint) buffer[ 9 ] << 16 );
-            result.SSRC           += ( (uint) buffer[ 10 ] << 8 );
-            result.SSRC           += ( (uint) buffer[ 11 ] );
+            result.SequenceNumber += (uint) ( buffer[ 2 ]  << 8 );
+            result.SequenceNumber += (uint) ( buffer[ 3 ] );
+            result.Timestamp      += (uint) ( buffer[ 4 ]  << 24 );
+            result.Timestamp      += (uint) ( buffer[ 5 ]  << 16 );
+            result.Timestamp      += (uint) ( buffer[ 6 ]  << 8  );
+            result.Timestamp      += (uint) ( buffer[ 7 ]  << 0  );
+            result.SSRC           += (uint) ( buffer[ 8 ]  << 24 );
+            result.SSRC           += (uint) ( buffer[ 9 ]  << 16 );
+            result.SSRC           += (uint) ( buffer[ 10 ] << 8 );
+            result.SSRC           += (uint) ( buffer[ 11 ] );
 
             result.SequenceNumber = result.SequenceNumber % ( ushort.MaxValue + 1 );
 
