@@ -242,6 +242,8 @@ namespace RabbitOM.Net.Rtsp.Tests
 
     public sealed class DefaultRTPSink : RTPSink
     {
+        /// TODO: use the DIP and replace with an interface
+        
         private readonly DefaultRTPFrameBuilder _builder = new DefaultRTPFrameBuilder();
 
         public override void Write( byte[] packet )
