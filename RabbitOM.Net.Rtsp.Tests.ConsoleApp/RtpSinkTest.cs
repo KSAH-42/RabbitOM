@@ -205,22 +205,14 @@ namespace RabbitOM.Net.Rtsp.Tests
 
     public class RTPPacketReceivedEventArgs : EventArgs
     {
-        private readonly RTPPacket _packet;
-
-        public RTPPacketReceivedEventArgs( RTPPacket packet )
-            => _packet = packet;
-    
-        public RTPPacket Packet { get => _packet; }
+        public RTPPacketReceivedEventArgs( RTPPacket packet ) => Packet = packet;
+        public RTPPacket Packet { get; private set; }
     }
 
     public class RTPFrameReceivedEventArgs : EventArgs
     {
-        private readonly RTPFrame _frame;
-
-        public RTPFrameReceivedEventArgs( RTPFrame frame )
-            => _frame = frame;
-
-        public RTPFrame Frame { get => _frame; }
+        public RTPFrameReceivedEventArgs( RTPFrame frame ) => Frame = frame;
+        public RTPFrame Frame { get; private set; }
     }
 
     public abstract class RTPSink : IDisposable
