@@ -220,6 +220,7 @@ namespace RabbitOM.Net.Rtsp.Tests
         public RTPFrame Frame { get; private set; }
     }
 
+    // TODO: maybe in this class we can add stats objects
     public abstract class RTPSink : IDisposable
     {
         public event EventHandler<RTPPacketReceivedEventArgs> PacketReceived;
