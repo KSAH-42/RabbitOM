@@ -165,11 +165,11 @@ namespace RabbitOM.Net.Rtsp.Tests
             {
                 RTPPacket[] packets = new RTPPacket[ _sizes.Dequeue() ];
 
-                int size = packets.Length;
+                int index = 0;
 
-                while ( size > 0 )
+                while ( index < packets.Length )
                 {
-                    packets[ packets.Length - ( size -- ) ] = _packets.Dequeue();
+                    packets[ index ++ ] = _packets.Dequeue();
                 }
 
                 return new RTPFrame( packets );
