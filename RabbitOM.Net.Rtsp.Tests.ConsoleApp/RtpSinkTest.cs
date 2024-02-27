@@ -107,10 +107,19 @@ namespace RabbitOM.Net.Rtsp.Tests
 
     public abstract class RTPFrameBuilder : IDisposable
     {
+
+        ~RTPFrameBuilder()
+            => Dispose();
+
         public abstract bool TryAddPacket( byte[] buffer );
         public abstract bool CanBuildFrame();
         public abstract RTPFrame BuildFrame();
-        public abstract void Dispose();
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+        protected abstract void Dispose( bool disposing );
         public abstract void Clear();
     }
 
@@ -176,9 +185,10 @@ namespace RabbitOM.Net.Rtsp.Tests
             }
         }
 
-        public override void Dispose()
+        protected override void Dispose( bool disposing )
         {
-            Clear();
+            if ( disposing )
+                Clear();
         }
 
         public override void Clear()
