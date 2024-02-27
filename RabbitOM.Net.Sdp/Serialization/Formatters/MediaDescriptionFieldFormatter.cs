@@ -78,12 +78,12 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             result = new MediaDescriptionField()
             {
-                Type       = DataConverter.ConvertToMediaType(tokens.ElementAtOrDefault(0) ?? string.Empty),
-                Port       = DataConverter.ConvertToInt( portTokens.ElementAtOrDefault(0) ?? string.Empty),
-                PortOption = DataConverter.ConvertToInt( portTokens.ElementAtOrDefault(1) ?? string.Empty),
-                Protocol   = DataConverter.ConvertToProtocolType(protocolTokens.ElementAtOrDefault(0)),
-                Profile    = DataConverter.ConvertToProfileType(protocolTokens.ElementAtOrDefault(1)),
-                Payload    = DataConverter.ConvertToInt(tokens.LastOrDefault() ?? string.Empty),
+                Type       = DataConverter.ConvertToMediaType( tokens.ElementAtOrDefault(0) ),
+                Port       = DataConverter.ConvertToInt( portTokens.ElementAtOrDefault(0) ),
+                PortOption = DataConverter.ConvertToInt( portTokens.ElementAtOrDefault(1) ),
+                Protocol   = DataConverter.ConvertToProtocolType( protocolTokens.ElementAtOrDefault(0) ),
+                Profile    = DataConverter.ConvertToProfileType( protocolTokens.ElementAtOrDefault(1) ),
+                Payload    = DataConverter.ConvertToInt( tokens.LastOrDefault() ),
             };
 
             return true;

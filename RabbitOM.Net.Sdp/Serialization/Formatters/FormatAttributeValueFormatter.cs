@@ -105,7 +105,7 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
                 {
                     result = new FormatAttributeValue()
                     {
-                        PayloadType = DataConverter.ConvertToByte(tokens.FirstOrDefault() ?? string.Empty),
+                        PayloadType = DataConverter.ConvertToByte( tokens.FirstOrDefault() ),
                     };
                 }
 

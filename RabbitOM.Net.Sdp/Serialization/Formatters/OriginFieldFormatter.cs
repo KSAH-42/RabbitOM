@@ -59,12 +59,12 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             result = new OriginField()
             {
-                UserName    = tokens.ElementAtOrDefault(0) ?? string.Empty,
+                UserName    = tokens.ElementAtOrDefault(0) ,
                 SessionId   = DataConverter.ConvertToULong( tokens.ElementAtOrDefault(1) ),
                 Version     = DataConverter.ConvertToULong( tokens.ElementAtOrDefault(2) ),
-                NetworkType = DataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(3) ?? string.Empty),
-                AddressType = DataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(4) ?? string.Empty),
-                Address     = tokens.ElementAtOrDefault(5) ?? string.Empty,
+                NetworkType = DataConverter.ConvertToNetworkType( tokens.ElementAtOrDefault(3) ),
+                AddressType = DataConverter.ConvertToAddressType( tokens.ElementAtOrDefault(4) ),
+                Address     = tokens.ElementAtOrDefault(5) ,
             };
 
             return true;

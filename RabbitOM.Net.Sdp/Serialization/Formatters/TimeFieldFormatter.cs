@@ -33,22 +33,22 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = value.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
 
-            if (!tokens.Any())
+            if ( ! tokens.Any() )
             {
                 return false;
             }
 
             result = new TimeField()
             {
-                StartTime = DataConverter.ConvertToLong(tokens.ElementAtOrDefault(0) ?? string.Empty),
-                StopTime  = DataConverter.ConvertToLong(tokens.ElementAtOrDefault(1) ?? string.Empty),
+                StartTime = DataConverter.ConvertToLong( tokens.ElementAtOrDefault(0) ),
+                StopTime  = DataConverter.ConvertToLong( tokens.ElementAtOrDefault(1) ),
             };
 
             return true;

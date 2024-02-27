@@ -64,10 +64,10 @@ namespace RabbitOM.Net.Sdp.Serialization.Formatters
 
             result = new ConnectionField()
             {
-                NetworkType = DataConverter.ConvertToNetworkType(tokens.ElementAtOrDefault(0) ?? string.Empty),
-                AddressType = DataConverter.ConvertToAddressType(tokens.ElementAtOrDefault(1) ?? string.Empty),
+                NetworkType = DataConverter.ConvertToNetworkType( tokens.ElementAtOrDefault(0) ),
+                AddressType = DataConverter.ConvertToAddressType( tokens.ElementAtOrDefault(1) ),
                 Address     = tokens.ElementAtOrDefault(2),
-                TTL         = DataConverter.ConvertToByteFromTTLFormat(tokens.ElementAtOrDefault(2)),
+                TTL         = DataConverter.ConvertToByteFromTTLFormat( tokens.ElementAtOrDefault(2) ),
             };
 
             return true;
