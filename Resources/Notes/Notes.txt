@@ -1,3 +1,6 @@
+Todo: refactor the client in the alpha namespace
+Todo: refactor the connection object
+
 Sdp next step ? Maybe this thing can potentially works
 
 A kind of possible implementation about the sdp expression parser:
