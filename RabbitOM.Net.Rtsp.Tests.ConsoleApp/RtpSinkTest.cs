@@ -22,7 +22,7 @@ namespace RabbitOM.Net.Rtsp.Tests
         public uint ExtensionId { get; private set; }
         public byte[] Data { get; private set; }
         public byte[] ExtensionData { get; private set; }
-        public int[] CSRCIds { get; private set; }
+        public int[] CSRCIdentifiers { get; private set; }
 
         public bool TryValidate()
             => Version != 2 || Data == null || Data.Length <= 0 ? false : true;
@@ -62,14 +62,14 @@ namespace RabbitOM.Net.Rtsp.Tests
 
             if ( result.CSRC > 0 )
             {
-                result.CSRCIds = new int[ result.CSRC ];
+                result.CSRCIdentifiers = new int[ result.CSRC ];
 
-                for ( uint i = 0 ; i < result.CSRCIds.Length && ( startIndex + i ) < buffer.Length ; ++i )
+                for ( uint i = 0 ; i < result.CSRCIdentifiers.Length && ( startIndex + i ) < buffer.Length ; ++i )
                 {
-                    result.CSRCIds[ i ] += buffer[ startIndex + i ] << 24; startIndex++;
-                    result.CSRCIds[ i ] += buffer[ startIndex + i ] << 16; startIndex++;
-                    result.CSRCIds[ i ] += buffer[ startIndex + i ] << 8; startIndex++;
-                    result.CSRCIds[ i ] += buffer[ startIndex + i ]; startIndex++;
+                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ] << 24; startIndex++;
+                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ] << 16; startIndex++;
+                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ] << 8; startIndex++;
+                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ]; startIndex++;
                 }
             }
 
