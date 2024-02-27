@@ -100,7 +100,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                         rtpSink.Write( e.Packet.Data );
                         return;
                     }
-
+                    
                     if ( ! RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
