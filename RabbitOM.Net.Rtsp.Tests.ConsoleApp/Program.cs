@@ -95,18 +95,17 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                         return;
                     }
 
-                    if ( ! commandLines.SinkOption )
-                    {
-                        if ( !RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine( "Invalid rtp packet !!!!" );
-                            return;
-                        }
-                    }
-                    else
+                    if ( commandLines.SinkOption )
                     {
                         rtpSink.Write( e.Packet.Data );
+                        return;
+                    }
+
+                    if ( ! RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine( "Invalid rtp packet !!!!" );
+                        return;
                     }
 
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
