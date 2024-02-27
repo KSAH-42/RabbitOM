@@ -1,6 +1,5 @@
 ﻿/*
-  The next implementation of the rtp layer
- 
+  experimentation of the next implementation of the rtp layer
  */
 
 using System;
@@ -97,17 +96,13 @@ namespace RabbitOM.Net.Rtsp.Tests
 
     public sealed class RTPFrame
     {
-        private readonly RTPPacket[] _packets;
-
-        public RTPFrame( RTPPacket[] packets )
-            => _packets = packets;
-
-        public RTPPacket[] Packets { get => _packets; }
+        public RTPFrame( RTPPacket[] packets ) 
+            => Packets = packets;
+        public RTPPacket[] Packets { get; private set; }
     }
 
     public abstract class RTPFrameBuilder : IDisposable
     {
-
         ~RTPFrameBuilder()
             => Dispose();
 
