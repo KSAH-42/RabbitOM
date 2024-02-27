@@ -23,17 +23,14 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 return;
             }
 
+            Action<string> test = Program.Run;
+
+            if ( commandLines.SinkOption )
+                test = Program.RunWithSink;
+
             try
             {
-                if ( commandLines.SinkOption )
-                {
-                    RunWithSink( commandLines.UriOption );
-                }
-                else
-                {
-                    Run( commandLines.UriOption );
-                }
-
+                test( commandLines.UriOption );
             }
             finally
             {
