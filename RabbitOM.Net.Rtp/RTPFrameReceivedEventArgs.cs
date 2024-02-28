@@ -8,7 +8,16 @@ namespace RabbitOM.Net.Rtp
 {
     public class RTPFrameReceivedEventArgs : EventArgs
     {
-        public RTPFrameReceivedEventArgs( RTPFrame frame ) => Frame = frame;
-        public RTPFrame Frame { get; private set; }
+        private readonly RTPFrame _frame;
+
+        public RTPFrameReceivedEventArgs( RTPFrame frame )
+        {
+            _frame = frame ?? throw new ArgumentNullException( nameof( frame ) );
+        }
+
+        public RTPFrame Frame 
+        {
+            get => _frame;
+        }
     }
 }
