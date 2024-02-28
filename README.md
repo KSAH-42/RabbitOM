@@ -13,7 +13,7 @@ A .net library for receiving raw audio/video streams.
 * Easy to used
 * Provide Event Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
-* Thread safe
+* Thread safe, except the sdp classes
 * Handle large streams with a high bitrate like 50 MBits/seconds
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
 
