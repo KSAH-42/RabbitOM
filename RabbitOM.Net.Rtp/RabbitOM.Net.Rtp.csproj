@@ -21,7 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\RabbitOM.Net.Rtp.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +31,8 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\RabbitOM.Net.Rtp.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,6 +46,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="H264\H264NalUnitCollection.cs" />
+    <Compile Include="H264\H264NalUnit.cs" />
+    <Compile Include="DefaultRTPSink.cs" />
+    <Compile Include="H264\H264Parser.cs" />
+    <Compile Include="RTPSink.cs" />
+    <Compile Include="RTPFrameReceivedEventArgs.cs" />
+    <Compile Include="RTPPacketReceivedEventArgs.cs" />
+    <Compile Include="DefaultRTPFrameBuilder.cs" />
+    <Compile Include="RTPFrameBuilder.cs" />
+    <Compile Include="RTPFrame.cs" />
+    <Compile Include="RTPPacket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
