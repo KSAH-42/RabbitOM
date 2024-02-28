@@ -21,8 +21,9 @@ namespace RabbitOM.Net.Rtp.H264
         private H264NalUnit() { }
 
         public bool ForbiddenBit { get; private set; }
-        public byte NRI { get; private set; }
+        public byte Nri { get; private set; }
         public byte Type { get; private set; }
+        public bool IsUnDefinedNri { get; private set; }
         public bool IsReserved { get; private set; }
         public bool IsSingle { get; private set; }
         public bool IsSTAP_A { get; private set; }
@@ -65,8 +66,8 @@ namespace RabbitOM.Net.Rtp.H264
                 +----------------------------------+
              */
 
-            int index = H264StartPrefix.StartsWith( buffer , StartPrefixA ) ? 2
-                      : H264StartPrefix.StartsWith( buffer , StartPrefixB ) ? 3 
+            int index = H264StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
+                      : H264StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
                       : -1;
 
             if ( index < 0 )
@@ -82,10 +83,11 @@ namespace RabbitOM.Net.Rtp.H264
 
             result = new H264NalUnit();
 
-            result.ForbiddenBit           = (buffer[ ++index ] & 0x1) == 1;
-            result.NRI                    = (byte) ( ( buffer[ index ] >> 1 ) & 0x2 );
-            result.Type                   = (byte) ( ( buffer[ index ] >> 1 ) & 0x1F );
+            result.ForbiddenBit           = (byte) ( ( buffer[ index ] >> 7 ) & 0x1) == 1;
+            result.Nri                    = (byte) ( ( buffer[ index ] >> 5 ) & 0x3 );
+            result.Type                   = (byte) ( ( buffer[ index ] ) & 0x1F );
 
+            result.IsUnDefinedNri         = result.Nri  == 0;
             result.IsReserved            |= result.Type == 0;
             result.IsSingle               = result.Type >= 1 && result.Type <= 23;
             result.IsSTAP_A               = result.Type == 24;
@@ -96,7 +98,6 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsFU_B                 = result.Type == 29;
             result.IsReserved            |= result.Type == 30;
             result.IsReserved            |= result.Type == 31;
-
             result.IsCodedSliceNIDR       = result.Type == 1;
             result.IsCodedSlicePartitionA = result.Type == 2;
             result.IsCodedSlicePartitionB = result.Type == 3;
