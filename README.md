@@ -49,7 +49,7 @@ using ( var client = new RTSPClient() )
 	if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
 	    return;
 	
-	if ( RtpPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
+	if ( RTPPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
             Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
     };
 
