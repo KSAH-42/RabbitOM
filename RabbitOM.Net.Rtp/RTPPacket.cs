@@ -8,6 +8,8 @@ namespace RabbitOM.Net.Rtp
 {
     public sealed class RTPPacket
     {
+		private RTPPacket() { }
+
         public byte Version { get; private set; }
         public bool Padding  { get; private set; }
         public bool HasExtension { get; private set; }
