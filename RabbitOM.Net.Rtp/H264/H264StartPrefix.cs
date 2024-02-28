@@ -23,14 +23,14 @@ namespace RabbitOM.Net.Rtsp.Tests
                 throw new ArgumentException( nameof( values ) );
 
             Values = values;
-            Hash = hash;
+            HashCode = hash;
         }       
 
 
 
 
         public byte[] Values { get; private set; }
-        public ulong Hash { get; private set; }
+        public ulong HashCode { get; private set; }
 
 
 
@@ -38,12 +38,12 @@ namespace RabbitOM.Net.Rtsp.Tests
 
         public static H264StartPrefix NewPrefix( byte[] buffer )
         {
-            return new H264StartPrefix( buffer , Sum( buffer , buffer.Length ) );
+            return new H264StartPrefix( buffer , Hash( buffer , buffer.Length ) );
         }
 
         public static bool StartWith( byte[] buffer , H264StartPrefix prefix )
         {
-            return Sum( buffer , prefix.Values.Length ) == prefix.Hash;
+            return Hash( buffer , prefix.Values.Length ) == prefix.HashCode;
         }
 
 
@@ -51,7 +51,7 @@ namespace RabbitOM.Net.Rtsp.Tests
 
 
 
-        public static ulong Sum( byte[] buffer , int count )
+        private static ulong Hash( byte[] buffer , int count )
         {
             ulong sum = 0;
 
