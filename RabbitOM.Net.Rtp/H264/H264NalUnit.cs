@@ -62,8 +62,8 @@ namespace RabbitOM.Net.Rtsp.Tests
                 +----------------------------------+
              */
 
-            int index = H264StartPrefix.StartWith( buffer , StartPrefixA ) ? 2
-                      : H264StartPrefix.StartWith( buffer , StartPrefixB ) ? 3 
+            int index = H264StartPrefix.StartsWith( buffer , StartPrefixA ) ? 2
+                      : H264StartPrefix.StartsWith( buffer , StartPrefixB ) ? 3 
                       : -1;
 
             if ( index < 0 )

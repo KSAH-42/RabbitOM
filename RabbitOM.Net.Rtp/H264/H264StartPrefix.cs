@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtsp.Tests
         public byte[] Values { get; private set; }
 
 
-        public static bool StartWith( byte[] buffer , H264StartPrefix prefix )
+        public static bool StartsWith( byte[] buffer , H264StartPrefix prefix )
         {
             if ( buffer == null )
                 throw new ArgumentNullException( nameof( buffer ) );
