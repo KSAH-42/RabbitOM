@@ -17,6 +17,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                 return;
             }
 
+            //H264NalUnit.Sum( new byte[] { 0,0,0,1 } , 4 );
+            H264NalUnit.TryParse( new byte[] {0,1,2 } , out H264NalUnit result );
+
             try
             {
                 Run( commandLines );
