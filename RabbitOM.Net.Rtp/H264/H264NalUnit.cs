@@ -15,8 +15,9 @@ namespace RabbitOM.Net.Rtsp.Tests
     public sealed class H264NalUnit
     {
         private static int DefaultMinimuLength = 4;
-        private static byte[] StartPrefix_001 = new byte[] { 0 , 0 , 1 };
-        private static byte[] StartPrefix_0001 = new byte[] { 0 , 0 , 0 , 1 };
+
+        private static readonly H264StartPrefix StartPrefixA = H264StartPrefix.NewPrefix( new byte[] { 0 , 0 , 1 } );
+        private static readonly H264StartPrefix StartPrefixB = H264StartPrefix.NewPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
         public bool ForbiddenBit { get; private set; }
         public byte NRI { get; private set; }
@@ -61,11 +62,11 @@ namespace RabbitOM.Net.Rtsp.Tests
                 +----------------------------------+
              */
 
-            int offset = Sum( buffer , StartPrefix_0001.Length ) == 1 ? 3
-                       : Sum( buffer , StartPrefix_001 .Length ) == 1 ? 2 
-                       : -1;
+            int index = H264StartPrefix.StartWith( buffer , StartPrefixA ) ? 2
+                      : H264StartPrefix.StartWith( buffer , StartPrefixB ) ? 3 
+                      : -1;
 
-            if ( offset < 0 )
+            if ( index < 0 )
                 return false;
 
             /*
@@ -78,9 +79,9 @@ namespace RabbitOM.Net.Rtsp.Tests
 
             result = new H264NalUnit();
 
-            result.ForbiddenBit           = (buffer[ ++offset ] & 0x1) == 1;
-            result.NRI                    = (byte) ( ( buffer[ offset ] >> 1 ) & 0x2 );
-            result.Type                   = (byte) ( ( buffer[ offset ] >> 1 ) & 0x1F );
+            result.ForbiddenBit           = (buffer[ ++index ] & 0x1) == 1;
+            result.NRI                    = (byte) ( ( buffer[ index ] >> 1 ) & 0x2 );
+            result.Type                   = (byte) ( ( buffer[ index ] >> 1 ) & 0x1F );
 
             result.IsReserved            |= result.Type == 0;
             result.IsSingle               = result.Type >= 1 && result.Type <= 23;
@@ -109,23 +110,11 @@ namespace RabbitOM.Net.Rtsp.Tests
                 +----------------------------------+
              */
 
-            result.Payload = new byte[ buffer.Length - ++ offset ];
+            result.Payload = new byte[ buffer.Length - ++ index ];
 
-            Buffer.BlockCopy( buffer , offset , result.Payload , 0 , result.Payload.Length );
+            Buffer.BlockCopy( buffer , index , result.Payload , 0 , result.Payload.Length );
 
             return true;
-        }
-
-        public static ulong Sum( byte[] buffer , int count )
-        {
-            ulong sum = 0;
-
-            count = count > buffer.Length ? buffer.Length : count ;
-
-            while ( -- count >= 0 )
-                sum += buffer[ count ];
-
-            return sum;
         }
     } 
 }
