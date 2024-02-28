@@ -15,13 +15,16 @@ namespace RabbitOM.Net.Rtsp.Tests
     public sealed class H264Parser
 	{
         // Time complexity O(N) as first view
-        // Time complexity O(N,M)  real => see TryParse
+
+        // Should be Time complexity O(N,M) => see H264NalUnit.TryParse
+
+        // TODO: try to improve again as O(N)
 
         public bool TryParse( RTPFrame frame , out H264NalUnitCollection result )
         {
             result = null;
 
-            if ( frame == null || ! frame.TryValidate())
+            if ( frame == null || ! frame.TryValidate() )
                 return false;
 
             H264NalUnitCollection nalunits = new H264NalUnitCollection();
