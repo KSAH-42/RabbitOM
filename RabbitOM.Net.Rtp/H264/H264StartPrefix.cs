@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Rtsp.Tests
 {
     public sealed class H264StartPrefix
     {
-        private H264StartPrefix( byte[] values , ulong hash )
+        public H264StartPrefix( byte[] values )
         {
             if ( values == null )
                 throw new ArgumentNullException( nameof( values ) );
@@ -23,44 +23,31 @@ namespace RabbitOM.Net.Rtsp.Tests
                 throw new ArgumentException( nameof( values ) );
 
             Values = values;
-            HashCode = hash;
         }       
 
 
-
-
         public byte[] Values { get; private set; }
-        public ulong HashCode { get; private set; }
 
-
-
-
-
-        public static H264StartPrefix NewPrefix( byte[] buffer )
-        {
-            return new H264StartPrefix( buffer , Hash( buffer , buffer.Length ) );
-        }
 
         public static bool StartWith( byte[] buffer , H264StartPrefix prefix )
         {
-            return Hash( buffer , prefix.Values.Length ) == prefix.HashCode;
-        }
+            if ( buffer == null )
+                throw new ArgumentNullException( nameof( buffer ) );
 
+            if ( prefix == null )
+                throw new ArgumentNullException( nameof( prefix ) );
 
+            int count = buffer.Length > prefix.Values.Length ? prefix.Values.Length : buffer.Length;
 
+            while ( -- count >= 0 )
+            {
+                if ( buffer[ count ] != prefix.Values[ count ] )
+                {
+                    return false;
+                }
+            }
 
-
-
-        private static ulong Hash( byte[] buffer , int count )
-        {
-            ulong sum = 0;
-
-            count = count > buffer.Length ? buffer.Length : count;
-
-            while ( --count >= 0 )
-                sum += buffer[ count ];
-
-            return sum;
+            return true;
         }
     }
 }

@@ -16,8 +16,8 @@ namespace RabbitOM.Net.Rtsp.Tests
     {
         private static int DefaultMinimuLength = 4;
 
-        private static readonly H264StartPrefix StartPrefixA = H264StartPrefix.NewPrefix( new byte[] { 0 , 0 , 1 } );
-        private static readonly H264StartPrefix StartPrefixB = H264StartPrefix.NewPrefix( new byte[] { 0 , 0 , 0 , 1 } );
+        private static readonly H264StartPrefix StartPrefixA = new H264StartPrefix( new byte[] { 0 , 0 , 1 } );
+        private static readonly H264StartPrefix StartPrefixB = new H264StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
         public bool ForbiddenBit { get; private set; }
         public byte NRI { get; private set; }
