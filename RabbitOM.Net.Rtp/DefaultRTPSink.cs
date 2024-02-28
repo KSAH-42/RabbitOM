@@ -24,13 +24,18 @@ namespace RabbitOM.Net.Rtp
                 OnFrameReceived( new RTPFrameReceivedEventArgs( _builder.BuildFrame() ) );
             }
         }
+        
         public override void Reset()
         {
             _builder.Clear();
         }
-        public override void Dispose()
+
+        protected override void Dispose( bool disposing)
         {
-            _builder.Dispose();
+            if ( disposing )
+            {
+                _builder.Dispose();
+            }
         }
     }
 }
