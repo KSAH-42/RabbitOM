@@ -10,7 +10,7 @@
 
 using System;
 
-namespace RabbitOM.Net.Rtsp.Tests
+namespace RabbitOM.Net.Rtp
 {
     // TODO: maybe in this class we can add stats objects
     public abstract class RTPSink : IDisposable

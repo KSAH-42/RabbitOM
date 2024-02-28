@@ -10,7 +10,7 @@
 
 using System;
 
-namespace RabbitOM.Net.Rtsp.Tests
+namespace RabbitOM.Net.Rtp.H264
 {
     public sealed class H264StartPrefix
     {

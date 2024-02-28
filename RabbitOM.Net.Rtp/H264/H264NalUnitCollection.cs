@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Net.Rtsp.Tests
+namespace RabbitOM.Net.Rtp.H264
 {
     public sealed class H264NalUnitCollection : Queue<H264NalUnit>
     {
