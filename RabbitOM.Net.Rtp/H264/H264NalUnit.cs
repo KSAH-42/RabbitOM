@@ -19,6 +19,8 @@ namespace RabbitOM.Net.Rtsp.Tests
         private static readonly H264StartPrefix StartPrefixA = new H264StartPrefix( new byte[] { 0 , 0 , 1 } );
         private static readonly H264StartPrefix StartPrefixB = new H264StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
+		private H264NalUnit() { }
+
         public bool ForbiddenBit { get; private set; }
         public byte NRI { get; private set; }
         public byte Type { get; private set; }
