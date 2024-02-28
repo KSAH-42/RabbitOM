@@ -19,7 +19,9 @@ namespace RabbitOM.Net.Rtp.H264
             result = null;
 
             if ( frame == null || ! frame.TryValidate() )
+            {
                 return false;
+            }
 
             H264NalUnitCollection nalunits = new H264NalUnitCollection();
 
