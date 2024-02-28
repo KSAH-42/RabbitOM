@@ -7,7 +7,7 @@ using System;
 namespace RabbitOM.Net.Rtp.H264
 {
     public sealed class H264Parser
-	{
+    {
         // Time complexity O(N) as first view
 
         // Should be Time complexity O(N,M) => see H264NalUnit.TryParse
@@ -37,5 +37,5 @@ namespace RabbitOM.Net.Rtp.H264
 
             return result != null;
         }
-	}
+    }
 }
