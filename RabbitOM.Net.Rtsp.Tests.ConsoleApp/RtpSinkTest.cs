@@ -407,8 +407,6 @@ namespace RabbitOM.Net.Rtsp.Tests
 
     public sealed class H264Parser : IDisposable
 	{
-        private readonly object _lock = new object();
-
         // Time complexity O(N) as first view
         // Time complexity O(N,M)  real => see TryParse
 
