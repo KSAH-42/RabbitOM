@@ -21,27 +21,9 @@ namespace RabbitOM.Net.Rtp.H265
         private H265NalUnit() { }
 
         public bool ForbiddenBit { get; private set; }
-        public byte NRI { get; private set; }
         public byte Type { get; private set; }
         public byte LayerId { get; private set; }
         public byte TID { get; private set; }
-        public bool IsReserved { get; private set; }
-        public bool IsSingle { get; private set; }
-        public bool IsSTAP_A { get; private set; }
-        public bool IsSTAP_B { get; private set; }
-        public bool IsMTAP_A { get; private set; }
-        public bool IsMTAP_B { get; private set; }
-        public bool IsFU_A { get; private set; }
-        public bool IsFU_B { get; private set; }
-        public bool IsCodedSliceNIDR { get; private set; }
-        public bool IsCodedSlicePartitionA { get; private set; }
-        public bool IsCodedSlicePartitionB { get; private set; }
-        public bool IsCodedSlicePartitionC { get; private set; }
-        public bool IsCodedSliceIDR { get; private set; }
-        public bool IsSEI { get; private set; }
-        public bool IsSPS { get; private set; }
-        public bool IsPPS { get; private set; }
-        public bool IsAccessDelimiter { get; private set; }
         public byte[] Payload { get; private set; } 
 
 
@@ -91,10 +73,12 @@ namespace RabbitOM.Net.Rtp.H265
 
             result = new H265NalUnit();
 
-            result.ForbiddenBit           = (buffer[ ++index ] & 0x1) == 1;
-            result.NRI                    = (byte) ( ( buffer[ index ] >> 1 ) & 0x2  );
+            result.ForbiddenBit           = (byte) ( ( buffer[ index ] >> 7 ) & 0x1 ) == 1;
             result.Type                   = (byte) ( ( buffer[ index ] >> 1 ) & 0x3F );
-           
+            result.LayerId                = (byte) ( ( buffer[ index ] << 7 ) & 0x80 );
+            result.LayerId               |= (byte) ( ( buffer[ index ] >> 3 ) & 0x1F );
+            // result.TID = ...
+
             throw new NotImplementedException();
         }
     } 
