@@ -6,7 +6,7 @@ A .net library for receiving raw audio/video streams.
 
 # Main features
 
-* Support Unicast TCP (interleave mode) / Unicast UDP / Multicast Streaming transports
+* Support Unicast TCP (interleaved mode) / Unicast UDP / Multicast Streaming transports
 * Support multiple authentications: Basic, MD5, SHA256, SHA512
 * Support auto reconnection in case of network failures
 * Support message reordering when multiple requests are sended and responses arrive in a different order
