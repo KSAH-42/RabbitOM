@@ -43,10 +43,11 @@ namespace RabbitOM.Net.Rtsp.Tests
         public bool TryValidate()
             => Payload != null && Payload.Length >= 1;
 
-        // Time complexity O(N) 
         // TODO: add parsing tests
         // TODO: add tests for protocol violations
 
+        // Time complexity O(N)
+        
         public static bool TryParse( byte[] buffer , out H264NalUnit result )
         {
             result = default;
