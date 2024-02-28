@@ -43,17 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayHelper.cs" />
-    <Compile Include="IRtpPayloadParser.cs" />
-    <Compile Include="Mjpeg\MjpegHelper.cs" />
-    <Compile Include="Mjpeg\MjpegRtpPayloadParser.cs" />
-    <Compile Include="RtpPayloadParser.cs" />
-    <Compile Include="RtpFrameReceivedEventArgs.cs" />
-    <Compile Include="RtpFrame.cs" />
-    <Compile Include="Mjpeg\JpegRtpFrame.cs" />
-    <Compile Include="RtpStream.cs" />
-    <Compile Include="RtpPacket.cs" />
-    <Compile Include="RtpDataConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

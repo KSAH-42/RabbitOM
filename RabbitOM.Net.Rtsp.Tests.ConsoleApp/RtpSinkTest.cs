@@ -278,10 +278,7 @@ namespace RabbitOM.Net.Rtsp.Tests
             _builder.Dispose();
         }
     }
-}
 
-namespace RabbitOM.Net.Rtsp.Tests
-{
     public sealed class H264NalUnitCollection : Queue<H264NalUnit>
     {
         public bool IsEmpty { get => Count == 0; }
