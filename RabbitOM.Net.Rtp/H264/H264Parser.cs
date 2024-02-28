@@ -12,7 +12,7 @@ using System;
 
 namespace RabbitOM.Net.Rtsp.Tests
 {
-    public sealed class H264Parser : IDisposable
+    public sealed class H264Parser
 	{
         // Time complexity O(N) as first view
         // Time complexity O(N,M)  real => see TryParse
@@ -37,10 +37,6 @@ namespace RabbitOM.Net.Rtsp.Tests
             result = nalunits.IsEmpty ? null : nalunits;
 
             return result != null;
-        }
-
-        public void Dispose()
-        {
         }
 	}
 }
