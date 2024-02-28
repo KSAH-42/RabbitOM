@@ -44,8 +44,11 @@ namespace RabbitOM.Net.Rtp.H265
         public bool IsAccessDelimiter { get; private set; }
         public byte[] Payload { get; private set; } 
 
+
         public bool TryValidate()
-            => Payload != null && Payload.Length >= 1;
+        {
+            return Payload != null && Payload.Length >= 1;
+        }
 
 
 
@@ -59,7 +62,9 @@ namespace RabbitOM.Net.Rtp.H265
             result = default;
 
             if ( buffer == null || buffer.Length < DefaultMinimuLength )
+            {
                 return false;
+            }
 
             /*
                 +----------------------------------+
@@ -72,7 +77,9 @@ namespace RabbitOM.Net.Rtp.H265
                       : -1;
 
             if ( index < 0 )
+            {
                 return false;
+            }
 
             /*
                 +------------------------------------------+
