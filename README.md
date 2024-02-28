@@ -142,7 +142,7 @@ You will be able to decorate each request by adding customs headers, because som
 
 # About Session Description Protocol layer
 
-The actual [SDP](https://www.rfc-editor.org/rfc/rfc4566) iimplementation is strong.
+The actual [SDP](https://www.rfc-editor.org/rfc/rfc4566) implementation is strong.
 
 ~~~~C#
 
