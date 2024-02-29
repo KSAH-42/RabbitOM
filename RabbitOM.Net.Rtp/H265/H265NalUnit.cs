@@ -20,9 +20,7 @@ namespace RabbitOM.Net.Rtp.H265
     {
         private static int DefaultMinimumLength = 5;
 
-        private static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
-        private static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
-
+        
         private H265NalUnit() { }
 
         public bool ForbiddenBit { get; private set; }
@@ -59,9 +57,12 @@ namespace RabbitOM.Net.Rtp.H265
                 +----------------------------------+
              */
 
-            int index = StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
-                      : StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
-                      : 0;
+            int index = StartPrefix.LastIndexOf( buffer );
+
+            if ( index < 0 )
+            {
+                index = 0;
+            }
 
             /*
                 +---------------------------------------------

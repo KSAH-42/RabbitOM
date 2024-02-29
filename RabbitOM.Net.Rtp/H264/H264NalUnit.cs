@@ -23,10 +23,9 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private static int DefaultMinimunLength = 4;
 
-        private static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
-        private static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
         private H264NalUnit() { }
+
 
         public bool ForbiddenBit { get; private set; }
         public byte Nri { get; private set; }
@@ -50,6 +49,8 @@ namespace RabbitOM.Net.Rtp.H264
         public bool IsPPS { get; private set; }
         public bool IsAccessDelimiter { get; private set; }
         public byte[] Payload { get; private set; } 
+
+
 
         public bool TryValidate()
         {
@@ -83,10 +84,13 @@ namespace RabbitOM.Net.Rtp.H264
                 +----------------------------------+
              */
 
-            int index = StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
-                      : StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
-                      : 0;
+            int index = StartPrefix.LastIndexOf( buffer );
 
+            if ( index < 0 )
+            {
+                index = 0;
+            }
+            
             /*
                 +------------------------------------------+
                 | NAL Unit Header (Variable size)          |

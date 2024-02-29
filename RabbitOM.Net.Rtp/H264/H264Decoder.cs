@@ -22,12 +22,30 @@ namespace RabbitOM.Net.Rtp.H264
                 return false;
             }
 
-            foreach ( var nalunit in nalunits )
+            while ( nalunits.Any() )
             {
+                H264NalUnit nalunit = nalunits.Dequeue();
+
                 if ( ! nalunit.TryValidate() || nalunit.CanSkip() )
                 {
                     continue;
                 }
+
+                if ( nalunit.IsSingle )
+                {
+                    continue;
+                }
+
+                if ( nalunit.IsSPS )
+                {
+                    OnDecodeSPS( nalunit );
+                }
+
+                if ( nalunit.IsPPS )
+                {
+                    OnDecodePPS( nalunit );
+                }
+
             }
 
             throw new NotImplementedException();
@@ -41,6 +59,14 @@ namespace RabbitOM.Net.Rtp.H264
         public void Dispose()
         {
             _stream.Dispose();
+        }
+
+        private void OnDecodeSPS( H264NalUnit nalunit )
+        {
+        }
+
+        private void OnDecodePPS( H264NalUnit nalunit )
+        {
         }
     }
 }

@@ -11,6 +11,10 @@ namespace RabbitOM.Net.Rtp
 {
     public sealed class StartPrefix
     {
+        public static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
+        public static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
+
+
         private readonly byte[] _values;
 
 
