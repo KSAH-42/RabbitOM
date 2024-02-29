@@ -13,7 +13,7 @@ namespace RabbitOM.Net.Rtp.H265
 {
     public sealed class H265NalUnit
     {
-        private static int DefaultMinimuLength = 4;
+        private static int DefaultMinimumLength = 5;
 
         private static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
         private static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
@@ -43,7 +43,7 @@ namespace RabbitOM.Net.Rtp.H265
         {
             result = default;
 
-            if ( buffer == null || buffer.Length < DefaultMinimuLength )
+            if ( buffer == null || buffer.Length < DefaultMinimumLength )
             {
                 return false;
             }
@@ -73,13 +73,17 @@ namespace RabbitOM.Net.Rtp.H265
 
             result = new H265NalUnit();
 
-            result.ForbiddenBit           = (byte) ( ( buffer[ index ] >> 7 ) & 0x1 ) == 1;
+            result.ForbiddenBit           = (byte) ( ( buffer[ index ] >> 7 ) & 0x1  ) == 1;
             result.Type                   = (byte) ( ( buffer[ index ] >> 1 ) & 0x3F );
             result.LayerId                = (byte) ( ( buffer[ index ] << 7 ) & 0x80 );
             result.LayerId               |= (byte) ( ( buffer[ index ] >> 3 ) & 0x1F );
-            // result.TID = ...
+            result.TID                    = (byte) ( ( buffer[ index ]      ) & 0x03 );
 
-            throw new NotImplementedException();
+            result.Payload = new byte[ buffer.Length - ++index ];
+
+            Buffer.BlockCopy( buffer , index , result.Payload , 0 , result.Payload.Length );
+
+            return true;
         }
     } 
 }

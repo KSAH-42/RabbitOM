@@ -10,6 +10,9 @@ namespace RabbitOM.Net.Rtp
     {
         private readonly byte[] _values;
 
+
+
+
         public StartPrefix( byte[] values )
         {
             if ( values == null )
@@ -24,6 +27,8 @@ namespace RabbitOM.Net.Rtp
 
             _values = values;
         }       
+
+
 
 
 

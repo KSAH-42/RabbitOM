@@ -13,7 +13,7 @@ namespace RabbitOM.Net.Rtp.H264
 {
     public sealed class H264NalUnit
     {
-        private static int DefaultMinimuLength = 4;
+        private static int DefaultMinimunLength = 4;
 
         private static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
         private static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
@@ -59,7 +59,7 @@ namespace RabbitOM.Net.Rtp.H264
         {
             result = default;
 
-            if ( buffer == null || buffer.Length < DefaultMinimuLength )
+            if ( buffer == null || buffer.Length < DefaultMinimunLength )
             {
                 return false;
             }
