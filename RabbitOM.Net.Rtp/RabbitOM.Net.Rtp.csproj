@@ -45,9 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="H264\H264StartPrefix.cs" />
+    <Compile Include="StartPrefix.cs" />
     <Compile Include="H265\H265Parser.cs" />
-    <Compile Include="H265\H265StartPrefix.cs" />
     <Compile Include="H265\H265NalUnit.cs" />
     <Compile Include="H265\H265NalUnitCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

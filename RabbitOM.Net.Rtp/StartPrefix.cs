@@ -4,13 +4,13 @@
 
 using System;
 
-namespace RabbitOM.Net.Rtp.H265
+namespace RabbitOM.Net.Rtp
 {
-    public sealed class H265StartPrefix
+    public sealed class StartPrefix
     {
         private readonly byte[] _values;
 
-        public H265StartPrefix( byte[] values )
+        public StartPrefix( byte[] values )
         {
             if ( values == null )
             {
@@ -36,16 +36,11 @@ namespace RabbitOM.Net.Rtp.H265
 
 
 
-        public static bool StartsWith( byte[] buffer , H265StartPrefix prefix )
+        public static bool StartsWith( byte[] buffer , StartPrefix prefix )
         {
-            if ( buffer == null )
+            if ( buffer == null || prefix == null )
             {
-                throw new ArgumentNullException( nameof( buffer ) );
-            }
-
-            if ( prefix == null )
-            {
-                throw new ArgumentNullException( nameof( prefix ) );
+                return false;
             }
 
             int count = buffer.Length > prefix.Values.Length ? prefix.Values.Length : buffer.Length;

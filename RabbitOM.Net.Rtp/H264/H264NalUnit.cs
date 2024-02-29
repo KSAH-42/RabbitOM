@@ -15,8 +15,8 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private static int DefaultMinimuLength = 4;
 
-        private static readonly H264StartPrefix StartPrefixA = new H264StartPrefix( new byte[] { 0 , 0 , 1 } );
-        private static readonly H264StartPrefix StartPrefixB = new H264StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
+        private static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
+        private static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
         private H264NalUnit() { }
 
@@ -70,8 +70,8 @@ namespace RabbitOM.Net.Rtp.H264
                 +----------------------------------+
              */
 
-            int index = H264StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
-                      : H264StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
+            int index = StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
+                      : StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
                       : -1;
 
             if ( index < 0 )

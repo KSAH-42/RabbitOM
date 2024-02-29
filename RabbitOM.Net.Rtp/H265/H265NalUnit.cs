@@ -15,8 +15,8 @@ namespace RabbitOM.Net.Rtp.H265
     {
         private static int DefaultMinimuLength = 4;
 
-        private static readonly H265StartPrefix StartPrefixA = new H265StartPrefix( new byte[] { 0 , 0 , 1 } );
-        private static readonly H265StartPrefix StartPrefixB = new H265StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
+        private static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
+        private static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
         private H265NalUnit() { }
 
@@ -54,8 +54,8 @@ namespace RabbitOM.Net.Rtp.H265
                 +----------------------------------+
              */
 
-            int index = H265StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
-                      : H265StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
+            int index = StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
+                      : StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
                       : -1;
 
             if ( index < 0 )
@@ -64,11 +64,11 @@ namespace RabbitOM.Net.Rtp.H265
             }
 
             /*
-                +------------------------------------------+
-                | NAL Unit Header (Variable size)          |
-                +------------------------------------------+
-                | Forbidden Zero Bit | NRI | NAL Unit Type |
-                +------------------------------------------+
+                +---------------------------------------------
+                | NAL Unit Header (Variable size)             |
+                +---------------------------------------------+
+                | Forbidden Zero Bit | Type | Layer Id | TID  |
+                +---------------------------------------------+
              */
 
             result = new H265NalUnit();
