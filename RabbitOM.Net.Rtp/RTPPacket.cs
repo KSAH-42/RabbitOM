@@ -32,6 +32,12 @@ namespace RabbitOM.Net.Rtp
         public bool TryValidate()
             => Version != 2 || Data == null || Data.Length <= 0 ? false : true;
 
+
+        public static bool IsH264Packet( RTPPacket packet )
+        {
+            return packet != null && packet.PayloadType == 96;
+        }
+
         public static bool TryParse( byte[] buffer , out RTPPacket result )
         {
             result = null;

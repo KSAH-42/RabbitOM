@@ -53,7 +53,17 @@ namespace RabbitOM.Net.Rtp.H264
 
         public bool TryValidate()
         {
-            return Payload != null && Payload.Length >= 1 ;
+            if ( Payload == null || Payload.Length <= 1 )
+            {
+                return false;
+            }
+
+            if ( ForbiddenBit || IsUnDefinedNri )
+            {
+                return false;
+            }
+
+            return true;
         }
 
 
