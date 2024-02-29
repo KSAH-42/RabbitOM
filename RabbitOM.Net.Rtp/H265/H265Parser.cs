@@ -1,5 +1,7 @@
 ﻿/*
  EXPERIMENTATION of the next implementation of the rtp layer
+
+                    IMPLEMENTATION  NOT COMPLETED
 */
 
 using System;

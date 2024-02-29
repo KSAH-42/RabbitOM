@@ -5,7 +5,12 @@
 
  Reduce copy by using array segment to remove Buffer.Copy or similar methods
 
-*/
+
+
+                    IMPLEMENTATION  NOT COMPLETED
+
+ 
+ */
 
 using System;
 
