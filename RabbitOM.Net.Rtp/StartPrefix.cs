@@ -64,12 +64,12 @@ namespace RabbitOM.Net.Rtp
             return true;
         }
 
-        public static int LastIndexOfPrefix( byte[] buffer )
+        public static int LastIndexOf( byte[] buffer )
         {
-            return LastIndexOfPrefix( buffer , 3 );
+            return LastIndexOf( buffer , 3 );
         }
 
-        public static int LastIndexOfPrefix( byte[] buffer , int count /*the prefix size*/ ) 
+        public static int LastIndexOf( byte[] buffer , int count /*the prefix size*/ ) 
         {
             if ( null == buffer )
                 return -1;
