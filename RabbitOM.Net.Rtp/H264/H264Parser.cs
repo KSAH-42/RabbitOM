@@ -27,6 +27,11 @@ namespace RabbitOM.Net.Rtp.H264
 
             foreach ( var packet in frame.Packets )
             {
+                if ( packet.PayloadType != 96 )
+                {
+                    continue;
+                }
+
                 if ( H264NalUnit.TryParse( packet.Data , out H264NalUnit nalUnit ) )
                 {
                     nalunits.Enqueue( nalUnit );

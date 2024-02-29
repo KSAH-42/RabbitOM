@@ -72,12 +72,7 @@ namespace RabbitOM.Net.Rtp.H264
 
             int index = StartPrefix.StartsWith( buffer , StartPrefixA ) ? StartPrefixA.Values.Length
                       : StartPrefix.StartsWith( buffer , StartPrefixB ) ? StartPrefixB.Values.Length
-                      : -1;
-
-            if ( index < 0 )
-            {
-                return false;
-            }
+                      : 0;
 
             /*
                 +------------------------------------------+
