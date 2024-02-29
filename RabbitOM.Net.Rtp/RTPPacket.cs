@@ -15,10 +15,12 @@ namespace RabbitOM.Net.Rtp
     {
         private RTPPacket() { }
 
+
+
         public byte Version { get; private set; }
         public bool Padding  { get; private set; }
         public bool HasExtension { get; private set; }
-        public ushort CSRC { get; private set; }
+        public ushort NumberOfCSRC { get; private set; }
         public bool Marker { get; private set; }
         public byte PayloadType { get; private set; }
         public uint SequenceNumber { get; private set; }
@@ -29,8 +31,17 @@ namespace RabbitOM.Net.Rtp
         public byte[] ExtensionData { get; private set; }
         public int[] CSRCIdentifiers { get; private set; }
 
+
+
+
         public bool TryValidate()
-            => Version != 2 || Data == null || Data.Length <= 0 ? false : true;
+        {
+            return Version != 2 || Data == null || Data.Length <= 0 ? false : true;
+        }
+
+
+
+
 
 
         public static bool IsH264Packet( RTPPacket packet )
@@ -52,7 +63,7 @@ namespace RabbitOM.Net.Rtp
             result.Version         = (byte) ( ( buffer[ 0 ] & 0xC0 ) >> 6 );
             result.Padding         = (byte) ( ( buffer[ 0 ] & 0x20 ) >> 5 ) == 1;
             result.HasExtension    = (byte) ( ( buffer[ 0 ] & 0x10 ) >> 4 ) == 1;
-            result.CSRC            = (ushort) ( buffer[ 0 ] & 0x0F );
+            result.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
             result.Marker          = (byte) ((buffer[ 1 ] & 0x80 ) ) != 0;
             result.PayloadType     = (byte) ( buffer[ 1 ] & 0x07F );
@@ -71,9 +82,9 @@ namespace RabbitOM.Net.Rtp
 
             uint startIndex = 12;
 
-            if ( result.CSRC > 0 )
+            if ( result.NumberOfCSRC > 0 )
             {
-                result.CSRCIdentifiers = new int[ result.CSRC ];
+                result.CSRCIdentifiers = new int[ result.NumberOfCSRC ];
 
                 for ( uint i = 0 ; i < result.CSRCIdentifiers.Length && ( startIndex + i ) < buffer.Length ; ++i )
                 {
