@@ -43,7 +43,7 @@ namespace RabbitOM.Net.Rtp
 
 
 
-
+        // TOBE REMOVED...
         public static bool StartsWith( byte[] buffer , StartPrefix prefix )
         {
             if ( buffer == null || prefix == null )
@@ -64,12 +64,12 @@ namespace RabbitOM.Net.Rtp
             return true;
         }
 
-        public static int IndexOfPrefix( byte[] buffer )
+        public static int LastIndexOfPrefix( byte[] buffer )
         {
-            return IndexOfPrefix( buffer , 3 );
+            return LastIndexOfPrefix( buffer , 3 );
         }
 
-        public static int IndexOfPrefix( byte[] buffer , int count /*the prefix size*/ ) 
+        public static int LastIndexOfPrefix( byte[] buffer , int count /*the prefix size*/ ) 
         {
             if ( null == buffer )
                 return -1;
