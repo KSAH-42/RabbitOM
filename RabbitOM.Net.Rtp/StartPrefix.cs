@@ -66,26 +66,31 @@ namespace RabbitOM.Net.Rtp
 
         public static int LastIndexOf( byte[] buffer )
         {
-            return LastIndexOf( buffer , 3 );
+            return LastIndexOf( buffer , 3 , 4 );
         }
 
-        public static int LastIndexOf( byte[] buffer , int count /*the prefix size*/ ) 
+        public static int LastIndexOf( byte[] buffer , int minimum , int maximum /*the prefix size*/ ) 
         {
             if ( null == buffer )
-                return -1;
+                throw new ArgumentNullException( nameof( buffer ) );
 
-            int numberOfZeros = 0;
+            if ( minimum > maximum )
+                throw new ArgumentException( nameof( minimum ) );
 
-            for ( int i = 0 ; i < buffer.Length && i <= count ; ++ i )
+            int size = 0;
+
+            for ( int i = 0 ; i < buffer.Length && i <= maximum ; ++ i )
             {
                 if ( buffer[ i ] > 1 )
                     break;
 
+                size ++;
+
                 if ( buffer[ i ] == 0 )
-                    numberOfZeros ++;
+                    continue;
 
                 if ( buffer[ i ] == 1 )
-                    return numberOfZeros >= 2 ? i : -1;
+                    return ( minimum <= size && size <= maximum ) ? i : -1;
             }
 
             return -1;
