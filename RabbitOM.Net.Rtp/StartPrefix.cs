@@ -11,8 +11,8 @@ namespace RabbitOM.Net.Rtp
 {
     public sealed class StartPrefix
     {
-        public static readonly StartPrefix StartPrefixA = new StartPrefix( new byte[] { 0 , 0 , 1 } );
-        public static readonly StartPrefix StartPrefixB = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
+        public static readonly StartPrefix StartPrefixS3 = new StartPrefix( new byte[] { 0 , 0 , 1 } );
+        public static readonly StartPrefix StartPrefixS4 = new StartPrefix( new byte[] { 0 , 0 , 0 , 1 } );
 
 
         private readonly byte[] _values;
@@ -69,8 +69,8 @@ namespace RabbitOM.Net.Rtp
         }
 
         public static int LastIndexOf( byte[] buffer )
-        {
-            return LastIndexOf( buffer , 3 , 4 );
+        {                                              
+            return LastIndexOf( buffer , StartPrefixS3.Values.Length , StartPrefixS4.Values.Length );
         }
 
         public static int LastIndexOf( byte[] buffer , int minimum , int maximum /*the prefix size*/ ) 
