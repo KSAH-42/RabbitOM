@@ -53,17 +53,12 @@ namespace RabbitOM.Net.Rtp.H264
 
         public bool TryValidate()
         {
-            if ( Payload == null || Payload.Length <= 1 )
-            {
-                return false;
-            }
+            return Payload == null || Payload.Length <= 1 ? false : true;
+        }
 
-            if ( ForbiddenBit || IsUnDefinedNri )
-            {
-                return false;
-            }
-
-            return true;
+        public bool CanSkip()
+        {
+            return ForbiddenBit || IsUnDefinedNri;
         }
 
 
@@ -72,7 +67,7 @@ namespace RabbitOM.Net.Rtp.H264
         // TODO: add tests for protocol violations
 
         // Time complexity O(N)
-        
+
         public static bool TryParse( byte[] buffer , out H264NalUnit result )
         {
             result = default;
