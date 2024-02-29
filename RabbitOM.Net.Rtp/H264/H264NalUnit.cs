@@ -122,7 +122,7 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsCodedSlicePartitionB = result.Type == 3;
             result.IsCodedSlicePartitionC = result.Type == 4;
             result.IsCodedSliceIDR        = result.Type == 5;
-            result.IsCodedSliceIDR        = result.Type == 6;
+            result.IsSEI                  = result.Type == 6;
             result.IsSPS                  = result.Type == 7;
             result.IsPPS                  = result.Type == 8;
             result.IsAccessDelimiter      = result.Type == 9;
