@@ -30,7 +30,7 @@ namespace RabbitOM.Net.Rtp.H264
                 }
             }
 
-            throw new InvalidOperationException();
+            throw new NotImplementedException();
         }
 
         public void Clear()
