@@ -29,15 +29,22 @@ namespace RabbitOM.Net.Rtp.H264
 
             foreach ( var packet in frame.Packets )
             {
-                if ( packet.PayloadType != 96 )
+                if ( packet.PayloadType != (byte) PayloadType.Mpeg4 )
                 {
                     continue;
                 }
 
-                if ( H264NalUnit.TryParse( packet.Data , out H264NalUnit nalUnit ) )
+                if ( ! H264NalUnit.TryParse( packet.Data , out H264NalUnit nalUnit ) )
                 {
-                    nalunits.Enqueue( nalUnit );
+                    continue;
                 }
+
+                if ( nalUnit.ForbiddenBit || nalUnit.IsUnDefinedNri )
+                {
+                    continue;
+                }
+
+                nalunits.Enqueue( nalUnit );
             }
 
             result = nalunits.IsEmpty ? null : nalunits;
