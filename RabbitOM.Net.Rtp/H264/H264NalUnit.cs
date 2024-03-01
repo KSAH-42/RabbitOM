@@ -14,7 +14,6 @@
 
 
 */
-
 using System;
 
 namespace RabbitOM.Net.Rtp.H264
@@ -23,7 +22,11 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private static int DefaultMinimunLength = 4;
 
+
+
         private H264NalUnit() { }
+
+
 
 
         public bool ForbiddenBit { get; private set; }
@@ -55,9 +58,13 @@ namespace RabbitOM.Net.Rtp.H264
         
 
 
+
+
+
+
         public bool TryValidate()
         {
-            return Payload == null || Payload.Length <= 1 ? false : true;
+            return Payload != null && Payload.Length > 0;
         }
 
         public bool CanSkip()
@@ -66,9 +73,13 @@ namespace RabbitOM.Net.Rtp.H264
         }
 
 
+
+
+
+
+
         // TODO: add parsing tests
         // TODO: add tests for protocol violations
-
         // Time complexity O(N)
 
         public static bool TryParse( byte[] buffer , out H264NalUnit result )
@@ -103,11 +114,10 @@ namespace RabbitOM.Net.Rtp.H264
 
             result = new H264NalUnit()
             {
+                Prefix       = prefix.Values,
                 ForbiddenBit = (byte) ( ( buffer[ index ] >> 7 ) & 0x1 ) == 1,
                 Nri          = (byte) ( ( buffer[ index ] >> 5 ) & 0x3 ),
                 Type         = (byte) ( ( buffer[ index ] ) & 0x1F ),
-
-                Prefix       = prefix.Values,
             };
 
             result.IsUnDefinedNri         = result.Nri  == 0;

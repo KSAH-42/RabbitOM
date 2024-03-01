@@ -3,7 +3,6 @@
 
                     IMPLEMENTATION  NOT COMPLETED
 */
-
 using System;
 
 namespace RabbitOM.Net.Rtp.H264

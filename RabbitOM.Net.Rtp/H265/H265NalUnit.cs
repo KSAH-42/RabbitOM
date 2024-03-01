@@ -11,7 +11,6 @@
 
  
  */
-
 using System;
 
 namespace RabbitOM.Net.Rtp.H265
@@ -20,7 +19,13 @@ namespace RabbitOM.Net.Rtp.H265
     {
         private static int DefaultMinimumLength = 5;
    
+
+
+
         private H265NalUnit() { }
+
+
+
 
         public bool ForbiddenBit { get; private set; }
         public byte Type { get; private set; }
@@ -30,6 +35,10 @@ namespace RabbitOM.Net.Rtp.H265
         public byte[] Prefix { get; private set; }
 
 
+
+
+
+
         public bool TryValidate()
         {
             return Payload != null && Payload.Length >= 1;
@@ -37,11 +46,15 @@ namespace RabbitOM.Net.Rtp.H265
 
 
 
+
+
+
+
+
         // TODO: add parsing tests
         // TODO: add tests for protocol violations
+        // Time complexity O(N)   
 
-        // Time complexity O(N)
-        
         public static bool TryParse( byte[] buffer , out H265NalUnit result )
         {
             result = default;
