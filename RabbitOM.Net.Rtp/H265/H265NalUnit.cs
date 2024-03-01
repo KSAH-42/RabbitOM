@@ -30,7 +30,6 @@ namespace RabbitOM.Net.Rtp.H265
         public byte[] Prefix { get; private set; }
 
 
-
         public bool TryValidate()
         {
             return Payload != null && Payload.Length >= 1;

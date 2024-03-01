@@ -47,6 +47,9 @@ namespace RabbitOM.Net.Rtp.H264
         public bool IsSPS { get; private set; }
         public bool IsPPS { get; private set; }
         public bool IsAccessDelimiter { get; private set; }
+        public bool IsSlice { get; private set; }
+        public bool IsIntraFrame { get; private set; }
+        public bool IsPredictiveFrame { get; private set; }
         public byte[] Payload { get; private set; } 
         public byte[] Prefix { get; private set; }
         
@@ -127,6 +130,22 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsSPS                  = result.Type == 7;
             result.IsPPS                  = result.Type == 8;
             result.IsAccessDelimiter      = result.Type == 9;
+            
+            result.IsSlice               |= result.IsCodedSliceNIDR;
+            result.IsSlice               |= result.IsCodedSlicePartitionA;
+            result.IsSlice               |= result.IsCodedSlicePartitionB;
+            result.IsSlice               |= result.IsCodedSlicePartitionC;
+            result.IsSlice               |= result.IsCodedSliceIDR;
+
+            result.IsIntraFrame          |= result.IsCodedSlicePartitionA;
+            result.IsIntraFrame          |= result.IsSEI;
+            result.IsIntraFrame          |= result.IsSPS;
+            result.IsIntraFrame          |= result.IsPPS;
+
+            result.IsPredictiveFrame     |= result.Type == 0;
+            result.IsPredictiveFrame     |= result.IsCodedSlicePartitionB;
+            result.IsPredictiveFrame     |= result.IsCodedSlicePartitionC;
+            result.IsPredictiveFrame     |= result.IsCodedSliceIDR;
 
             /*
                 +----------------------------------+
@@ -139,43 +158,6 @@ namespace RabbitOM.Net.Rtp.H264
             Buffer.BlockCopy( buffer , index , result.Payload , 0 , result.Payload.Length );
 
             return true;
-        }
-
-        public static bool IsSlice( H264NalUnit nalunit )
-        {
-            if ( nalunit == null )
-                return false;
-
-            return nalunit.IsCodedSliceNIDR
-                || nalunit.IsCodedSlicePartitionA
-                || nalunit.IsCodedSlicePartitionB
-                || nalunit.IsCodedSlicePartitionC
-                || nalunit.IsCodedSliceIDR
-                ;
-        }
-
-        public static bool IsIFrame( H264NalUnit nalunit )
-        {
-            if ( nalunit == null )
-                return false;
-
-            return nalunit.IsCodedSlicePartitionA
-                || nalunit.IsSEI
-                || nalunit.IsSPS
-                || nalunit.IsPPS
-                ;
-        }
-
-        public static bool IsPFrame( H264NalUnit nalunit )
-        {
-            if ( nalunit == null )
-                return false;
-
-            return nalunit.Type == 0
-                || nalunit.IsCodedSlicePartitionB
-                || nalunit.IsCodedSlicePartitionC
-                || nalunit.IsCodedSliceIDR
-                ;
         }
     }
 }
