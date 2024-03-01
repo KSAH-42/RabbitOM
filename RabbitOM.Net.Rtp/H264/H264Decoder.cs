@@ -39,7 +39,7 @@ namespace RabbitOM.Net.Rtp.H264
                 {
                     H264NalUnit nalunit = nalunits.Dequeue();
 
-                    if ( !nalunit.TryValidate() || nalunit.CanSkip() )
+                    if ( ! nalunit.TryValidate() || nalunit.CanSkip() )
                     {
                         continue;
                     }
