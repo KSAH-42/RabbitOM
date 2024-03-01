@@ -23,7 +23,7 @@ namespace RabbitOM.Net.Rtp
 
 
 
-        internal StartPrefix( byte[] values )
+        private StartPrefix( byte[] values )
         {
             _values = values;
         }       
