@@ -12,9 +12,9 @@ namespace RabbitOM.Net.Rtp.H265
     {
         // Time complexity O(N) as first view
 
-        // Should be Time complexity O(N,M) => see H264NalUnit.TryParse
+        // It should be O(N,M) => see frame.TryValidate & H264NalUnit.TryParse methods
 
-        // TODO: try to improve again as O(N)
+        // TODO: try improvement on space complexity, espacially on H264NalUnit.TryParse
 
         public bool TryParse( RTPFrame frame , out H265NalUnitCollection result )
         {
