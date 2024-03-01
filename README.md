@@ -15,13 +15,13 @@ A .net library for receiving raw audio/video streams using [RTSP](https://www.rf
 * Provide classes to access to the SDP informations
 * Thread safe, except the sdp classes
 * Handle large streams with a high bitrate like 50 MBits/seconds
-* Force the creation of ports used for receiving packets in case if the ports are temporaly used by some applications
+* Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
 ⚠️: Please note that the actual Rtp layer is not yet finished
 
 ➡️ The full rtp layer (rtp payload parsers, etc...) which already exists, will be replaced for the next version.
 
-➡️ Classes used for decoding was already implemented but not present in this repository at this moment.
+➡️ The Classes used for decoding was already implemented but here, in this repository, new implementation is in progress.
 
 # How to receive raw rtp packets using the rtsp client ?
 
