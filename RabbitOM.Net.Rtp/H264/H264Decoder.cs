@@ -46,6 +46,7 @@ namespace RabbitOM.Net.Rtp.H264
                     OnDecodePPS( nalunit );
                 }
 
+                OnWriteStream( nalunit );
             }
 
             throw new NotImplementedException();
@@ -61,12 +62,27 @@ namespace RabbitOM.Net.Rtp.H264
             _stream.Dispose();
         }
 
+
+
+
+
+        
         private void OnDecodeSPS( H264NalUnit nalunit )
         {
         }
 
         private void OnDecodePPS( H264NalUnit nalunit )
         {
+        }
+
+        private void OnWriteStream( H264NalUnit nalunit )
+        {
+            if ( nalunit.Prefix.Length == 0 )
+            {
+                _stream.Write( StartPrefix.StartPrefixS4.Values , 0 , StartPrefix.StartPrefixS4.Values.Length );
+            }
+
+            _stream.Write( nalunit.Payload , 0 , nalunit.Payload.Length );
         }
     }
 }

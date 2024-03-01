@@ -22,7 +22,7 @@ namespace RabbitOM.Net.Rtp
         public bool HasExtension { get; private set; }
         public ushort NumberOfCSRC { get; private set; }
         public bool Marker { get; private set; }
-        public byte PayloadType { get; private set; }
+        public byte Type { get; private set; }
         public uint SequenceNumber { get; private set; }
         public uint Timestamp { get; private set; }
         public uint SSRC { get; private set; }
@@ -46,7 +46,7 @@ namespace RabbitOM.Net.Rtp
 
         public static bool IsH264Packet( RTPPacket packet )
         {
-            return packet != null && packet.PayloadType == 96;
+            return packet != null && packet.Type == 96;
         }
 
         public static bool TryParse( byte[] buffer , out RTPPacket result )
@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtp
             result.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
             result.Marker          = (byte) ((buffer[ 1 ] & 0x80 ) ) != 0;
-            result.PayloadType     = (byte) ( buffer[ 1 ] & 0x07F );
+            result.Type     = (byte) ( buffer[ 1 ] & 0x07F );
             result.SequenceNumber += (uint) ( buffer[ 2 ]  << 8 );
             result.SequenceNumber += (uint) ( buffer[ 3 ] );
             result.Timestamp      += (uint) ( buffer[ 4 ]  << 24 );

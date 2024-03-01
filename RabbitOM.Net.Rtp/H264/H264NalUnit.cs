@@ -23,7 +23,6 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private static int DefaultMinimunLength = 4;
 
-
         private H264NalUnit() { }
 
 
@@ -49,7 +48,8 @@ namespace RabbitOM.Net.Rtp.H264
         public bool IsPPS { get; private set; }
         public bool IsAccessDelimiter { get; private set; }
         public byte[] Payload { get; private set; } 
-
+        public byte[] Prefix { get; private set; }
+        
 
 
         public bool TryValidate()
@@ -61,7 +61,6 @@ namespace RabbitOM.Net.Rtp.H264
         {
             return ForbiddenBit || IsUnDefinedNri;
         }
-
 
 
         // TODO: add parsing tests
@@ -84,9 +83,12 @@ namespace RabbitOM.Net.Rtp.H264
                 +----------------------------------+
              */
 
-            int index = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4.Values.Length 
-                      : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3.Values.Length
-                      : 0;
+            var prefix = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4
+                       : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3
+                       : StartPrefix.Null
+                       ;
+
+            int index = prefix.Values.Length;
 
             /*
                 +------------------------------------------+
@@ -96,11 +98,14 @@ namespace RabbitOM.Net.Rtp.H264
                 +------------------------------------------+
              */
 
-            result = new H264NalUnit();
+            result = new H264NalUnit()
+            {
+                ForbiddenBit = (byte) ( ( buffer[ index ] >> 7 ) & 0x1 ) == 1,
+                Nri          = (byte) ( ( buffer[ index ] >> 5 ) & 0x3 ),
+                Type         = (byte) ( ( buffer[ index ] ) & 0x1F ),
 
-            result.ForbiddenBit           = (byte) ( ( buffer[ index ] >> 7 ) & 0x1) == 1;
-            result.Nri                    = (byte) ( ( buffer[ index ] >> 5 ) & 0x3 );
-            result.Type                   = (byte) ( ( buffer[ index ] ) & 0x1F );
+                Prefix       = prefix.Values,
+            };
 
             result.IsUnDefinedNri         = result.Nri  == 0;
             result.IsReserved            |= result.Type == 0;
@@ -135,5 +140,42 @@ namespace RabbitOM.Net.Rtp.H264
 
             return true;
         }
-    } 
+
+        public static bool IsSlice( H264NalUnit nalunit )
+        {
+            if ( nalunit == null )
+                return false;
+
+            return nalunit.IsCodedSliceNIDR
+                || nalunit.IsCodedSlicePartitionA
+                || nalunit.IsCodedSlicePartitionB
+                || nalunit.IsCodedSlicePartitionC
+                || nalunit.IsCodedSliceIDR
+                ;
+        }
+
+        public static bool IsIFrame( H264NalUnit nalunit )
+        {
+            if ( nalunit == null )
+                return false;
+
+            return nalunit.IsCodedSlicePartitionA
+                || nalunit.IsSEI
+                || nalunit.IsSPS
+                || nalunit.IsPPS
+                ;
+        }
+
+        public static bool IsPFrame( H264NalUnit nalunit )
+        {
+            if ( nalunit == null )
+                return false;
+
+            return nalunit.Type == 0
+                || nalunit.IsCodedSlicePartitionB
+                || nalunit.IsCodedSlicePartitionC
+                || nalunit.IsCodedSliceIDR
+                ;
+        }
+    }
 }
