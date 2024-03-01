@@ -12,12 +12,16 @@ namespace RabbitOM.Net.Rtp.H264
     public sealed class H264Decoder : IDisposable
     {
         private readonly H264ParameterSet _parameterSet;
+        private readonly MemoryStream _stream;
+
 
 
 
         public H264Decoder( byte[] sps , byte[] pps )
 		{
             _parameterSet = new H264ParameterSet( sps , pps );
+
+            _stream = new MemoryStream();
         }
 
 
@@ -33,46 +37,43 @@ namespace RabbitOM.Net.Rtp.H264
                 return false;
             }
 
-            using ( MemoryStream stream = new MemoryStream() )
+            while ( nalunits.Any() )
             {
-                while ( nalunits.Any() )
+                H264NalUnit nalunit = nalunits.Dequeue();
+
+                if ( !nalunit.TryValidate() || nalunit.CanSkip() )
                 {
-                    H264NalUnit nalunit = nalunits.Dequeue();
-
-                    if ( ! nalunit.TryValidate() || nalunit.CanSkip() )
-                    {
-                        continue;
-                    }
-
-                    if ( ! nalunit.IsSingle )
-                    {
-                        continue;
-                    }
-
-                    if ( nalunit.IsSPS )
-                    {
-                        OnDecodeSPS( nalunit , stream );
-                    }
-                    else if ( nalunit.IsPPS )
-                    {
-                        OnDecodePPS( nalunit , stream );
-                    }
-                    else if ( nalunit.IsSlice )
-                    {
-                        OnDecodeSlice( nalunit , stream );
-                    }
-                    else
-                    {
-                        OnDecode( nalunit , stream );
-                    }
+                    continue;
                 }
 
-                stream.Flush();
+                if ( !nalunit.IsSingle )
+                {
+                    continue;
+                }
 
-                result = stream.ToArray();
-
-                return result.Length > 0;
+                if ( nalunit.IsSPS )
+                {
+                    OnDecodeSPS( nalunit );
+                }
+                else if ( nalunit.IsPPS )
+                {
+                    OnDecodePPS( nalunit );
+                }
+                else if ( nalunit.IsSlice )
+                {
+                    OnDecodeSlice( nalunit );
+                }
+                else
+                {
+                    OnDecode( nalunit );
+                }
             }
+
+            _stream.Flush();
+
+            result = _stream.ToArray();
+
+            return result.Length > 0;
         }
 
         public void Dispose()
@@ -84,7 +85,7 @@ namespace RabbitOM.Net.Rtp.H264
 
 
         
-        private void OnDecodeSPS( H264NalUnit nalunit , MemoryStream stream )
+        private void OnDecodeSPS( H264NalUnit nalunit )
         {
             if ( nalunit.Payload.Length < 5 )
             {
@@ -94,24 +95,24 @@ namespace RabbitOM.Net.Rtp.H264
             throw new NotImplementedException();
         }
 
-        private void OnDecodePPS( H264NalUnit nalunit , MemoryStream stream )
+        private void OnDecodePPS( H264NalUnit nalunit )
         {
             throw new NotImplementedException();
         }
 
-        private void OnDecodeSlice( H264NalUnit nalunit , MemoryStream stream )
+        private void OnDecodeSlice( H264NalUnit nalunit )
         {
             throw new NotImplementedException();
         }
 
-        private void OnDecode( H264NalUnit nalunit , MemoryStream stream )
+        private void OnDecode( H264NalUnit nalunit )
         {
             if ( nalunit.Prefix.Length == 0 )
             {
-                stream.Write( StartPrefix.StartPrefixS4.Values , 0 , StartPrefix.StartPrefixS4.Values.Length );
+                _stream.Write( StartPrefix.StartPrefixS4.Values , 0 , StartPrefix.StartPrefixS4.Values.Length );
             }
 
-            stream.Write( nalunit.Payload , 0 , nalunit.Payload.Length );
+            _stream.Write( nalunit.Payload , 0 , nalunit.Payload.Length );
         }
     }
 }
