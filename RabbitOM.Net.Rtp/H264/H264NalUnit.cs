@@ -84,13 +84,10 @@ namespace RabbitOM.Net.Rtp.H264
                 +----------------------------------+
              */
 
-            int index = StartPrefix.LastIndexOf( buffer );
+            int index = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4.Values.Length 
+                      : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3.Values.Length
+                      : 0;
 
-            if ( index < 0 )
-            {
-                index = 0;
-            }
-            
             /*
                 +------------------------------------------+
                 | NAL Unit Header (Variable size)          |

@@ -67,37 +67,5 @@ namespace RabbitOM.Net.Rtp
 
             return true;
         }
-
-        public static int LastIndexOf( byte[] buffer )
-        {                                              
-            return LastIndexOf( buffer , StartPrefixS3.Values.Length , StartPrefixS4.Values.Length );
-        }
-
-        public static int LastIndexOf( byte[] buffer , int minimum , int maximum /*the prefix size*/ ) 
-        {
-            if ( null == buffer )
-                throw new ArgumentNullException( nameof( buffer ) );
-
-            if ( minimum > maximum )
-                throw new ArgumentException( nameof( minimum ) );
-
-            int size = 0;
-
-            for ( int i = 0 ; i < buffer.Length && i <= maximum ; ++ i )
-            {
-                if ( buffer[ i ] > 1 )
-                    break;
-
-                size ++;
-
-                if ( buffer[ i ] == 0 )
-                    continue;
-
-                if ( buffer[ i ] == 1 )
-                    return ( minimum <= size && size <= maximum ) ? i : -1;
-            }
-
-            return -1;
-        }
     }
 }

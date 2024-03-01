@@ -57,12 +57,9 @@ namespace RabbitOM.Net.Rtp.H265
                 +----------------------------------+
              */
 
-            int index = StartPrefix.LastIndexOf( buffer );
-
-            if ( index < 0 )
-            {
-                index = 0;
-            }
+            int index = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4.Values.Length
+                      : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3.Values.Length
+                      : 0;
 
             /*
                 +---------------------------------------------
