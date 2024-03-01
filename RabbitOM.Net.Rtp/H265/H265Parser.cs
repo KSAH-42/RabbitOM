@@ -28,6 +28,11 @@ namespace RabbitOM.Net.Rtp.H265
 
             foreach ( var packet in frame.Packets )
             {
+                if ( ! RTPPacket.IsH265Packet( packet ) )
+                {
+                    continue;
+                }
+
                 if ( H265NalUnit.TryParse( packet.Data , out H265NalUnit nalUnit ) )
                 {
                     nalunits.Enqueue( nalUnit );

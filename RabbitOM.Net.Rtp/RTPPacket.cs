@@ -49,6 +49,11 @@ namespace RabbitOM.Net.Rtp
             return packet != null && packet.Type == 96;
         }
 
+        public static bool IsH265Packet( RTPPacket packet )
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool TryParse( byte[] buffer , out RTPPacket result )
         {
             result = null;
