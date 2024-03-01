@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="H264\H264ParameterSet.cs" />
     <Compile Include="H264\H264Decoder.cs" />
+    <Compile Include="H265\H265ParameterSet.cs" />
     <Compile Include="StartPrefix.cs" />
     <Compile Include="H265\H265Parser.cs" />
     <Compile Include="H265\H265NalUnit.cs" />
