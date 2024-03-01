@@ -19,7 +19,9 @@ namespace RabbitOM.Net.Rtp
         public override void Write( byte[] packet )
         {
             if ( ! _builder.TryAddPacket( packet ) )
+            {
                 return;
+            }
 
             OnPacketReceived( new RTPPacketReceivedEventArgs( _builder.LastPacket ) );
 

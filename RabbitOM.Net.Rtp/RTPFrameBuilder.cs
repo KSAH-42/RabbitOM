@@ -17,6 +17,8 @@ namespace RabbitOM.Net.Rtp
             Dispose( false );
         }
 
+        public abstract object SyncRoot { get; }
+
         public abstract bool TryAddPacket( byte[] buffer );
 
         public abstract bool CanBuildFrame();

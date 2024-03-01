@@ -12,10 +12,25 @@ namespace RabbitOM.Net.Rtp
     public sealed class DefaultRTPFrameBuilder : RTPFrameBuilder
     {
         private readonly object _lock = new object();
+        
         private readonly Queue<RTPPacket> _packets = new Queue<RTPPacket>();
+        
         private readonly Queue<int> _sizes = new Queue<int>();
+        
         private RTPPacket _lastPacket;
+       
         private int _frameSize;
+
+
+
+
+
+
+
+        public override object SyncRoot
+        {
+            get => _lock;
+        }
 
         public RTPPacket LastPacket
         {
@@ -27,6 +42,11 @@ namespace RabbitOM.Net.Rtp
                 }
             }
         }
+
+
+
+
+
 
         public override bool TryAddPacket( byte[] buffer )
         {
@@ -58,7 +78,7 @@ namespace RabbitOM.Net.Rtp
         {
             lock ( _lock )
             {
-                RTPPacket[] packets = new RTPPacket[ _sizes.Dequeue() ];
+                var packets = new RTPPacket[ _sizes.Dequeue() ];
 
                 int index = 0;
 
@@ -71,12 +91,6 @@ namespace RabbitOM.Net.Rtp
             }
         }
 
-        protected override void Dispose( bool disposing )
-        {
-            if ( disposing )
-                Clear();
-        }
-
         public override void Clear()
         {
             lock ( _lock )
@@ -86,6 +100,22 @@ namespace RabbitOM.Net.Rtp
                 _lastPacket = null;
             }
         }
+
+        protected override void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                Clear();
+            }
+        }
+
+
+
+
+
+
+
+
 
         private void OnPacketAdded( RTPPacket packet )
         {
