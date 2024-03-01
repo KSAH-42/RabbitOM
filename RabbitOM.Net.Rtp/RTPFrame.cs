@@ -19,14 +19,17 @@ namespace RabbitOM.Net.Rtp
         public RTPFrame( RTPPacket[] packets ) 
         {
             if ( packets == null )
+            {
                 throw new ArgumentNullException( nameof( packets ) );
+            }
 
             if ( packets.Length == 0 )
+            {
                 throw new ArgumentException( nameof( packets ) );
+            }
 
             _packets = packets;
         }
-
 
 
 
@@ -37,10 +40,9 @@ namespace RabbitOM.Net.Rtp
 
 
 
-
         public bool TryValidate()
         {
-            return _packets == null || _packets.Length == 0 ? false : true;
+            return _packets != null && _packets.Length > 0;
         }
     }
 }
