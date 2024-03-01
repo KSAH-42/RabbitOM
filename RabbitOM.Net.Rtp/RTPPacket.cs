@@ -66,7 +66,7 @@ namespace RabbitOM.Net.Rtp
             result.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
             result.Marker          = (byte) ((buffer[ 1 ] & 0x80 ) ) != 0;
-            result.Type     = (byte) ( buffer[ 1 ] & 0x07F );
+            result.Type            = (byte) ( buffer[ 1 ] & 0x07F );
             result.SequenceNumber += (uint) ( buffer[ 2 ]  << 8 );
             result.SequenceNumber += (uint) ( buffer[ 3 ] );
             result.Timestamp      += (uint) ( buffer[ 4 ]  << 24 );
