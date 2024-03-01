@@ -11,7 +11,7 @@ using System;
 
 namespace RabbitOM.Net.Rtp
 {
-	public sealed class RTPPacket
+    public sealed class RTPPacket
     {
         private RTPPacket() { }
 

@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Rtp.H264
 
         
         public H264ParameterSet( byte[] sps , byte[] pps )
-		{
+        {
             if ( sps == null )
             {
                 throw new ArgumentNullException( nameof( sps ) );

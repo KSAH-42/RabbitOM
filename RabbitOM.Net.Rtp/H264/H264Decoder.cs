@@ -18,7 +18,7 @@ namespace RabbitOM.Net.Rtp.H264
 
 
         public H264Decoder( byte[] sps , byte[] pps )
-		{
+        {
             _parameterSet = new H264ParameterSet( sps , pps );
 
             _stream = new MemoryStream();
