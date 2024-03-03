@@ -34,7 +34,7 @@ namespace RabbitOM.Net.Rtp.H264
         
 
 
-        public byte[] GetData()
+        public byte[] GetAllData()
         {
             if ( _data == null )
             {

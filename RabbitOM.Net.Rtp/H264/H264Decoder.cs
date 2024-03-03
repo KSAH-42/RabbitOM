@@ -120,7 +120,7 @@ namespace RabbitOM.Net.Rtp.H264
 
         private void OnDecoding( H264NalUnit nalunit )
         {
-            var values = nalunit.Payload.GetData();
+            var values = nalunit.Payload.GetAllData();
             
             throw new NotImplementedException();
         }
