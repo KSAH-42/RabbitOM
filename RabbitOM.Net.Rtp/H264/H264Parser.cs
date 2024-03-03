@@ -19,7 +19,7 @@ namespace RabbitOM.Net.Rtp.H264
         {
             result = null;
 
-            if ( frame == null || ! frame.TryValidate() )
+            if ( frame == null )
             {
                 return false;
             }

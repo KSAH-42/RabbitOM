@@ -29,12 +29,5 @@ namespace RabbitOM.Net.Rtp
         {
             get => _packets;
         }
-
-
-
-        public bool TryValidate()
-        {
-            return _packets != null && _packets.Length > 0;
-        }
     }
 }

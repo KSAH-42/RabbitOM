@@ -15,7 +15,7 @@ namespace RabbitOM.Net.Rtp.H265
         {
             result = null;
 
-            if ( frame == null || ! frame.TryValidate() )
+            if ( frame == null )
             {
                 return false;
             }
