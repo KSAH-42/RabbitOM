@@ -36,9 +36,7 @@ namespace RabbitOM.Net.Rtp.H264
         {
             if ( _data == null )
             {
-                _data = new byte[ _nalUnit.Buffer.Count ];
-                
-                Buffer.BlockCopy( _nalUnit.Buffer.Array , _nalUnit.Buffer.Offset , _data , 0 , _data.Length );
+                _data = CreateFromBuffer( _nalUnit.Buffer.Count );
             }
 
             return _data;
@@ -102,6 +100,19 @@ namespace RabbitOM.Net.Rtp.H264
             }
 
             return _pps;
+        }
+
+
+
+
+
+        private byte[] CreateFromBuffer( int length )
+        {
+            var buffer = new byte[ length ];
+
+            Buffer.BlockCopy( _nalUnit.Buffer.Array , _nalUnit.Buffer.Offset , buffer , 0 , buffer.Length );
+
+            return buffer;
         }
     }
 }
