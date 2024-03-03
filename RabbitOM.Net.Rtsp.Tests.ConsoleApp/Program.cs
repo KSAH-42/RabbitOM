@@ -1,5 +1,4 @@
-﻿using RabbitOM.Net.Rtp;
-using RabbitOM.Net.Rtsp.Clients;
+﻿using RabbitOM.Net.Rtsp.Clients;
 
 using System;
 
@@ -45,8 +44,9 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             }
 
             using ( var client = new RTSPClient() )
-            using ( var rtpSink= new DefaultRTPSink() )
             {
+                var parser = new Rtp.H264.H264Parser();
+
                 client.CommunicationStarted += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.White;
@@ -89,33 +89,8 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
                         return;
                     }
 
-                    if ( commandLines.SinkOption )
-                    {
-                        rtpSink.Write( e.Packet.Data );
-                        return;
-                    }
-                    
-                    if ( ! RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine( "Invalid rtp packet !!!!" );
-                        return;
-                    }
-
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
-                };
-
-                rtpSink.PacketReceived += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine( "Rtp packet received : {0}" , e.Packet.Data.Length );
-                };
-
-                rtpSink.FrameReceived += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine( "New Rtp frame - packet_count : {0} " , e.Frame.Packets.Length );
                 };
 
                 // Please note, read the manufacturer's documentation

@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{C8BA138C-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Net.Rtp", "RabbitOM.Net.Rtp\RabbitOM.Net.Rtp.csproj", "{8BC40A06-1EE6-4ABD-B6CA-29CDF5BFC19C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects-InProgress (NotImplemented)", "Projects-InProgress (NotImplemented)", "{98AD47BA-21EC-48F8-8898-3A7431CE5221}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1E661164-A7F8-4273-AB9F-F8B9F28BD75F} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
 		{C8BA138C-6603-4FBC-8033-5F6ED9E3D6D8} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
+		{8BC40A06-1EE6-4ABD-B6CA-29CDF5BFC19C} = {98AD47BA-21EC-48F8-8898-3A7431CE5221}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B4AD862-E72F-4EE0-8635-83FD58C5B14A}
