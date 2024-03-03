@@ -52,9 +52,10 @@ namespace RabbitOM.Net.Rtp.H264
         {
             return ForbiddenBit || IsUnDefinedNri;
         }
+        
         public override string ToString()
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             builder.Append( $"Type:{Type} " );
             builder.Append( $"IsSlice:{IsSlice} " );
