@@ -15,6 +15,8 @@ namespace RabbitOM.Net.Rtp.H264
         
         // Space complexiy : O(1) => but probably O(1,M)
 
+        // Try to improve it
+
         public bool TryParse( RTPFrame frame , out H264NalUnitCollection result )
         {
             result = null;
