@@ -1,10 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-                    IMPLEMENTATION  NOT COMPLETED
-
-*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Net.Rtp.H264
@@ -12,6 +6,7 @@ namespace RabbitOM.Net.Rtp.H264
     public sealed class H264ParserConfiguration
     {
         private readonly object _lock = new object();
+
         private readonly HashSet<int> _supportedPayloads = new HashSet<int>()
         {
             96

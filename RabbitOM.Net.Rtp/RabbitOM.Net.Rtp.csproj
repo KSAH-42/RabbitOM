@@ -51,6 +51,7 @@
     <Compile Include="H264\H264ParserConfiguration.cs" />
     <Compile Include="H265\H265ParserConfiguration.cs" />
     <Compile Include="H265\H265ParameterSet.cs" />
+    <Content Include="Readme.txt" />
     <Compile Include="StartPrefix.cs" />
     <Compile Include="H265\H265Parser.cs" />
     <Compile Include="H265\H265NalUnit.cs" />

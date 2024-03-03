@@ -1,10 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-                    IMPLEMENTATION  NOT COMPLETED
-*/
-
-using System;
+﻿using System;
 using System.IO;
 
 namespace RabbitOM.Net.Rtp.H264
@@ -12,6 +6,7 @@ namespace RabbitOM.Net.Rtp.H264
     public sealed class H264Decoder : IDisposable
     {
         private readonly H264ParameterSet _parameterSet;
+
         private readonly MemoryStream _stream;
 
 
@@ -80,30 +75,53 @@ namespace RabbitOM.Net.Rtp.H264
 
 
 
-        
+        private void OnDecodingFU_A( H264NalUnit nalunit )
+        {
+            var sps = nalunit.Payload.GetFuA();
+
+            throw new NotImplementedException();
+        }
+
+        private void OnDecodingFU_B( H264NalUnit nalunit )
+        {
+            var sps = nalunit.Payload.GetFuB();
+
+            throw new NotImplementedException();
+        }
+
+        private void OnDecodingSTAP_A( H264NalUnit nalunit )
+        {
+            var sps = nalunit.Payload.GetStapA();
+
+            throw new NotImplementedException();
+        }
+
+        private void OnDecodingSTAP_B( H264NalUnit nalunit )
+        {
+            var sps = nalunit.Payload.GetStapB();
+
+            throw new NotImplementedException();
+        }
+
         private void OnDecodingSPS( H264NalUnit nalunit )
         {
-            var sps = nalunit.Payload.GetDataAsSPS();
+            var sps = nalunit.Payload.GetSps();
 
             throw new NotImplementedException();
         }
 
         private void OnDecodingPPS( H264NalUnit nalunit )
         {
-            var pps = nalunit.Payload.GetDataAsPPS();
+            var pps = nalunit.Payload.GetPps();
 
             throw new NotImplementedException();
         }
 
         private void OnDecoding( H264NalUnit nalunit )
         {
-            var data   = nalunit.Payload.GetData();
-
-            var prefix = nalunit.Prefix.Length > 0 ? nalunit.Prefix : StartPrefix.StartPrefixS4.Values;
-
-
-            _stream.Write( prefix , 0 , prefix.Length );
-            _stream.Write( data , 0 , data.Length );
+            var data = nalunit.Payload.GetData();
+            
+            throw new NotImplementedException();
         }
     }
 }

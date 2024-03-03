@@ -1,17 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-                    IMPLEMENTATION  NOT COMPLETED
-
-TryParse Method:
-
-        // Time complexity O(N) as first view
-
-        // It should be O(N,M) => see frame.TryValidate & H264NalUnit.TryParse methods
-
-        // TODO: try improvement on space complexity, espacially on H264NalUnit.TryParse    
-*/
-using System;
+﻿using System;
 
 namespace RabbitOM.Net.Rtp.H265
 {

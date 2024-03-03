@@ -1,37 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-              O P T I M I Z A T I O N S
-
- Reduce copy by using array segment to remove Buffer.Copy or similar methods
-
-
-                    IMPLEMENTATION  NOT COMPLETED
-
-Before to make any optimization:
-
-  * First take a look on native code generation from IL Code
- 
-Then:
-
-  => Reduce the number of statements on try parse methods
-  
-  => Time complexity O(N,M)
-
-  => add tests for protocol violations
-
-if ( _data == null )
-            {
-                _data = new byte[ _nalUnit.Buffer.Count ];
-                
-                System.Buffer.BlockCopy( _nalUnit.Buffer.Array , _nalUnit.Buffer.Offset , _data , 0 , _data.Length );
-            }
-
-            return _data;
-
-        
-*/
-using System;
+﻿using System;
 
 namespace RabbitOM.Net.Rtp.H264
 {
@@ -39,50 +6,102 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private readonly H264NalUnit _nalUnit;
 
+        private byte[] _data;
+
+        private byte[] _fu_a;
+
+        private byte[] _fu_b;
+
+        private byte[] _stap_a;
+
+        private byte[] _stap_b;
+
+        private byte[] _pps;
+
+        private byte[] _sps;
 
 
 
-		public H264NalUnitPayload( H264NalUnit nalunit )
+
+
+        public H264NalUnitPayload( H264NalUnit nalunit )
 		{
             _nalUnit = nalunit ?? throw new ArgumentNullException( nameof( nalunit ) );
-		}
+        }
 
         
 
 
         public byte[] GetData()
         {
-            throw new NotImplementedException();
+            if ( _data == null )
+            {
+                _data = new byte[ _nalUnit.Buffer.Count ];
+                
+                Buffer.BlockCopy( _nalUnit.Buffer.Array , _nalUnit.Buffer.Offset , _data , 0 , _data.Length );
+            }
+
+            return _data;
         }
 
-        public byte[] GetDataAsFU_A()
+        public byte[] GetFuA()
         {
-            throw new NotImplementedException();
+            if ( _fu_a == null )
+            {
+                throw new NotImplementedException();
+            }
+
+            return _fu_a;
         }
 
-        public byte[] GetDataAsFU_B()
+        public byte[] GetFuB()
         {
-            throw new NotImplementedException();
+            if ( _fu_b == null )
+            {
+                throw new NotImplementedException();
+            }
+
+            return _fu_b;
         }
 
-        public byte[] GetDataAsSTAP_A()
+        public byte[] GetStapA()
         {
-            throw new NotImplementedException();
+            if ( _stap_a == null )
+            {
+                throw new NotImplementedException();
+            }
+
+            return _stap_a;
         }
 
-        public byte[] GetDataAsSTAP_B()
+        public byte[] GetStapB()
         {
-            throw new NotImplementedException();
+            if ( _stap_b == null )
+            {
+                throw new NotImplementedException();
+            }
+
+            return _stap_b;
         }
 
-        public byte[] GetDataAsSPS()
+        public byte[] GetSps()
         {
-            throw new NotImplementedException();
+            if ( _sps == null )
+            {
+                throw new NotImplementedException();
+            }
+
+            return _sps;
         }
 
-        public byte[] GetDataAsPPS()
+        public byte[] GetPps()
         {
-            throw new NotImplementedException();
+            if ( _pps == null )
+            {
+                throw new NotImplementedException();
+            }
+
+            return _pps;
         }
     }
 }

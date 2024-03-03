@@ -1,17 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-              O P T I M I Z A T I O N S
-
- Reduce copy by using array segment to remove Buffer.Copy or similar methods
-
-
-
-                    IMPLEMENTATION  NOT COMPLETED
-
- 
- */
-using System;
+﻿using System;
 
 namespace RabbitOM.Net.Rtp.H265
 {

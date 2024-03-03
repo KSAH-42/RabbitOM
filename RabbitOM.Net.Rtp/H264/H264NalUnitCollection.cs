@@ -1,10 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-                    IMPLEMENTATION  NOT COMPLETED
-*/
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Net.Rtp.H264

@@ -1,12 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-
-                    IMPLEMENTATION  NOT COMPLETED
-
-
-*/
-using System;
+﻿using System;
 
 namespace RabbitOM.Net.Rtp
 {
@@ -37,11 +29,6 @@ namespace RabbitOM.Net.Rtp
         {
             return Version != 2 || Data == null || Data.Length <= 0 ? false : true;
         }
-
-
-
-
-
 
 
 

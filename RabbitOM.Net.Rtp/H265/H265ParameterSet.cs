@@ -1,11 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-                    IMPLEMENTATION  NOT COMPLETED
-*/
-
-using System;
-using System.IO;
+﻿using System;
 
 namespace RabbitOM.Net.Rtp.H265
 {

@@ -1,28 +1,4 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-              O P T I M I Z A T I O N S
-
- Reduce copy by using array segment to remove Buffer.Copy or similar methods
-
-
-                    IMPLEMENTATION  NOT COMPLETED
-
-Before to make any optimization:
-
-  * First take a look on native code generation from IL Code
- 
-Then:
-
-  => Reduce the number of statements on try parse methods
-  
-  => Time complexity O(N,M)
-
-  => add tests for protocol violations
-
-        
-*/
-using System;
+﻿using System;
 using System.Text;
 
 namespace RabbitOM.Net.Rtp.H264
@@ -33,9 +9,6 @@ namespace RabbitOM.Net.Rtp.H264
 
         
         private H264NalUnit() { }
-
-
-
 
 
 

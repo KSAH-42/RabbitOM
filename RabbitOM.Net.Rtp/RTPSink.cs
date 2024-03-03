@@ -1,15 +1,7 @@
-﻿/*
- EXPERIMENTATION of the next implementation of the rtp layer
-
-                    IMPLEMENTATION  NOT COMPLETED
-
-*/
-
-using System;
+﻿using System;
 
 namespace RabbitOM.Net.Rtp
 {
-    // TODO: maybe in this class we can add stats objects
     public abstract class RTPSink : IDisposable
     {
         public event EventHandler<RTPPacketReceivedEventArgs> PacketReceived;
