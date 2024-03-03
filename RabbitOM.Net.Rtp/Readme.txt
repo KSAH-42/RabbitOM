@@ -1,4 +1,4 @@
-﻿The implement in this project is :
+﻿The implementation in this project is :
 
  * not finished
  * and not tested
