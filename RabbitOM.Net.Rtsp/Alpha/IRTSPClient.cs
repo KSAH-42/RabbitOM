@@ -18,8 +18,8 @@ namespace RabbitOM.Net.Rtsp.Alpha
 
 
         object SyncRoot { get; }
-        RTSPPipeLineCollection PipeLines { get; }
         IRTSPClientConfiguration Configuration { get; }
+        RTSPPipeLineCollection PipeLines { get; }
         bool IsCommunicationStarted { get; }
         bool IsConnected { get; }
         bool IsStreamingStarted { get; }
