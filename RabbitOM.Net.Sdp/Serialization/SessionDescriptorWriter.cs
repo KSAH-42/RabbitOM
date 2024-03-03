@@ -14,14 +14,14 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// Write a field
         /// </summary>
         /// <param name="field">the field</param>
-        public void WriteField(BaseField field)
+        public void WriteField( BaseField field )
         {
-            if (field == null || string.IsNullOrWhiteSpace(field.TypeName))
+            if ( field == null || string.IsNullOrWhiteSpace( field.TypeName ) )
             {
                 return;
             }
 
-            if ( !field.TryValidate() )
+            if ( ! field.TryValidate() )
             {
                 return;
             }
@@ -33,15 +33,14 @@ namespace RabbitOM.Net.Sdp.Serialization
         /// <summary>
         /// Write multiple fields
         /// </summary>
-        /// <typeparam name="TField">the type of field</typeparam>
         /// <param name="fields">the fields</param>
-        public void WriteFields<TField>(IEnumerable<TField> fields) where TField : BaseField
+        public void WriteFields( IEnumerable<BaseField> fields )
         {
-            if (fields != null)
+            if ( fields != null )
             {
-                foreach (var field in fields)
+                foreach ( var field in fields )
                 {
-                    WriteField(field);
+                    WriteField( field );
                 }
             }
         }

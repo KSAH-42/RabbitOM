@@ -21,7 +21,7 @@ namespace RabbitOM.Net.Sdp.Validation
         /// <exception cref="ArgumentNullException"/>
         public override void Validate(SessionDescriptor descriptor)
         {
-            if (descriptor == null)
+            if ( descriptor == null )
             {
                 throw new ArgumentNullException( nameof( descriptor ) );
             }
@@ -39,12 +39,12 @@ namespace RabbitOM.Net.Sdp.Validation
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate(SessionDescriptor descriptor)
         {
-            if (descriptor == null)
+            if ( descriptor == null )
             {
                 return false;
             }
 
-            foreach (var field in SessionDescriptor.EnumerateFields( descriptor ) )
+            foreach ( var field in SessionDescriptor.EnumerateFields( descriptor ) )
             {
                 if ( ! field.TryValidate() )
                 {
