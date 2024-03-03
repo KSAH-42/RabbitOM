@@ -27,7 +27,7 @@ namespace RabbitOM.Net.Rtp.H264
 
 
         public H264NalUnitPayload( H264NalUnit nalunit )
-		{
+        {
             _nalUnit = nalunit ?? throw new ArgumentNullException( nameof( nalunit ) );
         }
 
