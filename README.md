@@ -17,7 +17,7 @@ A .net library for receiving raw audio/video streams using [RTSP](https://www.rf
 * Handle large streams with a high bitrate like 50 MBits/seconds
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
-⚠️: Please note that the actual Rtp layer is not yet finished
+⚠️: Please note that the code on the RabbitOM.Rtp is partially implemented and class are not fully implemented, please ignore the implementation on the RTP project.
 
 ➡️ The full rtp layer (rtp payload parsers, etc...) which already exists, will be replaced for the next version.
 
