@@ -105,14 +105,14 @@ namespace RabbitOM.Net.Rtp.H264
 
         private void OnDecodingSPS( H264NalUnit nalunit )
         {
-            var values = nalunit.Payload.GetSps();
+            var values = nalunit.Payload.GetSPS();
 
             throw new NotImplementedException();
         }
 
         private void OnDecodingPPS( H264NalUnit nalunit )
         {
-            var values = nalunit.Payload.GetPps();
+            var values = nalunit.Payload.GetPPS();
 
             throw new NotImplementedException();
         }

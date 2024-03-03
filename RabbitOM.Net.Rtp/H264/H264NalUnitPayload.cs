@@ -84,7 +84,7 @@ namespace RabbitOM.Net.Rtp.H264
             return _stap_b;
         }
 
-        public byte[] GetSps()
+        public byte[] GetSPS()
         {
             if ( _sps == null )
             {
@@ -94,7 +94,7 @@ namespace RabbitOM.Net.Rtp.H264
             return _sps;
         }
 
-        public byte[] GetPps()
+        public byte[] GetPPS()
         {
             if ( _pps == null )
             {
