@@ -69,6 +69,7 @@ namespace RabbitOM.Net.Rtp.H264
 
         public void Dispose()
         {
+            _stream.Dispose();
         }
 
 
