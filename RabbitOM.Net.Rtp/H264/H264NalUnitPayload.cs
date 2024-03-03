@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.Rtp.H264
 {
-    // Make some and see it is use full to pass 
+    // Make some tests and see if it is usefull to move
     // this class as a struct
 
     public sealed class H264NalUnitPayload
