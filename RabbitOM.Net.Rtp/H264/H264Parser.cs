@@ -2,6 +2,15 @@
  EXPERIMENTATION of the next implementation of the rtp layer
 
                     IMPLEMENTATION  NOT COMPLETED
+
+  TryMethod :
+
+        // Time complexity O(N) as first view
+
+        // Should be Time complexity O(N,M) => see H264NalUnit.TryParse
+
+        // TODO: try to improve again as O(N)
+
 */
 using System;
 
@@ -9,11 +18,12 @@ namespace RabbitOM.Net.Rtp.H264
 {
     public sealed class H264Parser
     {
-        // Time complexity O(N) as first view
+        private readonly H264ParserConfiguration _configuration = new H264ParserConfiguration();
 
-        // Should be Time complexity O(N,M) => see H264NalUnit.TryParse
-
-        // TODO: try to improve again as O(N)
+        public H264ParserConfiguration Configuration
+        {
+            get => _configuration;
+        }
 
         public bool TryParse( RTPFrame frame , out H264NalUnitCollection result )
         {
@@ -28,7 +38,7 @@ namespace RabbitOM.Net.Rtp.H264
 
             foreach ( var packet in frame.Packets )
             {
-                if ( ! RTPPacket.IsH264Packet( packet ) )
+                if ( ! _configuration.IsPayloadSupported( packet.Type ) )
                 {
                     continue;
                 }

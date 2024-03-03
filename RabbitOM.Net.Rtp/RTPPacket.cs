@@ -6,7 +6,6 @@
 
 
 */
-
 using System;
 
 namespace RabbitOM.Net.Rtp
@@ -18,7 +17,7 @@ namespace RabbitOM.Net.Rtp
 
 
         public byte Version { get; private set; }
-        public bool Padding  { get; private set; }
+        public bool HasPadding  { get; private set; }
         public bool HasExtension { get; private set; }
         public ushort NumberOfCSRC { get; private set; }
         public bool Marker { get; private set; }
@@ -44,15 +43,8 @@ namespace RabbitOM.Net.Rtp
 
 
 
-        public static bool IsH264Packet( RTPPacket packet )
-        {
-            return packet != null && packet.Type == 96;
-        }
 
-        public static bool IsH265Packet( RTPPacket packet )
-        {
-            throw new NotImplementedException();
-        }
+
 
         public static bool TryParse( byte[] buffer , out RTPPacket result )
         {
@@ -63,60 +55,74 @@ namespace RabbitOM.Net.Rtp
                 return false;
             }
 
-            result = new RTPPacket();
+            RTPPacket packet = new RTPPacket();
 
-            result.Version         = (byte) ( ( buffer[ 0 ] & 0xC0 ) >> 6 );
-            result.Padding         = (byte) ( ( buffer[ 0 ] & 0x20 ) >> 5 ) == 1;
-            result.HasExtension    = (byte) ( ( buffer[ 0 ] & 0x10 ) >> 4 ) == 1;
-            result.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
+            packet.Version         = (byte) (   buffer[ 0 ] >> 6 );
+            packet.HasPadding      = (byte) ( ( buffer[ 0 ] >> 5 ) & 0x1 ) == 1;
+            packet.HasExtension    = (byte) ( ( buffer[ 0 ] >> 4 ) & 0x1 ) == 1;
+            packet.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
-            result.Marker          = (byte) ((buffer[ 1 ] & 0x80 ) ) != 0;
-            result.Type            = (byte) ( buffer[ 1 ] & 0x07F );
-            result.SequenceNumber += (uint) ( buffer[ 2 ]  << 8 );
-            result.SequenceNumber += (uint) ( buffer[ 3 ] );
-            result.Timestamp      += (uint) ( buffer[ 4 ]  << 24 );
-            result.Timestamp      += (uint) ( buffer[ 5 ]  << 16 );
-            result.Timestamp      += (uint) ( buffer[ 6 ]  << 8  );
-            result.Timestamp      += (uint) ( buffer[ 7 ]  << 0  );
-            result.SSRC           += (uint) ( buffer[ 8 ]  << 24 );
-            result.SSRC           += (uint) ( buffer[ 9 ]  << 16 );
-            result.SSRC           += (uint) ( buffer[ 10 ] << 8 );
-            result.SSRC           += (uint) ( buffer[ 11 ] );
+            packet.Marker          = (byte) ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
+            packet.Type            = (byte) ( buffer[ 1 ] & 0x7F );
+            packet.SequenceNumber += (uint) ( buffer[ 2 ] << 8   );
+            packet.SequenceNumber += (uint) ( buffer[ 3 ]        );
+            packet.Timestamp       = (uint) ( buffer[ 4 ] << 24  );
+            packet.Timestamp      += (uint) ( buffer[ 5 ] << 16  );
+            packet.Timestamp      += (uint) ( buffer[ 6 ] << 8   );
+            packet.Timestamp      += (uint) ( buffer[ 7 ] << 0   );
+            packet.SSRC            = (uint) ( buffer[ 8 ] << 24  );
+            packet.SSRC           += (uint) ( buffer[ 9 ] << 16  );
+            packet.SSRC           += (uint) ( buffer[ 10 ]<< 8   );
+            packet.SSRC           += (uint) ( buffer[ 11 ]       );
 
-            result.SequenceNumber = result.SequenceNumber % ( ushort.MaxValue + 1 );
+            packet.SequenceNumber = packet.SequenceNumber % ( ushort.MaxValue + 1 );
 
-            uint startIndex = 12;
-
-            if ( result.NumberOfCSRC > 0 )
+            int offset = 12;
+            
+            if ( packet.NumberOfCSRC > 0 )
             {
-                result.CSRCIdentifiers = new int[ result.NumberOfCSRC ];
-
-                for ( uint i = 0 ; i < result.CSRCIdentifiers.Length && ( startIndex + i ) < buffer.Length ; ++i )
+                if ( (offset + 4 * packet.NumberOfCSRC) > buffer.Length )
                 {
-                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ] << 24; startIndex++;
-                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ] << 16; startIndex++;
-                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ] << 8; startIndex++;
-                    result.CSRCIdentifiers[ i ] += buffer[ startIndex + i ]; startIndex++;
+                    return false;
+                }
+
+                packet.CSRCIdentifiers = new int[ packet.NumberOfCSRC ];
+
+                for ( uint i = 0 ; i < packet.CSRCIdentifiers.Length ; ++i )
+                {
+                    packet.CSRCIdentifiers[ i ] += buffer[ i + offset ++ ] << 24;
+                    packet.CSRCIdentifiers[ i ] += buffer[ i + offset ++ ] << 16;
+                    packet.CSRCIdentifiers[ i ] += buffer[ i + offset ++ ] << 8;
+                    packet.CSRCIdentifiers[ i ] += buffer[ i + offset ++ ];
                 }
             }
 
-            if ( result.HasExtension )
+            if ( packet.HasExtension )
             {
-                result.ExtensionId = ( (uint) buffer[ startIndex + 0 ] << 8 ) + (uint) ( buffer[ startIndex + 1 ] << 0 );
+                packet.ExtensionId = ( (uint) buffer[ offset + 0 ] << 8 ) + (uint) ( buffer[ offset + 1 ] << 0 );
 
-                uint extenstionSize = ( (uint) buffer[ startIndex + 2 ] << 8 ) + (uint) ( buffer[ startIndex + 3 ] << 0 ) * 4;
+                int extenstionSize = ( buffer[ offset + 2 ] << 8 ) + ( buffer[ offset + 3 ] << 0 ) * 4;
 
-                startIndex += (uint) extenstionSize + 4;
+                offset += extenstionSize + 4;
             }
 
-            if ( startIndex >= buffer.Length )
+            if ( offset >= buffer.Length )
             {
                 return false;
             }
 
-            result.Data = new byte[ buffer.Length - startIndex ];
+            int payloadSize = buffer.Length - offset;
 
-            Buffer.BlockCopy( buffer , (int) startIndex , result.Data , 0 , result.Data.Length );
+            if ( packet.HasPadding )
+            {
+                payloadSize -= buffer[ buffer.Length - 1 ];
+            }
+
+            packet.Data = new byte[ payloadSize ];
+
+            Buffer.BlockCopy( buffer , (int) offset , packet.Data , 0 , packet.Data.Length );
+            
+            result = packet;
 
             return true;
         }

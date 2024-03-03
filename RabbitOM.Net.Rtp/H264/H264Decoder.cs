@@ -53,19 +53,15 @@ namespace RabbitOM.Net.Rtp.H264
 
                 if ( nalunit.IsSPS )
                 {
-                    OnDecodeSPS( nalunit );
+                    OnDecodingSPS( nalunit );
                 }
                 else if ( nalunit.IsPPS )
                 {
-                    OnDecodePPS( nalunit );
-                }
-                else if ( nalunit.IsSlice )
-                {
-                    OnDecodeSlice( nalunit );
+                    OnDecodingPPS( nalunit );
                 }
                 else
                 {
-                    OnDecode( nalunit );
+                    OnDecoding( nalunit );
                 }
             }
 
@@ -85,34 +81,29 @@ namespace RabbitOM.Net.Rtp.H264
 
 
         
-        private void OnDecodeSPS( H264NalUnit nalunit )
+        private void OnDecodingSPS( H264NalUnit nalunit )
         {
-            if ( nalunit.Payload.Length < 5 )
-            {
-                return;
-            }
+            var sps = nalunit.Payload.GetDataAsSPS();
 
             throw new NotImplementedException();
         }
 
-        private void OnDecodePPS( H264NalUnit nalunit )
+        private void OnDecodingPPS( H264NalUnit nalunit )
         {
+            var pps = nalunit.Payload.GetDataAsPPS();
+
             throw new NotImplementedException();
         }
 
-        private void OnDecodeSlice( H264NalUnit nalunit )
+        private void OnDecoding( H264NalUnit nalunit )
         {
-            throw new NotImplementedException();
-        }
+            var data   = nalunit.Payload.GetData();
 
-        private void OnDecode( H264NalUnit nalunit )
-        {
-            if ( nalunit.Prefix.Length == 0 )
-            {
-                _stream.Write( StartPrefix.StartPrefixS4.Values , 0 , StartPrefix.StartPrefixS4.Values.Length );
-            }
+            var prefix = nalunit.Prefix.Length > 0 ? nalunit.Prefix : StartPrefix.StartPrefixS4.Values;
 
-            _stream.Write( nalunit.Payload , 0 , nalunit.Payload.Length );
+
+            _stream.Write( prefix , 0 , prefix.Length );
+            _stream.Write( data , 0 , data.Length );
         }
     }
 }

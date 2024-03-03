@@ -6,15 +6,24 @@
  Reduce copy by using array segment to remove Buffer.Copy or similar methods
 
 
-
-
                     IMPLEMENTATION  NOT COMPLETED
 
+Before to make any optimization:
 
+  * First take a look on native code generation from IL Code
+ 
+Then:
 
+  => Reduce the number of statements on try parse methods
+  
+  => Time complexity O(N,M)
 
+  => add tests for protocol violations
+
+        
 */
 using System;
+using System.Text;
 
 namespace RabbitOM.Net.Rtp.H264
 {
@@ -22,9 +31,10 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private static int DefaultMinimunLength = 4;
 
-
-
+        
         private H264NalUnit() { }
+
+
 
 
 
@@ -53,34 +63,40 @@ namespace RabbitOM.Net.Rtp.H264
         public bool IsSlice { get; private set; }
         public bool IsIntraFrame { get; private set; }
         public bool IsPredictiveFrame { get; private set; }
-        public byte[] Payload { get; private set; } 
         public byte[] Prefix { get; private set; }
-        
-
-
+        public ArraySegment<byte> Buffer { get; private set; }
+        public H264NalUnitPayload Payload { get; private set; }
 
 
 
 
         public bool TryValidate()
         {
-            return Payload != null && Payload.Length > 0;
+            return Buffer.Array != null && Buffer.Count > 0;
         }
 
         public bool CanSkip()
         {
             return ForbiddenBit || IsUnDefinedNri;
         }
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            builder.Append( $"Type:{Type} " );
+            builder.Append( $"IsSlice:{IsSlice} " );
+            builder.Append( $"IsFU_A:{IsFU_A} " );
+            builder.Append( $"IsFU_B:{IsFU_B} " );
+            builder.Append( $"IsPPS:{IsPPS} " );
+            builder.Append( $"IsSPS:{IsSPS} " );
+            builder.Append( $"PrefixLength:{Prefix?.Length} " );
+
+            return builder.ToString();
+        }
 
 
 
 
-
-
-
-        // TODO: add parsing tests
-        // TODO: add tests for protocol violations
-        // Time complexity O(N)
 
         public static bool TryParse( byte[] buffer , out H264NalUnit result )
         {
@@ -91,33 +107,19 @@ namespace RabbitOM.Net.Rtp.H264
                 return false;
             }
 
-            /*
-                +----------------------------------+
-                | Start Code Prefix (3 or 4 bytes) |
-                +----------------------------------+
-             */
-
             var prefix = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4
                        : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3
                        : StartPrefix.Null
                        ;
 
             int index = prefix.Values.Length;
-
-            /*
-                +------------------------------------------+
-                | NAL Unit Header (Variable size)          |
-                +------------------------------------------+
-                | Forbidden Zero Bit | NRI | NAL Unit Type |
-                +------------------------------------------+
-             */
-
-            result = new H264NalUnit()
+			
+			result = new H264NalUnit()
             {
                 Prefix       = prefix.Values,
-                ForbiddenBit = (byte) ( ( buffer[ index ] >> 7 ) & 0x1 ) == 1,
-                Nri          = (byte) ( ( buffer[ index ] >> 5 ) & 0x3 ),
-                Type         = (byte) ( ( buffer[ index ] ) & 0x1F ),
+                ForbiddenBit = (byte) ( ( buffer[ index ] >> 7 ) & 0x1  ) == 1,
+                Nri          = (byte) ( ( buffer[ index ] >> 5 ) & 0x3  ),
+                Type         = (byte) ( ( buffer[ index ]      ) & 0x1F ),
             };
 
             result.IsUnDefinedNri         = result.Nri  == 0;
@@ -129,7 +131,7 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsMTAP_B               = result.Type == 27;
             result.IsFU_A                 = result.Type == 28;
             result.IsFU_B                 = result.Type == 29;
-            result.IsReserved            |= result.Type == 30;
+            result.IsReserved             = result.Type == 30;
             result.IsReserved            |= result.Type == 31;
             result.IsCodedSliceNIDR       = result.Type == 1;
             result.IsCodedSlicePartitionA = result.Type == 2;
@@ -141,31 +143,28 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsPPS                  = result.Type == 8;
             result.IsAccessDelimiter      = result.Type == 9;
             
-            result.IsSlice               |= result.IsCodedSliceNIDR;
+            // Is a slice ?
+            result.IsSlice                = result.IsCodedSliceNIDR;
             result.IsSlice               |= result.IsCodedSlicePartitionA;
             result.IsSlice               |= result.IsCodedSlicePartitionB;
             result.IsSlice               |= result.IsCodedSlicePartitionC;
             result.IsSlice               |= result.IsCodedSliceIDR;
 
-            result.IsIntraFrame          |= result.IsCodedSlicePartitionA;
+            // Is a I-Frame ?
+            result.IsIntraFrame           = result.IsCodedSlicePartitionA;
             result.IsIntraFrame          |= result.IsSEI;
             result.IsIntraFrame          |= result.IsSPS;
             result.IsIntraFrame          |= result.IsPPS;
 
-            result.IsPredictiveFrame     |= result.Type == 0;
+            // Is a P-Frame ?
+            result.IsPredictiveFrame      = result.Type == 0;
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionB;
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionC;
             result.IsPredictiveFrame     |= result.IsCodedSliceIDR;
 
-            /*
-                +----------------------------------+
-                | Raw Byte Sequence Payload        |
-                +----------------------------------+
-             */
+            result.Buffer  = new ArraySegment<byte>( buffer , ++ index , buffer.Length - index );
 
-            result.Payload = new byte[ buffer.Length - ++ index ];
-
-            Buffer.BlockCopy( buffer , index , result.Payload , 0 , result.Payload.Length );
+            result.Payload = new H264NalUnitPayload( result );
 
             return true;
         }
