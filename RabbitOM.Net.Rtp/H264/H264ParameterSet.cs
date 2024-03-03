@@ -8,8 +8,6 @@ namespace RabbitOM.Net.Rtp.H264
 
         private readonly byte[] _pps;
 
-        private readonly byte[] _bytes;
-
 
 
         
@@ -37,11 +35,6 @@ namespace RabbitOM.Net.Rtp.H264
             
             _sps = sps;
             _pps = pps;
-
-            _bytes = new byte[ sps.Length + pps.Length ];
-
-            Buffer.BlockCopy( sps , 0 , _bytes , 0 , sps.Length );
-            Buffer.BlockCopy( pps , 0 , _bytes , sps.Length , pps.Length );
         }
 
 
@@ -62,7 +55,12 @@ namespace RabbitOM.Net.Rtp.H264
 
         public byte[] ToBytes()
         {
-            return _bytes;
+            var result = new byte[ _sps.Length + _pps.Length ];
+
+            Buffer.BlockCopy( _sps , 0 , result , 0 , _sps.Length );
+            Buffer.BlockCopy( _pps , 0 , result , _sps.Length , _pps.Length );
+
+            return result;
         }
     }
 }

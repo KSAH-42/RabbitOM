@@ -2,6 +2,9 @@
 
 namespace RabbitOM.Net.Rtp.H264
 {
+    // Make some and see it is use full to pass 
+    // this class as a struct
+
     public sealed class H264NalUnitPayload
     {
         private readonly H264NalUnit _nalUnit;
