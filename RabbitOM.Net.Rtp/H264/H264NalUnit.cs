@@ -55,7 +55,7 @@ namespace RabbitOM.Net.Rtp.H264
         
         public override string ToString()
         {
-            var builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
 
             builder.Append( $"Type:{Type} " );
             builder.Append( $"IsSlice:{IsSlice} " );
@@ -86,14 +86,14 @@ namespace RabbitOM.Net.Rtp.H264
                        : StartPrefix.Null
                        ;
 
-            int index = prefix.Values.Length;
-			
-			result = new H264NalUnit()
+            int offset = prefix.Values.Length;
+            
+            result = new H264NalUnit()
             {
                 Prefix       = prefix.Values,
-                ForbiddenBit = (byte) ( ( buffer[ index ] >> 7 ) & 0x1  ) == 1,
-                Nri          = (byte) ( ( buffer[ index ] >> 5 ) & 0x3  ),
-                Type         = (byte) ( ( buffer[ index ]      ) & 0x1F ),
+                ForbiddenBit = (byte) ( ( buffer[ offset ] >> 7 ) & 0x1  ) == 1,
+                Nri          = (byte) ( ( buffer[ offset ] >> 5 ) & 0x3  ),
+                Type         = (byte) ( ( buffer[ offset ]      ) & 0x1F ),
             };
 
             result.IsUnDefinedNri         = result.Nri  == 0;
@@ -136,7 +136,7 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionC;
             result.IsPredictiveFrame     |= result.IsCodedSliceIDR;
 
-            result.Buffer  = new ArraySegment<byte>( buffer , ++ index , buffer.Length - index );
+            result.Buffer  = new ArraySegment<byte>( buffer , ++ offset , buffer.Length - offset );
 
             result.Payload = new H264NalUnitPayload( result );
 

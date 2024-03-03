@@ -67,6 +67,11 @@ namespace RabbitOM.Net.Rtp.H264
             return result.Length > 0;
         }
 
+        public void Reset()
+        {
+            _stream.SetLength( 0 );
+        }
+
         public void Dispose()
         {
             _stream.Dispose();

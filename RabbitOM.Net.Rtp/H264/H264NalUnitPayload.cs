@@ -6,8 +6,6 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private readonly H264NalUnit _nalUnit;
 
-
-
         private byte[] _data;
 
         private byte[] _fu_a;
@@ -25,85 +23,86 @@ namespace RabbitOM.Net.Rtp.H264
 
 
 
-
         public H264NalUnitPayload( H264NalUnit nalunit )
         {
             _nalUnit = nalunit ?? throw new ArgumentNullException( nameof( nalunit ) );
         }
 
-        
+
 
 
         public byte[] GetAllData()
         {
-            if ( _data == null )
-            {
-                _data = CreateFromBuffer( _nalUnit.Buffer.Count );
-            }
-
-            return _data;
+            throw new NotImplementedException();
         }
 
         public byte[] GetFuA()
         {
-            if ( _fu_a == null )
-            {
-                throw new NotImplementedException();
-            }
-
-            return _fu_a;
+            throw new NotImplementedException();
         }
 
         public byte[] GetFuB()
         {
-            if ( _fu_b == null )
-            {
-                throw new NotImplementedException();
-            }
-
-            return _fu_b;
+            throw new NotImplementedException();
         }
 
         public byte[] GetStapA()
         {
-            if ( _stap_a == null )
-            {
-                throw new NotImplementedException();
-            }
-
-            return _stap_a;
+            throw new NotImplementedException();
         }
 
         public byte[] GetStapB()
         {
-            if ( _stap_b == null )
-            {
-                throw new NotImplementedException();
-            }
-
-            return _stap_b;
+            throw new NotImplementedException();
         }
 
         public byte[] GetSPS()
         {
-            if ( _sps == null )
-            {
-                throw new NotImplementedException();
-            }
-
-            return _sps;
+            throw new NotImplementedException();
         }
 
         public byte[] GetPPS()
         {
-            if ( _pps == null )
-            {
-                throw new NotImplementedException();
-            }
-
-            return _pps;
+            throw new NotImplementedException();
         }
 
+
+
+
+        public bool TryGetAllData( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetFuA( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetFuB( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetStapA( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetStapB( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetSPS( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetPPS( out byte[] result )
+        {
+            throw new NotImplementedException();
+        }
 
 
 
