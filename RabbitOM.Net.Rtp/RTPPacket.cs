@@ -42,7 +42,7 @@ namespace RabbitOM.Net.Rtp
                 return false;
             }
 
-            RTPPacket packet = new RTPPacket();
+            var packet = new RTPPacket();
 
             packet.Version         = (byte) (   buffer[ 0 ] >> 6 );
             packet.HasPadding      = (byte) ( ( buffer[ 0 ] >> 5 ) & 0x1 ) == 1;
