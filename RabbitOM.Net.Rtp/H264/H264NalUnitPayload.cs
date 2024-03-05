@@ -9,6 +9,8 @@ namespace RabbitOM.Net.Rtp.H264
     {
         private readonly H264NalUnit _nalUnit;
 
+#pragma warning disable CS0169
+
         private byte[] _data;
 
         private byte[] _fu_a;
@@ -23,6 +25,7 @@ namespace RabbitOM.Net.Rtp.H264
 
         private byte[] _sps;
 
+#pragma warning restore CS0169
 
 
 

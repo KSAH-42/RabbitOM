@@ -22,6 +22,8 @@ namespace RabbitOM.Net.Rtp.H264
         public bool IsSTAP_B { get; private set; }
         public bool IsMTAP_A { get; private set; }
         public bool IsMTAP_B { get; private set; }
+
+        public bool IsFU   { get; private set; }
         public bool IsFU_A { get; private set; }
         public bool IsFU_B { get; private set; }
         public bool IsCodedSliceNIDR { get; private set; }
@@ -63,7 +65,6 @@ namespace RabbitOM.Net.Rtp.H264
             builder.Append( $"IsFU_B:{IsFU_B} " );
             builder.Append( $"IsPPS:{IsPPS} " );
             builder.Append( $"IsSPS:{IsSPS} " );
-            builder.Append( $"PrefixLength:{Prefix?.Length} " );
 
             return builder.ToString();
         }
@@ -80,7 +81,7 @@ namespace RabbitOM.Net.Rtp.H264
             {
                 return false;
             }
-
+            
             var prefix = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4
                        : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3
                        : StartPrefix.Null
@@ -91,22 +92,15 @@ namespace RabbitOM.Net.Rtp.H264
             result = new H264NalUnit()
             {
                 Prefix       = prefix.Values,
-                ForbiddenBit = (byte) ( ( buffer[ offset ] >> 7 ) & 0x1  ) == 1,
-                Nri          = (byte) ( ( buffer[ offset ] >> 5 ) & 0x3  ),
-                Type         = (byte) ( ( buffer[ offset ]      ) & 0x1F ),
+                ForbiddenBit = (byte) ( buffer[ offset ] >> 7 & 0x1  ) == 1,
+                Nri          = (byte) ( buffer[ offset ] >> 5 & 0x3  ),
+                Type         = (byte) ( buffer[ offset ]      & 0x1F ),
             };
 
             result.IsUnDefinedNri         = result.Nri  == 0;
-            result.IsReserved            |= result.Type == 0;
+
+            // Is full nal unit ?
             result.IsSingle               = result.Type >= 1 && result.Type <= 23;
-            result.IsSTAP_A               = result.Type == 24;
-            result.IsSTAP_B               = result.Type == 25;
-            result.IsMTAP_A               = result.Type == 26;
-            result.IsMTAP_B               = result.Type == 27;
-            result.IsFU_A                 = result.Type == 28;
-            result.IsFU_B                 = result.Type == 29;
-            result.IsReserved             = result.Type == 30;
-            result.IsReserved            |= result.Type == 31;
             result.IsCodedSliceNIDR       = result.Type == 1;
             result.IsCodedSlicePartitionA = result.Type == 2;
             result.IsCodedSlicePartitionB = result.Type == 3;
@@ -116,13 +110,27 @@ namespace RabbitOM.Net.Rtp.H264
             result.IsSPS                  = result.Type == 7;
             result.IsPPS                  = result.Type == 8;
             result.IsAccessDelimiter      = result.Type == 9;
-            
+            result.IsSTAP_A               = result.Type == 24;
+            result.IsSTAP_B               = result.Type == 25;
+            result.IsMTAP_A               = result.Type == 26;
+            result.IsMTAP_B               = result.Type == 27;
+            result.IsFU_A                 = result.Type == 28;
+            result.IsFU_B                 = result.Type == 29;
+            result.IsFU                   = result.Type == 28;
+            result.IsReserved             = result.Type == 30;
+            result.IsReserved            |= result.Type == 31;
+            result.IsReserved            |= result.Type == 0;
+
+            // Is fragmented nal unit ?
+            result.IsFU                   = result.IsFU_A;
+            result.IsFU                  |= result.IsFU_B;
+
             // Is a slice ?
-            result.IsSlice                = result.IsCodedSliceNIDR;
+            result.IsSlice                = result.IsCodedSliceIDR;
+            result.IsSlice               |= result.IsCodedSliceNIDR;
             result.IsSlice               |= result.IsCodedSlicePartitionA;
             result.IsSlice               |= result.IsCodedSlicePartitionB;
             result.IsSlice               |= result.IsCodedSlicePartitionC;
-            result.IsSlice               |= result.IsCodedSliceIDR;
 
             // Is a I-Frame ?
             result.IsIntraFrame           = result.IsCodedSlicePartitionA;
@@ -132,15 +140,15 @@ namespace RabbitOM.Net.Rtp.H264
 
             // Is a P-Frame ?
             result.IsPredictiveFrame      = result.Type == 0;
+            result.IsPredictiveFrame     |= result.IsCodedSliceIDR;
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionB;
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionC;
-            result.IsPredictiveFrame     |= result.IsCodedSliceIDR;
 
-            result.Buffer  = new ArraySegment<byte>( buffer , ++ offset , buffer.Length - offset );
+            result.Buffer = new ArraySegment<byte>( buffer , ++ offset , buffer.Length - offset );
 
-            // The payload object has been introduce for delegating many other specific parses for later
+            // The payload object has been introduce for delegating many other specific parses for later processing
             // parsing every thing here and for each type, in this method, is not apporiate
-            // It is better to parse and extract fragement "on demand", depending of the need
+            // It is better to parse and extract data "on demand", depending of the need
             // of an algorithm
 
             result.Payload = new H264NalUnitPayload( result );

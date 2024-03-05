@@ -29,7 +29,7 @@ namespace RabbitOM.Net.Rtp.H265
                     continue;
                 }
 
-                if ( H265NalUnit.TryParse( packet.Data , out H265NalUnit nalUnit ) )
+                if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
                 {
                     nalunits.Enqueue( nalUnit );
                 }

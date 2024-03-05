@@ -4,6 +4,9 @@ namespace RabbitOM.Net.Rtp
 {
     public sealed class RTPPacket
     {
+        private const int DefaultMinimumLength = 12;
+
+
         private RTPPacket() { }
 
 
@@ -17,17 +20,18 @@ namespace RabbitOM.Net.Rtp
         public uint SequenceNumber { get; private set; }
         public uint Timestamp { get; private set; }
         public uint SSRC { get; private set; }
-        public uint ExtensionId { get; private set; }
-        public byte[] Data { get; private set; }
-        public byte[] ExtensionData { get; private set; }
+        public uint Extension { get; private set; }
         public int[] CSRCIdentifiers { get; private set; }
+        public byte[] ExtensionData { get; private set; }
+        public byte[] Payload { get; private set; }
+        public byte[] Buffer { get; private set; }
 
 
 
 
         public bool TryValidate()
         {
-            return Version != 2 || Data == null || Data.Length <= 0 ? false : true;
+            return Version != 2 || Payload == null || Payload.Length <= 0 ? false : true;
         }
 
 
@@ -37,11 +41,11 @@ namespace RabbitOM.Net.Rtp
         {
             result = null;
 
-            if ( buffer == null || buffer.Length <= 11 )
+            if ( buffer == null || buffer.Length < DefaultMinimumLength )
             {
                 return false;
             }
-
+            
             var packet = new RTPPacket();
 
             packet.Version         = (byte) (   buffer[ 0 ] >> 6 );
@@ -86,7 +90,7 @@ namespace RabbitOM.Net.Rtp
 
             if ( packet.HasExtension )
             {
-                packet.ExtensionId = ( (uint) buffer[ offset + 0 ] << 8 ) + (uint) ( buffer[ offset + 1 ] << 0 );
+                packet.Extension = ( (uint) buffer[ offset + 0 ] << 8 ) + (uint) ( buffer[ offset + 1 ] << 0 );
 
                 int extenstionSize = ( buffer[ offset + 2 ] << 8 ) + ( buffer[ offset + 3 ] << 0 ) * 4;
 
@@ -105,10 +109,12 @@ namespace RabbitOM.Net.Rtp
                 payloadSize -= buffer[ buffer.Length - 1 ];
             }
 
-            packet.Data = new byte[ payloadSize ];
+            packet.Buffer = buffer;
 
-            Buffer.BlockCopy( buffer , (int) offset , packet.Data , 0 , packet.Data.Length );
-            
+            packet.Payload = new byte[ payloadSize ];
+
+			System.Buffer.BlockCopy( packet.Buffer , (int) offset , packet.Payload , 0 , packet.Payload.Length );
+
             result = packet;
 
             return true;

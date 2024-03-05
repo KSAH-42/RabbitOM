@@ -34,8 +34,8 @@ namespace RabbitOM.Net.Rtp.H264
                 {
                     continue;
                 }
-
-                if ( H264NalUnit.TryParse( packet.Data , out H264NalUnit nalUnit ) )
+                
+                if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
                 {
                     nalunits.Enqueue( nalUnit );
                 }
