@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("RabbitCorp")]
 [assembly: AssemblyProduct("RabbitOM.Net.Rtsp")]
-[assembly: AssemblyCopyright( "Copyright © Rabbit Inc. 2022" )]
+[assembly: AssemblyCopyright( "Copyright © Rabbit Inc. 2024" )]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
