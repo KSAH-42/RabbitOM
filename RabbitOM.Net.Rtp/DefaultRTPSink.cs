@@ -8,9 +8,9 @@ namespace RabbitOM.Net.Rtp
         
         private readonly DefaultRTPFrameBuilder _builder = new DefaultRTPFrameBuilder();
 
-        public override void Write( byte[] packet )
+        public override void Write( byte[] data )
         {
-            if ( ! _builder.TryAddPacket( packet ) )
+            if ( ! _builder.TryAddPacket( data ) )
             {
                 return;
             }

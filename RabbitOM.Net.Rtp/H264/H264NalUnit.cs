@@ -146,11 +146,6 @@ namespace RabbitOM.Net.Rtp.H264
 
             result.Buffer = new ArraySegment<byte>( buffer , ++ offset , buffer.Length - offset );
 
-            // The payload object has been introduce for delegating many other specific parses for later processing
-            // parsing every thing here and for each type, in this method, is not apporiate
-            // It is better to parse and extract data "on demand", depending of the need
-            // of an algorithm
-
             result.Payload = new H264NalUnitPayload( result );
 
             return true;

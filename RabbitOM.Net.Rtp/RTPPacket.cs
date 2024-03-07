@@ -90,7 +90,7 @@ namespace RabbitOM.Net.Rtp
 
             if ( packet.HasExtension )
             {
-                packet.Extension = ( (uint) buffer[ offset + 0 ] << 8 ) + (uint) ( buffer[ offset + 1 ] << 0 );
+                packet.Extension = ( (uint) buffer[ offset ] << 8 ) + (uint) ( buffer[ offset + 1 ] << 0 );
 
                 int extenstionSize = ( buffer[ offset + 2 ] << 8 ) + ( buffer[ offset + 3 ] << 0 ) * 4;
 
