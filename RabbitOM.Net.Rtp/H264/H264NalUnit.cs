@@ -81,7 +81,9 @@ namespace RabbitOM.Net.Rtp.H264
             {
                 return false;
             }
-            
+
+            // this statement can be remove, because the payload rtp for nalunit must not include start code prefix
+            // It's unnecessary normally...
             var prefix = StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS4 ) ? StartPrefix.StartPrefixS4
                        : StartPrefix.StartsWith( buffer , StartPrefix.StartPrefixS3 ) ? StartPrefix.StartPrefixS3
                        : StartPrefix.Null
