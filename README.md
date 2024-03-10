@@ -17,6 +17,8 @@ A .net library for receiving raw audio/video streams using [RTSP](https://www.rf
 * Handle large streams with a high bitrate like 50 MBits/seconds
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
+➡️ The current implementation is based on the .net Framework 4.8
+
 ➡️ The full rtp layer (rtp payload parsers, etc...) which already exists and not present in this repository. A new implementation is actually in progress.
 
 ➡️ The Classes used for decoding was already implemented but here, in this repository, new implementation is in progress.
