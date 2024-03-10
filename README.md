@@ -49,8 +49,8 @@ using ( var client = new RTSPClient() )
 	if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
 	    return;
 	
-	if ( RTPPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
-            Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
+	if ( RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
+            Console.WriteLine( "DataReceived {0}" , packet.Payload.Length );
     };
 
     client.Configuration.Uri = Constants.LocalServer;
