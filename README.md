@@ -17,6 +17,8 @@ A .net library for receiving raw audio/video streams using [RTSP](https://www.rf
 * Handle large streams with a high bitrate like 50 MBits/seconds
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
+➡️ The current implementation used the .net Framework 4.8 and not .net core
+
 ➡️ The full rtp layer (rtp payload parsers, etc...) which already exists and not present in this repository. A new implementation is actually in progress.
 
 ➡️ The Classes used for decoding was already implemented but here, in this repository, new implementation is in progress.
@@ -49,8 +51,8 @@ using ( var client = new RTSPClient() )
 	if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
 	    return;
 	
-	if ( RTPPacket.TryParse( e.Packet.Data , out RtpPacket packet ) )
-            Console.WriteLine( "DataReceived {0}" , packet.Data.Count );
+	if ( RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
+            Console.WriteLine( "DataReceived {0}" , packet.Payload.Length );
     };
 
     client.Configuration.Uri = Constants.LocalServer;
@@ -142,7 +144,7 @@ You will be able to decorate each request by adding customs headers, because som
 
 # About Session Description Protocol layer
 
-The actual [SDP](https://www.rfc-editor.org/rfc/rfc4566) implementation is strong.
+That an exemple of how to use this .net implementation of [SDP](https://www.rfc-editor.org/rfc/rfc4566), please not that is implementation provide custom validation classes which are not explain in this example.
 
 ~~~~C#
 
