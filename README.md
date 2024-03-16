@@ -19,7 +19,7 @@ A .net library for receiving raw audio/video streams using [RTSP](https://www.rf
 
 ➡️ The current implementation used the .net Framework 4.8 and not .net core
 
-➡️ The full rtp layer (rtp payload parsers, etc...) which already exists and not present in this repository. A new implementation is actually in progress.
+➡️ The rtp layer is actually in progress, but not finished
 
 ➡️ The Classes used for decoding was already implemented but here, in this repository, new implementation is in progress.
 
