@@ -41,6 +41,7 @@ namespace RabbitOM.Net.Rtp
 
 
 
+        // TODO: Change the signature, replace the byte array by a packet class and move the parse statement into the sink class.
 
         public override bool TryAddPacket( byte[] buffer )
         {

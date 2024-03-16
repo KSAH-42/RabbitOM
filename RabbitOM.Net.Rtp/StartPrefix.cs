@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Net.Rtp
 {
+    // TODO: move this class into the Rtp.Data namespace
+
     public sealed class StartPrefix
     {
         public static readonly StartPrefix Null          = new StartPrefix( new byte[0] );

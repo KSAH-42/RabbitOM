@@ -12,6 +12,8 @@ namespace RabbitOM.Net.Rtp.H264
             96
         };
 
+        // O(1)
+
         public bool IsPayloadSupported( int value )
         {
             lock ( _lock )

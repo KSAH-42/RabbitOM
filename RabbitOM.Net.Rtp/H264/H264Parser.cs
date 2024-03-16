@@ -32,7 +32,7 @@ namespace RabbitOM.Net.Rtp.H264
             {
                 if ( ! _configuration.IsPayloadSupported( packet.Type ) )
                 {
-                    continue;
+                    return false;
                 }
                 
                 if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )

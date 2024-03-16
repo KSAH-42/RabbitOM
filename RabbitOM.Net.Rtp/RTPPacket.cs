@@ -4,11 +4,7 @@ namespace RabbitOM.Net.Rtp
 {
     public sealed class RTPPacket
     {
-        private const int DefaultMinimumLength = 12;
-
-
-        private RTPPacket() { }
-
+       private RTPPacket() { }
 
 
         public byte Version { get; private set; }
@@ -35,13 +31,13 @@ namespace RabbitOM.Net.Rtp
         }
 
 
-
+        // TODO: refactor this horrible code
 
         public static bool TryParse( byte[] buffer , out RTPPacket result )
         {
             result = null;
 
-            if ( buffer == null || buffer.Length < DefaultMinimumLength )
+            if ( buffer == null || buffer.Length < 12 )
             {
                 return false;
             }
@@ -64,19 +60,21 @@ namespace RabbitOM.Net.Rtp
             packet.SSRC            = (uint) ( buffer[ 8 ] << 24  );
             packet.SSRC           += (uint) ( buffer[ 9 ] << 16  );
             packet.SSRC           += (uint) ( buffer[ 10 ]<< 8   );
-            packet.SSRC           += (uint) ( buffer[ 11 ]       );
+            packet.SSRC           +=          buffer[ 11 ];
 
             packet.SequenceNumber = packet.SequenceNumber % ( ushort.MaxValue + 1 );
 
             int offset = 12;
             
+            int limit = offset + 4 * packet.NumberOfCSRC + (packet.HasExtension ? 4 : 0 );
+
+            if ( limit >= buffer.Length )
+            {
+                return false;
+            }
+
             if ( packet.NumberOfCSRC > 0 )
             {
-                if ( (offset + 4 * packet.NumberOfCSRC) > buffer.Length )
-                {
-                    return false;
-                }
-
                 packet.CSRCIdentifiers = new int[ packet.NumberOfCSRC ];
 
                 for ( uint i = 0 ; i < packet.CSRCIdentifiers.Length ; ++i )
@@ -90,11 +88,11 @@ namespace RabbitOM.Net.Rtp
 
             if ( packet.HasExtension )
             {
-                packet.Extension = ( (uint) buffer[ offset ] << 8 ) + (uint) ( buffer[ offset + 1 ] << 0 );
+                packet.Extension = ( (uint) buffer[ offset ] << 8 ) + (uint) ( buffer[ ++ offset ] << 0 );
 
-                int extenstionSize = ( buffer[ offset + 2 ] << 8 ) + ( buffer[ offset + 3 ] << 0 ) * 4;
+                int extenstionSize = ( buffer[ ++ offset ] << 8 ) + ( buffer[ ++ offset ] << 0 ) * 4;
 
-                offset += extenstionSize + 4;
+                offset += extenstionSize;
             }
 
             if ( offset >= buffer.Length )

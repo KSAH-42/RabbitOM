@@ -70,9 +70,10 @@ namespace RabbitOM.Net.Rtp.H264
         }
 
 
+        // TODO: refactor this code
 
-
-
+        // O(n)
+        
         public static bool TryParse( byte[] buffer , out H264NalUnit result )
         {
             result = default;
