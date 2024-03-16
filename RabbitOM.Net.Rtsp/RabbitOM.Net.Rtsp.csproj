@@ -41,32 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alpha\Channels\RTSPMediaService.cs" />
-    <Compile Include="Alpha\Channels\RTSPMediaChannel.cs" />
-    <Compile Include="Alpha\Channels\RTSPMediaChannelRunner.cs" />
-    <Compile Include="Alpha\Channels\Receivers\RTSPMulticastMediaReceiver.cs" />
-    <Compile Include="Alpha\Channels\Receivers\RTSPUdpMediaReceiver.cs" />
-    <Compile Include="Alpha\Channels\Receivers\RTSPMediaReceiver.cs" />
-    <Compile Include="Alpha\Events\RTSPStreamingSetupEventArgs.cs" />
-    <Compile Include="Alpha\RTSPPipeLineCollection.cs" />
-    <Compile Include="Alpha\RTSPMediaClient.cs" />
-    <Compile Include="Alpha\RTSPClientConfiguration.cs" />
-    <Compile Include="Alpha\RTSPClient.cs" />
-    <Compile Include="Alpha\Events\RTSPEventDispatcher.cs" />
-    <Compile Include="Alpha\Channels\IRTSPMediaChannel.cs" />
-    <Compile Include="Alpha\Events\RTSPStreamingStatus.cs" />
-    <Compile Include="Alpha\Events\RTSPStreamingStatusChangedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPMessageReceivedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPStreamingStoppedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPStreamingStartedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPErrorEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPDisconnectedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPConnectedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPCommunicationStoppedEventArgs.cs" />
-    <Compile Include="Alpha\Events\RTSPCommunicationStartedEventArgs.cs" />
-    <Compile Include="Alpha\IRTSPClientConfiguration.cs" />
-    <Compile Include="Alpha\IRTSPClient.cs" />
-    <Compile Include="Alpha\Events\IRTSPEventDispatcher.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Clients\Events\RTSPClientConnectedEventArgs.cs" />
