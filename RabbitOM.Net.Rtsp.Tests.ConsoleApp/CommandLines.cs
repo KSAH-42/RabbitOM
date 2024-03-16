@@ -8,9 +8,16 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
     {
         private readonly string[] _args;
         
-        private readonly string _uriOption;
+        private readonly bool _sinkOption ;
         
-        private readonly bool _sinkOption;
+        private readonly string _uriOption = string.Empty;
+
+        private readonly string _uri = string.Empty;
+
+        private readonly string _userName = string.Empty;
+
+        private readonly string _password = string.Empty;
+
 
 
 
@@ -22,9 +29,16 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
         {
             _args = args ?? throw new ArgumentNullException( nameof( args ) );
 
-            _uriOption = RTSPUri.TryParse( args.FirstOrDefault() , out RTSPUri result ) ? args.FirstOrDefault() : string.Empty;
-            
+            _uriOption = args.FirstOrDefault();
+
             _sinkOption = args.Any( x => x == "-sink" );
+
+            if ( RTSPUri.TryParse( _uriOption , out RTSPUri uri ) )
+            {
+                _uri = uri.ToString( true );
+                _userName = uri.UserName;
+                _password = uri.Password;
+            }
         }
 
 
@@ -42,6 +56,20 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
             get => _sinkOption;
         }
 
+        public string Uri
+        {
+            get => _uri;
+        }
+
+        public string UserName
+        {
+            get => _userName;
+        }
+        public string Password
+        {
+            get => _password;
+        }
+
 
 
 
@@ -49,7 +77,7 @@ namespace RabbitOM.Net.Rtsp.Tests.ConsoleApp
 
         public bool CanShowHelp()
         {
-            return ! _args.Any() || string.IsNullOrWhiteSpace( _uriOption );
+			return ! _args.Any() || string.IsNullOrWhiteSpace( _uri );
         }
 
         public void ShowHelp()
