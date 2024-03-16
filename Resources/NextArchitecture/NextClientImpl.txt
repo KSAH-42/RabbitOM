@@ -1,0 +1,822 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Linq;
+
+namespace TestApp
+{
+	using TestApp.Rtsp.Clients;
+	using TestApp.Rtsp.Clients.Filters;
+
+	class Program
+	{
+		static void Main( string[] args )
+		{
+			using ( var client = RtspClientFactory.NewClient() )
+			{
+				if ( client == null )
+					return;
+				
+				client.Connected += ( sender , e ) =>
+				{
+					Console.WriteLine( "Connected" );
+				};
+
+				client.Disconnected += ( sender , e ) =>
+				{
+					Console.WriteLine( "Disconnected" );
+				};
+
+				client.DataReceived += ( sender , e ) =>
+				{
+					Console.WriteLine( "DataReceived" );
+				};
+					   
+				client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
+				client.Configuration.UserName = "admin";
+				client.Configuration.Password = "camera123";
+				client.Configuration.FilterEngine = FilterEngineType.Parallel;
+
+				client.AddFilter( new DataLoggerFilter() );
+				client.AddFilter( new RtpDataSinkFilter() );
+				client.AddFilter( new RtpDataDecoderFilter() );
+				client.AddFilter( new HttpVideoRenderFilter() );
+				client.AddFilter( new HttpVideoDecoderFilter() );
+				client.AddFilter( new HttpVideoDecoderFilter() );
+				client.AddFilter( new HttpVideoDecoderFilter() );
+
+				client.StartCommunication();
+
+				Console.WriteLine("Press any keys...");
+			}
+		}
+	}
+}
+
+namespace TestApp.Rtsp
+{
+	public sealed class RtspThread
+	{
+		public bool IsStarted { get; }
+		public EventWaitHandle Handle { get; internal set; }
+
+		public void Start( Action action ) { }
+		public void Stop() { }
+
+		internal bool CanContinue()
+		{
+			throw new NotImplementedException();
+		}
+	}
+}
+
+namespace TestApp.Rtsp.Clients
+{
+	using TestApp.Rtsp.Clients.Filters;
+
+	public enum FilterEngineType
+	{
+		Sequencial, Parallel
+	}
+
+	public class ConnectedEventArgs : EventArgs{ }
+	public class DisconnectedEventArgs : EventArgs { }
+	public class ConnectionFailedEventArgs : EventArgs { }
+	public class CommunicationStartedEventArgs : EventArgs { }
+	public class CommunicationStoppedEventArgs : EventArgs { }
+	public class DataReceivedEventArgs : EventArgs { }
+	public class StreamingActiveEventArgs : EventArgs { }
+	public class StreamingInActiveEventArgs : EventArgs { }
+	public class CustomEventArgs : EventArgs { }
+	
+	public abstract class RtspConfiguration
+	{
+		public abstract object SyncRoot { get; }
+		public abstract string Uri { get; set; }
+		public abstract string UserName { get; set; }
+		public abstract string Password { get; set; }
+		public abstract string ReceiveTimeout { get; set; }
+		public abstract TimeSpan SendTimeout { get; set; }
+		public abstract TimeSpan ReceiveTransportTimeout { get; set; }
+		public abstract TimeSpan RetriesInterval { get; set; }
+		public abstract TimeSpan RetriesTransportInterval { get; set; }
+		public abstract string TranportTimeout { get; set; }
+		public abstract string KeepAliveInterval { get; set; }
+		public abstract string KeepAliveType { get; set; }
+		public abstract int RtpPort { get; set; }
+		public abstract string MulticastAddress { get; set; }
+		public abstract byte TimeToLive { get; set; }
+		public abstract string DeliveryMode { get; set; }
+		public abstract string MediaFormat { get; set; }
+		public abstract FilterEngineType FilterEngine { get; set; }
+		public abstract IDictionary<string,string> DefaultHeaders { get; }
+	}
+
+	public abstract class RtspClient : IDisposable
+	{
+		public event EventHandler<ConnectedEventArgs> Connected;
+		public event EventHandler<DisconnectedEventArgs> Disconnected;
+		public event EventHandler<ConnectionFailedEventArgs> ConnectionFailed;
+		public event EventHandler<CommunicationStartedEventArgs> CommunicationStarted;
+		public event EventHandler<CommunicationStoppedEventArgs> CommunicationStopped;
+		public event EventHandler<DataReceivedEventArgs> DataReceived;
+		public event EventHandler<StreamingActiveEventArgs> StreamingActive;
+		public event EventHandler<StreamingInActiveEventArgs> StreamingInActive;
+		public event EventHandler<CustomEventArgs> Event;
+
+
+		public abstract object SyncRoot {get; }
+		public abstract RtspConfiguration Configuration { get; }
+		public abstract RtspFilterReadCollection Filters { get; }
+		public abstract bool IsCommunicationStarted { get; }
+		public abstract bool IsConnected { get; }
+		public abstract bool IsReceivingData { get; }
+		public abstract bool IsStreamingActive { get; }
+		public abstract bool IsDisposed { get; }
+
+		public abstract void AddFilter( RtspFilter filter );
+		public abstract void AddFilterBefore( RtspFilter filter , RtspFilter previousFilter );
+		public abstract void AddFilterAfter( RtspFilter filter , RtspFilter previousFilter );
+		public abstract bool TryAddFilter( RtspFilter filter );
+		public abstract bool RemoveFilter( RtspFilter filter );
+		public abstract bool RemoveFilterById( string filter );
+		public abstract bool RemoveFilterById( string filter , string previous );
+		public abstract bool RemoveAllFilters( RtspFilter filter );
+		public abstract void StartCommunication();
+		public abstract void StopCommunication();
+		public abstract void StopCommunication(TimeSpan timeout);
+		public abstract bool WaitForConnection(TimeSpan timeout);
+		public abstract bool WaitForConnection(TimeSpan timeout,EventWaitHandle cancelationHandle);
+		public abstract void Dispose();
+		public abstract void Dispatch( Action action );
+
+
+
+		public static void DispatchEvent( RtspClient client , EventArgs e )
+		{
+			client?.Dispatch( new Action( () => 
+			{
+				RaiseEvent( client , e );
+			}));
+		}
+
+		public static void RaiseEvent( RtspClient client , EventArgs e )
+		{
+			if ( client == null )
+				throw new ArgumentNullException( nameof( client ) );
+
+			if ( e == null )
+				throw new ArgumentNullException( nameof( e ) );
+
+			if ( e is DataReceivedEventArgs )
+			{
+				client.OnDataReceived( e as DataReceivedEventArgs );
+			}
+			else if ( e is CommunicationStartedEventArgs )
+			{
+				client.OnCommunicationStarted( e as CommunicationStartedEventArgs );
+			}
+			else if ( e is CommunicationStoppedEventArgs)
+			{
+				client.OnCommunicationStopped( e as CommunicationStoppedEventArgs );
+			}
+			else if ( e is ConnectedEventArgs )
+			{
+				client.OnConnected( e as ConnectedEventArgs );
+			}
+			else if ( e is DisconnectedEventArgs )
+			{
+				client.OnDisconnected( e as DisconnectedEventArgs );
+			}
+			else if ( e is ConnectionFailedEventArgs )
+			{
+				client.OnConnectionFailed( e as ConnectionFailedEventArgs );
+			}
+			else if ( e is StreamingActiveEventArgs )
+			{
+				client.OnStreamingActive( e as StreamingActiveEventArgs );
+			}
+			else if ( e is StreamingInActiveEventArgs )
+			{
+				client.OnStreamingInActive( e as StreamingInActiveEventArgs );
+			}
+			else if ( e is CustomEventArgs )
+			{
+				client.OnCustomEvent( e as CustomEventArgs );
+			}
+		}
+
+
+
+
+
+
+		protected virtual void OnConnected( ConnectedEventArgs e )
+		{
+			Connected?.Invoke( this , e );
+		}
+		protected virtual void OnDisconnected( DisconnectedEventArgs e )
+		{
+			Disconnected?.Invoke( this , e );
+		}
+		protected virtual void OnConnectionFailed( ConnectionFailedEventArgs e )
+		{
+			ConnectionFailed?.Invoke( this , e );
+		}
+		protected virtual void OnCommunicationStarted( CommunicationStartedEventArgs e )
+		{
+			CommunicationStarted?.Invoke( this , e );
+		}
+		protected virtual void OnCommunicationStopped( CommunicationStoppedEventArgs e )
+		{
+			CommunicationStopped?.Invoke( this , e );
+		}
+		protected virtual void OnDataReceived( DataReceivedEventArgs e )
+		{
+			DataReceived?.Invoke( this , e );
+		}
+		protected virtual void OnStreamingActive( StreamingActiveEventArgs e )
+		{
+			StreamingActive?.Invoke( this , e );
+		}
+		protected virtual void OnStreamingInActive( StreamingInActiveEventArgs e )
+		{
+			StreamingInActive?.Invoke( this , e );
+		}
+		protected virtual void OnCustomEvent( CustomEventArgs e )
+		{
+			Event?.Invoke( this , e );
+		}
+	}
+
+	public static class RtspClientFactory
+	{
+		public static RtspClient NewClient()
+		{
+			return null;
+		}
+	}
+
+	public sealed class RtspClientBuilder
+	{
+		private readonly RtspClient _client;
+
+		public RtspClientBuilder( RtspClient client )
+		{
+			_client = client ?? throw new ArgumentNullException( nameof( client ) );
+		}
+
+		public TimeSpan ReceiveTimeout { get; set; }
+		public TimeSpan SendTimeout { get; set; }
+
+
+		public RtspClientBuilder AddFilter( RtpSourceFilter filter )
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterRtpSink()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterRtpDecoder()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterRtpH264Decoder()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterRtpH265Decoder()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterRtpMjpegDecoder()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterVideoDecoder()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterXYZ()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder AddFilterBlabla()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder UseDefaultFilters()
+			=> throw new NotImplementedException();
+		public RtspClientBuilder ConfigureForMulticast( string address , int port )
+			=> throw new NotImplementedException();
+		public RtspClientBuilder ConfigureForUnicastUdp( int port )
+			=> throw new NotImplementedException();
+		public RtspClientBuilder ConfigureForInterleaved()
+			=> throw new NotImplementedException();
+
+		public void Build()
+			=> throw new NotImplementedException();
+	}
+}
+
+namespace TestApp.Rtsp.Clients.Filters
+{
+	public sealed class RtspFilterData
+	{
+		public static readonly RtspFilterData Empty = new RtspFilterData();
+
+		private RtspFilterData()
+		{
+		}
+
+		public RtspFilterData( object source , object value )
+		{
+			Source = source ?? throw new ArgumentNullException( nameof( source ) );
+			Value = value;
+		}
+
+		public object Source { get; }
+		public object Value { get; }
+
+		public static bool IsNullOrEmpty( RtspFilterData data )
+		{
+			return object.ReferenceEquals( data , null ) || object.ReferenceEquals( data , Empty );
+		}
+	}
+
+	public sealed class RtspFilterDataQueue : Queue<RtspFilterData>
+	{
+		public bool IsEnabled { get; set; }
+
+		public static bool Wait( RtspFilterDataQueue queue , EventWaitHandle cancelationHandle )
+		{
+			return false;
+		}
+
+		public static bool Wait( RtspFilterDataQueue queue , TimeSpan timeout , EventWaitHandle cancelationHandle )
+		{
+			return false;
+		}
+	}
+
+	public class RtspStoppedFilterEventArgs : EventArgs { }
+	public class RtspStartedFilterEventArgs : EventArgs { }
+	public class RtspIdleEventArgs : EventArgs { }
+
+	public abstract class RtspFilter : IDisposable
+	{
+		public event EventHandler<RtspStartedFilterEventArgs> Started;
+		public event EventHandler<RtspStoppedFilterEventArgs> Stopped;
+		public event EventHandler<RtspIdleEventArgs> Idle;
+
+		private readonly object _lock;
+		private readonly Guid _uniqueId;
+		private TimeSpan _timeout;
+		private RtspClient _client;
+
+		protected RtspFilter()
+		{
+			_lock = new object();
+			_uniqueId = Guid.NewGuid(); 
+		}
+		~RtspFilter()
+		{
+			Dispose( false );
+		}
+
+		public object SyncRoot
+		{
+			get => _lock;
+		}
+
+		public Guid UniqueId
+		{
+			get => _uniqueId;
+		}
+		public virtual TimeSpan Timeout 
+		{ 
+			get
+			{
+				lock ( _lock )
+				{
+					return _timeout;
+				}
+			}
+
+			set
+			{
+				lock ( _lock )
+				{
+					_timeout = value;
+				}
+			}
+		}
+
+		protected RtspClient Client
+		{
+			get
+			{
+				lock ( _lock )
+				{
+					return _client;
+				}
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		protected void Dispose( bool disposing )
+		{
+		}
+
+
+
+		internal static void SetClient( RtspFilter filter , RtspClient client )
+		{
+			if ( filter == null )
+				throw new ArgumentNullException( nameof( filter ) );
+
+			if ( client == null )
+				throw new ArgumentNullException( nameof( filter ) );
+
+			filter._client = client;
+		}
+
+		public static void RaiseEvent( RtspFilter filter , EventArgs e )
+		{
+			if ( e is RtspStartedFilterEventArgs )
+			{
+				filter.OnStarted( e as RtspStartedFilterEventArgs );
+			}
+
+			else
+
+			if ( e is RtspStoppedFilterEventArgs )
+			{
+				filter.OnStopped( e as RtspStoppedFilterEventArgs );
+			}
+
+			else
+
+			if ( e is RtspIdleEventArgs )
+			{
+				filter.OnIdle( e as RtspIdleEventArgs );
+			}
+		}
+
+
+
+
+		public abstract RtspFilterData Execute( RtspFilterData data );
+
+
+
+		protected virtual void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			Started?.Invoke( this , e );
+		}
+
+		protected virtual void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			Stopped?.Invoke( this , e );
+		}
+
+		protected virtual void OnIdle( RtspIdleEventArgs e )
+		{
+			Idle?.Invoke( this , e );
+		}
+	}
+
+	public sealed class RtspFilterList : List<RtspFilter>
+	{
+		private readonly object _lock = new object();
+
+		private readonly IRtspFilterGraph _graph;
+
+		public RtspFilterList( IRtspFilterGraph graph )
+		{
+			_graph = graph ?? throw new ArgumentNullException( nameof( graph ) );
+		}
+
+		private void OnAdded( RtspFilter filter )
+		{
+			_graph.AddFilter( filter );
+		}
+
+		private void OnRemoved( RtspFilter filter )
+		{
+			_graph.RemoveFilter( filter );
+		}
+
+		private void OnClear()
+		{
+			_graph.RemoveAllFilters();
+		}
+	}
+
+	public sealed class RtspFilterReadCollection : System.Collections.ObjectModel.ReadOnlyCollection<RtspFilter> 
+	{
+		public RtspFilterReadCollection( RtspFilterList filters )
+			: base ( filters as IList<RtspFilter> )
+		{
+		}
+
+		public RtspFilter First() => null;
+		public RtspFilter Last() => null;
+		public RtspFilter FindById( Guid id ) => null;
+	}
+
+	// TODO: Write a base absract class
+	// and create ParrallelFilterEngine
+	// and create SequencialFilterEngine
+
+	public sealed class RtspFilterEngine : IDisposable
+	{
+		private readonly object _lock = new object();
+
+		private readonly RtspThread _thread = new RtspThread();
+		private readonly RtspFilterDataQueue _input = new RtspFilterDataQueue();
+		private readonly RtspFilter _filter;
+		private readonly ISet<RtspFilterEngine> _edges = new HashSet<RtspFilterEngine>();
+		
+
+
+		public RtspFilterEngine( RtspFilter filter )
+		{
+			_filter = filter ?? throw new ArgumentNullException( nameof( filter ) );
+		}
+
+		
+		public Guid UniqueId { get => _filter.UniqueId; }
+		public bool IsStarted { get => _thread.IsStarted; }		
+
+
+
+		public void AddEdge( RtspFilterEngine engine )
+		{
+			if ( engine == null )
+				throw new ArgumentNullException( nameof( engine ) );
+			
+			lock ( _lock )
+			{
+				_edges.Add( engine );
+			}
+		}
+
+		public void RemoveEdge( RtspFilterEngine engine )
+		{
+			lock ( _lock )
+			{
+				_edges.Remove( engine );
+			}
+		}
+
+		public void RemoveAllFilters()
+		{
+			lock ( _lock )
+			{
+				_edges.Clear();
+			}
+		}
+
+
+		public void Start() { _thread.Start( Processing ); }
+		public void Stop() { _thread.Stop(); }
+
+		public void Dispose()
+		{
+			Stop();
+			RemoveAllFilters();
+		}
+
+		public void Execute( RtspFilterData data )
+		{
+			_input.Enqueue( data );
+		}
+
+		private void Processing()
+		{
+			RtspFilter.RaiseEvent( _filter , new RtspStartedFilterEventArgs() );
+			
+			do
+			{
+				while ( RtspFilterDataQueue.Wait( _input , _filter.Timeout , _thread.Handle ) )
+				{
+					var result = _filter.Execute( _input.Dequeue() );
+
+					if ( RtspFilterData.IsNullOrEmpty( result ) )
+					{
+						continue;
+					}
+
+					foreach ( var engine in _edges )
+					{
+						engine.Execute( result );
+					}
+				}
+
+				RtspFilter.RaiseEvent( _filter , new RtspIdleEventArgs() );
+
+			}while ( _thread.CanContinue() );
+
+			RtspFilter.RaiseEvent( _filter , new RtspStoppedFilterEventArgs() );
+		}
+	}
+
+	public sealed class RtspFilterEngineList : List<RtspFilterEngine>
+	{
+		// private readonly LinkedList<RtspPipeLineHost> _collection = new LinkedList<RtspPipeLineHost>();
+
+		//                             Vs
+
+		// private readonly List<RtspPipeLineHost> _collection = new List<RtspPipeLineHost>();
+
+
+
+
+		internal void RemoveById( Guid uniqueId )
+		{
+			throw new NotImplementedException();
+		}
+
+		internal void Add( Guid uniqueId , RtspFilterEngine rtspPipeLineHost )
+		{
+			throw new NotImplementedException();
+		}
+	}
+
+	public interface IRtspFilterGraph : IDisposable
+	{
+		bool IsStarted { get; }
+		
+
+		void Start();
+		void Stop();
+		void AddFilter( RtspFilter filter );
+		void RemoveFilter( RtspFilter filter );
+		void RemoveAllFilters();
+	}
+
+	public sealed class HttpVideoDecoderFilter : RtspFilter
+	{
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return null;
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+	}
+
+	public sealed class HttpVideoRenderFilter : RtspFilter
+	{
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return null;
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+	}
+
+	public sealed class RtpDataDecoderFilter : RtspFilter
+	{
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return null;
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+	}
+
+	public sealed class RtpAgreggatorFilter : RtspFilter
+	{
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return null;
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+	}
+
+	public sealed class RtpDataSinkFilter : RtspFilter
+	{
+		private readonly object _lock = new object();
+		private readonly HashSet<int> _supportedPayloads = new HashSet<int>();
+
+		public IReadOnlyCollection<int> SupportedPayloads
+		{
+			get
+			{
+				lock ( _lock )
+				{
+					return new List<int>( _supportedPayloads );
+				}
+			}
+		}
+
+		public void RegisterPayload( int value )
+		{
+			lock ( _lock )
+			{
+				_supportedPayloads.Add( value );
+			}
+		}
+
+		public void UnRegisterPayload( int value )
+		{
+			lock ( _lock )
+			{
+				_supportedPayloads.Remove( value );
+			}
+		}
+
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return null;
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+	}
+
+	public sealed class RtpSourceFilter : RtspFilter
+	{
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return data;
+		}
+	}
+
+	public sealed class DataLoggerFilter : RtspFilter
+	{
+		public bool TriggerEvents { get; set; }
+
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			if ( TriggerEvents )
+				OnDataReceived( new DataReceivedEventArgs() );
+
+			return new RtspFilterData( this , data.Value );
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+
+		private void OnDataReceived( DataReceivedEventArgs e )
+		{
+			RtspClient.DispatchEvent( Client , e );
+		}
+	}
+
+	public sealed class TcpSenderFilter : RtspFilter 
+	{
+		public override RtspFilterData Execute( RtspFilterData data )
+		{
+			return data ?? RtspFilterData.Empty;
+		}
+
+		protected override void OnStarted( RtspStartedFilterEventArgs e )
+		{
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( RtspStoppedFilterEventArgs e )
+		{
+			base.OnStopped( e );
+		}
+	}
+}
