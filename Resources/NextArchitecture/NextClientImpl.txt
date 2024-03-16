@@ -17,8 +17,20 @@ namespace TestApp
 			using ( var client = RtspClientFactory.NewClient() )
 			{
 				if ( client == null )
+				{
 					return;
-				
+				}
+
+				client.CommunicationStarted += ( sender , e ) =>
+				{
+					Console.WriteLine( "Communication Started" );
+				};
+
+				client.CommunicationStopped += ( sender , e ) =>
+				{
+					Console.WriteLine( "Communication Stopped" );
+				};
+
 				client.Connected += ( sender , e ) =>
 				{
 					Console.WriteLine( "Connected" );
@@ -37,9 +49,13 @@ namespace TestApp
 				client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
 				client.Configuration.UserName = "admin";
 				client.Configuration.Password = "camera123";
+				client.Configuration.DeliveryMode = "Tcp";
+				client.Configuration.MediaFormat = "Audio";
+				client.Configuration.MulticastAddress = "224.0.0.1";
+				client.Configuration.RtpPort = 12321;
+				client.Configuration.TimeToLive = 123;
 				client.Configuration.FilterEngine = FilterEngineType.Parallel;
 
-				client.AddFilter( new DataLoggerFilter() );
 				client.AddFilter( new RtpDataSinkFilter() );
 				client.AddFilter( new RtpDataDecoderFilter() );
 				client.AddFilter( new HttpVideoRenderFilter() );
@@ -48,6 +64,11 @@ namespace TestApp
 				client.AddFilter( new HttpVideoDecoderFilter() );
 
 				client.StartCommunication();
+
+				if ( ! client.WaitForConnection( TimeSpan.FromSeconds( 3 ) ) )
+				{
+					client.Dispatch( new Action( () => { } ) );
+				}
 
 				Console.WriteLine("Press any keys...");
 			}
@@ -111,7 +132,15 @@ namespace TestApp.Rtsp.Clients
 		public abstract string DeliveryMode { get; set; }
 		public abstract string MediaFormat { get; set; }
 		public abstract FilterEngineType FilterEngine { get; set; }
-		public abstract IDictionary<string,string> DefaultHeaders { get; }
+		public abstract IReadOnlyDictionary<string,string> DefaultHeaders { get; }
+
+
+		public abstract void Validate();
+		public abstract bool TryValidate();
+		public abstract void AddHeader( string name , string value );
+		public abstract bool TryAddHeader( string name , string value );
+		public abstract bool RemoveHeader( string name , string value );
+		public abstract bool RemoveAllHeaders();
 	}
 
 	public abstract class RtspClient : IDisposable
@@ -136,11 +165,15 @@ namespace TestApp.Rtsp.Clients
 		public abstract bool IsStreamingActive { get; }
 		public abstract bool IsDisposed { get; }
 
+
+
 		public abstract void AddFilter( RtspFilter filter );
 		public abstract void AddFilterBefore( RtspFilter filter , RtspFilter previousFilter );
 		public abstract void AddFilterAfter( RtspFilter filter , RtspFilter previousFilter );
+
 		public abstract bool TryAddFilter( RtspFilter filter );
 		public abstract bool RemoveFilter( RtspFilter filter );
+
 		public abstract bool RemoveFilterById( string filter );
 		public abstract bool RemoveFilterById( string filter , string previous );
 		public abstract bool RemoveAllFilters( RtspFilter filter );
@@ -268,6 +301,9 @@ namespace TestApp.Rtsp.Clients
 			_client = client ?? throw new ArgumentNullException( nameof( client ) );
 		}
 
+		public string Uri { get; set; }
+		public string UserName { get; set; }
+		public string Password { get; set; }
 		public TimeSpan ReceiveTimeout { get; set; }
 		public TimeSpan SendTimeout { get; set; }
 
@@ -291,6 +327,9 @@ namespace TestApp.Rtsp.Clients
 		public RtspClientBuilder AddFilterBlabla()
 			=> throw new NotImplementedException();
 		public RtspClientBuilder UseDefaultFilters()
+			=> throw new NotImplementedException();
+
+		public RtspClientBuilder ConfigureAsDefault()
 			=> throw new NotImplementedException();
 		public RtspClientBuilder ConfigureForMulticast( string address , int port )
 			=> throw new NotImplementedException();
