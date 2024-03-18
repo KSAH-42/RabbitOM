@@ -1033,9 +1033,11 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 				RtspFilter.RaiseEvent( filter , new RtspStartedFilterEventArgs() );
 			}
 
-			foreach ( ParrallelFilterEngine engine in _engines )
+			foreach ( var engine in _engines )
 			{
-				engine.Start();
+				var parrallelEngine = engine as ParrallelFilterEngine;
+
+				parrallelEngine?.Start();
 			}
 
 			base.OnStarted( e );
