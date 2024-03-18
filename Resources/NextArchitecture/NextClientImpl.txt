@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Linq;
 
-namespace TestApp
+namespace TestApp.Rtsp
 {
 	using TestApp.Rtsp.Clients;
 	using TestApp.Rtsp.Clients.Filters;
@@ -13,6 +13,19 @@ namespace TestApp
 	class Program
 	{
 		static void Main( string[] args )
+		{
+			RtspFiltersBuilder.RegisterFilter( "fowarder.udp" , () => new UdpFowarderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.agreggator" , () => new RtpAgreggatorFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.sink" , () => new RtpSinkFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.jpeg" , () => new JpegRtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h264" , () => new H264RtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h265" , () => new H265RtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "video.render" , () => new VideoRenderFilter() );
+
+			Run( args );
+		}
+
+		static void Run( string[] args )
 		{
 			using ( var client = RtspClientFactory.NewClient() )
 			{
@@ -41,11 +54,29 @@ namespace TestApp
 					Console.WriteLine( "Disconnected" );
 				};
 
+				client.Setup += ( sender , e ) =>
+				{
+					var builder = new RtspFiltersBuilder( sender as RtspClient )
+					{
+						PayloadType = e.PayloadType ,
+						ClockRate = e.ClockRate ,
+						PPS = e.PPS ,
+						SPS = e.SPS ,
+						VPS = e.VPS ,
+						Codec = e.Codec ,
+						ProfileId = e.ProfileId ,
+					};
+
+					e.IsCanceled = ! builder.TryBuild();
+
+					Console.WriteLine( "Setup: {0}" , ! e.IsCanceled );
+				};
+
 				client.DataReceived += ( sender , e ) =>
 				{
 					Console.WriteLine( "DataReceived" );
 				};
-					   
+
 				client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
 				client.Configuration.UserName = "admin";
 				client.Configuration.Password = "camera123";
@@ -56,21 +87,9 @@ namespace TestApp
 				client.Configuration.TimeToLive = 123;
 				client.Configuration.FilterEngine = FilterEngineType.Parallel;
 
-				client.AddFilter( new RtpDataSinkFilter() );
-				client.AddFilter( new RtpDataDecoderFilter() );
-				client.AddFilter( new HttpVideoRenderFilter() );
-				client.AddFilter( new HttpVideoDecoderFilter() );
-				client.AddFilter( new HttpVideoDecoderFilter() );
-				client.AddFilter( new HttpVideoDecoderFilter() );
-
 				client.StartCommunication();
 
-				if ( ! client.WaitForConnection( TimeSpan.FromSeconds( 3 ) ) )
-				{
-					client.Dispatch( new Action( () => { } ) );
-				}
-
-				Console.WriteLine("Press any keys...");
+				Console.WriteLine( "Press any keys..." );
 			}
 		}
 	}
@@ -102,16 +121,28 @@ namespace TestApp.Rtsp.Clients
 		Sequencial, Parallel
 	}
 
-	public class ConnectedEventArgs : EventArgs{ }
+	public class ConnectedEventArgs : EventArgs { }
 	public class DisconnectedEventArgs : EventArgs { }
 	public class ConnectionFailedEventArgs : EventArgs { }
 	public class CommunicationStartedEventArgs : EventArgs { }
 	public class CommunicationStoppedEventArgs : EventArgs { }
 	public class DataReceivedEventArgs : EventArgs { }
+	public class SetupEventArgs : EventArgs 
+	{
+		public uint PayloadType { get; }
+		public uint ClockRate { get; }
+		public string PPS { get; }
+		public string VPS { get; }
+		public string SPS { get; }
+		public string Codec { get; }
+		public string ProfileId { get; }
+		public bool IsCanceled { get; set; } // Use to cancel the setup in case that decoder can not be created, at this moment, we don't consumme bandwith if we can decode
+	}
+
 	public class StreamingActiveEventArgs : EventArgs { }
 	public class StreamingInActiveEventArgs : EventArgs { }
 	public class CustomEventArgs : EventArgs { }
-	
+
 	public abstract class RtspConfiguration
 	{
 		public abstract object SyncRoot { get; }
@@ -132,7 +163,7 @@ namespace TestApp.Rtsp.Clients
 		public abstract string DeliveryMode { get; set; }
 		public abstract string MediaFormat { get; set; }
 		public abstract FilterEngineType FilterEngine { get; set; }
-		public abstract IReadOnlyDictionary<string,string> DefaultHeaders { get; }
+		public abstract IReadOnlyDictionary<string , string> DefaultHeaders { get; }
 
 
 		public abstract void Validate();
@@ -150,17 +181,19 @@ namespace TestApp.Rtsp.Clients
 		public event EventHandler<ConnectionFailedEventArgs> ConnectionFailed;
 		public event EventHandler<CommunicationStartedEventArgs> CommunicationStarted;
 		public event EventHandler<CommunicationStoppedEventArgs> CommunicationStopped;
+		public event EventHandler<SetupEventArgs> Setup;
 		public event EventHandler<DataReceivedEventArgs> DataReceived;
 		public event EventHandler<StreamingActiveEventArgs> StreamingActive;
 		public event EventHandler<StreamingInActiveEventArgs> StreamingInActive;
 		public event EventHandler<CustomEventArgs> Event;
 
 
-		public abstract object SyncRoot {get; }
+		public abstract object SyncRoot { get; }
 		public abstract RtspConfiguration Configuration { get; }
-		public abstract RtspFilterReadCollection Filters { get; }
+		public abstract RtspFilterReadOnlyCollection Filters { get; }
 		public abstract bool IsCommunicationStarted { get; }
 		public abstract bool IsConnected { get; }
+		public abstract bool IsSetup { get; }
 		public abstract bool IsReceivingData { get; }
 		public abstract bool IsStreamingActive { get; }
 		public abstract bool IsDisposed { get; }
@@ -170,18 +203,16 @@ namespace TestApp.Rtsp.Clients
 		public abstract void AddFilter( RtspFilter filter );
 		public abstract void AddFilterBefore( RtspFilter filter , RtspFilter previousFilter );
 		public abstract void AddFilterAfter( RtspFilter filter , RtspFilter previousFilter );
-
 		public abstract bool TryAddFilter( RtspFilter filter );
 		public abstract bool RemoveFilter( RtspFilter filter );
-
 		public abstract bool RemoveFilterById( string filter );
 		public abstract bool RemoveFilterById( string filter , string previous );
 		public abstract bool RemoveAllFilters( RtspFilter filter );
 		public abstract void StartCommunication();
 		public abstract void StopCommunication();
-		public abstract void StopCommunication(TimeSpan timeout);
-		public abstract bool WaitForConnection(TimeSpan timeout);
-		public abstract bool WaitForConnection(TimeSpan timeout,EventWaitHandle cancelationHandle);
+		public abstract void StopCommunication( TimeSpan timeout );
+		public abstract bool WaitForConnection( TimeSpan timeout );
+		public abstract bool WaitForConnection( TimeSpan timeout , EventWaitHandle cancelationHandle );
 		public abstract void Dispose();
 		public abstract void Dispatch( Action action );
 
@@ -189,10 +220,10 @@ namespace TestApp.Rtsp.Clients
 
 		public static void DispatchEvent( RtspClient client , EventArgs e )
 		{
-			client?.Dispatch( new Action( () => 
+			client?.Dispatch( new Action( () =>
 			{
 				RaiseEvent( client , e );
-			}));
+			} ) );
 		}
 
 		public static void RaiseEvent( RtspClient client , EventArgs e )
@@ -211,7 +242,7 @@ namespace TestApp.Rtsp.Clients
 			{
 				client.OnCommunicationStarted( e as CommunicationStartedEventArgs );
 			}
-			else if ( e is CommunicationStoppedEventArgs)
+			else if ( e is CommunicationStoppedEventArgs )
 			{
 				client.OnCommunicationStopped( e as CommunicationStoppedEventArgs );
 			}
@@ -226,6 +257,10 @@ namespace TestApp.Rtsp.Clients
 			else if ( e is ConnectionFailedEventArgs )
 			{
 				client.OnConnectionFailed( e as ConnectionFailedEventArgs );
+			}
+			else if ( e is SetupEventArgs )
+			{
+				client.OnSetup( e as SetupEventArgs );
 			}
 			else if ( e is StreamingActiveEventArgs )
 			{
@@ -265,6 +300,10 @@ namespace TestApp.Rtsp.Clients
 		protected virtual void OnCommunicationStopped( CommunicationStoppedEventArgs e )
 		{
 			CommunicationStopped?.Invoke( this , e );
+		}
+		protected virtual void OnSetup( SetupEventArgs e )
+		{
+			Setup?.Invoke( this , e );
 		}
 		protected virtual void OnDataReceived( DataReceivedEventArgs e )
 		{
@@ -306,29 +345,7 @@ namespace TestApp.Rtsp.Clients
 		public string Password { get; set; }
 		public TimeSpan ReceiveTimeout { get; set; }
 		public TimeSpan SendTimeout { get; set; }
-
-
-		public RtspClientBuilder AddFilter( RtpSourceFilter filter )
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterRtpSink()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterRtpDecoder()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterRtpH264Decoder()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterRtpH265Decoder()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterRtpMjpegDecoder()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterVideoDecoder()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterXYZ()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder AddFilterBlabla()
-			=> throw new NotImplementedException();
-		public RtspClientBuilder UseDefaultFilters()
-			=> throw new NotImplementedException();
-
+		
 		public RtspClientBuilder ConfigureAsDefault()
 			=> throw new NotImplementedException();
 		public RtspClientBuilder ConfigureForMulticast( string address , int port )
@@ -340,20 +357,59 @@ namespace TestApp.Rtsp.Clients
 
 		public void Build()
 			=> throw new NotImplementedException();
+		public bool TryBuild()
+			=> throw new NotImplementedException();
+	}
+
+	public sealed class RtspFiltersBuilder
+	{
+		private static readonly ConcurrentDictionary<string,Func<RtspFilter>> s_registry = new ConcurrentDictionary<string, Func<RtspFilter>>();
+
+		private readonly RtspClient _client;
+
+		public RtspFiltersBuilder( RtspClient client )
+		{
+			_client = client ?? throw new ArgumentNullException( nameof( client ) );
+		}
+
+		public uint PayloadType { get; set; }
+		public uint ClockRate { get; set; }
+		public string TrackUri { get; set; }
+		public string PPS { get; set; }
+		public string SPS { get; set; }
+		public string VPS { get; set; }
+		public string Codec { get; set; }
+		public string ProfileId { get; set; }
+
+		public RtspFiltersBuilder AddFilter( RtspFilter filter )
+			=> throw new NotImplementedException();
+		
+		public void Build()
+			=> throw new NotImplementedException();
+		
+		public bool TryAddFilter( RtspFilter filter )
+			=> throw new NotImplementedException();
+		public bool TryBuild()
+			=> throw new NotImplementedException();		   
+
+		public static void RegisterFilter( string key , Func<RtspFilter> factory )
+			=> s_registry.TryAdd( key , factory );
+		public static void UnRegisterFilter( string key )
+			=> s_registry.TryRemove( key , out Func<RtspFilter> factory );
 	}
 }
 
 namespace TestApp.Rtsp.Clients.Filters
 {
-	public sealed class RtspFilterData
+	public sealed class RtspDataFilter
 	{
-		public static readonly RtspFilterData Empty = new RtspFilterData();
+		public static readonly RtspDataFilter Empty = new RtspDataFilter();
 
-		private RtspFilterData()
+		private RtspDataFilter()
 		{
 		}
 
-		public RtspFilterData( object source , object value )
+		public RtspDataFilter( object source , object value )
 		{
 			Source = source ?? throw new ArgumentNullException( nameof( source ) );
 			Value = value;
@@ -362,13 +418,16 @@ namespace TestApp.Rtsp.Clients.Filters
 		public object Source { get; }
 		public object Value { get; }
 
-		public static bool IsNullOrEmpty( RtspFilterData data )
+		public static bool IsNullOrEmpty( RtspDataFilter data )
 		{
-			return object.ReferenceEquals( data , null ) || object.ReferenceEquals( data , Empty );
+			return object.ReferenceEquals( data , null )
+				|| object.ReferenceEquals( data , Empty )
+				//	|| object.ReferenceEquals( data.Value  , null )
+				;
 		}
 	}
 
-	public sealed class RtspFilterDataQueue : Queue<RtspFilterData>
+	public sealed class RtspFilterDataQueue : Queue<RtspDataFilter>
 	{
 		public bool IsEnabled { get; set; }
 
@@ -383,6 +442,25 @@ namespace TestApp.Rtsp.Clients.Filters
 		}
 	}
 
+	public interface IFilterGraph 
+	{
+		event EventHandler Started;
+		event EventHandler Stopped;
+
+		bool IsStarted { get; }
+		IReadOnlyCollection<RtspFilter> Filters { get; }
+
+		void AddFilter( RtspFilter filter );
+		void AddFilterAfter( RtspFilter filter , RtpSourceFilter previousFilter );
+		void AddFilterBefore( RtspFilter filter , RtspFilter nextFilter );
+		void RemoveFilter( RtspFilter filter );
+		void RemoveFilterById( string uniqueId );
+		void RemoveAllFilters();
+		void RemoveAndDestroyFilters();
+		void Start();
+		void Stop();
+	}
+
 	public class RtspStoppedFilterEventArgs : EventArgs { }
 	public class RtspStartedFilterEventArgs : EventArgs { }
 	public class RtspIdleEventArgs : EventArgs { }
@@ -394,14 +472,14 @@ namespace TestApp.Rtsp.Clients.Filters
 		public event EventHandler<RtspIdleEventArgs> Idle;
 
 		private readonly object _lock;
-		private readonly Guid _uniqueId;
 		private TimeSpan _timeout;
+		private bool _isEnabled;
 		private RtspClient _client;
 
 		protected RtspFilter()
 		{
 			_lock = new object();
-			_uniqueId = Guid.NewGuid(); 
+			_isEnabled = true;
 		}
 		~RtspFilter()
 		{
@@ -413,12 +491,25 @@ namespace TestApp.Rtsp.Clients.Filters
 			get => _lock;
 		}
 
-		public Guid UniqueId
+		public bool IsEnabled
 		{
-			get => _uniqueId;
+			get
+			{
+				lock ( _lock )
+				{
+					return _isEnabled;
+				}
+			}
+			set
+			{
+				lock ( _lock ) 
+				{
+					_isEnabled = value;
+				}
+			}
 		}
-		public virtual TimeSpan Timeout 
-		{ 
+		public TimeSpan Timeout
+		{
 			get
 			{
 				lock ( _lock )
@@ -470,32 +561,32 @@ namespace TestApp.Rtsp.Clients.Filters
 			filter._client = client;
 		}
 
-		public static void RaiseEvent( RtspFilter filter , EventArgs e )
+		public static void RaiseEvent( RtspFilter source , EventArgs e )
 		{
 			if ( e is RtspStartedFilterEventArgs )
 			{
-				filter.OnStarted( e as RtspStartedFilterEventArgs );
+				source.OnStarted( e as RtspStartedFilterEventArgs );
 			}
 
 			else
 
 			if ( e is RtspStoppedFilterEventArgs )
 			{
-				filter.OnStopped( e as RtspStoppedFilterEventArgs );
+				source.OnStopped( e as RtspStoppedFilterEventArgs );
 			}
 
 			else
 
 			if ( e is RtspIdleEventArgs )
 			{
-				filter.OnIdle( e as RtspIdleEventArgs );
+				source.OnIdle( e as RtspIdleEventArgs );
 			}
 		}
 
 
 
 
-		public abstract RtspFilterData Execute( RtspFilterData data );
+		public abstract RtspDataFilter Execute( RtspDataFilter data );
 
 
 
@@ -517,177 +608,232 @@ namespace TestApp.Rtsp.Clients.Filters
 
 	public sealed class RtspFilterList : List<RtspFilter>
 	{
-		private readonly object _lock = new object();
-
-		private readonly IRtspFilterGraph _graph;
-
-		public RtspFilterList( IRtspFilterGraph graph )
+		public RtspFilterList()
 		{
-			_graph = graph ?? throw new ArgumentNullException( nameof( graph ) );
-		}
-
-		private void OnAdded( RtspFilter filter )
-		{
-			_graph.AddFilter( filter );
-		}
-
-		private void OnRemoved( RtspFilter filter )
-		{
-			_graph.RemoveFilter( filter );
-		}
-
-		private void OnClear()
-		{
-			_graph.RemoveAllFilters();
 		}
 	}
 
-	public sealed class RtspFilterReadCollection : System.Collections.ObjectModel.ReadOnlyCollection<RtspFilter> 
+	public sealed class RtspFilterReadOnlyCollection : System.Collections.ObjectModel.ReadOnlyCollection<RtspFilter>
 	{
-		public RtspFilterReadCollection( RtspFilterList filters )
-			: base ( filters as IList<RtspFilter> )
+		public RtspFilterReadOnlyCollection( RtspFilterList filters )
+			: base( filters as IList<RtspFilter> )
 		{
 		}
 
-		public RtspFilter First() => null;
-		public RtspFilter Last() => null;
-		public RtspFilter FindById( Guid id ) => null;
+		public bool Contains( string id ) => throw new NotImplementedException();
+		public RtspFilter First() => throw new NotImplementedException();
+		public RtspFilter Last() => throw new NotImplementedException();
+		public RtspFilter FindById( string id ) => throw new NotImplementedException();
+		public RtspFilter GetById( string id ) => throw new NotImplementedException();
+		public bool TryGetById( string id , out RtspFilter result ) => throw new NotImplementedException();
 	}
 
-	// TODO: Write a base absract class
-	// and create ParrallelFilterEngine
-	// and create SequencialFilterEngine
-
-	public sealed class RtspFilterEngine : IDisposable
+	
+	public static class RtspFilterEngineFactory
 	{
-		private readonly object _lock = new object();
+		public static RtspFilterEngine NewFilterEngine( RtspFilter filter , FilterEngineType type )
+		{
+			switch ( type )
+			{
+				case FilterEngineType.Parallel:
+					return new ParrallelFilterEngine( filter );
+				case FilterEngineType.Sequencial:
+					return new SequentialFilterEngine( filter );
+			}
 
-		private readonly RtspThread _thread = new RtspThread();
-		private readonly RtspFilterDataQueue _input = new RtspFilterDataQueue();
+			throw new NotImplementedException();
+		}
+	}
+
+	public abstract class RtspFilterEngine : IDisposable
+	{
+		private readonly RtspFilterEngineList _edges = new RtspFilterEngineList();
+
+		public IReadOnlyCollection<RtspFilterEngine> Edges
+		{
+			get => _edges;
+		}
+
+		public abstract bool IsStarted { get; }
+		public abstract void Start();
+		public abstract void Stop();
+		public abstract void Dispose();
+		public abstract void WriteData( RtspDataFilter data );
+
+		public void AddEdge( RtspFilterEngine edge )
+			=> _edges.Add( edge );
+		public void RemoveEdge( RtspFilterEngine edge )
+			=> _edges.Add( edge );
+	}
+
+	public sealed class SequentialFilterEngine : RtspFilterEngine
+	{
 		private readonly RtspFilter _filter;
-		private readonly ISet<RtspFilterEngine> _edges = new HashSet<RtspFilterEngine>();
-		
+		private bool _isStarted;
 
-
-		public RtspFilterEngine( RtspFilter filter )
+		public SequentialFilterEngine( RtspFilter filter )
 		{
-			_filter = filter ?? throw new ArgumentNullException( nameof( filter ) );
+			_filter = filter;
 		}
 
-		
-		public Guid UniqueId { get => _filter.UniqueId; }
-		public bool IsStarted { get => _thread.IsStarted; }		
-
-
-
-		public void AddEdge( RtspFilterEngine engine )
+		public override bool IsStarted
 		{
-			if ( engine == null )
-				throw new ArgumentNullException( nameof( engine ) );
-			
-			lock ( _lock )
+			get 
 			{
-				_edges.Add( engine );
+				lock ( _filter.SyncRoot )
+				{
+					return _isStarted;
+				}
 			}
 		}
 
-		public void RemoveEdge( RtspFilterEngine engine )
+		public override void Start()
 		{
-			lock ( _lock )
+			lock ( _filter.SyncRoot )
 			{
-				_edges.Remove( engine );
+				if ( ! _isStarted )
+				{
+					RtspFilter.RaiseEvent( _filter , new RtspStartedFilterEventArgs() );
+					_isStarted = true;
+				}
 			}
 		}
-
-		public void RemoveAllFilters()
+		public override void Stop()
 		{
-			lock ( _lock )
+			lock ( _filter.SyncRoot )
 			{
-				_edges.Clear();
+				if ( _isStarted )
+				{
+					RtspFilter.RaiseEvent( _filter , new RtspStoppedFilterEventArgs() );
+					_isStarted = false;
+				}
 			}
 		}
+		public override void Dispose()
+			=> Stop();
 
-
-		public void Start() { _thread.Start( Processing ); }
-		public void Stop() { _thread.Stop(); }
-
-		public void Dispose()
+		public override void WriteData( RtspDataFilter data )
 		{
-			Stop();
-			RemoveAllFilters();
+			if ( data == null )
+				return;
+
+			lock ( _filter.SyncRoot )
+			{
+				if ( ! _isStarted )
+					return;
+			}
+
+			if ( !_filter.IsEnabled )
+				return;
+
+			data = _filter.Execute( data );
+
+			if ( data != null )
+			{
+				foreach ( var edge in Edges )
+				{
+					edge.WriteData( data );
+				}
+			}
+		}
+	}
+
+	public sealed class ParrallelFilterEngine : RtspFilterEngine
+	{
+		private readonly RtspThread _thread;
+		private readonly RtspFilter _filter;
+		private readonly ConcurrentQueue<RtspDataFilter> _queue;
+
+		public ParrallelFilterEngine( RtspFilter filter )
+		{
+			_filter = filter;
+			_thread = new RtspThread();
+			_queue = new ConcurrentQueue<RtspDataFilter>();
 		}
 
-		public void Execute( RtspFilterData data )
+		public override bool IsStarted
+			=> _thread.IsStarted;
+		public override void Start()
+			=> _thread.Start( ProcessData );
+		public override void Stop()
+			=> _thread.Stop();
+		public override void Dispose()
+			=> Stop();
+		public override void WriteData( RtspDataFilter data )
 		{
-			_input.Enqueue( data );
+			if ( data == null || !_filter.IsEnabled )
+				return;
+			_queue.Enqueue( data );
 		}
 
-		private void Processing()
+		private void ProcessData()
 		{
 			RtspFilter.RaiseEvent( _filter , new RtspStartedFilterEventArgs() );
-			
-			do
-			{
-				while ( RtspFilterDataQueue.Wait( _input , _filter.Timeout , _thread.Handle ) )
-				{
-					var result = _filter.Execute( _input.Dequeue() );
 
-					if ( RtspFilterData.IsNullOrEmpty( result ) )
+			while ( _thread.CanContinue() )
+			{
+				while ( _queue.Count > 0 )
+				{
+					if ( !_queue.TryDequeue( out RtspDataFilter data ) )
 					{
 						continue;
 					}
 
-					foreach ( var engine in _edges )
+					if ( data == null )
 					{
-						engine.Execute( result );
+						continue;
+					}
+
+					data = _filter.Execute( data );
+
+					if ( data == null )
+					{
+						continue;
+					}
+
+					foreach ( var edge in Edges )
+					{
+						edge.WriteData( data );
 					}
 				}
-
-				RtspFilter.RaiseEvent( _filter , new RtspIdleEventArgs() );
-
-			}while ( _thread.CanContinue() );
+			}
 
 			RtspFilter.RaiseEvent( _filter , new RtspStoppedFilterEventArgs() );
 		}
 	}
 
-	public sealed class RtspFilterEngineList : List<RtspFilterEngine>
+	public sealed class RtspFilterEngineList : HashSet<RtspFilterEngine>
 	{
-		// private readonly LinkedList<RtspPipeLineHost> _collection = new LinkedList<RtspPipeLineHost>();
-
-		//                             Vs
-
-		// private readonly List<RtspPipeLineHost> _collection = new List<RtspPipeLineHost>();
-
-
-
-
-		internal void RemoveById( Guid uniqueId )
-		{
-			throw new NotImplementedException();
-		}
-
-		internal void Add( Guid uniqueId , RtspFilterEngine rtspPipeLineHost )
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public interface IRtspFilterGraph : IDisposable
-	{
-		bool IsStarted { get; }
 		
-
-		void Start();
-		void Stop();
-		void AddFilter( RtspFilter filter );
-		void RemoveFilter( RtspFilter filter );
-		void RemoveAllFilters();
 	}
 
-	public sealed class HttpVideoDecoderFilter : RtspFilter
+	public sealed class JpegRtpDecoderFilter : RtspFilter
 	{
-		public override RtspFilterData Execute( RtspFilterData data )
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return null;
+		}
+	}
+
+	public sealed class H264RtpDecoderFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return null;
+		}
+	}
+
+	public sealed class H265RtpDecoderFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return null;
+		}
+	}
+
+	public sealed class VideoRenderFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
 			return null;
 		}
@@ -703,45 +849,10 @@ namespace TestApp.Rtsp.Clients.Filters
 		}
 	}
 
-	public sealed class HttpVideoRenderFilter : RtspFilter
-	{
-		public override RtspFilterData Execute( RtspFilterData data )
-		{
-			return null;
-		}
-
-		protected override void OnStarted( RtspStartedFilterEventArgs e )
-		{
-			base.OnStarted( e );
-		}
-
-		protected override void OnStopped( RtspStoppedFilterEventArgs e )
-		{
-			base.OnStopped( e );
-		}
-	}
-
-	public sealed class RtpDataDecoderFilter : RtspFilter
-	{
-		public override RtspFilterData Execute( RtspFilterData data )
-		{
-			return null;
-		}
-
-		protected override void OnStarted( RtspStartedFilterEventArgs e )
-		{
-			base.OnStarted( e );
-		}
-
-		protected override void OnStopped( RtspStoppedFilterEventArgs e )
-		{
-			base.OnStopped( e );
-		}
-	}
-
+	
 	public sealed class RtpAgreggatorFilter : RtspFilter
 	{
-		public override RtspFilterData Execute( RtspFilterData data )
+		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
 			return null;
 		}
@@ -757,7 +868,15 @@ namespace TestApp.Rtsp.Clients.Filters
 		}
 	}
 
-	public sealed class RtpDataSinkFilter : RtspFilter
+	public class UdpFowarderFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return data;
+		}
+	}
+
+	public class RtpSinkFilter : RtspFilter
 	{
 		private readonly object _lock = new object();
 		private readonly HashSet<int> _supportedPayloads = new HashSet<int>();
@@ -789,9 +908,9 @@ namespace TestApp.Rtsp.Clients.Filters
 			}
 		}
 
-		public override RtspFilterData Execute( RtspFilterData data )
+		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
-			return null;
+			return new RtspDataFilter( this , OnHandleData( data.Value as byte[] ) );
 		}
 
 		protected override void OnStarted( RtspStartedFilterEventArgs e )
@@ -803,11 +922,16 @@ namespace TestApp.Rtsp.Clients.Filters
 		{
 			base.OnStopped( e );
 		}
+
+		protected virtual byte[] OnHandleData( byte[] data )
+		{
+			return null;
+		}
 	}
 
 	public sealed class RtpSourceFilter : RtspFilter
 	{
-		public override RtspFilterData Execute( RtspFilterData data )
+		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
 			return data;
 		}
@@ -817,12 +941,12 @@ namespace TestApp.Rtsp.Clients.Filters
 	{
 		public bool TriggerEvents { get; set; }
 
-		public override RtspFilterData Execute( RtspFilterData data )
+		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
 			if ( TriggerEvents )
 				OnDataReceived( new DataReceivedEventArgs() );
 
-			return new RtspFilterData( this , data.Value );
+			return new RtspDataFilter( this , data.Value );
 		}
 
 		protected override void OnStarted( RtspStartedFilterEventArgs e )
@@ -841,11 +965,11 @@ namespace TestApp.Rtsp.Clients.Filters
 		}
 	}
 
-	public sealed class TcpSenderFilter : RtspFilter 
+	public sealed class TcpSenderFilter : RtspFilter
 	{
-		public override RtspFilterData Execute( RtspFilterData data )
+		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
-			return data ?? RtspFilterData.Empty;
+			return data ?? RtspDataFilter.Empty;
 		}
 
 		protected override void OnStarted( RtspStartedFilterEventArgs e )
@@ -858,4 +982,9 @@ namespace TestApp.Rtsp.Clients.Filters
 			base.OnStopped( e );
 		}
 	}
+}
+
+namespace TestApp.Rtsp.Clients.Graphs
+{
+	
 }
