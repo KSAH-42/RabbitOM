@@ -20,8 +20,11 @@ namespace TestApp.Rtsp
 			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.jpeg" , () => new JpegRtpDecoderFilter() );
 			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h264" , () => new H264RtpDecoderFilter() );
 			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h265" , () => new H265RtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "codec.jpeg" , () => new JpegCodecFilter() );
+			RtspFiltersBuilder.RegisterFilter( "codec.h264" , () => new H264CodecFilter() );
+			RtspFiltersBuilder.RegisterFilter( "codec.h265" , () => new H265CodecFilter() );
 			RtspFiltersBuilder.RegisterFilter( "video.render" , () => new VideoRenderFilter() );
-
+			
 			Run( args );
 		}
 
@@ -87,6 +90,8 @@ namespace TestApp.Rtsp
 				client.Configuration.TimeToLive = 123;
 				client.Configuration.FilterEngine = FilterEngineType.Parallel;
 
+				client.Configuration.FilterEngine = FilterEngineType.Parallel
+
 				client.StartCommunication();
 
 				Console.WriteLine( "Press any keys..." );
@@ -118,7 +123,7 @@ namespace TestApp.Rtsp.Clients
 
 	public enum FilterEngineType
 	{
-		Sequencial, Parallel
+		Parallel , Sequencial
 	}
 
 	public class ConnectedEventArgs : EventArgs { }
@@ -422,7 +427,6 @@ namespace TestApp.Rtsp.Clients.Filters
 		{
 			return object.ReferenceEquals( data , null )
 				|| object.ReferenceEquals( data , Empty )
-				//	|| object.ReferenceEquals( data.Value  , null )
 				;
 		}
 	}
@@ -440,25 +444,6 @@ namespace TestApp.Rtsp.Clients.Filters
 		{
 			return false;
 		}
-	}
-
-	public interface IFilterGraph 
-	{
-		event EventHandler Started;
-		event EventHandler Stopped;
-
-		bool IsStarted { get; }
-		IReadOnlyCollection<RtspFilter> Filters { get; }
-
-		void AddFilter( RtspFilter filter );
-		void AddFilterAfter( RtspFilter filter , RtpSourceFilter previousFilter );
-		void AddFilterBefore( RtspFilter filter , RtspFilter nextFilter );
-		void RemoveFilter( RtspFilter filter );
-		void RemoveFilterById( string uniqueId );
-		void RemoveAllFilters();
-		void RemoveAndDestroyFilters();
-		void Start();
-		void Stop();
 	}
 
 	public class RtspStoppedFilterEventArgs : EventArgs { }
@@ -626,185 +611,6 @@ namespace TestApp.Rtsp.Clients.Filters
 		public RtspFilter FindById( string id ) => throw new NotImplementedException();
 		public RtspFilter GetById( string id ) => throw new NotImplementedException();
 		public bool TryGetById( string id , out RtspFilter result ) => throw new NotImplementedException();
-	}
-
-	
-	public static class RtspFilterEngineFactory
-	{
-		public static RtspFilterEngine NewFilterEngine( RtspFilter filter , FilterEngineType type )
-		{
-			switch ( type )
-			{
-				case FilterEngineType.Parallel:
-					return new ParrallelFilterEngine( filter );
-				case FilterEngineType.Sequencial:
-					return new SequentialFilterEngine( filter );
-			}
-
-			throw new NotImplementedException();
-		}
-	}
-
-	public abstract class RtspFilterEngine : IDisposable
-	{
-		private readonly RtspFilterEngineList _edges = new RtspFilterEngineList();
-
-		public IReadOnlyCollection<RtspFilterEngine> Edges
-		{
-			get => _edges;
-		}
-
-		public abstract bool IsStarted { get; }
-		public abstract void Start();
-		public abstract void Stop();
-		public abstract void Dispose();
-		public abstract void WriteData( RtspDataFilter data );
-
-		public void AddEdge( RtspFilterEngine edge )
-			=> _edges.Add( edge );
-		public void RemoveEdge( RtspFilterEngine edge )
-			=> _edges.Add( edge );
-	}
-
-	public sealed class SequentialFilterEngine : RtspFilterEngine
-	{
-		private readonly RtspFilter _filter;
-		private bool _isStarted;
-
-		public SequentialFilterEngine( RtspFilter filter )
-		{
-			_filter = filter;
-		}
-
-		public override bool IsStarted
-		{
-			get 
-			{
-				lock ( _filter.SyncRoot )
-				{
-					return _isStarted;
-				}
-			}
-		}
-
-		public override void Start()
-		{
-			lock ( _filter.SyncRoot )
-			{
-				if ( ! _isStarted )
-				{
-					RtspFilter.RaiseEvent( _filter , new RtspStartedFilterEventArgs() );
-					_isStarted = true;
-				}
-			}
-		}
-		public override void Stop()
-		{
-			lock ( _filter.SyncRoot )
-			{
-				if ( _isStarted )
-				{
-					RtspFilter.RaiseEvent( _filter , new RtspStoppedFilterEventArgs() );
-					_isStarted = false;
-				}
-			}
-		}
-		public override void Dispose()
-			=> Stop();
-
-		public override void WriteData( RtspDataFilter data )
-		{
-			if ( data == null )
-				return;
-
-			lock ( _filter.SyncRoot )
-			{
-				if ( ! _isStarted )
-					return;
-			}
-
-			if ( !_filter.IsEnabled )
-				return;
-
-			data = _filter.Execute( data );
-
-			if ( data != null )
-			{
-				foreach ( var edge in Edges )
-				{
-					edge.WriteData( data );
-				}
-			}
-		}
-	}
-
-	public sealed class ParrallelFilterEngine : RtspFilterEngine
-	{
-		private readonly RtspThread _thread;
-		private readonly RtspFilter _filter;
-		private readonly ConcurrentQueue<RtspDataFilter> _queue;
-
-		public ParrallelFilterEngine( RtspFilter filter )
-		{
-			_filter = filter;
-			_thread = new RtspThread();
-			_queue = new ConcurrentQueue<RtspDataFilter>();
-		}
-
-		public override bool IsStarted
-			=> _thread.IsStarted;
-		public override void Start()
-			=> _thread.Start( ProcessData );
-		public override void Stop()
-			=> _thread.Stop();
-		public override void Dispose()
-			=> Stop();
-		public override void WriteData( RtspDataFilter data )
-		{
-			if ( data == null || !_filter.IsEnabled )
-				return;
-			_queue.Enqueue( data );
-		}
-
-		private void ProcessData()
-		{
-			RtspFilter.RaiseEvent( _filter , new RtspStartedFilterEventArgs() );
-
-			while ( _thread.CanContinue() )
-			{
-				while ( _queue.Count > 0 )
-				{
-					if ( !_queue.TryDequeue( out RtspDataFilter data ) )
-					{
-						continue;
-					}
-
-					if ( data == null )
-					{
-						continue;
-					}
-
-					data = _filter.Execute( data );
-
-					if ( data == null )
-					{
-						continue;
-					}
-
-					foreach ( var edge in Edges )
-					{
-						edge.WriteData( data );
-					}
-				}
-			}
-
-			RtspFilter.RaiseEvent( _filter , new RtspStoppedFilterEventArgs() );
-		}
-	}
-
-	public sealed class RtspFilterEngineList : HashSet<RtspFilterEngine>
-	{
-		
 	}
 
 	public sealed class JpegRtpDecoderFilter : RtspFilter
@@ -982,9 +788,423 @@ namespace TestApp.Rtsp.Clients.Filters
 			base.OnStopped( e );
 		}
 	}
+
+	public sealed class JpegCodecFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return null;
+		}
+	}
+
+	public sealed class H264CodecFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return null;
+		}
+	}
+
+	public sealed class H265CodecFilter : RtspFilter
+	{
+		public override RtspDataFilter Execute( RtspDataFilter data )
+		{
+			return null;
+		}
+	}
 }
 
-namespace TestApp.Rtsp.Clients.Graphs
+namespace TestApp.Rtsp.Clients.Filters.Graphs
 {
-	
+	public interface IFilterGraph
+	{
+		event EventHandler Started;
+		event EventHandler Stopped;
+
+		IReadOnlyCollection<RtspFilter> Filters { get; }
+		bool IsStarted { get; }
+
+		void AddFilter( RtspFilter filter );
+		void AddFilterAfter( RtspFilter filter , RtpSourceFilter previousFilter );
+		void AddFilterBefore( RtspFilter filter , RtspFilter nextFilter );
+		void RemoveFilter( RtspFilter filter );
+		void RemoveFilterById( string uniqueId );
+		void RemoveAllFilters();
+		void RemoveAndDestroyFilters();
+		void Start();
+		void Stop();
+		void WriteData( RtspDataFilter data );
+	}
+
+	public abstract class RtspFilterGraph : IFilterGraph , IDisposable
+	{
+		public event EventHandler Started;
+		public event EventHandler Stopped;
+
+		~RtspFilterGraph()
+		{
+			Dispose( false );
+		}
+
+		public abstract IReadOnlyCollection<RtspFilter> Filters { get; }
+		public abstract bool IsStarted { get; }
+
+		public abstract void AddFilter( RtspFilter filter );
+		public abstract void AddFilterAfter( RtspFilter filter , RtpSourceFilter previousFilter );
+		public abstract void AddFilterBefore( RtspFilter filter , RtspFilter nextFilter );
+		public abstract void RemoveFilter( RtspFilter filter );
+		public abstract void RemoveFilterById( string uniqueId );
+		public abstract void RemoveAllFilters();
+		public abstract void RemoveAndDestroyFilters();
+		public abstract void Start();
+		public abstract void Stop();
+		public abstract void WriteData( RtspDataFilter data );
+
+		public void Dispose()
+		{
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+		protected abstract void Dispose( bool disposing );
+
+
+		protected virtual void OnStarted( EventArgs e )
+		{
+			Started?.Invoke( this , e );
+		}
+
+		protected virtual void OnStopped( EventArgs e )
+		{
+			Stopped?.Invoke( this , e );
+		}
+	}
+
+	public sealed class MediaRtspFilterGraph : RtspFilterGraph
+	{
+		private readonly object _lock;
+		private readonly RtspClient _client;
+		private readonly RtspThread _thread;
+		private readonly RtspFilterList _filters;
+		private readonly RtspFilterEngineList _engines;
+		private readonly RtspFilterDataQueue _queue;
+
+		public MediaRtspFilterGraph( RtspClient client )
+		{
+			_client = client ?? throw new ArgumentNullException( nameof( client ) );
+			_lock = new object();
+			_thread = new RtspThread();
+			_filters = new RtspFilterList();
+			_engines = new RtspFilterEngineList();
+			_queue = new RtspFilterDataQueue();
+		}
+
+		public override IReadOnlyCollection<RtspFilter> Filters
+		{
+			get => _filters;
+		}
+
+		public override bool IsStarted
+		{
+			get => _thread.IsStarted;
+		}
+
+		public override void AddFilter( RtspFilter filter )
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void AddFilterAfter( RtspFilter filter , RtpSourceFilter previousFilter )
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void AddFilterBefore( RtspFilter filter , RtspFilter nextFilter )
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void RemoveFilter( RtspFilter filter )
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void RemoveFilterById( string uniqueId )
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void RemoveAllFilters()
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void RemoveAndDestroyFilters()
+		{
+			EnsureNotStarted();
+
+			throw new NotImplementedException();
+		}
+
+		public override void Start()
+		{
+			_thread.Start( Processing );
+		}
+		public override void Stop()
+		{
+			_thread.Stop();
+		}
+		public override void WriteData( RtspDataFilter data )
+		{
+			_queue.Enqueue( data );
+		}
+
+		protected override void Dispose( bool disposing )
+		{
+			if ( disposing )
+			{
+				Stop();
+
+				foreach ( var filter in _filters )
+				{
+					filter.Dispose();
+				}
+
+				foreach ( var engine in _engines )
+				{
+					engine.Dispose();
+				}
+
+				_filters.Clear();
+				_engines.Clear();
+
+			}
+		}
+
+		private void EnsureNotStarted()
+		{
+			if ( _thread.IsStarted )
+				throw new InvalidOperationException();
+		}
+
+		private RtspFilterEngine CreateEngine( RtspFilter filter )
+		{
+			return RtspFilterEngineFactory.NewFilterEngine( filter , _client.Configuration.FilterEngine );
+		}
+
+
+
+		private void Processing()
+		{
+			OnStarted( EventArgs.Empty );
+
+			var engine = _engines.FirstOrDefault();
+
+			while ( _thread.CanContinue() )
+			{
+				if ( RtspFilterDataQueue.Wait( _queue , _thread.Handle ) )
+				{
+					while ( _queue.Count > 0 )
+					{
+						engine?.WriteData( _queue.Dequeue() );
+					}
+				}
+			}
+
+			OnStopped( EventArgs.Empty );
+		}
+
+		protected override void OnStarted( EventArgs e )
+		{
+			foreach ( var filter in _filters )
+			{
+				RtspFilter.RaiseEvent( filter , new RtspStartedFilterEventArgs() );
+			}
+
+			foreach ( ParrallelFilterEngine engine in _engines )
+			{
+				engine.Start();
+			}
+
+			base.OnStarted( e );
+		}
+
+		protected override void OnStopped( EventArgs e )
+		{
+			foreach ( ParrallelFilterEngine engine in _engines )
+			{
+				engine.Stop();
+			}
+
+			foreach ( var filter in _filters )
+			{
+				RtspFilter.RaiseEvent( filter , new RtspStoppedFilterEventArgs() );
+			}
+
+			base.OnStopped( e );
+		}
+	}
+
+
+	//-----------------------------------------------
+
+	public static class RtspFilterEngineFactory
+	{
+		public static RtspFilterEngine NewFilterEngine( RtspFilter filter , FilterEngineType type )
+		{
+			switch ( type )
+			{
+				case FilterEngineType.Parallel:
+					return new ParrallelFilterEngine( filter );
+				case FilterEngineType.Sequencial:
+					return new SequentialFilterEngine( filter );
+			}
+
+			throw new NotImplementedException();
+		}
+	}
+
+	public abstract class RtspFilterEngine : IDisposable
+	{
+		private readonly RtspFilterEngineList _edges = new RtspFilterEngineList();
+
+		~RtspFilterEngine()
+		{
+			Dispose( false );
+		}
+
+		public IReadOnlyCollection<RtspFilterEngine> Edges
+		{
+			get => _edges;
+		}
+
+		public void AddEdge( RtspFilterEngine edge )
+			=> _edges.Add( edge );
+		public void RemoveEdge( RtspFilterEngine edge )
+			=> _edges.Add( edge );
+
+		public abstract void WriteData( RtspDataFilter data );
+
+		public void Dispose()
+		{
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		protected virtual void Dispose( bool disposing )
+		{
+		}
+	}
+
+	public sealed class SequentialFilterEngine : RtspFilterEngine
+	{
+		private readonly RtspFilter _filter;
+		
+		public SequentialFilterEngine( RtspFilter filter )
+		{
+			_filter = filter ?? throw new ArgumentNullException( nameof( filter ) );
+		}
+
+		
+
+		public override void WriteData( RtspDataFilter data )
+		{
+			if ( data == null )
+				return;
+
+			if ( !_filter.IsEnabled )
+				return;
+
+			data = _filter.Execute( data );
+
+			if ( data != null )
+			{
+				foreach ( var edge in Edges )
+				{
+					edge.WriteData( data );
+				}
+			}
+		}
+	}
+
+	public sealed class ParrallelFilterEngine : RtspFilterEngine
+	{
+		private readonly RtspThread _thread;
+		private readonly RtspFilter _filter;
+		private readonly ConcurrentQueue<RtspDataFilter> _queue;
+
+		public ParrallelFilterEngine( RtspFilter filter )
+		{
+			_filter = filter ?? throw new ArgumentNullException( nameof( filter ) );
+			_thread = new RtspThread();
+			_queue = new ConcurrentQueue<RtspDataFilter>();
+		}
+
+		public bool IsStarted
+			=> _thread.IsStarted;
+		public void Start()
+			=> _thread.Start( ProcessData );
+		public void Stop()
+			=> _thread.Stop();
+		public override void WriteData( RtspDataFilter data )
+		{
+			if ( data == null || !_filter.IsEnabled )
+				return;
+			_queue.Enqueue( data );
+		}
+		protected override void Dispose( bool disposing )
+		{
+			if ( disposing )
+			{
+				Stop();
+			}
+		}
+
+
+		private void ProcessData()
+		{
+			while ( _thread.CanContinue() )
+			{
+				while ( _queue.Count > 0 )
+				{
+					if ( !_queue.TryDequeue( out RtspDataFilter data ) )
+					{
+						continue;
+					}
+
+					if ( data == null )
+					{
+						continue;
+					}
+
+					data = _filter.Execute( data );
+
+					if ( data == null )
+					{
+						continue;
+					}
+
+					foreach ( var edge in Edges )
+					{
+						edge.WriteData( data );
+					}
+				}
+			}
+		}
+	}
+
+	public sealed class RtspFilterEngineList : HashSet<RtspFilterEngine>
+	{
+	}
 }
