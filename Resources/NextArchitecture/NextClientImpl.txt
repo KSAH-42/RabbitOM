@@ -90,8 +90,6 @@ namespace TestApp.Rtsp
 				client.Configuration.TimeToLive = 123;
 				client.Configuration.FilterEngine = FilterEngineType.Parallel;
 
-				client.Configuration.FilterEngine = FilterEngineType.Parallel
-
 				client.StartCommunication();
 
 				Console.WriteLine( "Press any keys..." );
