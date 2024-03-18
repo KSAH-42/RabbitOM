@@ -14,17 +14,6 @@ namespace TestApp.Rtsp
 	{
 		static void Main( string[] args )
 		{
-			RtspFiltersBuilder.RegisterFilter( "fowarder.udp" , () => new UdpFowarderFilter() );
-			RtspFiltersBuilder.RegisterFilter( "rtp.agreggator" , () => new RtpAgreggatorFilter() );
-			RtspFiltersBuilder.RegisterFilter( "rtp.sink" , () => new RtpSinkFilter() );
-			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.jpeg" , () => new JpegRtpDecoderFilter() );
-			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h264" , () => new H264RtpDecoderFilter() );
-			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h265" , () => new H265RtpDecoderFilter() );
-			RtspFiltersBuilder.RegisterFilter( "codec.jpeg" , () => new JpegCodecFilter() );
-			RtspFiltersBuilder.RegisterFilter( "codec.h264" , () => new H264CodecFilter() );
-			RtspFiltersBuilder.RegisterFilter( "codec.h265" , () => new H265CodecFilter() );
-			RtspFiltersBuilder.RegisterFilter( "video.render" , () => new VideoRenderFilter() );
-			
 			Run( args );
 		}
 
@@ -369,6 +358,20 @@ namespace TestApp.Rtsp.Clients
 		private static readonly ConcurrentDictionary<string,Func<RtspFilter>> s_registry = new ConcurrentDictionary<string, Func<RtspFilter>>();
 
 		private readonly RtspClient _client;
+
+		static RtspFiltersBuilder()
+		{
+			RtspFiltersBuilder.RegisterFilter( "fowarder.udp" , () => new UdpFowarderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.agreggator" , () => new RtpAgreggatorFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.sink" , () => new RtpSinkFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.jpeg" , () => new JpegRtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h264" , () => new H264RtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "rtp.decoder.h265" , () => new H265RtpDecoderFilter() );
+			RtspFiltersBuilder.RegisterFilter( "codec.jpeg" , () => new JpegCodecFilter() );
+			RtspFiltersBuilder.RegisterFilter( "codec.h264" , () => new H264CodecFilter() );
+			RtspFiltersBuilder.RegisterFilter( "codec.h265" , () => new H265CodecFilter() );
+			RtspFiltersBuilder.RegisterFilter( "video.render" , () => new VideoRenderFilter() );
+		}
 
 		public RtspFiltersBuilder( RtspClient client )
 		{
