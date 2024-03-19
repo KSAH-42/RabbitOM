@@ -14,11 +14,6 @@ namespace TestApp.Rtsp
 	{
 		static void Main( string[] args )
 		{
-			Run( args );
-		}
-
-		static void Run( string[] args )
-		{
 			using ( var client = RtspClientFactory.NewClient() )
 			{
 				if ( client == null )
@@ -352,10 +347,15 @@ namespace TestApp.Rtsp.Clients
 		public bool TryBuild()
 			=> throw new NotImplementedException();
 	}
+}
+
+namespace TestApp.Rtsp.Clients.Filters
+{
+	public sealed class ConcurrentDictionaryFilter : ConcurrentDictionary<string , Func<RtspFilter>> { }
 
 	public sealed class RtspFiltersBuilder
 	{
-		private static readonly ConcurrentDictionary<string,Func<RtspFilter>> s_registry = new ConcurrentDictionary<string, Func<RtspFilter>>();
+		private static readonly ConcurrentDictionaryFilter s_registry = new ConcurrentDictionaryFilter();
 
 		private readonly RtspClient _client;
 
@@ -389,24 +389,21 @@ namespace TestApp.Rtsp.Clients
 
 		public RtspFiltersBuilder AddFilter( RtspFilter filter )
 			=> throw new NotImplementedException();
-		
+
 		public void Build()
 			=> throw new NotImplementedException();
-		
+
 		public bool TryAddFilter( RtspFilter filter )
 			=> throw new NotImplementedException();
 		public bool TryBuild()
-			=> throw new NotImplementedException();		   
+			=> throw new NotImplementedException();
 
 		public static void RegisterFilter( string key , Func<RtspFilter> factory )
 			=> s_registry.TryAdd( key , factory );
 		public static void UnRegisterFilter( string key )
 			=> s_registry.TryRemove( key , out Func<RtspFilter> factory );
 	}
-}
 
-namespace TestApp.Rtsp.Clients.Filters
-{
 	public sealed class RtspDataFilter
 	{
 		public static readonly RtspDataFilter Empty = new RtspDataFilter();
@@ -458,14 +455,11 @@ namespace TestApp.Rtsp.Clients.Filters
 		public event EventHandler<RtspIdleEventArgs> Idle;
 
 		private readonly object _lock;
-		private TimeSpan _timeout;
-		private bool _isEnabled;
 		private RtspClient _client;
 
 		protected RtspFilter()
 		{
 			_lock = new object();
-			_isEnabled = true;
 		}
 		~RtspFilter()
 		{
@@ -475,42 +469,6 @@ namespace TestApp.Rtsp.Clients.Filters
 		public object SyncRoot
 		{
 			get => _lock;
-		}
-
-		public bool IsEnabled
-		{
-			get
-			{
-				lock ( _lock )
-				{
-					return _isEnabled;
-				}
-			}
-			set
-			{
-				lock ( _lock ) 
-				{
-					_isEnabled = value;
-				}
-			}
-		}
-		public TimeSpan Timeout
-		{
-			get
-			{
-				lock ( _lock )
-				{
-					return _timeout;
-				}
-			}
-
-			set
-			{
-				lock ( _lock )
-				{
-					_timeout = value;
-				}
-			}
 		}
 
 		protected RtspClient Client
@@ -1096,9 +1054,6 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 			=> _edges.Add( edge );
 		public void RemoveEdge( RtspFilterEngine edge )
 			=> _edges.Add( edge );
-
-		public abstract void WriteData( RtspDataFilter data );
-
 		public void Dispose()
 		{
 			Dispose( true );
@@ -1108,6 +1063,8 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 		protected virtual void Dispose( bool disposing )
 		{
 		}
+		
+		public abstract void WriteData( RtspDataFilter data );
 	}
 
 	public sealed class SequentialFilterEngine : RtspFilterEngine
@@ -1117,18 +1074,10 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 		public SequentialFilterEngine( RtspFilter filter )
 		{
 			_filter = filter ?? throw new ArgumentNullException( nameof( filter ) );
-		}
-
-		
+		}	
 
 		public override void WriteData( RtspDataFilter data )
 		{
-			if ( data == null )
-				return;
-
-			if ( !_filter.IsEnabled )
-				return;
-
 			data = _filter.Execute( data );
 
 			if ( data != null )
@@ -1162,8 +1111,6 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 			=> _thread.Stop();
 		public override void WriteData( RtspDataFilter data )
 		{
-			if ( data == null || !_filter.IsEnabled )
-				return;
 			_queue.Enqueue( data );
 		}
 		protected override void Dispose( bool disposing )
@@ -1173,7 +1120,6 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 				Stop();
 			}
 		}
-
 
 		private void ProcessData()
 		{
