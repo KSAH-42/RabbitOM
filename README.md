@@ -58,10 +58,12 @@ using ( var client = new RTSPClient() )
     client.Configuration.Uri = Constants.LocalServer;
     client.Configuration.UserName = Constants.UserName;
     client.Configuration.Password = Constants.Password;
-    client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
     client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; 
     client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3);
     client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
+
+    client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
+    client.Configuration.MediaFormat = RTSPMediaFormat.Video;
 
     client.StartCommunication(); 
 
