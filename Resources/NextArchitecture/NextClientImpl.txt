@@ -64,6 +64,11 @@ namespace TestApp.Rtsp
 					Console.WriteLine( "DataReceived" );
 				};
 
+				client.MediaEvent += ( sender , e ) =>
+				{
+					Console.WriteLine( "MediaEvent" );
+				};
+
 				client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
 				client.Configuration.UserName = "admin";
 				client.Configuration.Password = "camera123";
@@ -103,33 +108,7 @@ namespace TestApp.Rtsp.Clients
 {
 	using TestApp.Rtsp.Clients.Filters;
 
-	public enum FilterEngineType
-	{
-		Parallel , Sequencial
-	}
-
-	public class ConnectedEventArgs : EventArgs { }
-	public class DisconnectedEventArgs : EventArgs { }
-	public class ConnectionFailedEventArgs : EventArgs { }
-	public class CommunicationStartedEventArgs : EventArgs { }
-	public class CommunicationStoppedEventArgs : EventArgs { }
-	public class DataReceivedEventArgs : EventArgs { }
-	public class SetupEventArgs : EventArgs 
-	{
-		public uint PayloadType { get; }
-		public uint ClockRate { get; }
-		public string PPS { get; }
-		public string VPS { get; }
-		public string SPS { get; }
-		public string Codec { get; }
-		public string ProfileId { get; }
-		public bool IsCanceled { get; set; } // Use to cancel the setup in case that decoder can not be created, at this moment, we don't consumme bandwith if we can decode
-	}
-
-	public class StreamingActiveEventArgs : EventArgs { }
-	public class StreamingInActiveEventArgs : EventArgs { }
-	public class CustomEventArgs : EventArgs { }
-
+	public enum FilterEngineType { Parallel , Sequencial }
 	public enum DeliveryMode { Tcp , Udp , Multicast }
 	public enum MediaType { Video , Audio }
 
@@ -164,10 +143,30 @@ namespace TestApp.Rtsp.Clients
 		public abstract bool RemoveAllHeaders();
 	}
 
-	public interface ISite
+	public class ConnectedEventArgs : EventArgs { }
+	public class DisconnectedEventArgs : EventArgs { }
+	public class ConnectionFailedEventArgs : EventArgs { }
+	public class CommunicationStartedEventArgs : EventArgs { }
+	public class CommunicationStoppedEventArgs : EventArgs { }
+	public class DataReceivedEventArgs : EventArgs { }
+	public class SetupEventArgs : EventArgs
 	{
-		RtspClient Client { get; set; }
+		public uint PayloadType { get; }
+		public uint ClockRate { get; }
+		public string PPS { get; }
+		public string VPS { get; }
+		public string SPS { get; }
+		public string Codec { get; }
+		public string ProfileId { get; }
+		public bool IsCanceled { get; set; } // Use to cancel the setup in case that decoder can not be created, at this moment, we don't consumme bandwith if we can decode
 	}
+
+	public class StreamingActiveEventArgs : EventArgs { }
+	public class StreamingInActiveEventArgs : EventArgs { }
+	public class MediaEventArgs : EventArgs { }
+	public class DecodedImageEventArgs : MediaEventArgs { }
+	public class ResolutionChangedEventArgs : MediaEventArgs { }
+
 
 	public abstract class RtspClient : IDisposable
 	{
@@ -180,7 +179,7 @@ namespace TestApp.Rtsp.Clients
 		public event EventHandler<DataReceivedEventArgs> DataReceived;
 		public event EventHandler<StreamingActiveEventArgs> StreamingActive;
 		public event EventHandler<StreamingInActiveEventArgs> StreamingInActive;
-		public event EventHandler<CustomEventArgs> Event;
+		public event EventHandler<MediaEventArgs> MediaEvent;
 
 
 		public abstract object SyncRoot { get; }
@@ -265,9 +264,9 @@ namespace TestApp.Rtsp.Clients
 			{
 				client.OnStreamingInActive( e as StreamingInActiveEventArgs );
 			}
-			else if ( e is CustomEventArgs )
+			else if ( e is MediaEventArgs )
 			{
-				client.OnCustomEvent( e as CustomEventArgs );
+				client.OnMediaEvent( e as MediaEventArgs );
 			}
 		}
 
@@ -312,9 +311,9 @@ namespace TestApp.Rtsp.Clients
 		{
 			StreamingInActive?.Invoke( this , e );
 		}
-		protected virtual void OnCustomEvent( CustomEventArgs e )
+		protected virtual void OnMediaEvent( MediaEventArgs e )
 		{
-			Event?.Invoke( this , e );
+			MediaEvent?.Invoke( this , e );
 		}
 	}
 
@@ -354,6 +353,11 @@ namespace TestApp.Rtsp.Clients
 			=> throw new NotImplementedException();
 		public bool TryBuild()
 			=> throw new NotImplementedException();
+	}
+
+	public interface ISite
+	{
+		RtspClient Client { get; set; }
 	}
 }
 
@@ -466,15 +470,12 @@ namespace TestApp.Rtsp.Clients.Filters
 		RtspDataFilter Execute( RtspDataFilter data );
 	}
 
-	public abstract class RtspFilter : IFilter , IDisposable
+	public abstract partial class RtspFilter : IFilter , IDisposable
 	{
 		public event EventHandler<RtspStartedFilterEventArgs> Started;
 		public event EventHandler<RtspStoppedFilterEventArgs> Stopped;
 		
-		protected RtspFilter()
-		{
-			SyncRoot = new object();
-		}
+		private readonly object _lock = new object();
 
 		~RtspFilter()
 		{
@@ -483,36 +484,12 @@ namespace TestApp.Rtsp.Clients.Filters
 
 		public object SyncRoot
 		{
-			get;
-		}
-
-
-
-
-
-		internal static void RaiseEvent( IFilter source , EventArgs e )
-		{
-			if ( source is RtspFilter filter )
-			{
-				if ( e is RtspStartedFilterEventArgs )
-				{
-					filter.OnStarted( e as RtspStartedFilterEventArgs );
-				}
-
-				else
-
-				if ( e is RtspStoppedFilterEventArgs )
-				{
-					filter.OnStopped( e as RtspStoppedFilterEventArgs );
-				}
-			}
+			get => _lock;
 		}
 
 
 
 		public abstract RtspDataFilter Execute( RtspDataFilter data );
-
-
 
 		public void Dispose()
 		{
@@ -534,6 +511,27 @@ namespace TestApp.Rtsp.Clients.Filters
 		protected virtual void OnStopped( RtspStoppedFilterEventArgs e )
 		{
 			Stopped?.Invoke( this , e );
+		}
+	}
+
+	public partial class RtspFilter
+	{
+		internal static void RaiseEvent( IFilter source , EventArgs e )
+		{
+			if ( source is RtspFilter filter )
+			{
+				if ( e is RtspStartedFilterEventArgs )
+				{
+					filter.OnStarted( e as RtspStartedFilterEventArgs );
+				}
+
+				else
+
+				if ( e is RtspStoppedFilterEventArgs )
+				{
+					filter.OnStopped( e as RtspStoppedFilterEventArgs );
+				}
+			}
 		}
 	}
 
@@ -607,7 +605,7 @@ namespace TestApp.Rtsp.Clients.Filters
 	{
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
-			return data;
+			return null;
 		}
 	}
 
@@ -623,7 +621,7 @@ namespace TestApp.Rtsp.Clients.Filters
 	{
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
-			return data;
+			return null;
 		}
 	}
 
@@ -631,7 +629,7 @@ namespace TestApp.Rtsp.Clients.Filters
 	{
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
-			return new RtspDataFilter( this , data.Value );
+			return null;
 		}
 	}
 
@@ -639,7 +637,7 @@ namespace TestApp.Rtsp.Clients.Filters
 	{
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
-			return data ?? RtspDataFilter.Empty;
+			return null;
 		}
 	}
 
@@ -650,6 +648,7 @@ namespace TestApp.Rtsp.Clients.Filters
 
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
+			RtspClient.DispatchEvent( Client , new DecodedImageEventArgs() );
 			return null;
 		}
 	}
@@ -662,6 +661,7 @@ namespace TestApp.Rtsp.Clients.Filters
 
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
+			RtspClient.DispatchEvent( Client , new DecodedImageEventArgs() );
 			return null;
 		}
 	}
@@ -675,6 +675,8 @@ namespace TestApp.Rtsp.Clients.Filters
 		
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
+			// Do some stuff
+			OnDecodedImage( new DecodedImageEventArgs() );
 			return null;
 		}
 
@@ -686,6 +688,11 @@ namespace TestApp.Rtsp.Clients.Filters
 		protected override void OnStopped( RtspStoppedFilterEventArgs e )
 		{
 			base.OnStopped( e );
+		}
+
+		private void OnDecodedImage( DecodedImageEventArgs e )
+		{
+			RtspClient.DispatchEvent( Client , e );
 		}
 	}
 }
@@ -855,6 +862,9 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 
 				foreach ( var filter in _filters )
 				{
+					if ( filter is ISite site )
+						site.Client = null;
+
 					if ( filter is IDisposable disposable )
 						disposable.Dispose();
 				}
@@ -909,9 +919,7 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 			foreach ( var filter in _filters )
 			{
 				if ( filter is ISite site )
-				{
 					site.Client = _client;
-				}
 				
 				RtspFilter.RaiseEvent( filter , new RtspStartedFilterEventArgs() );
 			}
@@ -936,6 +944,9 @@ namespace TestApp.Rtsp.Clients.Filters.Graphs
 			foreach ( var filter in _filters )
 			{
 				RtspFilter.RaiseEvent( filter , new RtspStoppedFilterEventArgs() );
+
+				if ( filter is ISite site )
+					site.Client = null;
 			}
 
 			base.OnStopped( e );
