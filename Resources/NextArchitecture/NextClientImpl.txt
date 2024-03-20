@@ -166,6 +166,9 @@ namespace TestApp.Rtsp.Clients
 	public class MediaEventArgs : EventArgs { }
 	public class DecodedImageEventArgs : MediaEventArgs { }
 	public class ResolutionChangedEventArgs : MediaEventArgs { }
+	public class RtpPacketLostEventArgs : MediaEventArgs { }
+	public class BandwithChangedEventArgs : MediaEventArgs { }
+	public class FrameRateChangedEventArgs : MediaEventArgs { }
 
 
 	public abstract class RtspClient : IDisposable
@@ -672,7 +675,7 @@ namespace TestApp.Rtsp.Clients.Filters
 		public string SPS { get; set; }
 		public string PPS { get; set; }
 		public string VPS { get; set; }
-		
+
 		public override RtspDataFilter Execute( RtspDataFilter data )
 		{
 			// Do some stuff
@@ -691,6 +694,11 @@ namespace TestApp.Rtsp.Clients.Filters
 		}
 
 		private void OnDecodedImage( DecodedImageEventArgs e )
+		{
+			RtspClient.DispatchEvent( Client , e );
+		}
+
+		private void OnResolutionChanged( ResolutionChangedEventArgs e )
 		{
 			RtspClient.DispatchEvent( Client , e );
 		}
