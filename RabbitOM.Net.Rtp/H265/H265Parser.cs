@@ -24,7 +24,7 @@ namespace RabbitOM.Net.Rtp.H265
 
             foreach ( var packet in frame.Packets )
             {
-                if ( ! _configuration.IsPayloadSupported( packet.Type ) )
+                if ( ! _configuration.SupportsPayload( packet.Type ) )
                 {
                     continue;
                 }

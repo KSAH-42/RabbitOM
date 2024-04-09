@@ -9,7 +9,7 @@ namespace RabbitOM.Net.Rtp.H265
 
         private readonly HashSet<int> _supportedPayloads = new HashSet<int>();
 
-        public bool IsPayloadSupported( int value )
+        public bool SupportsPayload( int value )
         {
             lock ( _lock )
             {

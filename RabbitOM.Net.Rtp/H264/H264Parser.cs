@@ -13,7 +13,7 @@ namespace RabbitOM.Net.Rtp.H264
 
         // Time  complexiy : O(N) => but probably O(N,M)
         
-        // Space complexiy : O(1) => but probably O(1,M)
+        // Space complexity : O(1) => but probably O(1,M)
 
         // Try to improve it
 
@@ -30,7 +30,7 @@ namespace RabbitOM.Net.Rtp.H264
 
             foreach ( var packet in frame.Packets )
             {
-                if ( ! _configuration.IsPayloadSupported( packet.Type ) )
+                if ( ! _configuration.SupportsPayload( packet.Type ) )
                 {
                     return false;
                 }

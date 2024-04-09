@@ -17,9 +17,19 @@ namespace RabbitOM.Net.Rtp
 
             OnPacketReceived( new RTPPacketReceivedEventArgs( _builder.LastPacket ) );
 
-            if ( _builder.CanBuildFrame() )
+            RTPFrame frame = null;
+
+            lock ( _builder.SyncRoot )
             {
-                OnFrameReceived( new RTPFrameReceivedEventArgs( _builder.BuildFrame() ) );
+                if ( _builder.CanBuildFrame() )
+                {
+                    frame = _builder.BuildFrame();
+                }
+            }
+            
+            if ( frame != null )
+            {
+                OnFrameReceived( new RTPFrameReceivedEventArgs( frame ) );
             }
         }
         
