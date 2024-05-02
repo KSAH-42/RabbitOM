@@ -257,7 +257,7 @@ namespace RabbitOM.Net.Rtsp.Remoting
                 throw new ArgumentException(nameof(uri));
             }
 
-            if (TryOpen(uri, credentials))
+            if ( ! TryOpen(uri, credentials))
             {
                 throw new Exception("Open failure");
             }
