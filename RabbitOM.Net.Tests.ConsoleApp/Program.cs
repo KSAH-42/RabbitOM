@@ -11,7 +11,7 @@ namespace RabbitOM.Net.Tests.ConsoleApp
         static void Main( string[] args )
         {
             var commandLines = new CommandLines( args );
-
+              
             if ( commandLines.CanShowHelp() )
             {
                 commandLines.ShowHelp();
@@ -47,8 +47,6 @@ namespace RabbitOM.Net.Tests.ConsoleApp
 
             using ( var client = new RTSPClient() )
             {
-                var parser = new Rtp.H264.H264Parser();
-
                 client.CommunicationStarted += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.White;
