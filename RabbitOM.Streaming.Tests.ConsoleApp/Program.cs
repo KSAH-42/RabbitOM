@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
         static void Run( CommandLines commandLines )
         {
-            if ( !RTSPUri.TryParse( commandLines.UriOption , out RTSPUri rtspUri ) )
+            if ( ! RTSPUri.TryParse( commandLines.UriOption , out RTSPUri rtspUri ) )
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine( "Bad uri" );
