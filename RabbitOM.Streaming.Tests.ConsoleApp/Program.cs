@@ -1,4 +1,13 @@
-﻿using System;
+﻿// If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
+// Make sure that the ports are not blocked
+// Use the vendor configuration tool to activate the rtsp protocol especially the port
+// AND create a user account for the rtsp connection
+// You can try to find a online security camera F R O M  a manufacturer, but ...
+// I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
+// Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
+
+
+using System;
 
 namespace RabbitOM.Streaming.Tests.ConsoleApp
 {
@@ -27,14 +36,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
-
-        // If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
-        // Make sure that the ports are not blocked
-        // Use the vendor configuration tool to activate the rtsp protocol especially the port
-        // AND create a user account for the rtsp connection
-        // You can try to find a online security camera F R O M  a manufacturer, but ...
-        // I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
-        // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
         static void Run( CommandLines commandLines )
         {
@@ -111,6 +112,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 // AND make sure that your are used a switch not a hub, very is difference between them
                 // And activate igmp snooping on the switch
 
+                // client.Configuration.DeliveryMode = RTSPDeliveryMode.Multicast;
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
 
