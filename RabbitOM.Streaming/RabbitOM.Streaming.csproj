@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{09233582-17ED-40D4-BC6A-309ECFDB116B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RabbitOM.Net</RootNamespace>
+    <AssemblyName>RabbitOM.Net</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DelegateExtensions.cs" />
+    <Compile Include="EnumerableExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rtp\DefaultRTPFrameBuilder.cs" />
+    <Compile Include="Rtp\DefaultRTPSink.cs" />
+    <Compile Include="Rtp\H264\H264Decoder.cs" />
+    <Compile Include="Rtp\H264\H264NalUnit.cs" />
+    <Compile Include="Rtp\H264\H264NalUnitCollection.cs" />
+    <Compile Include="Rtp\H264\H264NalUnitPayload.cs" />
+    <Compile Include="Rtp\H264\H264ParameterSet.cs" />
+    <Compile Include="Rtp\H264\H264Parser.cs" />
+    <Compile Include="Rtp\H264\H264ParserConfiguration.cs" />
+    <Compile Include="Rtp\H265\H265NalUnit.cs" />
+    <Compile Include="Rtp\H265\H265NalUnitCollection.cs" />
+    <Compile Include="Rtp\H265\H265ParameterSet.cs" />
+    <Compile Include="Rtp\H265\H265Parser.cs" />
+    <Compile Include="Rtp\H265\H265ParserConfiguration.cs" />
+    <Compile Include="Rtp\RTPFrame.cs" />
+    <Compile Include="Rtp\RTPFrameBuilder.cs" />
+    <Compile Include="Rtp\RTPFrameReceivedEventArgs.cs" />
+    <Compile Include="Rtp\RTPPacket.cs" />
+    <Compile Include="Rtp\RTPPacketReceivedEventArgs.cs" />
+    <Compile Include="Rtp\RTPSink.cs" />
+    <Compile Include="Rtp\StartPrefix.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientCommunicationStartedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientCommunicationStoppedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientConnectedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientDisconnectedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientErrorEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSession.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionDescriptor.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionDispatcher.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionHost.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionInfos.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionMulticastTransport.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionTransport.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientSessionUdpTransport.cs" />
+    <Compile Include="Rtsp\Clients\IRTSPClient.cs" />
+    <Compile Include="Rtsp\Clients\IRTSPClientConfiguration.cs" />
+    <Compile Include="Rtsp\Clients\IRTSPClientEvents.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClient.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientConfiguration.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientErrorCode.cs" />
+    <Compile Include="Rtsp\Clients\RTSPClientException.cs" />
+    <Compile Include="Codecs\AACCodecInfo.cs" />
+    <Compile Include="Codecs\AudioCodecInfo.cs" />
+    <Compile Include="Codecs\CodecInfo.cs" />
+    <Compile Include="Codecs\CodecType.cs" />
+    <Compile Include="Codecs\G711ACodecInfo.cs" />
+    <Compile Include="Codecs\G711CCodecInfo.cs" />
+    <Compile Include="Codecs\G711CodecInfo.cs" />
+    <Compile Include="Codecs\H264CodecInfo.cs" />
+    <Compile Include="Codecs\H265CodecInfo.cs" />
+    <Compile Include="Codecs\MJPEGCodecInfo.cs" />
+    <Compile Include="Codecs\PCMCodecInfo.cs" />
+    <Compile Include="Codecs\VideoCodecInfo.cs" />
+    <Compile Include="Rtsp\IRTSPHeaderValue.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Extensions\RTSPConnectionExtensions.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPAnnounceInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPDescribeInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPGetParameterInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPKeepAliveInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPOptionsInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPPauseInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPPlayInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPRecordInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPRedirectInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPSetParameterInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPSetupInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\Invokers\RTSPTearDownInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\IRTSPConnection.cs" />
+    <Compile Include="Rtsp\Clients\Connections\IRTSPInvoker.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPAuthenticationFailedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPConnection.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPConnectionClosedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPConnectionErrorEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPConnectionOpenedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPInvokerResult.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPInvokerResultRequest.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPInvokerResultResponse.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPMessageReceivedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPMessageSendedEventArgs.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxy.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyInformations.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyInvocationManager.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyMessageType.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyRequestHandler.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyRequestHandlerList.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyRequestManager.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxySecurityManager.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxySettings.cs" />
+    <Compile Include="Rtsp\Clients\Connections\RTSPProxyStatus.cs" />
+    <Compile Include="Rtsp\RTSPActionQueue.cs" />
+    <Compile Include="Rtsp\RTSPAuthenticationType.cs" />
+    <Compile Include="Rtsp\RTSPAuthorizationChallenge.cs" />
+    <Compile Include="Rtsp\RTSPAuthorizationFactory.cs" />
+    <Compile Include="Rtsp\RTSPBasicAuthorizationChallenge.cs" />
+    <Compile Include="Rtsp\RTSPChunkQueue.cs" />
+    <Compile Include="Rtsp\RTSPCredentials.cs" />
+    <Compile Include="Rtsp\RTSPDataConverter.cs" />
+    <Compile Include="Rtsp\RTSPDateTimeFormatType.cs" />
+    <Compile Include="Rtsp\RTSPDeliveryMode.cs" />
+    <Compile Include="Rtsp\RTSPDigestAlgorithmType.cs" />
+    <Compile Include="Rtsp\RTSPDigestAuthorizationChallenge.cs" />
+    <Compile Include="Rtsp\RTSPDisposeScope.cs" />
+    <Compile Include="Rtsp\RTSPEventQueue.cs" />
+    <Compile Include="Rtsp\RTSPEventWaitHandle.cs" />
+    <Compile Include="Rtsp\RTSPHashAlgorithm.cs" />
+    <Compile Include="Rtsp\RTSPHeader.cs" />
+    <Compile Include="Rtsp\RTSPHeaderAccept.cs" />
+    <Compile Include="Rtsp\RTSPHeaderAcceptEncoding.cs" />
+    <Compile Include="Rtsp\RTSPHeaderAcceptLanguage.cs" />
+    <Compile Include="Rtsp\RTSPHeaderAllow.cs" />
+    <Compile Include="Rtsp\RTSPHeaderAuthorization.cs" />
+    <Compile Include="Rtsp\RTSPHeaderBandwith.cs" />
+    <Compile Include="Rtsp\RTSPHeaderBlockSize.cs" />
+    <Compile Include="Rtsp\RTSPHeaderCacheControl.cs" />
+    <Compile Include="Rtsp\RTSPHeaderCollection.cs" />
+    <Compile Include="Rtsp\RTSPHeaderConference.cs" />
+    <Compile Include="Rtsp\RTSPHeaderConnection.cs" />
+    <Compile Include="Rtsp\RTSPHeaderContentBase.cs" />
+    <Compile Include="Rtsp\RTSPHeaderContentEncoding.cs" />
+    <Compile Include="Rtsp\RTSPHeaderContentLanguage.cs" />
+    <Compile Include="Rtsp\RTSPHeaderContentLength.cs" />
+    <Compile Include="Rtsp\RTSPHeaderContentLocation.cs" />
+    <Compile Include="Rtsp\RTSPHeaderContentType.cs" />
+    <Compile Include="Rtsp\RTSPHeaderCSeq.cs" />
+    <Compile Include="Rtsp\RTSPHeaderCustom.cs" />
+    <Compile Include="Rtsp\RTSPHeaderDate.cs" />
+    <Compile Include="Rtsp\RTSPHeaderExpires.cs" />
+    <Compile Include="Rtsp\RTSPHeaderFactory.cs" />
+    <Compile Include="Rtsp\RTSPHeaderFieldNames.cs" />
+    <Compile Include="Rtsp\RTSPHeaderFrom.cs" />
+    <Compile Include="Rtsp\RTSPHeaderIfMatch.cs" />
+    <Compile Include="Rtsp\RTSPHeaderIfModifiedSince.cs" />
+    <Compile Include="Rtsp\RTSPHeaderLastModified.cs" />
+    <Compile Include="Rtsp\RTSPHeaderLocation.cs" />
+    <Compile Include="Rtsp\RTSPHeaderNames.cs" />
+    <Compile Include="Rtsp\RTSPHeaderNull.cs" />
+    <Compile Include="Rtsp\RTSPHeaderProxyAuthenticate.cs" />
+    <Compile Include="Rtsp\RTSPHeaderProxyRequire.cs" />
+    <Compile Include="Rtsp\RTSPHeaderPublic.cs" />
+    <Compile Include="Rtsp\RTSPHeaderRange.cs" />
+    <Compile Include="Rtsp\RTSPHeaderReader.cs" />
+    <Compile Include="Rtsp\RTSPHeaderReferer.cs" />
+    <Compile Include="Rtsp\RTSPHeaderRequire.cs" />
+    <Compile Include="Rtsp\RTSPHeaderRetryAfter.cs" />
+    <Compile Include="Rtsp\RTSPHeaderRtpInfo.cs" />
+    <Compile Include="Rtsp\RTSPHeaderScale.cs" />
+    <Compile Include="Rtsp\RTSPHeaderServer.cs" />
+    <Compile Include="Rtsp\RTSPHeaderSession.cs" />
+    <Compile Include="Rtsp\RTSPHeaderSpeed.cs" />
+    <Compile Include="Rtsp\RTSPHeaderTransport.cs" />
+    <Compile Include="Rtsp\RTSPHeaderUserAgent.cs" />
+    <Compile Include="Rtsp\RTSPHeaderVary.cs" />
+    <Compile Include="Rtsp\RTSPHeaderVia.cs" />
+    <Compile Include="Rtsp\RTSPHeaderWriter.cs" />
+    <Compile Include="Rtsp\RTSPHeaderWWWAuthenticate.cs" />
+    <Compile Include="Rtsp\RTSPInterleavedPacket.cs" />
+    <Compile Include="Rtsp\RTSPKeepAliveType.cs" />
+    <Compile Include="Rtsp\RTSPMD5AuthorizationChallenge.cs" />
+    <Compile Include="Rtsp\RTSPMediaFormat.cs" />
+    <Compile Include="Rtsp\RTSPMemoryStream.cs" />
+    <Compile Include="Rtsp\RTSPMessage.cs" />
+    <Compile Include="Rtsp\RTSPMessageBody.cs" />
+    <Compile Include="Rtsp\RTSPMessageExtactor.cs" />
+    <Compile Include="Rtsp\RTSPMessageRequest.cs" />
+    <Compile Include="Rtsp\RTSPMessageRequestBuilder.cs" />
+    <Compile Include="Rtsp\RTSPMessageResponse.cs" />
+    <Compile Include="Rtsp\RTSPMessageResponseReader.cs" />
+    <Compile Include="Rtsp\RTSPMessageSerializer.cs" />
+    <Compile Include="Rtsp\RTSPMessageStatus.cs" />
+    <Compile Include="Rtsp\RTSPMessageVersion.cs" />
+    <Compile Include="Rtsp\RTSPMethod.cs" />
+    <Compile Include="Rtsp\RTSPMethodList.cs" />
+    <Compile Include="Rtsp\RTSPMethodNames.cs" />
+    <Compile Include="Rtsp\RTSPMethodReadonlyList.cs" />
+    <Compile Include="Rtsp\RTSPMimeType.cs" />
+    <Compile Include="Rtsp\RTSPMulticastSocket.cs" />
+    <Compile Include="Rtsp\RTSPOperator.cs" />
+    <Compile Include="Rtsp\RTSPPacket.cs" />
+    <Compile Include="Rtsp\RTSPPacketQueue.cs" />
+    <Compile Include="Rtsp\RTSPPacketReceivedEventArgs.cs" />
+    <Compile Include="Rtsp\RTSPParser.cs" />
+    <Compile Include="Rtsp\RTSPPortPair.cs" />
+    <Compile Include="Rtsp\RTSPQueue.cs" />
+    <Compile Include="Rtsp\RTSPQueue.Scope.cs" />
+    <Compile Include="Rtsp\RTSPSeparator.cs" />
+    <Compile Include="Rtsp\RTSPSHA256AuthorizationChallenge.cs" />
+    <Compile Include="Rtsp\RTSPSHA512AuthorizationChallenge.cs" />
+    <Compile Include="Rtsp\RTSPStatusCode.cs" />
+    <Compile Include="Rtsp\RTSPStatusHandle.cs" />
+    <Compile Include="Rtsp\RTSPStringCollection.cs" />
+    <Compile Include="Rtsp\RTSPStringPair.cs" />
+    <Compile Include="Rtsp\RTSPStringReader.cs" />
+    <Compile Include="Rtsp\RTSPTcpSocket.cs" />
+    <Compile Include="Rtsp\RTSPThread.cs" />
+    <Compile Include="Rtsp\RTSPTrackInfo.cs" />
+    <Compile Include="Rtsp\RTSPTransmissionType.cs" />
+    <Compile Include="Rtsp\RTSPTransportType.cs" />
+    <Compile Include="Rtsp\RTSPUdpSocket.cs" />
+    <Compile Include="Rtsp\RTSPUri.cs" />
+    <Compile Include="Sdp\AddressType.cs" />
+    <Compile Include="Sdp\AttributeField.cs" />
+    <Compile Include="Sdp\AttributeFieldCollection.cs" />
+    <Compile Include="Sdp\AttributeFieldFactory.cs" />
+    <Compile Include="Sdp\AttributeNames.cs" />
+    <Compile Include="Sdp\AttributeValue.cs" />
+    <Compile Include="Sdp\BandwithField.cs" />
+    <Compile Include="Sdp\BandwithFieldCollection.cs" />
+    <Compile Include="Sdp\BaseField.cs" />
+    <Compile Include="Sdp\BaseFieldCollection.cs" />
+    <Compile Include="Sdp\ConnectionField.cs" />
+    <Compile Include="Sdp\DataConverter.cs" />
+    <Compile Include="Sdp\EmailField.cs" />
+    <Compile Include="Sdp\EmailFieldCollection.cs" />
+    <Compile Include="Sdp\EncoderTypes.cs" />
+    <Compile Include="Sdp\EncryptionField.cs" />
+    <Compile Include="Sdp\Extensions\AttributeFieldCollectionExtensions.cs" />
+    <Compile Include="Sdp\Extensions\SessionDescriptorExtensions.cs" />
+    <Compile Include="Sdp\FieldCollection.cs" />
+    <Compile Include="Sdp\FormatAttributeValue.cs" />
+    <Compile Include="Sdp\ICopyable.cs" />
+    <Compile Include="Sdp\MediaDescriptionField.cs" />
+    <Compile Include="Sdp\MediaDescriptionFieldCollection.cs" />
+    <Compile Include="Sdp\MediaTrack.cs" />
+    <Compile Include="Sdp\MediaType.cs" />
+    <Compile Include="Sdp\NetworkType.cs" />
+    <Compile Include="Sdp\OriginField.cs" />
+    <Compile Include="Sdp\PhoneField.cs" />
+    <Compile Include="Sdp\PhoneFieldCollection.cs" />
+    <Compile Include="Sdp\ProfileType.cs" />
+    <Compile Include="Sdp\ProtocolType.cs" />
+    <Compile Include="Sdp\RepeatField.cs" />
+    <Compile Include="Sdp\RepeatFieldCollection.cs" />
+    <Compile Include="Sdp\RtpMapAttributeValue.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\AttributeFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\BandwithFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\ConnectionFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\EmailFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\EncryptionFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\FormatAttributeValueFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\MediaDescriptionFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\OriginFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\PhoneFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\RepeatFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\RtpMapAttributeValueFormatter.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\TimeFieldFormatter.cs" />
+    <Compile Include="Sdp\Serialization\SessionDescriptorBuilder.cs" />
+    <Compile Include="Sdp\Serialization\SessionDescriptorReader.cs" />
+    <Compile Include="Sdp\Serialization\SessionDescriptorSerializer.cs" />
+    <Compile Include="Sdp\Serialization\SessionDescriptorWriter.cs" />
+    <Compile Include="Sdp\SessionDescriptor.cs" />
+    <Compile Include="Sdp\SessionInformationField.cs" />
+    <Compile Include="Sdp\SessionNameField.cs" />
+    <Compile Include="Sdp\StringList.cs" />
+    <Compile Include="Sdp\StringPair.cs" />
+    <Compile Include="Sdp\TimeField.cs" />
+    <Compile Include="Sdp\TimeFieldCollection.cs" />
+    <Compile Include="Sdp\TimeZoneField.cs" />
+    <Compile Include="Sdp\UriField.cs" />
+    <Compile Include="Sdp\Validation\DefaultSessionDescriptorValidator.cs" />
+    <Compile Include="Sdp\Validation\FullSessionDescriptorValidator.cs" />
+    <Compile Include="Sdp\Validation\SessionDescriptorValidator.cs" />
+    <Compile Include="Sdp\Validation\ValidationException.cs" />
+    <Compile Include="Sdp\Validation\ValidatorHelper.cs" />
+    <Compile Include="Sdp\ValueTime.cs" />
+    <Compile Include="Sdp\VersionField.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Rtp\Readme.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
