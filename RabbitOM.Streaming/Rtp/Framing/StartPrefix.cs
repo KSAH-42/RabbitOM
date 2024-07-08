@@ -46,18 +46,40 @@ namespace RabbitOM.Streaming.Rtp.Framing
             return new StartPrefix( buffer );
         }
 
+        // TODO: Not actually tested
+
         public static bool StartsWith( byte[] buffer , StartPrefix prefix )
         {
             if ( buffer == null || prefix == null )
             {
                 return false;
             }
-
+            
             int count = buffer.Length > prefix.Values.Length ? prefix.Values.Length : buffer.Length;
 
             while ( -- count >= 0 )
             {
                 if ( buffer[ count ] != prefix.Values[ count ] )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool StartsWith( ArraySegment<byte> buffer , StartPrefix prefix )
+        {
+            if ( buffer.Count == 0 || prefix == null )
+            {
+                return false;
+            }
+
+            int count = buffer.Count > prefix.Values.Length ? prefix.Values.Length : buffer.Count;
+
+            while ( --count >= 0 )
+            {
+                if ( buffer.Array[ buffer.Offset + count ] != prefix.Values[ count ] )
                 {
                     return false;
                 }

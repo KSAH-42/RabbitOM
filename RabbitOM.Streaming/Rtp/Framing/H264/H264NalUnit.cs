@@ -73,12 +73,15 @@ namespace RabbitOM.Streaming.Rtp.Framing.H264
         // TODO: refactor this code
 
         // O(n)
-        
-        public static bool TryParse( byte[] buffer , out H264NalUnit result )
+
+        // TODO: Not actually tested
+
+
+        public static bool TryParse( ArraySegment<byte> buffer , out H264NalUnit result )
         {
             result = default;
 
-            if ( buffer == null || buffer.Length < DefaultMinimunLength )
+            if ( buffer.Count < DefaultMinimunLength )
             {
                 return false;
             }
@@ -99,9 +102,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H264
             result = new H264NalUnit()
             {
                 Prefix       = prefix.Values,
-                ForbiddenBit = (byte) ( buffer[ offset ] >> 7 & 0x1  ) == 1,
-                Nri          = (byte) ( buffer[ offset ] >> 5 & 0x3  ),
-                Type         = (byte) ( buffer[ offset ]      & 0x1F ),
+                ForbiddenBit = (byte) ( buffer.Array[ buffer.Offset + offset ] >> 7 & 0x1  ) == 1,
+                Nri          = (byte) ( buffer.Array[ buffer.Offset + offset ] >> 5 & 0x3  ),
+                Type         = (byte) ( buffer.Array[ buffer.Offset + offset ]      & 0x1F ),
             };
 
             result.IsUnDefinedNri         = result.Nri  == 0;
@@ -150,8 +153,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H264
             result.IsPredictiveFrame     |= result.IsCodedSliceIDR;
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionB;
             result.IsPredictiveFrame     |= result.IsCodedSlicePartitionC;
-
-            result.Buffer = new ArraySegment<byte>( buffer , ++ offset , buffer.Length - offset );
 
             result.Payload = new H264NalUnitPayload( result );
 

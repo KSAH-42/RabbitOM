@@ -2,34 +2,105 @@
 
 namespace RabbitOM.Streaming.Rtp
 {
+    /// <summary>
+    /// Represent the packet class
+    /// </summary>
     public sealed class RTPPacket
     {
-        public byte Version { get; set; }
-        public bool HasPadding  { get; set; }
-        public bool HasExtension { get; set; }
-        public ushort NumberOfCSRC { get; set; }
-        public bool Marker { get; set; }
-        public byte Type { get; set; }
-        public uint SequenceNumber { get; set; }
-        public uint Timestamp { get; set; }
-        public uint SSRC { get; set; }
-        public uint Extension { get; set; }
-        public int[] CSRCIdentifiers { get; set; }
-        public byte[] ExtensionData { get; set; }
-        public byte[] Payload { get; set; }
-        public byte[] Buffer { get; set; }
+        /// <summary>
+        /// Disable the constructor
+        /// </summary>
+        private RTPPacket() { }
 
 
 
 
+        /// <summary>
+        /// Gets the version
+        /// </summary>
+        public byte Version { get; private set; }
+
+        /// <summary>
+        /// Gets the padding state
+        /// </summary>
+        public bool HasPadding { get; private set; }
+
+        /// <summary>
+        /// Gets the extensions usage state
+        /// </summary>
+        public bool HasExtension { get; private set; }
+
+        /// <summary>
+        /// Gets the the number of contributing sources
+        /// </summary>
+        public ushort NumberOfCSRC { get; private set; }
+
+        /// <summary>
+        /// Gets the marker state
+        /// </summary>
+        public bool Marker { get; private set; }
+
+        /// <summary>
+        /// Gets the type
+        /// </summary>
+        public byte Type { get; private set; }
+
+        /// <summary>
+        /// Gets the sequence number
+        /// </summary>
+        public uint SequenceNumber { get; private set; }
+
+        /// <summary>
+        /// Gets the timestamp
+        /// </summary>
+        public uint Timestamp { get; private set; }
+
+        /// <summary>
+        /// Gets the sequence source
+        /// </summary>
+        public uint SSRC { get; private set; }
+
+        /// <summary>
+        /// Gets the extension
+        /// </summary>
+        public uint Extension { get; private set; }
+
+        /// <summary>
+        /// Gets the contributors sources identifiers
+        /// </summary>
+        public int[] CSRCIdentifiers { get; private set; }
+
+        /// <summary>
+        /// Gets the extension data
+        /// </summary>
+        public byte[] ExtensionData { get; private set; }
+
+        /// <summary>
+        /// Gets the payload
+        /// </summary>
+        public ArraySegment<byte> Payload { get; private set; }
+
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return Version != 2 || Payload == null || Payload.Length <= 0 ? false : true;
+            return Type >= 0 && Version == 2 && Payload.Count > 0;
         }
 
 
-        // TODO: refactor this horrible code
 
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="buffer">the input buffer</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( byte[] buffer , out RTPPacket result )
         {
             result = null;
@@ -104,13 +175,9 @@ namespace RabbitOM.Streaming.Rtp
                 payloadSize -= buffer[ buffer.Length - 1 ];
             }
 
-            packet.Buffer = buffer;
+            packet.Payload = new ArraySegment<byte>( buffer , offset , payloadSize );
 
-            packet.Payload = new byte[ payloadSize ];
-
-			System.Buffer.BlockCopy( packet.Buffer , (int) offset , packet.Payload , 0 , packet.Payload.Length );
-
-            result = packet;
+			result = packet;
 
             return true;
         }

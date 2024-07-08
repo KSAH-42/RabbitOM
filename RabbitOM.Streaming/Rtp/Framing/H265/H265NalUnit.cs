@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         public byte Type { get; private set; }
         public byte LayerId { get; private set; }
         public byte TID { get; private set; }
-        public byte[] Payload { get; private set; } 
+        public ArraySegment<byte> Payload { get; private set; } 
         public byte[] Prefix { get; private set; }
 
 
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public bool TryValidate()
         {
-            return Payload != null && Payload.Length >= 1;
+            return Payload != null && Payload.Count >= 1;
         }
 
 
@@ -42,11 +42,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         // TODO: add tests for protocol violations
         // Time complexity O(N)   
 
-        public static bool TryParse( byte[] buffer , out H265NalUnit result )
+        // TODO: Not actually tested
+
+        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = default;
 
-            if ( buffer == null || buffer.Length < DefaultMinimumLength )
+            if ( buffer.Count < DefaultMinimumLength )
             {
                 return false;
             }
@@ -77,16 +79,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 Prefix = prefix.Values,
             };
 
-            result.ForbiddenBit  = (byte) ( ( buffer[ index ] >> 7 ) & 0x1  ) == 1;
-            result.Type          = (byte) ( ( buffer[ index ] >> 1 ) & 0x3F );
-            result.LayerId       = (byte) ( ( buffer[ index ] << 7 ) & 0x80 );
-            result.LayerId      |= (byte) ( ( buffer[ index ] >> 3 ) & 0x1F );
-            result.TID           = (byte) ( ( buffer[ index ]      ) & 0x03 );
+            result.ForbiddenBit  = (byte) ( ( buffer.Array[ buffer.Offset + index ] >> 7 ) & 0x1  ) == 1;
+            result.Type          = (byte) ( ( buffer.Array[ buffer.Offset + index ] >> 1 ) & 0x3F );
+            result.LayerId       = (byte) ( ( buffer.Array[ buffer.Offset + index ] << 7 ) & 0x80 );
+            result.LayerId      |= (byte) ( ( buffer.Array[ buffer.Offset + index ] >> 3 ) & 0x1F );
+            result.TID           = (byte) ( ( buffer.Array[ buffer.Offset + index ]      ) & 0x03 );
 
-            result.Payload = new byte[ buffer.Length - ++ index ];
-
-            Buffer.BlockCopy( buffer , index , result.Payload , 0 , result.Payload.Length );
-
+            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + ++ index , buffer.Count - index );
+            
             return true;
         }
     } 

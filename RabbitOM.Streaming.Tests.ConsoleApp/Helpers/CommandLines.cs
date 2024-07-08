@@ -79,7 +79,10 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
         public bool TryValidate()
         {
-			return ! string.IsNullOrWhiteSpace( _uri ) && _args.Any();
+            if ( string.IsNullOrWhiteSpace( _uri ) )
+                return false;
+
+            return _args.Any();
         }
 
         public void ShowHelp()

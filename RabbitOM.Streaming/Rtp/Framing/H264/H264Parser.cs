@@ -12,10 +12,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H264
         }
 
         // Time  complexiy : O(N) => but probably O(N,M)
-        
+
         // Space complexity : O(1) => but probably O(1,M)
 
         // Try to improve it
+
+        // Parse not actually tested
 
         public bool TryParse( RTPFrame frame , out H264NalUnitCollection result )
         {

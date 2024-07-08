@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
         static void Main( string[] args )
         {
             var commandLines = new CommandLines( args );
-                 
+     
             if ( ! commandLines.TryValidate() )
             {
                 commandLines.ShowHelp();
