@@ -8,77 +8,64 @@ namespace RabbitOM.Streaming.Rtp
     public sealed class RTPPacket
     {
         /// <summary>
-        /// Disable the constructor
-        /// </summary>
-        private RTPPacket() { }
-
-
-
-
-        /// <summary>
         /// Gets the version
         /// </summary>
-        public byte Version { get; private set; }
+        public byte Version { get; set; }
 
         /// <summary>
         /// Gets the padding state
         /// </summary>
-        public bool HasPadding { get; private set; }
+        public bool HasPadding { get; set; }
 
         /// <summary>
         /// Gets the extensions usage state
         /// </summary>
-        public bool HasExtension { get; private set; }
+        public bool HasExtension { get; set; }
 
         /// <summary>
         /// Gets the the number of contributing sources
         /// </summary>
-        public ushort NumberOfCSRC { get; private set; }
+        public ushort NumberOfCSRC { get; set; }
 
         /// <summary>
         /// Gets the marker state
         /// </summary>
-        public bool Marker { get; private set; }
+        public bool Marker { get; set; }
 
         /// <summary>
         /// Gets the type
         /// </summary>
-        public byte Type { get; private set; }
+        public byte Type { get; set; }
 
         /// <summary>
         /// Gets the sequence number
         /// </summary>
-        public uint SequenceNumber { get; private set; }
+        public uint SequenceNumber { get; set; }
 
         /// <summary>
         /// Gets the timestamp
         /// </summary>
-        public uint Timestamp { get; private set; }
+        public uint Timestamp { get; set; }
 
         /// <summary>
         /// Gets the sequence source
         /// </summary>
-        public uint SSRC { get; private set; }
+        public uint SSRC { get; set; }
 
         /// <summary>
         /// Gets the extension
         /// </summary>
-        public uint Extension { get; private set; }
+        public uint Extension { get; set; }
 
         /// <summary>
         /// Gets the contributors sources identifiers
         /// </summary>
-        public int[] CSRCIdentifiers { get; private set; }
-
-        /// <summary>
-        /// Gets the extension data
-        /// </summary>
-        public byte[] ExtensionData { get; private set; }
+        public int[] CSRCIdentifiers { get; set; }
 
         /// <summary>
         /// Gets the payload
         /// </summary>
-        public ArraySegment<byte> Payload { get; private set; }
+        public ArraySegment<byte> Payload { get; set; }
 
 
 
