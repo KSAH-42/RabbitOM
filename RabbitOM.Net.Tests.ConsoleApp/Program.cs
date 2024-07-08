@@ -12,7 +12,7 @@ namespace RabbitOM.Net.Tests.ConsoleApp
         {
             var commandLines = new CommandLines( args );
               
-            if ( commandLines.CanShowHelp() )
+            if ( ! commandLines.TryValidate() )
             {
                 commandLines.ShowHelp();
                 return;

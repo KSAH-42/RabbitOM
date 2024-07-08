@@ -77,9 +77,9 @@ namespace RabbitOM.Net.Tests.ConsoleApp
 
 
 
-        public bool CanShowHelp()
+        public bool TryValidate()
         {
-			return ! _args.Any() || string.IsNullOrWhiteSpace( _uri );
+			return ! string.IsNullOrWhiteSpace( _uri ) && _args.Any();
         }
 
         public void ShowHelp()
