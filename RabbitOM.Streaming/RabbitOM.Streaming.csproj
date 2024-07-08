@@ -46,27 +46,22 @@
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rtp\DefaultRTPFrameBuilder.cs" />
-    <Compile Include="Rtp\DefaultRTPSink.cs" />
-    <Compile Include="Rtp\H264\H264Decoder.cs" />
-    <Compile Include="Rtp\H264\H264NalUnit.cs" />
-    <Compile Include="Rtp\H264\H264NalUnitCollection.cs" />
-    <Compile Include="Rtp\H264\H264NalUnitPayload.cs" />
-    <Compile Include="Rtp\H264\H264ParameterSet.cs" />
-    <Compile Include="Rtp\H264\H264Parser.cs" />
-    <Compile Include="Rtp\H264\H264ParserConfiguration.cs" />
-    <Compile Include="Rtp\H265\H265NalUnit.cs" />
-    <Compile Include="Rtp\H265\H265NalUnitCollection.cs" />
-    <Compile Include="Rtp\H265\H265ParameterSet.cs" />
-    <Compile Include="Rtp\H265\H265Parser.cs" />
-    <Compile Include="Rtp\H265\H265ParserConfiguration.cs" />
-    <Compile Include="Rtp\RTPFrame.cs" />
-    <Compile Include="Rtp\RTPFrameBuilder.cs" />
-    <Compile Include="Rtp\RTPFrameReceivedEventArgs.cs" />
+    <Compile Include="Rtp\Framing\H264\H264Decoder.cs" />
+    <Compile Include="Rtp\Framing\H264\H264NalUnit.cs" />
+    <Compile Include="Rtp\Framing\H264\H264NalUnitCollection.cs" />
+    <Compile Include="Rtp\Framing\H264\H264NalUnitPayload.cs" />
+    <Compile Include="Rtp\Framing\H264\H264ParameterSet.cs" />
+    <Compile Include="Rtp\Framing\H264\H264Parser.cs" />
+    <Compile Include="Rtp\Framing\H264\H264ParserConfiguration.cs" />
+    <Compile Include="Rtp\Framing\H265\H265NalUnit.cs" />
+    <Compile Include="Rtp\Framing\H265\H265NalUnitCollection.cs" />
+    <Compile Include="Rtp\Framing\H265\H265ParameterSet.cs" />
+    <Compile Include="Rtp\Framing\H265\H265Parser.cs" />
+    <Compile Include="Rtp\Framing\H265\H265ParserConfiguration.cs" />
+    <Compile Include="Rtp\Framing\RTPFrame.cs" />
+    <Compile Include="Rtp\Framing\RTPFrameBuilder.cs" />
     <Compile Include="Rtp\RTPPacket.cs" />
-    <Compile Include="Rtp\RTPPacketReceivedEventArgs.cs" />
-    <Compile Include="Rtp\RTPSink.cs" />
-    <Compile Include="Rtp\StartPrefix.cs" />
+    <Compile Include="Rtp\Framing\StartPrefix.cs" />
     <Compile Include="Rtsp\Clients\RTSPClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RTSPClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RTSPClientConnectedEventArgs.cs" />
@@ -312,9 +307,6 @@
     <Compile Include="Sdp\Validation\ValidatorHelper.cs" />
     <Compile Include="Sdp\ValueTime.cs" />
     <Compile Include="Sdp\VersionField.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Rtp\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

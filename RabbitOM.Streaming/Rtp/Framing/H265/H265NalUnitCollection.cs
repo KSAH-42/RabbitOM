@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Rtp.H265
+namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265NalUnitCollection : Queue<H265NalUnit>
     {

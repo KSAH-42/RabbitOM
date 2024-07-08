@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Rtp.H264
+namespace RabbitOM.Streaming.Rtp.Framing.H264
 {
     public sealed class H264Decoder : IDisposable
     {

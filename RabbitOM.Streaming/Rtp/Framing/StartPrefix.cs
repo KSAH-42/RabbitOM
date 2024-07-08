@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp
+namespace RabbitOM.Streaming.Rtp.Framing
 {
     // TODO: move this class into the Rtp.Data namespace
 

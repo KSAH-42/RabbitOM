@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp.H264
+namespace RabbitOM.Streaming.Rtp.Framing.H264
 {
     // Make some tests and see if it is usefull to move
     // this class as a struct

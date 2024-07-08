@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Rtp.H265
+namespace RabbitOM.Streaming.Rtp.Framing.H264
 {
-    public sealed class H265ParserConfiguration
+    public sealed class H264ParserConfiguration
     {
         private readonly object _lock = new object();
 
-        private readonly HashSet<int> _supportedPayloads = new HashSet<int>();
+        private readonly HashSet<int> _supportedPayloads = new HashSet<int>()
+        {
+            96
+        };
+
+        // O(1)
 
         public bool SupportsPayload( int value )
         {

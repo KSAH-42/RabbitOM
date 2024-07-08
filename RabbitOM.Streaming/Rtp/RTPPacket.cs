@@ -4,23 +4,20 @@ namespace RabbitOM.Streaming.Rtp
 {
     public sealed class RTPPacket
     {
-       private RTPPacket() { }
-
-
-        public byte Version { get; private set; }
-        public bool HasPadding  { get; private set; }
-        public bool HasExtension { get; private set; }
-        public ushort NumberOfCSRC { get; private set; }
-        public bool Marker { get; private set; }
-        public byte Type { get; private set; }
-        public uint SequenceNumber { get; private set; }
-        public uint Timestamp { get; private set; }
-        public uint SSRC { get; private set; }
-        public uint Extension { get; private set; }
-        public int[] CSRCIdentifiers { get; private set; }
-        public byte[] ExtensionData { get; private set; }
-        public byte[] Payload { get; private set; }
-        public byte[] Buffer { get; private set; }
+        public byte Version { get; set; }
+        public bool HasPadding  { get; set; }
+        public bool HasExtension { get; set; }
+        public ushort NumberOfCSRC { get; set; }
+        public bool Marker { get; set; }
+        public byte Type { get; set; }
+        public uint SequenceNumber { get; set; }
+        public uint Timestamp { get; set; }
+        public uint SSRC { get; set; }
+        public uint Extension { get; set; }
+        public int[] CSRCIdentifiers { get; set; }
+        public byte[] ExtensionData { get; set; }
+        public byte[] Payload { get; set; }
+        public byte[] Buffer { get; set; }
 
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp
+namespace RabbitOM.Streaming.Rtp.Framing
 {
     public abstract class RTPFrameBuilder : IDisposable
     {
