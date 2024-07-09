@@ -553,7 +553,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             var header = headerName.Trim();
 
-            if ( s_factories.TryGetValue( header , out Func<string , RTSPHeader> factory ) && factory != null )
+            if ( s_factories.TryGetValue( header , out Func<string , RTSPHeader> factory ) )
             {
                 return factory.Invoke( headerValue );
             }

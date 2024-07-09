@@ -19,17 +19,18 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
     {
         static void Main( string[] args )
         {
-            var commandLines = new CommandLines( args );
-     
-            if ( ! commandLines.TryValidate() )
-            {
-                commandLines.ShowHelp();
-                return;
-            }
-
             try
             {
-                Run( commandLines );
+                var commandLines = new CommandLines( args );
+
+                if ( commandLines.TryValidate() )
+                {
+                    Run( commandLines );
+                }
+                else
+                {
+                    commandLines.ShowHelp();
+                }
             }
             finally
             {
