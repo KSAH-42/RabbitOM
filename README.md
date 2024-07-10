@@ -55,9 +55,9 @@ using ( var client = new RtspClient() )
             Console.WriteLine( "DataReceived {0}" , packet.Payload.Length );
     };
 
-    client.Configuration.Uri = Constants.LocalServer;
-    client.Configuration.UserName = Constants.UserName;
-    client.Configuration.Password = Constants.Password;
+    client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
+    client.Configuration.UserName = "admin";
+    client.Configuration.Password = "camera123";
     client.Configuration.KeepAliveType = RtspKeepAliveType.Options; 
     client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3);
     client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
