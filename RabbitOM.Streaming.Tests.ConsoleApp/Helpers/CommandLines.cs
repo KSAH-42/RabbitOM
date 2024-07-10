@@ -93,10 +93,10 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             Console.WriteLine();
             Console.WriteLine( "Usage: " );
             Console.WriteLine();
-            Console.WriteLine( $"{processName} Rtsp://127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} Rtsp://admin:camera123@127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} Rtsp://127.0.0.1:554/toy.mp4" );
-            Console.WriteLine( $"{processName} Rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://127.0.0.1/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
+            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
             Console.WriteLine();
         }
     }

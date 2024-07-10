@@ -109,7 +109,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            if ( !System.Uri.TryCreate( _uri , UriKind.Absolute , out System.Uri uri ) || string.Compare( uri.Scheme , "Rtsp" ) != 0 )
+            if ( ! System.Uri.TryCreate( _uri , UriKind.Absolute , out System.Uri uri ) || string.Compare( uri.Scheme , "rtsp" , true ) != 0 )
             {
                 return false;
             }
