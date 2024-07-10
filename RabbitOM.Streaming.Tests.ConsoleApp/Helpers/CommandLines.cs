@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
             _sinkOption = args.Any( x => x == "-sink" );
 
-            if ( RTSPUri.TryParse( _uriOption , out RTSPUri uri ) )
+            if ( RtspUri.TryParse( _uriOption , out RtspUri uri ) )
             {
                 _uri = uri.ToString( true );
                 _userName = uri.UserName;
@@ -89,14 +89,14 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
         {
             string processName = Assembly.GetExecutingAssembly().GetName().Name + ".exe";
 
-            Console.WriteLine( $"Receiving packets from a rtsp source" );
+            Console.WriteLine( $"Receiving packets from a Rtsp source" );
             Console.WriteLine();
             Console.WriteLine( "Usage: " );
             Console.WriteLine();
-            Console.WriteLine( $"{processName} rtsp://127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
+            Console.WriteLine( $"{processName} Rtsp://127.0.0.1/toy.mp4" );
+            Console.WriteLine( $"{processName} Rtsp://admin:camera123@127.0.0.1/toy.mp4" );
+            Console.WriteLine( $"{processName} Rtsp://127.0.0.1:554/toy.mp4" );
+            Console.WriteLine( $"{processName} Rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
             Console.WriteLine();
         }
     }

@@ -4,11 +4,11 @@ namespace RabbitOM.Streaming.Rtp.Framing
 {
     public sealed class RTPFrame
     {
-        private readonly RTPPacket[] _packets;
+        private readonly RtpPacket[] _packets;
 
 
 
-        public RTPFrame( RTPPacket[] packets ) 
+        public RTPFrame( RtpPacket[] packets ) 
         {
             if ( packets == null )
             {
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
 
-        public RTPPacket[] Packets 
+        public RtpPacket[] Packets 
         {
             get => _packets;
         }

@@ -1,11 +1,10 @@
-﻿// If you want to get more features, used the RTSPConnection class instead to get more control of the protocol messaging layer
+﻿// If you want to get more features, used the RtspConnection class instead to get more control of the protocol messaging layer
 // Make sure that the ports are not blocked
-// Use the vendor configuration tool to activate the rtsp protocol especially the port
-// AND create a user account for the rtsp connection
+// Use the vendor configuration tool to activate the Rtsp protocol especially the port
+// AND create a user account for the Rtsp connection
 // You can try to find a online security camera F R O M  a manufacturer, but ...
 // I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
 // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
-
 
 using System;
 
@@ -20,7 +19,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
         static void Main( string[] args )
         {
             try
-            {
+            {               
                 var commandLines = new CommandLines( args );
 
                 if ( commandLines.TryValidate() )
@@ -40,14 +39,14 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
         static void Run( CommandLines commandLines )
         {
-            if ( ! RTSPUri.TryParse( commandLines.UriOption , out RTSPUri rtspUri ) )
+            if ( ! RtspUri.TryParse( commandLines.UriOption , out RtspUri rtspUri ) )
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine( "Bad uri" );
                 return;
             }
 
-            using ( var client = new RTSPClient() )
+            using ( var client = new RtspClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
                 {
@@ -76,12 +75,12 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 client.Error += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine( "Client Error: " + (sender as RTSPClient).Configuration.Uri + " " + e.Code );
+                    Console.WriteLine( "Client Error: " + (sender as RtspClient).Configuration.Uri + " " + e.Code );
                 };
 
                 client.PacketReceived += ( sender , e ) =>
                 {
-                    var interleavedPacket = e.Packet as RTSPInterleavedPacket;
+                    var interleavedPacket = e.Packet as RtspInterleavedPacket;
 
                     if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
                     {
@@ -103,14 +102,14 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 client.Configuration.Password = rtspUri.Password;
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
-                client.Configuration.KeepAliveType = RTSPKeepAliveType.Options;
-                client.Configuration.MediaFormat = RTSPMediaFormat.Video;
-                client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
+                client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
+                client.Configuration.MediaFormat = RtspMediaFormat.Video;
+                client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
 
                 // For multicast settings, please make sure
                 // that the camera or the video source support multicast 
                 
-                // client.Configuration.DeliveryMode = RTSPDeliveryMode.Multicast;
+                // client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast;
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
 

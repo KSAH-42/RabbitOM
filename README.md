@@ -1,8 +1,8 @@
-# A resilient RTSP client based on the .net framework
+# A resilient Rtsp client based on the .net framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-A .net library for receiving raw audio/video streams using [RTSP](https://www.rfc-editor.org/rfc/rfc2326). 
+A .net library for receiving raw audio/video streams using [Rtsp](https://www.rfc-editor.org/rfc/rfc2326). 
 
 # Main features
 
@@ -23,13 +23,13 @@ A .net library for receiving raw audio/video streams using [RTSP](https://www.rf
 
 ➡️ The classes used for decoding was already implemented in a another project. Here a new implementation is actually in progress.
 
-# How to receive raw rtp packets using the rtsp client ?
+# How to receive raw rtp packets using the Rtsp client ?
 
 Like this :
 
 ~~~~C#
 
-using ( var client = new RTSPClient() )
+using ( var client = new RtspClient() )
 {
     // Fired when a successfull connection or when the communication has been recovered after a lost
     client.Connected += (sender, e) =>
@@ -46,7 +46,7 @@ using ( var client = new RTSPClient() )
     // Fired when a raw media data has been received 
     client.PacketReceived += (sender, e) =>
     {
-        var interleavedPacket = e.Packet as RTSPInterleavedPacket;
+        var interleavedPacket = e.Packet as RtspInterleavedPacket;
 
 	if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
 	    return;
@@ -58,12 +58,12 @@ using ( var client = new RTSPClient() )
     client.Configuration.Uri = Constants.LocalServer;
     client.Configuration.UserName = Constants.UserName;
     client.Configuration.Password = Constants.Password;
-    client.Configuration.KeepAliveType = RTSPKeepAliveType.Options; 
+    client.Configuration.KeepAliveType = RtspKeepAliveType.Options; 
     client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds(3);
     client.Configuration.SendTimeout = TimeSpan.FromSeconds(5);
 
-    client.Configuration.DeliveryMode = RTSPDeliveryMode.Tcp;
-    client.Configuration.MediaFormat = RTSPMediaFormat.Video;
+    client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
+    client.Configuration.MediaFormat = RtspMediaFormat.Video;
 
     client.StartCommunication(); 
 
@@ -75,11 +75,11 @@ using ( var client = new RTSPClient() )
 
 # About the connection class
 
-The RTSPConnection class will give you more features and a direct access to the protocol messaging layer. The following code demonstrate how to list the supported methods available on a security camera:
+The RtspConnection class will give you more features and a direct access to the protocol messaging layer. The following code demonstrate how to list the supported methods available on a security camera:
 
 ~~~~C#
 
-using ( var connection = new RTSPConnection() )
+using ( var connection = new RtspConnection() )
 {
     // Events subscriptions
 
@@ -91,9 +91,9 @@ using ( var connection = new RTSPConnection() )
     connection.Closed               += (sender, e) => Console.WriteLine("Connection closed");
     connection.Error                += (sender, e) => Console.WriteLine("Error occurs");
 
-    // Connect to RTSP server (happytime-rtsp-server.exe)
+    // Connect to Rtsp server (happytime-Rtsp-server.exe)
     
-    connection.Open("rtsp://192.168.1.11/city1.mp4");
+    connection.Open("Rtsp://192.168.1.11/city1.mp4");
      
     // Request the available methods from a server
 
@@ -119,7 +119,7 @@ var bodyResult =
 
         .Play()
 
-        .AddHeader( new RTSPHeaderContentType( RTSPMimeType.ApplicationText ) )
+        .AddHeader( new RtspHeaderContentType( RtspMimeType.ApplicationText ) )
         .AddHeader( "X-Header1" , "my value 1")
         .AddHeader( "X-Header2" , "my value 2")
         .AddHeader( "X-Header3" , "my value 3")
@@ -168,7 +168,7 @@ sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"))
 
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-sessionDescriptor.Uri.Value = "rtsp://192.168.1.11:554/video/channel/1";
+sessionDescriptor.Uri.Value = "Rtsp://192.168.1.11:554/video/channel/1";
 
 for ( int i = 1; i <= 10; ++ i )
 {

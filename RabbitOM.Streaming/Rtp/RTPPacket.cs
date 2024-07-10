@@ -5,65 +5,65 @@ namespace RabbitOM.Streaming.Rtp
     /// <summary>
     /// Represent the packet class
     /// </summary>
-    public sealed class RTPPacket
+    public sealed class RtpPacket
     {
         /// <summary>
-        /// Gets the version
+        /// Gets / Sets the version
         /// </summary>
         public byte Version { get; set; }
 
         /// <summary>
-        /// Gets the padding state
+        /// Gets / Sets the padding state
         /// </summary>
         public bool HasPadding { get; set; }
 
         /// <summary>
-        /// Gets the extensions usage state
+        /// Gets / Sets the extensions usage state
         /// </summary>
         public bool HasExtension { get; set; }
 
         /// <summary>
-        /// Gets the the number of contributing sources
+        /// Gets / Sets the the number of contributing sources
         /// </summary>
         public ushort NumberOfCSRC { get; set; }
 
         /// <summary>
-        /// Gets the marker state
+        /// Gets / Sets the marker state
         /// </summary>
         public bool Marker { get; set; }
 
         /// <summary>
-        /// Gets the type
+        /// Gets / Sets the type
         /// </summary>
         public byte Type { get; set; }
 
         /// <summary>
-        /// Gets the sequence number
+        /// Gets / Sets the sequence number
         /// </summary>
         public uint SequenceNumber { get; set; }
 
         /// <summary>
-        /// Gets the timestamp
+        /// Gets / Sets the timestamp
         /// </summary>
         public uint Timestamp { get; set; }
 
         /// <summary>
-        /// Gets the sequence source
+        /// Gets / Sets the sequence source
         /// </summary>
         public uint SSRC { get; set; }
 
         /// <summary>
-        /// Gets the extension
+        /// Gets / Sets the extension
         /// </summary>
         public uint Extension { get; set; }
 
         /// <summary>
-        /// Gets the contributors sources identifiers
+        /// Gets / Sets the contributors sources identifiers
         /// </summary>
         public int[] CSRCIdentifiers { get; set; }
 
         /// <summary>
-        /// Gets the payload
+        /// Gets / Sets the payload
         /// </summary>
         public ArraySegment<byte> Payload { get; set; }
 
@@ -88,7 +88,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <param name="buffer">the input buffer</param>
         /// <param name="result">the output result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( byte[] buffer , out RTPPacket result )
+        public static bool TryParse( byte[] buffer , out RtpPacket result )
         {
             result = null;
 
@@ -97,7 +97,7 @@ namespace RabbitOM.Streaming.Rtp
                 return false;
             }
             
-            var packet = new RTPPacket();
+            var packet = new RtpPacket();
 
             packet.Version         = (byte) (   buffer[ 0 ] >> 6 );
             packet.HasPadding      = (byte) ( ( buffer[ 0 ] >> 5 ) & 0x1 ) == 1;

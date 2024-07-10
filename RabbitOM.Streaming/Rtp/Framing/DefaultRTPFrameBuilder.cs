@@ -7,11 +7,11 @@ namespace RabbitOM.Streaming.Rtp.Framing
     {
         private readonly object _lock = new object();
         
-        private readonly Queue<RTPPacket> _packets = new Queue<RTPPacket>();
+        private readonly Queue<RtpPacket> _packets = new Queue<RtpPacket>();
         
         private readonly Queue<int> _sizes = new Queue<int>();
         
-        private RTPPacket _lastPacket;
+        private RtpPacket _lastPacket;
        
         private int _frameSize;
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
             get => _lock;
         }
 
-        public RTPPacket LastPacket
+        public RtpPacket LastPacket
         {
             get 
             {
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
         public override bool TryAddPacket( byte[] buffer )
         {
-            if ( ! RTPPacket.TryParse( buffer , out RTPPacket packet ) )
+            if ( ! RtpPacket.TryParse( buffer , out RtpPacket packet ) )
             {
                 return false;
             }
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
         {
             lock ( _lock )
             {
-                var packets = new RTPPacket[ _sizes.Dequeue() ];
+                var packets = new RtpPacket[ _sizes.Dequeue() ];
 
                 int index = 0;
 
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
 
-        private void OnPacketAdded( RTPPacket packet )
+        private void OnPacketAdded( RtpPacket packet )
         {
             _frameSize++;
 
