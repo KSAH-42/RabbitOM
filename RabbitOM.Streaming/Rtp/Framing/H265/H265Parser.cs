@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             get => _configuration;
         }
 
-        public bool TryParse( RTPFrame frame , out H265NalUnitCollection result )
+        public bool TryParse( RtpFrame frame , out H265NalUnitCollection result )
         {
             result = null;
 

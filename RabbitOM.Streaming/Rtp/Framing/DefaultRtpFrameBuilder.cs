@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing
 {
-    public sealed class DefaultRTPFrameBuilder : RTPFrameBuilder
+    public sealed class DefaultRTPFrameBuilder : RtpFrameBuilder
     {
         private readonly object _lock = new object();
         
@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
             }
         }
 
-        public override RTPFrame BuildFrame()
+        public override RtpFrame BuildFrame()
         {
             lock ( _lock )
             {
@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
                     packets[ index ++ ] = _packets.Dequeue();
                 }
 
-                return new RTPFrame( packets );
+                return new RtpFrame( packets );
             }
         }
 

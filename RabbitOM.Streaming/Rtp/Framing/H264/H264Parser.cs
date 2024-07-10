@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H264
 
         // Parse not actually tested
 
-        public bool TryParse( RTPFrame frame , out H264NalUnitCollection result )
+        public bool TryParse( RtpFrame frame , out H264NalUnitCollection result )
         {
             result = null;
 

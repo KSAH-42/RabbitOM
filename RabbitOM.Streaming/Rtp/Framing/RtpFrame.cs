@@ -2,13 +2,13 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing
 {
-    public sealed class RTPFrame
+    public sealed class RtpFrame
     {
         private readonly RtpPacket[] _packets;
 
 
 
-        public RTPFrame( RtpPacket[] packets ) 
+        public RtpFrame( RtpPacket[] packets ) 
         {
             if ( packets == null )
             {

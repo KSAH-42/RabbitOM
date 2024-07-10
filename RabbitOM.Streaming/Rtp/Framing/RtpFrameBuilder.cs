@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing
 {
-    public abstract class RTPFrameBuilder : IDisposable
+    public abstract class RtpFrameBuilder : IDisposable
     {
-        ~RTPFrameBuilder()
+        ~RtpFrameBuilder()
         {
             Dispose( false );
         }
@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
         public abstract bool CanBuildFrame();
 
-        public abstract RTPFrame BuildFrame();
+        public abstract RtpFrame BuildFrame();
 
         public void Dispose()
         {
