@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Represent the default scheme
         /// </summary>
-        public const string     DefaultScheme = "Rtsp";
+        public const string     DefaultScheme = "rtsp";
 
         /// <summary>
         /// Represent the default port
@@ -276,12 +276,12 @@ namespace RabbitOM.Streaming.Rtsp
 
             var rtspUri = uri.Trim();
 
-            if ( Uri.IsWellFormedUriString( rtspUri , UriKind.Absolute ) )
+            if ( ! Uri.IsWellFormedUriString( rtspUri , UriKind.Absolute ) )
             {
-                return rtspUri.StartsWith( DefaultScheme );
+                return false;
             }
 
-            return false;
+            return rtspUri.StartsWith( DefaultScheme , StringComparison.OrdinalIgnoreCase );
         }
 
 
