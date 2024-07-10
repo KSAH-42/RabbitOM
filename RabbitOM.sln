@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Streaming.Tests.ConsoleApp", "RabbitOM.Streaming.Tests.ConsoleApp\RabbitOM.Streaming.Tests.ConsoleApp.csproj", "{14469407-333C-403D-9F72-1F8C6DB39928}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Streaming", "RabbitOM.Streaming\RabbitOM.Streaming.csproj", "{09233582-17ED-40D4-BC6A-309ECFDB116B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Streaming.Tests", "RabbitOM.Streaming.Tests\RabbitOM.Streaming.Tests.csproj", "{E62883C2-C01C-4CA8-A9F0-AADA70DAB34B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Streaming.Tests.ConsoleApp", "RabbitOM.Streaming.Tests.ConsoleApp\RabbitOM.Streaming.Tests.ConsoleApp.csproj", "{14469407-333C-403D-9F72-1F8C6DB39928}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}"
 	ProjectSection(SolutionItems) = preProject
