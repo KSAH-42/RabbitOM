@@ -164,7 +164,7 @@ namespace RabbitOM.Streaming.Rtp
 
             packet.Payload = new ArraySegment<byte>( buffer , offset , payloadSize );
 
-			result = packet;
+            result = packet;
 
             return true;
         }
