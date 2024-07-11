@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         }
 
 
-
+     
 
         public override void Write( byte[] buffer )
         {

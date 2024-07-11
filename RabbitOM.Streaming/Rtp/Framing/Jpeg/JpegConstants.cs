@@ -4,12 +4,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public static class JpegConstants
     {
-        public static readonly byte[] SOI = new byte[]
+        public static readonly byte[] StartOfImage = new byte[]
         {
             0xFF , 0xD8
         };
 
-        public static readonly byte[] EOI = new byte[]
+        public static readonly byte[] EndOfImage = new byte[]
         {
             0xFF , 0xD9
         };

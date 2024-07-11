@@ -78,14 +78,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.Dispose();
         }
 
-        public byte[] ToArray()
-        {
-            return _stream.ToArray();
-        }
-
         public void Clear()
         {
             _stream.SetLength( 0 );
+        }
+
+        public byte[] ToArray()
+        {
+            return _stream.ToArray();
         }
     }
 }

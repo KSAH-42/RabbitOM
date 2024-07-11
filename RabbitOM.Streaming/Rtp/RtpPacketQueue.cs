@@ -5,6 +5,7 @@ using System.Collections.Generic;
 namespace RabbitOM.Streaming.Rtp
 {
 	// Need to be thread safe ?
+	// Later, this collection will be used a priorty queue to handle reording packet, this is not fondamental, but in some rare cases it can happen
 
 	public sealed class RtpPacketQueue
 		: IEnumerable
