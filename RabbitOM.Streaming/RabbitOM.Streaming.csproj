@@ -7,8 +7,8 @@
     <ProjectGuid>{09233582-17ED-40D4-BC6A-309ECFDB116B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RabbitOM.Net</RootNamespace>
-    <AssemblyName>RabbitOM.Net</AssemblyName>
+    <RootNamespace>RabbitOM.Streaming</RootNamespace>
+    <AssemblyName>RabbitOM.Streaming</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -46,23 +46,19 @@
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rtp\Framing\DefaultRtpFrameBuilder.cs" />
-    <Compile Include="Rtp\Framing\H264\H264Decoder.cs" />
-    <Compile Include="Rtp\Framing\H264\H264NalUnit.cs" />
-    <Compile Include="Rtp\Framing\H264\H264NalUnitCollection.cs" />
-    <Compile Include="Rtp\Framing\H264\H264NalUnitPayload.cs" />
-    <Compile Include="Rtp\Framing\H264\H264ParameterSet.cs" />
-    <Compile Include="Rtp\Framing\H264\H264Parser.cs" />
-    <Compile Include="Rtp\Framing\H264\H264ParserConfiguration.cs" />
-    <Compile Include="Rtp\Framing\H265\H265NalUnit.cs" />
-    <Compile Include="Rtp\Framing\H265\H265NalUnitCollection.cs" />
-    <Compile Include="Rtp\Framing\H265\H265ParameterSet.cs" />
-    <Compile Include="Rtp\Framing\H265\H265Parser.cs" />
-    <Compile Include="Rtp\Framing\H265\H265ParserConfiguration.cs" />
-    <Compile Include="Rtp\Framing\RtpFrame.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegConstants.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFragment.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFrameAggregator.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilder.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilderConfiguration.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFrameFactory.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegQuantizationTableFactory.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriter.cs" />
     <Compile Include="Rtp\Framing\RtpFrameBuilder.cs" />
+    <Compile Include="Rtp\Framing\RtpFrame.cs" />
+    <Compile Include="Rtp\Framing\RtpFrameReceivedEventArgs.cs" />
+    <Compile Include="Rtp\RtpPacketQueue.cs" />
     <Compile Include="Rtp\RtpPacket.cs" />
-    <Compile Include="Rtp\Framing\StartPrefix.cs" />
     <Compile Include="Rtsp\Clients\RtspClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RtspClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RtspClientConnectedEventArgs.cs" />

@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             try
             {               
                 var commandLines = new CommandLines( args );
-
+                 
                 if ( commandLines.TryValidate() )
                 {
                     Run( commandLines );
@@ -97,9 +97,9 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 // Please note, read the manufacturer's documentation
                 // to get the right uri
 
-                client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4"; rtspUri.ToString( true );
-                client.Configuration.UserName = "admin";// rtspUri.UserName;
-                client.Configuration.Password = "camera123"; //rtspUri.Password;
+                client.Configuration.Uri = commandLines.Uri;
+                client.Configuration.UserName = commandLines.UserName;
+                client.Configuration.Password = commandLines.Password;
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.KeepAliveType = RtspKeepAliveType.Options;

@@ -2,32 +2,33 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing
 {
-    public sealed class RtpFrame
+    public class RtpFrame
     {
-        private readonly RtpPacket[] _packets;
+        private readonly byte[] _data;
 
 
 
-        public RtpFrame( RtpPacket[] packets ) 
+        public RtpFrame( byte[] data )
         {
-            if ( packets == null )
+            if ( data == null )
             {
-                throw new ArgumentNullException( nameof( packets ) );
+                throw new ArgumentNullException( nameof( data ) );
             }
 
-            if ( packets.Length == 0 )
+            if ( data.Length == 0 )
             {
-                throw new ArgumentException( nameof( packets ) );
+                throw new ArgumentException( nameof( data ) );
             }
 
-            _packets = packets;
+            _data = data;
         }
 
 
 
-        public RtpPacket[] Packets 
+
+        public byte[] Data
         {
-            get => _packets;
+            get => _data;
         }
     }
 }
