@@ -1,8 +1,8 @@
-# A resilient Rtsp client based on the .net framework
+# A resilient rtsp client based on the .net framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-A .net library for receiving raw audio/video streams using [Rtsp](https://www.rfc-editor.org/rfc/rfc2326). 
+A .net library for receiving raw audio/video streams using [rtsp](https://www.rfc-editor.org/rfc/rfc2326). 
 
 # Main features
 
@@ -23,7 +23,7 @@ A .net library for receiving raw audio/video streams using [Rtsp](https://www.rf
 
 ➡️ The classes used for decoding was already implemented in a another project. Here a new implementation is actually in progress.
 
-# How to receive raw rtp packets using the Rtsp client ?
+# How to receive raw rtp packets using the rtsp client ?
 
 Like this :
 
@@ -91,9 +91,9 @@ using ( var connection = new RtspConnection() )
     connection.Closed               += (sender, e) => Console.WriteLine("Connection closed");
     connection.Error                += (sender, e) => Console.WriteLine("Error occurs");
 
-    // Connect to Rtsp server (happytime-Rtsp-server.exe)
+    // Connect to rtsp server (happytime-rtsp-server.exe)
     
-    connection.Open("Rtsp://192.168.1.11/city1.mp4");
+    connection.Open("rtsp://192.168.1.11/city1.mp4");
      
     // Request the available methods from a server
 
@@ -168,7 +168,7 @@ sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"))
 
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
 sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
-sessionDescriptor.Uri.Value = "Rtsp://192.168.1.11:554/video/channel/1";
+sessionDescriptor.Uri.Value = "rtsp://192.168.1.11:554/video/channel/1";
 
 for ( int i = 1; i <= 10; ++ i )
 {
