@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <summary>
         /// Gets / Sets the type
         /// </summary>
-        public byte Type { get; set; }
+        public PacketType Type { get; set; }
 
         /// <summary>
         /// Gets / Sets the sequence number
@@ -76,7 +76,17 @@ namespace RabbitOM.Streaming.Rtp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return Type >= 0 && Version == 2 && Payload.Count > 0;
+            if ( Type < PacketType.MINIMUM || Type > PacketType.MAXIMUM )
+            {
+                return false;
+            }
+
+            if ( Version != 2  )
+            {
+                return false;
+            }
+
+            return Payload.Array != null && Payload.Count > 0;
         }
 
 
@@ -104,8 +114,8 @@ namespace RabbitOM.Streaming.Rtp
             packet.HasExtension    = (byte) ( ( buffer[ 0 ] >> 4 ) & 0x1 ) == 1;
             packet.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
-            packet.Marker          = (byte) ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
-            packet.Type            = (byte) ( buffer[ 1 ] & 0x7F );
+            packet.Marker          = (byte)       ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
+            packet.Type            = (PacketType) ( buffer[ 1 ] & 0x7F );
             packet.SequenceNumber += (uint) ( buffer[ 2 ] << 8   );
             packet.SequenceNumber += (uint) ( buffer[ 3 ]        );
             packet.Timestamp       = (uint) ( buffer[ 4 ] << 24  );

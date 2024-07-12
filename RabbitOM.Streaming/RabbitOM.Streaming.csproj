@@ -59,6 +59,7 @@
     <Compile Include="Rtp\Framing\RtpFrameReceivedEventArgs.cs" />
     <Compile Include="Rtp\RtpPacketQueue.cs" />
     <Compile Include="Rtp\RtpPacket.cs" />
+    <Compile Include="Rtp\PacketType.cs" />
     <Compile Include="Rtsp\Clients\RtspClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RtspClientCommunicationStoppedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RtspClientConnectedEventArgs.cs" />

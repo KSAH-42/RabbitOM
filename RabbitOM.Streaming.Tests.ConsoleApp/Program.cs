@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             try
             {               
                 var commandLines = new CommandLines( args );
-                 
+
                 if ( commandLines.TryValidate() )
                 {
                     Run( commandLines );
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 Console.WriteLine( "Bad uri" );
                 return;
             }
-
+            
             using ( var client = new RtspClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
@@ -108,10 +108,11 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
                 // For multicast settings, please make sure
                 // that the camera or the video source support multicast 
-                
+
                 // client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast;
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
+                // client.Configuration.TimeToLive = 15;
 
                 client.StartCommunication();
 

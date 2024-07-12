@@ -62,7 +62,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private bool CanAggregate( RtpPacket packet )
         {
-            if ( packet == null || packet.Type != 26 )
+            if ( packet == null || packet.Type != PacketType.JPEG )
             {
                 return false;
             }
