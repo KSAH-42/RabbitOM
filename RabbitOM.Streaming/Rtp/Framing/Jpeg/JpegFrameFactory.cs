@@ -17,6 +17,28 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
+            result = null;
+
+            if ( packets == null )
+            {
+                return false;
+            }
+
+            _stream.Clear();
+            _stream.WriteStartOfImage();
+            
+            foreach ( RtpPacket packet in packets )
+            {
+                if ( ! JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
+                {
+                    return false;
+                }
+                
+                // select the right stream.WriteXXXX method 
+            }
+
+            _stream.WriteEndOfImage();
+
             throw new NotImplementedException();
         }
 
