@@ -25,6 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             _stream.Clear();
+
             _stream.WriteStartOfImage();
             
             foreach ( RtpPacket packet in packets )
@@ -33,13 +34,17 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 {
                     return false;
                 }
-                
+
                 // select the right stream.WriteXXXX method 
+
+                throw new NotImplementedException();
             }
 
             _stream.WriteEndOfImage();
 
-            throw new NotImplementedException();
+            result = new RtpFrame( _stream.ToArray() );
+
+            return true;
         }
 
         public void Clear()
