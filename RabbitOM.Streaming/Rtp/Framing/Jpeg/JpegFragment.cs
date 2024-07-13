@@ -92,5 +92,25 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 			
             return true;
         }
+
+        public static bool CanReset( JpegFragment a , JpegFragment b )
+        {
+            if ( object.ReferenceEquals( a , b ) )
+            {
+                return false;
+            }
+
+            if ( object.ReferenceEquals( a , null ) || object.ReferenceEquals( b , null ) )
+            {
+                return true;
+            }
+
+            return a.Type    != b.Type
+                && a.Width   != b.Width
+                && a.Height  != b.Height
+                && a.Dri     != b.Dri
+                && a.QFactor != b.QFactor && ! a.QTable.SequenceEquals( b.QTable )
+                ;
+        }
     }
 }
