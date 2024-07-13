@@ -44,6 +44,7 @@
     <Compile Include="Codecs\Decoder.cs" />
     <Compile Include="Codecs\IDecoder.cs" />
     <Compile Include="DelegateExtensions.cs" />
+    <Compile Include="ArrayExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegConstants.cs" />

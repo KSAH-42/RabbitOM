@@ -40,5 +40,39 @@ namespace RabbitOM.Streaming
 
             return true;
         }
+
+        /// <summary>
+        /// Byte array comparision
+        /// </summary>
+        /// <param name="source">the source</param>
+        /// <param name="target">the target</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool IsEquals( this ArraySegment<byte> source , ArraySegment<byte> target )
+        {
+            if ( object.ReferenceEquals( source.Array , target.Array ) )
+            {
+                return true;
+            }
+
+            if ( object.ReferenceEquals( source.Array , null ) || object.ReferenceEquals( target.Array , null ) )
+            {
+                return false;
+            }
+
+            if ( source.Count != target.Count )
+            {
+                return false;
+            }
+
+            for ( int i = 0 ; i < source.Count ; ++i )
+            {
+                if ( source.Array[ i + source.Offset ] != target.Array[ i + target.Offset ] )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
