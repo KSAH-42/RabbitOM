@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             try
             {               
                 var commandLines = new CommandLines( args );
-
+                
                 if ( commandLines.TryValidate() )
                 {
                     Run( commandLines );

@@ -67,12 +67,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            if ( packet.Payload.Count > _builder.Configuration.PayloadMaxSize )
+            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
             {
                 return false;
             }
 
-            if ( _packets.Count > _builder.Configuration.MaximumOfPackets )
+            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
             {
                 return false;
             }

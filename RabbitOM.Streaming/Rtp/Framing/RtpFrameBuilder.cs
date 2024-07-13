@@ -36,11 +36,6 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
         protected virtual void OnFrameReceived( RtpFrameReceivedEventArgs e )
         {
-            if ( e == null )
-            {
-                return;
-            }
-
             FrameReceived?.TryInvoke( this , e );
         }
     }
