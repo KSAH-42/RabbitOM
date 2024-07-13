@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteStartOfImage()
         {
-            throw new NotImplementedException();
+            _stream.Write( JpegConstants.StartOfImage , 0 , JpegConstants.StartOfImage.Length );
         }
 
         public void WriteApplicationSegments( ArraySegment<byte> data )
@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteEndOfImage()
         {
-            throw new NotImplementedException();
+            _stream.Write( JpegConstants.EndOfImage , 0 , JpegConstants.EndOfImage.Length );
         }
 
         public void Dispose()
