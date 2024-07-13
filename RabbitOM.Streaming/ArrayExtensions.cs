@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming
     public static class ArrayExtensions
     {
         /// <summary>
-        /// Byte array comparision
+        /// Byte array comparison
         /// </summary>
         /// <param name="source">the source</param>
         /// <param name="target">the target</param>
@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming
         }
 
         /// <summary>
-        /// Byte array comparision
+        /// Array segment comparison
         /// </summary>
         /// <param name="source">the source</param>
         /// <param name="target">the target</param>
