@@ -147,9 +147,7 @@ namespace RabbitOM.Streaming.Rtp
             {
                 packet.Extension = ( (uint) buffer[ offset ] << 8 ) + (uint) ( buffer[ ++ offset ] << 0 );
 
-                int extenstionSize = ( buffer[ ++ offset ] << 8 ) + ( buffer[ ++ offset ] << 0 ) * 4;
-
-                offset += extenstionSize;
+                offset += ( buffer[ ++ offset ] << 8 ) + ( buffer[ ++ offset ] << 0 ) * 4;
             }
 
             if ( offset >= buffer.Length )
