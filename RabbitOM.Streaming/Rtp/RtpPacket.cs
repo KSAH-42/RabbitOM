@@ -76,17 +76,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            if ( Type < PacketType.MINIMUM || Type > PacketType.MAXIMUM )
-            {
-                return false;
-            }
-
-            if ( Version != 2  )
-            {
-                return false;
-            }
-
-            return Payload.Array != null && Payload.Count > 0;
+            return Version == 2 && Payload.Array != null && Payload.Count > 0;
         }
 
 
