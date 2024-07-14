@@ -2,6 +2,13 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing
 {
+
+    // Normally the builder pattern must expose a build method
+    // There problem the frame must be build at a special time
+    // That's why a event handler has been introduce
+    // Try pattern can be used, to solve the problem 
+    // Like TryBuild( byte[] buffer , out RtpFrame result );
+    
     public abstract class RtpFrameBuilder : IDisposable
     {
         public event EventHandler<RtpFrameReceivedEventArgs> FrameReceived;
