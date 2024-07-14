@@ -21,6 +21,25 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+        public bool CanAggregate( RtpPacket packet )
+        {
+            if ( packet == null || packet.Type != PacketType.JPEG )
+            {
+                return false;
+            }
+
+            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
+            {
+                return false;
+            }
+
+            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         public bool TryAggregate( RtpPacket packet , out IEnumerable<RtpPacket> result )
         {
@@ -53,31 +72,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Dispose()
         {
             Clear();
-        }
-
-
-
-
-
-
-        private bool CanAggregate( RtpPacket packet )
-        {
-            if ( packet == null || packet.Type != PacketType.JPEG )
-            {
-                return false;
-            }
-
-            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
-            {
-                return false;
-            }
-
-            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }
