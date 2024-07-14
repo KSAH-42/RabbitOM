@@ -8,7 +8,9 @@ namespace RabbitOM.Streaming.Rtp.Framing
     // That's why a event handler has been introduce
     // Try pattern can be used, to solve the problem 
     // Like bool TryBuild( byte[] buffer , out RtpFrame result );
-    
+
+    // May be the name should be changed as RtpFrameSink instead of RtpFrameBuilder class
+
     public abstract class RtpFrameBuilder : IDisposable
     {
         public event EventHandler<RtpFrameReceivedEventArgs> FrameReceived;
