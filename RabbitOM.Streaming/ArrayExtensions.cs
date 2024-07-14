@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming
                 return true;
             }
 
-            if ( object.ReferenceEquals( source , null ) || object.ReferenceEquals( target , null ) )
+            if ( source == null || target == null )
             {
                 return false;
             }
@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming
                 return true;
             }
 
-            if ( object.ReferenceEquals( source.Array , null ) || object.ReferenceEquals( target.Array , null ) )
+            if ( source.Array == null || target.Array == null )
             {
                 return false;
             }

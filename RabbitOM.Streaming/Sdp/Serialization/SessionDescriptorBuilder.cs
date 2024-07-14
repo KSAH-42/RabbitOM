@@ -250,12 +250,7 @@
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanBuild()
         {
-            return _sessionName == null
-                || _sessionInformation == null
-                || _version == null
-                ? false
-                : true
-                ;
+            return _sessionName != null && _sessionInformation != null && _version != null ;
         }
 
         /// <summary>

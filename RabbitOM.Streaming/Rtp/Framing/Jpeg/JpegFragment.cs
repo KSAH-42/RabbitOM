@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public bool TryValidate()
         {
-            return Type <= 0 || Width < 2 || Height < 2 || Data.Count < 0 ? false : true;
+            return Type > 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
         }
         
         public override string ToString()
@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            if ( object.ReferenceEquals( a , null ) || object.ReferenceEquals( b , null ) )
+            if ( a == null || b == null )
             {
                 return true;
             }
