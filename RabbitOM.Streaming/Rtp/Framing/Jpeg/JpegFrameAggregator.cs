@@ -41,6 +41,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             return true;
         }
 
+        // no exception throw here, unnecessary to add a try catch block
+
         public bool TryAggregate( RtpPacket packet , out IEnumerable<RtpPacket> result )
         {
             result = null;

@@ -14,6 +14,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream = new JpegStreamWriter();
         }
 
+        // a try catch block must be add added
+        // and not tryMethod on the stream class because there is a loop
+        // it is better to discard all data when a failure happens
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
