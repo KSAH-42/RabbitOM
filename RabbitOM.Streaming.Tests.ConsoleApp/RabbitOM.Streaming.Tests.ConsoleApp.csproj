@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\ArrayExtensions.cs" />
-    <Compile Include="Helpers\CommandLines.cs" />
+    <Compile Include="Helpers\CommandLineOptions.cs" />
     <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,13 +6,13 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 {
     using RabbitOM.Streaming.Rtsp;
 
-    public sealed class CommandLines
-    {
-        private readonly string[] _args;
-        
-        private readonly bool _sinkOption ;
-        
-        private readonly string _uriOption = string.Empty;
+    public sealed class CommandLineOptions
+    {        
+        public static readonly CommandLineOptions Empty = new CommandLineOptions();
+
+
+
+
 
         private readonly string _uri = string.Empty;
 
@@ -25,38 +25,21 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
 
 
+		private CommandLineOptions()
+		{
+		}
 
-
-        public CommandLines( string[] args )
+        public CommandLineOptions( string uri , string userName , string password )
         {
-            _args = args ?? throw new ArgumentNullException( nameof( args ) );
-
-            _uriOption = args.FirstOrDefault();
-
-            _sinkOption = args.Any( x => x == "-sink" );
-
-            if ( RtspUri.TryParse( _uriOption , out RtspUri uri ) )
-            {
-                _uri = uri.ToString( true );
-                _userName = uri.UserName;
-                _password = uri.Password;
-            }
+            _uri      = uri      ?? string.Empty;
+            _userName = userName ?? string.Empty;
+            _password = password ?? string.Empty;
         }
 
 
 
 
 
-
-        public string UriOption
-        {
-            get => _uriOption;
-        }
-
-        public bool SinkOption
-        {
-            get => _sinkOption;
-        }
 
         public string Uri
         {
@@ -80,9 +63,16 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
         public bool TryValidate()
         {
             if ( string.IsNullOrWhiteSpace( _uri ) )
+            {
                 return false;
+            }
 
-            return _args.Any();
+            if ( ! string.IsNullOrWhiteSpace( _password ) )
+            {
+                return ! string.IsNullOrWhiteSpace( _userName );
+            }
+
+            return true;
         }
 
         public void ShowHelp()
@@ -98,6 +88,26 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
             Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
             Console.WriteLine();
+        }
+
+
+
+
+
+
+        public static CommandLineOptions Parse( string[] args )
+        {
+            if ( args == null )
+            {
+                return CommandLineOptions.Empty;
+            }
+
+            if ( ! RtspUri.TryParse( args.FirstOrDefault() , out RtspUri uri ) )
+            {
+                return CommandLineOptions.Empty;
+            }
+
+            return new CommandLineOptions( uri.ToString( true ) , uri.UserName , uri.Password );
         }
     }
 }

@@ -95,7 +95,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public static bool CanReset( JpegFragment a , JpegFragment b )
         {
-            if ( object.ReferenceEquals( a , b ) )
+            if ( a == b )
             {
                 return false;
             }

@@ -17,18 +17,18 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
     class Program
     {
         static void Main( string[] args )
-        {        
+        {
             try
             {               
-                var commandLines = new CommandLines( args );
+                var options = CommandLineOptions.Parse( args );
                 
-                if ( commandLines.TryValidate() )
+                if ( options.TryValidate() )
                 {
-                    Run( commandLines );
+                    Run( options );
                 }
                 else
                 {
-                    commandLines.ShowHelp();
+                    options.ShowHelp();
                 }
             }
             finally
@@ -37,13 +37,11 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             }
         }
 
-        static void Run( CommandLines commandLines )
+        static void Run( CommandLineOptions options )
         {
-            if ( ! RtspUri.TryParse( commandLines.UriOption , out RtspUri rtspUri ) )
+            if ( options == null )
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine( "Bad uri" );
-                return;
+                throw new ArgumentNullException( nameof( options ) );
             }
             
             using ( var client = new RtspClient() )
@@ -97,9 +95,9 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 // Please note, read the manufacturer's documentation
                 // to get the right uri
 
-                client.Configuration.Uri = commandLines.Uri;
-                client.Configuration.UserName = commandLines.UserName;
-                client.Configuration.Password = commandLines.Password;
+                client.Configuration.Uri = options.Uri;
+                client.Configuration.UserName = options.UserName;
+                client.Configuration.Password = options.Password;
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
