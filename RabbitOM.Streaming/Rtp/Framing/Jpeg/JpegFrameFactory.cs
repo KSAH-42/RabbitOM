@@ -30,6 +30,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.Clear();
 
             _stream.WriteStartOfImage();
+            _stream.WriteApplicationInfo();
 
             foreach ( var packet in packets )
             {

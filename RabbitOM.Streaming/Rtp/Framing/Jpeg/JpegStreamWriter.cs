@@ -38,15 +38,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.Write( JpegConstants.StartOfImage , 0 , JpegConstants.StartOfImage.Length );
         }
 
-        public void WriteApplicationData()
+        public void WriteApplicationInfo()
         {
-            // the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
-
-            // so here we have 0x0010 and not 0x000E
-            // After the length header, the number of remaining bytes is equal to 14
-            // and total is 16 => 0x10
-            // to calculate the length, the formula is similar to:
-            // length = 2 + payload.size 
+            // take care: the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
+            // and not like common protocols where the length header field is always equals to the number of remain bytes
 
             _stream.WriteByte( 0xFF ); // start marker msb
             _stream.WriteByte( 0xE0 ); // start marker lsb
@@ -56,7 +51,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteByte( (byte) 'F' );
             _stream.WriteByte( (byte) 'I' );
             _stream.WriteByte( (byte) 'F' );
-            _stream.WriteByte( 0x00 ); // it's the end of string, and as as you know any string must be ended by zero
+            _stream.WriteByte( 0x00 ); // the end of string
             _stream.WriteByte( 0x01 ); // version major
             _stream.WriteByte( 0x01 ); // version minor
             _stream.WriteByte( 0x00 ); // units
@@ -75,7 +70,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return;
             }
 
-            // the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
+            // take care: the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
+            // and not like common protocols where the length header field is always equals to the number of remain bytes
 
             _stream.WriteByte( 0xFF ); // start marker msb
             _stream.WriteByte( 0xDD ); // start marker lsb
