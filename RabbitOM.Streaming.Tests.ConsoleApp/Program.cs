@@ -111,8 +111,8 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
                 // client.Configuration.TimeToLive = 15;
-
-                client.StartCommunication();
+                
+                client.StartCommunication();    
 
                 Console.CancelKeyPress += ( sender , e ) => Console.ForegroundColor = ConsoleColor.White;
 
