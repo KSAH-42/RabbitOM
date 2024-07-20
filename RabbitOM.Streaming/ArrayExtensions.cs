@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool SequenceEquals( this byte[] source , byte[] target )
         {
-            if ( object.ReferenceEquals( source , target ) )
+            if ( source == target )
             {
                 return true;
             }
