@@ -43,10 +43,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             // take care: the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
             // and not like common protocols where the length header field is always equals to the number of remain bytes
 
+            // for optimization create a buffer member and used MemoryStream.Write method
+
             _stream.WriteByte( 0xFF ); // start marker msb
             _stream.WriteByte( 0xE0 ); // start marker lsb
             _stream.WriteByte( 0x00 ); // length msb
-            _stream.WriteByte( 0x10 ); // length lsb
+            _stream.WriteByte( 0x10 ); // length lsb (must include the header length size which are equals to 2)
             _stream.WriteByte( (byte) 'J' );
             _stream.WriteByte( (byte) 'F' );
             _stream.WriteByte( (byte) 'I' );
@@ -54,13 +56,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteByte( 0x00 ); // the end of string
             _stream.WriteByte( 0x01 ); // version major
             _stream.WriteByte( 0x01 ); // version minor
-            _stream.WriteByte( 0x00 ); // units
+            _stream.WriteByte( 0x00 ); // density units
             _stream.WriteByte( 0x00 ); // x density
             _stream.WriteByte( 0x01 ); // x density
             _stream.WriteByte( 0x00 ); // y density
             _stream.WriteByte( 0x01 ); // y density
             _stream.WriteByte( 0x00 ); // x thumbail
-            _stream.WriteByte( 0x00 ); // y thumbail
+            _stream.WriteByte( 0x00 ); // y thumbail 
         }
 
         public void WriteDri( int value )
@@ -70,13 +72,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return;
             }
 
-            // take care: the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
-            // and not like common protocols where the length header field is always equals to the number of remain bytes
+            // for optimization create a buffer member and used MemoryStream.Write method
 
             _stream.WriteByte( 0xFF ); // start marker msb
             _stream.WriteByte( 0xDD ); // start marker lsb
             _stream.WriteByte( 0x00 ); // length msb
-            _stream.WriteByte( 0x04 ); // length lsb
+            _stream.WriteByte( 0x04 ); // length lsb (must include the header length size which are equals to 2)
             _stream.WriteByte( (byte) ( (value >> 8) & 0xFF ) );
             _stream.WriteByte( (byte) (  value       & 0xFF ) );
         }
