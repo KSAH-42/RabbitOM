@@ -11,14 +11,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
             0xE0
         };
 
-        public static readonly string IdentifierJFIF = "JFIF";
+        public static readonly string DefaultIdentifier = "JFIF";
 
 
 
 
 
 
-        public string Identifier { get; private set; } = IdentifierJFIF;
+        public string Identifier { get; private set; } = DefaultIdentifier;
         public byte VersionMajor { get; set; } = 1;
         public byte VersionMinor { get; set; } = 1;
         public byte Unit { get; set; }
@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
                 throw new InvalidOperationException( "the length header field is too big" );
             }
 
-            using ( var stream = new MemoryStream( 100 ) )
+            using ( var stream = new MemoryStream( length + 10 ) )
             {
                 stream.WriteAsBinary( Marker );
                 stream.WriteAsInt16( (Int16) length );

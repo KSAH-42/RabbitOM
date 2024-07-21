@@ -11,9 +11,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory;
 
-        private readonly JpegApplicationJFIFSegment _appDataSegment;
+        private readonly JpegApplicationJFIFSegment _applicationJFIFSegment;
 
         private readonly JpegDriSegment _driSegment;
+
+        private readonly JpegDQTSegment _dqtSegment;
 
 
 
@@ -24,8 +26,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _stream = new MemoryStream();
             _quantizationTableFactory = new JpegQuantizationTableFactory();
-            _appDataSegment = new JpegApplicationJFIFSegment();
+            _applicationJFIFSegment = new JpegApplicationJFIFSegment();
             _driSegment = new JpegDriSegment();
+            _dqtSegment = new JpegDQTSegment();
         }
 
 
@@ -48,7 +51,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteApplicationJFIF()
         {
-            _stream.Write( _appDataSegment.GetBuffer() , 0 , _appDataSegment.GetBuffer().Length );
+            _stream.Write( _applicationJFIFSegment.GetBuffer() , 0 , _applicationJFIFSegment.GetBuffer().Length );
         }
 
         public void WriteDri( int value )
@@ -69,7 +72,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteQuantizationTable( ArraySegment<byte> data )
         {
-            throw new NotImplementedException();
+            WriteQuantizationTable( data , 0 );
+        }
+
+        public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
+        {
+            _dqtSegment.TableNumber = 0;
+            _dqtSegment.Data = data;
+            _dqtSegment.ClearBuffer();
+
+            _stream.Write( _dqtSegment.GetBuffer() , 0 , _dqtSegment.GetBuffer().Length );
         }
 
         public void WriteStartOfFrame( ArraySegment<byte> data )

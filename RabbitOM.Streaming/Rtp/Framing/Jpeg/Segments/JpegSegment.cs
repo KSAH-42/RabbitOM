@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
         }
 
 
-        public void ClearBuffer()
+        public virtual void ClearBuffer()
         {
             _buffer = null;
         }
