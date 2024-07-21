@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
+namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 {
     public sealed class JpegDriSegment : JpegSegment
     {

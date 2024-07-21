@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
+namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 {
-    public sealed class JpegApplicationDataSegment : JpegSegment
+    public sealed class JpegApplicationJFIFSegment : JpegSegment
     {
         public static readonly byte[] Marker = new byte[]
         {
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
 
 
 
-        public string Identifier { get; set; } = IdentifierJFIF;
+        public string Identifier { get; private set; } = IdentifierJFIF;
         public byte VersionMajor { get; set; } = 1;
         public byte VersionMinor { get; set; } = 1;
         public byte Unit { get; set; }
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
         public Int16 DensityY { get; set; } = 1;
         public byte ThumbailX { get; set; }
         public byte ThumbailY { get; set; }
-        public ArraySegment<byte> Data { get; set; }
+        public ArraySegment<byte> ThumbailData { get; set; }
 
 
 
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
 
         protected override byte[] CreateBuffer()
         {
-            int length = 2 + Identifier.Length + 1 + Data.Count;
+            int length = 2 + Identifier.Length + 1 + ThumbailData.Count;
 
             if ( length > 0xFFFF )
             {
@@ -48,14 +48,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
                 stream.WriteAsInt16( (Int16) length );
                 stream.WriteAsString( Identifier );
                 stream.WriteByte( 0x00 );
-                stream.WriteAsInt16( VersionMinor );
                 stream.WriteAsInt16( VersionMajor );
+                stream.WriteAsInt16( VersionMinor );
                 stream.WriteByte( Unit );
                 stream.WriteAsInt16( DensityX );
                 stream.WriteAsInt16( DensityY );
                 stream.WriteAsInt16( ThumbailX );
                 stream.WriteAsInt16( ThumbailY );
-                stream.WriteAsBinary( Data );
+                stream.WriteAsBinary( ThumbailData );
 
                 return stream.ToArray();
             }

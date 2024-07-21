@@ -3,7 +3,7 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    using RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers;
+    using RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments;
 
     public sealed class JpegStreamWriter : IDisposable
     {
@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory;
 
-        private readonly JpegApplicationDataSegment _appDataSegment;
+        private readonly JpegApplicationJFIFSegment _appDataSegment;
 
         private readonly JpegDriSegment _driSegment;
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _stream = new MemoryStream();
             _quantizationTableFactory = new JpegQuantizationTableFactory();
-            _appDataSegment = new JpegApplicationDataSegment();
+            _appDataSegment = new JpegApplicationJFIFSegment();
             _driSegment = new JpegDriSegment();
         }
 
@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.Write( JpegConstants.StartOfImage , 0 , JpegConstants.StartOfImage.Length );
         }
 
-        public void WriteApplicationInfo()
+        public void WriteApplicationJFIF()
         {
             _stream.Write( _appDataSegment.GetBuffer() , 0 , _appDataSegment.GetBuffer().Length );
         }

@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         // a try catch block must be add added
         // and not tryMethod on the stream class because there is a loop
-        // it is better to discard all data when a failure happens
+        // it is better to leave the loop when a failure happens inside it.
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.Clear();
 
             _stream.WriteStartOfImage();
-            _stream.WriteApplicationInfo();
+            _stream.WriteApplicationJFIF();
 
             foreach ( var packet in packets )
             {

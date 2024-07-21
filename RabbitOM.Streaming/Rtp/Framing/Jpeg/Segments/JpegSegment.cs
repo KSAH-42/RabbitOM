@@ -1,11 +1,13 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
+namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 {
     public abstract class JpegSegment
     {
         protected byte[] _buffer = null;
 
+        
+        
 
         public byte[] GetBuffer()
         {
