@@ -8,10 +8,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
     {
         private readonly MemoryStream _stream;
 
-		public JpegSerializationContext( MemoryStream stream )
-		{
+        public JpegSerializationContext( MemoryStream stream )
+        {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
-		}
+        }
         
         public void WriteAsByte( byte value )
         {
