@@ -3,13 +3,19 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
+    using RabbitOM.Streaming.Rtp.Framing.Jpeg.Data;
+
     public sealed class JpegStreamWriter : IDisposable
     {
         private readonly MemoryStream _stream;
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory;
 
-        
+        private readonly ApplicationDataJpegSegment _appDataSegment;
+
+        private readonly DriJpegSegment _driSegment;
+
+
 
 
 
@@ -18,6 +24,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _stream = new MemoryStream();
             _quantizationTableFactory = new JpegQuantizationTableFactory();
+            _appDataSegment = new ApplicationDataJpegSegment();
+            _driSegment = new DriJpegSegment();
         }
 
 
@@ -40,29 +48,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteApplicationInfo()
         {
-            // take care: the length of the segment is equal to: 2 bytes of length + the number of remaining bytes
-            // and not like common protocols where the length header field is always equals to the number of remain bytes
-
-            // for optimization create a buffer member and used MemoryStream.Write method
-
-            _stream.WriteByte( 0xFF ); // start marker msb
-            _stream.WriteByte( 0xE0 ); // start marker lsb
-            _stream.WriteByte( 0x00 ); // length msb
-            _stream.WriteByte( 0x10 ); // length lsb (must include the header length size which are equals to 2)
-            _stream.WriteByte( (byte) 'J' );
-            _stream.WriteByte( (byte) 'F' );
-            _stream.WriteByte( (byte) 'I' );
-            _stream.WriteByte( (byte) 'F' );
-            _stream.WriteByte( 0x00 ); // the end of string
-            _stream.WriteByte( 0x01 ); // version major
-            _stream.WriteByte( 0x01 ); // version minor
-            _stream.WriteByte( 0x00 ); // density units
-            _stream.WriteByte( 0x00 ); // x density
-            _stream.WriteByte( 0x01 ); // x density
-            _stream.WriteByte( 0x00 ); // y density
-            _stream.WriteByte( 0x01 ); // y density
-            _stream.WriteByte( 0x00 ); // x thumbail
-            _stream.WriteByte( 0x00 ); // y thumbail 
+            _stream.Write( _appDataSegment.GetBuffer() , 0 , _appDataSegment.GetBuffer().Length );
         }
 
         public void WriteDri( int value )
@@ -72,14 +58,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return;
             }
 
-            // for optimization create a buffer member and used MemoryStream.Write method
+            if ( _driSegment.Value != value )
+            {
+                _driSegment.Value = value;
+                _driSegment.ClearBuffer();
+            }
 
-            _stream.WriteByte( 0xFF ); // start marker msb
-            _stream.WriteByte( 0xDD ); // start marker lsb
-            _stream.WriteByte( 0x00 ); // length msb
-            _stream.WriteByte( 0x04 ); // length lsb (must include the header length size which are equals to 2)
-            _stream.WriteByte( (byte) ( (value >> 8) & 0xFF ) );
-            _stream.WriteByte( (byte) (  value       & 0xFF ) );
+            _stream.Write( _driSegment.GetBuffer() , 0 , _driSegment.GetBuffer().Length );
         }
 
         public void WriteQuantizationTable( ArraySegment<byte> data )

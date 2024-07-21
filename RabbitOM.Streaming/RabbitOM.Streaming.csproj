@@ -45,12 +45,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtp\Framing\Jpeg\Data\DriJpegSegment.cs" />
+    <Compile Include="StreamExtensions.cs" />
     <Compile Include="Codecs\Decoder.cs" />
     <Compile Include="Codecs\IDecoder.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="ArrayExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\Data\ApplicationDataJpegSegment.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\Data\JpegSegment.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegConstants.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFragment.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameAggregator.cs" />
