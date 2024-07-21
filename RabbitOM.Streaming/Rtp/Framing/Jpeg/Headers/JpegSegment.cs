@@ -2,27 +2,27 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
 {
-	public abstract class JpegSegment
-	{
-		protected byte[] _buffer = null;
+    public abstract class JpegSegment
+    {
+        protected byte[] _buffer = null;
 
 
-		public byte[] GetBuffer()
-		{
-			if ( _buffer == null )
-			{
-				_buffer = CreateBuffer();
-			}
+        public byte[] GetBuffer()
+        {
+            if ( _buffer == null )
+            {
+                _buffer = CreateBuffer();
+            }
 
-			return _buffer;
-		}
+            return _buffer;
+        }
 
 
-		public void ClearBuffer()
-		{
-			_buffer = null;
-		}
+        public void ClearBuffer()
+        {
+            _buffer = null;
+        }
 
-		protected abstract byte[] CreateBuffer();
-	}
+        protected abstract byte[] CreateBuffer();
+    }
 }

@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine( "Communication stopped - " + DateTime.Now );
                 };
-
+              
                 client.Connected += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
