@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
         {
             int length = 2 + Identifier.Length + 1 + Data.Count;
 
-            if ( length > 0xFF )
+            if ( length > 0xFFFF )
             {
                 throw new InvalidOperationException( "the length header field is too big" );
             }
