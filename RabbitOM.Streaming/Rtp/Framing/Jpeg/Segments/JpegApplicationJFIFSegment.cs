@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 
         private static readonly byte[] Identifier = new byte[]
         {
-            (byte) 'J' , (byte) 'F' , (byte) 'I' , (byte) 'F'
+            0x4A , 0x46 , 0x49 , 0x46
         };
 
 
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
         public Int16 DensityY { get; set; } = 1;
         public byte ThumbailX { get; set; }
         public byte ThumbailY { get; set; }
-        public ArraySegment<byte> ThumbailData { get; set; }
+        public ArraySegment<byte> Data { get; set; }
 
 
 
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 
         public override void Serialize( JpegSerializationContext context )
         {
-            int length = 2 + Identifier.Length + 1 + ThumbailData.Count;
+            int length = 2 + Identifier.Length + 1 + Data.Count;
 
             if ( length > 0xFFFF )
             {
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
             context.WriteAsUInt16( DensityY );
             context.WriteAsUInt16( ThumbailX );
             context.WriteAsUInt16( ThumbailY );
-            context.WriteAsBinary( ThumbailData );
+            context.WriteAsBinary( Data );
         }
     }
 }

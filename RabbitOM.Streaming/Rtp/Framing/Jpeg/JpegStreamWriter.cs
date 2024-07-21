@@ -31,9 +31,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _stream = new MemoryStream();
             _quantizationTableFactory = new JpegQuantizationTableFactory();
+            _startOfImageSegment = new JpegStartOfImageSegment();
             _applicationJFIFSegment = new JpegApplicationJFIFSegment();
             _driSegment = new JpegDriSegment();
             _dqtSegment = new JpegDQTSegment();
+            _endOfImageSegment = new JpegEndOfImageSegment();
             _context = new JpegSerializationContext( _stream );
         }
 
