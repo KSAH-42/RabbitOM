@@ -76,9 +76,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return Version == 2 
-                && Payload.Array != null 
-                && Payload.Count > 0;
+            return Version == 2 && Payload.Array != null  && Payload.Count > 0;
         }
 
 
