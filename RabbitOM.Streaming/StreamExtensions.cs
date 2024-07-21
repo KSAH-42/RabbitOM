@@ -83,7 +83,7 @@ namespace RabbitOM.Streaming
                 return;
             }
 
-            var buffer = System.Text.Encoding.UTF8.GetBytes( value );
+            var buffer = Encoding.UTF8.GetBytes( value );
 
             if ( buffer == null || buffer.Length == 0 )
             {

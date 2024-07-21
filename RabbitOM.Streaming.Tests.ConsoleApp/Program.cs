@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             try
             {              
                 var options = CommandLineOptions.Parse( args );
-                
+                RabbitOM.Streaming.StreamExtensions.WriteAsBinary
                 if ( options.TryValidate() )
                 {
                     Run( options );
