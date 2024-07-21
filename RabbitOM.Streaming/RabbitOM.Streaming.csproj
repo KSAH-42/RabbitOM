@@ -46,7 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rtp\Framing\Jpeg\Segments\JpegDQTSegment.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\Segments\JpegEndOfImageSegment.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\Segments\JpegStartOfImageSegment.cs" />
     <Compile Include="Rtp\Framing\Jpeg\Segments\JpegDriSegment.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\Segments\JpegSerializationContext.cs" />
     <Compile Include="StreamExtensions.cs" />
     <Compile Include="Codecs\Decoder.cs" />
     <Compile Include="Codecs\IDecoder.cs" />

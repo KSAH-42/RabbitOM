@@ -11,12 +11,17 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory;
 
+        private readonly JpegStartOfImageSegment _startOfImageSegment;
+
         private readonly JpegApplicationJFIFSegment _applicationJFIFSegment;
 
         private readonly JpegDriSegment _driSegment;
 
         private readonly JpegDQTSegment _dqtSegment;
 
+        private readonly JpegEndOfImageSegment _endOfImageSegment;
+
+        private readonly JpegSerializationContext _context;
 
 
 
@@ -29,6 +34,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _applicationJFIFSegment = new JpegApplicationJFIFSegment();
             _driSegment = new JpegDriSegment();
             _dqtSegment = new JpegDQTSegment();
+            _context = new JpegSerializationContext( _stream );
         }
 
 
@@ -46,42 +52,30 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteStartOfImage()
         {
-            _stream.Write( JpegConstants.StartOfImage , 0 , JpegConstants.StartOfImage.Length );
+            _startOfImageSegment.Serialize( _context );
         }
 
         public void WriteApplicationJFIF()
         {
-            _stream.Write( _applicationJFIFSegment.GetBuffer() , 0 , _applicationJFIFSegment.GetBuffer().Length );
+            _applicationJFIFSegment.Serialize( _context );
         }
 
         public void WriteDri( int value )
         {
-            if ( value <= 0 )
-            {
-                return;
-            }
-
-            if ( _driSegment.Value != value )
+            if ( value > 0 )
             {
                 _driSegment.Value = value;
-                _driSegment.ClearBuffer();
+
+                _driSegment.Serialize( _context );
             }
-
-            _stream.Write( _driSegment.GetBuffer() , 0 , _driSegment.GetBuffer().Length );
-        }
-
-        public void WriteQuantizationTable( ArraySegment<byte> data )
-        {
-            WriteQuantizationTable( data , 0 );
         }
 
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
         {
-            _dqtSegment.TableNumber = 0;
+            _dqtSegment.TableNumber = tableNumber;
             _dqtSegment.Data = data;
-            _dqtSegment.ClearBuffer();
 
-            _stream.Write( _dqtSegment.GetBuffer() , 0 , _dqtSegment.GetBuffer().Length );
+            _dqtSegment.Serialize( _context );
         }
 
         public void WriteStartOfFrame( ArraySegment<byte> data )
@@ -106,7 +100,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteEndOfImage()
         {
-            _stream.Write( JpegConstants.EndOfImage , 0 , JpegConstants.EndOfImage.Length );
+            _endOfImageSegment.Serialize( _context );
         }
 
         public void Dispose()

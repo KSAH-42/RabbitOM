@@ -4,16 +4,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public static class JpegConstants
     {
-        public static readonly byte[] StartOfImage = new byte[]
-        {
-            0xFF , 0xD8
-        };
-
-        public static readonly byte[] EndOfImage = new byte[]
-        {
-            0xFF , 0xD9
-        };
-
         public static readonly byte[] ChmDcCodelens =
         {
             0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0

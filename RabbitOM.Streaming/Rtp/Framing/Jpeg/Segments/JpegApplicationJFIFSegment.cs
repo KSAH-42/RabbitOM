@@ -1,24 +1,21 @@
 ﻿using System;
-using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 {
     public sealed class JpegApplicationJFIFSegment : JpegSegment
     {
-        public static readonly byte[] Marker = new byte[]
+        private static readonly byte[] Marker = new byte[]
         {
-            0xFF ,
-            0xE0
+            0xFF , 0xE0
         };
 
-        public static readonly string DefaultIdentifier = "JFIF";
+        private static readonly byte[] Identifier = new byte[]
+        {
+            (byte) 'J' , (byte) 'F' , (byte) 'I' , (byte) 'F'
+        };
 
 
 
-
-
-
-        public string Identifier { get; private set; } = DefaultIdentifier;
         public byte VersionMajor { get; set; } = 1;
         public byte VersionMinor { get; set; } = 1;
         public byte Unit { get; set; }
@@ -33,7 +30,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 
 
 
-        protected override byte[] CreateBuffer()
+        public override void Serialize( JpegSerializationContext context )
         {
             int length = 2 + Identifier.Length + 1 + ThumbailData.Count;
 
@@ -42,23 +39,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
                 throw new InvalidOperationException( "the length header field is too big" );
             }
 
-            using ( var stream = new MemoryStream( length + 10 ) )
-            {
-                stream.WriteAsBinary( Marker );
-                stream.WriteAsInt16( (Int16) length );
-                stream.WriteAsString( Identifier );
-                stream.WriteByte( 0x00 );
-                stream.WriteAsInt16( VersionMajor );
-                stream.WriteAsInt16( VersionMinor );
-                stream.WriteByte( Unit );
-                stream.WriteAsInt16( DensityX );
-                stream.WriteAsInt16( DensityY );
-                stream.WriteAsInt16( ThumbailX );
-                stream.WriteAsInt16( ThumbailY );
-                stream.WriteAsBinary( ThumbailData );
-
-                return stream.ToArray();
-            }
+            context.WriteAsBinary( Marker );
+            context.WriteAsUInt16( length );
+            context.WriteAsBinary( Identifier );
+            context.WriteAsByte( 0x00 );
+            context.WriteAsUInt16( VersionMajor );
+            context.WriteAsUInt16( VersionMinor );
+            context.WriteAsByte( Unit );
+            context.WriteAsUInt16( DensityX );
+            context.WriteAsUInt16( DensityY );
+            context.WriteAsUInt16( ThumbailX );
+            context.WriteAsUInt16( ThumbailY );
+            context.WriteAsBinary( ThumbailData );
         }
     }
 }
