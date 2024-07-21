@@ -11,9 +11,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory;
 
-        private readonly ApplicationDataJpegSegment _appDataSegment;
+        private readonly JpegApplicationDataSegment _appDataSegment;
 
-        private readonly DriJpegSegment _driSegment;
+        private readonly JpegDriSegment _driSegment;
 
 
 
@@ -24,8 +24,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _stream = new MemoryStream();
             _quantizationTableFactory = new JpegQuantizationTableFactory();
-            _appDataSegment = new ApplicationDataJpegSegment();
-            _driSegment = new DriJpegSegment();
+            _appDataSegment = new JpegApplicationDataSegment();
+            _driSegment = new JpegDriSegment();
         }
 
 

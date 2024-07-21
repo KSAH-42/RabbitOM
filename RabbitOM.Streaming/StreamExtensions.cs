@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 
 namespace RabbitOM.Streaming
 {
@@ -61,7 +62,7 @@ namespace RabbitOM.Streaming
             {
                 return;
             }
-
+                                        
             source.Write( value.Array , value.Offset , value.Count );
         }
 

@@ -3,7 +3,7 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
 {
-	public sealed class ApplicationDataJpegSegment : JpegSegment
+	public sealed class JpegApplicationDataSegment : JpegSegment
 	{
 		public static readonly byte[] Marker = new byte[]
 		{
