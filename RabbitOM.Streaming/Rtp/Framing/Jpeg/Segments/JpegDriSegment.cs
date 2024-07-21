@@ -10,7 +10,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
         };
 
 
+
+
+
         public int Value { get; set; }
+
+
+
 
 
         public override void Serialize( JpegSerializationContext context )

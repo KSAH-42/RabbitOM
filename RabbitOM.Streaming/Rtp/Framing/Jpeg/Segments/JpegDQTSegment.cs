@@ -10,8 +10,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
         };
 
 
+
+
+
         public byte TableNumber { get; set; }
         public ArraySegment<byte> Data { get; set; }
+
+
+
 
 
         public override void Serialize( JpegSerializationContext context )

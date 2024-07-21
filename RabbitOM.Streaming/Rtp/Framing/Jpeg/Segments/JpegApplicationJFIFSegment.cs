@@ -16,6 +16,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
 
 
 
+
+
         public byte VersionMajor { get; set; } = 1;
         public byte VersionMinor { get; set; } = 1;
         public byte Unit { get; set; }
@@ -24,7 +26,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
         public byte ThumbailX { get; set; }
         public byte ThumbailY { get; set; }
         public ArraySegment<byte> Data { get; set; }
-
 
 
 
