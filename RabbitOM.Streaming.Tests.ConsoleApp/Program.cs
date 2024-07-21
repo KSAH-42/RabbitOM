@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
         static void Main( string[] args )
         {
             try
-            {               
+            {              
                 var options = CommandLineOptions.Parse( args );
                 
                 if ( options.TryValidate() )

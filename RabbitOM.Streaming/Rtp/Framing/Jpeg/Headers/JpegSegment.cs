@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Data
+namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers
 {
 	public abstract class JpegSegment
 	{

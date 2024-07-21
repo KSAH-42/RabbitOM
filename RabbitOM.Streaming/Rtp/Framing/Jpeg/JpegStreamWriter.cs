@@ -3,7 +3,7 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    using RabbitOM.Streaming.Rtp.Framing.Jpeg.Data;
+    using RabbitOM.Streaming.Rtp.Framing.Jpeg.Headers;
 
     public sealed class JpegStreamWriter : IDisposable
     {
