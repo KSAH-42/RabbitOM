@@ -32,12 +32,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments
             _stream.WriteByte( (byte) ( ( value ) & 0xFF ) );
         }
 
-        public void WriteAsUInt16( UInt16 value )
-        {
-            _stream.WriteByte( (byte) ( ( value >> 8 ) & 0xFF ) );
-            _stream.WriteByte( (byte) ( ( value      ) & 0xFF ) );
-        }
-
         public void WriteAsBinary( byte[] value )
         {
             if ( value == null || value.Length <= 0 )
