@@ -21,8 +21,6 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 
 ➡️ The classes used for RTP layer was already implemented in a another project. Here a new implementation is actually in progress.
 
-➡️ The classes used for decoding was already implemented in a another project. Here a new implementation is actually in progress.
-
 # How to receive raw rtp packets using the rtsp client ?
 
 Like this :
