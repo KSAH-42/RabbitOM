@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] HuffmanTableMarker      = new byte[] { 0xFF , 0xC4 };
         private static readonly byte[] CommentsMarker          = new byte[] { 0xFF , 0xFE };
         private static readonly byte[] IdentifierJFIF          = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
-        private static readonly byte[] StartOfScanData        = new byte[] { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
+        private static readonly byte[] StartOfScanPayload      = new byte[] { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
 
         private const int MaximumLength = 0xFFFF;
 
@@ -139,14 +139,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteStartOfScan()
         {
-            int length = 2 + StartOfScanData.Length;
+            int length = 2 + StartOfScanPayload.Length;
 
             if ( length > MaximumLength )
                 throw new InvalidOperationException( "the length header field is too big" );
 
             _stream.WriteAsBinary( StartOfScanMarker );
             _stream.WriteAsUInt16( length );
-            _stream.WriteAsBinary( StartOfScanData );
+            _stream.WriteAsBinary( StartOfScanPayload );
         }
 
         public void WriteHuffmanTables()
