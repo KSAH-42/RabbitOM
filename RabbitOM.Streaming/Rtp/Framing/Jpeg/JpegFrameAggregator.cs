@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void Dispose()
         {
-            Clear();
+            _packets.Clear();
         }
     }
 }

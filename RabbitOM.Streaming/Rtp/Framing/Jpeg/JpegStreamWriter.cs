@@ -1,83 +1,89 @@
 ﻿using System;
-using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    using RabbitOM.Streaming.Rtp.Framing.Jpeg.Segments;
-
     public sealed class JpegStreamWriter : IDisposable
     {
-        private readonly MemoryStream _stream;
+        private static readonly byte[] StartOfImageMarker = new byte[] { 0xFF , 0xD8 };
+        private static readonly byte[] EndOfImageMarker = new byte[] { 0xFF , 0xD9 };
+        private static readonly byte[] ApplicationJFIFMarker = new byte[] { 0xFF , 0xE0 };
+        private static readonly byte[] DriMarker = new byte[] { 0xFF , 0xDD };
+        private static readonly byte[] QuantizationTableMarker = new byte[] { 0xFF , 0xDB };
+        private static readonly byte[] IdenitifierJFIF = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
+        private const int MaximumLength = 0xFFFF;
 
-        private readonly JpegQuantizationTableFactory _quantizationTableFactory;
+        private readonly JpegMemoryStream _stream = new JpegMemoryStream();
+        private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
 
-        private readonly JpegStartOfImageSegment _startOfImageSegment;
-
-        private readonly JpegApplicationJFIFSegment _applicationJFIFSegment;
-
-        private readonly JpegDriSegment _driSegment;
-
-        private readonly JpegDQTSegment _dqtSegment;
-
-        private readonly JpegEndOfImageSegment _endOfImageSegment;
-
-        private readonly JpegSerializationContext _context;
-
-
-
-
-
-        public JpegStreamWriter()
+        public JpegStreamWriterConfiguration Configuration
         {
-            _stream = new MemoryStream();
-            _quantizationTableFactory = new JpegQuantizationTableFactory();
-            _startOfImageSegment = new JpegStartOfImageSegment();
-            _applicationJFIFSegment = new JpegApplicationJFIFSegment();
-            _driSegment = new JpegDriSegment();
-            _dqtSegment = new JpegDQTSegment();
-            _endOfImageSegment = new JpegEndOfImageSegment();
-            _context = new JpegSerializationContext( _stream );
+            get => _configuration;
         }
 
-
-
-
-
-       public long Length
+        public void Dispose()
         {
-            get => _stream.Length;
+            _stream.Dispose();
         }
 
+        public void Clear()
+        {
+            _stream.Clear();
+        }
 
-
-
+        public byte[] ToArray()
+        {
+            return _stream.ToArray();
+        }
 
         public void WriteStartOfImage()
         {
-            _startOfImageSegment.Serialize( _context );
+            _stream.WriteAsBinary( StartOfImageMarker );
         }
 
         public void WriteApplicationJFIF()
         {
-            _applicationJFIFSegment.Serialize( _context );
+            int length = 2 + IdenitifierJFIF.Length + 9;
+
+            if ( length > MaximumLength )
+                throw new InvalidOperationException();
+
+            _stream.WriteAsBinary( ApplicationJFIFMarker );
+            _stream.WriteAsUInt16( length );
+            _stream.WriteAsBinary( IdenitifierJFIF );
+            _stream.WriteAsByte( _configuration.VersionMajor );
+            _stream.WriteAsByte( _configuration.VersionMinor );
+            _stream.WriteAsByte( _configuration.Unit );
+            _stream.WriteAsUInt16( _configuration.XDensity );
+            _stream.WriteAsUInt16( _configuration.YDensity );
+            _stream.WriteAsByte( 0 );
+            _stream.WriteAsByte( 0 );
         }
 
         public void WriteDri( int value )
         {
             if ( value > 0 )
             {
-                _driSegment.Value = value;
-
-                _driSegment.Serialize( _context );
+                _stream.WriteAsBinary( DriMarker );
+                _stream.WriteAsByte( 0x00 );
+                _stream.WriteAsByte( 0x04 );
+                _stream.WriteAsUInt16( value );
             }
         }
 
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
         {
-            _dqtSegment.TableNumber = tableNumber;
-            _dqtSegment.Data = data;
+            if ( data.Count == 0 )
+                throw new ArgumentException( nameof( data ) );
 
-            _dqtSegment.Serialize( _context );
+            int length = 3 + data.Count;
+
+            if ( length > MaximumLength )
+                throw new InvalidOperationException( "the length header field is too big" );
+            
+            _stream.WriteAsBinary( QuantizationTableMarker );
+            _stream.WriteAsUInt16( length );
+            _stream.WriteAsByte( tableNumber );
+            _stream.WriteAsBinary( data );
         }
 
         public void WriteStartOfFrame( ArraySegment<byte> data )
@@ -102,22 +108,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteEndOfImage()
         {
-            _endOfImageSegment.Serialize( _context );
-        }
-
-        public void Dispose()
-        {
-            _stream.Dispose();
-        }
-
-        public void Clear()
-        {
-            _stream.SetLength( 0 );
-        }
-
-        public byte[] ToArray()
-        {
-            return _stream.ToArray();
+            _stream.WriteAsBinary( EndOfImageMarker );
         }
     }
 }
