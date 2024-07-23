@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public byte VersionMajor { get; set; } = 1;
         public byte VersionMinor { get; set; } = 1;
         public byte Unit { get; set; }
-        public UInt16 XDensity { get; set; }
-        public UInt16 YDensity { get; set; }
+        public UInt16 XDensity { get; set; } = 1;
+        public UInt16 YDensity { get; set; } = 1;
     }
 }
