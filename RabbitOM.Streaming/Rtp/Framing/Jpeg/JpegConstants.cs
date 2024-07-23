@@ -2,6 +2,11 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
+    // TODO: remove the class and move all member on JpegStreamWriter class
+    // and change the visibilty as private, in order to avoid
+    // some one to access to any byte array and corrupted it
+    // or change it as internal 
+
     public static class JpegConstants
     {
         public static readonly byte[] ChmDcCodelens =
