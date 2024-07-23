@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -9,16 +8,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private readonly MemoryStream _stream = new MemoryStream();
 
 
-
-
-
         public bool IsEmpty { get => _stream.Length == 0; }
         public long Capacity { get => _stream.Capacity; }
         public long Length { get => _stream.Length; }
         
-
-
-
 
         public void Dispose() 
         {
