@@ -186,7 +186,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             if ( length > MaximumLength )
                 throw new InvalidOperationException( "the length header field is too big" );
 
-            _stream.WriteAsBinary( EndOfImageMarker );
+            _stream.WriteAsBinary( CommentsMarker );
             _stream.WriteAsUInt16( length );
             _stream.WriteAsString( text );
         }
