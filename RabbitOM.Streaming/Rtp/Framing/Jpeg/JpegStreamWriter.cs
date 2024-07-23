@@ -16,7 +16,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] HuffmanTableMarker      = new byte[] { 0xFF , 0xC4 };
         private static readonly byte[] CommentsMarker          = new byte[] { 0xFF , 0xFE };
         private static readonly byte[] IdentifierJFIF          = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
-        
+        private static readonly byte[] StartOfScanData        = new byte[] { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
+
         private const int MaximumLength = 0xFFFF;
 
         private readonly JpegMemoryStream _stream = new JpegMemoryStream();
@@ -45,6 +46,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteStartOfImage()
         {
             _stream.WriteAsBinary( StartOfImageMarker );
+        }
+
+        public void WriteEndOfImage()
+        {
+            _stream.WriteAsBinary( EndOfImageMarker );
+        }
+
+        public void WriteImageData( ArraySegment<byte> data )
+        {
+            if ( data.Count == 0 )
+                throw new ArgumentException( nameof( data ) );
+
+            _stream.WriteAsBinary( data );
         }
 
         public void WriteApplicationJFIF()
@@ -122,15 +136,28 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsByte( 0x00 ); // TODO: parameterize it like this: qtablesCount == 1 ? (byte)0x00 : (byte)0x01;
         }
 
-        public void WriteStartHuffmanTables()
+
+        public void WriteStartOfScan()
         {
-            WriteStartHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
-            WriteStartHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
-            WriteStartHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 0 , 2 );
-            WriteStartHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 3 );
+            int length = 2 + StartOfScanData.Length;
+
+            if ( length > MaximumLength )
+                throw new InvalidOperationException( "the length header field is too big" );
+
+            _stream.WriteAsBinary( StartOfScanMarker );
+            _stream.WriteAsUInt16( length );
+            _stream.WriteAsBinary( StartOfScanData );
         }
 
-        public void WriteStartHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
+        public void WriteHuffmanTables()
+        {
+            WriteHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
+            WriteHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
+            WriteHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 0 , 2 );
+            WriteHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 3 );
+        }
+
+        public void WriteHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
         {
             if ( codes == null || codes.Length == 0 )
                 throw new ArgumentException( nameof( codes ) );
@@ -138,42 +165,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             if ( symbols == null || symbols.Length == 0 )
                 throw new ArgumentException( nameof( symbols ) );
 
+            int length = 3 + codes.Length + symbols.Length;
+
+            if ( length > MaximumLength )
+                throw new InvalidOperationException( "the length header field is too big" );
+
             _stream.WriteAsBinary( HuffmanTableMarker );
-            _stream.WriteAsByte( 0 );
-            _stream.WriteAsByte( (byte) ( 3 + codes.Length + symbols.Length ) );
+            _stream.WriteAsUInt16( length );
             _stream.WriteAsByte( (byte) ( ( tableClass << 4 ) | tableNo ) );
             _stream.WriteAsBinary( codes );
             _stream.WriteAsBinary( symbols );
-        }
-
-        public void WriteStartOfScan()
-        {
-            _stream.WriteAsBinary( StartOfScanMarker );
-            _stream.WriteAsByte( 0x00 );
-            _stream.WriteAsByte( 0x0C );
-            _stream.WriteAsByte( 0x03 );
-            _stream.WriteAsByte( 0x01 );
-            _stream.WriteAsByte( 0x00 );
-            _stream.WriteAsByte( 0x02 );
-            _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( 0x03 );
-            _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( 0x00 );
-            _stream.WriteAsByte( 0x3F );
-            _stream.WriteAsByte( 0x00 );
-        }
-
-        public void WriteImageData( ArraySegment<byte> data )
-        {
-            if ( data.Count == 0 )
-                throw new ArgumentException( nameof( data ) );
-
-            _stream.WriteAsBinary( data );
-        }
-
-        public void WriteEndOfImage()
-        {
-            _stream.WriteAsBinary( EndOfImageMarker );
         }
 
         public void WriteComments( string text )
