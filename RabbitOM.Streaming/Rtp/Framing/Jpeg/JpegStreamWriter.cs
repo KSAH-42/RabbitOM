@@ -149,14 +149,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsBinary( StartOfScanPayload );
         }
 
-        public void WriteHuffmanTables()
-        {
-            WriteHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
-            WriteHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
-            WriteHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 0 , 2 );
-            WriteHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 3 );
-        }
-
         public void WriteHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
         {
             if ( codes == null || codes.Length == 0 )
@@ -175,6 +167,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsByte( (byte) ( ( tableClass << 4 ) | tableNo ) );
             _stream.WriteAsBinary( codes );
             _stream.WriteAsBinary( symbols );
+        }
+
+        public void WriteHuffmanDefaultTables()
+        {
+            WriteHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
+            WriteHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
+            WriteHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 0 , 2 );
+            WriteHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 3 );
         }
 
         public void WriteComments( string text )
