@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegMemoryStream : IDisposable
     {
-        private readonly MemoryStream _stream = new MemoryStream();
+        private readonly MemoryStream _stream = new MemoryStream( 1024 * 5 );
 
 
         public bool IsEmpty { get => _stream.Length == 0; }
