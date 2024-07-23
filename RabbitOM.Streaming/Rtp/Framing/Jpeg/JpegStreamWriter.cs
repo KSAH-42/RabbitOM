@@ -14,6 +14,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] StartOfScanMarker       = new byte[] { 0xFF , 0xDA };
         private static readonly byte[] StartOfFrameMarker      = new byte[] { 0xFF , 0xC0 };
         private static readonly byte[] HuffmanMarker           = new byte[] { 0xFF , 0xC4 };
+        private static readonly byte[] CommentsMarker          = new byte[] { 0xFF , 0xFE };
         private static readonly byte[] IdenitifierJFIF         = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
         
         private const int MaximumLength = 0xFFFF;
@@ -173,6 +174,21 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteEndOfImage()
         {
             _stream.WriteAsBinary( EndOfImageMarker );
+        }
+
+        public void WriteComments( string text )
+        {
+            if ( string.IsNullOrWhiteSpace( text ) )
+                throw new ArgumentNullException( nameof( text ) );
+
+            int length = 2 + EndOfImageMarker.Length + text.Length;
+
+            if ( length > MaximumLength )
+                throw new InvalidOperationException( "the length header field is too big" );
+
+            _stream.WriteAsBinary( EndOfImageMarker );
+            _stream.WriteAsUInt16( length );
+            _stream.WriteAsString( text );
         }
     }
 }
