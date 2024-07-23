@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             int length = 2 + IdenitifierJFIF.Length + 9;
 
             if ( length > MaximumLength )
-                throw new InvalidOperationException();
+                throw new InvalidOperationException( "the length header field is too big" );
 
             _stream.WriteAsBinary( ApplicationJFIFMarker );
             _stream.WriteAsUInt16( length );
