@@ -20,13 +20,31 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private const int MaximumLength = 0xFFFF;
 
-        private readonly JpegMemoryStream _stream = new JpegMemoryStream();
-        private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
+        private readonly JpegMemoryStream _stream;
+        private readonly JpegQuantizationTableFactory _quantizationTableFactory;
+        private readonly JpegStreamWriterConfiguration _configuration;
+
+
+
+        public JpegStreamWriter()
+        {
+            _stream = new JpegMemoryStream();
+            _quantizationTableFactory = new JpegQuantizationTableFactory();
+            _configuration = new JpegStreamWriterConfiguration();
+        }
+
+
+
+
 
         public JpegStreamWriterConfiguration Configuration
         {
             get => _configuration;
         }
+
+
+
+
 
         public void Dispose()
         {
@@ -56,7 +74,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteImageData( ArraySegment<byte> data )
         {
             if ( data.Count == 0 )
+            {
                 throw new ArgumentException( nameof( data ) );
+            }
 
             _stream.WriteAsBinary( data );
         }
@@ -66,7 +86,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             int length = 2 + IdentifierJFIF.Length + 9;
 
             if ( length > MaximumLength )
+            {
                 throw new InvalidOperationException( "the length header field is too big" );
+            }
 
             _stream.WriteAsBinary( ApplicationJFIFMarker );
             _stream.WriteAsUInt16( length );
@@ -94,12 +116,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
         {
             if ( data.Count == 0 )
+            {
                 throw new ArgumentException( nameof( data ) );
+            }
 
             int length = 3 + data.Count;
 
             if ( length > MaximumLength )
+            {
                 throw new InvalidOperationException( "the length header field is too big" );
+            }
             
             _stream.WriteAsBinary( QuantizationTableMarker );
             _stream.WriteAsUInt16( length );
@@ -110,13 +136,23 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteStartOfFrame( int type , int width , int height )
         {
             if ( type < 0 )
+            {
                 throw new ArgumentException( nameof( width ) );
+            }
 
             if ( width < 0 )
+            {
                 throw new ArgumentException( nameof( width ) );
+            }
 
             if ( height < 0 )
+            {
                 throw new ArgumentException( nameof( height ) );
+            }
+
+            byte componentParameterA = ( type & 1 ) != 0 ? (byte) 0x22 : (byte) 0x21;
+
+            byte componentParameterB = _quantizationTableFactory.GetNumberOfTables() == 1 ? (byte) 0x00 : (byte) 0x01;
 
             _stream.WriteAsBinary( StartOfFrameMarker );
             _stream.WriteAsByte( 0x00 );
@@ -126,14 +162,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsUInt16( width );
             _stream.WriteAsByte( 0x03 );
             _stream.WriteAsByte( 0x01 );
-            _stream.WriteAsByte( ( type & 1 ) != 0 ? (byte) 0x22 : (byte) 0x21 );
+            _stream.WriteAsByte( componentParameterA );
             _stream.WriteAsByte( 0x00 );
             _stream.WriteAsByte( 0x02 );
             _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( 0x00 ); // TODO: parameterize it like this: qtablesCount == 1 ? (byte)0x00 : (byte)0x01;
+            _stream.WriteAsByte( componentParameterB );
             _stream.WriteAsByte( 0x03 );
             _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( 0x00 ); // TODO: parameterize it like this: qtablesCount == 1 ? (byte)0x00 : (byte)0x01;
+            _stream.WriteAsByte( componentParameterB );
         }
 
 
@@ -142,7 +178,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             int length = 2 + StartOfScanPayload.Length;
 
             if ( length > MaximumLength )
+            {
                 throw new InvalidOperationException( "the length header field is too big" );
+            }
 
             _stream.WriteAsBinary( StartOfScanMarker );
             _stream.WriteAsUInt16( length );
@@ -152,15 +190,21 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
         {
             if ( codes == null || codes.Length == 0 )
+            {
                 throw new ArgumentException( nameof( codes ) );
+            }
 
             if ( symbols == null || symbols.Length == 0 )
+            {
                 throw new ArgumentException( nameof( symbols ) );
+            }
 
             int length = 3 + codes.Length + symbols.Length;
 
             if ( length > MaximumLength )
+            {
                 throw new InvalidOperationException( "the length header field is too big" );
+            }
 
             _stream.WriteAsBinary( HuffmanTableMarker );
             _stream.WriteAsUInt16( length );
@@ -180,12 +224,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void WriteComments( string text )
         {
             if ( string.IsNullOrWhiteSpace( text ) )
+            {
                 throw new ArgumentNullException( nameof( text ) );
+            }
 
             int length = 2 + text.Length;
 
             if ( length > MaximumLength )
+            {
                 throw new InvalidOperationException( "the length header field is too big" );
+            }
 
             _stream.WriteAsBinary( CommentsMarker );
             _stream.WriteAsUInt16( length );

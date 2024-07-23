@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtp\Framing\Jpeg\JpegQuantizationTableFactory.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriterConfiguration.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegMemoryStream.cs" />
     <Compile Include="Codecs\Decoder.cs" />
