@@ -13,9 +13,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] QuantizationTableMarker = new byte[] { 0xFF , 0xDB };
         private static readonly byte[] StartOfScanMarker       = new byte[] { 0xFF , 0xDA };
         private static readonly byte[] StartOfFrameMarker      = new byte[] { 0xFF , 0xC0 };
-        private static readonly byte[] HuffmanMarker           = new byte[] { 0xFF , 0xC4 };
+        private static readonly byte[] HuffmanTableMarker      = new byte[] { 0xFF , 0xC4 };
         private static readonly byte[] CommentsMarker          = new byte[] { 0xFF , 0xFE };
-        private static readonly byte[] IdenitifierJFIF         = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
+        private static readonly byte[] IdentifierJFIF          = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
         
         private const int MaximumLength = 0xFFFF;
 
@@ -49,14 +49,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteApplicationJFIF()
         {
-            int length = 2 + IdenitifierJFIF.Length + 9;
+            int length = 2 + IdentifierJFIF.Length + 9;
 
             if ( length > MaximumLength )
                 throw new InvalidOperationException( "the length header field is too big" );
 
             _stream.WriteAsBinary( ApplicationJFIFMarker );
             _stream.WriteAsUInt16( length );
-            _stream.WriteAsBinary( IdenitifierJFIF );
+            _stream.WriteAsBinary( IdentifierJFIF );
             _stream.WriteAsByte( _configuration.VersionMajor );
             _stream.WriteAsByte( _configuration.VersionMinor );
             _stream.WriteAsByte( _configuration.Unit );
@@ -138,7 +138,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             if ( symbols == null || symbols.Length == 0 )
                 throw new ArgumentException( nameof( symbols ) );
 
-            _stream.WriteAsBinary( HuffmanMarker );
+            _stream.WriteAsBinary( HuffmanTableMarker );
             _stream.WriteAsByte( 0 );
             _stream.WriteAsByte( (byte) ( 3 + codes.Length + symbols.Length ) );
             _stream.WriteAsByte( (byte) ( ( tableClass << 4 ) | tableNo ) );
