@@ -127,7 +127,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             WriteStartHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
             WriteStartHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
             WriteStartHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 0 , 2 );
-            WriteStartHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 2 );
+            WriteStartHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 3 );
         }
 
         public void WriteStartHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
