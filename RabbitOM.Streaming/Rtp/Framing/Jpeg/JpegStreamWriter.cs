@@ -181,7 +181,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             if ( string.IsNullOrWhiteSpace( text ) )
                 throw new ArgumentNullException( nameof( text ) );
 
-            int length = 2 + EndOfImageMarker.Length + text.Length;
+            int length = 2 + text.Length;
 
             if ( length > MaximumLength )
                 throw new InvalidOperationException( "the length header field is too big" );
