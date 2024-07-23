@@ -1,6 +1,4 @@
-﻿// TODO: Please check if the method JpegFragment.CanReset must be placed in a different location, in a another class, many on the frame builder class
-
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -145,35 +143,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             result.Data = new ArraySegment<byte>( buffer.Array , buffer.Offset + offset , buffer.Count - offset );
 			
             return true;
-        }
-
-        /// <summary>
-        /// Make a comparison between two fragment inorder to determine is something has changed
-        /// </summary>
-        /// <param name="a">a fragment</param>
-        /// <param name="b">an another fragment</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        /// <remarks>
-        ///     <para>please note that this method does make any comparison on payload, this is not the purpose</para>
-        /// </remarks>
-        public static bool CanReset( JpegFragment a , JpegFragment b )
-        {
-            if ( a == b )
-            {
-                return false;
-            }
-
-            if ( a == null || b == null )
-            {
-                return true;
-            }
-
-            return a.Type    != b.Type
-                && a.Width   != b.Width
-                && a.Height  != b.Height
-                && a.Dri     != b.Dri
-                && a.QFactor != b.QFactor && ! a.QTable.SequenceEquals( b.QTable )
-                ;
         }
     }
 }

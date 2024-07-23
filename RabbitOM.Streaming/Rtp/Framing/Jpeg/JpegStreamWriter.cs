@@ -21,16 +21,17 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private const int MaximumLength = 0xFFFF;
 
         private readonly JpegMemoryStream _stream;
-        private readonly JpegQuantizationTableFactory _quantizationTableFactory;
         private readonly JpegStreamWriterConfiguration _configuration;
+        private readonly JpegQuantizationTableFactory _quantizationTableFactory;
+        private JpegFragmentationInfo _fragmentationInfo;
 
 
 
         public JpegStreamWriter()
         {
             _stream = new JpegMemoryStream();
-            _quantizationTableFactory = new JpegQuantizationTableFactory();
             _configuration = new JpegStreamWriterConfiguration();
+            _quantizationTableFactory = new JpegQuantizationTableFactory();
         }
 
 
@@ -54,11 +55,24 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Clear()
         {
             _stream.Clear();
+            _fragmentationInfo = JpegFragmentationInfo.Empty;
         }
 
         public byte[] ToArray()
         {
             return _stream.ToArray();
+        }
+
+        public bool TrySetup( JpegFragmentationInfo fragmentationInfo )
+        {
+            if ( fragmentationInfo == _fragmentationInfo )
+            {
+                return false;
+            }
+
+            _fragmentationInfo = fragmentationInfo;
+
+            return true;
         }
 
         public void WriteStartOfImage()
