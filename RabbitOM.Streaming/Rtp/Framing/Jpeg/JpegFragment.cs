@@ -133,14 +133,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
                     int length = buffer.Array[ offset++ ] << 8 | buffer.Array[ offset++ ];
 
-                    length += 2;
-
                     if ( length >= ( buffer.Array.Length - offset ) )
                     {
                         return false;
                     }
 
-                    result.QTable = new ArraySegment<byte>( buffer.Array , offset , length );
+                    result.QTable = new ArraySegment<byte>( buffer.Array , offset  , length );
 
                     offset += length;
                 }
@@ -151,7 +149,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            result.Data = new ArraySegment<byte>( buffer.Array , offset , buffer.Array.Length - offset );
+            result.Data = new ArraySegment<byte>( buffer.Array , offset , buffer.Count - (offset - buffer.Offset) );
 			
             return true;
         }
