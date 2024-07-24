@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             builder.WriteInitialFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
 
-            for ( int i = 0 ; i < rtpPackets.Count - 1 ; ++ i )
+            while ( rtpPackets.Count > 1 )
             {
                 builder.WriteFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
             }
