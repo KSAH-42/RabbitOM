@@ -7,11 +7,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         public readonly JpegStreamWriter _stream;
 
+
+
       
         public JpegImageBuilder( JpegStreamWriter stream )
-		{
+        {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
-		}
+        }
 
 
 
