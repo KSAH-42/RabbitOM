@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
              */
 
 
-            return true;
+            throw new NotImplementedException();
         }
 
         public void Clear()
