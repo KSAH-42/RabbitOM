@@ -39,9 +39,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                     return false;
                 }
 
+				Console.WriteLine( fragment.ToString() );
+                
+
                 // select the right stream.WriteXXXX method 
 
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
             }
 
             _stream.WriteEndOfImage();
