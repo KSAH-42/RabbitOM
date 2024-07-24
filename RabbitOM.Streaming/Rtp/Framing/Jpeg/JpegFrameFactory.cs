@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -7,11 +8,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegFrameBuilder _builder;
         private readonly JpegStreamWriter _stream;
+        private readonly JpegImageBuilder _imageBuilder;
 
         public JpegFrameFactory( JpegFrameBuilder builder )
         {
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
             _stream = new JpegStreamWriter();
+            _imageBuilder = new JpegImageBuilder( _stream );
         }
 
         // a try catch block must be add added
@@ -26,30 +29,29 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             {
                 return false;
             }
-           
-            _stream.Clear();
 
-            _stream.WriteStartOfImage();
-            _stream.WriteApplicationJFIF();
+            /// according to rtp mjpeg
+            /// it is not possible to have sequence that containts multiple fragment with different width and height size
+            /// we can create a optimization by storing the jpeg headers inside the class used to write fragments, it could save a lot time
+            /// much more than the previous projects and from different existing projects.
 
-            foreach ( var packet in packets )
+            /*
+             
+            var rtpPackets = packets as RtpPacketQueue;
+
+            builder.WriteInitialFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
+
+            for ( int i = 0 ; i < rtpPackets.Count - 1 ; ++ i )
             {
-                if ( ! JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
-                {
-                    return false;
-                }
-
-				Console.WriteLine( fragment.ToString() );
-                
-
-                // select the right stream.WriteXXXX method 
-
-                //throw new NotImplementedException();
+                builder.WriteFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
             }
 
-            _stream.WriteEndOfImage();
+            builder.WriteLastFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
 
-            result = new RtpFrame( _stream.ToArray() );
+            result = new RtpFrame( _imageBuilder.BuildImage() );
+            
+             */
+
 
             return true;
         }

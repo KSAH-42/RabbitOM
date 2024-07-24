@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    public sealed class JpegImageBuilder
+    public class JpegImageBuilder
     {
         public readonly JpegStreamWriter _stream;
+
       
         public JpegImageBuilder( JpegStreamWriter stream )
 		{
@@ -12,15 +14,54 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 		}
 
 
-        public void CreateHeaders( JpegFragment fragment )
+
+
+        public void WriteInitialFragment( JpegFragment fragment )
         {
             if ( fragment == null )
-            {
                 throw new ArgumentNullException( nameof( fragment ) );
-            }
 
             _stream.Clear();
+            
+            OnStartOfImage( fragment );
 
+            _stream.WriteImageData( fragment.Data );
+        }
+
+        public void WriteLastFragment( JpegFragment fragment )
+        {
+            if ( fragment == null )
+                throw new ArgumentNullException( nameof( fragment ) );
+
+            _stream.WriteImageData( fragment.Data );
+
+            OnStopOfImage( fragment );
+        }
+
+        public void WriteIntermediaryFragment( JpegFragment fragment )
+        {
+            if ( fragment == null )
+                throw new ArgumentNullException( nameof( fragment ) );
+
+            _stream.WriteImageData( fragment.Data );
+        }
+
+        public byte[] BuildImage()
+        {
+            return _stream.ToArray();
+        }
+
+        public void Clear()
+        {
+            _stream.Clear();
+        }
+
+
+
+
+
+        protected virtual void OnStartOfImage( JpegFragment fragment )
+        {
             _stream.WriteStartOfImage();
             _stream.WriteApplicationJFIF();
             _stream.WriteDri( fragment.Dri );
@@ -30,24 +71,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteStartOfScan();
         }
 
-        public void WriteFragment( JpegFragment fragment )
+        protected virtual void OnStopOfImage( JpegFragment fragment )
         {
-            if ( fragment == null )
-            {
-                throw new ArgumentNullException( nameof( fragment ) );
-            }
-
-            _stream.WriteImageData( fragment.Data );
-        }
-
-        public bool CanBuild( JpegFragment fragment )
-        {
-            return fragment != null && fragment.Offset == 0 && _stream.Length > 0;
-        }
-
-        public byte[] BuildImage()
-        {
-            throw new NotImplementedException();
+            _stream.WriteEndOfImage();
         }
     }
 }
