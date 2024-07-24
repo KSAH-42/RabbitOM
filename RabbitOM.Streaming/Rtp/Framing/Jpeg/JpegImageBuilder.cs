@@ -5,8 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     public sealed class JpegImageBuilder
     {
         public readonly JpegStreamWriter _stream;
-        private JpegFragment _currentFragment;
-
+      
         public JpegImageBuilder( JpegStreamWriter stream )
 		{
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
@@ -21,6 +20,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             _stream.Clear();
+
             _stream.WriteStartOfImage();
             _stream.WriteApplicationJFIF();
             _stream.WriteDri( fragment.Dri );
