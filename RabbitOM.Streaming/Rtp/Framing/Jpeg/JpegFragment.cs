@@ -138,7 +138,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                         return false;
                     }
 
-                    result.QTable = new ArraySegment<byte>( buffer.Array , offset  , length );
+                    result.QTable = new ArraySegment<byte>( buffer.Array , offset , length );
 
                     offset += length;
                 }
