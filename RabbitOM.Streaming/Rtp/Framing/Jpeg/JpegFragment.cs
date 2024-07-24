@@ -76,6 +76,15 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             return Type > 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
         }
 
+        /// <summary>
+        /// Format to string
+        /// </summary>
+        /// <returns>returns true for a success otherwise</returns>
+        public override string ToString()
+        {
+            return $"{Offset} {Type} {QFactor} {Width} {Height} {Dri} {Mbz} {QTable.Count} {Data.Count}";
+        }
+
 
 
 
@@ -96,11 +105,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            int offset = 1;
-
+            int offset = buffer.Offset + 1;
+           
             result = new JpegFragment()
             {
-                Offset  = buffer.Array[ offset++ ] << 16 | buffer.Array[ offset++] << 8 | buffer.Array[ offset ++ ] ,
+                Offset  = buffer.Array[ offset++ ]  << 16 | buffer.Array[ offset++] << 8 | buffer.Array[ offset ++ ] ,
                 Type    = buffer.Array[ offset++ ] ,
                 QFactor = buffer.Array[ offset++ ] ,
                 Width   = buffer.Array[ offset++ ] * 8 ,
@@ -124,23 +133,25 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
                     int length = buffer.Array[ offset++ ] << 8 | buffer.Array[ offset++ ];
 
-                    if ( length < 0 || length > ( buffer.Count - (buffer.Offset + offset) ) )
+                    length += 2;
+
+                    if ( length >= ( buffer.Array.Length - offset ) )
                     {
                         return false;
                     }
 
-                    result.QTable = new ArraySegment<byte>( buffer.Array , buffer.Offset + offset , length );
+                    result.QTable = new ArraySegment<byte>( buffer.Array , offset , length );
 
                     offset += length;
                 }
             }
 
-            if ( (buffer.Offset + offset) >= buffer.Count )
+            if ( offset >= buffer.Count )
             {
                 return false;
             }
 
-            result.Data = new ArraySegment<byte>( buffer.Array , buffer.Offset + offset , buffer.Count - offset );
+            result.Data = new ArraySegment<byte>( buffer.Array , offset , buffer.Array.Length - offset );
 			
             return true;
         }
