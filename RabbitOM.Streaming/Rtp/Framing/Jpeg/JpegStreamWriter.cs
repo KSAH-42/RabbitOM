@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    // TODO: add quantization factory class and handle changes during writes
-
     public sealed class JpegStreamWriter : IDisposable
     {
         private static readonly byte[] StartOfImageMarker      = new byte[] { 0xFF , 0xD8 };
@@ -23,8 +21,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private readonly JpegMemoryStream _stream;
         private readonly JpegStreamWriterConfiguration _configuration;
         private readonly JpegQuantizationTableFactory _quantizationTableFactory;
-        private JpegFragmentationInfo _fragmentationInfo;
-
+        
 
 
         public JpegStreamWriter()
@@ -43,6 +40,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             get => _configuration;
         }
 
+        public long Length
+        {
+            get => _stream.Length;
+        }
+
 
 
 
@@ -55,24 +57,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Clear()
         {
             _stream.Clear();
-            _fragmentationInfo = JpegFragmentationInfo.Empty;
         }
 
         public byte[] ToArray()
         {
             return _stream.ToArray();
-        }
-
-        public bool TrySetup( JpegFragmentationInfo fragmentationInfo )
-        {
-            if ( fragmentationInfo == _fragmentationInfo )
-            {
-                return false;
-            }
-
-            _fragmentationInfo = fragmentationInfo;
-
-            return true;
         }
 
         public void WriteStartOfImage()
@@ -126,6 +115,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _stream.WriteAsUInt16( value );
             }
         }
+        
+        public void WriteQuantizationTable( ArraySegment<byte> data )
+        {
+            WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset , data.Count / 2 ) , 0 );
+            WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset + data.Count / 2 + 1 , (data.Count / 2) - 1 ) , 1 );
+        }
 
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
         {
@@ -147,7 +142,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsBinary( data );
         }
 
-        public void WriteStartOfFrame( int type , int width , int height )
+        public void WriteStartOfFrame( int type , int width , int height , long quantizationTableLength )
         {
             if ( type < 0 )
             {
@@ -164,9 +159,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 throw new ArgumentException( nameof( height ) );
             }
 
+            if ( quantizationTableLength < 0 )
+            {
+                throw new ArgumentException( nameof( quantizationTableLength ) );
+            }
+
             byte componentParameterA = ( type & 1 ) != 0 ? (byte) 0x22 : (byte) 0x21;
 
-            byte componentParameterB = _quantizationTableFactory.GetNumberOfTables() == 1 ? (byte) 0x00 : (byte) 0x01;
+            byte componentParameterB = quantizationTableLength > 64 ? (byte) 0x01 : (byte) 0x00;
 
             _stream.WriteAsBinary( StartOfFrameMarker );
             _stream.WriteAsByte( 0x00 );
@@ -185,7 +185,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsByte( 0x11 );
             _stream.WriteAsByte( componentParameterB );
         }
-
 
         public void WriteStartOfScan()
         {

@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             {
                 return false;
             }
-
+           
             _stream.Clear();
 
             _stream.WriteStartOfImage();
