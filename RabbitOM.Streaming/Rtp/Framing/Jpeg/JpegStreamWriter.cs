@@ -60,16 +60,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             return _stream.ToArray();
         }
 
-        public void WriteStartOfImage()
-        {
-            _stream.WriteAsBinary( StartOfImageMarker );
-        }
-
-        public void WriteEndOfImage()
-        {
-            _stream.WriteAsBinary( EndOfImageMarker );
-        }
-
         public void Write( ArraySegment<byte> data )
         {
             if ( data.Count == 0 )
@@ -78,6 +68,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             _stream.WriteAsBinary( data );
+        }
+
+        public void WriteStartOfImage()
+        {
+            _stream.WriteAsBinary( StartOfImageMarker );
+        }
+
+        public void WriteEndOfImage()
+        {
+            _stream.WriteAsBinary( EndOfImageMarker );
         }
 
         public void WriteApplicationJFIF()
