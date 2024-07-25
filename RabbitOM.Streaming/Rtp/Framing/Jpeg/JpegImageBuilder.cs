@@ -3,21 +3,18 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    public sealed class JpegImageBuilder
+    public sealed class JpegImageBuilder : IDisposable
     {
-        private readonly JpegStreamWriter _writer;
+        private readonly JpegStreamWriter _writer = new JpegStreamWriter();
+ 
         private readonly Queue<JpegFragment> _fragments = new Queue<JpegFragment>();
 
 
-
-
-        public JpegImageBuilder( JpegStreamWriter writer )
+        public void Dispose()
         {
-            _writer = writer ?? throw new ArgumentNullException( nameof( writer ) );
+            _writer.Dispose();
+            _fragments.Clear();
         }
-
-
-
 
         public void AddFragment( JpegFragment fragment )
         {
@@ -39,6 +36,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             var firstFragment = _fragments.Dequeue();
 
             _writer.Clear();
+
+            /// according to rtp mjpeg
+            /// it is not possible to have sequence that containts multiple fragment with different width and height size
+            /// we can create a optimization by storing the jpeg headers inside the class used to write fragments, it could save a lot time
+            /// much more than the previous projects and from different existing projects.
 
             _writer.WriteStartOfImage();
             _writer.WriteApplicationJFIF();

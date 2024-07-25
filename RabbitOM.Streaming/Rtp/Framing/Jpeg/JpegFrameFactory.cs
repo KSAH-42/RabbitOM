@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegFrameFactory : IDisposable
     {
         private readonly JpegFrameBuilder _builder;
-        private readonly JpegStreamWriter _stream;
         private readonly JpegImageBuilder _imageBuilder;
 
         public JpegFrameFactory( JpegFrameBuilder builder )
         {
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
-            _stream = new JpegStreamWriter();
-            _imageBuilder = new JpegImageBuilder( _stream );
+            _imageBuilder = new JpegImageBuilder();
         }
 
         // a try catch block must be add added
@@ -23,6 +20,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
+            // to be tested , throw an exception to indicate that this code is not available
+
+            throw new NotImplementedException();
+
             result = null;
 
             if ( packets == null )
@@ -30,40 +31,34 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            /// according to rtp mjpeg
-            /// it is not possible to have sequence that containts multiple fragment with different width and height size
-            /// we can create a optimization by storing the jpeg headers inside the class used to write fragments, it could save a lot time
-            /// much more than the previous projects and from different existing projects.
+            _imageBuilder.Clear();
 
-            /*
-             
-            var rtpPackets = packets as RtpPacketQueue;
-
-            builder.WriteInitialFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
-
-            while ( rtpPackets.Count > 1 )
+            foreach ( RtpPacket packet in packets )
             {
-                builder.WriteFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
+                if ( JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
+                {
+                    _imageBuilder.AddFragment( fragment );
+                }                    
             }
 
-            builder.WriteLastFragment( JpegFragment.Parse( rtpPackets.Dequeue().Payload() );
+            if ( ! _imageBuilder.CanBuild() )
+            {
+                return false;
+            }
 
-            result = new RtpFrame( _imageBuilder.BuildImage() );
-            
-             */
+            result = new RtpFrame( _imageBuilder.BuildFrame() );
 
-
-            throw new NotImplementedException();
+            return true;
         }
 
         public void Clear()
         {
-            _stream.Clear();
+            _imageBuilder.Clear();
         }
 
         public void Dispose()
         {
-            _stream.Dispose();
+            _imageBuilder.Dispose();
         }
     }
 }
