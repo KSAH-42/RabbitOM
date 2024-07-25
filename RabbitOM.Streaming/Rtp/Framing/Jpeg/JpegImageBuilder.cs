@@ -48,11 +48,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable.Count );
             _writer.WriteHuffmanDefaultTables();
             _writer.WriteStartOfScan();
-            _writer.WriteImageData( firstFragment.Data );
+            _writer.Write( firstFragment.Data );
 
             while ( _fragments.Count > 0 )
             {
-                _writer.WriteImageData( _fragments.Dequeue().Data );
+                _writer.Write( _fragments.Dequeue().Data );
             }
 
             _writer.WriteEndOfImage();

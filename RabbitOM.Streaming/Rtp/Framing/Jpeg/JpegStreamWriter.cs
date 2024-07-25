@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsBinary( EndOfImageMarker );
         }
 
-        public void WriteImageData( ArraySegment<byte> data )
+        public void Write( ArraySegment<byte> data )
         {
             if ( data.Count == 0 )
             {
