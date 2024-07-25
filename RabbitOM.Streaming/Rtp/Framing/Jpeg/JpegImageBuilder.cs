@@ -1,102 +1,62 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegImageBuilder
     {
-        private readonly JpegStreamWriter _stream;
-        private JpegFragment _sample;
-        private byte[] _headers;
+        private readonly JpegStreamWriter _writer;
+        private readonly Queue<JpegFragment> _fragments = new Queue<JpegFragment>();
 
 
 
 
-        public JpegImageBuilder( JpegStreamWriter stream )
+        public JpegImageBuilder( JpegStreamWriter writer )
         {
-            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
+            _writer = writer ?? throw new ArgumentNullException( nameof( writer ) );
         }
 
 
 
 
-
-        public void WriteInitialFragment( JpegFragment fragment )
+        public void AddFragment( JpegFragment fragment )
         {
-            if ( fragment == null )
-            {
-                throw new ArgumentNullException( nameof( fragment ) );
-            }
-
-            _stream.Clear();
-
-            OnStartOfImage( fragment );
-
-            _stream.WriteImageData( fragment.Data );
-        }
-
-        public void WriteLastFragment( JpegFragment fragment )
-        {
-            if ( fragment == null )
-                throw new ArgumentNullException( nameof( fragment ) );
-
-            _stream.WriteImageData( fragment.Data );
-
-            OnEndOfImage( fragment );
-        }
-
-        public void WriteIntermediaryFragment( JpegFragment fragment )
-        {
-            if ( fragment == null )
-                throw new ArgumentNullException( nameof( fragment ) );
-
-            _stream.WriteImageData( fragment.Data );
-        }
-
-        public byte[] BuildImage()
-        {
-            return _stream.ToArray();
+            _fragments.Enqueue( fragment );
         }
 
         public void Clear()
         {
-            _stream.Clear();
-            _sample = null;
-            _headers = null;
+            _fragments.Clear();
         }
 
-
-
-
-
-        private void OnStartOfImage( JpegFragment fragment )
+        public bool CanBuild()
         {
-            if ( ! JpegFragment.IsSimilar( fragment , _sample ) )
-            {
-                _sample = fragment;
-                _headers = null;
-            }
-
-            if ( _headers != null )
-            {
-                _stream.Write( _headers );
-            }
-            else
-            {
-                _stream.WriteStartOfImage();
-                _stream.WriteApplicationJFIF();
-                _stream.WriteDri( fragment.Dri );
-                _stream.WriteQuantizationTable( fragment.QTable );
-                _stream.WriteStartOfFrame( fragment.Type , fragment.Width , fragment.Height , fragment.QTable.Count );
-                _stream.WriteHuffmanDefaultTables();
-                _stream.WriteStartOfScan();
-
-                _headers = _stream.ToArray();
-            }
+            return _fragments.Count > 1;
         }
 
-        private void OnEndOfImage( JpegFragment fragment )
+        public byte[] BuildFrame()
         {
-            _stream.WriteEndOfImage();
+            var firstFragment = _fragments.Dequeue();
+
+            _writer.Clear();
+
+            _writer.WriteStartOfImage();
+            _writer.WriteApplicationJFIF();
+            _writer.WriteDri( firstFragment.Dri );
+            _writer.WriteQuantizationTable( firstFragment.Data );
+            _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable.Count );
+            _writer.WriteHuffmanDefaultTables();
+            _writer.WriteStartOfScan();
+            _writer.WriteImageData( firstFragment.Data );
+
+            while ( _fragments.Count > 0 )
+            {
+                _writer.WriteImageData( _fragments.Dequeue().Data );
+            }
+
+            _writer.WriteEndOfImage();
+
+            return _writer.ToArray();
         }
     }
 }
