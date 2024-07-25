@@ -5,12 +5,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegFrameFactory : IDisposable
     {
-        private readonly JpegFrameBuilder _builder;
         private readonly JpegImageBuilder _imageBuilder;
 
-        public JpegFrameFactory( JpegFrameBuilder builder )
+        public JpegFrameFactory()
         {
-            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
             _imageBuilder = new JpegImageBuilder();
         }
 

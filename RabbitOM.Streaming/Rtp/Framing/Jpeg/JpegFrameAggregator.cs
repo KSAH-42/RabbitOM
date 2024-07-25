@@ -7,41 +7,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegFrameAggregator : IDisposable
     {
-        private readonly JpegFrameBuilder _builder;
+        private readonly JpegFrameBuilderConfiguration _configuration;
         private readonly RtpPacketQueue _packets;
 
 
 
-        public JpegFrameAggregator( JpegFrameBuilder builder )
+        public JpegFrameAggregator( JpegFrameBuilderConfiguration configuration )
         {
-            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
+            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
             _packets = new RtpPacketQueue();
         }
 
 
 
-
-        public bool CanAggregate( RtpPacket packet )
-        {
-            if ( packet == null || packet.Type != PacketType.JPEG )
-            {
-                return false;
-            }
-
-            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
-            {
-                return false;
-            }
-
-            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        // no exception throw here, unnecessary to add a try catch block
 
         public bool TryAggregate( RtpPacket packet , out IEnumerable<RtpPacket> result )
         {
@@ -74,6 +52,26 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Dispose()
         {
             _packets.Clear();
+        }
+
+        private bool CanAggregate( RtpPacket packet )
+        {
+            if ( packet == null || packet.Type != PacketType.JPEG )
+            {
+                return false;
+            }
+
+            if ( packet.Payload.Count > _configuration.MaximumPayloadSize )
+            {
+                return false;
+            }
+
+            if ( _packets.Count > _configuration.NumberOfPacketsPerFrame )
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
