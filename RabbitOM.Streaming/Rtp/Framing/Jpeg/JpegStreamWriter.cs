@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsByte( 0 );
         }
 
-        public void WriteDri( int value )
+        public void WriteRestartInterval( int value )
         {
             if ( value > 0 )
             {
