@@ -2,44 +2,16 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    // TODO: remove the class and move all member on JpegStreamWriter class
-    // and change the visibilty as private, in order to avoid
-    // some one to access to any byte array and corrupted it
-    // or change it as internal 
-
-    public static class JpegConstants
+    internal static class JpegConstants
     {
-        public static readonly byte[] ChmDcCodelens =
-        {
-            0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0
-        };
-
-        public static readonly byte[] ChmDcSymbols =
-        {
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-        };
-
-        public static readonly byte[] ChmAcCodelens =
-        {
-            0, 2, 1, 2, 4, 4, 3, 4, 7, 5, 4, 4, 0, 1, 2, 0x77
-        };
-
-        public static readonly byte[] LumDcCodelens =
-        {
-            0, 1, 5, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0
-        };
-
-        public static readonly byte[] LumDcSymbols =
-        {
-            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
-        };
-
-        public static readonly byte[] LumAcCodelens =
-        {
-            0, 2, 1, 3, 3, 2, 4, 3, 5, 5, 4, 4, 0, 0, 1, 0x7d
-        };
-
-        public static readonly byte[] LumAcSymbols =
+        public static readonly byte[] ChmDcCodelens = { 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
+        public static readonly byte[] ChmDcSymbols  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+        public static readonly byte[] ChmAcCodelens = { 0, 2, 1, 2, 4, 4, 3, 4, 7, 5, 4, 4, 0, 1, 2, 0x77 };
+        public static readonly byte[] LumDcCodelens = { 0, 1, 5, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+        public static readonly byte[] LumDcSymbols  = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+        public static readonly byte[] LumAcCodelens = { 0, 2, 1, 3, 3, 2, 4, 3, 5, 5, 4, 4, 0, 0, 1, 0x7d };
+        
+        public static readonly byte[] LumAcSymbols  =
         {
             0x01, 0x02, 0x03, 0x00, 0x04, 0x11, 0x05, 0x12,
             0x21, 0x31, 0x41, 0x06, 0x13, 0x51, 0x61, 0x07,

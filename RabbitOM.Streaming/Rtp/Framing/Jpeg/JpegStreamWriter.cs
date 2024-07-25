@@ -4,17 +4,17 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegStreamWriter : IDisposable
     {
-        private static readonly byte[] StartOfImageMarker      = new byte[] { 0xFF , 0xD8 };
-        private static readonly byte[] EndOfImageMarker        = new byte[] { 0xFF , 0xD9 };
-        private static readonly byte[] ApplicationJFIFMarker   = new byte[] { 0xFF , 0xE0 };
-        private static readonly byte[] DriMarker               = new byte[] { 0xFF , 0xDD };
-        private static readonly byte[] QuantizationTableMarker = new byte[] { 0xFF , 0xDB };
-        private static readonly byte[] StartOfScanMarker       = new byte[] { 0xFF , 0xDA };
-        private static readonly byte[] StartOfFrameMarker      = new byte[] { 0xFF , 0xC0 };
-        private static readonly byte[] HuffmanTableMarker      = new byte[] { 0xFF , 0xC4 };
-        private static readonly byte[] CommentsMarker          = new byte[] { 0xFF , 0xFE };
-        private static readonly byte[] IdentifierJFIF          = new byte[] { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
-        private static readonly byte[] StartOfScanPayload      = new byte[] { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
+        private static readonly byte[] StartOfImageMarker      = { 0xFF , 0xD8 };
+        private static readonly byte[] EndOfImageMarker        = { 0xFF , 0xD9 };
+        private static readonly byte[] ApplicationJFIFMarker   = { 0xFF , 0xE0 };
+        private static readonly byte[] DriMarker               = { 0xFF , 0xDD };
+        private static readonly byte[] QuantizationTableMarker = { 0xFF , 0xDB };
+        private static readonly byte[] StartOfScanMarker       = { 0xFF , 0xDA };
+        private static readonly byte[] StartOfFrameMarker      = { 0xFF , 0xC0 };
+        private static readonly byte[] HuffmanTableMarker      = { 0xFF , 0xC4 };
+        private static readonly byte[] CommentsMarker          = { 0xFF , 0xFE };
+        private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
+        private static readonly byte[] StartOfScanPayload      = { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
 
         private const int MaximumLength = 0xFFFF;
 
