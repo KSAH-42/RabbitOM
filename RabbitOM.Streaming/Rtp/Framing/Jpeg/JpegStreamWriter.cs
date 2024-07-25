@@ -4,6 +4,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegStreamWriter : IDisposable
     {
+        private const int SegmentMaxLength = 0xFFFF;
+
         private static readonly byte[] StartOfImageMarker      = { 0xFF , 0xD8 };
         private static readonly byte[] EndOfImageMarker        = { 0xFF , 0xD9 };
         private static readonly byte[] ApplicationJFIFMarker   = { 0xFF , 0xE0 };
@@ -15,8 +17,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] CommentsMarker          = { 0xFF , 0xFE };
         private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
         private static readonly byte[] StartOfScanPayload      = { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
-
-        private const int MaximumLength = 0xFFFF;
 
         private readonly JpegMemoryStream _stream;
         private readonly JpegStreamWriterConfiguration _configuration;
@@ -32,7 +32,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
-
         public JpegStreamWriterConfiguration Configuration
         {
             get => _configuration;
@@ -42,7 +41,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             get => _stream.Length;
         }
-
 
 
 
@@ -86,7 +84,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             int length = 2 + IdentifierJFIF.Length + 9;
 
-            if ( length > MaximumLength )
+            if ( length > SegmentMaxLength )
             {
                 throw new InvalidOperationException( "the length header field is too big" );
             }
@@ -129,7 +127,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             int length = 3 + data.Count;
 
-            if ( length > MaximumLength )
+            if ( length > SegmentMaxLength )
             {
                 throw new InvalidOperationException( "the length header field is too big" );
             }
@@ -188,7 +186,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             int length = 2 + StartOfScanPayload.Length;
 
-            if ( length > MaximumLength )
+            if ( length > SegmentMaxLength )
             {
                 throw new InvalidOperationException( "the length header field is too big" );
             }
@@ -212,7 +210,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             int length = 3 + codes.Length + symbols.Length;
 
-            if ( length > MaximumLength )
+            if ( length > SegmentMaxLength )
             {
                 throw new InvalidOperationException( "the length header field is too big" );
             }
@@ -241,7 +239,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             int length = 2 + text.Length;
 
-            if ( length > MaximumLength )
+            if ( length > SegmentMaxLength )
             {
                 throw new InvalidOperationException( "the length header field is too big" );
             }
