@@ -88,6 +88,34 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+        /// <summary>
+        /// Compare properties what are supposed to be un changed
+        /// </summary>
+        /// <param name="a">a fragment</param>
+        /// <param name="b">a fragment</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        /// <remarks>
+        ///     <para>this method doesn't make any check <see cref="Offset"/> and <see cref="Data"/> </para>
+        /// </remarks>
+        public static bool IsSimilar( JpegFragment a , JpegFragment b )
+        {
+            if ( object.ReferenceEquals( a , b ) )
+                return true;
+                 
+            if ( object.ReferenceEquals( a , null ) || object.ReferenceEquals( b , null ) )
+                return false;
+
+            return a.Type == b.Type
+                && a.Dri == b.Dri
+                && a.Mbz == b.Mbz
+                && a.Height == b.Height
+                && a.Width == b.Width
+                && a.QFactor == b.QFactor
+                && a.QTable.SequenceEquals( b.QTable )
+                ;
+        }
+
+
 
 
         /// <summary>
