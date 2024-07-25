@@ -71,7 +71,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 throw new ArgumentException( nameof( buffer ) );
 
             _stream.WriteAsBinary( buffer );
-
         }
 
         public void WriteStartOfImage()

@@ -5,16 +5,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     public sealed class JpegImageBuilder
     {
         private readonly JpegStreamWriter _stream;
-        
         private JpegFragment _sample;
-        
         private byte[] _headers;
+
+
 
 
         public JpegImageBuilder( JpegStreamWriter stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
+
+
+
 
 
         public void WriteInitialFragment( JpegFragment fragment )
@@ -60,6 +63,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _sample = null;
             _headers = null;
         }
+
+
+
+
 
         private void OnStartOfImage( JpegFragment fragment )
         {
