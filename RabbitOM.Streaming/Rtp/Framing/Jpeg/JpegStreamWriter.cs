@@ -64,6 +64,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             return _stream.ToArray();
         }
 
+        public void Write( byte[] buffer )
+        {
+            if ( buffer == null )
+                throw new ArgumentNullException( nameof( buffer ) );
+
+            if ( buffer.Length == 0 )
+                throw new ArgumentException( nameof( buffer ) );
+
+            _stream.WriteAsBinary( buffer );
+
+        }
+
         public void WriteStartOfImage()
         {
             _stream.WriteAsBinary( StartOfImageMarker );
