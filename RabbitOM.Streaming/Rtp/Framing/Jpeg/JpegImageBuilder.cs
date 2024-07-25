@@ -2,28 +2,30 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    public class JpegImageBuilder
+    public sealed class JpegImageBuilder
     {
-        public readonly JpegStreamWriter _stream;
+        private readonly JpegStreamWriter _stream;
+        
+        private JpegFragment _sample;
+        
+        private byte[] _headers;
 
 
-
-      
         public JpegImageBuilder( JpegStreamWriter stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
 
-
-
         public void WriteInitialFragment( JpegFragment fragment )
         {
             if ( fragment == null )
+            {
                 throw new ArgumentNullException( nameof( fragment ) );
+            }
 
             _stream.Clear();
-            
+
             OnStartOfImage( fragment );
 
             _stream.WriteImageData( fragment.Data );
@@ -36,7 +38,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             _stream.WriteImageData( fragment.Data );
 
-            OnStopOfImage( fragment );
+            OnEndOfImage( fragment );
         }
 
         public void WriteIntermediaryFragment( JpegFragment fragment )
@@ -55,24 +57,37 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Clear()
         {
             _stream.Clear();
+            _sample = null;
+            _headers = null;
         }
 
-
-
-
-
-        protected virtual void OnStartOfImage( JpegFragment fragment )
+        private void OnStartOfImage( JpegFragment fragment )
         {
-            _stream.WriteStartOfImage();
-            _stream.WriteApplicationJFIF();
-            _stream.WriteDri( fragment.Dri );
-            _stream.WriteQuantizationTable( fragment.QTable );
-            _stream.WriteStartOfFrame( fragment.Type , fragment.Width , fragment.Height , fragment.QTable.Count );
-            _stream.WriteHuffmanDefaultTables();
-            _stream.WriteStartOfScan();
+            if ( ! JpegFragment.IsSimilar( fragment , _sample ) )
+            {
+                _sample = fragment;
+                _headers = null;
+            }
+
+            if ( _headers != null )
+            {
+                _stream.Write( _headers );
+            }
+            else
+            {
+                _stream.WriteStartOfImage();
+                _stream.WriteApplicationJFIF();
+                _stream.WriteDri( fragment.Dri );
+                _stream.WriteQuantizationTable( fragment.QTable );
+                _stream.WriteStartOfFrame( fragment.Type , fragment.Width , fragment.Height , fragment.QTable.Count );
+                _stream.WriteHuffmanDefaultTables();
+                _stream.WriteStartOfScan();
+
+                _headers = _stream.ToArray();
+            }
         }
 
-        protected virtual void OnStopOfImage( JpegFragment fragment )
+        private void OnEndOfImage( JpegFragment fragment )
         {
             _stream.WriteEndOfImage();
         }
