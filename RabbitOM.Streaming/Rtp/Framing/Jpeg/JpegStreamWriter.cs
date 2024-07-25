@@ -222,7 +222,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsBinary( symbols );
         }
 
-        public void WriteHuffmanDefaultTables()
+        public void WriteHuffmanTables()
         {
             WriteHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
             WriteHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
