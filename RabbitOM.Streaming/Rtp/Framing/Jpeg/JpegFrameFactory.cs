@@ -33,10 +33,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             foreach ( RtpPacket packet in packets )
             {
-                if ( JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
+                if ( ! JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
                 {
-                    _imageBuilder.AddFragment( fragment );
-                }                    
+                    return false; 
+                }
+
+                _imageBuilder.AddFragment( fragment );
             }
 
             if ( ! _imageBuilder.CanBuild() )
