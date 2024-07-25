@@ -334,7 +334,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             try
             {
-                result = new RtspUri();  // call first to invoke RegisterUriScheme
+                result = new RtspUri();
 
                 var builder = new UriBuilder( value );
 
