@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] HuffmanTableMarker      = { 0xFF , 0xC4 };
         private static readonly byte[] CommentsMarker          = { 0xFF , 0xFE };
         private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
-        private static readonly byte[] StartOfScanPayload      = { 0x00 , 0x0C , 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
+        private static readonly byte[] StartOfScanPayload      = { 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
 
         private readonly JpegMemoryStream _stream;
         private readonly JpegStreamWriterConfiguration _configuration;
@@ -114,8 +114,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         
         public void WriteQuantizationTable( ArraySegment<byte> data )
         {
-            WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset , data.Count / 2 ) , 0 );
-            WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset + data.Count / 2 + 1 , (data.Count / 2) - 1 ) , 1 );
+            WriteQuantizationTable( data , 0 );
+//            WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset + data.Count / 2 + 1 , (data.Count / 2) - 1 ) , 1 );
         }
 
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
@@ -162,7 +162,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             byte componentParameterA = ( type & 1 ) != 0 ? (byte) 0x22 : (byte) 0x21;
 
-            byte componentParameterB = quantizationTableLength > 64 ? (byte) 0x01 : (byte) 0x00;
+            byte componentParameterB = quantizationTableLength <= 64 ? (byte) 0x00 : (byte) 0x01;
 
             _stream.WriteAsBinary( StartOfFrameMarker );
             _stream.WriteAsByte( 0x00 );
@@ -226,8 +226,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             WriteHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
             WriteHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
-            WriteHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 0 , 2 );
-            WriteHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 0 , 3 );
+            WriteHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 1 , 0 );
+            WriteHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 1 , 1 );
         }
 
         public void WriteComments( string text )
