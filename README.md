@@ -14,7 +14,7 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 * Easy to used
 * Provide Event Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
-* Thread safe, except the sdp classes
+* Thread safe, except the sdp classes and some rtp classes
 * Handle large streams with a high bitrate like 50 MBits/seconds
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 * Support RTP 2435 - frame parsing (MJPEG) : reconstruct the picture from packets (new implementation)
