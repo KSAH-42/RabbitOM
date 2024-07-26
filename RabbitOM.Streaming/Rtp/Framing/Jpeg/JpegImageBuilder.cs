@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _fragments.Clear();
         }
 
-        public bool CanBuild()
+        public bool CanBuildFrame()
         {
             return _fragments.Count > 1;
         }

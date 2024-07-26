@@ -12,9 +12,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _imageBuilder = new JpegImageBuilder();
         }
 
-        // a try catch block must be add added
-        // and not tryMethod on the stream class because there is a loop
-        // it is better to leave the loop when a failure happens inside it.
+        // TODO: add a try catch block
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
@@ -41,7 +39,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _imageBuilder.AddFragment( fragment );
             }
 
-            if ( ! _imageBuilder.CanBuild() )
+            if ( ! _imageBuilder.CanBuildFrame() )
             {
                 return false;
             }
