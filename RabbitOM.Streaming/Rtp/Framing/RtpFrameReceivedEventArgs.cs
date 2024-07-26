@@ -6,23 +6,10 @@ namespace RabbitOM.Streaming.Rtp.Framing
 	{
 		private readonly RtpFrame _frame;
 
-
-
-
-
 		public RtpFrameReceivedEventArgs( RtpFrame frame )
 		{
-			if ( _frame == null )
-			{
-				throw new ArgumentNullException( nameof( frame ) );
-			}
-
-			_frame = frame;
+			_frame = frame ?? throw new ArgumentNullException( nameof( frame ) ); ;
 		}
-
-
-
-
 
 		public RtpFrame Frame
 		{
