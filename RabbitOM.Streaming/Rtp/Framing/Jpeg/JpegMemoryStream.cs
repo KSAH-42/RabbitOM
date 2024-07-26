@@ -5,12 +5,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegMemoryStream : IDisposable
     {
-        private readonly MemoryStream _stream = new MemoryStream( 1024 * 5 );
+        private readonly MemoryStream _stream = new MemoryStream( 1024 * 10 );
 
 
-        public bool IsEmpty { get => _stream.Length == 0; }
         public long Capacity { get => _stream.Capacity; }
         public long Length { get => _stream.Length; }
+        public bool IsEmpty { get => _stream.Length == 0; }
         
 
         public void Dispose() 
