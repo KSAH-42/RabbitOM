@@ -16,8 +16,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
-            // to be tested , throw an exception to indicate that this code is not available
-
             result = null;
 
             if ( packets == null )
