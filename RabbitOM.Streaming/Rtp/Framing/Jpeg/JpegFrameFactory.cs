@@ -18,8 +18,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             // to be tested , throw an exception to indicate that this code is not available
 
-            throw new NotImplementedException();
-
             result = null;
 
             if ( packets == null )
