@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -114,8 +115,22 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         
         public void WriteQuantizationTable( ArraySegment<byte> data )
         {
-            WriteQuantizationTable( data , 0 );
-//            WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset + data.Count / 2 + 1 , (data.Count / 2) - 1 ) , 1 );
+            if ( data.Count == 0 )
+            {
+                throw new ArgumentException( nameof( data ) );
+            }
+
+            for ( int offset = 0 , tableNumber = 0 ; offset < data.Count && tableNumber <= 0xFF ; offset += 64 , tableNumber ++ )
+            {
+                int count = 64;
+
+                if ( offset + 64 > data.Count )
+                {
+                    count = data.Count - offset;
+                }
+
+                WriteQuantizationTable( new ArraySegment<byte>( data.Array , data.Offset + offset , count ) , (byte) tableNumber );
+            }
         }
 
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
