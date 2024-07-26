@@ -1,6 +1,4 @@
-﻿// This class is used to reassemble packets into one single frame
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
@@ -25,7 +23,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             result = null;
 
-            if ( ! CanAggregate( packet ) )
+            if ( packet == null || packet.Type != PacketType.JPEG  || packet.Payload.Count > _configuration.MaximumPayloadSize || _packets.Count > _configuration.NumberOfPacketsPerFrame )
             {
                 _packets.Clear();
 
@@ -52,26 +50,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Dispose()
         {
             _packets.Clear();
-        }
-
-        private bool CanAggregate( RtpPacket packet )
-        {
-            if ( packet == null || packet.Type != PacketType.JPEG )
-            {
-                return false;
-            }
-
-            if ( packet.Payload.Count > _configuration.MaximumPayloadSize )
-            {
-                return false;
-            }
-
-            if ( _packets.Count > _configuration.NumberOfPacketsPerFrame )
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }
