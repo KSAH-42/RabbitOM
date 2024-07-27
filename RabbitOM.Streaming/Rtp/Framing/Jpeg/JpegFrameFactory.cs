@@ -12,7 +12,15 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _imageBuilder = new JpegImageBuilder();
         }
 
-        // TODO: add a try catch block
+        public void Dispose()
+        {
+            _imageBuilder.Dispose();
+        }
+
+        public void Clear()
+        {
+            _imageBuilder.Clear();
+        }
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
@@ -29,30 +37,21 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             {
                 if ( ! JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
                 {
-                    return false; 
-                }
+					return false;
+				}
+				Console.WriteLine( fragment );
 
                 _imageBuilder.AddFragment( fragment );
             }
 
-            if ( ! _imageBuilder.CanBuildFrame() )
+            if ( ! _imageBuilder.CanBuildImage() )
             {
                 return false;
             }
 
-            result = new RtpFrame( _imageBuilder.BuildFrame() );
+            result = JpegFrame.NewFrame( _imageBuilder.BuildImage() );
 
             return true;
-        }
-
-        public void Clear()
-        {
-            _imageBuilder.Clear();
-        }
-
-        public void Dispose()
-        {
-            _imageBuilder.Dispose();
         }
     }
 }

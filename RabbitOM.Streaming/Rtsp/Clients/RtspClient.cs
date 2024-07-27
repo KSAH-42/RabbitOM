@@ -120,7 +120,16 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             get => _thread.IsStarted;
         }
 
-        
+        /// <summary>
+        /// Check if the communication is actually stopping
+        /// </summary>
+        public bool IsCommunicationStopping
+        {
+            get => _thread.IsShudown;
+        }
+
+
+
 
 
         /// <summary>

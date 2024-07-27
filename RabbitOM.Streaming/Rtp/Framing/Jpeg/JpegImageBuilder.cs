@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegImageBuilder : IDisposable
     {
         private readonly JpegStreamWriter _writer = new JpegStreamWriter();
-        private readonly Queue<JpegFragment> _fragments = new Queue<JpegFragment>();
-
-
+        private readonly JpegFragmentQueue _fragments = new JpegFragmentQueue();
+       
         public void Dispose()
         {
-            _writer.Dispose();
             _fragments.Clear();
+            _writer.Dispose();
         }
 
         public void AddFragment( JpegFragment fragment )
         {
-            _fragments.Enqueue( fragment ?? throw new ArgumentNullException( nameof( fragment ) ) );
+            _fragments.Enqueue( fragment );
         }
 
         public void Clear()
@@ -25,28 +23,23 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _fragments.Clear();
         }
 
-        public bool CanBuildFrame()
+        public bool CanBuildImage()
         {
-            return _fragments.Count > 1;
+            return _fragments.Any();
         }
 
-        public byte[] BuildFrame()
+        // TODO: used memozaïtion to for optimizations to build headers byte array
+
+        public JpegImage BuildImage()
         {
             var firstFragment = _fragments.Dequeue();
 
             _writer.Clear();
 
-            /// according to rtp mjpeg
-            /// it is not possible to have sequence that containts multiple fragment with different width and height size
-            /// we can create a optimization by storing the jpeg headers inside the class used to write fragments, it could save a lot time
-            /// much more than the previous projects and from different existing projects.
-            /// some tests need to be done regarding the order of sequence
-            /// something need to be review
-
             _writer.WriteStartOfImage();
             _writer.WriteApplicationJFIF();
             _writer.WriteRestartInterval( firstFragment.Dri );
-            _writer.WriteQuantizationTable( firstFragment.QTable );
+            _writer.WriteQuantizationTable( firstFragment.QTable , firstFragment.QFactor );
             _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable.Count );
             _writer.WriteHuffmanTables();
             _writer.WriteStartOfScan();
@@ -59,7 +52,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             _writer.WriteEndOfImage();
 
-            return _writer.ToArray();
+            return new JpegImage( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
         }
     }
 }

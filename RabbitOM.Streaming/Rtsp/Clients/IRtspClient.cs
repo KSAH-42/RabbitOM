@@ -39,6 +39,16 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             get;
         }
 
+        /// <summary>
+        /// Check if the communication is actually stopping
+        /// </summary>
+        bool IsCommunicationStopping
+        {
+            get;
+        }
+
+
+
 
 
         /// <summary>

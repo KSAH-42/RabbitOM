@@ -45,6 +45,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             }
             
             using ( var client = new RtspClient() )
+            using ( var builder = new RabbitOM.Streaming.Rtp.Framing.Jpeg.JpegFrameBuilder() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
                 {
@@ -89,7 +90,18 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                     }
 
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
+                    //Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
+
+                    builder.Write( e.Packet.Data );
+                };
+
+                builder.FrameReceived += ( sender , e ) =>
+                {
+
+                   // System.IO.File.WriteAllBytes( "test.jpg" , e.Frame.Data );
+                    ///d.Save( "test.jpg" );
+
+					Console.WriteLine( "Frame received: " + e.Frame.Data.Length );
                 };
 
                 // Please note, read the manufacturer's documentation

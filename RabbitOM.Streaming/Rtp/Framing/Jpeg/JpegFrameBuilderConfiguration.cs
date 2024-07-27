@@ -9,7 +9,52 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public const int DefaultNumberOfPacketsPerFrame = 1000;
 
 
-        public int MaximumPayloadSize { get; set; } = DefaultMaximumPayloadSize;
-        public int NumberOfPacketsPerFrame { get; set; } = DefaultNumberOfPacketsPerFrame;
+
+
+		private readonly object _lock = new object();
+
+		private int _maximumPayloadSize      = DefaultMaximumPayloadSize;
+        private int _numberOfPacketsPerFrame = DefaultNumberOfPacketsPerFrame;
+
+
+
+
+        public int MaximumPayloadSize
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _maximumPayloadSize;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _maximumPayloadSize = value;
+                }
+            }
+        }
+
+        public int NumberOfPacketsPerFrame
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _numberOfPacketsPerFrame;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _numberOfPacketsPerFrame = value;
+                }
+            }
+        }
     }
 }

@@ -19,17 +19,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
         private static readonly byte[] StartOfScanPayload      = { 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
 
-        private readonly JpegMemoryStream _stream;
-        private readonly JpegStreamWriterConfiguration _configuration;
-        
 
 
-        public JpegStreamWriter()
-        {
-            _stream = new JpegMemoryStream();
-            _configuration = new JpegStreamWriterConfiguration();
-        }
-
+        private readonly JpegMemoryStream _stream = new JpegMemoryStream();
+        private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
+        private readonly JpegStreamWriterQuantizer _quantizer = new JpegStreamWriterQuantizer();
 
 
 
@@ -113,11 +107,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
         }
         
-        public void WriteQuantizationTable( ArraySegment<byte> data )
+        public void WriteQuantizationTable( ArraySegment<byte> data , int factor )
         {
             if ( data.Count == 0 )
             {
-                throw new ArgumentException( nameof( data ) );
+                data = _quantizer.CreateDefaultTable( factor );
+            }
+
+            if ( data.Count == 0 )
+            {
+                throw new InvalidOperationException( "Invalid quantization table" );
             }
 
             for ( int offset = 0 , tableNumber = 0 ; offset < data.Count && tableNumber <= 0xFF ; offset += 64 , tableNumber ++ )

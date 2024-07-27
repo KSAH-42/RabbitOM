@@ -5,6 +5,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegFrameBuilder : RtpFrameBuilder
     {
+        private readonly object _lock = new object();
+
         private readonly JpegFrameBuilderConfiguration _configuration;
         private readonly JpegFrameFactory _factory;
         private readonly JpegFrameAggregator _aggregator;
@@ -37,19 +39,31 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return;
             }
 
-            if ( _aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
+            RtpFrame frame = null;
+
+            lock ( _lock )
             {
-                if ( _factory.TryCreateFrame( packets , out RtpFrame frame ) )
+                if ( ! _aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
                 {
-                    OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+                    return;
+                }
+
+                if ( ! _factory.TryCreateFrame( packets , out frame ) )
+                {
+                    return;
                 }
             }
+
+            OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
         }
 
         public override void Clear()
         {
-            _aggregator.Clear();
-            _factory.Clear();
+            lock ( _lock )
+            {
+                _aggregator.Clear();
+                _factory.Clear();
+            }
         }
 
 
@@ -58,7 +72,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         protected override void Dispose( bool disposing )
         {
-            if ( disposing )
+            lock ( _lock )
             {
                 _aggregator.Dispose();
                 _factory.Dispose();

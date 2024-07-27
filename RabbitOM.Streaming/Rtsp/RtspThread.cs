@@ -73,6 +73,13 @@ namespace RabbitOM.Streaming.Rtsp
             get => _thread != null;
         }
 
+        /// <summary>
+        /// Check if the thread is actually stopping
+        /// </summary>
+        public bool IsShudown
+        {
+            get => _eventExit.Wait(0);
+        }
 
 
 
@@ -94,7 +101,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            if ( !_eventExit.Reset() )
+            if ( ! _eventExit.Reset() )
             {
                 return false;
             }
@@ -181,7 +188,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 OnError(ex);
             }
-
+        
             return false;
         }
 
@@ -226,12 +233,10 @@ namespace RabbitOM.Streaming.Rtsp
             }
             catch ( Exception ex )
             {
-                _exception = ex;
+                OnError( ex );
             }
-            finally
-            {
-                _thread = null;
-            }
+
+            _thread = null;
         }
 
         /// <summary>
@@ -280,6 +285,10 @@ namespace RabbitOM.Streaming.Rtsp
             catch ( Exception ex )
             {
                 _exception = ex;
+            }
+            finally
+            {
+                _eventExit.Reset();
             }
         }
 
