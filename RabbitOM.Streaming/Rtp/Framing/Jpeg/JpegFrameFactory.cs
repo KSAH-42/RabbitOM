@@ -39,8 +39,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 {
 					return false;
 				}
-				Console.WriteLine( fragment );
-
+				
                 _imageBuilder.AddFragment( fragment );
             }
 
