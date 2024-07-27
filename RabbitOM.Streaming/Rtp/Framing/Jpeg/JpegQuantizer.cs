@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    public sealed class JpegStreamWriterQuantizer
+    public sealed class JpegQuantizer
     {
         private const int DefaultTableLength = 128;
 

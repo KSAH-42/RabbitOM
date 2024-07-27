@@ -12,20 +12,13 @@
 
  instead used a WritableBitmap
 
- About multhreading, you must used the dispatcher and to used BeginInvoke method instead of Invoke method.
+ About multihreading, you must used the dispatcher and I recomment in this sample to used BeginInvoke method instead of Invoke method.
 
  to get more details scroll down a take a look on the method used for receiving packet. 
 
- If you want to display multiple streams you must refactor this code and go more deeply in wpf and using the dispatcher and multhreading.
+ If you want to display multiple streams you must refactor this code and go more deeply in wpf.
 
  This is not the goal of this sample code
-
-
- To Avoid a dispatcher dead lock using BeginInvoke and not the Invoke method
- 
- because it in some case it is possible that the dispatcher wait the completion of the main thread 
- it is avoid re entrant call when the OnRenderFrame is call and the client rtps want to stop
- that the main thread where the main is actually occupied to stop the client rtsp
             
  */
 

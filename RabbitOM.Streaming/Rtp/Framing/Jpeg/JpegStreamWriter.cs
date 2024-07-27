@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegMemoryStream _stream = new JpegMemoryStream();
         private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
-        private readonly JpegStreamWriterQuantizer _quantizer = new JpegStreamWriterQuantizer();
+        private readonly JpegQuantizer _quantizer = new JpegQuantizer();
 
 
 

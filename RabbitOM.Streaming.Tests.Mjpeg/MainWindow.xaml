@@ -24,6 +24,7 @@
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/toy.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/movie.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102"/>
+			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/butterfly.mpg" />
 		</ComboBox>
 		<Button x:Name="_controlButton" Content="Play" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Top" Width="74" Click="OnButtonControlClick" Height="22"/>
 		<Grid Margin="1,29,1,1" Background="Black">
