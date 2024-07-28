@@ -10,7 +10,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
-
         public JpegStreamWriterConfiguration Configuration
         {
             get => _configuration;
@@ -20,7 +19,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             get => _stream.Length;
         }
-
 
 
 
@@ -222,10 +220,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteHuffmanTables()
         {
-            WriteHuffmanTable( LumDcCodelens , LumDcSymbols , 0 , 0 );
-            WriteHuffmanTable( LumAcCodelens , LumAcSymbols , 0 , 1 );
-            WriteHuffmanTable( ChmDcCodelens , ChmDcSymbols , 1 , 0 );
-            WriteHuffmanTable( ChmAcCodelens , ChmAcSymbols , 1 , 1 );
+            WriteHuffmanTable( LuminanceDirectCodeLens , LuminanceDirectSymbols , 0 , 0 );
+            WriteHuffmanTable( LuminanceAlternativeCodeLens , LuminanceAlterntativeSymbols , 0 , 1 );
+            WriteHuffmanTable( ChrominanceDirectCodeLens , ChrominanceDirectSymbols , 1 , 0 );
+            WriteHuffmanTable( ChrominanceAlternativeCodelens , ChrominanceAlternativeSymbols , 1 , 1 );
         }
 
         public void WriteComments( string text )
