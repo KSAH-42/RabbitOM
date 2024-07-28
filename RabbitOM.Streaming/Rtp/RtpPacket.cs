@@ -106,7 +106,7 @@ namespace RabbitOM.Streaming.Rtp
 
             packet.Marker          = (byte)       ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
             packet.Type            = (PacketType) ( buffer[ 1 ] & 0x7F );
-            packet.SequenceNumber += (uint) ( buffer[ 2 ] << 8   );
+            packet.SequenceNumber  = (uint) ( buffer[ 2 ] << 8   );
             packet.SequenceNumber += (uint) ( buffer[ 3 ]        );
             packet.Timestamp       = (uint) ( buffer[ 4 ] << 24  );
             packet.Timestamp      += (uint) ( buffer[ 5 ] << 16  );
