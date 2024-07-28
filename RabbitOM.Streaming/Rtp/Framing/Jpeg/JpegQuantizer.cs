@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private static int AdaptQuantizationFactor( int value )
         {
-            value = value < 1 ? 1 : value > 99 ? 99 : value;
+            value = value < 1 ? 1 : (value > 99 ? 99 : value);
 
             return value < 50 ? ( 5000 / value ) : ( 200 - value * 2 );
         }
