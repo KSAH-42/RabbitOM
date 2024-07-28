@@ -58,7 +58,6 @@
     <Compile Include="ArrayExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rtp\Framing\Jpeg\JpegConstants.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFragment.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameAggregator.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilder.cs" />
