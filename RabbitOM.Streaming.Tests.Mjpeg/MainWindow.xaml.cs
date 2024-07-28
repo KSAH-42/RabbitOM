@@ -79,7 +79,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             {
                 if ( _client.IsCommunicationStarted )
                 {
-                    _client.StopCommunication(); // It can hangs due to socket connection timeout, and it can be fixed very quicky
+                    _client.StopCommunication( TimeSpan.FromSeconds(2) ); // It can hangs due to socket connection timeout here just specify a timeout value in this case, or do ....
                     _image.Source = null;
                     return;
                 }
