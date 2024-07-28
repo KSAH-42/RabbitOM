@@ -216,4 +216,4 @@ This project contains also a sample that demonstrate how to create a video playe
 
 # Getting more details ?
 
-If you want to get more details, send me an email to "a.sahnine@netcourrier.com"
+If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
