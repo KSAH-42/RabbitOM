@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private readonly int _width;
         private readonly int _height;
 
-        public JpegFrame( byte[] data , int width , int height )
+        public JpegFrame( int width , int height , byte[] data )
             : base ( data )
         {
             _width = width;
@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public static JpegFrame NewFrame( JpegImage image )
         {
-            return new JpegFrame( image.Data , image.Width , image.Height );
+            return new JpegFrame( image.Width , image.Height , image.Data );
         }
     }
 }
