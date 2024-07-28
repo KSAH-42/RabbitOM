@@ -3,6 +3,9 @@
  Please read this section it's important, 
 
  First, I know it's boring remarks but please make sure that you uri point to mjpeg rtps source.
+
+
+
  
  No MVVM is used here, this is not the goal
 
