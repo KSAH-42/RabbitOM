@@ -2,20 +2,22 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing
 {
-
-    // Normally the builder pattern must expose a build method
-    // The problem is that the frame must be build at a special time
-    // That's why a event handler has been introduce
-    // Try pattern can be used, to solve the problem 
-    // Like bool TryBuild( byte[] buffer , out RtpFrame result );
-
-    // May be the name should be changed as RtpFrameSink instead of RtpFrameBuilder class
-
+    /// <summary>
+    /// Represent the base frame builder class
+    /// </summary>
     public abstract class RtpFrameBuilder : IDisposable
     {
+        /// <summary>
+        /// Raised when a complete frame has been received
+        /// </summary>
         public event EventHandler<RtpFrameReceivedEventArgs> FrameReceived;
 
 
+
+
+        /// <summary>
+        /// Finalizer
+        /// </summary>
         ~RtpFrameBuilder()
         {
             Dispose( false );
@@ -23,26 +25,42 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
 
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
         public void Dispose()
         {
             Dispose( true );
             GC.SuppressFinalize( this );
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">true when the dispose method is explicity called</param>
+        protected virtual void Dispose( bool disposing )
+        {
+        }
+
+        /// <summary>
+        /// Clear generally used to reset the builder
+        /// </summary>
         public abstract void Clear();
+
+        /// <summary>
+        /// Write a buffer
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
         public abstract void Write( byte[] buffer );
 
 
 
 
-
-
-
-
-        protected virtual void Dispose( bool disposing )
-        {
-        }
-
+        /// <summary>
+        /// Fire an frame received event
+        /// </summary>
+        /// <param name="e">the event to fired outside</param>
         protected virtual void OnFrameReceived( RtpFrameReceivedEventArgs e )
         {
             FrameReceived?.TryInvoke( this , e );
