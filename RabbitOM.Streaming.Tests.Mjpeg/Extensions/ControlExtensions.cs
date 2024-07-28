@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Extensions
             {
                 string element = item as string;
 
-                if ( string.Compare( element ?? string.Empty , text ?? string.Empty , true ) == 1 )
+                if ( string.Compare( element ?? string.Empty , text ?? string.Empty , true ) == 0 )
                 {
                     return true;
                 }
