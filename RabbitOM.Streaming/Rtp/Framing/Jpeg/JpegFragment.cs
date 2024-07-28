@@ -72,15 +72,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             return Type > 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
         }
 
-        /// <summary>
-        /// Format to string
-        /// </summary>
-        /// <returns>returns true for a success otherwise</returns>
-        public override string ToString()
-        {
-            return $"{Offset} {Type} {QFactor} {Width} {Height} {Dri} {Mbz} {QTable.Count} {Data.Count}";
-        }
-
 
 
 
