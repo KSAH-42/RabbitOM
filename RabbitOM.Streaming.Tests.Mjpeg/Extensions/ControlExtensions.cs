@@ -14,14 +14,19 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Extensions
 
             foreach ( var item in source )
             {
-                ComboBoxItem element = item as ComboBoxItem;
+                string element = string.Empty;
 
-                if ( element == null )
+                if ( item is string )
                 {
-                    continue;
+                    element = item as string;
                 }
 
-                if ( string.Compare( element.Content as string ?? string.Empty , text ?? string.Empty , true ) == 0 )
+                if ( item is ComboBoxItem )
+                {
+                    element = (item as ComboBoxItem).Content as string;
+                }
+
+                if ( string.Compare( element as string ?? string.Empty , text ?? string.Empty , true ) == 0 )
                 {
                     return true;
                 }
