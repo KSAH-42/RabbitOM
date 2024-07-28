@@ -4,6 +4,8 @@
 
 A .net library for receiving raw audio/video streams using [rtsp](https://www.rfc-editor.org/rfc/rfc2326). 
 
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.png)
+
 # Main features
 
 * No external dependencies, pure .net
@@ -210,7 +212,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 There is an existing tool used to display picture from a rtsp source that render only a MJPEG steam. This sample can demonstrate how to build a player.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.Hik.png)
 
 # Getting more details ?
 
