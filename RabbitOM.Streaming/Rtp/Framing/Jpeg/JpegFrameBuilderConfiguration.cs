@@ -11,9 +11,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
-		private readonly object _lock = new object();
+        private readonly object _lock = new object();
 
-		private int _maximumPayloadSize      = DefaultMaximumPayloadSize;
+        private int _maximumPayloadSize      = DefaultMaximumPayloadSize;
         private int _numberOfPacketsPerFrame = DefaultNumberOfPacketsPerFrame;
 
 

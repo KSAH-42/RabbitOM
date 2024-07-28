@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// <summary>
     /// Represent the jpeg fragment
     /// </summary>
-	public sealed class JpegFragment
+    public sealed class JpegFragment
     {
         /// <summary>
         /// The minimum length
@@ -144,7 +144,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             result.Data = new ArraySegment<byte>( buffer.Array , offset , buffer.Count - (offset - buffer.Offset) );
-			
+            
             return true;
         }
     }

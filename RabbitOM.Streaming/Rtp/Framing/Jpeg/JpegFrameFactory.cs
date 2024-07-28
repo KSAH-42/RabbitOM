@@ -37,9 +37,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             {
                 if ( ! JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
                 {
-					return false;
-				}
-				
+                    return false;
+                }
+                
                 _imageBuilder.AddFragment( fragment );
             }
 
