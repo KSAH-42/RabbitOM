@@ -1,4 +1,4 @@
-# A rtsp client based on the .net framework
+# Rtsp client based on the .net framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
