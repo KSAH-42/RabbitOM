@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             if ( data.Count == 0 )
             {
-                data = _quantizer.CreateDefaultTable( factor );
+                data = _quantizer.CreateTable( factor );
             }
 
             if ( data.Count == 0 )
