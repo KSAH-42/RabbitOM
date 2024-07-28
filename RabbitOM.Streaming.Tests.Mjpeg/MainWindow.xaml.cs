@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
                     return;
                 }
 
-                if ( ! _uris.Items.Contains( _uris.Text ) )
+                if ( ! _uris.Contains( _uris.Text ) )
                 {
                     _uris.Items.Add( _uris.Text );
                 }
