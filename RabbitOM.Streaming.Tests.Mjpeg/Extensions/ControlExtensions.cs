@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace RabbitOM.Streaming.Tests.Mjpeg
+namespace RabbitOM.Streaming.Tests.Mjpeg.Extensions
 {
     public static class ControlExtensions
     {
-        public static bool Contains( this ComboBox source , string text )
+        public static bool Any( this ItemCollection source , string text )
         {
             if ( source == null )
             {
                 throw new ArgumentNullException( nameof( source ) );
             }
 
-            foreach ( var item in source.Items )
+            foreach ( var item in source )
             {
                 string element = item as string;
 

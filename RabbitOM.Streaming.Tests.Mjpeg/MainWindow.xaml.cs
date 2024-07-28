@@ -36,6 +36,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
     using RabbitOM.Streaming.Rtp.Framing.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Streaming.Tests.Mjpeg.Extensions;
 
     public partial class MainWindow : Window
     {
@@ -89,7 +90,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
                     return;
                 }
 
-                if ( ! _uris.Contains( _uris.Text ) )
+                if ( ! _uris.Items.Any( _uris.Text ) )
                 {
                     _uris.Items.Add( _uris.Text );
                 }
