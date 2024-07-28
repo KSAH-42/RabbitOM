@@ -8,7 +8,7 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 
 # Main features
 
-* No external dependencies, pure .net
+* No external dependencies
 * Support Unicast TCP (interleaved mode) / Unicast UDP / Multicast Streaming transports
 * Support multiple authentications: Basic, MD5, SHA256, SHA512
 * Support auto reconnection in case of network failures
