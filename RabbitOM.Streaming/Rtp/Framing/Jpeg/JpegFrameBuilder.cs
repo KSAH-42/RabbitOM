@@ -5,8 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     public sealed class JpegFrameBuilder : RtpFrameBuilder
     {
-        private readonly object _lock = new object();
-
+        private readonly object _lock;
         private readonly JpegFrameBuilderConfiguration _configuration;
         private readonly JpegFrameFactory _factory;
         private readonly JpegFrameAggregator _aggregator;
@@ -16,6 +15,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public JpegFrameBuilder()
         {
+            _lock = new object();
             _configuration = new JpegFrameBuilderConfiguration();
             _factory = new JpegFrameFactory();
             _aggregator = new JpegFrameAggregator( _configuration );
@@ -55,6 +55,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+
         }
 
         public override void Clear()
