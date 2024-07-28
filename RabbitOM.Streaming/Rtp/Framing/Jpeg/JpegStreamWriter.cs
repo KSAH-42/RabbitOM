@@ -1,29 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
-    public sealed class JpegStreamWriter : IDisposable
+    public sealed partial class JpegStreamWriter : IDisposable
     {
-        private const int SegmentMaxLength = 0xFFFF;
-
-        private static readonly byte[] StartOfImageMarker      = { 0xFF , 0xD8 };
-        private static readonly byte[] EndOfImageMarker        = { 0xFF , 0xD9 };
-        private static readonly byte[] ApplicationJFIFMarker   = { 0xFF , 0xE0 };
-        private static readonly byte[] DriMarker               = { 0xFF , 0xDD };
-        private static readonly byte[] QuantizationTableMarker = { 0xFF , 0xDB };
-        private static readonly byte[] StartOfScanMarker       = { 0xFF , 0xDA };
-        private static readonly byte[] StartOfFrameMarker      = { 0xFF , 0xC0 };
-        private static readonly byte[] HuffmanTableMarker      = { 0xFF , 0xC4 };
-        private static readonly byte[] CommentsMarker          = { 0xFF , 0xFE };
-        private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
-        private static readonly byte[] StartOfScanPayload      = { 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
-
-
-
         private readonly JpegMemoryStream _stream = new JpegMemoryStream();
-        private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
         private readonly JpegQuantizer _quantizer = new JpegQuantizer();
+        private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
+
 
 
 
@@ -238,10 +222,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         public void WriteHuffmanTables()
         {
-            WriteHuffmanTable( JpegConstants.LumDcCodelens , JpegConstants.LumDcSymbols , 0 , 0 );
-            WriteHuffmanTable( JpegConstants.LumAcCodelens , JpegConstants.LumAcSymbols , 0 , 1 );
-            WriteHuffmanTable( JpegConstants.ChmDcCodelens , JpegConstants.ChmDcSymbols , 1 , 0 );
-            WriteHuffmanTable( JpegConstants.ChmAcCodelens , JpegConstants.ChmAcSymbols , 1 , 1 );
+            WriteHuffmanTable( LumDcCodelens , LumDcSymbols , 0 , 0 );
+            WriteHuffmanTable( LumAcCodelens , LumAcSymbols , 0 , 1 );
+            WriteHuffmanTable( ChmDcCodelens , ChmDcSymbols , 1 , 0 );
+            WriteHuffmanTable( ChmAcCodelens , ChmAcSymbols , 1 , 1 );
         }
 
         public void WriteComments( string text )

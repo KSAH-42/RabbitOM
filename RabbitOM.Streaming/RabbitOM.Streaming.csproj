@@ -49,6 +49,7 @@
     <Compile Include="Rtp\Framing\Jpeg\JpegQuantizer.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegImage.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegImageBuilder.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriter.Constants.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriterConfiguration.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegMemoryStream.cs" />
     <Compile Include="Codecs\Decoder.cs" />
