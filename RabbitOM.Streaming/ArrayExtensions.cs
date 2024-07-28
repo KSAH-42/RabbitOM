@@ -74,5 +74,29 @@ namespace RabbitOM.Streaming
 
             return true;
         }
+
+        /// <summary>
+        /// Check if the byte array
+        /// </summary>
+        /// <param name="source">the source</param>
+        /// <param name="target">the target</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool StartsWith( this ArraySegment<byte> source , byte[] target )
+        {
+            if ( source.Array == null || source.Count < target.Length )
+            {
+                return false;
+            }
+
+            for ( int i = 0 ; i < target.Length ; ++ i )
+            {
+                if ( target[ i ] != source.Array[ i + source.Offset ] )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
