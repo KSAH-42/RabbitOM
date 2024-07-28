@@ -210,7 +210,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 # Test player
 
-There is an existing tool used to display picture from a rtsp source that render only a MJPEG steam. This sample can demonstrate how to build a player.
+This project contains also a sample that demonstrate how to create a video player from a mjpeg rtsp source. 
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.Hik.png)
 
