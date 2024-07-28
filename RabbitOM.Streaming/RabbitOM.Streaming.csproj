@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtp\Framing\Jpeg\JpegDataConverter.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegQuantizer.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegImage.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegImageBuilder.cs" />
