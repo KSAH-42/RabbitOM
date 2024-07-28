@@ -9,8 +9,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
        
         public void Dispose()
         {
-            _fragments.Clear();
             _writer.Dispose();
+            _fragments.Clear();
         }
 
         public void AddFragment( JpegFragment fragment )
@@ -27,8 +27,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             return _fragments.Any();
         }
-
-        // TODO: used memozaïtion to for optimizations to build headers byte array
 
         public JpegImage BuildImage()
         {
