@@ -3,27 +3,43 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
+    /// <summary>
+    /// Represent the frame builder class
+    /// </summary>
     public sealed class JpegFrameBuilder : RtpFrameBuilder
     {
         private readonly object _lock;
+
         private readonly JpegFrameBuilderConfiguration _configuration;
+        
         private readonly JpegFrameFactory _factory;
+        
         private readonly JpegFrameAggregator _aggregator;
 
 
 
 
+
+        /// <summary>
+        /// Initialize a new instance of the frame builder class
+        /// </summary>
         public JpegFrameBuilder()
         {
-            _lock = new object();
+            _lock          = new object();
+
             _configuration = new JpegFrameBuilderConfiguration();
-            _factory = new JpegFrameFactory();
-            _aggregator = new JpegFrameAggregator( _configuration );
+            _factory       = new JpegFrameFactory();
+            _aggregator    = new JpegFrameAggregator( _configuration );
         }
 
 
 
 
+
+        
+        /// <summary>
+        /// Gets the builder configuration settings
+        /// </summary>
         public JpegFrameBuilderConfiguration Configuration
         {
             get => _configuration;
@@ -32,6 +48,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
      
 
+
+
+        /// <summary>
+        /// Write the rtp packet
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
         public override void Write( byte[] buffer )
         {
             if ( ! RtpPacket.TryParse( buffer , out RtpPacket packet ) )
@@ -58,6 +80,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         }
 
+        /// <summary>
+        /// Clear
+        /// </summary>
         public override void Clear()
         {
             lock ( _lock )
@@ -67,10 +92,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose( bool disposing )
         {
             lock ( _lock )
