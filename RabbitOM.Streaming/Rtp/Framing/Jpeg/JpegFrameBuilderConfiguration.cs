@@ -2,12 +2,20 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
+    /// <summary>
+    /// Represent the builder configuration class
+    /// </summary>
     public sealed class JpegFrameBuilderConfiguration
     {
-        public const int MTU = 1500;
-        public const int DefaultMaximumPayloadSize = MTU * 3;
-        public const int DefaultNumberOfPacketsPerFrame = 1000;
+        /// <summary>
+        /// The default maximum payload size
+        /// </summary>
+        public const int DefaultMaximumPayloadSize = 1500 * 3;
 
+        /// <summary>
+        /// The default number of packets per frame
+        /// </summary>
+        public const int DefaultNumberOfPacketsPerFrame = 1000;
 
 
 
@@ -18,7 +26,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
-
+        /// <summary>
+        /// Gets / Sets the maximul payload size
+        /// </summary>
         public int MaximumPayloadSize
         {
             get
@@ -38,6 +48,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
         }
 
+        /// <summary>
+        /// Gets / Sets the numbers of packets allowed per frame
+        /// </summary>
         public int NumberOfPacketsPerFrame
         {
             get
