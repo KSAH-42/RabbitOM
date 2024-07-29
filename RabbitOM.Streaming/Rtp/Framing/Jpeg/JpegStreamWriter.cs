@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegMemoryStream _stream = new JpegMemoryStream();
 
-        private readonly JpegQuantizer _quantizer = new JpegQuantizer();
+        private readonly JpegQuantizationTableFactory _quantizationTableFactory = new JpegQuantizationTableFactory();
         
         private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
 
@@ -152,7 +152,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             if ( data.Count == 0 )
             {
-                data = _quantizer.CreateTable( factor );
+                data = _quantizationTableFactory.CreateTable( factor );
             }
 
             if ( data.Count == 0 )
