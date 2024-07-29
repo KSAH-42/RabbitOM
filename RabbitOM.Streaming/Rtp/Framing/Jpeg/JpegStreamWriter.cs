@@ -127,7 +127,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Write DRI segment
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">the value</param>
         public void WriteRestartInterval( int value )
         {
             if ( value > 0 )

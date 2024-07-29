@@ -734,7 +734,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Occurs when a message has been sended
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">the event args</param>
         private void OnMessageSended( RtspMessageSendedEventArgs e )
         {
             _status.KeepStatusActive();
@@ -756,7 +756,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Occurs when the data has been received
         /// </summary>
-        /// <param name="e"></param>
+        /// <param name="e">the event args</param>
         private void OnDataReceived(RtspPacketReceivedEventArgs e )
         {
             DataReceived?.TryInvoke( this , e );

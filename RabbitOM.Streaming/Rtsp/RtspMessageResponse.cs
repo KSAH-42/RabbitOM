@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="status">the status code</param>
-        /// <param name="version"></param>
+        /// <param name="version">the version</param>
         /// <exception cref="ArgumentNullException"/>
         public RtspMessageResponse( RtspMessageStatus status , RtspMessageVersion version )
         {

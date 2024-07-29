@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">the value</param>
         public RtspHeaderSpeed( long value )
         {
             Value = value;
