@@ -47,9 +47,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             for ( int i = 0 ; i < buffer.Length ; ++i )
             {
-                int newVal = ( BaseTable[ i ] * quantizationFactor + 50 ) / 100;
-
-                buffer[ i ] = (newVal < 1) ? (byte) 0x01 : (newVal > 0xFF ) ? (byte) 0xFF : (byte) newVal;
+                buffer[ i ] = JpegDataConverter.ConvertToQuantizedValue( BaseTable[ i ] , quantizationFactor );
             }
 
             _table = new ArraySegment<byte>( buffer , 0 , buffer.Length );

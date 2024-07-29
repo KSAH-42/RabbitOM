@@ -18,5 +18,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             return value < 50 ? ( 5000 / value ) : ( 200 - value * 2 );
         }
+
+        /// <summary>
+        /// Just transform an input value
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <param name="factor">the quantization factor</param>
+        /// <returns>returns a value</returns>
+        public static byte ConvertToQuantizedValue( int value , int factor )
+        {
+            int newVal = ( value * factor + 50 ) / 100;
+
+            return ( newVal < 1 ) ? (byte) 0x01 : ( newVal > 0xFF ) ? (byte) 0xFF : (byte) newVal;
+        }
     }
 }
