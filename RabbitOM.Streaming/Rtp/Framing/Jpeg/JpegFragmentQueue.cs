@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 throw new ArgumentNullException( nameof( collection ) );
             }
 
-            _collection = new Queue<JpegFragment>();  // avoid a filter using linq and pass the result on the constuctor for performance reason, look using reflector
+            _collection = new Queue<JpegFragment>();
 
             foreach ( var element in collection )
             {
