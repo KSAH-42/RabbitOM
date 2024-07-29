@@ -77,7 +77,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
-
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Dispose
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">true for disposing...</param>
         protected override void Dispose( bool disposing )
         {
             lock ( _lock )
