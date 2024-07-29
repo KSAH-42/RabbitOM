@@ -18,13 +18,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Initialize a new instance of the jpeg frame
         /// </summary>
+        /// <param name="data">the data</param>
         /// <param name="width">the width</param>
         /// <param name="height">the height</param>
-        /// <param name="data">the data</param>
-        public JpegFrame( int width , int height , byte[] data )
+        public JpegFrame( byte[] data , int width , int height )
             : base ( data )
         {
-            _width = width;
+            _width  = width;
             _height = height;
         }
 
@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <returns>returns an instance</returns>
         public static JpegFrame NewFrame( JpegImage image )
         {
-            return new JpegFrame( image.Width , image.Height , image.Data );
+            return new JpegFrame( image.Data , image.Width , image.Height );
         }
     }
 }
