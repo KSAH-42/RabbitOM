@@ -39,7 +39,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 {
                     return false;
                 }
-                
+
+                if ( ! _imageBuilder.CanAddFragment( fragment ) )
+                {
+                    return false;
+                }
+
                 _imageBuilder.AddFragment( fragment );
             }
 
