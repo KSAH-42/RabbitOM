@@ -34,19 +34,19 @@ Like this :
 
 using ( var client = new RtspClient() )
 {
-    // Fired when a successfull connection or when the communication has been recovered after a lost
+    // Raised when a successfull connection or when the communication has been recovered after a lost
     client.Connected += (sender, e) =>
     {
         Console.WriteLine("Client connected - " + client.Configuration.Uri);
     };
 
-    // Fired when the communication has been lost
+    // Raised when the communication has been lost
     client.Disconnected += (sender, e) =>
     {
         Console.WriteLine("Client disconnected - " + DateTime.Now);
     };
 
-    // Fired when a raw media data has been received 
+    // Raised when a raw media data has been received 
     client.PacketReceived += (sender, e) =>
     {
         var interleavedPacket = e.Packet as RtspInterleavedPacket;
