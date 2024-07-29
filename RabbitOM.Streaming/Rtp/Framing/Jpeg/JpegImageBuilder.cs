@@ -13,6 +13,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _fragments.Clear();
         }
 
+        public bool CanAddFragment( JpegFragment fragment )
+        {
+            return fragment != null && fragment.TryValidate();
+        }
+
         public void AddFragment( JpegFragment fragment )
         {
             _fragments.Enqueue( fragment );
