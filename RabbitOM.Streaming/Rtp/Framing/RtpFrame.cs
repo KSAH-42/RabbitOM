@@ -9,6 +9,9 @@ namespace RabbitOM.Streaming.Rtp.Framing
     {
         private readonly byte[] _data;
 
+
+
+
         /// <summary>
         /// Initialize an new instance of the frame class
         /// </summary>
@@ -29,6 +32,9 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
             _data = data;
         }
+
+
+
 
         /// <summary>
         /// Gets the data

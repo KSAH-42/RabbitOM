@@ -13,10 +13,12 @@ namespace RabbitOM.Streaming.Rtp
 
 
 
+
+
+
         /// <summary>
         /// Initialize a new instance of the packet queue
         /// </summary>
-
         public RtpPacketQueue()
         {
             _collection = new Queue<RtpPacket>();
@@ -31,7 +33,6 @@ namespace RabbitOM.Streaming.Rtp
         {
             _collection = new Queue<RtpPacket>( capacity );
         }
-
 
         /// <summary>
         /// Initialize a new instance of the packet queue
@@ -55,6 +56,11 @@ namespace RabbitOM.Streaming.Rtp
 
 
 
+
+
+
+
+
         /// <summary>
         /// Gets the number of elements
         /// </summary>
@@ -70,6 +76,11 @@ namespace RabbitOM.Streaming.Rtp
         {
             get => _collection.Count == 0;
         }
+
+
+
+
+
 
 
 

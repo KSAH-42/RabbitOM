@@ -9,6 +9,10 @@ namespace RabbitOM.Streaming.Rtp.Framing
     {
         private readonly RtpFrame _frame;
 
+
+
+
+
         /// <summary>
         /// Initialize a new instancel of the frame event args
         /// </summary>
@@ -18,6 +22,10 @@ namespace RabbitOM.Streaming.Rtp.Framing
         {
             _frame = frame ?? throw new ArgumentNullException( nameof( frame ) );
         }
+
+
+
+
 
         /// <summary>
         /// Gets the frame

@@ -15,6 +15,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
 
+
         /// <summary>
         /// Finalizer
         /// </summary>
@@ -22,6 +23,8 @@ namespace RabbitOM.Streaming.Rtp.Framing
         {
             Dispose( false );
         }
+
+
 
 
 
@@ -53,6 +56,9 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// </summary>
         /// <param name="buffer">the buffer</param>
         public abstract void Write( byte[] buffer );
+
+
+
 
 
 
