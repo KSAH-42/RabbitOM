@@ -1,4 +1,18 @@
 ﻿/*
+
+You can download and configure this rtsp server as a rtsp media source, and it offer many nice features.
+
+https://www.happytimesoft.com/products/rtsp-server/index.html
+
+go to the rtsp server folder, and add movies and the same folder and edit the xml configuration used by this server. and then launch this sample application.
+
+Otherwise use a security ip camera, and go the web page configuration section, and select the mjpeg or jpeg codec.
+and then read the manufacturer pdf in order to get the right rtsp uri. 
+Please also, check the rtsp settings on the web page of the camera.
+
+
+----------------------------------------------------------------------------------------------
+
  
  Please read this section it's important, 
 
