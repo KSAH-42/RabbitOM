@@ -182,6 +182,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
 
         private void OnRenderFrame( object sender , RtpFrameReceivedEventArgs e )
         {
+            // Use a WriteableBitmap instead it's better for this case
+
             try
             {
                 var image = new BitmapImage();
