@@ -2,6 +2,9 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
+    /// <summary>
+    /// Represent the quantizer class
+    /// </summary>
     public sealed class JpegQuantizer
     {
         private static readonly byte[] BaseTable =
@@ -24,9 +27,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             99, 99, 99, 99, 99, 99, 99, 99
         };
 
-
-
-
         private ArraySegment<byte> _table;
 
         private int _factor;
@@ -34,6 +34,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+        /// <summary>
+        /// Generate a new table
+        /// </summary>
+        /// <param name="factor">the factor</param>
+        /// <returns>returns a table</returns>
         public ArraySegment<byte> CreateTable( int factor )
         {
             if ( _table.Count > 0 && _factor == factor )
@@ -56,12 +61,5 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             return _table;
         }
-
-
-
-
-
-
-        
     }
 }
