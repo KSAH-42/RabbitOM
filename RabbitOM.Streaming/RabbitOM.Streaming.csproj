@@ -104,7 +104,7 @@
     <Compile Include="Codecs\G711CodecInfo.cs" />
     <Compile Include="Codecs\H264CodecInfo.cs" />
     <Compile Include="Codecs\H265CodecInfo.cs" />
-    <Compile Include="Codecs\MJPEGCodecInfo.cs" />
+    <Compile Include="Codecs\MJpegCodecInfo.cs" />
     <Compile Include="Codecs\PCMCodecInfo.cs" />
     <Compile Include="Codecs\VideoCodecInfo.cs" />
     <Compile Include="Rtsp\IRtspHeaderValue.cs" />

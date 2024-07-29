@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Codecs
     /// <summary>
     /// Represent a video codec
     /// </summary>
-    public sealed class MJPEGCodecInfo : VideoCodecInfo
+    public sealed class MJpegCodecInfo : VideoCodecInfo
     {
         /// <summary>
         /// Gets the codec type
