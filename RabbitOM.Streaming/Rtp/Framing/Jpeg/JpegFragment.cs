@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return Type > 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
+            return Type >= 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
         }
 
 
