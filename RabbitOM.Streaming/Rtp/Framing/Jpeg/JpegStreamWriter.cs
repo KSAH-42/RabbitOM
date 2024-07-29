@@ -8,8 +8,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     public sealed partial class JpegStreamWriter : IDisposable
     {
         private readonly JpegMemoryStream _stream = new JpegMemoryStream();
+
         private readonly JpegQuantizer _quantizer = new JpegQuantizer();
+        
         private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
+
+
 
 
 
@@ -31,6 +35,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             get => _stream.Length;
         }
+
+
 
 
 

@@ -8,8 +8,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     public sealed class JpegImageBuilder : IDisposable
     {
         private readonly JpegStreamWriter _writer = new JpegStreamWriter();
+
         private readonly JpegFragmentQueue _fragments = new JpegFragmentQueue();
        
+
+
+
+
         /// <summary>
         /// Dispose
         /// </summary>

@@ -11,6 +11,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private readonly MemoryStream _stream = new MemoryStream( 1024 * 10 );
 
 
+
+
+
+
         /// <summary>
         /// Gets the capacity
         /// </summary>
@@ -35,6 +39,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             get => _stream.Length == 0; 
         }
         
+
+
+
+
 
 
         /// <summary>

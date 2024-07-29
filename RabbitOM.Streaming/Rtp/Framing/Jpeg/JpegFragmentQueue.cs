@@ -13,10 +13,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+
+
         /// <summary>
         /// Initialize a new instance of the fragment queue
         /// </summary>
-
         public JpegFragmentQueue()
         {
             _collection = new Queue<JpegFragment>();
@@ -55,6 +56,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+
+
         /// <summary>
         /// Gets the number of elements
         /// </summary>
@@ -70,6 +73,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             get => _collection.Count == 0;
         }
+
+
+
 
 
 

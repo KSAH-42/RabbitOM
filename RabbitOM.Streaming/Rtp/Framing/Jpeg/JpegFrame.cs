@@ -8,7 +8,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     public class JpegFrame : RtpFrame
     {
         private readonly int _width;
+
         private readonly int _height;
+
+
+
+
 
         /// <summary>
         /// Initialize a new instance of the jpeg frame
@@ -22,6 +27,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _width = width;
             _height = height;
         }
+
+
+
+
 
         /// <summary>
         /// Gets the width
@@ -38,6 +47,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             get => _height;
         }
+
+
+
 
 
         /// <summary>

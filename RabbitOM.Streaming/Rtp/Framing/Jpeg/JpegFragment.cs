@@ -15,6 +15,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+
+
         /// <summary>
         /// Gets / Sets the offset
         /// </summary>
@@ -63,6 +65,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
+
+
         /// <summary>
         /// Try to validate
         /// </summary>
@@ -71,6 +75,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             return Type >= 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
         }
+
+
 
 
 

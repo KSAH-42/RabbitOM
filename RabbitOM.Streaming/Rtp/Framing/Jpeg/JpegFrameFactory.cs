@@ -10,6 +10,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegImageBuilder _imageBuilder;
 
+
+
+
+
+
         /// <summary>
         /// Initialize an instance
         /// </summary>
@@ -17,6 +22,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _imageBuilder = new JpegImageBuilder();
         }
+
+
+
+
+
 
         /// <summary>
         /// Dispose

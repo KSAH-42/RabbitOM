@@ -48,7 +48,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
 
-
         /// <summary>
         /// Gets the image in binary form
         /// </summary>

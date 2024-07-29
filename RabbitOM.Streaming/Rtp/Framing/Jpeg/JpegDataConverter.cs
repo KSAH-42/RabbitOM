@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         }
 
         /// <summary>
-        /// Just transform an input value
+        /// Just transform an input value (it reduce the precision of the value)
         /// </summary>
         /// <param name="value">the value</param>
         /// <param name="factor">the quantization factor</param>
