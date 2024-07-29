@@ -149,7 +149,7 @@ You will be able to decorate each request by adding customs headers, because som
 
 # About Session Description Protocol layer
 
-That an exemple of how to use this .net implementation of [SDP](https://www.rfc-editor.org/rfc/rfc4566), please not that is implementation provide custom validation classes which are not explain in this example.
+That's an exemple of how to used the [SDP](https://www.rfc-editor.org/rfc/rfc4566).
 
 ~~~~C#
 
