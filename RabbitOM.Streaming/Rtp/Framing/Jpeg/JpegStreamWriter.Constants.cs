@@ -2,6 +2,9 @@ using System;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
+    /// <summary>
+    /// Represent a stream writer class
+    /// </summary>
     public sealed partial class JpegStreamWriter
     {                               
         private const int SegmentMaxLength = 0xFFFF;
