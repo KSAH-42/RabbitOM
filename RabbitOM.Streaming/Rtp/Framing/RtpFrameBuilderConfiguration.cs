@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
     /// <summary>
     /// Represent the builder configuration class
     /// </summary>
-    public class FrameBuilderConfiguration
+    public class RtpFrameBuilderConfiguration
     {
         /// <summary>
         /// The default maximum payload size

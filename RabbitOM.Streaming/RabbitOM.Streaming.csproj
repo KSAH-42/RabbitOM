@@ -46,8 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rtp\Framing\H265\H265Frame.cs" />
+    <Compile Include="Rtp\Framing\H265\H265FrameBuilderConfiguration.cs" />
     <Compile Include="Rtp\Framing\H265\H265NalUnit.cs" />
     <Compile Include="Rtp\Framing\H265\H265NalUnitQueue.cs" />
+    <Compile Include="Rtp\Framing\H265\H265FrameBuilder.cs" />
+    <Compile Include="Rtp\Framing\H265\H265FrameAggregator.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilderConfiguration.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegQuantizer.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegQuantizationTableFactory.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegImage.cs" />
@@ -64,7 +68,6 @@
     <Compile Include="Rtp\Framing\Jpeg\JpegFragment.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameAggregator.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilder.cs" />
-    <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilderConfiguration.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameFactory.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriter.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrame.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="Rtp\Framing\RtpFrameBuilder.cs" />
     <Compile Include="Rtp\Framing\RtpFrame.cs" />
     <Compile Include="Rtp\Framing\RtpFrameReceivedEventArgs.cs" />
+    <Compile Include="Rtp\Framing\RtpFrameBuilderConfiguration.cs" />
     <Compile Include="Rtp\RtpPacketQueue.cs" />
     <Compile Include="Rtp\RtpPacket.cs" />
     <Compile Include="Rtp\PacketType.cs" />
