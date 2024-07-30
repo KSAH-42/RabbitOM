@@ -26,7 +26,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        
+
+        public override FrameBuilderType Type
+        {
+            get => FrameBuilderType.H265;
+        }
+
         public H265FrameBuilderConfiguration Configuration
         {
             get => _configuration;

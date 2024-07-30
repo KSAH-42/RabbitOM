@@ -28,6 +28,17 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
 
+        /// <summary>
+        /// Gets the type
+        /// </summary>
+        public abstract FrameBuilderType Type
+        {
+            get;
+        }
+
+
+
+
 
         /// <summary>
         /// Dispose

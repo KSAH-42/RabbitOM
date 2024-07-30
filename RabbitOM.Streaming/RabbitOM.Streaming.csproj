@@ -72,6 +72,7 @@
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriter.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrame.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFragmentQueue.cs" />
+    <Compile Include="Rtp\Framing\FrameBuilderType.cs" />
     <Compile Include="Rtp\Framing\RtpFrameBuilder.cs" />
     <Compile Include="Rtp\Framing\RtpFrame.cs" />
     <Compile Include="Rtp\Framing\RtpFrameReceivedEventArgs.cs" />
