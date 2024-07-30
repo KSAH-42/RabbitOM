@@ -71,11 +71,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             result = new H265NalUnit();
 
-            result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
-            result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x1  ) == 1;
+            result.TID           = (byte)        ( ( header      ) & 0x07 );
             result.LayerId       = (byte)        ( ( header >> 8 ) & 0x01 );
             result.LayerId      |= (byte)        ( ( header >> 3 ) & 0x1F );
-            result.TID           = (byte)        ( ( header      ) & 0x07 );
+            result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
+            result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x1  ) == 1;
 
             result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + ++ index , buffer.Count - index );
             
