@@ -10,17 +10,17 @@ namespace RabbitOM.Streaming.Codecs
         /// <summary>
         /// Video codec
         /// </summary>
-        H264 = 1,
+        Jpeg,
+
+        /// <summary>
+        /// Video codec
+        /// </summary>
+        H264,
 
         /// <summary>
         /// Video codec
         /// </summary>
         H265,
-
-        /// <summary>
-        /// Video codec
-        /// </summary>
-        MJPEG ,
 
         /// <summary>
         /// Audio codec
