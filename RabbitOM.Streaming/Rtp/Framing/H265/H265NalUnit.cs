@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public bool ForbiddenBit { get; set; }
         
-        public byte Type { get; set; }
+        public NalUnitType Type { get; set; }
         
         public byte LayerId { get; set; }
         
@@ -58,11 +58,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 Prefix = new ArraySegment<byte>( prefix , 0 , prefix.Length ),
             };
 
-            result.ForbiddenBit  = (byte) ( ( buffer.Array[ buffer.Offset + index ] >> 7 ) & 0x1  ) == 1;
-            result.Type          = (byte) ( ( buffer.Array[ buffer.Offset + index ] >> 1 ) & 0x3F );
-            result.LayerId       = (byte) ( ( buffer.Array[ buffer.Offset + index ] << 7 ) & 0x80 );
-            result.LayerId      |= (byte) ( ( buffer.Array[ buffer.Offset + index ] >> 3 ) & 0x1F );
-            result.TID           = (byte) ( ( buffer.Array[ buffer.Offset + index ]      ) & 0x03 );
+            result.ForbiddenBit  = (byte)        ( ( buffer.Array[ buffer.Offset + index ] >> 7 ) & 0x1  ) == 1;
+            result.Type          = (NalUnitType) ( ( buffer.Array[ buffer.Offset + index ] >> 1 ) & 0x3F );
+            result.LayerId       = (byte)        ( ( buffer.Array[ buffer.Offset + index ] << 7 ) & 0x80 );
+            result.LayerId      |= (byte)        ( ( buffer.Array[ buffer.Offset + index ] >> 3 ) & 0x1F );
+            result.TID           = (byte)        ( ( buffer.Array[ buffer.Offset + index ]      ) & 0x03 );
 
             result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + ++ index , buffer.Count - index );
             
