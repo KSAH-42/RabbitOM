@@ -23,32 +23,17 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        /// <summary>
-        /// Try to aggregate until a marker has been detected and depending the builder configuration settings
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
         public bool TryAggregate( RtpPacket packet , out IEnumerable<RtpPacket> result )
         {
             result = null;
 
-            if (   packet == null || packet.Payload.Count > _builder.MaximumPayloadSize || _packets.Count > _builder.NumberOfPacketsPerFrame )
+            if ( ! OnAggregating( packet ) )
             {
                 _packets.Clear();
 
                 return false;
             }
-
-            if ( packet.Type != PacketType.MPEG4 ||
-                packet.Type != PacketType.MPEG4_DYNAMIC_A ||
-                packet.Type != PacketType.MPEG4_DYNAMIC_B 
-             )
-             {
-            }
-
-
-
+        
             _packets.Enqueue( packet );
 
             if ( packet.Marker )
@@ -61,20 +46,43 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return result != null;
         }
 
-        /// <summary>
-        /// Remove all pending packets
-        /// </summary>
         public void Clear()
         {
             _packets.Clear();
         }
 
-        /// <summary>
-        /// Dispose
-        /// </summary>
         public void Dispose()
         {
             _packets.Clear();
+        }
+
+
+
+
+
+        private bool OnAggregating( RtpPacket packet )
+        {
+            if ( packet == null )
+            {
+                return false;
+            }
+
+            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
+            {
+                return false;
+            }
+
+            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            {
+                return false;
+            }
+
+            return packet.Type == PacketType.MPEG4
+                || packet.Type == PacketType.MPEG4_DYNAMIC_A
+                || packet.Type == PacketType.MPEG4_DYNAMIC_B
+                || packet.Type == PacketType.MPEG4_DYNAMIC_C
+                || packet.Type == PacketType.MPEG4_DYNAMIC_D
+                ;
         }
     }
 }
