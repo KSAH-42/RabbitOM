@@ -5,8 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// <summary>
     /// Represent the builder configuration class
     /// </summary>
-    public sealed class JpegFrameBuilderConfiguration : FrameBuilderConfiguration
+    public sealed class JpegFrameBuilderConfiguration : RtpFrameBuilderConfiguration
     {
-        
     }
 }

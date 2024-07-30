@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             _configuration = new JpegFrameBuilderConfiguration();
             _factory       = new JpegFrameFactory();
-            _aggregator    = new JpegFrameAggregator( _configuration );
+            _aggregator    = new JpegFrameAggregator( this );
         }
 
 
@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Gets the builder configuration settings
         /// </summary>
-        public JpegFrameBuilderConfiguration Configuration
+        public RtpFrameBuilderConfiguration Configuration
         {
             get => _configuration;
         }

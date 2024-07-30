@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// </summary>
     public sealed class JpegFrameAggregator : IDisposable
     {
-        private readonly JpegFrameBuilderConfiguration _configuration;
+        private readonly JpegFrameBuilder _builder;
 
         private readonly RtpPacketQueue _packets;
 
@@ -19,11 +19,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Initialize the aggregator
         /// </summary>
-        /// <param name="configuration">the configuration</param>
+        /// <param name="builder">the builder</param>
         /// <exception cref="ArgumentNullException"/>
-        public JpegFrameAggregator( JpegFrameBuilderConfiguration configuration )
+        public JpegFrameAggregator( JpegFrameBuilder builder )
         {
-            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
+            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
             _packets = new RtpPacketQueue();
         }
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             result = null;
 
-            if ( packet == null || packet.Type != PacketType.JPEG  || packet.Payload.Count > _configuration.MaximumPayloadSize || _packets.Count > _configuration.NumberOfPacketsPerFrame )
+            if ( ! OnAggregating( packet ) )
             {
                 _packets.Clear();
 
@@ -74,6 +74,36 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Dispose()
         {
             _packets.Clear();
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Occurs to perform before the aggregation
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        private bool OnAggregating( RtpPacket packet )
+        {
+            if ( packet == null || packet.Type != PacketType.JPEG )
+            {
+                return false;
+            }
+
+            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
+            {
+                return false;
+            }
+
+            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
