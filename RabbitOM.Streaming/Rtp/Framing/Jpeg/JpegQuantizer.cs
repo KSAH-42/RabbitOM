@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         /// <param name="value">value</param>
         /// <returns>returns a values</returns>
-        public static int CreateFactor( int value )
+        public static int AdaptFactor( int value )
         {
             value = value < 1 ? 1 : ( value > 99 ? 99 : value );
 

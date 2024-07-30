@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             byte[] buffer = new byte[ BaseTable.Length ];
 
-            int quantizationFactor = JpegQuantizer.CreateFactor( factor );
+            int quantizationFactor = JpegQuantizer.AdaptFactor( factor );
 
             for ( int i = 0 ; i < buffer.Length ; ++i )
             {
