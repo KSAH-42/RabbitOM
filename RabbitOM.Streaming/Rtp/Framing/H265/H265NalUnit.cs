@@ -10,8 +10,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        public ArraySegment<byte> Prefix { get; set; }
-
         public bool ForbiddenBit { get; set; }
         
         public NalUnitType Type { get; set; }
@@ -32,9 +30,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         // TODO: to be removed
         public override string ToString()
         {
-            return $"{Prefix.Count} {ForbiddenBit} {Type} {LayerId} {TID} {Payload.Count}";
+            return $"{(byte)Type} {ForbiddenBit} {LayerId} {TID} {Payload.Count}";
         }
 
+
+
+        /*
+            +---------------+---------------+
+            |0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
+            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+            |F|   Type    |  LayerId  | TID |
+            +-------------+-----------------+
+         */
 
 
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
@@ -50,19 +57,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                        : buffer.StartsWith( StartPrefixS4 ) ? StartPrefixS4
                        : StartPrefixS0;
                        ;
-
+            
             int index = prefix.Length;
 
-            result = new H265NalUnit()
-            {
-                Prefix = new ArraySegment<byte>( prefix , 0 , prefix.Length ),
-            };
+            int header = ( buffer.Array[ buffer.Offset + index ] << 8 ) | ( buffer.Array[ buffer.Offset + ++ index ] );
 
-            result.ForbiddenBit  = (byte)        ( ( buffer.Array[ buffer.Offset + index ] >> 7 ) & 0x1  ) == 1;
-            result.Type          = (NalUnitType) ( ( buffer.Array[ buffer.Offset + index ] >> 1 ) & 0x3F );
-            result.LayerId       = (byte)        ( ( buffer.Array[ buffer.Offset + index ] << 7 ) & 0x80 );
-            result.LayerId      |= (byte)        ( ( buffer.Array[ buffer.Offset + index ] >> 3 ) & 0x1F );
-            result.TID           = (byte)        ( ( buffer.Array[ buffer.Offset + index ]      ) & 0x03 );
+            result = new H265NalUnit();
+
+            result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
+            result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x1  ) == 1;
+            result.LayerId       = (byte)        ( ( header >> 8 ) & 0x01 );
+            result.LayerId      |= (byte)        ( ( header >> 3 ) & 0x1F );
+            result.TID           = (byte)        ( ( header      ) & 0x07 );
 
             result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + ++ index , buffer.Count - index );
             
