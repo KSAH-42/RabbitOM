@@ -105,6 +105,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <param name="disposing">true for disposing...</param>
         protected override void Dispose( bool disposing )
         {
+            if ( ! disposing )
+            {
+                return;
+            }
+
             lock ( _lock )
             {
                 _aggregator.Dispose();
