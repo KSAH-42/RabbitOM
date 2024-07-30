@@ -57,7 +57,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                        : buffer.StartsWith( StartPrefixS4 ) ? StartPrefixS4
                        : StartPrefixS0;
                        ;
-            
+
+            if ( (buffer.Count - (prefix.Length+2) ) <= 0 )
+            {
+                return false;
+            }
+
             int index = prefix.Length;
 
             int header = ( buffer.Array[ buffer.Offset + index ] << 8 ) | ( buffer.Array[ buffer.Offset + ++ index ] );
