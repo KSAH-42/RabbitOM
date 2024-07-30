@@ -30,14 +30,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         }
 
         // TODO: to be removed
-		public override string ToString()
-		{
-			return $"{Prefix.Count} {ForbiddenBit} {Type} {LayerId} {TID} {Payload.Count}";
-		}
+        public override string ToString()
+        {
+            return $"{Prefix.Count} {ForbiddenBit} {Type} {LayerId} {TID} {Payload.Count}";
+        }
 
 
 
-		public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
+        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = default;
 
