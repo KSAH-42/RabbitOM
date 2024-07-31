@@ -19,8 +19,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public H265FrameBuilder()
         {
+#if !DEBUG
             throw new NotImplementedException( "the implementation is not yet finished" );
-
+#endif
             _lock = new object();
 
             _configuration = new H265FrameBuilderConfiguration();
