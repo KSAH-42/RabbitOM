@@ -48,6 +48,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public override void Write( byte[] buffer )
         {
+            throw new NotImplementedException("this is method is not yet finished");
+
             if ( ! RtpPacket.TryParse( buffer , out RtpPacket packet ) )
             {
                 return;
@@ -57,7 +59,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             lock ( _lock )
             {
-                if ( ! _aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
+                if ( !_aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
                 {
                     return;
                 }

@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
                 {
-					Console.WriteLine( nalUnit );
+					
                 }
             }
 
