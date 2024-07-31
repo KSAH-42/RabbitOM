@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
+namespace RabbitOM.Streaming.Rtp.Framing
 {
     /// <summary>
     /// Represent a memory stream
     /// </summary>
-    public sealed class JpegMemoryStream : IDisposable
+    public sealed class RtpMemoryStream : IDisposable
     {
         private readonly MemoryStream _stream = new MemoryStream( 1024 * 10 );
 

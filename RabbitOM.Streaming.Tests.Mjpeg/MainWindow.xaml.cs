@@ -10,6 +10,7 @@ Otherwise use a security ip camera, and go the web page configuration section, a
 and then read the manufacturer pdf in order to get the right rtsp uri. 
 Please also, check the rtsp settings on the web page of the camera.
 
+After setting a jpeg rtsp server using the happyRtspServer, please make that you receive the JPEG (not H264,or...) stream using vlc, and then launch this app.
 
 ----------------------------------------------------------------------------------------------
 

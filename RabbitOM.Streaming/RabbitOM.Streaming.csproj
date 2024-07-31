@@ -60,7 +60,7 @@
     <Compile Include="Rtp\Framing\Jpeg\JpegImageBuilder.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriter.Constants.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriterConfiguration.cs" />
-    <Compile Include="Rtp\Framing\Jpeg\JpegMemoryStream.cs" />
+    <Compile Include="Rtp\Framing\RtpMemoryStream.cs" />
     <Compile Include="Codecs\Decoder.cs" />
     <Compile Include="Codecs\IDecoder.cs" />
     <Compile Include="DelegateExtensions.cs" />
