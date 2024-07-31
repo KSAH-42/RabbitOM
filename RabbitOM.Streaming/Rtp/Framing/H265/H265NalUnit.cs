@@ -36,13 +36,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
         /*
-            Please note that from the rfc, bit order is not like 7 6 5 4 3 2 1 0 | 7 6 5 4 3 2 1 0 
-
+            From the rfc: 
             +---------------+---------------+
             |0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
             +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
             |F|   Type    |  LayerId  | TID |
             +-------------+-----------------+
+
+            Please note that the bit order is not like 7 6 5 4 3 2 1 0 | 7 6 5 4 3 2 1 0 
          */
 
 
