@@ -56,10 +56,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return false;
             }
 
-            var prefix = buffer.StartsWith( StartPrefixS3 ) ? StartPrefixS3
-                       : buffer.StartsWith( StartPrefixS4 ) ? StartPrefixS4
-                       : StartPrefixS0;
-                       ;
+            var prefix = buffer.StartsWith( StartPrefixS3 ) ? StartPrefixS3 : buffer.StartsWith( StartPrefixS4 ) ? StartPrefixS4 : StartPrefixS0;
 
             if ( (buffer.Count - (prefix.Length+2) ) <= 0 )
             {
