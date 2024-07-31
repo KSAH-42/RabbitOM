@@ -19,7 +19,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public H265FrameBuilder()
         {
-            _lock          = new object();
+            throw new NotImplementedException( "the implementation is not yet finished" );
+
+            _lock = new object();
 
             _configuration = new H265FrameBuilderConfiguration();
             _frameFactory  = new H265FrameFactory();
@@ -48,8 +50,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public override void Write( byte[] buffer )
         {
-            throw new NotImplementedException("this is method is not yet finished");
-
             if ( ! RtpPacket.TryParse( buffer , out RtpPacket packet ) )
             {
                 return;
