@@ -4,11 +4,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public struct FragmentationUnit
     {
-        public static readonly FragmentationUnit Empty = new FragmentationUnit();
-
-
-
-
         public bool StartBit { get; private set; }
         
         public bool EndBit { get; private set; }
