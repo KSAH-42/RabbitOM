@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         
         public byte LayerId { get; set; }
         
-        public byte TID { get; set; }
+        public byte Tid { get; set; }
         
         public ArraySegment<byte> Payload { get; set; }
 
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             result = new H265NalUnit();
 
-            result.TID           = (byte)        ( ( header      ) & 0x07 );
+            result.Tid           = (byte)        ( ( header      ) & 0x07 );
             result.LayerId       = (byte)        ( ( header >> 3 ) & 0x1F );
             result.LayerId      |= (byte)        ( ( header >> 8 ) & 0x01 );
             result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
