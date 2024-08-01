@@ -960,6 +960,14 @@ namespace RabbitOM.Streaming.Rtsp
                 return RtspDigestAlgorithmType.SHA_512;
             }
 
+            if (string.Compare( "SHA-1" , method , ignoreCase ) == 0 ||
+                string.Compare( "SHA1"  , method , ignoreCase ) == 0 ||
+                string.Compare( "SHA"   , method , ignoreCase ) == 0
+                )
+            {
+                return RtspDigestAlgorithmType.SHA_1;
+            }
+
             return RtspDigestAlgorithmType.UnDefined;
         }
 
