@@ -108,6 +108,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                         return request.Headers.TryAddOrUpdate( _factory.CreateDigestMD5Authorization( credentials , request.Method , uri.ToString() ) );
                     }
 
+                    if ( _factory.CanCreateDigestSHA1Authorization() )
+                    {
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA1Authorization( credentials , request.Method , uri.ToString() ) );
+                    }
+
                     if ( _factory.CanCreateDigestSHA256Authorization() )
                     {
                         return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA256Authorization( credentials , request.Method , uri.ToString() ) );

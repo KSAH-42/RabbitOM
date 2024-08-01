@@ -18,6 +18,11 @@ namespace RabbitOM.Streaming.Rtsp
         MD5,
 
         /// <summary>
+        /// The SHA type
+        /// </summary>
+        SHA_1,
+
+        /// <summary>
         /// The SHA 256 type
         /// </summary>
         SHA_256,

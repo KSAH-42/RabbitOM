@@ -62,6 +62,15 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
+        /// Check if a SHA 1 authorization can be created
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool CanCreateDigestSHA1Authorization()
+        {
+            return _header != null && _header.Type == RtspAuthenticationType.Digest && _header.Algorithm == RtspDigestAlgorithmType.SHA_1;
+        }
+
+        /// <summary>
         /// Check if a SHA 256 authorization can be created
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
@@ -127,6 +136,18 @@ namespace RabbitOM.Streaming.Rtsp
         public RtspHeader CreateDigestMD5Authorization( RtspCredentials credentials , RtspMethod method , string uri )
         {
             return CreateDigestAuthorization( new RtspMD5AuthorizationChallenge( credentials ) , method , uri );
+        }
+
+        /// <summary>
+        /// Create an authorization header
+        /// </summary>
+        /// <param name="credentials">the credentials</param>
+        /// <param name="method">the method</param>
+        /// <param name="uri">the uri</param>
+        /// <returns>returns a header, otherwise null</returns>
+        public RtspHeader CreateDigestSHA1Authorization( RtspCredentials credentials , RtspMethod method , string uri )
+        {
+            return CreateDigestAuthorization( new RtspSHA1AuthorizationChallenge( credentials ) , method , uri );
         }
 
         /// <summary>

@@ -247,6 +247,7 @@
     <Compile Include="Rtsp\RtspQueue.cs" />
     <Compile Include="Rtsp\RtspQueue.Scope.cs" />
     <Compile Include="Rtsp\RtspSeparator.cs" />
+    <Compile Include="Rtsp\RtspSHA1AuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspSHA256AuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspSHA512AuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
