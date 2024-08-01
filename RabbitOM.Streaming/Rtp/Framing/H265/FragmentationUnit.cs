@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
-    public struct H265FragmentationUnit
+    public struct FragmentationUnit
     {
         public bool StartBit { get; set; }
         
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        public static bool TryParse( ArraySegment<byte> buffer , out H265FragmentationUnit result )
+        public static bool TryParse( ArraySegment<byte> buffer , out FragmentationUnit result )
         {
             result = default;
 
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return false;
             }
 
-            result = new H265FragmentationUnit();
+            result = new FragmentationUnit();
 
             result.StartBit = ( ( buffer.Array[ buffer.Offset ] >> 7 ) & 0x1 ) == 1;
             result.EndBit   = ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x1 ) == 1;
