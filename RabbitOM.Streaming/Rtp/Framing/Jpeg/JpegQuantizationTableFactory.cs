@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     /// <summary>
-    /// Represent the quantizer class
+    /// Represent the quantization table factory class
     /// </summary>
     public sealed class JpegQuantizationTableFactory
     {
