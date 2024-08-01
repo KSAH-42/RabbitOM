@@ -39,11 +39,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _stream.WriteAsBinary( data );
         }
 
-        public void WriteStartMarker()
-        {
-            _stream.WriteAsBinary( StartMarker );
-        }
-
         public void WriteParameterSet( ArraySegment<byte> data )
         {
             if ( data.Count == 0 )
