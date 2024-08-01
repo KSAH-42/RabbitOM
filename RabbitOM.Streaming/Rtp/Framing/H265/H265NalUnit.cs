@@ -16,8 +16,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-
-
+        
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = null;
