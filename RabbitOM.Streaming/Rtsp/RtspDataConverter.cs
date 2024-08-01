@@ -339,6 +339,9 @@ namespace RabbitOM.Streaming.Rtsp
                 case RtspDigestAlgorithmType.MD5:
                     return "MD5";
 
+                case RtspDigestAlgorithmType.SHA_1:
+                    return "SHA-1";
+
                 case RtspDigestAlgorithmType.SHA_256:
                     return "SHA-256";
 
