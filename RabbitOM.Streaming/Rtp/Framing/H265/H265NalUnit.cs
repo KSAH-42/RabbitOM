@@ -4,12 +4,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265NalUnit
     {
-        private static readonly byte[] StartPrefixS0   = { };
-        private static readonly byte[] StartPrefixS3   = { 0x00 , 0x00 , 0x01 };
-        private static readonly byte[] StartPrefixS4   = { 0x00 , 0x00 , 0x00 , 0x01 };
-
-
-
         public bool ForbiddenBit { get; set; }
         
         public NalUnitType Type { get; set; }
@@ -51,21 +45,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             result = default;
 
-            if ( buffer.Count <= StartPrefixS4.Length )
+            if ( buffer.Count <= 2 )
             {
                 return false;
             }
 
-            var prefix = buffer.StartsWith( StartPrefixS3 ) ? StartPrefixS3 : buffer.StartsWith( StartPrefixS4 ) ? StartPrefixS4 : StartPrefixS0;
-
-            if ( (buffer.Count - (prefix.Length+2) ) <= 0 )
-            {
-                return false;
-            }
-
-            int index = prefix.Length;
-
-            int header = ( buffer.Array[ buffer.Offset + index ] << 8 ) | ( buffer.Array[ buffer.Offset + ++ index ] );
+            int header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
 
             result = new H265NalUnit();
 
@@ -75,7 +60,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
             result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x1  ) == 1;
 
-            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + ++ index , buffer.Count - index );
+            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             
             return true;
         }
