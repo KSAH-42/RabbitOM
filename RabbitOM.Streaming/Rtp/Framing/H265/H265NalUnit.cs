@@ -16,29 +16,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+
         public bool TryValidate()
         {
-            return Payload != null && Payload.Count >= 1;
-        }
-
-        // TODO: to be removed
-        public override string ToString()
-        {
-            return $"{(byte)Type} {ForbiddenBit} {LayerId} {TID} {Payload.Count}";
+            return Payload.Count >= 1;
         }
 
 
-
-        /*
-            From the rfc: 
-            +---------------+---------------+
-            |0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
-            +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-            |F|   Type    |  LayerId  | TID |
-            +-------------+-----------------+
-
-            Please note that the bit order is not like 7 6 5 4 3 2 1 0 | 7 6 5 4 3 2 1 0 
-         */
 
 
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
