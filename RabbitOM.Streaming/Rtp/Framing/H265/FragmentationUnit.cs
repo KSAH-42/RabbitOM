@@ -4,13 +4,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public struct FragmentationUnit
     {
-        public bool StartBit { get; set; }
+        public bool StartBit { get; private set; }
         
-        public bool EndBit { get; set; }
+        public bool EndBit { get; private set; }
         
-        public byte Type { get; set; }
+        public byte Type { get; private set; }
 
-        public ArraySegment<byte> Data { get; set; }
+        public ArraySegment<byte> Data { get; private set; }
 
 
 
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         }
 
 
-
+        
 
         public static bool TryParse( ArraySegment<byte> buffer , out FragmentationUnit result )
         {
