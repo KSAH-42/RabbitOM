@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// <summary>
     /// Represent the a jpeg frame
     /// </summary>
-    public class JpegFrame : RtpFrame
+    public sealed class JpegFrame : RtpFrame
     {
         private readonly int _width;
 
