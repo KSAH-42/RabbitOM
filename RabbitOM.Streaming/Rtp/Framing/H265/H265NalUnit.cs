@@ -16,6 +16,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+
+        public bool TryValidate()
+        {
+            return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
+        }
+
+
+
         
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
