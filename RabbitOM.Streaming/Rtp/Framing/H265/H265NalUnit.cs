@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         
         public byte TemporalId { get; set; }
         
-        public ArraySegment<byte> Payload { get; set; }
+        public ArraySegment<byte> Data { get; set; }
 
 
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
             result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x1  ) == 1;
 
-            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
+            result.Data = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             
             return true;
         }
