@@ -22,15 +22,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return false;
             }
 
-            foreach ( RtpPacket packet in packets )
-            {
-                if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
-                {
-					
-                }
-            }
-
-            return false;
+            throw new NotImplementedException();
         }
     }
 }
