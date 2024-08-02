@@ -7,10 +7,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// </summary>
     public sealed class JpegFragment
     {
-        /// <summary>
-        /// The minimum length
-        /// </summary>
-        public const int MinimumLength = 16;
+        private const int MinimumLength = 16;
 
 
 
