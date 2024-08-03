@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _writer.WriteApplicationJFIF();
             _writer.WriteRestartInterval( firstFragment.Dri );
             _writer.WriteQuantizationTable( firstFragment.QTable , firstFragment.QFactor );
-            _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable.Count );
+            _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable , firstFragment.QFactor );
             _writer.WriteHuffmanTables();
             _writer.WriteStartOfScan();
             _writer.Write( firstFragment.Data );

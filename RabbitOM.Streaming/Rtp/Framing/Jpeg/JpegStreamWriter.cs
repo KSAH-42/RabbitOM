@@ -206,9 +206,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <param name="type">the type</param>
         /// <param name="width">the width</param>
         /// <param name="height">the height</param>
-        /// <param name="quantizationTableLength">the table length</param>
+        /// <param name="quantizationTable">the quantization table</param>
+        /// <param name="quantizationFactor">the quantization factor</param>
         /// <exception cref="ArgumentException"/>
-        public void WriteStartOfFrame( int type , int width , int height , long quantizationTableLength )
+        public void WriteStartOfFrame( int type , int width , int height , ArraySegment<byte> quantizationTable , int quantizationFactor )
         {
             if ( type < 0 )
             {
@@ -225,14 +226,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 throw new ArgumentException( nameof( height ) );
             }
 
-            if ( quantizationTableLength < 0 )
+            if ( quantizationTable.Count == 0 )
             {
-                throw new ArgumentException( nameof( quantizationTableLength ) );
+                quantizationTable = _quantizationTableFactory.CreateTable( quantizationFactor );
+            }
+
+            if ( quantizationTable.Count == 0 )
+            {
+                throw new ArgumentException( nameof( quantizationTable ) );
             }
 
             byte componentParameterA = ( type & 1 ) != 0 ? (byte) 0x22 : (byte) 0x21;
 
-            byte componentParameterB = quantizationTableLength <= 64 ? (byte) 0x00 : (byte) 0x01;
+            byte componentParameterB = quantizationTable.Count <= 64 ? (byte) 0x00 : (byte) 0x01;
 
             _stream.WriteAsBinary( StartOfFrameMarker );
             _stream.WriteAsByte( 0x00 );
