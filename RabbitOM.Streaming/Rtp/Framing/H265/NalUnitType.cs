@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         RESERVED_NVCL45 = 45,
         RESERVED_NVCL46 = 46,
         RESERVED_NVCL47 = 47,
-        AGGREGATE = 48,
+        AGGREGATION = 48,
         FRAGMENTATION = 49,
         UNSPECIFIED_50 = 50,
         UNSPECIFIED_51 = 51,
