@@ -46,9 +46,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         }
 
         /// <summary>
-        /// Gets the builder configuration settings
+        /// Gets the builder configuration
         /// </summary>
-        public RtpFrameBuilderConfiguration Configuration
+        public JpegFrameBuilderConfiguration Configuration
         {
             get => _configuration;
         }
