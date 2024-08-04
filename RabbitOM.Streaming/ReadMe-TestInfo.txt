@@ -1,10 +1,4 @@
 ﻿Please considered that all classes which 
-are NOT commented are not tested 
-against the physical world, with real cameras etc...
+are NOT commented will never be used in production.
 
-The rest of classes are tested elsewhere and in different ways.
-
-But remember: class which are not documented are not tested. 
-
-
-
+The classes are not finished
