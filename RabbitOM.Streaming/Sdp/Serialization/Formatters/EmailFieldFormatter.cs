@@ -9,6 +9,15 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
     public static class EmailFieldFormatter
     {
         /// <summary>
+        /// Gets the tokenizer used for parsing
+        /// </summary>
+        public static Tokenizer Tokenizer { get; } = new Tokenizer();
+
+
+
+
+
+        /// <summary>
         /// Format to string the field
         /// </summary>
         /// <param name="field">the field</param>
@@ -43,7 +52,7 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
                 return false;
             }
 
-            var tokens = value.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var tokens = Tokenizer.Split( value , ' ' );
 
             if ( ! tokens.Any() )
             {

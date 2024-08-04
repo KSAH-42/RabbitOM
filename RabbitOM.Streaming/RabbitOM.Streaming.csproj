@@ -299,6 +299,7 @@
     <Compile Include="Sdp\RepeatField.cs" />
     <Compile Include="Sdp\RepeatFieldCollection.cs" />
     <Compile Include="Sdp\RtpMapAttributeValue.cs" />
+    <Compile Include="Sdp\Serialization\Formatters\Tokenizer.cs" />
     <Compile Include="Sdp\Serialization\Formatters\AttributeFieldFormatter.cs" />
     <Compile Include="Sdp\Serialization\Formatters\BandwithFieldFormatter.cs" />
     <Compile Include="Sdp\Serialization\Formatters\ConnectionFieldFormatter.cs" />
