@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _reassembler.Clear();
         }
 
-        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
+        public bool TryCreateFrames( IEnumerable<RtpPacket> packets , out IEnumerable<RtpFrame> result )
         {
             result = null;
 
@@ -25,6 +25,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 return false;
             }
+
+            _reassembler.Clear();
 
             foreach ( RtpPacket packet in packets )
             {

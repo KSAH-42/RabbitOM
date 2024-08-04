@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return;
             }
 
-            RtpFrame frame = null;
+            IEnumerable<RtpFrame> frames = null;
 
             lock ( _lock )
             {
@@ -65,15 +65,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                     return;
                 }
 
-                if ( !_frameFactory.TryCreateFrame( packets , out frame ) )
+                if ( !_frameFactory.TryCreateFrames( packets , out frames ) )
                 {
                     return;
                 }
             }
 
-            if ( frame != null )
+            if ( frames != null )
             {
-                OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+                foreach ( RtpFrame frame in frames )
+                {
+                    // Add Frame.Type = I_Frame/P_Frame/B_Frame ?
+                    OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+                }
             }
         }
 
