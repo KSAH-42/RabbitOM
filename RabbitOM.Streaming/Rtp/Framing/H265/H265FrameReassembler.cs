@@ -26,7 +26,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             
             else  if ( nalUnit.Type == NalUnitType.AGGREGATION )
             {
-
                 OnAddAggregation( nalUnit );
             }
             
