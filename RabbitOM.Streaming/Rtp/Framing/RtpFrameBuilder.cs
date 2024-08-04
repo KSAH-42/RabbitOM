@@ -16,6 +16,15 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
 
+        private readonly object _lock = new object();
+
+        private readonly RtpFrameBuilderConfiguration _configuration = new RtpFrameBuilderConfiguration();
+
+
+
+
+
+
         /// <summary>
         /// Finalizer
         /// </summary>
@@ -23,6 +32,28 @@ namespace RabbitOM.Streaming.Rtp.Framing
         {
             Dispose( false );
         }
+
+
+
+
+
+
+        /// <summary>
+        /// Gets the sync root
+        /// </summary>
+        public object SyncRoot
+        {
+            get => _lock;
+        }
+
+        /// <summary>
+        /// Gets the builder configuration
+        /// </summary>
+        public RtpFrameBuilderConfiguration Configuration
+        {
+            get => _configuration;
+        }
+
 
 
 
@@ -55,7 +86,6 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// </summary>
         /// <param name="buffer">the buffer</param>
         public abstract void Write( byte[] buffer );
-
 
 
 

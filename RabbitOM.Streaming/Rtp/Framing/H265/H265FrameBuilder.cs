@@ -5,10 +5,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265FrameBuilder : RtpFrameBuilder
     {
-        private readonly object _lock;
-
-        private readonly RtpFrameBuilderConfiguration _configuration;
-
         private readonly H265FrameFactory _frameFactory;
 
         private readonly H265FrameAggregator _aggregator;
@@ -22,25 +18,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 #if !DEBUG
             throw new NotImplementedException( "the implementation is not finished, this class must not be used in production." );
 #endif
-            _lock = new object();
-
-            _configuration = new RtpFrameBuilderConfiguration();
             _frameFactory  = new H265FrameFactory();
             _aggregator    = new H265FrameAggregator( this );
         }
 
 
 
-
-
-
-        public RtpFrameBuilderConfiguration Configuration
-        {
-            get => _configuration;
-        }
-
-
-     
 
 
 
@@ -53,7 +36,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             IEnumerable<RtpFrame> frames = null;
 
-            lock ( _lock )
+            lock ( SyncRoot )
             {
                 if ( !_aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
                 {
@@ -78,7 +61,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public override void Clear()
         {
-            lock ( _lock )
+            lock ( SyncRoot )
             {
                 _aggregator.Clear();
                 _frameFactory.Clear();
@@ -92,7 +75,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return;
             }
 
-            lock ( _lock )
+            lock ( SyncRoot )
             {
                 _aggregator.Dispose();
                 _frameFactory.Dispose();

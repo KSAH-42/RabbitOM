@@ -8,10 +8,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// </summary>
     public sealed class JpegFrameBuilder : RtpFrameBuilder
     {
-        private readonly object _lock;
-
-        private readonly RtpFrameBuilderConfiguration _configuration;
-        
         private readonly JpegFrameFactory _factory;
         
         private readonly JpegFrameAggregator _aggregator;
@@ -25,28 +21,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         public JpegFrameBuilder()
         {
-            _lock          = new object();
-
-            _configuration = new RtpFrameBuilderConfiguration();
-            _factory       = new JpegFrameFactory();
-            _aggregator    = new JpegFrameAggregator( this );
+            _factory    = new JpegFrameFactory();
+            _aggregator = new JpegFrameAggregator( this );
         }
 
 
 
-
-
-
-        /// <summary>
-        /// Gets the builder configuration
-        /// </summary>
-        public RtpFrameBuilderConfiguration Configuration
-        {
-            get => _configuration;
-        }
-
-
-     
 
 
 
@@ -63,7 +43,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             RtpFrame frame = null;
 
-            lock ( _lock )
+            lock ( SyncRoot )
             {
                 if ( ! _aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
                 {
@@ -84,7 +64,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         public override void Clear()
         {
-            lock ( _lock )
+            lock ( SyncRoot )
             {
                 _aggregator.Clear();
                 _factory.Clear();
@@ -102,7 +82,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return;
             }
 
-            lock ( _lock )
+            lock ( SyncRoot )
             {
                 _aggregator.Dispose();
                 _factory.Dispose();
