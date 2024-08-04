@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
@@ -23,10 +24,35 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
         }
 
+        public IEnumerable<ArraySegment<byte>> SplitData()
+        {
+            var results = new Queue<ArraySegment<byte>>();
+
+            if ( Data.Count > 2 )
+            {
+                int index = 0;
+
+                while ( index < Data.Count )
+                {
+                    int size = Data.Array[ Data.Offset + index ++ ] * 0x100 | Data.Array[ Data.Offset +  index ++ ];
+
+                    if ( 0 < size && size < Data.Count - 2 )
+                    {
+                        results.Enqueue( new ArraySegment<byte>( Data.Array , index , size ) );
+                    }
+
+                    index += size;
+                }
+            }
+            
+            return results;
+        }
 
 
 
-        
+
+
+
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = null;
