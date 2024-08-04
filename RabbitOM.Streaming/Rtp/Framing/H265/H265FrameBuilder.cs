@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
     {
         private readonly object _lock;
 
-        private readonly H265FrameBuilderConfiguration _configuration;
+        private readonly RtpFrameBuilderConfiguration _configuration;
 
         private readonly H265FrameFactory _frameFactory;
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 #endif
             _lock = new object();
 
-            _configuration = new H265FrameBuilderConfiguration();
+            _configuration = new RtpFrameBuilderConfiguration();
             _frameFactory  = new H265FrameFactory();
             _aggregator    = new H265FrameAggregator( this );
         }
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             get => FrameBuilderType.H265;
         }
 
-        public H265FrameBuilderConfiguration Configuration
+        public RtpFrameBuilderConfiguration Configuration
         {
             get => _configuration;
         }

@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly object _lock;
 
-        private readonly JpegFrameBuilderConfiguration _configuration;
+        private readonly RtpFrameBuilderConfiguration _configuration;
         
         private readonly JpegFrameFactory _factory;
         
@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _lock          = new object();
 
-            _configuration = new JpegFrameBuilderConfiguration();
+            _configuration = new RtpFrameBuilderConfiguration();
             _factory       = new JpegFrameFactory();
             _aggregator    = new JpegFrameAggregator( this );
         }
@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Gets the builder configuration
         /// </summary>
-        public JpegFrameBuilderConfiguration Configuration
+        public RtpFrameBuilderConfiguration Configuration
         {
             get => _configuration;
         }
