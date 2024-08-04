@@ -38,14 +38,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
         /// <summary>
-        /// Gets the type
-        /// </summary>
-        public override FrameBuilderType Type
-        {
-            get => FrameBuilderType.Jpeg;
-        }
-
-        /// <summary>
         /// Gets the builder configuration
         /// </summary>
         public RtpFrameBuilderConfiguration Configuration
