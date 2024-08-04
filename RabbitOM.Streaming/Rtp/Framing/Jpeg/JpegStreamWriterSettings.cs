@@ -3,9 +3,9 @@
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     /// <summary>
-    /// Represent the writer configuration class
+    /// Represent the writer settings class
     /// </summary>
-    public sealed class JpegStreamWriterConfiguration
+    public sealed class JpegStreamWriterSettings
     {
         /// <summary>
         /// Gets / Sets the major version value

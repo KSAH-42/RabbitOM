@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory = new JpegQuantizationTableFactory();
         
-        private readonly JpegStreamWriterConfiguration _configuration = new JpegStreamWriterConfiguration();
+        private readonly JpegStreamWriterSettings _configuration = new JpegStreamWriterSettings();
 
 
 
@@ -21,9 +21,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
         /// <summary>
-        /// Gets the configuration
+        /// Gets the settings
         /// </summary>
-        public JpegStreamWriterConfiguration Configuration
+        public JpegStreamWriterSettings Settings
         {
             get => _configuration;
         }
