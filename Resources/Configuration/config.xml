@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Please copy this file on the same folder of the Happytime rtsp server application 
+<!-- 
 
-and run the following command:
+Download the server at https://www.happytimesoft.com/products/rtsp-server/index.html
+
+On the same folder of RtspServer.exe :
+
+  * copy this files
+  * video files
+  
+Then run the following command:
 
 RtspServer.exe -c config.xml
+
+Use vlc to check if the server config correctly.
+
+A please configure the supported codecs.
 
 -->
 
