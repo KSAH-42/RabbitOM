@@ -25,8 +25,7 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
 
             var address = DataConverter.ConvertToLoopBackIfEmpty(field.Address, field.AddressType);
 
-            builder.AppendFormat(
-                  "{0} {1} {2}"
+            builder.AppendFormat( "{0} {1} {2}"
                 , DataConverter.ConvertToString(field.NetworkType)
                 , DataConverter.ConvertToString(field.AddressType)
                 , address 
