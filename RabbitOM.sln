@@ -21,6 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{C8BA138C-6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Streaming.Tests.Mjpeg", "RabbitOM.Streaming.Tests.Mjpeg\RabbitOM.Streaming.Tests.Mjpeg.csproj", "{FAE346A3-9229-4ADA-A0F0-EBC2A56F3681}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{48314992-1774-4F55-BEF3-E4F6272F889E}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\Configuration\config.xml = Resources\Configuration\config.xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +54,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C8BA138C-6603-4FBC-8033-5F6ED9E3D6D8} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
+		{48314992-1774-4F55-BEF3-E4F6272F889E} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B4AD862-E72F-4EE0-8635-83FD58C5B14A}
