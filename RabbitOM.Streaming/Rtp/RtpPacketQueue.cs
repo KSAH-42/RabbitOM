@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Rtp
                 throw new ArgumentNullException( nameof( collection ) );
             }
 
-            _collection = new Queue<RtpPacket>();  // avoid a filter using linq and pass the result on the constuctor for performance reason, look using reflector
+            _collection = new Queue<RtpPacket>();
 
             foreach ( var element in collection )
             {
