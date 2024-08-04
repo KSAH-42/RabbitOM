@@ -2,16 +2,15 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
-    public class H265FrameReassembler : IDisposable
+    public sealed class H265FrameReassembler : IDisposable
     {
-        ~H265FrameReassembler()
+        public void Dispose()
         {
-            Dispose( false );
         }
 
-
-
-
+        public void Clear()
+        {
+        }
 
         public void AddNalUnit( H265NalUnit nalUnit )
         {
@@ -37,35 +36,22 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
         }
 
-        public virtual void Clear()
+
+
+
+
+
+
+
+        private void OnAdd( H265NalUnit nalUnit )
         {
         }
 
-        public void Dispose()
-        {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        protected void Dispose( bool disposing )
+        private void OnAddAggregation( H265NalUnit nalUnit )
         {
         }
 
-
-
-
-
-
-
-        protected virtual void OnAdd( H265NalUnit nalUnit )
-        {
-        }
-
-        protected virtual void OnAddAggregation( H265NalUnit nalUnit )
-        {
-        }
-
-        protected virtual void OnAddFragmentation( H265NalUnit nalUnit )
+        private void OnAddFragmentation( H265NalUnit nalUnit )
         {
             if ( ! FragmentationUnit.TryParse( nalUnit.Data , out FragmentationUnit fragmentation ) )
             {
