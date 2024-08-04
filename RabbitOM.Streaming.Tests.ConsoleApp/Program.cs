@@ -45,7 +45,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
             }
             
             using ( var client = new RtspClient() )
-            using ( var writer = new RabbitOM.Streaming.Rtp.Framing.H265.H265FrameBuilder() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
                 {
@@ -91,14 +90,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
 
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
-
-                    writer.Write( e.Packet.Data );
-                };
-
-                writer.FrameReceived += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
-					Console.WriteLine("Frame received : " + e.Frame.Data.Length );
                 };
 
                 // Please note, read the manufacturer's documentation
