@@ -10,15 +10,6 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
     public static class MediaDescriptionFieldFormatter
     {
         /// <summary>
-        /// Gets the tokenizer used for parsing
-        /// </summary>
-        public static Tokenizer Tokenizer { get; } = new Tokenizer();
-
-
-
-
-
-        /// <summary>
         /// Format to string the field
         /// </summary>
         /// <param name="field">the field</param>
@@ -64,9 +55,9 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
                 return false;
             }
 
-            var tokens = Tokenizer.Split( DataConverter.ReArrange( value , '/' ) );
+            var tokens = DataConverter.ReArrange( value , '/' ).Split(new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens.Length < 4 )
+            if (tokens.Length < 4)
             {
                 return false;
             }
