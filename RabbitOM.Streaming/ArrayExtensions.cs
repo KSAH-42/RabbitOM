@@ -20,16 +20,12 @@ namespace RabbitOM.Streaming
                 return true;
             }
 
-            if ( source == null || target == null )
+            if ( source == null || target == null || source.Length != target.Length )
             {
                 return false;
             }
-
-            if ( source.Length != target.Length )
-            {
-                return false;
-            }
-
+            
+            // use this, linq is too slow
             for ( int i = 0 ; i < source.Length ; ++ i )
             {
                 if ( source[ i ] != target[ i ] )
@@ -54,12 +50,7 @@ namespace RabbitOM.Streaming
                 return true;
             }
 
-            if ( source.Array == null || target.Array == null )
-            {
-                return false;
-            }
-
-            if ( source.Count != target.Count )
+            if ( source.Array == null || target.Array == null || source.Count != target.Count )
             {
                 return false;
             }
