@@ -8,6 +8,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// </summary>
     public sealed class JpegFrameBuilder : RtpFrameBuilder
     {
+        private readonly JpegFrameBuilderConfiguration _configuration;
+
         private readonly JpegFrameFactory _factory;
         
         private readonly JpegFrameAggregator _aggregator;
@@ -21,10 +23,22 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         public JpegFrameBuilder()
         {
-            _factory    = new JpegFrameFactory();
-            _aggregator = new JpegFrameAggregator( this );
+            _configuration = new JpegFrameBuilderConfiguration();
+            _factory       = new JpegFrameFactory();
+            _aggregator    = new JpegFrameAggregator( this );
         }
 
+
+
+
+
+        /// <summary>
+        /// Gets the builder configuration
+        /// </summary>
+        public JpegFrameBuilderConfiguration Configuration
+        {
+            get => _configuration;
+        }
 
 
 

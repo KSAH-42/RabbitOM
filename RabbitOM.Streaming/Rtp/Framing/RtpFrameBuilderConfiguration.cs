@@ -46,8 +46,21 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// </summary>
         public int MaximumPayloadSize
         {
-            get => GetField( ref _maximumPayloadSize );
-            set => SetField( ref _maximumPayloadSize , value );
+            get
+            {
+                lock ( SyncRoot )
+                {
+                    return _maximumPayloadSize;
+                }
+            }
+
+            set
+            {
+                lock ( SyncRoot )
+                {
+                    _maximumPayloadSize = value;
+                }
+            }
         }
 
         /// <summary>
@@ -55,40 +68,20 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// </summary>
         public int NumberOfPacketsPerFrame
         {
-            get => GetField( ref _numberOfPacketsPerFrame );
-            set => SetField( ref _numberOfPacketsPerFrame , value );
-        }
-
-
-
-
-
-
-        /// <summary>
-        /// Get the field value using a lock
-        /// </summary>
-        /// <typeparam name="TValue">type of the value</typeparam>
-        /// <param name="memberValue">the member value</param>
-        /// <returns>returns a value</returns>
-        protected TValue GetField<TValue>( ref TValue memberValue )
-        {
-            lock ( _lock )
+            get
             {
-                return memberValue;
+                lock ( SyncRoot )
+                {
+                    return _numberOfPacketsPerFrame;
+                }
             }
-        }
 
-        /// <summary>
-        /// Set the field value using a lock
-        /// </summary>
-        /// <typeparam name="TValue">type of the value</typeparam>
-        /// <param name="memberValue">the member value</param>
-        /// <param name="value">the value</param>
-        protected void SetField<TValue>( ref TValue memberValue , TValue value )
-        {
-            lock ( _lock )
+            set
             {
-                memberValue = value;
+                lock ( SyncRoot )
+                {
+                    _numberOfPacketsPerFrame = value;
+                }
             }
         }
     }

@@ -18,9 +18,6 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
         private readonly object _lock = new object();
 
-        private readonly RtpFrameBuilderConfiguration _configuration = new RtpFrameBuilderConfiguration();
-
-
 
 
 
@@ -44,14 +41,6 @@ namespace RabbitOM.Streaming.Rtp.Framing
         public object SyncRoot
         {
             get => _lock;
-        }
-
-        /// <summary>
-        /// Gets the builder configuration
-        /// </summary>
-        public RtpFrameBuilderConfiguration Configuration
-        {
-            get => _configuration;
         }
 
 
