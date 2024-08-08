@@ -113,7 +113,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _writer.SetLength( _headersPosition );
             }
 
-            while ( _fragments.Count > 0 )
+            while ( _fragments.Any() )
             {
                 _writer.Write( _fragments.Dequeue().Data );
             }
