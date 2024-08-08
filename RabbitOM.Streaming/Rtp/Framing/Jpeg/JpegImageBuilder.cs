@@ -80,14 +80,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         /// <returns>returns an instance</returns>
         /// <remarks>
-        ///     <para>For optimization reason, this method don't recreate headers.</para>
-        ///     <para>Some approach consist to create headers after write data on the stream.</para>
+        ///     <para>For optimization reasons, this method don't recreate headers.</para>
+        ///     <para>Some approach consist to a byte array that contains headers values after write data on the stream using the ToArray method.</para>
         ///     <para>Another approach is used here.</para>
-        ///     <para>No headers array is created.</para>
-        ///     <para>Instead it saves the position on the stream, and restore it if no changed occurs.</para>
+        ///     <para>We saves the position on the stream, and restore it if no changed occurs.</para>
         ///     <para>This approach is prefered because:</para>
-        ///     <para> we save allocation times and memory</para>
-        ///     <para> and reused the internal array of <see cref="System.IO.MemoryStream". />.</para>
+        ///     <para> it save allocation times</para>
+        ///     <para> it save allocation memory</para>
+        ///     <para> and it reused the internal array of <see cref="System.IO.MemoryStream"/>.</para>
         /// </remarks>
         public JpegImage BuildImage()
         {
@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
             else
             {
-				_writer.SetLength( _headersPosition );
+                _writer.SetLength( _headersPosition );
             }
 
             _writer.Write( firstFragment.Data );
@@ -138,12 +138,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <returns>returns true if the headers need to be created</returns>
         private bool OnBuildHeaders( JpegFragment fragment )
         {
-			if ( _headersPosition == 0 )
+            if ( _headersPosition == 0 )
             {
-				return true;
-			}
+                return true;
+            }
 
-			if ( _firstFragment == null || fragment == null )
+            if ( _firstFragment == null || fragment == null )
             {
                 return true;
             }
