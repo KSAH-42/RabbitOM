@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -111,7 +110,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
             else
             {
-                _writer.SetLength( _headersPosition );
+			    _writer.SetLength( _headersPosition );
             }
 
             _writer.Write( firstFragment.Data );
@@ -153,7 +152,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 || _firstFragment.Width   != fragment.Width
                 || _firstFragment.Height  != fragment.Height
                 || _firstFragment.Dri     != fragment.Dri
-                || _firstFragment.QTable.SequenceEqual( fragment.QTable ) == false
+                || _firstFragment.QTable.IsEqualTo( fragment.QTable ) == false
                 ;
         }
     }

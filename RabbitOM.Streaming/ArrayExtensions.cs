@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming
         /// <param name="source">the source</param>
         /// <param name="target">the target</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool SequenceEquals( this byte[] source , byte[] target )
+        public static bool IsEqualTo( this byte[] source , byte[] target )
         {
             if ( source == target )
             {
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming
         /// <param name="source">the source</param>
         /// <param name="target">the target</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool SequenceEquals( this ArraySegment<byte> source , ArraySegment<byte> target )
+        public static bool IsEqualTo( this ArraySegment<byte> source , ArraySegment<byte> target )
         {
             if ( object.ReferenceEquals( source.Array , target.Array ) )
             {
