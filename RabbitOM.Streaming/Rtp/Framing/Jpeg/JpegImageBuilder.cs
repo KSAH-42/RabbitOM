@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             var firstFragment = _fragments.Peek();
 
-            if ( OnHeadersBuilding( firstFragment ) )
+            if ( OnCreatingHeaders( firstFragment ) )
             {
                 _writer.Clear();
 
@@ -104,7 +104,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _writer.WriteHuffmanTables();
                 _writer.WriteStartOfScan();
 
-                OnHeadersBuilded( firstFragment );
+                OnCreatedHeaders( firstFragment );
 
                 _headersPosition = _writer.Length;
             }
@@ -133,7 +133,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         /// <param name="fragment">the first fragment</param>
         /// <returns>returns true if the headers need to be created</returns>
-        private bool OnHeadersBuilding( JpegFragment fragment )
+        private bool OnCreatingHeaders( JpegFragment fragment )
         {
             if ( _headersPosition == 0 || _firstFragment == null || fragment == null )
             {
@@ -153,7 +153,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// Occurs when the headers has been created
         /// </summary>
         /// <param name="firstFragment">the first fragment</param>
-        private void OnHeadersBuilded( JpegFragment firstFragment )
+        private void OnCreatedHeaders( JpegFragment firstFragment )
         {
             _firstFragment = firstFragment;
         }
