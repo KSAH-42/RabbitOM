@@ -96,8 +96,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             {
                 _writer.Clear();
                 
-                // Build headers
-
                 _writer.WriteStartOfImage();
                 _writer.WriteApplicationJFIF();
                 _writer.WriteRestartInterval( firstFragment.Dri );
@@ -112,7 +110,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
             else
             {
-			    _writer.SetLength( _headersPosition );
+                _writer.SetLength( _headersPosition );
             }
 
             _writer.Write( firstFragment.Data );
