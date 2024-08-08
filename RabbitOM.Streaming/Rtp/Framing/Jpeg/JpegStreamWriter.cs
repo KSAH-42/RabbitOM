@@ -69,6 +69,21 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         }
 
         /// <summary>
+        /// Set the length
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <exception cref="ArgumentException"/>
+        public void SetLength( long value )
+        {
+            if ( value < 0 )
+            {
+                throw new ArgumentException( nameof( value ) ); 
+            }
+
+            _stream.SetLength( value );
+        }
+
+        /// <summary>
         /// Write data 
         /// </summary>
         /// <param name="data">the data</param>

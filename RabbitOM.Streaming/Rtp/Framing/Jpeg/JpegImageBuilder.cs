@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -11,23 +12,39 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegFragmentQueue _fragments = new JpegFragmentQueue();
 
+        private JpegFragment _firstFragment;
+
+        private long _headersPosition = 0;
+
+
+
+
+
+
         /// <summary>
         /// Dispose
         /// </summary>
         public void Dispose()
         {
             _writer.Dispose();
-            _fragments.Clear();
         }
 
         /// <summary>
-        /// Check if the fragment can be added
+        /// Removes all fragments
         /// </summary>
-        /// <param name="fragment">the fragment</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool CanAddFragment( JpegFragment fragment )
+        public void Clear()
         {
-            return fragment != null && fragment.TryValidate();
+            _fragments.Clear();
+            _firstFragment = null;
+            _headersPosition = 0;
+        }
+
+        /// <summary>
+        /// Call this method before adding any fragements
+        /// </summary>
+        public void Initialize()
+        {
+            _fragments.Clear();
         }
 
         /// <summary>
@@ -40,11 +57,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         }
 
         /// <summary>
-        /// Removes all fragments
+        /// Check if the fragment can be added
         /// </summary>
-        public void Clear()
+        /// <param name="fragment">the fragment</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool CanAddFragment( JpegFragment fragment )
         {
-            _fragments.Clear();
+            return fragment != null && fragment.TryValidate();
         }
 
         /// <summary>
@@ -60,19 +79,41 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// Build the image from the fragments
         /// </summary>
         /// <returns>returns an instance</returns>
+        /// <remarks>
+        ///     <para>For optimization reason, this method don't recreate headers.</para>
+        ///     <para>Some approach consist to create headers after write data on the stream.</para>
+        ///     <para>Another approach is used here.</para>
+        ///     <para>No headers array is created.</para>
+        ///     <para>Instead it saves the position on the stream, and restore it if no changed occurs.</para>
+        ///     <para>This approach is prefered because:</para>
+        ///     <para> we save allocation times and memory</para>
+        ///     <para> and reused the internal array of <see cref="System.IO.MemoryStream". />.</para>
+        /// </remarks>
         public JpegImage BuildImage()
         {
             var firstFragment = _fragments.Dequeue();
 
-            _writer.Clear();
+            if ( OnBuildHeaders( firstFragment ) )
+            {
+                _firstFragment = firstFragment;
 
-            _writer.WriteStartOfImage();
-            _writer.WriteApplicationJFIF();
-            _writer.WriteRestartInterval( firstFragment.Dri );
-            _writer.WriteQuantizationTable( firstFragment.QTable , firstFragment.QFactor );
-            _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable , firstFragment.QFactor );
-            _writer.WriteHuffmanTables();
-            _writer.WriteStartOfScan();
+                _writer.Clear();
+                
+                _writer.WriteStartOfImage();
+                _writer.WriteApplicationJFIF();
+                _writer.WriteRestartInterval( firstFragment.Dri );
+                _writer.WriteQuantizationTable( firstFragment.QTable , firstFragment.QFactor );
+                _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable , firstFragment.QFactor );
+                _writer.WriteHuffmanTables();
+                _writer.WriteStartOfScan();
+
+                _headersPosition = _writer.Length;
+            }
+            else
+            {
+				_writer.SetLength( _headersPosition );
+            }
+
             _writer.Write( firstFragment.Data );
 
             while ( _fragments.Count > 0 )
@@ -83,6 +124,37 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _writer.WriteEndOfImage();
 
             return new JpegImage( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Occurs when the image headers need to be created
+        /// </summary>
+        /// <param name="fragment">the first fragment</param>
+        /// <returns>returns true if the headers need to be created</returns>
+        private bool OnBuildHeaders( JpegFragment fragment )
+        {
+			if ( _headersPosition == 0 )
+            {
+				return true;
+			}
+
+			if ( _firstFragment == null || fragment == null )
+            {
+                return true;
+            }
+
+            return _firstFragment.Type    != fragment.Type 
+                || _firstFragment.QFactor != fragment.QFactor
+                || _firstFragment.Width   != fragment.Width
+                || _firstFragment.Height  != fragment.Height
+                || _firstFragment.Dri     != fragment.Dri
+                || _firstFragment.QTable.SequenceEqual( fragment.QTable ) == false
+                ;
         }
     }
 }

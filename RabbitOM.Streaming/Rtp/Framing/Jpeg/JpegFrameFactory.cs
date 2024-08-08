@@ -34,6 +34,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Dispose()
         {
             _imageBuilder.Dispose();
+            _imageBuilder.Clear();
         }
 
         /// <summary>
@@ -59,7 +60,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            _imageBuilder.Clear();
+            _imageBuilder.Initialize();
 
             foreach ( RtpPacket packet in packets )
             {
