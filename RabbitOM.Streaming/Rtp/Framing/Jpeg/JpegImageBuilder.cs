@@ -90,12 +90,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </remarks>
         public JpegImage BuildImage()
         {
-            var firstFragment = _fragments.Dequeue();
+            var firstFragment = _fragments.Peek();
 
-            if ( OnBuildingHeaders( firstFragment ) )
+            if ( OnHeadersBuilding( firstFragment ) )
             {
                 _writer.Clear();
-                
+
                 _writer.WriteStartOfImage();
                 _writer.WriteApplicationJFIF();
                 _writer.WriteRestartInterval( firstFragment.Dri );
@@ -104,7 +104,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _writer.WriteHuffmanTables();
                 _writer.WriteStartOfScan();
 
-                _firstFragment = firstFragment;
+                OnHeadersBuilded( firstFragment );
 
                 _headersPosition = _writer.Length;
             }
@@ -112,8 +112,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             {
                 _writer.SetLength( _headersPosition );
             }
-
-            _writer.Write( firstFragment.Data );
 
             while ( _fragments.Count > 0 )
             {
@@ -135,7 +133,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         /// <param name="fragment">the first fragment</param>
         /// <returns>returns true if the headers need to be created</returns>
-        private bool OnBuildingHeaders( JpegFragment fragment )
+        private bool OnHeadersBuilding( JpegFragment fragment )
         {
             if ( _headersPosition == 0 || _firstFragment == null || fragment == null )
             {
@@ -149,6 +147,15 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 || _firstFragment.Dri     != fragment.Dri
                 || _firstFragment.QTable.IsEqualTo( fragment.QTable ) == false
                 ;
+        }
+
+        /// <summary>
+        /// Occurs when the headers has been created
+        /// </summary>
+        /// <param name="firstFragment">the first fragment</param>
+        private void OnHeadersBuilded( JpegFragment firstFragment )
+        {
+            _firstFragment = firstFragment;
         }
     }
 }
