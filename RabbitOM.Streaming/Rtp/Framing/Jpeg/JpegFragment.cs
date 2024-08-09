@@ -37,12 +37,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <summary>
         /// Gets / Sets the DRI (Define Restart Interval)
         /// </summary>
-        public int Dri { get; set; }
+        public int RestartInterval { get; set; }
 
         /// <summary>
         /// Gets / Sets the MBZ (Must Be Zero)
         /// </summary>
-        public int Mbz { get; set; }
+        public int MustBeZero { get; set; }
 
         /// <summary>
         /// Gets / Sets the quantization factor
@@ -106,16 +106,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             if ( result.Type >= 64 )
             {
-                result.Dri = buffer.Array[ offset++ ] << 8 | buffer.Array[ offset++ ];
+                result.RestartInterval = buffer.Array[ offset++ ] << 8 | buffer.Array[ offset++ ];
 
                 offset += 2;
             }
 
             if ( result.Offset == 0 && result.QFactor >= 128 )
             {
-                result.Mbz = buffer.Array[ offset++ ];
+                result.MustBeZero = buffer.Array[ offset++ ];
 
-                if ( result.Mbz == 0 )
+                if ( result.MustBeZero == 0 )
                 {
                     offset ++;
 

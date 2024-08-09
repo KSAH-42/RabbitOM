@@ -147,7 +147,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             if ( value > 0 )
             {
-                _stream.WriteAsBinary( DriMarker );
+                _stream.WriteAsBinary( RestartIntervalMarker );
                 _stream.WriteAsByte( 0x00 );
                 _stream.WriteAsByte( 0x04 );
                 _stream.WriteAsUInt16( value );

@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         private static readonly byte[] StartOfImageMarker      = { 0xFF , 0xD8 };
         private static readonly byte[] EndOfImageMarker        = { 0xFF , 0xD9 };
         private static readonly byte[] ApplicationJFIFMarker   = { 0xFF , 0xE0 };
-        private static readonly byte[] DriMarker               = { 0xFF , 0xDD };
+        private static readonly byte[] RestartIntervalMarker   = { 0xFF , 0xDD };
         private static readonly byte[] QuantizationTableMarker = { 0xFF , 0xDB };
         private static readonly byte[] StartOfScanMarker       = { 0xFF , 0xDA };
         private static readonly byte[] StartOfFrameMarker      = { 0xFF , 0xC0 };

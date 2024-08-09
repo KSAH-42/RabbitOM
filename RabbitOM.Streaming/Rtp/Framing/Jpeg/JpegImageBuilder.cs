@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
                 _writer.WriteStartOfImage();
                 _writer.WriteApplicationJFIF();
-                _writer.WriteRestartInterval( firstFragment.Dri );
+                _writer.WriteRestartInterval( firstFragment.RestartInterval );
                 _writer.WriteQuantizationTable( firstFragment.QTable , firstFragment.QFactor );
                 _writer.WriteStartOfFrame( firstFragment.Type , firstFragment.Width , firstFragment.Height , firstFragment.QTable , firstFragment.QFactor );
                 _writer.WriteHuffmanTables();
@@ -144,7 +144,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 || _firstFragment.QFactor != fragment.QFactor
                 || _firstFragment.Width   != fragment.Width
                 || _firstFragment.Height  != fragment.Height
-                || _firstFragment.Dri     != fragment.Dri
+                || _firstFragment.RestartInterval     != fragment.RestartInterval
                 || _firstFragment.QTable.IsEqualTo( fragment.QTable ) == false
                 ;
         }
