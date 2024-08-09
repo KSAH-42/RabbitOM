@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265FrameReassembler : IDisposable
     {
-        private readonly Queue<ArraySegment<byte>> _payloads = new Queue<ArraySegment<byte>>();
+        private readonly Queue<H265NalElement> _elements = new Queue<H265NalElement>();
 
         public void Dispose()
         {
@@ -50,14 +50,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void OnAdd( H265NalUnit nalUnit )
         {
-            _payloads.Enqueue( nalUnit.Data );
+            _elements.Enqueue( H265NalElement.NewNalElement( nalUnit.Data ) );
         }
 
         private void OnAddAggregation( H265NalUnit nalUnit )
         {
             foreach ( var segment in nalUnit.SplitData() )
             {
-                _payloads.Enqueue( segment );
+                _elements.Enqueue( H265NalElement.NewNalElement( nalUnit.Data ) );
             }
         }
 
