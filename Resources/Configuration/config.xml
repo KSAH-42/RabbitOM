@@ -13,9 +13,9 @@ Then run the following command:
 
 RtspServer.exe -c config.xml
 
-Use vlc to check if the server config correctly.
+Use vlc to check if the server config are correct.
 
-A please configure the supported codecs.
+And then please check the configuration of the supported codecs.
 
 -->
 
