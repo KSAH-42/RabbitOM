@@ -15,6 +15,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         
         
         public static H265NalElement NewNalElement( ArraySegment<byte> data )
-            => new H265NalElement() { Data = data , IsNal = true };
+        {
+            return new H265NalElement() { Data = data , IsNal = true };
+        }
     }
 }
