@@ -17,11 +17,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             throw new NotImplementedException();
         }
 
+        public bool CanAddNalUnit( H265NalUnit nalUnit )
+        {
+            return nalUnit != null && nalUnit.TryValidate();
+        }
+
         public void AddNalUnit( H265NalUnit nalUnit )
         {
             if ( nalUnit == null )
             {
-                return;
+                throw new ArgumentNullException( nameof( nalUnit ) );
             }
 
             if ( nalUnit.Type != NalUnitType.AGGREGATION && nalUnit.Type != NalUnitType.FRAGMENTATION )
@@ -39,7 +44,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 OnAddFragmentation( nalUnit );
             }
 
-            throw new NotImplementedException();
+            throw new ArgumentException( nameof( nalUnit ) );
         }
 
 
@@ -57,7 +62,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             foreach ( var segment in nalUnit.SplitData() )
             {
-                _elements.Enqueue( H265NalElement.NewNalElement( nalUnit.Data ) );
+                _elements.Enqueue( H265NalElement.NewNalElement( segment , true ) );
             }
         }
 

@@ -9,6 +9,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         public bool IsPPS { get; private set; }
         public bool IsSPS { get; private set; }
         public bool IsFragment { get; private set; }
+        public bool IsAggregated { get; private set; }
         public bool IsNal { get; private set; }
         public ArraySegment<byte> Data { get; private set; }
 
@@ -17,6 +18,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         public static H265NalElement NewNalElement( ArraySegment<byte> data )
         {
             return new H265NalElement() { Data = data , IsNal = true };
+        }
+
+        public static H265NalElement NewNalElement( ArraySegment<byte> data , bool isAggrated )
+        {
+            return new H265NalElement() { Data = data , IsNal = true , IsAggregated = isAggrated };
         }
     }
 }
