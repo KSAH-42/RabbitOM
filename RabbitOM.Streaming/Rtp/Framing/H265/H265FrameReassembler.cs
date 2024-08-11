@@ -44,6 +44,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 OnAddFragmentation( nalUnit );
             }
 
+            // the object seems to be validated just to alert that something wrong happen
+            // and to alert that the CanAddNalUnit seems to be ne called
+            // jus to alert that a valid must be done before calling this method
+            // without to call twice the nalUnit.TryValidate method if the CanAddNalUnit is called
             throw new ArgumentException( nameof( nalUnit ) );
         }
 
