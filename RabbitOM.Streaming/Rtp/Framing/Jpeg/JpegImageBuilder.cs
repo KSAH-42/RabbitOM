@@ -133,18 +133,26 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         /// <param name="fragment">the first fragment</param>
         /// <returns>returns true if the headers need to be created</returns>
+        /// <exception cref="ArgumentNullException"/>
+        /// <remarks>
+        ///     <para>this method throw an exception if the argument is null.</para>
+        ///     <para>Because it create a violation of the purpose for the returned value. we can't create headers if the fragment is null or returns any types of values in this case.</para>
+        ///     <para>the null check must done in an other place</para>
+        /// </remarks>
         private bool OnCreatingHeaders( JpegFragment fragment )
         {
-            if ( _headersPosition == 0 || _firstFragment == null || fragment == null )
+            if ( fragment == null )
             {
-                return true;
+                throw new ArgumentNullException( nameof( fragment ) );
             }
 
-            return _firstFragment.Type    != fragment.Type 
-                || _firstFragment.QFactor != fragment.QFactor
-                || _firstFragment.Width   != fragment.Width
-                || _firstFragment.Height  != fragment.Height
-                || _firstFragment.RestartInterval     != fragment.RestartInterval
+            return _headersPosition               == 0
+                || _firstFragment                 == null 
+                || _firstFragment.Type            != fragment.Type 
+                || _firstFragment.Width           != fragment.Width
+                || _firstFragment.Height          != fragment.Height
+                || _firstFragment.RestartInterval != fragment.RestartInterval
+                || _firstFragment.QFactor         != fragment.QFactor
                 || _firstFragment.QTable.IsEqualTo( fragment.QTable ) == false
                 ;
         }
