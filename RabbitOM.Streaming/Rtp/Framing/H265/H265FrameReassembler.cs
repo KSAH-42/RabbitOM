@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
             else
             {
-                // the object seems to be validated just to alert that something wrong happen
+                // the object seems to be not validated, so just to alert that something wrong happen we throw exception
                 // and to alert that the CanAddNalUnit seems to be ne called
                 // jus to alert that a valid must be done before calling this method
                 // without to call twice the nalUnit.TryValidate method if the CanAddNalUnit is called
