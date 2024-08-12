@@ -16,6 +16,18 @@ RtspServer.exe -c config.xml
 Use vlc to check if the server config are correct.
 
 And then please check the configuration of the supported codecs.
+ 
+   .
+  / \
+ / ! \
+/_____\ 
+
+
+ Some times some video file will not work on some specific resolutions
+ 
+ I don't know if it comes from the server because when using VLC I get the exacte same thing.
+ 
+ Please apply the right resolutions settings.
 
 -->
 
