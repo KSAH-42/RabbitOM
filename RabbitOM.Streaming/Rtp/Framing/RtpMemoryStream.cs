@@ -4,7 +4,7 @@ using System.IO;
 namespace RabbitOM.Streaming.Rtp.Framing
 {
     /// <summary>
-    /// Represent a memory stream
+    /// Represent a tolerant memory stream
     /// </summary>
     public sealed class RtpMemoryStream : IDisposable
     {
@@ -116,9 +116,9 @@ namespace RabbitOM.Streaming.Rtp.Framing
                 return;
             }
 
-            int delta = count - offset;
+            int delta = buffer.Length - offset;
 
-            if ( 0 < delta && delta <= buffer.Length )
+            if ( 0 < delta && count <= delta )
             {
                 _stream.Write( buffer , offset , count );
             }
