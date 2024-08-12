@@ -9,12 +9,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _elements.Clear();
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _elements.Clear();
         }
 
         public bool CanAddNalUnit( H265NalUnit nalUnit )
@@ -34,24 +34,26 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 OnAdd( nalUnit );
             }
             
-            else  if ( nalUnit.Type == NalUnitType.AGGREGATION )
+            else if ( nalUnit.Type == NalUnitType.AGGREGATION )
             {
                 OnAddAggregation( nalUnit );
             }
             
-            else  if ( nalUnit.Type == NalUnitType.FRAGMENTATION )
+            else if ( nalUnit.Type == NalUnitType.FRAGMENTATION )
             {
                 OnAddFragmentation( nalUnit );
             }
             else
             {
-                // the object seems to be not validated, so just to alert that something wrong happen we throw exception
-                // and to alert that the CanAddNalUnit seems to be ne called
-                // jus to alert that a valid must be done before calling this method
-                // without to call twice the nalUnit.TryValidate method if the CanAddNalUnit is called
+                // the object parameter seems to be not validated, so just to alert that something wrong happen by we throwing an exception
+                // and to alert that the CanAddNalUnit method seems to be not called
+                // so just for alerting that a validation must be done before calling this method
+                // and to avoid to call twice the nalUnit.TryValidate method
+                // we throw this exception at the end of this method
                 throw new ArgumentException( nameof( nalUnit ) );
             }
         }
+
 
 
 
