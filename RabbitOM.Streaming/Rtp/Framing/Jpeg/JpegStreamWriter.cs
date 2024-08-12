@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory = new JpegQuantizationTableFactory();
         
-        private readonly JpegStreamWriterSettings _configuration = new JpegStreamWriterSettings();
+        private readonly JpegStreamWriterSettings _settings = new JpegStreamWriterSettings();
 
 
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         public JpegStreamWriterSettings Settings
         {
-            get => _configuration;
+            get => _settings;
         }
 
         /// <summary>
@@ -130,11 +130,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             _stream.WriteAsBinary( ApplicationJFIFMarker );
             _stream.WriteAsUInt16( length );
             _stream.WriteAsBinary( IdentifierJFIF );
-            _stream.WriteAsByte( _configuration.VersionMajor );
-            _stream.WriteAsByte( _configuration.VersionMinor );
-            _stream.WriteAsByte( _configuration.Unit );
-            _stream.WriteAsUInt16( _configuration.XDensity );
-            _stream.WriteAsUInt16( _configuration.YDensity );
+            _stream.WriteAsByte( _settings.VersionMajor );
+            _stream.WriteAsByte( _settings.VersionMinor );
+            _stream.WriteAsByte( _settings.Unit );
+            _stream.WriteAsUInt16( _settings.XDensity );
+            _stream.WriteAsUInt16( _settings.YDensity );
             _stream.WriteAsByte( 0 );
             _stream.WriteAsByte( 0 );
         }
