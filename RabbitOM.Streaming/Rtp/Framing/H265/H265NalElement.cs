@@ -24,5 +24,20 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             return new H265NalElement() { Data = data , IsNal = true , IsAggregated = isAggrated };
         }
+
+        public static H265NalElement NewPPS( ArraySegment<byte> data )
+        {
+            return new H265NalElement() { Data = data , IsPPS = true };
+        }
+
+        public static H265NalElement NewSPS( ArraySegment<byte> data )
+        {
+            return new H265NalElement() { Data = data , IsSPS = true };
+        }
+
+        public static H265NalElement NewVPS( ArraySegment<byte> data )
+        {
+            return new H265NalElement() { Data = data , IsVPS = true };
+        }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
+    // The following implementation is subject to change or to be removed entirely
+
     public sealed class H265FrameReassembler : IDisposable
     {
         private readonly Queue<H265NalElement> _elements = new Queue<H265NalElement>();
@@ -17,11 +19,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _elements.Clear();
         }
 
-        public bool CanAddNalUnit( H265NalUnit nalUnit )
-        {
-            return nalUnit != null && nalUnit.TryValidate();
-        }
-
         public void AddNalUnit( H265NalUnit nalUnit )
         {
             if ( nalUnit == null )
@@ -29,28 +26,36 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 throw new ArgumentNullException( nameof( nalUnit ) );
             }
 
-            if ( nalUnit.Type != NalUnitType.AGGREGATION && nalUnit.Type != NalUnitType.FRAGMENTATION )
+            if ( ! nalUnit.TryValidate() )
             {
-                OnAdd( nalUnit );
-            }
-            
-            else if ( nalUnit.Type == NalUnitType.AGGREGATION )
-            {
-                OnAddAggregation( nalUnit );
-            }
-            
-            else if ( nalUnit.Type == NalUnitType.FRAGMENTATION )
-            {
-                OnAddFragmentation( nalUnit );
-            }
-            else
-            {
-                // the object parameter seems to be not validated, so just to alert that something wrong happen by we throwing an exception
-                // and to alert that the CanAddNalUnit method seems to be not called
-                // so just for alerting that a validation must be done before calling this method
-                // and to avoid to call twice the nalUnit.TryValidate method
-                // we throw this exception at the end of this method
                 throw new ArgumentException( nameof( nalUnit ) );
+            }
+
+            switch ( nalUnit.Type )
+            {
+                case NalUnitType.AGGREGATION:
+                    OnAddAggregation( nalUnit );
+                    break;
+
+                case NalUnitType.FRAGMENTATION:
+                    OnAddFragmentation( nalUnit );
+                    break;
+
+                case NalUnitType.PPS:
+                    OnAddPPS( nalUnit );
+                    break;
+
+                case NalUnitType.SPS:
+                    OnAddSPS( nalUnit );
+                    break;
+
+                case NalUnitType.VPS:
+                    OnAddVPS( nalUnit );
+                    break;
+
+                default:
+                    OnAdd( nalUnit );
+                    break;
             }
         }
 
@@ -62,8 +67,23 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
         private void OnAdd( H265NalUnit nalUnit )
-        {
+        {                                                                  
             _elements.Enqueue( H265NalElement.NewNalElement( nalUnit.Data ) );
+        }
+
+        private void OnAddPPS( H265NalUnit nalUnit )
+        {
+            _elements.Enqueue( H265NalElement.NewPPS( nalUnit.Data ) );
+        }
+
+        private void OnAddVPS( H265NalUnit nalUnit )
+        {
+            _elements.Enqueue( H265NalElement.NewVPS( nalUnit.Data ) );
+        }
+
+        private void OnAddSPS( H265NalUnit nalUnit )
+        {
+            _elements.Enqueue( H265NalElement.NewSPS( nalUnit.Data ) );
         }
 
         private void OnAddAggregation( H265NalUnit nalUnit )
