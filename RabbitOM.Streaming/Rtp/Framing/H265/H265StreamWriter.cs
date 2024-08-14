@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
     public sealed class H265StreamWriter : IDisposable
     {
-        private static readonly byte[] StartPrefix = { 0x00 , 0x00 , 0x01 };
+        private static readonly byte[] StartPrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
 
 
 
