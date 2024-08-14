@@ -55,9 +55,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public ArraySegment<byte> QTable { get; set; }
 
         /// <summary>
-        /// Gets / Sets the data
+        /// Gets / Sets the payload
         /// </summary>
-        public ArraySegment<byte> Data { get; set; }
+        public ArraySegment<byte> Payload { get; set; }
 
 
 
@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return Type >= 0 && Width >= 2 && Height >= 2 && Data.Count > 0;
+            return Type >= 0 && Width >= 2 && Height >= 2 && Payload.Count > 0;
         }
 
 
@@ -137,7 +137,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            result.Data = new ArraySegment<byte>( buffer.Array , offset , buffer.Count - (offset - buffer.Offset) );
+            result.Payload = new ArraySegment<byte>( buffer.Array , offset , buffer.Count - (offset - buffer.Offset) );
             
             return true;
         }
