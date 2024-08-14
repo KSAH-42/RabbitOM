@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         
         public byte TemporalId { get; set; }
         
-        public ArraySegment<byte> Data { get; set; }
+        public ArraySegment<byte> Payload { get; set; }
 
 
 
@@ -24,21 +24,21 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
         }
 
-        public IEnumerable<ArraySegment<byte>> SplitData()
+        public IEnumerable<ArraySegment<byte>> SplitPayload()
         {
             var results = new Queue<ArraySegment<byte>>();
 
-            if ( Data.Count > 2 )
+            if ( Payload.Count > 2 )
             {
                 int index = 0;
 
-                while ( index < Data.Count )
+                while ( index < Payload.Count )
                 {
-                    int size = Data.Array[ Data.Offset + index ++ ] * 0x100 | Data.Array[ Data.Offset +  index ++ ];
+                    int size = Payload.Array[ Payload.Offset + index ++ ] * 0x100 | Payload.Array[ Payload.Offset +  index ++ ];
 
-                    if ( 0 < size && size < Data.Count - 2 )
+                    if ( 0 < size && size < Payload.Count - 2 )
                     {
-                        results.Enqueue( new ArraySegment<byte>( Data.Array , index , size ) );
+                        results.Enqueue( new ArraySegment<byte>( Payload.Array , index , size ) );
                     }
 
                     index += size;
@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
             result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x1  ) == 1;
 
-            result.Data = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
+            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             
             return true;
         }
