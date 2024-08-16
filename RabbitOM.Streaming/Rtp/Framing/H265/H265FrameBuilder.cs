@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
+    // TODO: the implementation is not finished! it mays contains errors
+
     public sealed class H265FrameBuilder : RtpFrameBuilder
     {
         private readonly H265FrameBuilderConfiguration _configuration;
