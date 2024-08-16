@@ -8,6 +8,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     public sealed class JpegStreamWriterSettings
     {
         /// <summary>
+        /// Gets / Sets the unit value
+        /// </summary>
+        public byte Unit { get; set; }
+
+        /// <summary>
         /// Gets / Sets the major version value
         /// </summary>
         public byte VersionMajor { get; set; } = 1;
@@ -16,11 +21,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// Gets / Sets the minor version value
         /// </summary>
         public byte VersionMinor { get; set; } = 1;
-
-        /// <summary>
-        /// Gets / Sets the unit value
-        /// </summary>
-        public byte Unit { get; set; }
 
         /// <summary>
         /// Gets / Sets the X density value
