@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             throw new NotImplementedException( "the implementation is not finished, this class must not be used in production." );
 #endif
             _configuration = new H265FrameBuilderConfiguration();
-            _frameFactory  = new H265FrameFactory();
+            _frameFactory  = new H265FrameFactory( this );
             _aggregator    = new H265FrameAggregator( this );
         }
 

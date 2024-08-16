@@ -5,9 +5,30 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265FrameFactory : IDisposable
     {
-        private readonly H265StreamWriter _writer = new H265StreamWriter();
-        
-        private readonly H265PacketConverter _converter = new H265PacketConverter();
+        private readonly H265FrameBuilder _builder;
+
+        private readonly H265StreamWriter _writer;
+
+        private readonly H265PacketConverter _converter;
+
+
+
+
+
+
+
+		public H265FrameFactory( H265FrameBuilder builder )
+		{
+            if ( builder == null )
+            {
+                throw new ArgumentNullException( nameof( builder ) );
+            }
+
+            _builder   = builder;
+            _writer    = new H265StreamWriter();
+            _converter = new H265PacketConverter();
+        }
+
 
 
 
