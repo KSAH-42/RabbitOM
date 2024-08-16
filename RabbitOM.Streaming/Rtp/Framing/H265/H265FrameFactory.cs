@@ -13,6 +13,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+        // TODO: when the implementation will be finish, handle the case where an exception can be throw
 
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
@@ -28,25 +29,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                H265NalUnit nalUnit = _converter.Convert( packet );
-
-                if ( nalUnit.Type == NalUnitType.AGGREGATION )
-                {
-                    OnAddAggregation( packet , nalUnit );
-                }
-
-                else if ( nalUnit.Type == NalUnitType.FRAGMENTATION )
-                {
-                    OnAddFragmentation( packet , nalUnit );
-                }
-
-                else
-                {
-                    OnAdd( packet , nalUnit );
-                }
+                HandlePacket( packet );
             }
 
+#if ! DEBUG
             throw new NotImplementedException();
+#endif
+
+            if ( _writer.Length > 0 )
+            {
+                result = new RtpFrame( _writer.ToArray() );
+            }
+
+            return result != null;
         }
 
         public void Clear()
@@ -65,17 +60,75 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+        private void HandlePacket( RtpPacket packet )
+        {
+            H265NalUnit nalUnit = _converter.Convert( packet );
 
-        private void OnAdd( RtpPacket packet , H265NalUnit nalu )
+            switch ( nalUnit.Type )
+            {
+                case NalUnitType.AGGREGATION:
+                    OnWriteAggregation( packet , nalUnit );
+                    break;
+
+                case NalUnitType.FRAGMENTATION:
+                    OnWriteFragmentation( packet , nalUnit );
+                    break;
+
+                case NalUnitType.PPS:
+                    OnWritePPS( packet , nalUnit );
+                    break;
+
+                case NalUnitType.SPS:
+                    OnWriteSPS( packet , nalUnit );
+                    break;
+
+                case NalUnitType.VPS:
+                    OnWriteVPS( packet , nalUnit );
+                    break;
+
+                case NalUnitType.UNDEFINED:
+                case NalUnitType.INVALID:
+                    OnWriteError( packet , nalUnit );
+                    break;
+
+                default:
+                    OnWrite( packet , nalUnit );
+                    break;
+            }
+        }
+
+
+
+
+
+
+
+        private void OnWrite( RtpPacket packet , H265NalUnit nalUnit )
         {
             _writer.Write( packet.Payload );
         }
 
-        private void OnAddAggregation( RtpPacket packet , H265NalUnit nalu )
+        private void OnWritePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
 
-        private void OnAddFragmentation( RtpPacket packet , H265NalUnit nalu )
+        private void OnWriteSPS( RtpPacket packet , H265NalUnit nalUnit )
+        {
+        }
+
+        private void OnWriteVPS( RtpPacket packet , H265NalUnit nalUnit )
+        {
+        }
+
+        private void OnWriteAggregation( RtpPacket packet , H265NalUnit nalUnit )
+        {
+        }
+
+        private void OnWriteFragmentation( RtpPacket packet , H265NalUnit nalUnit )
+        {
+        }
+
+        private void OnWriteError( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
     }

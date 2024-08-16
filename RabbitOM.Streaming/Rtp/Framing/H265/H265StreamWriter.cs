@@ -10,6 +10,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private readonly RtpMemoryStream _stream = new RtpMemoryStream();
 
+
+
+        public long Length
+        {
+            get => _stream.Length;
+        }
+
+
         public void Dispose()
         {
             _stream.Dispose();
