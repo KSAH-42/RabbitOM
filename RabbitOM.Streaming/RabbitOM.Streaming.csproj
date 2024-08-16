@@ -50,7 +50,6 @@
     <Compile Include="Rtp\Framing\H265\H265StreamWriter.cs" />
     <Compile Include="Rtp\Framing\H265\H265Frame.cs" />
     <Compile Include="Rtp\Framing\H265\H265NalUnit.cs" />
-    <Compile Include="Rtp\Framing\H265\H265NalUnitQueue.cs" />
     <Compile Include="Rtp\Framing\H265\H265FrameBuilder.cs" />
     <Compile Include="Rtp\Framing\H265\H265FrameAggregator.cs" />
     <Compile Include="Rtp\Framing\H265\H265FrameFactory.cs" />
