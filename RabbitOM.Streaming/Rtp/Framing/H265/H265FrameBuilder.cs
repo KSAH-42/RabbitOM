@@ -46,29 +46,22 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return;
             }
 
-            IEnumerable<RtpFrame> frames = null;
+            RtpFrame frame = null;
 
             lock ( SyncRoot )
             {
-                if ( !_aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
+                if ( ! _aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
                 {
                     return;
                 }
 
-                if ( !_frameFactory.TryCreateFrames( packets , out frames ) )
+                if ( ! _frameFactory.TryCreateFrames( packets , out frame ) )
                 {
                     return;
                 }
             }
 
-            if ( frames != null )
-            {
-                foreach ( RtpFrame frame in frames )
-                {
-                    // Add Frame.Type = I_Frame/P_Frame/B_Frame ?
-                    OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
-                }
-            }
+            OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
         }
 
         public override void Clear()

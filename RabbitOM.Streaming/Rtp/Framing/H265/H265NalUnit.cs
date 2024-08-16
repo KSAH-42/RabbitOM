@@ -24,30 +24,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
         }
 
-        public IEnumerable<ArraySegment<byte>> SplitPayload()
-        {
-            var results = new Queue<ArraySegment<byte>>();
-
-            if ( Payload.Count > 2 )
-            {
-                int index = 0;
-
-                while ( index < Payload.Count )
-                {
-                    int size = Payload.Array[ Payload.Offset + index ++ ] * 0x100 | Payload.Array[ Payload.Offset +  index ++ ];
-
-                    if ( 0 < size && size < Payload.Count - 2 )
-                    {
-                        results.Enqueue( new ArraySegment<byte>( Payload.Array , index , size ) );
-                    }
-
-                    index += size;
-                }
-            }
-            
-            return results;
-        }
-
 
 
 
