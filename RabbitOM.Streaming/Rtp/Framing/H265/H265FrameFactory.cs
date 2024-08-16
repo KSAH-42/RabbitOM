@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265FrameFactory : IDisposable
     {
-        private readonly H265NalUnitFrameBuilder _reassembler = new H265NalUnitFrameBuilder();
+        private readonly H265FrameReassembler _reassembler = new H265FrameReassembler();
 
         public void Dispose()
         {
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                _reassembler.AddNalUnit( packet.Payload );
+                _reassembler.AddNalUnit( packet );
             }
 
             throw new NotImplementedException();
