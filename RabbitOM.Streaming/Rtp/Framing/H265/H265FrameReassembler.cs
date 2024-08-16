@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        public void AddNalUnit( RtpPacket packet )
+        public void AddPacket( RtpPacket packet )
         {
             if ( packet == null )
             {

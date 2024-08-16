@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                _reassembler.AddNalUnit( packet );
+                _reassembler.AddPacket( packet );
             }
 
             throw new NotImplementedException();
