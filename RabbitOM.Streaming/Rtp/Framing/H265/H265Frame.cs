@@ -8,7 +8,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         private readonly byte[] _sps;
         private readonly byte[] _pps;
 
-        public H265Frame( byte[] data , byte[] vps , byte[] sps , byte[] pps ) : base ( data )
+        public H265Frame( byte[] data , byte[] vps , byte[] sps , byte[] pps ) 
+            : base ( data )
         {
             _vps = vps ?? throw new ArgumentNullException( nameof( vps ) );
             _sps = sps ?? throw new ArgumentNullException( nameof( sps ) );
