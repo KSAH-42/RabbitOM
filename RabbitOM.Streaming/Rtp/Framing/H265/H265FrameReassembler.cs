@@ -13,30 +13,23 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        public void Dispose()
-        {
-            _writer.Dispose();
-        }
-
-        public void Clear()
-        {
-            _writer.Clear();
-        }
 
 
         public void AddNalUnit( RtpPacket packet )
         {
             if ( packet == null )
             {
-                throw new ArgumentNullException( nameof( packet ) );
+                return;
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalu ) )
+            if ( ! H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalu ) )
             {
-                if ( nalu.TryValidate() )
-                {
-                    _elements.Enqueue( new H265Element( packet , nalu ) );
-                }
+                return;
+            }
+
+            if ( nalu.TryValidate() )
+            {
+                _elements.Enqueue( new H265Element( packet , nalu ) );
             }
         }
 
@@ -81,7 +74,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return _writer.ToArray();
         }
 
-        
+        public void Clear()
+        {
+            _elements.Clear();
+
+            _writer.Clear();
+        }
+
+        public void Dispose()
+        {
+            _elements.Clear();
+
+            _writer.Dispose();
+        }
 
 
 
