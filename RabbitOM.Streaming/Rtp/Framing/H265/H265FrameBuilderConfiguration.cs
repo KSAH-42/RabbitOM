@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
         /// <summary>
-        /// Gets / Sets the PPS
+        /// Gets / Sets the PPS usually it comes from the sdp
         /// </summary>
         public byte[] PPS
         {
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         }
 
         /// <summary>
-        /// Gets / Sets the SPS
+        /// Gets / Sets the SPS usually it comes from the sdp
         /// </summary>
         public byte[] SPS
         {
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         }
 
         /// <summary>
-        /// Gets / Sets the VPS
+        /// Gets / Sets the VPS usually it comes from the sdp
         /// </summary>
         public byte[] VPS
         {
