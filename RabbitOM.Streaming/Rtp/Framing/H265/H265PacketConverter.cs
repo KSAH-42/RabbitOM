@@ -4,6 +4,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265PacketConverter
     {
+        public bool ForceValidation { get; set; } = true;
+
+
+
+
         public H265NalUnit Convert( RtpPacket packet )
         {
             if ( packet == null )
@@ -16,7 +21,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 throw new FormatException( nameof( packet ) );
             }
 
-            if ( ! nalUnit.TryValidate() )
+            if ( ForceValidation && ! nalUnit.TryValidate() )
             {
                 throw new InvalidOperationException( nameof( packet ) );
             }
