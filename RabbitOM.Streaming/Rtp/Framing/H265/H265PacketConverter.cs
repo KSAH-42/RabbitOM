@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     public sealed class H265PacketConverter
     {
-		public H265NalUnit Convert( RtpPacket packet )
+        public H265NalUnit Convert( RtpPacket packet )
         {
             if ( packet == null )
             {

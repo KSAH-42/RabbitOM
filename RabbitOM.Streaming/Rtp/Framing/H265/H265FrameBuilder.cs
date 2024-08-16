@@ -55,7 +55,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                     return;
                 }
 
-                if ( ! _frameFactory.TryCreateFrames( packets , out frame ) )
+                if ( ! _frameFactory.TryCreateFrame( packets , out frame ) )
                 {
                     return;
                 }
