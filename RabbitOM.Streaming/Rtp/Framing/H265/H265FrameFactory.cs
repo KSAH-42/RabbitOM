@@ -67,32 +67,32 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             switch ( nalUnit.Type )
             {
                 case NalUnitType.AGGREGATION:
-                    OnWriteAggregation( packet , nalUnit );
+                    OnHandleAggregation( packet , nalUnit );
                     break;
 
                 case NalUnitType.FRAGMENTATION:
-                    OnWriteFragmentation( packet , nalUnit );
+                    OnHandleFragmentation( packet , nalUnit );
                     break;
 
                 case NalUnitType.PPS:
-                    OnWritePPS( packet , nalUnit );
+                    OnHandlePPS( packet , nalUnit );
                     break;
 
                 case NalUnitType.SPS:
-                    OnWriteSPS( packet , nalUnit );
+                    OnHandleSPS( packet , nalUnit );
                     break;
 
                 case NalUnitType.VPS:
-                    OnWriteVPS( packet , nalUnit );
+                    OnHandleVPS( packet , nalUnit );
                     break;
 
                 case NalUnitType.UNDEFINED:
                 case NalUnitType.INVALID:
-                    OnWriteError( packet , nalUnit );
+                    OnHandleError( packet , nalUnit );
                     break;
 
                 default:
-                    OnWrite( packet , nalUnit );
+                    OnHandle( packet , nalUnit );
                     break;
             }
         }
@@ -103,32 +103,32 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        private void OnWrite( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandle( RtpPacket packet , H265NalUnit nalUnit )
         {
             _writer.Write( packet.Payload );
         }
 
-        private void OnWritePPS( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
 
-        private void OnWriteSPS( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
 
-        private void OnWriteVPS( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleVPS( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
 
-        private void OnWriteAggregation( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleAggregation( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
 
-        private void OnWriteFragmentation( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleFragmentation( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
 
-        private void OnWriteError( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleError( RtpPacket packet , H265NalUnit nalUnit )
         {
         }
     }
