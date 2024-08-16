@@ -53,10 +53,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 HandlePacket( packet );
             }
 
-#if ! DEBUG
-            throw new NotImplementedException();
-#endif
-
             if ( _writer.Length > 0 )
             {
                 result = new RtpFrame( _writer.ToArray() );
