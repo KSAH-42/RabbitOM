@@ -6,17 +6,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
     public sealed class H265FrameFactory : IDisposable
     {
         private readonly H265StreamWriter _writer = new H265StreamWriter();
+        
         private readonly H265PacketConverter _converter = new H265PacketConverter();
 
-        public void Dispose()
-        {
-            _writer.Dispose();
-        }
 
-        public void Clear()
-        {
-            _writer.Clear();
-        }
+
+
+
+
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
@@ -51,6 +48,20 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             throw new NotImplementedException();
         }
+
+        public void Clear()
+        {
+            _writer.Clear();
+        }
+
+        public void Dispose()
+        {
+            _writer.Dispose();
+        }
+
+
+
+
 
 
 
