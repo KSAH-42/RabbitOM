@@ -82,10 +82,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         ///     <para>For optimization reasons, this method don't recreate headers.</para>
         ///     <para>Some approach consist to create a byte array that contains headers values after writing data on the stream using the ToArray method and reused this buffer later.</para>
         ///     <para>Another approach is used here.</para>
-        ///     <para>We saves the position on the stream, and restore it if no changed occurs.</para>
-        ///     <para>This approach is prefered because:</para>
+        ///     <para>Here, we just saves the position on the stream when headers are created, and restore it if no changed occurs.</para>
+        ///     <para>I think this approach is prefered because:</para>
         ///     <para> it saved allocation times</para>
-        ///     <para> it saved allocation memory</para>
+        ///     <para> it saved allocation spaces</para>
         ///     <para> and it reused the internal array of <see cref="System.IO.MemoryStream"/> and not creating a new one.</para>
         /// </remarks>
         public JpegImage BuildImage()
