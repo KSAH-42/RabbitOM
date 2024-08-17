@@ -31,9 +31,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        // TODO: when the implementation will be finish, handle the case where an exception can be throw
-
-
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
             result = null;
