@@ -129,7 +129,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
 
         /// <summary>
-        /// Occurs when the image headers need to be created
+        /// Occurs when the image headers need to be renew. If the first fragment doesn't changed there is no way to recreated jpeg headers.
         /// </summary>
         /// <param name="fragment">the first fragment</param>
         /// <returns>returns true if the headers need to be created</returns>
