@@ -39,7 +39,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                if ( ! H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) || ! nalUnit.TryValidate() )
+                if ( ! H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
+                {
+                    return false;
+                }
+
+                if ( ! nalUnit.TryValidate() )
                 {
                     return false;
                 }
