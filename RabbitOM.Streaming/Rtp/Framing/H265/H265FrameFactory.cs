@@ -9,8 +9,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private readonly H265StreamWriter _writer;
 
-        private readonly H265PacketConverter _converter;
-
 
 
 
@@ -26,7 +24,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             _builder   = builder;
             _writer    = new H265StreamWriter();
-            _converter = new H265PacketConverter();
         }
 
 
@@ -50,7 +47,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                HandlePacket( packet );
+                if ( ! H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) || ! nalUnit.TryValidate() )
+                {
+                    return false;
+                }
+
+                HandlePacket( packet , nalUnit );
             }
 
             if ( _writer.Length > 0 )
@@ -77,9 +79,17 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        private void HandlePacket( RtpPacket packet )
+        private void HandlePacket( RtpPacket packet , H265NalUnit nalUnit )
         {
-            H265NalUnit nalUnit = _converter.Convert( packet );
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( nalUnit == null )
+            {
+                throw new ArgumentNullException( nameof( nalUnit ) );
+            }
 
             switch ( nalUnit.Type )
             {

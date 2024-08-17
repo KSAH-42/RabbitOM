@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rtp\Framing\H265\FragmentationUnit.cs" />
-    <Compile Include="Rtp\Framing\H265\H265PacketConverter.cs" />
     <Compile Include="Rtp\Framing\H265\H265StreamWriter.cs" />
     <Compile Include="Rtp\Framing\H265\H265Frame.cs" />
     <Compile Include="Rtp\Framing\H265\H265NalUnit.cs" />
