@@ -83,6 +83,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             switch ( nalUnit.Type )
             {
+                case NalUnitType.UNDEFINED:
+                case NalUnitType.INVALID:
+                    OnHandleError( packet , nalUnit );
+                    break;
+
                 case NalUnitType.AGGREGATION:
                     OnHandleAggregation( packet , nalUnit );
                     break;
@@ -101,11 +106,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
                 case NalUnitType.VPS:
                     OnHandleVPS( packet , nalUnit );
-                    break;
-
-                case NalUnitType.UNDEFINED:
-                case NalUnitType.INVALID:
-                    OnHandleError( packet , nalUnit );
                     break;
 
                 default:
