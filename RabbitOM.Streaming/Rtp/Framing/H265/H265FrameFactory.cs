@@ -54,6 +54,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             if ( _writer.Length > 0 )
             {
+                // TODO: replace by using the right frame type
                 result = new RtpFrame( _writer.ToArray() );
             }
 
