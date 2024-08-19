@@ -7,6 +7,10 @@ namespace RabbitOM.Streaming
     /// </summary>
     public static class ArrayExtensions
     {
+        private static readonly byte[] s_empty_buffer = new byte[0];
+
+
+
         /// <summary>
         /// Byte array comparison
         /// </summary>
@@ -25,7 +29,6 @@ namespace RabbitOM.Streaming
                 return false;
             }
             
-            // use this, linq is too slow
             for ( int i = 0 ; i < source.Length ; ++ i )
             {
                 if ( source[ i ] != target[ i ] )
@@ -88,6 +91,25 @@ namespace RabbitOM.Streaming
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Create a bytes array from an array segment
+        /// </summary>
+        /// <param name="source">the source</param>
+        /// <returns>returns an array</returns>
+        public static byte[] ToArray( this ArraySegment<byte> source )
+        {
+            if ( source.Count == 0 )
+            {
+                return s_empty_buffer;
+            }
+
+            byte[] result = new byte[ source.Count ];
+
+            Buffer.BlockCopy( source.Array , source.Offset , result , 0 , result.Length );
+
+            return result;
         }
     }
 }
