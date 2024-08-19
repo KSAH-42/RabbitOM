@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         
         private static readonly byte[] ChrominanceDirectCodeLens        = { 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
         private static readonly byte[] ChrominanceDirectSymbols         = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
-        private static readonly byte[] ChrominanceAlternativeCodelens   = { 0, 2, 1, 2, 4, 4, 3, 4, 7, 5, 4, 4, 0, 1, 2, 0x77 };
+        private static readonly byte[] ChrominanceAlternativeCodeLens   = { 0, 2, 1, 2, 4, 4, 3, 4, 7, 5, 4, 4, 0, 1, 2, 0x77 };
         private static readonly byte[] ChrominanceAlternativeSymbols    =
         {
             0x00, 0x01, 0x02, 0x03, 0x11, 0x04, 0x05, 0x21,

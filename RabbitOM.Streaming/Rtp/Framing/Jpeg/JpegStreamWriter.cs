@@ -334,7 +334,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             WriteHuffmanTable( LuminanceDirectCodeLens , LuminanceDirectSymbols , 0 , 0 );
             WriteHuffmanTable( LuminanceAlternativeCodeLens , LuminanceAlterntativeSymbols , 0 , 1 );
             WriteHuffmanTable( ChrominanceDirectCodeLens , ChrominanceDirectSymbols , 1 , 0 );
-            WriteHuffmanTable( ChrominanceAlternativeCodelens , ChrominanceAlternativeSymbols , 1 , 1 );
+            WriteHuffmanTable( ChrominanceAlternativeCodeLens , ChrominanceAlternativeSymbols , 1 , 1 );
         }
 
         /// <summary>
