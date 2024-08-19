@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
+    // The following implementation is subject to change or to be removed entirely
+
     public sealed class H265FrameFactory : IDisposable
     {
         private readonly H265FrameBuilder _builder;
@@ -40,6 +42,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             _writer.Clear();
 
+            _writer.Configure( _builder.Configuration.VPS , _builder.Configuration.SPS , _builder.Configuration.PPS );
+
             foreach ( RtpPacket packet in packets )
             {
                 if ( _converter.TryConvert( packet , out H265NalUnit nalunit ) )
@@ -54,8 +58,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             if ( _writer.Length > 0 )
             {
-                // TODO: replace by using the right frame type
-                result = new RtpFrame( _writer.ToArray() );
+                result = new H265Frame( _writer.ToArray() , _writer.VPS , _writer.SPS , _writer.PPS );
             }
 
             return result != null;
@@ -88,16 +91,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                     OnHandleFragmentation( packet , nalUnit );
                     break;
 
-                case NalUnitType.PPS:
-                    OnHandlePPS( packet , nalUnit );
+                case NalUnitType.VPS:
+                    OnHandleVPS( packet , nalUnit );
                     break;
 
                 case NalUnitType.SPS:
                     OnHandleSPS( packet , nalUnit );
                     break;
 
-                case NalUnitType.VPS:
-                    OnHandleVPS( packet , nalUnit );
+                case NalUnitType.PPS:
+                    OnHandlePPS( packet , nalUnit );
                     break;
 
                 case NalUnitType.UNDEFINED:
@@ -125,28 +128,34 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _writer.Write( packet.Payload );
         }
 
-        private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleVPS( RtpPacket packet , H265NalUnit nalUnit )
         {
+            _writer.WriteVPS( packet.Payload );
         }
 
         private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
         {
+            _writer.WriteSPS( packet.Payload );
         }
 
-        private void OnHandleVPS( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
+            _writer.WritePPS( packet.Payload );
         }
 
         private void OnHandleAggregation( RtpPacket packet , H265NalUnit nalUnit )
         {
+            throw new NotImplementedException();
         }
 
         private void OnHandleFragmentation( RtpPacket packet , H265NalUnit nalUnit )
         {
+            throw new NotImplementedException();
         }
 
         private void OnHandleError( RtpPacket packet , H265NalUnit nalUnit )
         {
+            throw new NotImplementedException();
         }
     }
 }
