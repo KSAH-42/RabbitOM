@@ -10,6 +10,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private readonly RtpMemoryStream _stream = new RtpMemoryStream();
 
+        private byte[] _vps;
+
+        private byte[] _sps;
+
+        private byte[] _pps;
+
+
+
 
 
         public long Length
@@ -17,15 +25,42 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             get => _stream.Length;
         }
 
-
-        public void Dispose()
+        public byte[] VPS
         {
-            _stream.Dispose();
+            get => _vps;
         }
 
-        public void Clear()
+        public byte[] SPS
         {
-            _stream.Clear();
+            get => _sps;
+        }
+
+        public byte[] PPS
+        {
+            get => _pps;
+        }
+
+
+
+
+
+
+        public void Configure( byte[] vps , byte[] sps , byte[] pps )
+        {
+            if ( _vps == null )
+            {
+                _vps = vps;
+            }
+
+            if ( _sps == null )
+            {
+                _sps = sps;
+            }
+
+            if ( _pps == null )
+            {
+                _pps = pps;
+            }
         }
 
         public void Write( ArraySegment<byte> buffer )
@@ -39,9 +74,56 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _stream.WriteAsBinary( buffer );
         }
 
+        public void WriteVPS( ArraySegment<byte> buffer )
+        {
+            if ( buffer.Count > 0 )
+            {
+                _vps = buffer.ToArray();
+
+                _stream.WriteAsBinary( StartPrefix );
+                _stream.WriteAsBinary( buffer );
+            }
+        }
+
+        public void WriteSPS( ArraySegment<byte> buffer )
+        {
+            if ( buffer.Count > 0 )
+            {
+                _sps = buffer.ToArray();
+
+                _stream.WriteAsBinary( StartPrefix );
+                _stream.WriteAsBinary( buffer );
+            }
+        }
+
+        public void WritePPS( ArraySegment<byte> buffer )
+        {
+            if ( buffer.Count > 0 )
+            {
+                _pps = buffer.ToArray();
+
+                _stream.WriteAsBinary( StartPrefix );
+                _stream.WriteAsBinary( buffer );
+            }
+        }
+
         public byte[] ToArray()
         {
             return _stream.ToArray();
+        }
+
+        public void Dispose()
+        {
+            _stream.Dispose();
+        }
+
+        public void Clear()
+        {
+            _stream.Clear();
+
+            _vps = null;
+            _sps = null;
+            _pps = null;
         }
     }
 }
