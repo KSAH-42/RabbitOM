@@ -7,13 +7,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         public H265Frame( byte[] data , byte[] vps , byte[] sps , byte[] pps ) 
             : base ( data )
         {
-            PPS = pps;
-            SPS = sps;
             VPS = vps;
+            SPS = sps;
+            PPS = pps;
         }
 
-        public byte[] PPS { get; }
-        public byte[] SPS { get; }
         public byte[] VPS { get; }
+        public byte[] SPS { get; }
+        public byte[] PPS { get; }
     }
 }
