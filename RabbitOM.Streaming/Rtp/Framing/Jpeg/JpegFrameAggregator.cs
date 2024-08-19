@@ -88,7 +88,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <returns>returns true for a success, otherwise false</returns>
         private bool OnAggregating( RtpPacket packet )
         {
-            if ( packet == null || packet.Type != PacketType.JPEG )
+            if ( packet == null )
+            {
+                return false;
+            }
+
+            if ( ! packet.TryValidate() || packet.Type != PacketType.JPEG )
             {
                 return false;
             }
