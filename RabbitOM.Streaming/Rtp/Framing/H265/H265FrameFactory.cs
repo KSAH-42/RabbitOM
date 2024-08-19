@@ -9,16 +9,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private readonly H265StreamWriter _writer;
 
+        private readonly H265PacketConverter _converter;
 
 
 
 
 
 
-		public H265FrameFactory( H265FrameBuilder builder )
+
+        public H265FrameFactory( H265FrameBuilder builder )
 		{
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) ); ;
             _writer  = new H265StreamWriter();
+            _converter = new H265PacketConverter();
         }
 
 
@@ -39,17 +42,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                if ( ! H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
+                if ( _converter.TryConvert( packet , out H265NalUnit nalunit ) )
+                {
+                    HandlePacket( packet , nalunit );
+                }
+                else
                 {
                     return false;
                 }
-
-                if ( ! nalUnit.TryValidate() )
-                {
-                    return false;
-                }
-
-                HandlePacket( packet , nalUnit );
             }
 
             if ( _writer.Length > 0 )
@@ -76,26 +76,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-
         private void HandlePacket( RtpPacket packet , H265NalUnit nalUnit )
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            if ( nalUnit == null )
-            {
-                throw new ArgumentNullException( nameof( nalUnit ) );
-            }
-
             switch ( nalUnit.Type )
             {
-                case NalUnitType.UNDEFINED:
-                case NalUnitType.INVALID:
-                    OnHandleError( packet , nalUnit );
-                    break;
-
                 case NalUnitType.AGGREGATION:
                     OnHandleAggregation( packet , nalUnit );
                     break;
@@ -114,6 +98,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
                 case NalUnitType.VPS:
                     OnHandleVPS( packet , nalUnit );
+                    break;
+
+                case NalUnitType.UNDEFINED:
+                    OnHandleError( packet , nalUnit );
+                    break;
+
+                case NalUnitType.INVALID:
+                    OnHandleError( packet , nalUnit );
                     break;
 
                 default:
