@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
     public sealed class H265StreamWriter : IDisposable
     {
-        private static readonly byte[] StartPrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
+        private static readonly byte[] StartCodePrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
 
         private readonly RtpMemoryStream _stream = new RtpMemoryStream();
 
@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 throw new ArgumentException( nameof( buffer ) );
             }
 
-            _stream.WriteAsBinary( StartPrefix );
+            _stream.WriteAsBinary( StartCodePrefix );
             _stream.WriteAsBinary( buffer );
         }
 
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 _vps = buffer.ToArray();
 
-                _stream.WriteAsBinary( StartPrefix );
+                _stream.WriteAsBinary( StartCodePrefix );
                 _stream.WriteAsBinary( buffer );
             }
         }
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 _sps = buffer.ToArray();
 
-                _stream.WriteAsBinary( StartPrefix );
+                _stream.WriteAsBinary( StartCodePrefix );
                 _stream.WriteAsBinary( buffer );
             }
         }
@@ -102,7 +102,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 _pps = buffer.ToArray();
 
-                _stream.WriteAsBinary( StartPrefix );
+                _stream.WriteAsBinary( StartCodePrefix );
                 _stream.WriteAsBinary( buffer );
             }
         }
