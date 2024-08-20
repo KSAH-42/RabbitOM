@@ -28,23 +28,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             var results = new List<ArraySegment<byte>>( 100 );
 
-            if ( Payload.Count > 2 )
+            for ( int index = 0 ; index < Payload.Count - 2 ; )
             {
-                int index = 0;
+                int size = Payload.Array[ Payload.Offset + index++ ] * 0x100
+                         | Payload.Array[ Payload.Offset + index ];
 
-                while ( index < Payload.Count - 2 )
+                int delta = Payload.Count - index++;
+
+                if ( 0 < size && size < delta )
                 {
-                    int size = Payload.Array[ Payload.Offset + index ++ ] * 0x100 
-                             | Payload.Array[ Payload.Offset + index ];
+                    results.Add( new ArraySegment<byte>( Payload.Array , index , size ) );
 
-                    int delta = Payload.Count - index ++ ;
-
-                    if ( 0 < size && size < delta )
-                    {
-                        results.Add( new ArraySegment<byte>( Payload.Array , index , size ) );
-
-                        index += size;
-                    }
+                    index += size;
                 }
             }
 
