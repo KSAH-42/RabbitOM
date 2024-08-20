@@ -21,8 +21,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public H265FrameFactory( H265FrameBuilder builder )
 		{
-            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) ); ;
-            _writer  = new H265StreamWriter();
+            _builder   = builder ?? throw new ArgumentNullException( nameof( builder ) ); ;
+
+            _writer    = new H265StreamWriter();
             _converter = new H265PacketConverter();
         }
 
