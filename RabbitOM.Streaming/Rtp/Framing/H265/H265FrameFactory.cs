@@ -154,11 +154,44 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void OnHandleFragmentation( RtpPacket packet , H265NalUnit nalUnit )
         {
-            throw new NotImplementedException();
+            if ( ! FragmentationUnit.TryParse( packet.Payload , out FragmentationUnit fragmentationUnit ) )
+            {
+                OnHandleError( packet , nalUnit );
+                return;
+            }
+
+            if ( fragmentationUnit.StartBit && fragmentationUnit.EndBit )
+            {
+                OnHandleError( packet , nalUnit );
+                return;
+            }
+
+            if ( fragmentationUnit.StartBit )
+            {
+                // Fragmentation started
+                // _writer.WriteStartFU() ?
+                return;
+            }
+
+            if ( fragmentationUnit.EndBit )
+            {
+                // Fragmentation stopped
+                // _writer.WriteEndFU() ?
+                return;
+            }
+
+            // We are inside interval, and received normal Fragmentation packets 
+            // _writer.WriteFU() ?
         }
 
         private void OnHandleError( RtpPacket packet , H265NalUnit nalUnit )
         {
+            // do like this ? => _writer.SetError( true );
+
+            // what is the best thing to do ?
+            //    add a error property on the frame class   ?
+            // or add a property status on the writer class ?
+
             throw new NotImplementedException();
         }
     }
