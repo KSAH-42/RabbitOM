@@ -18,6 +18,19 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
     {
         static void Main( string[] args )
         {
+            RabbitOM.Streaming.Rtp.Framing.H265.H265NalUnit nalu = new Rtp.Framing.H265.H265NalUnit();
+
+            nalu.Payload = new ArraySegment<byte>( new byte[] {  0 , 0,1,2, 0,1,2 } , 1 , 6 );
+
+            foreach ( var segment in nalu.GetAggregationUnits() )
+            {
+				Console.WriteLine( segment.Count );
+            }
+
+            return;
+
+
+
             try
             {              
                 var options = CommandLineOptions.Parse( args );
