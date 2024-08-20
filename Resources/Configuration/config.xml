@@ -6,8 +6,8 @@ Download the server at https://www.happytimesoft.com/products/rtsp-server/index.
 
 On the same folder of RtspServer.exe :
 
-  * copy this files
-  * video files
+  * copy this configuration file
+  * copy your video files
   
 Then run the following command:
 
@@ -17,11 +17,12 @@ Use vlc to check if the server config are correct.
 
 And then please check the configuration of the supported codecs.
  
-   .
-  / \
- / ! \
-/_____\ 
-
+     .
+    / \
+   / | \
+  /  |  \ 
+ /   *   \ 
+/_________\ 
 
  Some times some video file will not work on some specific resolutions
  
