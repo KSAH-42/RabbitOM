@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
@@ -21,6 +22,30 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         public bool TryValidate()
         {
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
+        }
+
+        public IList<ArraySegment<byte>> GetAggregationUnits()
+        {
+            var results = new List<ArraySegment<byte>>( 100 );
+
+            if ( Payload.Count > 2 )
+            {
+                int index = 0;
+
+                while ( index < Payload.Count )
+                {
+                    int size = Payload.Array[ Payload.Offset + index ++ ] * 0x100 | Payload.Array[ Payload.Offset + index ++ ];
+
+                    if ( 0 < size && size < Payload.Count - 2 )
+                    {
+                        results.Add( new ArraySegment<byte>( Payload.Array , index , size ) );
+
+                        index += size;
+                    }
+                }
+            }
+
+            return results;
         }
 
 

@@ -145,7 +145,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void OnHandleAggregation( RtpPacket packet , H265NalUnit nalUnit )
         {
-            throw new NotImplementedException();
+            foreach ( var segment in nalUnit.GetAggregationUnits() )
+            {
+                _writer.Write( segment );
+            }
         }
 
         private void OnHandleFragmentation( RtpPacket packet , H265NalUnit nalUnit )
