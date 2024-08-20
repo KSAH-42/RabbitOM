@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return false;
             }
 
-            _writer.Clear();
+            _writer.Clear( false );
 
             _writer.Configure( _builder.Configuration.VPS , _builder.Configuration.SPS , _builder.Configuration.PPS );
 

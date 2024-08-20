@@ -117,13 +117,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _stream.Dispose();
         }
 
-        public void Clear()
+        public void Clear( bool clearParameterSets = true )
         {
             _stream.Clear();
 
-            _vps = null;
-            _sps = null;
-            _pps = null;
+            if ( clearParameterSets )
+            {
+                _vps = null;
+                _sps = null;
+                _pps = null;
+            }
         }
     }
 }
