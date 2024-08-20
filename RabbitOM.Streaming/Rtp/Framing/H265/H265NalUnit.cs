@@ -34,9 +34,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
                 while ( index < Payload.Count - 2 )
                 {
-                    int size = Payload.Array[ Payload.Offset + index ++ ] * 0x100 | Payload.Array[ Payload.Offset + index ++ ];
+                    int size = Payload.Array[ Payload.Offset + index ++ ] * 0x100 
+                             | Payload.Array[ Payload.Offset + index ];
 
-                    if ( 0 < size && size <= Payload.Count - 2 )
+                    int delta = Payload.Count - index ++ ;
+
+                    if ( 0 < size && size < delta )
                     {
                         results.Add( new ArraySegment<byte>( Payload.Array , index , size ) );
 
