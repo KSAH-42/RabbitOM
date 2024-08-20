@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArraySegmentExtensions.cs" />
     <Compile Include="Rtp\Framing\H265\FragmentationUnit.cs" />
     <Compile Include="Rtp\Framing\H265\H265PacketConverter.cs" />
     <Compile Include="Rtp\Framing\H265\H265StreamWriter.cs" />
