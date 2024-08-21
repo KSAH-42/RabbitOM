@@ -47,14 +47,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             foreach ( RtpPacket packet in packets )
             {
-                if ( _converter.TryConvert( packet , out H265NalUnit nalunit ) )
-                {
-                    HandlePacket( packet , nalunit );
-                }
-                else
-                {
-                    return false;
-                }
+                HandlePacket( packet );
             }
 
             if ( _writer.Length > 0 )
@@ -80,8 +73,15 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        private void HandlePacket( RtpPacket packet , H265NalUnit nalUnit )
+
+        private void HandlePacket( RtpPacket packet )
         {
+            if ( ! _converter.TryConvert( packet , out H265NalUnit nalUnit ) )
+            {
+                OnError( packet );
+                return;
+            }
+
             switch ( nalUnit.Type )
             {
                 case NalUnitType.AGGREGATION:
@@ -105,11 +105,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                     break;
 
                 case NalUnitType.UNDEFINED:
-                    OnHandleError( packet , nalUnit );
+                    OnError( packet , nalUnit );
                     break;
 
                 case NalUnitType.INVALID:
-                    OnHandleError( packet , nalUnit );
+                    OnError( packet , nalUnit );
                     break;
 
                 default:
@@ -135,9 +135,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         }
 
         private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
-        {
-            _writer.WriteSPS( packet.Payload );
-        }
+		{
+			_writer.WriteSPS( packet.Payload );
+		 }
 
         private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
@@ -156,43 +156,35 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             if ( ! FragmentationUnit.TryParse( packet.Payload , out FragmentationUnit fragmentationUnit ) )
             {
-                OnHandleError( packet , nalUnit );
+                OnError( packet , nalUnit );
                 return;
             }
 
             if ( fragmentationUnit.StartBit && fragmentationUnit.EndBit )
             {
-                OnHandleError( packet , nalUnit );
+                OnError( packet , nalUnit );
                 return;
             }
 
             if ( fragmentationUnit.StartBit )
             {
-                // Fragmentation started
-                // _writer.WriteStartFU() ?
                 return;
             }
 
             if ( fragmentationUnit.EndBit )
             {
-                // Fragmentation stopped
-                // _writer.WriteEndFU() ?
                 return;
             }
-
-            // We are inside interval, and received normal Fragmentation packets 
-            // _writer.WriteFU() ?
         }
 
-        private void OnHandleError( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnError( RtpPacket packet )
         {
-            // do like this ? => _writer.SetError( true );
+            _writer.SetErrorStatus( true );
+        }
 
-            // what is the best thing to do ?
-            //    add a error property on the frame class   ?
-            // or add a property status on the writer class ?
-
-            throw new NotImplementedException();
+        private void OnError( RtpPacket packet , H265NalUnit nalUnit )
+        {
+            _writer.SetErrorStatus( true );
         }
     }
 }
