@@ -23,7 +23,7 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
 
-
+➡️ RTP Packet reordering is actually in progress
 ➡️ RTP HEVC/H264 a new implementation is actually in progress
 
 
