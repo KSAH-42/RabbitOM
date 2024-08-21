@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
     // The following implementation is subject to change or to be removed entirely
 
-    public sealed class H265StreamWriter : IDisposable
+    public sealed class H265StreamBuilder : IDisposable
     {
         private static readonly byte[] StartCodePrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
 
@@ -51,6 +51,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+        public bool CanBuild()
+        {
+            return _stream.Length > 0 && _hasErrors == false;
+        }
 
         public void Configure( byte[] vps , byte[] sps , byte[] pps )
         {
@@ -114,7 +118,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
         }
 
-        public byte[] ToArray()
+        public byte[] Build()
         {
             return _stream.ToArray();
         }
