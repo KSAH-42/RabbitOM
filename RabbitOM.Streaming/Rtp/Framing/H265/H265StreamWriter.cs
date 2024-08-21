@@ -16,6 +16,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private byte[] _pps;
 
+        private bool _hasErrors;
+
 
 
 
@@ -38,6 +40,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         public byte[] PPS
         {
             get => _pps;
+        }
+
+        public bool HasErrors 
+        {
+            get => _hasErrors;
         }
 
 
@@ -119,6 +126,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public void Clear( bool clearParameterSets = true )
         {
+            _hasErrors = false;
             _stream.Clear();
 
             if ( clearParameterSets )
@@ -127,6 +135,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 _sps = null;
                 _pps = null;
             }
+        }
+
+        public void SetErrorStatus( bool status )
+        {
+            _hasErrors = true;
         }
     }
 }
