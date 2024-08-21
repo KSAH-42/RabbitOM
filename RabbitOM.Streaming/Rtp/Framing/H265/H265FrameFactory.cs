@@ -137,7 +137,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
 		{
 			_streamBuilder.WriteSPS( packet.Payload );
-		 }
+		}
 
         private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
@@ -146,9 +146,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void OnHandleAggregation( RtpPacket packet , H265NalUnit nalUnit )
         {
-            foreach ( var segment in nalUnit.GetAggregationUnits() )
+            foreach ( var smallNalUnit in nalUnit.GetAggregationUnits() )
             {
-                _streamBuilder.Write( segment );
+                _streamBuilder.Write( smallNalUnit );
             }
         }
 
