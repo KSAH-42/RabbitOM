@@ -102,7 +102,7 @@ namespace RabbitOM.Streaming.Rtp
 
             var result = new RtpPacketQueue();
 
-            foreach ( var element in queue.OrderBy( x => x.SequenceNumber ).ThenBy( x => x.Timestamp ) )
+            foreach ( var element in queue.OrderBy( x => x.SequenceNumber ).ThenBy( x => x.TimeStamp ) )
             {
                 result.Enqueue( element );
             }

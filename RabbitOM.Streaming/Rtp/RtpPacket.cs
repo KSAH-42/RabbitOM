@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <summary>
         /// Gets / Sets the timestamp
         /// </summary>
-        public uint Timestamp { get; set; }
+        public uint TimeStamp { get; set; }
 
         /// <summary>
         /// Gets / Sets the sequence source
@@ -114,10 +114,10 @@ namespace RabbitOM.Streaming.Rtp
             packet.Type            = (PacketType) ( buffer[ 1 ] & 0x7F );
             packet.SequenceNumber  = (uint) ( buffer[ 2 ] << 8   );
             packet.SequenceNumber += (uint) ( buffer[ 3 ]        );
-            packet.Timestamp       = (uint) ( buffer[ 4 ] << 24  );
-            packet.Timestamp      += (uint) ( buffer[ 5 ] << 16  );
-            packet.Timestamp      += (uint) ( buffer[ 6 ] << 8   );
-            packet.Timestamp      += (uint) ( buffer[ 7 ] << 0   );
+            packet.TimeStamp       = (uint) ( buffer[ 4 ] << 24  );
+            packet.TimeStamp      += (uint) ( buffer[ 5 ] << 16  );
+            packet.TimeStamp      += (uint) ( buffer[ 6 ] << 8   );
+            packet.TimeStamp      += (uint) ( buffer[ 7 ] << 0   );
             packet.SSRC            = (uint) ( buffer[ 8 ] << 24  );
             packet.SSRC           += (uint) ( buffer[ 9 ] << 16  );
             packet.SSRC           += (uint) ( buffer[ 10 ]<< 8   );
