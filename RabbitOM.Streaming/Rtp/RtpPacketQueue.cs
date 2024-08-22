@@ -88,7 +88,7 @@ namespace RabbitOM.Streaming.Rtp
 
 
         /// <summary>
-        /// Sort the packet queue by sequence number and time stamp
+        /// Sort the packet queue by sequence number
         /// </summary>
         /// <param name="queue">the queue to be sorted</param>
         /// <returns>returns an new instance</returns>
@@ -100,11 +100,12 @@ namespace RabbitOM.Streaming.Rtp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            // TODO: add some code to handle a situation when a rollback of sequence number comes
+            // TODO: refactor: this class need to used an internal priority queue
+            // without using the sort method
 
             var result = new RtpPacketQueue();
 
-            foreach ( var element in queue.OrderBy( packet => packet.SequenceNumber ).ThenBy( packet => packet.TimeStamp ) )
+            foreach ( var element in queue.OrderBy( packet => packet.SequenceNumber ) )
             {
                 result.Enqueue( element );
             }
