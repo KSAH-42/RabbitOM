@@ -1,4 +1,7 @@
-﻿using System;
+﻿// TODO: refactor: this class need to used an internal priority queue
+// without using the sort method
+
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -99,9 +102,6 @@ namespace RabbitOM.Streaming.Rtp
             {
                 throw new ArgumentNullException( nameof( queue ) );
             }
-
-            // TODO: refactor: this class need to used an internal priority queue
-            // without using the sort method
 
             var result = new RtpPacketQueue();
 
