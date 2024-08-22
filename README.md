@@ -20,11 +20,9 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 * Reduce memory copy for large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
+* Support RTP packet reordering
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
-
-
-➡️ RTP Packet reordering is actually in progress
 
 ➡️ RTP HEVC/H264 a new implementation is actually in progress
 
