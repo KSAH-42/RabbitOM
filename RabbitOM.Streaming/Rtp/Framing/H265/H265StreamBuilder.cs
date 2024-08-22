@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return _stream.Length > 0 && _hasErrors == false;
         }
 
-        public void Configure( byte[] vps , byte[] sps , byte[] pps )
+        public void Setup( byte[] vps , byte[] sps , byte[] pps )
         {
             if ( _vps == null )
             {

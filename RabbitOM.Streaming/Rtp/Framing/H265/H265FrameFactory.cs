@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             _streamBuilder.Clear( false );
 
-            _streamBuilder.Configure( _builder.Configuration.VPS , _builder.Configuration.SPS , _builder.Configuration.PPS );
+            _streamBuilder.Setup( _builder.Configuration.VPS , _builder.Configuration.SPS , _builder.Configuration.PPS );
 
             foreach ( RtpPacket packet in packets )
             {
