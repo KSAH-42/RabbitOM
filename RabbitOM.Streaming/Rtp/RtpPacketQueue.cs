@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -76,6 +77,41 @@ namespace RabbitOM.Streaming.Rtp
         {
             get => _collection.Count == 0;
         }
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Sort the packet queue by sequence number and time stamp
+        /// </summary>
+        /// <param name="queue">the queue to be sorted</param>
+        /// <returns>returns an new instance</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static RtpPacketQueue Sort( RtpPacketQueue queue )
+        {
+            if ( queue == null )
+            {
+                throw new ArgumentNullException( nameof( queue ) );
+            }
+
+            var result = new RtpPacketQueue();
+
+            foreach ( var element in queue.OrderBy( x => x.SequenceNumber ).ThenBy( x => x.Timestamp ) )
+            {
+                result.Enqueue( element );
+            }
+
+            return result;
+        }
+
+
+
 
 
 
