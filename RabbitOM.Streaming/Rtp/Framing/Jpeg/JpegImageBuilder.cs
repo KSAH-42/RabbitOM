@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -9,7 +10,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegStreamWriter _writer = new JpegStreamWriter();
 
-        private readonly JpegFragmentQueue _fragments = new JpegFragmentQueue();
+        private readonly Queue<JpegFragment> _fragments = new Queue<JpegFragment>();
 
         private JpegFragment _firstFragment;
 
@@ -52,7 +53,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <param name="fragment">the fragment</param>
         public void AddFragment( JpegFragment fragment )
         {
-            _fragments.Enqueue( fragment );
+            _fragments.Enqueue( fragment ?? throw new ArgumentNullException( nameof( fragment ) ) );
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanBuildImage()
         {
-            return _fragments.Any();
+            return _fragments.Count > 0;
         }
 
         /// <summary>
@@ -113,7 +114,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _writer.SetLength( _headersPosition );
             }
 
-            while ( _fragments.Any() )
+            while ( _fragments.Count > 0 )
             {
                 _writer.Write( _fragments.Dequeue().Payload );
             }
