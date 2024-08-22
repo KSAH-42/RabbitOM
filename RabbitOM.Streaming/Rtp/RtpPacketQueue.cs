@@ -100,9 +100,11 @@ namespace RabbitOM.Streaming.Rtp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
+            // TODO: add optimization and case when a rollback of sequence number comes
+
             var result = new RtpPacketQueue();
 
-            foreach ( var element in queue.OrderBy( x => x.SequenceNumber ).ThenBy( x => x.TimeStamp ) )
+            foreach ( var element in queue.OrderBy( packet => packet.SequenceNumber ).ThenBy( packet => packet.TimeStamp ) )
             {
                 result.Enqueue( element );
             }
