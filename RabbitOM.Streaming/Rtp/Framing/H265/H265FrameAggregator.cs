@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             if ( packet.Marker )
             {
-                result = _packets.ToArray();
+                result = RtpPacketQueue.Sort( _packets );
 
                 _packets.Clear();
             }
