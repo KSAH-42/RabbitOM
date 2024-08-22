@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Rtp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            // TODO: add optimization and case when a rollback of sequence number comes
+            // TODO: add some code to handle a situation when a rollback of sequence number comes
 
             var result = new RtpPacketQueue();
 
