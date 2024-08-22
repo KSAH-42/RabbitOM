@@ -22,30 +22,38 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+
+
+
         public long Length
         {
             get => _stream.Length;
         }
 
+        public bool HasErrors
+        {
+            get => _hasErrors;
+        }
+        
         public byte[] VPS
         {
             get => _vps;
+            set => _vps = value;
         }
 
         public byte[] SPS
         {
             get => _sps;
+            set => _sps = value;
         }
 
         public byte[] PPS
         {
             get => _pps;
+            set => _pps = value;
         }
 
-        public bool HasErrors 
-        {
-            get => _hasErrors;
-        }
+        
 
 
 
@@ -56,25 +64,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return _stream.Length > 0 && _hasErrors == false;
         }
 
-        public void Setup( byte[] vps , byte[] sps , byte[] pps )
-        {
-            if ( _vps == null )
-            {
-                _vps = vps;
-            }
-
-            if ( _sps == null )
-            {
-                _sps = sps;
-            }
-
-            if ( _pps == null )
-            {
-                _pps = pps;
-            }
-        }
-
-        public void WriteNal( ArraySegment<byte> buffer )
+        public void Write( ArraySegment<byte> buffer )
         {
             if ( buffer.Count == 0 )
             {
@@ -83,53 +73,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             _stream.WriteAsBinary( StartCodePrefix );
             _stream.WriteAsBinary( buffer );
-        }
-
-        public void WriteNalAsVPS( ArraySegment<byte> buffer )
-        {
-            if ( buffer.Count > 0 )
-            {
-                _vps = buffer.ToArray();
-
-                _stream.WriteAsBinary( StartCodePrefix );
-                _stream.WriteAsBinary( buffer );
-            }
-        }
-
-        public void WriteNalAsSPS( ArraySegment<byte> buffer )
-        {
-            if ( buffer.Count > 0 )
-            {
-                _sps = buffer.ToArray();
-
-                _stream.WriteAsBinary( StartCodePrefix );
-                _stream.WriteAsBinary( buffer );
-            }
-        }
-
-        public void WriteNalAsPPS( ArraySegment<byte> buffer )
-        {
-            if ( buffer.Count > 0 )
-            {
-                _pps = buffer.ToArray();
-
-                _stream.WriteAsBinary( StartCodePrefix );
-                _stream.WriteAsBinary( buffer );
-            }
-        }
-
-        public void WriteNalAsFuStart( ArraySegment<byte> buffer )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteNalAsFu( ArraySegment<byte> buffer )
-        {
-            throw new NotImplementedException();
-        }
-        public void WriteNalAsFuStop( ArraySegment<byte> buffer )
-        {
-            throw new NotImplementedException();
         }
 
         public byte[] Build()
@@ -142,17 +85,15 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _stream.Dispose();
         }
 
-        public void Clear( bool clearParameterSets = true )
+        public void Clear()
         {
-            _hasErrors = false;
             _stream.Clear();
 
-            if ( clearParameterSets )
-            {
-                _vps = null;
-                _sps = null;
-                _pps = null;
-            }
+            _hasErrors = false;
+
+            _vps = null;
+            _sps = null;
+            _pps = null;
         }
 
         public void SetErrorStatus( bool status )

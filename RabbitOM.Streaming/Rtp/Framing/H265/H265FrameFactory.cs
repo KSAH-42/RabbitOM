@@ -41,9 +41,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return false;
             }
 
-            _streamBuilder.Clear( false );
+            _streamBuilder.Clear();
 
-            _streamBuilder.Setup( _builder.Configuration.VPS , _builder.Configuration.SPS , _builder.Configuration.PPS );
+            _streamBuilder.VPS = _builder.Configuration.VPS;
+            _streamBuilder.SPS = _builder.Configuration.SPS;
+            _streamBuilder.PPS = _builder.Configuration.PPS;
 
             foreach ( RtpPacket packet in packets )
             {
@@ -84,6 +86,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             switch ( nalUnit.Type )
             {
+                case NalUnitType.UNDEFINED:
+                case NalUnitType.INVALID:
+                    OnError( packet );
+                    break;
+
                 case NalUnitType.AGGREGATION:
                     OnHandleAggregation( packet , nalUnit );
                     break;
@@ -104,14 +111,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                     OnHandlePPS( packet , nalUnit );
                     break;
 
-                case NalUnitType.UNDEFINED:
-                    OnError( packet , nalUnit );
-                    break;
-
-                case NalUnitType.INVALID:
-                    OnError( packet , nalUnit );
-                    break;
-
                 default:
                     OnHandle( packet , nalUnit );
                     break;
@@ -126,29 +125,35 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void OnHandle( RtpPacket packet , H265NalUnit nalUnit )
         {
-            _streamBuilder.WriteNal( packet.Payload );
+            _streamBuilder.Write( packet.Payload );
         }
 
         private void OnHandleVPS( RtpPacket packet , H265NalUnit nalUnit )
         {
-            _streamBuilder.WriteNalAsVPS( packet.Payload );
+            _streamBuilder.Write( packet.Payload );
+            
+            _streamBuilder.VPS = packet.Payload.ToArray();
         }
 
         private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
 		{
-			_streamBuilder.WriteNalAsSPS( packet.Payload );
-		}
+            _streamBuilder.Write( packet.Payload );
+
+            _streamBuilder.SPS = packet.Payload.ToArray();
+        }
 
         private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
-            _streamBuilder.WriteNalAsPPS( packet.Payload );
+            _streamBuilder.Write( packet.Payload );
+
+            _streamBuilder.PPS = packet.Payload.ToArray();
         }
 
         private void OnHandleAggregation( RtpPacket packet , H265NalUnit nalUnit )
         {
             foreach ( var smallNalUnit in nalUnit.GetAggregationUnits() )
             {
-                _streamBuilder.WriteNal( smallNalUnit );
+                _streamBuilder.Write( smallNalUnit );
             }
         }
 
@@ -156,37 +161,32 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             if ( ! FragmentationUnit.TryParse( nalUnit.Payload , out FragmentationUnit fragmentationUnit ) )
             {
-                OnError( packet , nalUnit );
+                OnError( packet );
                 return;
             }
 
             if ( fragmentationUnit.StartBit && fragmentationUnit.EndBit )
             {
-                OnError( packet , nalUnit );
+                OnError( packet );
                 return;
             }
 
             if ( fragmentationUnit.StartBit )
             {
-                _streamBuilder.WriteNalAsFuStart( packet.Payload );
+                throw new NotImplementedException();
             }
 
             else if ( fragmentationUnit.EndBit )
             {
-                _streamBuilder.WriteNalAsFuStop( packet.Payload );
+                throw new NotImplementedException();
             }
             else
             {
-                _streamBuilder.WriteNalAsFu( packet.Payload );
+                throw new NotImplementedException();
             }
         }
 
         private void OnError( RtpPacket packet )
-        {
-            _streamBuilder.SetErrorStatus( true );
-        }
-
-        private void OnError( RtpPacket packet , H265NalUnit nalUnit )
         {
             _streamBuilder.SetErrorStatus( true );
         }
