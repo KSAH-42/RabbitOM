@@ -84,7 +84,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             lock ( SyncRoot )
             {
-                _aggregator.Dispose();
                 _frameFactory.Dispose();
             }
         }

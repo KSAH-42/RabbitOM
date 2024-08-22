@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// <summary>
     /// Represent a packet aggregator. This class is used to reconstructor a group packet that represent a single frame.
     /// </summary>
-    public sealed class JpegFrameAggregator : IDisposable
+    public sealed class JpegFrameAggregator
     {
         private readonly JpegFrameBuilder _builder;
 
@@ -24,6 +24,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public JpegFrameAggregator( JpegFrameBuilder builder )
         {
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
+           
             _packets = new RtpPacketQueue();
         }
 
@@ -64,14 +65,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// Remove all pending packets
         /// </summary>
         public void Clear()
-        {
-            _packets.Clear();
-        }
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        public void Dispose()
         {
             _packets.Clear();
         }

@@ -34,7 +34,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         public void Dispose()
         {
             _imageBuilder.Dispose();
-            _imageBuilder.Clear();
         }
 
         /// <summary>

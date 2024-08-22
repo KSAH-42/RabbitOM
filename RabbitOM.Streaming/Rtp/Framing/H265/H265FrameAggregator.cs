@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
-    public sealed class H265FrameAggregator : IDisposable
+    public sealed class H265FrameAggregator
     {
         private readonly H265FrameBuilder _builder;
 
@@ -53,10 +53,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _packets.Clear();
         }
 
-        public void Dispose()
-        {
-            _packets.Clear();
-        }
+
+
+
 
 
 

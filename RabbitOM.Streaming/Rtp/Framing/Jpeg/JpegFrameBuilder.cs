@@ -98,7 +98,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             lock ( SyncRoot )
             {
-                _aggregator.Dispose();
                 _factory.Dispose();
             }
         }
