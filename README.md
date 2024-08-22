@@ -14,12 +14,12 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 * Support multiple type of authentications: Basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support auto reconnection in case of network failures
 * Support of event Handlers for connection loss, receiving packet, etc...
-* Support message reordering when multiple requests are sended and responses arrive in a different order
 * Provide classes to access to the SDP informations
 * Thread safe, except the sdp classes and some rtp classes
 * Reduce memory copy for large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
+* Support RTSP message reordering when multiple requests are sended and responses arrive in a different order
 * Support RTP packet reordering
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
