@@ -48,6 +48,16 @@ namespace RabbitOM.Streaming.Sdp
         /// </summary>
         public const string TypeConfiguration = "config";
 
+        /// <summary>
+        /// Represent the default SPS for H264 encoder
+        /// </summary>
+        public const string Default_H264_SPS = "Z00AH5pkAoAt/4C1AQEBQAAA+gAAJxAh";
+
+        /// <summary>
+        /// Represent the default PPS for H264 encoder
+        /// </summary>
+        public const string Default_H264_PPS = "aO48gA==";
+
 
 
 
