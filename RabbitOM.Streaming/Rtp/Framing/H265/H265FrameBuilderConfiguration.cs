@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
-    /// <summary>
-    /// Represent the builder configuration class
-    /// </summary>
     public sealed class H265FrameBuilderConfiguration : RtpFrameBuilderConfiguration
     {
         private byte[] _pps;
@@ -15,9 +12,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-        /// <summary>
-        /// Gets / Sets the PPS usually it comes from the sdp
-        /// </summary>
         public byte[] PPS
         {
             get
@@ -37,9 +31,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
         }
 
-        /// <summary>
-        /// Gets / Sets the SPS usually it comes from the sdp
-        /// </summary>
         public byte[] SPS
         {
             get
@@ -59,9 +50,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
         }
 
-        /// <summary>
-        /// Gets / Sets the VPS usually it comes from the sdp
-        /// </summary>
         public byte[] VPS
         {
             get

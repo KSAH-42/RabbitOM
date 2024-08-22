@@ -126,35 +126,35 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void OnHandle( RtpPacket packet , H265NalUnit nalUnit )
         {
-            _streamBuilder.Write( packet.Payload );
+            _streamBuilder.WriteNal( packet.Payload );
         }
 
         private void OnHandleVPS( RtpPacket packet , H265NalUnit nalUnit )
         {
-            _streamBuilder.WriteVPS( packet.Payload );
+            _streamBuilder.WriteNalAsVPS( packet.Payload );
         }
 
         private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
 		{
-			_streamBuilder.WriteSPS( packet.Payload );
+			_streamBuilder.WriteNalAsSPS( packet.Payload );
 		}
 
         private void OnHandlePPS( RtpPacket packet , H265NalUnit nalUnit )
         {
-            _streamBuilder.WritePPS( packet.Payload );
+            _streamBuilder.WriteNalAsPPS( packet.Payload );
         }
 
         private void OnHandleAggregation( RtpPacket packet , H265NalUnit nalUnit )
         {
             foreach ( var smallNalUnit in nalUnit.GetAggregationUnits() )
             {
-                _streamBuilder.Write( smallNalUnit );
+                _streamBuilder.WriteNal( smallNalUnit );
             }
         }
 
         private void OnHandleFragmentation( RtpPacket packet , H265NalUnit nalUnit )
         {
-            if ( ! FragmentationUnit.TryParse( packet.Payload , out FragmentationUnit fragmentationUnit ) )
+            if ( ! FragmentationUnit.TryParse( nalUnit.Payload , out FragmentationUnit fragmentationUnit ) )
             {
                 OnError( packet , nalUnit );
                 return;
@@ -168,12 +168,16 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             if ( fragmentationUnit.StartBit )
             {
-                return;
+                _streamBuilder.WriteNalAsFuStart( packet.Payload );
             }
 
-            if ( fragmentationUnit.EndBit )
+            else if ( fragmentationUnit.EndBit )
             {
-                return;
+                _streamBuilder.WriteNalAsFuStop( packet.Payload );
+            }
+            else
+            {
+                _streamBuilder.WriteNalAsFu( packet.Payload );
             }
         }
 

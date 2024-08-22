@@ -19,6 +19,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+
+
+
+
         public bool TryValidate()
         {
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
@@ -30,8 +34,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             for ( int index = 0 ; index < Payload.Count - 2 ; )
             {
-                int size = Payload.Array[ Payload.Offset + index++ ] * 0x100
-                         | Payload.Array[ Payload.Offset + index ];
+                int size = Payload.Array[ Payload.Offset + index++ ] * 0x100 | Payload.Array[ Payload.Offset + index ];
 
                 int delta = Payload.Count - index++;
 
@@ -45,6 +48,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             return results;
         }
+
+
+
 
 
 
