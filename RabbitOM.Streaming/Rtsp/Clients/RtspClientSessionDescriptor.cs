@@ -129,12 +129,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                 if ( string.IsNullOrWhiteSpace( mediaTrack.Format.SPS ) )
                 { 
-                    mediaTrack.Format.SPS = CodecInfo.Default_H264_SPS;
+                    mediaTrack.Format.SPS = FormatAttributeValue.Default_H264_SPS;
                 }
                 
                 if ( string.IsNullOrWhiteSpace( mediaTrack.Format.PPS ) )
                 { 
-                    mediaTrack.Format.PPS = CodecInfo.Default_H264_PPS;
+                    mediaTrack.Format.PPS = FormatAttributeValue.Default_H264_PPS;
                 }
 
                 if ( mediaFormat == RtspMediaFormat.Audio )
