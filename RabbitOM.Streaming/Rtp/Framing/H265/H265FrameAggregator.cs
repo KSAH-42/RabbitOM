@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-
+        
         public H265FrameAggregator( H265FrameBuilder builder )
         {
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
@@ -58,10 +58,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
-
-
-
-
+        
         private bool OnAggregating( RtpPacket packet )
         {
             if ( packet == null )
