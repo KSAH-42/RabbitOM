@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
@@ -41,7 +42,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             if ( packet.Marker )
             {
-                result = RtpPacketQueue.Sort( _packets );
+                result = RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
 
                 _packets.Clear();
             }

@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             if ( packet.Marker )
             {
-                result = RtpPacketQueue.Sort( _packets );
+                result = RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
 
                 _packets.Clear();
             }

@@ -15,6 +15,10 @@ namespace RabbitOM.Streaming.Rtp
     {
         private readonly Queue<RtpPacket> _collection;
 
+        private uint? _lastSequenceNumber;
+
+        private bool _canSort;
+
 
 
 
@@ -89,6 +93,15 @@ namespace RabbitOM.Streaming.Rtp
 
 
 
+        /// <summary>
+        /// Check if the
+        /// </summary>
+        /// <param name="queue"></param>
+        /// <returns></returns>
+        public static bool CanSort( RtpPacketQueue queue )
+        {
+            return queue != null && queue._canSort;
+        }
 
         /// <summary>
         /// Sort the packet queue by sequence number
@@ -96,21 +109,16 @@ namespace RabbitOM.Streaming.Rtp
         /// <param name="queue">the queue to be sorted</param>
         /// <returns>returns an new instance</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static RtpPacketQueue Sort( RtpPacketQueue queue )
+        public static IEnumerable<RtpPacket> Sort( RtpPacketQueue queue )
         {
             if ( queue == null )
             {
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            var result = new RtpPacketQueue();
+            queue._canSort = false;
 
-            foreach ( var element in queue.OrderBy( packet => packet.SequenceNumber ) )
-            {
-                result.Enqueue( element );
-            }
-
-            return result;
+            return new Queue<RtpPacket>( queue.OrderBy( packet => packet.SequenceNumber ) );
         }
 
 
@@ -165,7 +173,12 @@ namespace RabbitOM.Streaming.Rtp
         /// </summary>
         public void Clear()
         {
-            _collection.Clear();
+            if ( _collection.Count > 0 )
+            {
+                _collection.Clear();
+
+                OnClear();
+            }
         }
 
         /// <summary>
@@ -178,6 +191,15 @@ namespace RabbitOM.Streaming.Rtp
         }
 
         /// <summary>
+        /// Create an enumerable of elements
+        /// </summary>
+        /// <returns>returns an array</returns>
+        public IEnumerable<RtpPacket> AsEnumerable()
+        {
+            return new Queue<RtpPacket>( _collection );
+        }
+
+        /// <summary>
         /// Enqueue an element
         /// </summary>
         /// <param name="packet">the packet</param>
@@ -185,6 +207,8 @@ namespace RabbitOM.Streaming.Rtp
         public void Enqueue( RtpPacket packet )
         {
             _collection.Enqueue( packet ?? throw new ArgumentNullException( nameof( packet ) ) );
+
+            OnEnqueue( packet );
         }
 
         /// <summary>
@@ -194,7 +218,11 @@ namespace RabbitOM.Streaming.Rtp
         /// <exception cref="InvalidOperationException"/>
         public RtpPacket Dequeue()
         {
-            return _collection.Dequeue() ?? throw new InvalidOperationException();
+            var result = _collection.Dequeue() ?? throw new InvalidOperationException();
+
+            OnDequeue( result );
+
+            return result;
         }
 
         /// <summary>
@@ -221,6 +249,8 @@ namespace RabbitOM.Streaming.Rtp
 
             _collection.Enqueue( packet );
 
+            OnEnqueue( packet );
+
             return true;
         }
 
@@ -233,7 +263,14 @@ namespace RabbitOM.Streaming.Rtp
         {
             result = _collection.Count > 0 ? _collection.Dequeue() : null;
 
-            return result != null;
+            if ( result == null )
+            {
+                return false;
+            }
+
+            OnDequeue( result );
+
+            return true;
         }
 
         /// <summary>
@@ -246,6 +283,54 @@ namespace RabbitOM.Streaming.Rtp
             result = _collection.Count > 0 ? _collection.Peek() : null ;
             
             return result != null;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Occurs when a packet is queued
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        private void OnEnqueue( RtpPacket packet )
+        {
+            if ( ! _lastSequenceNumber.HasValue )
+            {
+                _lastSequenceNumber = packet.SequenceNumber;
+            }
+            else
+            {
+                if ( ! _canSort )
+                {
+                    _canSort = _lastSequenceNumber > packet.SequenceNumber ? true : false;
+                }
+
+                _lastSequenceNumber = packet.SequenceNumber;
+            }
+        }
+
+        /// <summary>
+        /// Occurs when a packet is dequeue
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        private void OnDequeue( RtpPacket packet )
+        {
+            if ( _collection.Count == 0 )
+            {
+                _lastSequenceNumber = null;
+                _canSort = false;
+            }
+        }
+
+        /// <summary>
+        /// Occurs when clear method is called
+        /// </summary>
+        private void OnClear()
+        {
+            _lastSequenceNumber = null;
+            _canSort = false;
         }
     }
 }
