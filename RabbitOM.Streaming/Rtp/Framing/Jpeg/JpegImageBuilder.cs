@@ -51,6 +51,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// Add a fragment
         /// </summary>
         /// <param name="fragment">the fragment</param>
+        /// <exception cref="ArgumentNullException"/>
         public void AddFragment( JpegFragment fragment )
         {
             _fragments.Enqueue( fragment ?? throw new ArgumentNullException( nameof( fragment ) ) );
