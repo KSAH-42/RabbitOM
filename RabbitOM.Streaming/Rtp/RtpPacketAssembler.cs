@@ -4,9 +4,10 @@ using System.Collections.Generic;
 namespace RabbitOM.Streaming.Rtp
 {
     /// <summary>
-    /// Represent a rtp packet assembler. This class has been introduce to become the central point where packet need to aggregated.
+    /// Represent a rtp packet assembler. This class has been introduce to become the central point where packets need to be aggregated.
     /// And it can become an abstract class or it can used a priority queue without modifing all XXXFrameAggregator class.
-    /// This class has been introduce to avoid coupling based inheritance by using a BaseFrameAggregator class used by the different aggregator.
+    /// This class has been introduce to avoid coupling based on inheritance by using a BaseFrameAggregator class.
+    /// And also to be tested independently
     /// </summary>
     public sealed class RtpPacketAssembler
     {
