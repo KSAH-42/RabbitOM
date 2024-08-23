@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegFrameBuilder _builder;
 
-        private readonly RtpPacketQueue _packets;
+        private readonly RtpPacketAssembler _assembler;
 
 
 
@@ -23,9 +23,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <exception cref="ArgumentNullException"/>
         public JpegFrameAggregator( JpegFrameBuilder builder )
         {
-            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
-           
-            _packets = new RtpPacketQueue();
+            _builder   = builder ?? throw new ArgumentNullException( nameof( builder ) );
+
+            _assembler = new RtpPacketAssembler();
         }
 
 
@@ -42,23 +42,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             result = null;
 
-            if ( ! OnAggregating( packet ) )
+            if ( OnAggregating( packet ) )
             {
-                _packets.Clear();
-
-                return false;
+                return _assembler.TryAssemble( packet , out result );
             }
 
-            _packets.Enqueue( packet );
+            _assembler.Clear();
 
-            if ( packet.Marker )
-            {
-                result = RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
-
-                _packets.Clear();
-            }
-
-            return result != null;
+            return false;
         }
 
         /// <summary>
@@ -66,7 +57,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         public void Clear()
         {
-            _packets.Clear();
+            _assembler.Clear();
         }
 
 
@@ -96,7 +87,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            if ( _assembler.Packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
             {
                 return false;
             }

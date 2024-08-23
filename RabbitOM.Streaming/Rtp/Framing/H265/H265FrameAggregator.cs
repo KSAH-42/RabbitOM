@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
     {
         private readonly H265FrameBuilder _builder;
 
-        private readonly RtpPacketQueue _packets;
+        private readonly RtpPacketAssembler _assembler;
 
 
 
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
 
-            _packets = new RtpPacketQueue();
+            _assembler = new RtpPacketAssembler();
         }
 
 
@@ -30,28 +30,19 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             result = null;
 
-            if ( ! OnAggregating( packet ) )
+            if ( OnAggregating( packet ) )
             {
-                _packets.Clear();
-
-                return false;
-            }
-        
-            _packets.Enqueue( packet );
-
-            if ( packet.Marker )
-            {
-                result = RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
-
-                _packets.Clear();
+                return _assembler.TryAssemble( packet , out result );
             }
 
-            return result != null;
+            _assembler.Clear();
+            
+            return false;
         }
 
         public void Clear()
         {
-            _packets.Clear();
+            _assembler.Clear();
         }
 
 
@@ -71,7 +62,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return false;
             }
 
-            if ( _packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            if ( _assembler.Packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
             {
                 return false;
             }
