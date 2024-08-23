@@ -176,10 +176,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 throw new NotImplementedException();
             }
 
-            else if ( fragmentationUnit.EndBit )
-            {
-                throw new NotImplementedException();
-            }
             else
             {
                 throw new NotImplementedException();
