@@ -63,6 +63,7 @@
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriter.Constants.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegStreamWriterSettings.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegFrameBuilderConfiguration.cs" />
+    <Compile Include="Rtp\RtpPacketAssembler.cs" />
     <Compile Include="Rtp\Framing\RtpMemoryStream.cs" />
     <Compile Include="Codecs\Decoder.cs" />
     <Compile Include="Codecs\IDecoder.cs" />
