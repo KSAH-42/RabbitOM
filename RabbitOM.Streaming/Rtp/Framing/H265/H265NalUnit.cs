@@ -1,12 +1,4 @@
-﻿/*
-    +-------------------------------+
-    |0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |F|   Type    |  LayerId  | TID |
-    +-------------------------------+
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
@@ -75,6 +67,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 return false;
             }
+
+            // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
 
             int header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
 
