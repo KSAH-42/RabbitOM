@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             // TODO: a code refactoring must done here 
 
-            // This code here is not finished !!!
+            // This code here is not yet finished !!!
 
 
             // Because we need to parse first  2 byte of
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                     break;
 
                 case NalUnitType.FRAGMENTATION:
-                    OnHandleFragmentation( packet , nalUnit );
+                    OnHandleFragmentation( packet );
                     break;
 
                 case NalUnitType.VPS:
@@ -173,9 +173,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
         }
 
-        private void OnHandleFragmentation( RtpPacket packet , H265NalUnit nalUnit )
+        private void OnHandleFragmentation( RtpPacket packet )
         {
-            if ( ! FragmentationUnit.TryParse( nalUnit.Payload , out FragmentationUnit fragmentationUnit ) )
+            if ( ! FragmentationUnit.TryParse( packet.Payload , out FragmentationUnit fragmentationUnit ) )
             {
                 OnError( packet );
                 return;
@@ -187,12 +187,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return;
             }
 
-            if ( fragmentationUnit.StartBit )
-            {
-                _streamBuilder.WriteAsUInt16( H265NalUnit.FormatHeader( nalUnit , fragmentationUnit.Type ) );
-            }
-            
-            _streamBuilder.Write( fragmentationUnit.Data );
+
+            throw new NotFiniteNumberException();
         }
 
         private void OnError( RtpPacket packet )

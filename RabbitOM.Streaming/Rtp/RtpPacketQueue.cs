@@ -1,4 +1,4 @@
-﻿// refactor: this class may need to used an internal priority queue
+﻿// refactorization: this class may need to used an internal priority queue
 // without using the sort method
 
 using System;
