@@ -1,4 +1,4 @@
-﻿// TODO: refactor: this class need to used an internal priority queue
+﻿// refactor: this class may need to used an internal priority queue
 // without using the sort method
 
 using System;
