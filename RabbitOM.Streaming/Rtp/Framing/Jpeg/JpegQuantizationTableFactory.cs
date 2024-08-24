@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 buffer[ i ] = JpegQuantizer.Quantize( BaseTable[ i ] , quantizationFactor );
             }
 
-            _table = new ArraySegment<byte>( buffer , 0 , buffer.Length );
+            _table = new ArraySegment<byte>( buffer );
 
             _factor = factor;
 
