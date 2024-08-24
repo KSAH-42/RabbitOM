@@ -1,4 +1,4 @@
-# An implementation of a rtsp client based on the .net framework
+# A implementation of a rtsp client based on the .net framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
@@ -11,7 +11,7 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 * No external dependencies
 * Easy to used
 * Support Unicast TCP (interleaved mode) / Unicast UDP / Multicast Streaming transports
-* Support multiple type of authentications: Basic and digest ( MD5, SHA1, SHA256, SHA512 )
+* Support multiple types of authentications: basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support auto reconnection in case of network failures
 * Support of event Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
