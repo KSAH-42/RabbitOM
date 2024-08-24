@@ -28,8 +28,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
         }
 
-        
-
         public IList<ArraySegment<byte>> GetAggregationUnits()
         {
             var results = new List<ArraySegment<byte>>( 100 );
@@ -103,8 +101,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             result |= ( (byte) nalUnit.LayerId & 0x3F ) << 3;
             result |= ( (byte) nalUnit.Type & 0x3F ) << 9;
             result |= nalUnit.ForbiddenBit ? 1 << 15 : 0;
+            result |= fragmentationType << 9;
 
-            return result | (fragmentationType << 9);
+            return result;
         }
     } 
 }
