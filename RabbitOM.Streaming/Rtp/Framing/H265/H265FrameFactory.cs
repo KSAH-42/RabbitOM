@@ -78,12 +78,28 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         private void HandlePacket( RtpPacket packet )
         {
+            // TODO: a code refactoring must done here 
+
+            // This code here is not finished !!!
+
+
+            // Because we need to parse first  2 byte of
+            // the rtp payload to see if it is a nal unit header
+            // or fragment header
+            // before parsing 
+            // So here we can continue to used to parse the nalunit
+            // but we to test the forbiddenBit true
+            // in order to used a different parser  
+            // to parse and to test the unitnalUnit.ForbiddenBit == true
+            // this code is actually incompleted
+
+
             if ( ! _converter.TryConvert( packet , out H265NalUnit nalUnit ) )
             {
                 OnError( packet );
                 return;
             }
-
+            
             switch ( nalUnit.Type )
             {
                 case NalUnitType.UNDEFINED:
