@@ -173,12 +173,9 @@ namespace RabbitOM.Streaming.Rtp
         /// </summary>
         public void Clear()
         {
-            if ( _collection.Count > 0 )
-            {
-                _collection.Clear();
+            _collection.Clear();
 
-                OnClear();
-            }
+            OnClear();
         }
 
         /// <summary>
