@@ -188,7 +188,7 @@ namespace RabbitOM.Streaming.Rtp
         }
 
         /// <summary>
-        /// Create an enumerable of elements
+        /// Just returns all elements present on the queue on iterable object
         /// </summary>
         /// <returns>returns an array</returns>
         public IEnumerable<RtpPacket> AsEnumerable()
