@@ -75,6 +75,11 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _stream.WriteAsBinary( buffer );
         }
 
+        public void WriteAsUInt16( int value )
+        {
+            _stream.WriteAsUInt16( value );
+        }
+
         public byte[] Build()
         {
             return _stream.ToArray();

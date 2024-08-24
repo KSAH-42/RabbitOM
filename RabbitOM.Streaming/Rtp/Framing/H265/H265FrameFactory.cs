@@ -171,15 +171,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
                 return;
             }
 
-            throw new NotImplementedException();
-            /*
             if ( fragmentationUnit.StartBit )
             {
+                _streamBuilder.WriteAsUInt16( H265NalUnit.FormatHeader( nalUnit , fragmentationUnit.Type ) );
             }
-            else
-            {
-            }
-            */
+            
+            _streamBuilder.Write( fragmentationUnit.Data );
         }
 
         private void OnError( RtpPacket packet )

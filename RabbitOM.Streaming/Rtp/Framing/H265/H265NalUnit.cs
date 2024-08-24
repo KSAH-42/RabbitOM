@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+    +-------------------------------+
+    |0|1|2|3|4|5|6|7|0|1|2|3|4|5|6|7|
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |F|   Type    |  LayerId  | TID |
+    +-------------------------------+
+ */
+
+using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
@@ -27,6 +35,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             return Type == NalUnitType.UNDEFINED || Type >= NalUnitType.INVALID;
         }
+
+        
 
         public IList<ArraySegment<byte>> GetAggregationUnits()
         {
@@ -79,6 +89,28 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             
             return true;
+        }
+
+        public static int FormatHeader( H265NalUnit nalUnit )
+        {
+            return FormatHeader( nalUnit , 0 );
+        }
+
+        public static int FormatHeader( H265NalUnit nalUnit , byte fragmentationType )
+        {
+            if ( nalUnit == null )
+            {
+                throw new ArgumentNullException( nameof( nalUnit ) );
+            }
+
+            int result = 0;
+
+            result |=   (byte) nalUnit.TemporalId & 0x07;
+            result |= ( (byte) nalUnit.LayerId & 0x3F ) << 3;
+            result |= ( (byte) nalUnit.Type & 0x3F ) << 9;
+            result |= nalUnit.ForbiddenBit ? 1 << 15 : 0;
+
+            return result | (fragmentationType << 9);
         }
     } 
 }
