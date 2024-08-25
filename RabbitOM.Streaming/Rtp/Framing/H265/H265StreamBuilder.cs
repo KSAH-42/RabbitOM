@@ -59,6 +59,24 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
 
+        public void Configure( byte[] vps , byte[] sps , byte[] pps )
+        {
+            if ( _vps == null )
+            {
+                _vps = vps;
+            }
+
+            if ( _sps == null )
+            {
+                _sps = sps;
+            }
+
+            if ( _pps == null )
+            {
+                _pps = pps;
+            }
+        }
+
         public bool CanBuild()
         {
             return _stream.Length > 0 && _hasErrors == false;
@@ -90,15 +108,18 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             _stream.Dispose();
         }
 
-        public void Clear()
+        public void Clear( bool clearParameterSet = true )
         {
             _stream.Clear();
 
             _hasErrors = false;
 
-            _vps = null;
-            _sps = null;
-            _pps = null;
+            if ( clearParameterSet )
+            {
+                _vps = null;
+                _sps = null;
+                _pps = null;
+            }
         }
 
         public void SetErrorStatus( bool status )
