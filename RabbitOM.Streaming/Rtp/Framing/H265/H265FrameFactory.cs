@@ -184,7 +184,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             }
 
 
-            throw new NotFiniteNumberException();
+            throw new NotImplementedException();
         }
 
         private void OnError( RtpPacket packet )
