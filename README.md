@@ -24,7 +24,7 @@ A .net library for receiving raw audio/video streams using [rtsp](https://www.rf
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
 
-➡️ RTP HEVC/H264 a new implementation is actually in progress
+➡️ RTP HEVC a new implementation is actually in progress
 
 
 # How to receive raw rtp packets using the rtsp client ?
