@@ -87,7 +87,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         // We can used the same code but we need to change
         // the converter code and it's output type and 
-        // to introduce H265Packet class base a class
+        // to introduce H265Packet class base class
         // for a fragment or nal unit
         // and then a cast be done
 
