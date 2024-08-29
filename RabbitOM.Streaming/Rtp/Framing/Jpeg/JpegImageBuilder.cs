@@ -150,7 +150,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 throw new ArgumentNullException( nameof( fragment ) );
             }
 #endif
-
             return _headersPosition               == 0
                 || _firstFragment                 == null 
                 || _firstFragment.Type            != fragment.Type 
