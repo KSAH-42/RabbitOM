@@ -75,15 +75,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
         // TODO: a code refactoring must done here 
-        // This code here is not yet finished !!!
-        // Because we need to parse first  2 byte of
+        // This code here is not yet finished
+        // Because we need to parse first 2 bytes of
         // the rtp payload to see if it is a nal unit header
-        // or fragment header
-        // before parsing 
+        // or a fragment header
+        // before parsing remain bytes including the two bytes
         // So here we can continue to used to parse the nalunit
-        // but we to test the forbiddenBit true
-        // in order to used a different parser  
-        // to parse and to test the unitnalUnit.ForbiddenBit == true
+        // but we need to test the forbiddenBit and to see if it's equals to true
+        // in order to select the right parser  
         // this code is actually incompleted
 
         private void HandlePacket( RtpPacket packet )
