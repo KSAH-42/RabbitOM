@@ -85,6 +85,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         // in order to select the right parser  
         // this code is actually incompleted
 
+        // We can used the same code but we need to change
+        // the converter code and it's output type and 
+        // to introduce H265Packet class base a class
+        // for a fragment or nal unit
+        // and then a cast be done
+
         private void HandlePacket( RtpPacket packet )
         {
             if ( ! _converter.TryConvert( packet , out H265NalUnit nalUnit ) )
