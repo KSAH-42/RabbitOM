@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
 
 
         /// <summary>
-        /// Fire a frame received event
+        /// Fire a frame event received
         /// </summary>
         /// <param name="e">the event to fired outside</param>
         protected virtual void OnFrameReceived( RtpFrameReceivedEventArgs e )
