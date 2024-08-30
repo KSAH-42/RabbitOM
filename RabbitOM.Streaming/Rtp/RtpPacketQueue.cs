@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Rtp
 
         private uint? _lastSequenceNumber;
 
-        private bool _canSort;
+        private bool _isUnOrdered;
 
 
 
@@ -94,13 +94,13 @@ namespace RabbitOM.Streaming.Rtp
 
 
         /// <summary>
-        /// Check if the queue need to be sorted
+        /// Check if the queue is not sorted
         /// </summary>
         /// <param name="queue">the queue</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool CanSort( RtpPacketQueue queue )
+        public static bool IsUnOrdered( RtpPacketQueue queue )
         {
-            return queue != null && queue._canSort;
+            return queue != null && queue._isUnOrdered;
         }
 
         /// <summary>
@@ -115,8 +115,6 @@ namespace RabbitOM.Streaming.Rtp
             {
                 throw new ArgumentNullException( nameof( queue ) );
             }
-
-            queue._canSort = false;
 
             return new Queue<RtpPacket>( queue.OrderBy( packet => packet.SequenceNumber ) );
         }
@@ -299,9 +297,9 @@ namespace RabbitOM.Streaming.Rtp
             }
             else
             {
-                if ( ! _canSort )
+                if ( ! _isUnOrdered )
                 {
-                    _canSort = _lastSequenceNumber > packet.SequenceNumber ? true : false;
+                    _isUnOrdered = _lastSequenceNumber > packet.SequenceNumber ? true : false;
                 }
 
                 _lastSequenceNumber = packet.SequenceNumber;
@@ -317,7 +315,7 @@ namespace RabbitOM.Streaming.Rtp
             if ( _collection.Count == 0 )
             {
                 _lastSequenceNumber = null;
-                _canSort = false;
+                _isUnOrdered = false;
             }
         }
 
@@ -327,7 +325,7 @@ namespace RabbitOM.Streaming.Rtp
         private void OnClear()
         {
             _lastSequenceNumber = null;
-            _canSort = false;
+            _isUnOrdered = false;
         }
     }
 }

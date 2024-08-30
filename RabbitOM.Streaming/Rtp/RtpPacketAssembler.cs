@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Rtp
 
             if ( packet.Marker )
             {
-                result = _isSortEnabled && RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
+                result = _isSortEnabled && RtpPacketQueue.IsUnOrdered( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
                 
                 _packets.Clear();
             }
