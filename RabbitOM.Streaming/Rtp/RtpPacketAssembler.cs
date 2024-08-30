@@ -11,7 +11,21 @@ namespace RabbitOM.Streaming.Rtp
     public sealed class RtpPacketAssembler
     {
         private readonly RtpPacketQueue _packets = new RtpPacketQueue();
+
+        private bool _isSortEnabled;
+
+
+
  
+
+        /// <summary>
+        /// Gets / Sets the sorting status
+        /// </summary>
+        public bool IsSortEnabled
+        {
+            get => _isSortEnabled;
+            set => _isSortEnabled = value;
+        }
 
         /// <summary>
         /// Gets the packets as a readonly collection
@@ -45,8 +59,8 @@ namespace RabbitOM.Streaming.Rtp
 
             if ( packet.Marker )
             {
-                result = RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
-
+                result = _isSortEnabled && RtpPacketQueue.CanSort( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
+                
                 _packets.Clear();
             }
 
