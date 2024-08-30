@@ -94,10 +94,10 @@ namespace RabbitOM.Streaming.Rtp
 
 
         /// <summary>
-        /// Check if the
+        /// Check if the queue need to be sorted
         /// </summary>
-        /// <param name="queue"></param>
-        /// <returns></returns>
+        /// <param name="queue">the queue</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool CanSort( RtpPacketQueue queue )
         {
             return queue != null && queue._canSort;
