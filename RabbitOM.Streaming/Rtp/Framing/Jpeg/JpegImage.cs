@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// <summary>
     /// Represent a simple data structure
     /// </summary>
-    public struct JpegImage
+    public readonly struct JpegImage
     {
         /// <summary>
         /// Empty value

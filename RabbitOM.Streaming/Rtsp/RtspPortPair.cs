@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Rtsp
     /// <summary>
     /// Represent a port pair value
     /// </summary>
-    public struct RtspPortPair
+    public readonly struct RtspPortPair
     {
         /// <summary>
         /// Represent the zero value

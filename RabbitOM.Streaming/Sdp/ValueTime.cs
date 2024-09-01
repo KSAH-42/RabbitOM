@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Sdp
     /// <summary>
     /// Represent a value object
     /// </summary>
-    public struct ValueTime
+    public readonly struct ValueTime
     {
         private readonly long _startTime;
 
