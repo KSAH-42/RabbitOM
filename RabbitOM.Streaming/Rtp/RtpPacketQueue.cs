@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Rtp
         /// </summary>
         public bool IsEmpty
         {
-            get => _collection.Count == 0;
+            get => _collection.Count <= 0;
         }
 
 
