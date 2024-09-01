@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Sdp
         /// </summary>
         public bool IsEmpty
         {
-            get => _collection.Count == 0;
+            get => _collection.Count <= 0;
         }
 
         /// <summary>

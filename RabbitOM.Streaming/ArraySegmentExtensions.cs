@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming
         /// <returns>returns an array</returns>
         public static byte[] ToArray( this ArraySegment<byte> source )
         {
-            if ( source.Count == 0 )
+            if ( source.Count <= 0 )
             {
                 return s_empty_buffer;
             }

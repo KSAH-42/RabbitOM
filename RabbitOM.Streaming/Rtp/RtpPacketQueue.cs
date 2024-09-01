@@ -312,7 +312,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <param name="packet">the packet</param>
         private void OnDequeue( RtpPacket packet )
         {
-            if ( _collection.Count == 0 )
+            if ( _collection.Count <= 0 )
             {
                 _lastSequenceNumber = null;
                 _isUnOrdered = false;

@@ -84,7 +84,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public void Write( ArraySegment<byte> buffer )
         {
-            if ( buffer.Count == 0 )
+            if ( buffer.Count <= 0 )
             {
                 throw new ArgumentException( nameof( buffer ) );
             }

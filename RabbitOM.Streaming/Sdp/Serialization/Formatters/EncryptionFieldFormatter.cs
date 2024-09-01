@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
 
             var tokens = value.Split(new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (tokens.Length == 0)
+            if ( tokens.Length <= 0 )
             {
                 return false;
             }

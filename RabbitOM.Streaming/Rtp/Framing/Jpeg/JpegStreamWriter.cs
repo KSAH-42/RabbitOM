@@ -90,7 +90,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <exception cref="ArgumentException"/>
         public void Write( ArraySegment<byte> data )
         {
-            if ( data.Count == 0 )
+            if ( data.Count <= 0 )
             {
                 throw new ArgumentException( nameof( data ) );
             }
@@ -165,12 +165,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </remarks>
         public void WriteQuantizationTable( ArraySegment<byte> data , int factor )
         {
-            if ( data.Count == 0 )
+            if ( data.Count <= 0 )
             {
                 data = _quantizationTableFactory.CreateTable( factor );
             }
 
-            if ( data.Count == 0 )
+            if ( data.Count <= 0 )
             {
                 throw new InvalidOperationException( "Invalid quantization table" );
             }
@@ -197,7 +197,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <exception cref="InvalidOperationException"/>
         public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
         {
-            if ( data.Count == 0 )
+            if ( data.Count <= 0 )
             {
                 throw new ArgumentException( nameof( data ) );
             }
@@ -241,12 +241,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 throw new ArgumentException( nameof( height ) );
             }
 
-            if ( quantizationTable.Count == 0 )
+            if ( quantizationTable.Count <= 0 )
             {
                 quantizationTable = _quantizationTableFactory.CreateTable( quantizationFactor );
             }
 
-            if ( quantizationTable.Count == 0 )
+            if ( quantizationTable.Count <= 0 )
             {
                 throw new ArgumentException( nameof( quantizationTable ) );
             }
@@ -302,12 +302,12 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <exception cref="InvalidOperationException"/>
         public void WriteHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
         {
-            if ( codes == null || codes.Length == 0 )
+            if ( codes == null || codes.Length <= 0 )
             {
                 throw new ArgumentException( nameof( codes ) );
             }
 
-            if ( symbols == null || symbols.Length == 0 )
+            if ( symbols == null || symbols.Length <= 0 )
             {
                 throw new ArgumentException( nameof( symbols ) );
             }

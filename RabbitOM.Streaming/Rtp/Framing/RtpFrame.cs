@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
                 throw new ArgumentNullException( nameof( data ) );
             }
 
-            if ( data.Length == 0 )
+            if ( data.Length <= 0 )
             {
                 throw new ArgumentException( nameof( data ) );
             }

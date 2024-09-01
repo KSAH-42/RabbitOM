@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
 
             var tokens = DataConverter.ReArrange( value , '/' ).Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (tokens.Length < 3)
+            if ( tokens.Length < 3 )
             {
                 return false;
             }

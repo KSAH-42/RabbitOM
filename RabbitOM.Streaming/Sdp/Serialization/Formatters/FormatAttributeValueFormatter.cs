@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
 
             var tokens = value.Trim().Split(new char[] { ' ', ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (!tokens.Any())
+            if ( tokens.Length <= 0 )
             {
                 return false;
             }

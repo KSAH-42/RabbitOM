@@ -108,7 +108,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             var tokens = value.Trim().Split( new char[] { separator } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens.Length == 0 )
+            if ( tokens.Length <= 0 )
             {
                 return false;
             }

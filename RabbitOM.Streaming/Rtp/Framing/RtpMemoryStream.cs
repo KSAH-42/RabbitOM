@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// </summary>
         public bool IsEmpty
         {
-            get => _stream.Length == 0; 
+            get => _stream.Length <= 0; 
         }
         
 
@@ -95,7 +95,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// <param name="buffer">the buffer</param>
         public void WriteAsBinary( byte[] buffer )
         {
-            if ( buffer == null || buffer.Length == 0 )
+            if ( buffer == null || buffer.Length <= 0 )
             {
                 return;
             }
@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
         /// <param name="count">the count</param>
         public void WriteAsBinary( byte[] buffer , int offset , int count )
         {
-            if ( buffer == null || buffer.Length == 0 || count <= 0 || offset < 0 )
+            if ( buffer == null || buffer.Length <= 0 || count <= 0 || offset < 0 )
             {
                 return;
             }

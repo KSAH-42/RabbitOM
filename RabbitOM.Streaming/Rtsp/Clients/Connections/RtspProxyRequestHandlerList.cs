@@ -97,7 +97,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 lock ( _lock )
                 {
-                    return _collection.Count == 0;
+                    return _collection.Count <= 0;
                 }
             }
         }

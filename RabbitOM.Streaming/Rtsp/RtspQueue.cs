@@ -103,7 +103,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 lock ( _lock )
                 {
-                    return _collection.Count == 0 ;
+                    return _collection.Count <= 0 ;
                 }
             }
         }
@@ -350,7 +350,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 using ( _scope )
                 {
-                    if ( _collection.Count == 0 )
+                    if ( _collection.Count <= 0 )
                     {
                         return false;
                     }
