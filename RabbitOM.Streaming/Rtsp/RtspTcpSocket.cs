@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
         /// <summary>
-        /// Check if the socket is opened and the internal stream has been acquired
+        /// Check if the socket is opened 
         /// </summary>
         public bool IsOpened
         {
@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Rtsp
                 OnError( ex );
             }
 
-            Close(); 
+            Close();
 
             return false;
         }
