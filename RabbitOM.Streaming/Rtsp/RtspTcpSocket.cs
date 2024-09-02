@@ -35,14 +35,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
         /// <summary>
-        /// Check if the socket is opening
-        /// </summary>
-        public bool IsOpening
-        {
-            get => _socket != null;
-        }
-
-        /// <summary>
         /// Check if the socket is opened and the internal stream has been acquired
         /// </summary>
         public bool IsOpened
@@ -70,47 +62,6 @@ namespace RabbitOM.Streaming.Rtsp
             }
         }
 
-        /// <summary>
-        /// Check if the read operation is supported
-        /// </summary>
-        public bool CanRead
-        {
-            get
-            {
-                return _socket != null;
-            }
-        }
-
-        /// <summary>
-        /// Check if the write operation is supported
-        /// </summary>
-        public bool CanWrite
-        {
-            get
-            {
-                return _socket != null;
-            }
-        }
-
-        /// <summary>
-        /// Check if some data are available
-        /// </summary>
-        public bool DataAvailable
-        {
-            get
-            {
-                try
-                {
-                    return _socket != null && _socket.Available != 0;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return false;
-            }
-        }
 
 
 
