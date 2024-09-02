@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private readonly Action<Exception>  _errorHandler = null;
 
-        private Socket                      _socket       = null;
+        private  Socket                     _socket       = null;
 
 
 
@@ -25,9 +25,10 @@ namespace RabbitOM.Streaming.Rtsp
         /// Constructor
         /// </summary>
         /// <param name="errorHandler">the error handler</param>
+        /// <exception cref="ArgumentNullException"/>
         public RtspTcpSocket( Action<Exception> errorHandler )
         {
-            _errorHandler = errorHandler;
+            _errorHandler = errorHandler ?? throw new ArgumentNullException( nameof( errorHandler ) );
         }
 
 
@@ -88,7 +89,7 @@ namespace RabbitOM.Streaming.Rtsp
             try
             {
                 _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
-
+                
                 _socket.Connect(ipAddress, port);
                 _socket.ReceiveBufferSize = 500000;
 
