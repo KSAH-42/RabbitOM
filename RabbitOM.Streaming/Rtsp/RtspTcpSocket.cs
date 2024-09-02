@@ -110,9 +110,12 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Close()
         {
-            _socket?.Close();
-            _socket?.Dispose();
-            _socket = null;
+            if ( _socket != null )
+            {
+                _socket.Close();
+                _socket.Dispose();
+                _socket = null;
+            }
         }
 
         /// <summary>
