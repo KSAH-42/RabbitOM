@@ -10,37 +10,37 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Raised when the connection has been opened
         /// </summary>
-        public event EventHandler<RtspConnectionOpenedEventArgs>      Opened                = null;
+        public event EventHandler<RtspConnectionOpenedEventArgs>      Opened;
 
         /// <summary>
         /// Raised when the connection has been closed
         /// </summary>
-        public event EventHandler<RtspConnectionClosedEventArgs>      Closed                = null;
+        public event EventHandler<RtspConnectionClosedEventArgs>      Closed;
 
         /// <summary>
         /// Raised when a message has been sended
         /// </summary>
-        public event EventHandler<RtspMessageSendedEventArgs>         MessageSended         = null;
+        public event EventHandler<RtspMessageSendedEventArgs>         MessageSended;
 
         /// <summary>
         /// Raised when a message has been received
         /// </summary>
-        public event EventHandler<RtspMessageReceivedEventArgs>       MessageReceived       = null;
+        public event EventHandler<RtspMessageReceivedEventArgs>       MessageReceived;
 
         /// <summary>
         /// Raised the data has been received
         /// </summary>
-        public event EventHandler<RtspPacketReceivedEventArgs>        DataReceived          = null;
+        public event EventHandler<RtspPacketReceivedEventArgs>        DataReceived;
 
         /// <summary>
         /// Raised when an error occurs
         /// </summary>
-        public event EventHandler<RtspConnectionErrorEventArgs>       Error                 = null;
+        public event EventHandler<RtspConnectionErrorEventArgs>       Error;
 
         /// <summary>
         /// Raised when the authentication has failed
         /// </summary>
-        public event EventHandler<RtspAuthenticationFailedEventArgs>  AuthenticationFailed  = null;
+        public event EventHandler<RtspAuthenticationFailedEventArgs>  AuthenticationFailed;
 
 
 
