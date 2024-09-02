@@ -453,52 +453,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// Dispatch an event
         /// </summary>
         /// <param name="e">the event args</param>
-        public void DispatchEvent( RtspConnectionOpenedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchEvent( RtspConnectionClosedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchEvent( RtspConnectionErrorEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchEvent( RtspAuthenticationFailedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchEvent( RtspMessageSendedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchEvent( RtspMessageReceivedEventArgs e )
+        public void DispatchEvent( EventArgs e )
         {
             _eventQueue.Enqueue( e );
         }
@@ -507,9 +462,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// Dispatch an event
         /// </summary>
         /// <param name="e">the event args</param>
-        public void DispatchEvent(RtspPacketReceivedEventArgs e )
+        public void DispatchMediaEvent( EventArgs e )
         {
-            _mediaEventQueue.Enqueue(e);
+            _mediaEventQueue.Enqueue( e );
         }
 
 
@@ -627,23 +582,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _informations.ResetAll();
             _securityManager.Initialize();
 
-            _eventListener.Start( () =>
-            {
-                while ( WaitEvents() )
-                {
-                    HandleEvents();
-                }
+            _eventListener.Start( () => DoEvents( _eventQueue , _eventListener.ExitHandle ) );
 
-                HandleEvents();
-            } );
-
-            _mediaEventListener.Start( () =>
-            {
-                while (WaitMediaEvents())
-                {
-                    HandleMediaEvents();
-                }
-            } );
+            _mediaEventListener.Start( () => DoEvents( _mediaEventQueue , _mediaEventListener.ExitHandle ) );
 
             _requestManager.Start();
 
@@ -666,46 +607,29 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Wait media events
+        /// Pump events
         /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        private bool WaitEvents()
+        /// <param name="queue">the queue</param>
+        /// <param name="exitHandle">the exit handle</param>
+        private void DoEvents( RtspEventQueue queue , RtspEventWaitHandle exitHandle )
         {
-            return RtspEventQueue.Wait( _eventQueue , _eventListener.ExitHandle );
-        }
-
-        /// <summary>
-        /// Handle the events
-        /// </summary>
-        private void HandleEvents()
-        {
-            while ( _eventQueue.Any() )
+            void pumpEvents()
             {
-                if ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
+                while ( queue.Any() )
                 {
-                    OnDispatchEvent( eventArgs );
+                    if ( queue.TryDequeue( out EventArgs eventArgs ) )
+                    {
+                        OnDispatchEvent( eventArgs );
+                    }
                 }
             }
-        }
 
-        /// <summary>
-        /// Wait media events
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        private bool WaitMediaEvents()
-        {
-            return RtspEventQueue.Wait( _mediaEventQueue , _mediaEventListener.ExitHandle );
-        }
-
-        /// <summary>
-        /// Handle media events
-        /// </summary>
-        private void HandleMediaEvents()
-        {
-            while (_mediaEventQueue.TryDequeue(out EventArgs eventArgs))
+            while ( RtspEventQueue.Wait( queue , exitHandle ) )
             {
-                OnDispatchEvent(eventArgs);
+                pumpEvents();
             }
+
+            pumpEvents();
         }
 
 

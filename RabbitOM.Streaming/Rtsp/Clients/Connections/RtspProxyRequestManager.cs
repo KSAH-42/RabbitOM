@@ -334,7 +334,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 return;
             }
 
-            _proxy.DispatchEvent( new RtspPacketReceivedEventArgs( packet ) );
+            _proxy.DispatchMediaEvent( new RtspPacketReceivedEventArgs( packet ) );
         }
 
         /// <summary>
