@@ -48,31 +48,35 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
 
 
-        private readonly object                   _lock                  = null;
+        private readonly object _lock;
 
-        private readonly RtspTcpSocket            _socket                = null;
+        private readonly RtspTcpSocket _socket;
 
-        private readonly RtspProxyInformations    _informations          = null;
+        private readonly RtspProxyInformations _informations;
 
-        private readonly RtspProxyRequestManager  _requestManager        = null;
+        private readonly RtspProxyRequestManager _requestManager;
 
-        private readonly RtspProxySecurityManager _securityManager       = null;
+        private readonly RtspProxySecurityManager _securityManager;
 
-        private readonly RtspProxyInvocationManager  _invokeManager      = null;
+        private readonly RtspProxyInvocationManager _invokeManager;
         
-        private readonly RtspEventQueue           _eventQueue            = null;
+        private readonly RtspEventQueue _eventQueue;
 
-        private readonly RtspEventQueue           _mediaEventQueue       = null;
+        private readonly RtspEventQueue _mediaEventQueue;
 
-        private readonly RtspThread               _eventListener         = null;
+        private readonly RtspThread _eventListener;
 
-        private readonly RtspThread               _mediaEventListener    = null;
+        private readonly RtspThread _mediaEventListener;
 
-        private readonly RtspProxyStatus          _status                = null;
+        private readonly RtspProxyStatus _status;
 
-        private readonly RtspProxySettings        _settings              = null;
+        private readonly RtspProxySettings _settings;
 
-        private bool                              _isDisposed            = false;
+        private bool _isDisposed;
+
+
+
+
 
 
 
@@ -94,6 +98,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _status = new RtspProxyStatus();
             _settings = new RtspProxySettings();
         }
+
 
 
 
@@ -216,7 +221,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
 
 
-
         /// <summary>
         /// Open the connection
         /// </summary>
@@ -290,7 +294,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                     _socket.Shutdown();
                     _socket.Close();
 
-                    UnInitialize();
+                    Release();
                 }
 
                 if ( isOpened )
@@ -300,7 +304,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             }
             catch ( Exception ex )
             {
-                UnInitialize();
+                Release();
 
                 OnError( new RtspConnectionErrorEventArgs( ex ) );
             }
@@ -324,14 +328,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 {
                     OnClosed(new RtspConnectionClosedEventArgs());
                 }
-
-                UnInitialize();
             }
             catch (Exception ex)
             {
-                UnInitialize();
-
                 OnError(new RtspConnectionErrorEventArgs(ex));
+            }
+            finally
+            {
+                Release();
             }
         }
 
@@ -526,7 +530,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             }
             catch ( Exception ex )
             {
-                UnInitialize();
+                Release();
 
                 OnError( new RtspConnectionErrorEventArgs( ex ) );
             }
@@ -575,7 +579,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Initialize
+        /// Init internal resources
         /// </summary>
         private void Initialize()
         {
@@ -583,28 +587,28 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _securityManager.Initialize();
 
             _eventListener.Start( () => DoEvents( _eventQueue , _eventListener.ExitHandle ) );
-
             _mediaEventListener.Start( () => DoEvents( _mediaEventQueue , _mediaEventListener.ExitHandle ) );
-
             _requestManager.Start();
 
             _status.Activate();
         }
 
         /// <summary>
-        /// Uninitialize
+        /// Release internal resources
         /// </summary>
-        private void UnInitialize()
+        private void Release()
         {
             _requestManager.Stop();
             _mediaEventListener.Stop();
             _eventListener.Stop();
 
-            _informations.ResetAll();
             _status.Deactivate();
+
             _eventQueue.Clear();
             _mediaEventQueue.Clear();
+            _informations.ResetAll();
         }
+
 
         /// <summary>
         /// Pump events
@@ -631,6 +635,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
             pumpEvents();
         }
+
 
 
 
