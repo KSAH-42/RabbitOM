@@ -471,7 +471,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _mediaEventQueue.Enqueue( e );
         }
 
-
         /// <summary>
         /// Open the connection
         /// </summary>
