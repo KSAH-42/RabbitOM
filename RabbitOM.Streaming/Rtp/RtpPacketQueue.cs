@@ -15,10 +15,6 @@ namespace RabbitOM.Streaming.Rtp
     {
         private readonly Queue<RtpPacket> _collection;
 
-        private uint? _lastSequenceNumber;
-
-        private bool _isUnOrdered;
-
 
 
 
@@ -94,16 +90,6 @@ namespace RabbitOM.Streaming.Rtp
 
 
         /// <summary>
-        /// Check if the queue is not sorted
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsUnOrdered( RtpPacketQueue queue )
-        {
-            return queue != null && queue._isUnOrdered;
-        }
-
-        /// <summary>
         /// Sort the packet queue by sequence number
         /// </summary>
         /// <param name="queue">the queue to be sorted</param>
@@ -172,8 +158,6 @@ namespace RabbitOM.Streaming.Rtp
         public void Clear()
         {
             _collection.Clear();
-
-            OnClear();
         }
 
         /// <summary>
@@ -202,8 +186,6 @@ namespace RabbitOM.Streaming.Rtp
         public void Enqueue( RtpPacket packet )
         {
             _collection.Enqueue( packet ?? throw new ArgumentNullException( nameof( packet ) ) );
-
-            OnEnqueue( packet );
         }
 
         /// <summary>
@@ -213,11 +195,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <exception cref="InvalidOperationException"/>
         public RtpPacket Dequeue()
         {
-            var result = _collection.Dequeue() ?? throw new InvalidOperationException();
-
-            OnDequeue( result );
-
-            return result;
+            return _collection.Dequeue() ?? throw new InvalidOperationException();
         }
 
         /// <summary>
@@ -244,8 +222,6 @@ namespace RabbitOM.Streaming.Rtp
 
             _collection.Enqueue( packet );
 
-            OnEnqueue( packet );
-
             return true;
         }
 
@@ -258,14 +234,7 @@ namespace RabbitOM.Streaming.Rtp
         {
             result = _collection.Count > 0 ? _collection.Dequeue() : null;
 
-            if ( result == null )
-            {
-                return false;
-            }
-
-            OnDequeue( result );
-
-            return true;
+            return result != null;
         }
 
         /// <summary>
@@ -278,54 +247,6 @@ namespace RabbitOM.Streaming.Rtp
             result = _collection.Count > 0 ? _collection.Peek() : null ;
             
             return result != null;
-        }
-
-
-
-
-
-
-        /// <summary>
-        /// Occurs when a packet is queued
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        private void OnEnqueue( RtpPacket packet )
-        {
-            if ( ! _lastSequenceNumber.HasValue )
-            {
-                _lastSequenceNumber = packet.SequenceNumber;
-            }
-            else
-            {
-                if ( ! _isUnOrdered )
-                {
-                    _isUnOrdered = _lastSequenceNumber > packet.SequenceNumber ? true : false;
-                }
-
-                _lastSequenceNumber = packet.SequenceNumber;
-            }
-        }
-
-        /// <summary>
-        /// Occurs when a packet is dequeue
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        private void OnDequeue( RtpPacket packet )
-        {
-            if ( _collection.Count <= 0 )
-            {
-                _lastSequenceNumber = null;
-                _isUnOrdered = false;
-            }
-        }
-
-        /// <summary>
-        /// Occurs when clear method is called
-        /// </summary>
-        private void OnClear()
-        {
-            _lastSequenceNumber = null;
-            _isUnOrdered = false;
         }
     }
 }

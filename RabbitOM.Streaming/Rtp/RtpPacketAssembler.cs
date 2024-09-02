@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp
 {
+
     /// <summary>
     /// Represent a rtp packet assembler. This class has been introduce to become the central point where packets need to be aggregated.
     /// And it can become an abstract class or it can used a priority queue without modifing all XXXFrameAggregator class.
@@ -10,73 +11,135 @@ namespace RabbitOM.Streaming.Rtp
     /// </summary>
     public sealed class RtpPacketAssembler
     {
-        private readonly RtpPacketQueue _packets = new RtpPacketQueue();
-
-        private bool _isSortEnabled;
-
-
-
- 
-
-        /// <summary>
-        /// Gets / Sets the sorting status
-        /// </summary>
-        public bool IsSortEnabled
-        {
-            get => _isSortEnabled;
-            set => _isSortEnabled = value;
-        }
-
-        /// <summary>
-        /// Gets the packets as a readonly collection
-        /// </summary>
-        public IReadOnlyCollection<RtpPacket> Packets
-        {
-            get => _packets;
-        }
+		private readonly RtpPacketQueue _queue = new RtpPacketQueue();
+		
 
 
 
 
 
 
+		/// <summary>
+		/// Gets the packets
+		/// </summary>
+		public IReadOnlyCollection<RtpPacket> Packets
+		{
+			get => _queue;
+		}
 
-        /// <summary>
-        /// Try to assemble packet in one single unit
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <param name="result">the list of aggregated packed if it succeed</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        /// <remarks>
-        ///     <para>If the method succeed, all pending <see cref="Packets"/> will be removed.</para>
-        /// </remarks>
-        public bool TryAssemble( RtpPacket packet , out IEnumerable<RtpPacket> result )
-        {
-            result = null;
+		/// <summary>
+		/// Gets the first sequence number
+		/// </summary>
+		public uint? FirstSequenceNumber 
+		{ 
+			get; 
+			private set; 
+		}
 
-            if ( packet == null )
-            {
-                return false;
-            }
+		/// <summary>
+		/// Gets the current sequence number
+		/// </summary>
+		public uint? CurrentSequenceNumber
+		{
+			get;
+			private set;
+		}
 
-            _packets.Enqueue( packet );
+		/// <summary>
+		/// Gets the status if the sequence is ordered or not
+		/// </summary>
+		public bool IsUnOrdered
+		{
+			get;
+			private set;
+		}
 
-            if ( packet.Marker )
-            {
-                result = _isSortEnabled && RtpPacketQueue.IsUnOrdered( _packets ) ? RtpPacketQueue.Sort( _packets ) : _packets.AsEnumerable();
-                
-                _packets.Clear();
-            }
 
-            return result != null;
-        }
 
-        /// <summary>
-        /// Remove all packets
-        /// </summary>
-        public void Clear()
-        {
-            _packets.Clear();
-        }
-    }
+
+
+
+
+
+		/// <summary>
+		/// Try to assemble packet in one single unit
+		/// </summary>
+		/// <param name="packet">the packet</param>
+		/// <param name="result">the list of aggregated packed if it succeed</param>
+		/// <returns>returns true for a success, otherwise false</returns>
+		/// <remarks>
+		///     <para>If the method succeed, all pending <see cref="Packets"/> will be removed.</para>
+		/// </remarks>
+		public bool TryAssemble( RtpPacket packet , out IEnumerable<RtpPacket> packets )
+		{
+			packets = default;
+
+			if ( null == packet )
+			{
+				return false;
+			}
+
+			_queue.Enqueue( packet );
+
+			OnPacketAdded( packet );
+
+			if ( packet.Marker )
+			{
+				packets = IsUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
+
+				_queue.Clear();
+
+				IsUnOrdered = false;
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Clear
+		/// </summary>
+		public void Clear()
+		{
+			_queue.Clear();
+
+			FirstSequenceNumber   = null;
+			CurrentSequenceNumber = null;
+			IsUnOrdered           = false;
+		}
+
+
+
+
+
+
+
+
+
+		/// <summary>
+		/// Occurs when a packet is added
+		/// </summary>
+		/// <param name="packet">the packet</param>
+		private void OnPacketAdded( RtpPacket packet )
+		{
+			if ( ! FirstSequenceNumber.HasValue )
+			{
+				FirstSequenceNumber = packet.SequenceNumber;
+			}
+
+			if ( CurrentSequenceNumber.HasValue )
+			{
+				if ( CurrentSequenceNumber > packet.SequenceNumber )
+				{
+					if ( FirstSequenceNumber < packet.SequenceNumber )
+					{
+						IsUnOrdered = true;
+					}
+				}
+			}
+
+			FirstSequenceNumber = packet.SequenceNumber;
+		}
+	}
 }
