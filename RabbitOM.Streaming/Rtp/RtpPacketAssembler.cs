@@ -28,15 +28,6 @@ namespace RabbitOM.Streaming.Rtp
 		}
 
 		/// <summary>
-		/// Gets the first sequence number
-		/// </summary>
-		public uint? FirstSequenceNumber 
-		{ 
-			get; 
-			private set; 
-		}
-
-		/// <summary>
 		/// Gets the current sequence number
 		/// </summary>
 		public uint? CurrentSequenceNumber
@@ -104,7 +95,6 @@ namespace RabbitOM.Streaming.Rtp
 		{
 			_queue.Clear();
 
-			FirstSequenceNumber   = null;
 			CurrentSequenceNumber = null;
 			IsUnOrdered           = false;
 		}
@@ -123,23 +113,18 @@ namespace RabbitOM.Streaming.Rtp
 		/// <param name="packet">the packet</param>
 		private void OnPacketAdded( RtpPacket packet )
 		{
-			if ( ! FirstSequenceNumber.HasValue )
-			{
-				FirstSequenceNumber = packet.SequenceNumber;
-			}
-
 			if ( CurrentSequenceNumber.HasValue )
 			{
 				if ( CurrentSequenceNumber > packet.SequenceNumber )
 				{
-					if ( FirstSequenceNumber < packet.SequenceNumber )
+					if ( CurrentSequenceNumber != ushort.MaxValue )
 					{
 						IsUnOrdered = true;
 					}
 				}
 			}
 
-			FirstSequenceNumber = packet.SequenceNumber;
+			CurrentSequenceNumber = packet.SequenceNumber;
 		}
 	}
 }
