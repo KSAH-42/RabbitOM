@@ -60,13 +60,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private readonly RtspProxyInvocationManager _invokeManager;
         
-        private readonly RtspEventQueue _eventQueue;
+        private readonly RtspProxyEventManager _eventManager;
 
-        private readonly RtspEventQueue _mediaEventQueue;
-
-        private readonly RtspThread _eventListener;
-
-        private readonly RtspThread _mediaEventListener;
+        private readonly RtspProxyEventManager _mediaEventManager;
 
         private readonly RtspProxyStatus _status;
 
@@ -91,10 +87,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _requestManager = new RtspProxyRequestManager(this);
             _securityManager = new RtspProxySecurityManager(this);
             _invokeManager = new RtspProxyInvocationManager(this);
-            _eventQueue = new RtspEventQueue();
-            _mediaEventQueue = new RtspEventQueue();
-            _eventListener = new RtspThread( "Rtsp - Proxy Event listener" );
-            _mediaEventListener = new RtspThread( "Rtsp - Proxy Media event listener" );
+            _eventManager = new RtspProxyEventManager( this );
+            _mediaEventManager = new RtspProxyEventManager( this );
             _status = new RtspProxyStatus();
             _settings = new RtspProxySettings();
         }
@@ -167,6 +161,22 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         public RtspProxyInvocationManager InvocationManager
         {
             get => _invokeManager;
+        }
+
+        /// <summary>
+        /// Gets the event manager
+        /// </summary>
+        public RtspProxyEventManager EventManager
+        {
+            get => _eventManager;
+        }
+
+        /// <summary>
+        /// Gets the media event manager
+        /// </summary>
+        public RtspProxyEventManager MediaEventManager
+        {
+            get => _mediaEventManager;
         }
 
         /// <summary>
@@ -454,24 +464,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchEvent( EventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-        
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        public void DispatchMediaEvent( EventArgs e )
-        {
-            _mediaEventQueue.Enqueue( e );
-        }
-
-        /// <summary>
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
@@ -578,6 +570,44 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
+        /// Raise the event
+        /// </summary>
+        /// <param name="e">the event args</param>
+        public void RaiseEvent( EventArgs e )
+        {
+            switch ( e )
+            {
+                case RtspPacketReceivedEventArgs eventArgs:
+                    OnDataReceived( eventArgs );
+                    break;
+
+                case RtspConnectionOpenedEventArgs eventArgs:
+                    OnOpened( eventArgs );
+                    break;
+
+                case RtspConnectionClosedEventArgs eventArgs:
+                    OnClosed( eventArgs );
+                    break;
+
+                case RtspMessageSendedEventArgs eventArgs:
+                    OnMessageSended( eventArgs );
+                    break;
+
+                case RtspMessageReceivedEventArgs eventArgs:
+                    OnMessageReceived( eventArgs );
+                    break;
+
+                case RtspAuthenticationFailedEventArgs eventArgs:
+                    OnAuthenticationFailed( eventArgs );
+                    break;
+
+                case RtspConnectionErrorEventArgs eventArgs:
+                    OnError( eventArgs );
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Init internal resources
         /// </summary>
         private void Initialize()
@@ -585,8 +615,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _informations.ResetAll();
             _securityManager.Initialize();
 
-            _eventListener.Start( () => DoEvents( _eventQueue , _eventListener.ExitHandle ) );
-            _mediaEventListener.Start( () => DoEvents( _mediaEventQueue , _mediaEventListener.ExitHandle ) );
+            _eventManager.Start();
+            _mediaEventManager.Start();
             _requestManager.Start();
 
             _status.Activate();
@@ -598,41 +628,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         private void Release()
         {
             _requestManager.Stop();
-            _mediaEventListener.Stop();
-            _eventListener.Stop();
+            _mediaEventManager.Stop();
+            _eventManager.Stop();
 
             _status.Deactivate();
 
-            _eventQueue.Clear();
-            _mediaEventQueue.Clear();
             _informations.ResetAll();
-        }
-
-
-        /// <summary>
-        /// Pump events
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="exitHandle">the exit handle</param>
-        private void DoEvents( RtspEventQueue queue , RtspEventWaitHandle exitHandle )
-        {
-            void pumpEvents()
-            {
-                while ( queue.Any() )
-                {
-                    if ( queue.TryDequeue( out EventArgs eventArgs ) )
-                    {
-                        OnDispatchEvent( eventArgs );
-                    }
-                }
-            }
-
-            while ( RtspEventQueue.Wait( queue , exitHandle ) )
-            {
-                pumpEvents();
-            }
-
-            pumpEvents();
         }
 
 
@@ -708,44 +709,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _status.IncreaseErrors();
 
             Error?.TryInvoke( this , e );
-        }
-
-        /// <summary>
-        /// Process the event
-        /// </summary>
-        /// <param name="e">the event args</param>
-        private void OnDispatchEvent( EventArgs e )
-        {
-            switch ( e )
-            {
-                case RtspPacketReceivedEventArgs eventArgs:
-                    OnDataReceived( eventArgs );
-                    break;
-
-                case RtspConnectionOpenedEventArgs eventArgs:
-                    OnOpened( eventArgs );
-                    break;
-
-                case RtspConnectionClosedEventArgs eventArgs:
-                    OnClosed( eventArgs );
-                    break;
-
-                case RtspMessageSendedEventArgs eventArgs:
-                    OnMessageSended( eventArgs );
-                    break;
-
-                case RtspMessageReceivedEventArgs eventArgs:
-                    OnMessageReceived( eventArgs );
-                    break;
-
-                case RtspAuthenticationFailedEventArgs eventArgs:
-                    OnAuthenticationFailed( eventArgs );
-                    break;
-
-                case RtspConnectionErrorEventArgs eventArgs:
-                    OnError( eventArgs );
-                    break;
-            }
         }
     }
 }

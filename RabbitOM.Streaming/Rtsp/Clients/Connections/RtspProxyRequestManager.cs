@@ -329,12 +329,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="packet">the packet</param>
         private void OnDataReceived( RtspPacket packet )
         {
-            if ( packet == null )
-            {
-                return;
-            }
-
-            _proxy.DispatchMediaEvent( new RtspPacketReceivedEventArgs( packet ) );
+            _proxy.MediaEventManager.Dispatch( new RtspPacketReceivedEventArgs( packet ) );
         }
 
         /// <summary>
@@ -343,12 +338,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="message">the message</param>
         private void OnMessageSended( RtspMessage message )
         {
-            if ( message == null )
-            {
-                return;
-            }
-
-            _proxy.DispatchEvent( new RtspMessageSendedEventArgs( message ) );
+            _proxy.EventManager.Dispatch( new RtspMessageSendedEventArgs( message ) );
         }
 
         /// <summary>
@@ -357,12 +347,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="message">the message</param>
         private void OnMessageReceived( RtspMessage message )
         {
-            if ( message == null )
-            {
-                return;
-            }
-
-            _proxy.DispatchEvent( new RtspMessageReceivedEventArgs( message ) );
+            _proxy.EventManager.Dispatch( new RtspMessageReceivedEventArgs( message ) );
         }
 
         /// <summary>
@@ -371,7 +356,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="ex">the exception</param>
         private void OnError( Exception ex )
         {
-            _proxy.DispatchEvent( new RtspConnectionErrorEventArgs( ex ) );
+            _proxy.EventManager.Dispatch( new RtspConnectionErrorEventArgs( ex ) );
         }
     }
 }

@@ -657,7 +657,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections.Invokers
 
                 if ( response.Status.Code == RtspStatusCode.UnAuthorized )
                 {
-                    _proxy.DispatchEvent( new RtspAuthenticationFailedEventArgs() );
+                    _proxy.EventManager.Dispatch( new RtspAuthenticationFailedEventArgs() );
                 }
             }
 
