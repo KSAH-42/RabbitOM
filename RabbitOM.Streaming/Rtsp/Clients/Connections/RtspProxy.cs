@@ -108,38 +108,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Gets the uri
-        /// </summary>
-        public string Uri
-        {
-            get => _settings.Uri;
-        }
-
-        /// <summary>
-        /// Gets the credentials
-        /// </summary>
-        public RtspCredentials Credentials
-        {
-            get => _settings.Credentials;
-        }
-
-        /// <summary>
-        /// Gets the receive timeout
-        /// </summary>
-        public TimeSpan ReceiveTimeout
-        {
-            get => _settings.ReceiveTimeout;
-        }
-
-        /// <summary>
-        /// Gets the send timeout
-        /// </summary>
-        public TimeSpan SendTimeout
-        {
-            get => _settings.SendTimeout;
-        }
-
-        /// <summary>
         /// Gets the request manager
         /// </summary>
         public RtspProxyRequestManager RequestManager
@@ -177,6 +145,38 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         public RtspProxyEventManager MediaEventManager
         {
             get => _mediaEventManager;
+        }
+
+        /// <summary>
+        /// Gets the uri
+        /// </summary>
+        public string Uri
+        {
+            get => _settings.Uri;
+        }
+
+        /// <summary>
+        /// Gets the credentials
+        /// </summary>
+        public RtspCredentials Credentials
+        {
+            get => _settings.Credentials;
+        }
+
+        /// <summary>
+        /// Gets the receive timeout
+        /// </summary>
+        public TimeSpan ReceiveTimeout
+        {
+            get => _settings.ReceiveTimeout;
+        }
+
+        /// <summary>
+        /// Gets the send timeout
+        /// </summary>
+        public TimeSpan SendTimeout
+        {
+            get => _settings.SendTimeout;
         }
 
         /// <summary>
