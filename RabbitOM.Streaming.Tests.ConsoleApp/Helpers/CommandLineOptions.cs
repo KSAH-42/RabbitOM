@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RabbitOM.Streaming.Tests.ConsoleApp
+namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 {
     using RabbitOM.Streaming.Rtsp;
 

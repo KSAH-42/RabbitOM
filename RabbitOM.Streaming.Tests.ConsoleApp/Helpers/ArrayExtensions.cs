@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Tests.ConsoleApp
+namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 {
     public static class ArrayExtensions
     {

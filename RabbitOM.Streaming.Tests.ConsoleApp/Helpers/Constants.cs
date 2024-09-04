@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Tests.ConsoleApp
+namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 {
     public static class Constants
     {
