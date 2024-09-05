@@ -69,10 +69,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         void StopCommunication( TimeSpan shutdownTimeout );
 
         /// <summary>
-        /// Just wait for a connection succeed
+        /// Just wait until the communication is active
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>return true for a success, otherwise false</returns>
-        bool WaitForConnection( TimeSpan timeout );
+        bool WaitForOnline( TimeSpan timeout );
     }
 }

@@ -179,13 +179,13 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         }
 
         /// <summary>
-        /// Just wait for a connection succeed
+        /// Just wait until the communication is active
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>return true for a success, otherwise false</returns>
-        public bool WaitForConnection( TimeSpan timeout )
+        public bool WaitForOnline( TimeSpan timeout )
         {
-            return _session.WaitForConnection( timeout );
+            return _session.WaitForOnline( timeout );
         }
 
         /// <summary>
