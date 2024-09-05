@@ -158,14 +158,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Gets the current state
-        /// </summary>
-        public bool IsOnline
-        {
-            get => _status.IsOnline;
-        }
-
-        /// <summary>
         /// <summary>
         /// Check the connection is opened
         /// </summary>
@@ -179,7 +171,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public bool IsConnected
         {
-            get => _socket.IsConnected;
+            get => _socket.IsConnected && _status.IsOnline;
         }
 
         /// <summary>
@@ -557,7 +549,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool WaitForOnline( TimeSpan timeout )
+        public bool WaitForConnected( TimeSpan timeout )
         {
             return _status.WaitActivation( timeout );
         }

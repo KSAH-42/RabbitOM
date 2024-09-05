@@ -401,7 +401,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// <returns>return true for a success, otherwise false</returns>
         public bool WaitForOnline( TimeSpan timeout )
         {
-            return _connection.WaitForOnline( timeout );
+            return _connection.WaitForConnected( timeout );
         }
 
         /// <summary>
