@@ -59,12 +59,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="e">the event args</param>
         public void Dispatch( EventArgs e )
         {
-            if ( e == null )
+            if ( e != null )
             {
-                return;
+                _eventQueue.Enqueue( e );
             }
-
-            _eventQueue.Enqueue( e );
         }
 
 
