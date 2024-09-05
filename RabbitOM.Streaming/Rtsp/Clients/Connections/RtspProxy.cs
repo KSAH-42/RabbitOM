@@ -449,7 +449,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             lock ( _lock )
             {
-                if ( _socket.SetReceiveTimeout( timeout ) )
+                if ( ! _socket.SetReceiveTimeout( timeout ) )
                 {
                     throw new InvalidOperationException();
                 }
