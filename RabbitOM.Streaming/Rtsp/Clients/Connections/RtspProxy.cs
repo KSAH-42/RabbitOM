@@ -157,11 +157,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Gets the status activation
+        /// Gets the current state
         /// </summary>
-        public bool IsActive
+        public bool Status
         {
-            get => _status.IsActive;
+            get => _status.State;
         }
 
         /// <summary>
@@ -612,6 +612,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="e">the event args</param>
         private void OnOpened( RtspConnectionOpenedEventArgs e )
         {
+            _status.TurnOn();
+
             Opened?.TryInvoke( this, e );
         }
 
@@ -687,7 +689,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _mediaEventManager.Start();
             _requestManager.Start();
 
-            _status.Activate();
+            _status.Initialize();
         }
 
         /// <summary>
@@ -699,7 +701,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _mediaEventManager.Stop();
             _eventManager.Stop();
 
-            _status.Deactivate();
+            _status.TurnOff();
 
             _informations.ResetAll();
         }

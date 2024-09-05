@@ -78,7 +78,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Gets the actual status
         /// </summary>
-        public bool IsActive
+        public bool State
         {
             get => _eventHandle.Wait( TimeSpan.Zero );
         }
@@ -104,7 +104,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// Try to activate the status
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Activate()
+        public bool TurnOn()
         {
             lock ( _lock )
             {
@@ -124,7 +124,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Deactivate. This method does not reset the number of error.
         /// </summary>
-        public void Deactivate()
+        public void TurnOff()
         {
             _eventHandle.Reset();
         }
