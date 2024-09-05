@@ -84,14 +84,15 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         public RtspProxy()
         {
             _lock = new object();
-            _socket = new RtspTcpSocket( e => OnError( new RtspConnectionErrorEventArgs( e ) ) );
-            _informations = new RtspProxyInformations();
-            _requestManager = new RtspProxyRequestManager(this);
-            _securityManager = new RtspProxySecurityManager(this);
-            _invokeManager = new RtspProxyInvocationManager(this);
-            _eventManager = new RtspProxyEventManager( this );
+            
+            _socket            = new RtspTcpSocket( e => OnError( new RtspConnectionErrorEventArgs( e ) ) );
+            _informations      = new RtspProxyInformations();
+            _requestManager    = new RtspProxyRequestManager( this );
+            _securityManager   = new RtspProxySecurityManager( this );
+            _invokeManager     = new RtspProxyInvocationManager( this );
+            _eventManager      = new RtspProxyEventManager( this );
             _mediaEventManager = new RtspProxyEventManager( this );
-            _status = new RtspProxyStatus();
+            _status            = new RtspProxyStatus();
         }
 
 
