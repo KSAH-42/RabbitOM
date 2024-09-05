@@ -171,7 +171,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public bool IsConnected
         {
-            get => _socket.IsConnected && _status.IsOnline;
+            get => _socket.IsConnected && _status.State;
         }
 
         /// <summary>
