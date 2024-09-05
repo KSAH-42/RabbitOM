@@ -68,8 +68,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         internal bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _userName )
-                && !string.IsNullOrWhiteSpace( _password );
+            return ! string.IsNullOrWhiteSpace( _userName ) && ! string.IsNullOrWhiteSpace( _password );
         }
     }
 }
