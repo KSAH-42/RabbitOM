@@ -77,12 +77,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             void pumpEvents()
             {
-                while ( _eventQueue.Any() )
+                while ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
                 {
-                    if ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
-                    {
-                        _proxy.RaiseEvent( eventArgs );
-                    }
+                    _proxy.RaiseEvent( eventArgs );
                 }
             }
 
