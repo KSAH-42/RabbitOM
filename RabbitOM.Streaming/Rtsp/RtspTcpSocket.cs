@@ -110,12 +110,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Close()
         {
-            if ( _socket != null )
-            {
-                _socket.Close();
-                _socket.Dispose();
-                _socket = null;
-            }
+            _socket?.Close();
+            _socket?.Dispose();
+            _socket = null;
         }
 
         /// <summary>
@@ -131,14 +128,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Shutdown()
         {
-            if ( _socket == null )
-            {
-                return;
-            }
-
             try
             {
-                _socket.Shutdown( SocketShutdown.Both );
+                _socket?.Shutdown( SocketShutdown.Both );
             }
             catch ( Exception ex )
             {
@@ -195,14 +187,14 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            if ( _socket == null )
-            {
-                return false;
-            }
+            var socket = _socket;
 
             try
             {
-                return _socket.Send(buffer, offset , count , SocketFlags.None ) > 0;
+                if ( socket != null )
+                {
+                    return socket.Send(buffer, offset , count , SocketFlags.None ) > 0;
+                }
             }
             catch ( Exception ex )
             {
@@ -231,14 +223,9 @@ namespace RabbitOM.Streaming.Rtsp
                 return 0;
             }
 
-            if ( _socket == null )
-            {
-                return 0;
-            }
-
             try
             {
-                return _socket.Receive(buffer, offset , buffer.Length , SocketFlags.None );
+                return _socket?.Receive(buffer, offset , buffer.Length , SocketFlags.None ) ?? 0 ;
             }
             catch ( Exception ex )
             {
@@ -255,14 +242,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a value</returns>
         public TimeSpan GetReceiveTimeout()
         {
-            if ( _socket == null )
-            {
-                return TimeSpan.Zero;
-            }
-
             try
             {
-                return TimeSpan.FromMilliseconds( _socket.ReceiveTimeout );
+                return TimeSpan.FromMilliseconds( _socket?.ReceiveTimeout ?? 0 );
             }
             catch ( Exception ex )
             {
@@ -278,14 +260,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a value</returns>
         public TimeSpan GetSendTimeout()
         {
-            if ( _socket == null )
-            {
-                return TimeSpan.Zero;
-            }
-
             try
             {
-                return TimeSpan.FromMilliseconds( _socket.SendTimeout );
+                return TimeSpan.FromMilliseconds( _socket?.SendTimeout ?? 0 );
             }
             catch ( Exception ex )
             {
@@ -302,16 +279,16 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool SetReceiveTimeout( TimeSpan value )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
+            var socket = _socket;
 
             try
             {
-                _socket.ReceiveTimeout = (int) value.TotalMilliseconds;
+                if ( socket != null )
+                {
+                    socket.ReceiveTimeout = (int) value.TotalMilliseconds;
 
-                return true;
+                    return true;
+                }
             }
             catch ( Exception ex )
             {
@@ -328,16 +305,16 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool SetSendTimeout( TimeSpan value )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
+            var socket = _socket;
 
             try
             {
-                _socket.SendTimeout = (int) value.TotalMilliseconds;
+                if ( socket != null )
+                {
+                    socket.SendTimeout = (int) value.TotalMilliseconds;
 
-                return true;
+                    return true;
+                }
             }
             catch ( Exception ex )
             {
@@ -355,16 +332,16 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool SetLingerState( bool status , TimeSpan timeout )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
+            var socket = _socket;
 
             try
             {
-                _socket.LingerState = new LingerOption( status , (int) timeout.TotalSeconds );
+                if ( socket != null )
+                {
+                    socket.LingerState = new LingerOption( status , (int) timeout.TotalSeconds );
 
-                return true;
+                    return true;
+                }
             }
             catch ( Exception ex )
             {
@@ -381,14 +358,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a boolean value</returns>
         public bool PollReceive( TimeSpan timeout )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
-
             try
             {
-                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectRead );
+                return _socket?.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectRead ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -405,14 +377,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a boolean value</returns>
         public bool PollSend( TimeSpan timeout )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
-
             try
             {
-                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectWrite );
+                return _socket?.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectWrite ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -429,14 +396,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a boolean value</returns>
         public bool PoolError( TimeSpan timeout )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
-
             try
             {
-                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectError );
+                return _socket?.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectError ) ?? false;
             }
             catch ( Exception ex )
             {
