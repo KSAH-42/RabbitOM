@@ -183,7 +183,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>return true for a success, otherwise false</returns>
-        public bool WaitForOnline( TimeSpan timeout )
+        public bool WaitForConnected( TimeSpan timeout )
         {
             return _session.WaitForOnline( timeout );
         }
