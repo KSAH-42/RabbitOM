@@ -260,9 +260,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool WaitForConnection( TimeSpan timeout )
+        public bool WaitForOnline( TimeSpan timeout )
         {
-            return _proxy.WaitConnectionSucceed( timeout );
+            return _proxy.WaitForOnline( timeout );
         }
 
         /// <summary>

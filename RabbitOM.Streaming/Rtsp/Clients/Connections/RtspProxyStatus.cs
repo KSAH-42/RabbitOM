@@ -78,7 +78,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Gets the actual status
         /// </summary>
-        public bool State
+        public bool IsOnline
         {
             get => _eventHandle.Wait( TimeSpan.Zero );
         }

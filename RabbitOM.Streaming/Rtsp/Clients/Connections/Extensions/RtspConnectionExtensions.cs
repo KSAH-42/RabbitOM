@@ -32,14 +32,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections.Extensions
         }
 
         /// <summary>
-        /// Wait the connection succeed
+        /// Wait the if communication is active
         /// </summary>
         /// <param name="connection">the connection</param>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static async Task<bool> WaitForConnectionAsync( this IRtspConnection connection , TimeSpan timeout )
+        public static async Task<bool> WaitForOnlineAsync( this IRtspConnection connection , TimeSpan timeout )
         {
-            return await Task.Run( () => connection.WaitForConnection( timeout ) );
+            return await Task.Run( () => connection.WaitForOnline( timeout ) );
         }
     }
 }
