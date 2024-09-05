@@ -137,19 +137,32 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         void Abort();
 
         /// <summary>
-        /// Configure the timeout
+        /// Configure the receive timeout
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <exception cref="Exception"/>
+        void ConfigureReceiveTimeout( TimeSpan timeout );
+
+        /// <summary>
+        /// Configure the send timeout
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <exception cref="Exception"/>
+        void ConfigureSendTimeout( TimeSpan timeout );
+
+        /// <summary>
+        /// Configure the receive timeout
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool TryConfigureTimeouts( TimeSpan timeout );
+        bool TryConfigureReceiveTimeout( TimeSpan timeout );
 
         /// <summary>
-        /// Configure the timeout
+        /// Configure the send timeout
         /// </summary>
-        /// <param name="receiveTimeout">the receive timeout</param>
-        /// <param name="sendTimeout">the send timeout</param>
+        /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout );
+        bool TryConfigureSendTimeout( TimeSpan timeout );
 
         /// <summary>
         /// Gets the next sequence identifier

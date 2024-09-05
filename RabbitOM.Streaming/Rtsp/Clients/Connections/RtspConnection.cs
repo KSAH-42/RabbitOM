@@ -196,45 +196,43 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Configure the timeout
+        /// Configure the receive timeout
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <exception cref="Exception"/>
-        public void ConfigureTimeouts(TimeSpan timeout)
+        public void ConfigureReceiveTimeout( TimeSpan timeout )
         {
-            _proxy.ConfigureTimeouts(timeout);
+            _proxy.ConfigureReceiveTimeout( timeout );
         }
 
         /// <summary>
-        /// Configure the timeout
+        /// Configure the send timeout
         /// </summary>
-        /// <param name="receiveTimeout">the receive timeout</param>
-        /// <param name="sendTimeout">the send timeout</param>
+        /// <param name="timeout">the timeout</param>
         /// <exception cref="Exception"/>
-        public void ConfigureTimeouts(TimeSpan receiveTimeout, TimeSpan sendTimeout)
+        public void ConfigureSendTimeout( TimeSpan timeout )
         {
-            _proxy.ConfigureTimeouts(receiveTimeout, sendTimeout);
+            _proxy.ConfigureSendTimeout( timeout );
         }
 
         /// <summary>
-        /// Configure the timeout
+        /// Configure the receive timeout
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryConfigureTimeouts( TimeSpan timeout )
+        public bool TryConfigureReceiveTimeout( TimeSpan timeout )
         {
-            return _proxy.TryConfigureTimeouts( timeout );
+            return _proxy.TryConfigureReceiveTimeout( timeout );
         }
 
         /// <summary>
-        /// Configure the timeout
+        /// Configure the send timeout
         /// </summary>
-        /// <param name="receiveTimeout">the receive timeout</param>
-        /// <param name="sendTimeout">the send timeout</param>
+        /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryConfigureTimeouts( TimeSpan receiveTimeout , TimeSpan sendTimeout )
+        public bool TryConfigureSendTimeout( TimeSpan timeout )
         {
-            return _proxy.TryConfigureTimeouts( receiveTimeout , sendTimeout );
+            return _proxy.TryConfigureSendTimeout( timeout );
         }
 
         /// <summary>

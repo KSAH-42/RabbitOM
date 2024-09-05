@@ -181,7 +181,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                     throw new RtspClientException( RtspClientErrorCode.ConnectionFailed , "Connection failed" );
                 }
 
-                if ( ! _connection.TryConfigureTimeouts( _configuration.ReceiveTimeout , _configuration.SendTimeout ) )
+                if ( ! _connection.TryConfigureReceiveTimeout( _configuration.ReceiveTimeout ) )
+                {
+                    throw new RtspClientException( RtspClientErrorCode.ConnectionFailed , "Failed to configure the timeout" );
+                }
+
+                if ( ! _connection.TryConfigureSendTimeout( _configuration.SendTimeout ) )
                 {
                     throw new RtspClientException( RtspClientErrorCode.ConnectionFailed , "Failed to configure the timeout" );
                 }

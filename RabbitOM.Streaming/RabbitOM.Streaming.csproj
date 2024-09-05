@@ -140,7 +140,6 @@
     <Compile Include="Rtsp\Clients\Connections\RtspProxyRequestHandlerList.cs" />
     <Compile Include="Rtsp\Clients\Connections\RtspProxyRequestManager.cs" />
     <Compile Include="Rtsp\Clients\Connections\RtspProxySecurityManager.cs" />
-    <Compile Include="Rtsp\Clients\Connections\RtspProxySettings.cs" />
     <Compile Include="Rtsp\Clients\Connections\RtspProxyStatus.cs" />
     <Compile Include="Rtsp\RtspActionQueue.cs" />
     <Compile Include="Rtsp\RtspAuthenticationType.cs" />
