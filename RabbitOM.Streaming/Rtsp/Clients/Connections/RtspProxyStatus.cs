@@ -14,7 +14,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         
         private readonly object              _lock            = new object();
 
-
         private uint                         _numberOfErrors  = 0;
 
         private readonly RtspEventWaitHandle _eventHandle     = new RtspEventWaitHandle();
