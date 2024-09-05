@@ -25,10 +25,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <exception cref="ArgumentNullException"/>
         public RtspProxyEventManager( RtspProxy proxy )
         {
-            _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
+            _proxy      = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
             _eventQueue = new RtspEventQueue();
-            _thread= new RtspThread( "Rtsp - Proxy Event Manager");
+            _thread     = new RtspThread( "Rtsp - Proxy Event Manager");
         }
 
 
