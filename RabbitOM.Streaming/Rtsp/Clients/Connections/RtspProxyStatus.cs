@@ -7,39 +7,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     /// </summary>
     internal sealed class RtspProxyStatus
     {
+        private const uint                   DefaultMaxErrors = 10;
+
+
+
+        
         private readonly object              _lock            = new object();
 
-        private readonly uint                _maximumOfErrors = 0;
 
         private uint                         _numberOfErrors  = 0;
 
         private readonly RtspEventWaitHandle _eventHandle     = new RtspEventWaitHandle();
-
-
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspProxyStatus()
-            : this( 10 )
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="maximumOfErrors">the maximum of error</param>
-        public RtspProxyStatus( uint maximumOfErrors )
-        {
-            if ( maximumOfErrors == uint.MinValue || maximumOfErrors == uint.MaxValue )
-            {
-                throw new ArgumentException( nameof( maximumOfErrors ) );
-            }
-
-            _maximumOfErrors = maximumOfErrors;
-        }
 
 
 
@@ -51,28 +29,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         public object SyncRoot
         {
             get => _lock;
-        }
-
-        /// <summary>
-        /// Gets the maximum of errors
-        /// </summary>
-        public uint MaximumOfErrors
-        {
-            get => _maximumOfErrors;
-        }
-
-        /// <summary>
-        /// Gets the number of errors
-        /// </summary>
-        public uint NumberOfErrors
-        {
-            get
-            {
-                lock ( _lock )
-                {
-                    return _numberOfErrors;
-                }
-            }
         }
 
         /// <summary>
@@ -108,7 +64,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             lock ( _lock )
             {
-                if ( _numberOfErrors >= _maximumOfErrors )
+                if ( _numberOfErrors >= DefaultMaxErrors )
                 {
                     _eventHandle.Reset();
 
@@ -151,9 +107,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                     _numberOfErrors++;
                 }
 
-                if ( _numberOfErrors >= _maximumOfErrors )
+                if ( _numberOfErrors >= DefaultMaxErrors )
                 {
-                    _numberOfErrors = _maximumOfErrors;
+                    _numberOfErrors = DefaultMaxErrors;
 
                     _eventHandle.Reset();
                 }
