@@ -122,7 +122,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 if ( _proxy.SecurityManager.IsAuthenticationSetup() )
                 {
-                    _proxy.SecurityManager.ConfigureAuthorization( request );
+                    _proxy.SecurityManager.AddAuthorization( request );
                 }
 
                 var handler = new RtspProxyRequestHandler( request );

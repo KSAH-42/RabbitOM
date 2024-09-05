@@ -7,11 +7,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     /// </summary>
     internal sealed class RtspProxySecurityManager
     {
-        private readonly object                    _lock     = null;
+        private readonly object _lock;
 
-        private readonly RtspProxy                 _proxy    = null;
+        private readonly RtspProxy _proxy;
 
-        private readonly RtspAuthorizationFactory  _factory  = null;
+        private readonly RtspAuthorizationFactory _factory;
 
 
 
@@ -24,9 +24,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <exception cref="ArgumentNullException"/>
         public RtspProxySecurityManager( RtspProxy proxy )
         {
-            _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) ) ;
+            _proxy   = proxy ?? throw new ArgumentNullException( nameof( proxy ) ) ;
 
-            _lock = new object();
+            _lock    = new object();
             _factory = new RtspAuthorizationFactory();
         }
 
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         /// <param name="request">the request</param>
         /// <returns>returns for a success, otherwise false</returns>
-        public bool ConfigureAuthorization( RtspMessageRequest request )
+        public bool AddAuthorization( RtspMessageRequest request )
         {
             if ( request == null || request.Method == RtspMethod.UnDefined )
             {
@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
             lock ( _lock )
             {
-                if ( !_factory.IsAuthenticationSetup() )
+                if ( ! _factory.IsAuthenticationSetup() )
                 {
                     return false;
                 }
