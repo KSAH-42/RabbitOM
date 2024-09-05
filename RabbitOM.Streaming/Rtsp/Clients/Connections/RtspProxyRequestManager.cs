@@ -7,19 +7,19 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     /// </summary>
     internal sealed class RtspProxyRequestManager : IDisposable
     {
-        private readonly RtspProxy                    _proxy                 = null;
+        private readonly RtspProxy _proxy;
 
-        private readonly RtspChunkQueue               _chunks                = null;
+        private readonly RtspChunkQueue _chunks;
 
-        private readonly RtspMessageExtactor           _extractor               = null;
+        private readonly RtspMessageExtactor _extractor;
 
-        private readonly RtspThread                   _chunkListenerThread   = null;
+        private readonly RtspThread _chunkListenerThread;
 
-        private readonly RtspThread                   _requestListenerThread = null;
+        private readonly RtspThread _requestListenerThread;
 
-        private readonly RtspProxyRequestHandlerList  _requestHandlers       = null;
+        private readonly RtspProxyRequestHandlerList _requestHandlers;
 
-        private byte[]                                _buffer                = null;
+        private byte[] _buffer;
 
 
 
@@ -32,12 +32,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
-            _chunkListenerThread = new RtspThread( "Rtsp - proxy request manager - chunk listener" );
+            _chunkListenerThread   = new RtspThread( "Rtsp - proxy request manager - chunk listener" );
             _requestListenerThread = new RtspThread( "Rtsp - proxy request manager - listener " );
-            _requestHandlers = new RtspProxyRequestHandlerList();
-            _chunks = new RtspChunkQueue();
-            _extractor = new RtspMessageExtactor();
-            _buffer = new byte[8096 * 8 * 2];
+            _requestHandlers       = new RtspProxyRequestHandlerList();
+            _chunks                = new RtspChunkQueue();
+            _extractor             = new RtspMessageExtactor();
+            _buffer                = new byte[ 8096 * 8 * 2 ];
         }
 
 
@@ -127,10 +127,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
                 var handler = new RtspProxyRequestHandler( request );
 
-                if ( ! _requestHandlers.TryAdd( handler ) )
-                {
-                    return false;
-                }
+                _requestHandlers.Add( handler );
 
                 using ( var scope = new RtspDisposeScope( () => _requestHandlers.Remove( handler ) ) )
                 {
@@ -141,12 +138,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
                     OnMessageSended( request );
                     
-                    if ( ! handler.WaitCompletion( _proxy.ReceiveTimeout ) || !handler.Succeed )
+                    if ( ! handler.WaitCompletion( _proxy.ReceiveTimeout ) || ! handler.Succeed )
                     {
                         return false;
                     }
 
-                    if ( handler.Response == null || !handler.Response.TryValidate() )
+                    if ( handler.Response == null || ! handler.Response.TryValidate() )
                     {
                         return false;
                     }
