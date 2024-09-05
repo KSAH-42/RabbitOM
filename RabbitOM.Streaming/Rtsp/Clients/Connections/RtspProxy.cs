@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private readonly RtspProxySecurityManager _securityManager;
 
-        private readonly RtspProxyInvocationManager _invokeManager;
+        private readonly RtspProxyInvocationManager _invocationManager;
         
         private readonly RtspProxyEventManager _eventManager;
 
@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _informations      = new RtspProxyInformations();
             _requestManager    = new RtspProxyRequestManager( this );
             _securityManager   = new RtspProxySecurityManager( this );
-            _invokeManager     = new RtspProxyInvocationManager( this );
+            _invocationManager = new RtspProxyInvocationManager( this );
             _eventManager      = new RtspProxyEventManager( this );
             _mediaEventManager = new RtspProxyEventManager( this );
             _status            = new RtspProxyStatus();
@@ -130,7 +130,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public RtspProxyInvocationManager InvocationManager
         {
-            get => _invokeManager;
+            get => _invocationManager;
         }
 
         /// <summary>

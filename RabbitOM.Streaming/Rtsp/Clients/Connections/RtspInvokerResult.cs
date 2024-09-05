@@ -7,11 +7,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     /// </summary>
     public sealed class RtspInvokerResult
     {
-        private readonly bool                      _succeed   = false;
+        private readonly RtspInvokerResultResponse _response;
 
-        private readonly RtspInvokerResultResponse _response  = null;
+        private readonly RtspInvokerResultRequest _request;
 
-        private readonly RtspInvokerResultRequest  _request   = null;
+        private readonly bool _succeed;
+
+
+
 
 
         /// <summary>
@@ -23,10 +26,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <exception cref="ArgumentNullException"/>
         public RtspInvokerResult( bool succeed , RtspInvokerResultRequest request , RtspInvokerResultResponse response )
         {
-            _succeed = succeed;
-            _request = request ?? throw new ArgumentNullException( nameof( request ) );
+            _succeed  = succeed;
+            _request  = request  ?? throw new ArgumentNullException( nameof( request  ) );
             _response = response ?? throw new ArgumentNullException( nameof( response ) );
         }
+
 
 
 
