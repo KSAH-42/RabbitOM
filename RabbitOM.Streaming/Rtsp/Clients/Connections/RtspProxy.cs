@@ -457,19 +457,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Configure the receive timeout
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryConfigureReceiveTimeout( TimeSpan timeout )
-        {
-            lock ( _lock )
-            {
-                return _socket.SetReceiveTimeout( timeout );
-            }
-        }
-
-        /// <summary>
         /// Configure the send timeout
         /// </summary>
         /// <param name="timeout">the timeout</param>
@@ -482,6 +469,20 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 {
                     throw new InvalidOperationException();
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// Configure the receive timeout
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryConfigureReceiveTimeout( TimeSpan timeout )
+        {
+            lock ( _lock )
+            {
+                return _socket.SetReceiveTimeout( timeout );
             }
         }
 
