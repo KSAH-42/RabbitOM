@@ -10,16 +10,16 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <summary>
         /// Represent the default sequence identifier
         /// </summary>
-        public const int          DefaultSequenceId  = 1;
+        private const int          DefaultSequenceId  = 1;
 
 
 
 
-        private readonly object   _lock              = new object();
+        private readonly object   _lock               = new object();
 
-        private int               _sequenceId        = DefaultSequenceId;
+        private int               _sequenceId         = DefaultSequenceId;
 
-        private string            _sessionId         = string.Empty;
+        private string            _sessionId          = string.Empty;
 
 
 
