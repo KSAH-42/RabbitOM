@@ -7,18 +7,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     /// </summary>
     internal sealed class RtspProxyRequestHandler : IDisposable
     {
-        private readonly object                _lock               = null;
+        private readonly object _lock;
 
-        private bool                           _succeed            = false;
+        private readonly RtspEventWaitHandle _completionHandle;
 
-        private bool                           _isCanceled         = false;
+        private readonly RtspMessageRequest _request;
 
-        private readonly RtspEventWaitHandle   _completionHandle   = null;
+        private RtspMessageResponse _response;
 
-        private readonly RtspMessageRequest    _request            = null;
+        private bool _succeed;
 
-        private RtspMessageResponse            _response           = null;
-
+        private bool _isCanceled;
 
 
 
@@ -96,10 +95,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
 
 
-
-
-
-
         /// <summary>
         /// Cancel the handle operation
         /// </summary>
@@ -133,44 +128,41 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 return;
             }
-                                  
-            InternalHandleResponse( response );
-            _completionHandle.Set();
-        }
 
-        /// <summary>
-        /// Update internal member according to the response value
-        /// </summary>
-        /// <param name="response">the response</param>
-        private void InternalHandleResponse( RtspMessageResponse response )
-        {
             _response = response;
+			
+            try
+			{
+                if ( _response == null || ! _response.TryValidate() )
+                {
+                    return;
+                }
 
-            if ( _response == null || !_response.TryValidate() )
-            {
-                return;
+                var responseCSeq = _response.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
+
+                if ( responseCSeq == null || !responseCSeq.TryValidate() )
+                {
+                    return;
+                }
+
+                var requestCSeq = _request.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
+
+                if ( requestCSeq == null || ! requestCSeq.TryValidate() )
+                {
+                    return;
+                }
+
+                if ( requestCSeq.Value != responseCSeq.Value )
+                {
+                    return;
+                }
+
+                OnSucceed();
             }
-
-            var responseCSeq = _response.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
-
-            if ( responseCSeq == null || !responseCSeq.TryValidate() )
-            {
-                return;
-            }
-
-            var requestCSeq = _request.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
-
-            if ( requestCSeq == null || !requestCSeq.TryValidate() )
-            {
-                return;
-            }
-
-            if ( requestCSeq.Value != responseCSeq.Value )
-            {
-                return;
-            }
-
-            OnSucceed();
+			finally
+			{
+                _completionHandle.Set();
+			}
         }
 
         /// <summary>
@@ -180,10 +172,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             _completionHandle.Dispose();
         }
-
-
-
-
 
 
 
