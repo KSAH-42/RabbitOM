@@ -472,7 +472,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             }
         }
 
-
         /// <summary>
         /// Configure the receive timeout
         /// </summary>
