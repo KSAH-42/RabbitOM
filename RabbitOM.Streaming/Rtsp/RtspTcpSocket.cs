@@ -36,9 +36,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
         /// <summary>
-        /// Check if the socket is opened 
+        /// Check if the socket is created
         /// </summary>
-        public bool IsOpened
+        public bool IsCreated
         {
             get => _socket != null;
         }
@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="ipAddress">the end point</param>
         /// <param name="port">the port</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Open( string ipAddress , int port )
+        public bool Connect( string ipAddress , int port )
         {
             if ( string.IsNullOrWhiteSpace( ipAddress ) || port < 0 )
             {

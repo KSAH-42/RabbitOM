@@ -163,7 +163,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public bool IsOpened
         {
-            get => _socket.IsOpened;
+            get => _socket.IsCreated;
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 lock ( _lock )
                 {
-                    if ( _socket.IsOpened )
+                    if ( _socket.IsCreated )
                     {
                         return false;
                     }
@@ -316,17 +316,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
                     var rtspUri = RtspUri.Create( uri );
 
-                    using ( var scope = new RtspDisposeScope( () => _socket.Close() ) )
+                    if ( ! _socket.Connect( rtspUri.Host , rtspUri.Port ) )
                     {
-                        if ( ! _socket.Open( rtspUri.Host , rtspUri.Port ) )
-                        {
-                            return false;
-                        }
-                        
-                        _socket.SetLingerState( true , TimeSpan.FromSeconds( 5 ) );
-
-                        scope.ClearActions();
+                        return false;
                     }
+
+                    _socket.SetLingerState( true , TimeSpan.FromSeconds( 5 ) );
 
                     OnInitialized();
                 }
@@ -356,7 +351,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
                 lock ( _lock )
                 {
-                    isOpened = _socket.IsOpened;
+                    isOpened = _socket.IsCreated;
 
                     _socket.Shutdown();
                     _socket.Close();
@@ -384,7 +379,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             try
             {
-                bool isOpened = _socket.IsOpened;
+                bool isOpened = _socket.IsCreated;
 
                 _socket.Shutdown();
                 _socket.Close();
