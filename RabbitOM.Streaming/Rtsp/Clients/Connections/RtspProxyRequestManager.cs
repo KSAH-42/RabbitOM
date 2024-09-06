@@ -65,9 +65,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 do
                 {
-                    ListenMessages();
+                    int bytesReceived = ReceiveMessages();
+
+                    if ( bytesReceived <= 0 )
+                    {
+                        _requestListenerThread.CanContinue( _proxy.ReceiveTimeout );
+                    }
                 }
-                while ( _proxy.IsConnected );
+                while( _requestListenerThread.CanContinue() );
             } );
         }
 
@@ -177,29 +182,31 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Receive the chunk
+        /// Receive messages
         /// </summary>
-        private void ListenMessages()
+        private int ReceiveMessages()
         {
             try
             {
                 int bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
 
-                if ( bytesReceived <= 0 )
+                if ( bytesReceived > 0 )
                 {
-                    return;
+                    var data = new byte[ bytesReceived ];
+
+                    Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
+
+                    _chunks.Enqueue( data );
                 }
 
-                var data = new byte[ bytesReceived ];
-
-                Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
-
-                _chunks.Enqueue(data);
+                return bytesReceived;
             }
             catch ( Exception ex )
             {
                 OnError( ex );
             }
+
+            return -1;
         }
 
         /// <summary>

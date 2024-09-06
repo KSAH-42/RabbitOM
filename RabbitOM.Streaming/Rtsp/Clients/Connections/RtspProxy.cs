@@ -66,9 +66,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private readonly RtspProxyStatus _status;
 
-        private RtspCredentials _credentials;
-
-        private string _uri;
+        private readonly RtspProxyEndPoint _endPoint;
 
         private bool _isDisposed;
 
@@ -93,6 +91,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _eventManager      = new RtspProxyEventManager( this );
             _mediaEventManager = new RtspProxyEventManager( this );
             _status            = new RtspProxyStatus();
+            _endPoint          = new RtspProxyEndPoint();
         }
 
 
@@ -171,23 +170,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public bool IsConnected
         {
-            get => _socket.IsConnected && _status.State;
-        }
-
-        /// <summary>
-        /// Gets the receive timeout
-        /// </summary>
-        public TimeSpan ReceiveTimeout
-        {
-            get => _socket.GetReceiveTimeout();
-        }
-
-        /// <summary>
-        /// Gets the send timeout
-        /// </summary>
-        public TimeSpan SendTimeout
-        {
-            get => _socket.GetSendTimeout();
+            get => _status.State;
         }
 
         /// <summary>
@@ -195,13 +178,23 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public string Uri
         {
-            get
-            {
-                lock ( _lock )
-                {
-                    return _uri ?? string.Empty;
-                }
-            }
+            get => _endPoint.Uri;
+        }
+
+        /// <summary>
+        /// Gets the receive timeout
+        /// </summary>
+        public TimeSpan ReceiveTimeout
+        {
+            get => _endPoint.ReceiveTimeout;
+        }
+
+        /// <summary>
+        /// Gets the send timeout
+        /// </summary>
+        public TimeSpan SendTimeout
+        {
+            get => _endPoint.SendTimeout;
         }
 
         /// <summary>
@@ -209,13 +202,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public RtspCredentials Credentials
         {
-            get
-            {
-                lock ( _lock )
-                {
-                    return _credentials ?? RtspCredentials.Empty;
-                }
-            }
+            get => _endPoint.Credentials;
         }
 
         /// <summary>
@@ -268,7 +255,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             EnsureNotDispose();
 
-            if ( ! TryOpen( uri ?? throw new ArgumentNullException( nameof( uri ) ) , credentials ?? throw new ArgumentNullException( nameof( credentials ) ) ) )
+            if ( string.IsNullOrWhiteSpace( uri ) )
+            {
+                throw new ArgumentNullException( nameof( uri ) );
+            }
+
+            if ( credentials == null )
+            {
+                throw new ArgumentNullException( nameof( credentials ) );
+            }
+
+            if ( ! TryOpen( uri , credentials ) )
             {
                 throw new Exception("Open failure");
             }
@@ -292,7 +289,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <returns>returns true for a success otherwise false</returns>
         public bool TryOpen( string uri , RtspCredentials credentials )
         {
-            if ( string.IsNullOrWhiteSpace( uri ) || credentials == null )
+            if ( string.IsNullOrWhiteSpace( uri ) )
             {
                 return false;
             }
@@ -306,8 +303,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                         return false;
                     }
 
-                    _uri = uri;
-                    _credentials = credentials;
+                    _endPoint.Uri = uri;
+                    _endPoint.Credentials = credentials;
 
                     var rtspUri = RtspUri.Create( uri );
 
@@ -430,12 +427,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <exception cref="ObjectDisposedException"/>
         public void ConfigureReceiveTimeout(TimeSpan timeout)
         {
-            lock ( _lock )
+            if ( ! TryConfigureReceiveTimeout( timeout ) )
             {
-                if ( ! _socket.SetReceiveTimeout( timeout ) )
-                {
-                    throw new InvalidOperationException();
-                }
+                throw new InvalidOperationException();
             }
         }
 
@@ -446,12 +440,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <exception cref="ObjectDisposedException"/>
         public void ConfigureSendTimeout( TimeSpan timeout )
         {
-            lock ( _lock )
+            if ( ! TryConfigureSendTimeout( timeout ) )
             {
-                if ( ! _socket.SetSendTimeout( timeout ) )
-                {
-                    throw new InvalidOperationException();
-                }
+                throw new InvalidOperationException();
             }
         }
 
@@ -464,7 +455,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             lock ( _lock )
             {
-                return _socket.SetReceiveTimeout( timeout );
+                if ( _socket.SetReceiveTimeout( timeout ) )
+                {
+                    _endPoint.ReceiveTimeout = timeout;
+
+                    return true;
+                }
+
+                return false;
             }
         }
 
@@ -477,7 +475,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             lock ( _lock )
             {
-                return _socket.SetSendTimeout( timeout );
+                if ( _socket.SetSendTimeout( timeout ) )
+                {
+                    _endPoint.SendTimeout = timeout;
+
+                    return true;
+                }
+
+                return false;
             }
         }
 
