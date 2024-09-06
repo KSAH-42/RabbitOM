@@ -297,16 +297,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 return false;
             }
 
-            if ( IsDisposed )
-            {
-                return false;
-            }
-
             try
             {
                 lock ( _lock )
                 {
-                    if ( _socket.IsCreated )
+                    if ( _socket.IsCreated || IsDisposed )
                     {
                         return false;
                     }
