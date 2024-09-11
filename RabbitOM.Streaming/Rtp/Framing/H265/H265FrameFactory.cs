@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
         public H265FrameFactory( H265FrameBuilder builder )
-		{
+        {
             _builder       = builder ?? throw new ArgumentNullException( nameof( builder ) ); ;
 
             _streamBuilder = new H265StreamBuilder();
@@ -151,7 +151,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         }
 
         private void OnHandleSPS( RtpPacket packet , H265NalUnit nalUnit )
-		{
+        {
             _streamBuilder.Write( packet.Payload );
 
             _streamBuilder.SPS = packet.Payload.ToArray();
