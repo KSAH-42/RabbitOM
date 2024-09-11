@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             lock ( _lock )
             {
-                if ( _thread != null || !_exitHandle.Reset() )
+                if ( _thread != null || ! _exitHandle.Reset() )
                 {
                     return false;
                 }
