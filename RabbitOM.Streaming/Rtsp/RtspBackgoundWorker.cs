@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp
 {
-    internal sealed class RtspBackgoundThread
+    internal sealed class RtspBackgoundWorker
     {
         private readonly object _lock = new object();
         
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        public RtspBackgoundThread( string name )
+        public RtspBackgoundWorker( string name )
         {
             _name       = name ?? string.Empty;
             _exitHandle = new EventWaitHandle( false , EventResetMode.ManualReset );
@@ -115,29 +115,29 @@ namespace RabbitOM.Streaming.Rtsp
 
         struct Scope : IDisposable
         {
-            private readonly RtspBackgoundThread _instance;
+            private readonly RtspBackgoundWorker _worker;
 
-            public Scope( RtspBackgoundThread instance )
+            public Scope( RtspBackgoundWorker worker )
             {
-                _instance = instance;
-                _instance._exitHandle.Set();
+                _worker = worker;
+                _worker._exitHandle.Set();
             }
 
             public void Dispose()
             {
-                _instance._exitHandle.Reset();
-                _instance._thread = null;
-                _instance._state.SetStatus( false );
+                _worker._exitHandle.Reset();
+                _worker._thread = null;
+                _worker._state.SetStatus( false );
             }
 
-            public static Scope NewScope( RtspBackgoundThread instance )
+            public static Scope NewScope( RtspBackgoundWorker worker )
             {
-                if ( instance._thread?.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
+                if ( worker._thread?.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
                 {
                     throw new InvalidOperationException();
                 }
 
-                return new Scope( instance );
+                return new Scope( worker );
             }
         }
 
