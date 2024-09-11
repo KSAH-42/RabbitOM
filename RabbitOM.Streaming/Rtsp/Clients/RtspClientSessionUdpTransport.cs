@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         {
             if ( ! _socket.IsOpened )
             {
-                IdleTimeout = 5000;
+                IdleTimeout = TimeSpan.FromSeconds( 5 );
 
                 if ( ! _socket.Open( _port ) )
                 {
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                     return;
                 }
                                     
-                IdleTimeout = 0;
+                IdleTimeout = TimeSpan.Zero;
             }
             else
             {

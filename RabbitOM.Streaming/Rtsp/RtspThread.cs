@@ -245,17 +245,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanContinue()
         {
-            return CanContinue( 0 );
-        }
-
-        /// <summary>
-        /// Check if the thread can continue it's job
-        /// </summary>
-        /// <param name="milliseconds">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool CanContinue( int milliseconds )
-        {
-            return CanContinue( TimeSpan.FromMilliseconds( milliseconds > 0 ? milliseconds : 0 ) );
+            return CanContinue( TimeSpan.Zero );
         }
 
         /// <summary>

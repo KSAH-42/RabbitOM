@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         private RtspClientSession          _session     = null;
 
-        private int                        _idleTimeout = 0;
+        private TimeSpan                   _idleTimeout = TimeSpan.Zero;
         
 
 
@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// <summary>
         /// Gets / Sets the idle timeout
         /// </summary>
-        protected int IdleTimeout
+        protected TimeSpan IdleTimeout
         {
             get => _idleTimeout;
             set => _idleTimeout = value;
@@ -80,9 +80,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
             return _thread.Start( () =>
             {
-                _idleTimeout = 0;
+                IdleTimeout = TimeSpan.Zero;
 
-                while ( _thread.CanContinue( _idleTimeout ) )
+                while ( _thread.CanContinue( IdleTimeout ) )
                 {
                     Run();
                 }

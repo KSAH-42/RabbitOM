@@ -90,14 +90,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         {
             if ( ! _socket.IsOpened )
             {
-                IdleTimeout = 5000;
+                IdleTimeout = TimeSpan.FromSeconds( 5 );
 
                 if ( ! _socket.Open( _address , _port , _ttl , _timeout ) )
                 {
                     return;
                 }
 
-                IdleTimeout = 0;
+                IdleTimeout = TimeSpan.Zero;
             }
             else
             {
