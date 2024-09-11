@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// This class is used for updating the internal event handle during add and remove operations
         /// </summary>
-        struct Scope : IDisposable
+        class Scope : IDisposable
         {
             private readonly RtspQueue<TElement> _queue;
 
