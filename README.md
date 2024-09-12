@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-A .net library for receiving raw audio/video streams using [rtsp](https://www.rfc-editor.org/rfc/rfc2326). 
+A [rtsp](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw audio/video streams. 
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.png)
 
