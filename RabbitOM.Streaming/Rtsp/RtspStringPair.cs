@@ -6,29 +6,22 @@ namespace RabbitOM.Streaming.Rtsp
     /// <summary>
     /// Represent a string data pair
     /// </summary>
-    public sealed class RtspStringPair
+    public struct RtspStringPair
     {
         /// <summary>
         /// Represent an empty value
         /// </summary>
-        public static RtspStringPair Empty = new RtspStringPair();
+        public static RtspStringPair Empty = new RtspStringPair( string.Empty , string.Empty );
 
 
 
 
-        private readonly string _first  = string.Empty;
+        private readonly string _first;
 
-        private readonly string _second = string.Empty;
-
-
+        private readonly string _second;
 
 
-        /// <summary>
-        /// Initialize an new instance
-        /// </summary>
-        private RtspStringPair()
-        {
-        }
+
 
         /// <summary>
         /// Initialize an new instance
@@ -70,13 +63,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool IsNullOrEmpty( RtspStringPair pair )
         {
-            if ( object.ReferenceEquals( pair , null ) )
-            {
-                return true;
-            }
-
-            return string.IsNullOrEmpty( pair.First )
-                && string.IsNullOrEmpty( pair.Second );
+            return string.IsNullOrEmpty( pair.First ) && string.IsNullOrEmpty( pair.Second );
         }
 
         /// <summary>
@@ -99,7 +86,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string value , char separator , out RtspStringPair result )
         {
-            result = null;
+            result = default;
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {

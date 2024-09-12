@@ -8,30 +8,14 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderRange : RtspHeader
     {
-        private readonly RtspStringPair _npt;
+        private RtspStringPair _npt;
 
-        private readonly RtspStringPair _clock;
+        private RtspStringPair _clock;
 
-        private readonly RtspStringPair _time;
+        private RtspStringPair _time;
 
 
         
-        
-        /// <summary>
-        /// Intialize an new instance of header range class
-        /// </summary>
-        /// <param name="ntp">the ntp</param>
-        /// <param name="clock">the clock</param>
-        /// <param name="time">the time</param>
-        public RtspHeaderRange( RtspStringPair ntp , RtspStringPair clock , RtspStringPair time )
-        {
-            _npt   = ntp   ?? RtspStringPair.Empty;
-            _clock = clock ?? RtspStringPair.Empty;
-            _time  = time  ?? RtspStringPair.Empty;
-        }
-
-
-       
         
         /// <summary>
         /// Gets the name
@@ -42,27 +26,30 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Gets the ntp value
+        /// Gets / Sets the ntp value
         /// </summary>
         public RtspStringPair Npt
         {
             get => _npt;
+            set => _npt = value;
         }
 
         /// <summary>
-        /// Gets the clock value
+        /// Gets / Sets the clock value
         /// </summary>
         public RtspStringPair Clock
         {
             get => _clock;
+            set => _clock = value;
         }
 
         /// <summary>
-        /// Gets the time value
+        /// Gets / Sets the time value
         /// </summary>
         public RtspStringPair Time
         {
             get => _time;
+            set => _time = value;
         }
 
 
@@ -136,7 +123,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            var pairs = new RtspStringPair[3];
+            var pairs = new RtspStringPair[ 3 ];
 
             using ( var reader = new RtspHeaderReader( parser.GetParsedHeaders() ) )
             {
@@ -165,12 +152,12 @@ namespace RabbitOM.Streaming.Rtsp
                     }
                 }
 
-                if ( pairs.All( RtspStringPair.IsNullOrEmpty ) )
+                result = new RtspHeaderRange()
                 {
-                    return false;
-                }
-
-                result = new RtspHeaderRange( pairs[0] , pairs[1] , pairs[2] );
+                    Npt   = pairs.ElementAtOrDefault( 0 ) ,
+                    Clock = pairs.ElementAtOrDefault( 1 ) ,
+                    Time  = pairs.ElementAtOrDefault( 2 )
+                };
 
                 return true;
             }
