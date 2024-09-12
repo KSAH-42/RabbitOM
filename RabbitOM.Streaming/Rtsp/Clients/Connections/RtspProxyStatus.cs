@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 {
@@ -16,7 +17,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private uint                         _numberOfErrors  = 0;
 
-        private readonly RtspEventWaitHandle _eventHandle     = new RtspEventWaitHandle();
+        private readonly EventWaitHandle     _eventHandle     = new ManualResetEvent( false );
 
 
 
@@ -35,7 +36,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public bool State
         {
-            get => _eventHandle.Wait( TimeSpan.Zero );
+            get => _eventHandle.TryWait( TimeSpan.Zero );
         }
 
 
@@ -49,7 +50,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             lock ( _lock )
             {
-                _eventHandle.Reset();
+                _eventHandle.TryReset();
 
                 _numberOfErrors = 0;
             }
@@ -65,12 +66,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 if ( _numberOfErrors >= DefaultMaxErrors )
                 {
-                    _eventHandle.Reset();
+                    _eventHandle.TryReset();
 
                     return false;
                 }
 
-                _eventHandle.Set();
+                _eventHandle.TrySet();
 
                 return true;
             }
@@ -81,7 +82,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public void TurnOff()
         {
-            _eventHandle.Reset();
+            _eventHandle.TryReset();
         }
 
         /// <summary>
@@ -91,7 +92,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <returns>returns true for a success, otherwise false</returns>
         public bool WaitActivation( TimeSpan timeout )
         {
-            return _eventHandle.Wait( timeout );
+            return _eventHandle.TryWait( timeout );
         }
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 {
                     _numberOfErrors = DefaultMaxErrors;
 
-                    _eventHandle.Reset();
+                    _eventHandle.TryReset();
                 }
             }
         }
@@ -124,7 +125,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 _numberOfErrors = 0;
 
-                _eventHandle.Set();
+                _eventHandle.TrySet();
             }
         }
     }

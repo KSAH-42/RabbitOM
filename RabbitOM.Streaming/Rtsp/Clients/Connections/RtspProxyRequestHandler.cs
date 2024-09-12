@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 {
@@ -9,7 +10,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     {
         private readonly object _lock;
 
-        private readonly RtspEventWaitHandle _completionHandle;
+        private readonly EventWaitHandle _completionHandle;
 
         private readonly RtspMessageRequest _request;
 
@@ -32,7 +33,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         {
             _request = request ?? throw new ArgumentNullException( nameof( request ) );
             _lock = new object();
-            _completionHandle = new RtspEventWaitHandle();
+            _completionHandle = new ManualResetEvent( false );
         }
 
 
@@ -60,7 +61,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public bool IsCompleted
         {
-            get => _completionHandle.Wait( TimeSpan.Zero );
+            get => _completionHandle.TryWait( TimeSpan.Zero );
         }
 
         /// <summary>
@@ -100,11 +101,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public void Cancel()
         {
-            if ( !_completionHandle.Wait( TimeSpan.Zero ) )
+            if ( ! _completionHandle.TryWait( TimeSpan.Zero ) )
             {
                 OnCancel();
 
-                _completionHandle.Set();
+                _completionHandle.TrySet();
             }
         }
 
@@ -115,7 +116,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool WaitCompletion( TimeSpan timeout )
         {
-            return _completionHandle.Wait( timeout );
+            return _completionHandle.TryWait( timeout );
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="response">the response</param>
         public void HandleResponse( RtspMessageResponse response )
         {
-            if ( _response != null || _completionHandle.Wait( TimeSpan.Zero ) )
+            if ( _response != null || _completionHandle.TryWait( TimeSpan.Zero ) )
             {
                 return;
             }
@@ -161,7 +162,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             }
 			finally
 			{
-                _completionHandle.Set();
+                _completionHandle.TrySet();
 			}
         }
 

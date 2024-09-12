@@ -4,37 +4,20 @@ using System.Threading;
 namespace RabbitOM.Streaming.Rtsp
 {
     /// <summary>
-    /// Represent a safe event handle class
+    /// Represent an extension class
     /// </summary>
-    public sealed class RtspEventWaitHandle : IDisposable
+    public static class RtspEventWaitHandleExtensions
     {
-        private readonly EventWaitHandle _handle = null;
-
-
-
-
         /// <summary>
-        /// Constructor
+        /// Try to set
         /// </summary>
-        public RtspEventWaitHandle()
-        {
-            _handle = new EventWaitHandle( false , EventResetMode.ManualReset );
-        }
-
-
-
-
-
-
-        /// <summary>
-        /// Activate the event
-        /// </summary>
+        /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Set()
+        public static bool TrySet( this EventWaitHandle handle )
         {
             try
             {
-                return _handle.Set();
+                return handle?.Set() ?? false;
             }
             catch ( Exception ex )
             {
@@ -45,14 +28,15 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Deactivate
+        /// Try to reset
         /// </summary>
+        /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Reset()
+        public static bool TryReset( this EventWaitHandle handle )
         {
             try
             {
-                return _handle.Reset();
+                return handle?.Reset() ?? false;
             }
             catch ( Exception ex )
             {
@@ -63,14 +47,15 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Wait the activation
+        /// Try to wait the activation
         /// </summary>
+        /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Wait()
+        public static bool TryWait( this EventWaitHandle handle )
         {
             try
             {
-                return _handle.WaitOne();
+                return handle?.WaitOne() ?? false;
             }
             catch ( Exception ex )
             {
@@ -81,13 +66,13 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Wait the activation
+        /// Try to wait the activation
         /// </summary>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Wait( RtspEventWaitHandle cancellationHandle )
+        public static bool TryWait( this EventWaitHandle handle , EventWaitHandle cancellationHandle )
         {
-            if ( cancellationHandle == null )
+            if ( handle == null || cancellationHandle == null )
             {
                 return false;
             }
@@ -96,7 +81,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 var handles = new EventWaitHandle[]
                 {
-                    cancellationHandle._handle , _handle
+                    cancellationHandle , handle
                 };
 
                 return EventWaitHandle.WaitAny( handles ) == 1;
@@ -110,15 +95,16 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Wait the activation
+        /// Try to wait the activation
         /// </summary>
+        /// <param name="handle">the handle</param>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Wait( int timeout )
+        public static bool TryWait( this EventWaitHandle handle , int timeout )
         {
             try
             {
-                return _handle.WaitOne( timeout );
+                return handle?.WaitOne( timeout ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -129,15 +115,16 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Wait the activation
+        /// Try to wait the activation
         /// </summary>
+        /// <param name="handle">the handle</param>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool Wait( TimeSpan timeout )
+        public static bool TryWait( this EventWaitHandle handle , TimeSpan timeout )
         {
             try
             {
-                return _handle.WaitOne( timeout );
+                return handle?.WaitOne( timeout ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -148,14 +135,15 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Wait until an element has been push to the queue
+        /// Try wait until an element has been push to the queue
         /// </summary>
+        /// <param name="handle">the handle</param>
         /// <param name="timeout">the timeout</param>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( int timeout , RtspEventWaitHandle cancellationHandle )
+        public static bool TryWait( this EventWaitHandle handle , int timeout , EventWaitHandle cancellationHandle )
         {
-            if ( cancellationHandle == null )
+            if ( handle == null || cancellationHandle == null )
             {
                 return false;
             }
@@ -164,7 +152,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 var handles = new EventWaitHandle[]
                 {
-                    cancellationHandle._handle , _handle
+                    cancellationHandle , handle
                 };
 
                 return EventWaitHandle.WaitAny( handles , timeout ) == 1;
@@ -178,14 +166,14 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Wait until an element has been push to the queue
+        /// Try wait until an element has been push to the queue
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public bool Wait( TimeSpan timeout , RtspEventWaitHandle cancellationHandle )
+        public static bool TryWait( this EventWaitHandle handle , TimeSpan timeout , EventWaitHandle cancellationHandle )
         {
-            if ( cancellationHandle == null )
+            if ( handle == null || cancellationHandle == null )
             {
                 return false;
             }
@@ -194,7 +182,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 var handles = new EventWaitHandle[]
                 {
-                    cancellationHandle._handle , _handle
+                    cancellationHandle , handle
                 };
 
                 return EventWaitHandle.WaitAny( handles , timeout ) == 1;
@@ -206,15 +194,6 @@ namespace RabbitOM.Streaming.Rtsp
 
             return false;
         }
-
-        /// <summary>
-        /// Release internal resources
-        /// </summary>
-        public void Dispose()
-        {
-            this._handle.Dispose();
-        }
-
 
 
 
@@ -224,7 +203,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// Fired when an exception occurs
         /// </summary>
         /// <param name="ex">the exception</param>
-        private void OnException( Exception ex )
+        private static void OnException( Exception ex )
         {
             if ( ex == null )
             {

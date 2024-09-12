@@ -31,11 +31,11 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 if (_queue.Items.Count > 0)
                 {
-                    _queue.Handle.Set();
+                    _queue.Handle.TrySet();
                 }
                 else
                 {
-                    _queue.Handle.Reset();
+                    _queue.Handle.TryReset();
                 }
             }
         }

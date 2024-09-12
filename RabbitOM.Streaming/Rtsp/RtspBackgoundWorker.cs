@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtsp
 {
     internal sealed class RtspBackgoundWorker
     {
-        private readonly object _lock = new object();
+        private readonly object _lock;
         
         private readonly string _name;
         
@@ -24,7 +24,8 @@ namespace RabbitOM.Streaming.Rtsp
         public RtspBackgoundWorker( string name )
         {
             _name       = name ?? string.Empty;
-            _exitHandle = new EventWaitHandle( false , EventResetMode.ManualReset );
+            _lock       = new object();
+            _exitHandle = new ManualResetEvent( false );
             _state      = new State();
         }
 

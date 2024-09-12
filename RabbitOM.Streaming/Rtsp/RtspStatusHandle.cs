@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp
 {
@@ -7,14 +8,14 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     internal sealed class RtspStatusHandle
     {
-        private readonly RtspEventWaitHandle _handle = new RtspEventWaitHandle();
+        private readonly EventWaitHandle _handle = new ManualResetEvent( false );
 
         /// <summary>
         /// Check if the status has been activated
         /// </summary>
         public bool Value
         {
-            get => _handle.Wait( TimeSpan.Zero );
+            get => _handle.TryWait( TimeSpan.Zero );
         }
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Activate()
         {
-            _handle.Set();
+            _handle.TrySet();
         }
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Deactivate()
         {
-            _handle.Reset();
+            _handle.TryReset();
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Wait( TimeSpan timeout )
         {
-            return _handle.Wait( timeout );
+            return _handle.TryWait( timeout );
         }
     }
 }

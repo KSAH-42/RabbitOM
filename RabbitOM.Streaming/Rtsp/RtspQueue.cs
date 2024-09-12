@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp
 {
@@ -17,7 +18,7 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private readonly object _lock;
 
-        private readonly RtspEventWaitHandle _handle;
+        private readonly EventWaitHandle _handle;
 
         private readonly Queue<TElement> _collection;
 
@@ -49,7 +50,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             _lock       = new object();
             _collection = new Queue<TElement>( capacity );
-            _handle     = new RtspEventWaitHandle();
+            _handle     = new ManualResetEvent( false );
             _scope      = new Scope( this );
         }
 
@@ -122,7 +123,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Gets the handle
         /// </summary>
-        private RtspEventWaitHandle Handle
+        private EventWaitHandle Handle
         {
             get
             {
@@ -148,7 +149,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return queue.Handle.Wait();
+            return queue.Handle.TryWait();
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return queue.Handle.Wait( timeout );
+            return queue.Handle.TryWait( timeout );
         }
 
         /// <summary>
@@ -182,7 +183,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException(nameof(queue));
             }
 
-            return queue.Handle.Wait(timeout);
+            return queue.Handle.TryWait( timeout);
         }
 
         /// <summary>
@@ -192,14 +193,14 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait( RtspQueue<TElement> queue , RtspEventWaitHandle cancellationHandle )
+        public static bool Wait( RtspQueue<TElement> queue , EventWaitHandle cancellationHandle )
         {
             if ( queue == null )
             {
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return queue.Handle.Wait( cancellationHandle );
+            return queue.Handle.TryWait( cancellationHandle );
         }
 
         /// <summary>
@@ -210,7 +211,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RtspQueue<TElement> queue, int timeout, RtspEventWaitHandle cancellationHandle)
+        public static bool Wait(RtspQueue<TElement> queue, int timeout, EventWaitHandle cancellationHandle)
         {
             if ( queue == null )
             {
@@ -222,7 +223,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( cancellationHandle ) );
             }
 
-            return queue.Handle.Wait( timeout , cancellationHandle );
+            return queue.Handle.TryWait( timeout , cancellationHandle );
         }
 
         /// <summary>
@@ -233,7 +234,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RtspQueue<TElement> queue, TimeSpan timeout, RtspEventWaitHandle cancellationHandle)
+        public static bool Wait(RtspQueue<TElement> queue, TimeSpan timeout, EventWaitHandle cancellationHandle)
         {
             if (queue == null)
             {
@@ -245,7 +246,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException(nameof(cancellationHandle));
             }
 
-            return queue.Handle.Wait(timeout, cancellationHandle);
+            return queue.Handle.TryWait( timeout, cancellationHandle);
         }
 
 

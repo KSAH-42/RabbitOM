@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private readonly string              _name        = string.Empty;
 
-        private readonly RtspEventWaitHandle _eventExit   = null;
+        private readonly EventWaitHandle     _eventExit   = null;
 
         private Thread                       _thread      = null;
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Rtsp
             }
 
             _name = name;
-            _eventExit = new RtspEventWaitHandle();
+            _eventExit = new ManualResetEvent( false );
         }
 
 
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Gets the exit handle
         /// </summary>
-        public RtspEventWaitHandle ExitHandle
+        public EventWaitHandle ExitHandle
         {
             get => _eventExit;
         }
@@ -78,8 +78,11 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsShudown
         {
-            get => _eventExit.Wait(0);
+            get => _eventExit.TryWait( 0 );
         }
+
+
+
 
 
 
@@ -101,7 +104,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            if ( ! _eventExit.Reset() )
+            if ( ! _eventExit.TryReset() )
             {
                 return false;
             }
@@ -143,7 +146,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             EnsureCallingThread( thread );
 
-            _eventExit.Set();
+            _eventExit.TrySet();
 
             try
             {
@@ -178,7 +181,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             EnsureCallingThread( thread );
 
-            _eventExit.Set();
+            _eventExit.TrySet();
 
             try
             {
@@ -208,7 +211,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             EnsureCallingThread( thread );
 
-            return _eventExit.Set();
+            return _eventExit.TrySet();
         }
 
         /// <summary>
@@ -225,7 +228,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             EnsureCallingThread( thread );
 
-            _eventExit.Set();
+            _eventExit.TrySet();
 
             try
             {
@@ -260,7 +263,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            return ! _eventExit.Wait( timeout );
+            return ! _eventExit.TryWait( timeout );
         }
 
         /// <summary>
