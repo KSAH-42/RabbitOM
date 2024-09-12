@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Check if the thread is actually stopping
         /// </summary>
-        public bool IsShudown
+        public bool IsStopping
         {
             get => _eventExit.TryWait( 0 );
         }
