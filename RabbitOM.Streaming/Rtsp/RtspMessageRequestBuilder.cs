@@ -1018,7 +1018,7 @@ namespace RabbitOM.Streaming.Rtsp
                     }
                 }
 
-                if ( !_headers.IsEmpty )
+                if ( ! _headers.IsEmpty )
                 {
                     request.Headers.TryAddRange( _headers );
                 }
@@ -1030,12 +1030,12 @@ namespace RabbitOM.Streaming.Rtsp
                     request.Body.Value = _body.ToString();
                 }
 
-                if (!string.IsNullOrWhiteSpace(_acceptHeader))
+                if ( ! string.IsNullOrWhiteSpace( _acceptHeader ) )
                 {
-                    request.Headers.TryAddOrUpdate(new RtspHeaderAccept(_acceptHeader));
+                    request.Headers.TryAddOrUpdate( RtspHeaderAccept.NewAcceptHeader( _acceptHeader ) );
                 }
 
-                if ( !string.IsNullOrWhiteSpace( _contentType ) )
+                if ( ! string.IsNullOrWhiteSpace( _contentType ) )
                 {
                     request.Headers.TryAddOrUpdate( new RtspHeaderContentType( _contentType ) );
                 }

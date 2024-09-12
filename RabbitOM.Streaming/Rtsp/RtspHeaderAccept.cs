@@ -74,6 +74,25 @@ namespace RabbitOM.Streaming.Rtsp
             return writer.Output;
         }
 
+
+
+
+
+
+
+        /// <summary>
+        /// Create an new instance of the accept header
+        /// </summary>
+        /// <param name="mime">the mime</param>
+        public static RtspHeaderAccept NewAcceptHeader( string mime )
+        {
+            RtspHeaderAccept header = new RtspHeaderAccept();
+
+            header.Mimes.TryAdd( mime );
+
+            return header;
+        }
+
         /// <summary>
         /// Try to parse
         /// </summary>
