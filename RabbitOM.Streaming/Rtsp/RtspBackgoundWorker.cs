@@ -70,10 +70,15 @@ namespace RabbitOM.Streaming.Rtsp
                     return false;
                 }
 
-                _thread = new Thread( threadStart );
-                _thread.IsBackground = true;
-                _thread.Name = _name;
-                _thread.Start();
+                var thread = new Thread( threadStart )
+                {
+                    IsBackground = true ,
+                    Name = _name ,
+                };
+
+                thread.Start();
+
+                _thread = thread;
 
                 _state.SetStatus( true );
 
