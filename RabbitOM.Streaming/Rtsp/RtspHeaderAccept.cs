@@ -7,39 +7,9 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderAccept : RtspHeader
     {
-        private readonly RtspStringCollection _mimes = null;
+        private readonly RtspStringCollection _mimes = new RtspStringCollection();
 
 
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderAccept( string value )
-        {
-            _mimes = new RtspStringCollection();
-            _mimes.TryAdd(value);
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderAccept()
-            : this( new RtspStringCollection() )
-        {
-
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="collection">the collection</param>
-        /// <exception cref="ArgumentNullException"/>
-        public RtspHeaderAccept( RtspStringCollection collection )
-        {
-            _mimes = collection ?? throw new ArgumentNullException( nameof( collection ) );
-        }
 
 
 
@@ -59,6 +29,8 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get => _mimes;
         }
+
+
 
 
 
