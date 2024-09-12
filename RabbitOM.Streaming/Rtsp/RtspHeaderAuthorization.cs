@@ -25,6 +25,8 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -104,6 +106,8 @@ namespace RabbitOM.Streaming.Rtsp
             get => _response;
             set => _response = RtspDataConverter.Trim( value );
         }
+
+
 
 
 
@@ -192,6 +196,10 @@ namespace RabbitOM.Streaming.Rtsp
 
             return string.Empty;
         }
+
+
+
+
 
         /// <summary>
         /// Try to parse

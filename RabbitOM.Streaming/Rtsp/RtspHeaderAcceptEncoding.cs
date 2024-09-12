@@ -12,25 +12,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
         /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderAcceptEncoding()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderAcceptEncoding( string value )
-        {
-            Value = value;
-        }
-
-
-
-
-        /// <summary>
         /// Gets the name
         /// </summary>
         public override string Name

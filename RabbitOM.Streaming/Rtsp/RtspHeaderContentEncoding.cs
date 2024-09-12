@@ -11,22 +11,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderContentEncoding()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderContentEncoding( string value )
-        {
-            Value = value;
-        }
-
 
 
         /// <summary>
@@ -48,6 +32,8 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Validate
         /// </summary>
@@ -66,6 +52,10 @@ namespace RabbitOM.Streaming.Rtsp
             return _value;
         }
 
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -76,7 +66,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }

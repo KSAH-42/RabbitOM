@@ -11,22 +11,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderCacheControl()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderCacheControl( string value )
-        {
-            Value = value;
-        }
-
 
 
         /// <summary>
@@ -48,6 +32,8 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Validate
         /// </summary>
@@ -65,6 +51,10 @@ namespace RabbitOM.Streaming.Rtsp
         {
             return _value;
         }
+
+
+
+
 
         /// <summary>
         /// Try to parse

@@ -11,22 +11,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderContentLocation()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderContentLocation( string value )
-        {
-            Value = value;
-        }
-
 
 
         /// <summary>
@@ -48,13 +32,15 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _value );
+            return ! string.IsNullOrWhiteSpace( _value );
         }
 
         /// <summary>
@@ -66,6 +52,10 @@ namespace RabbitOM.Streaming.Rtsp
             return _value;
         }
 
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -76,7 +66,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }

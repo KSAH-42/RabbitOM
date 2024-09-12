@@ -12,24 +12,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderBandwith()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderBandwith( int value )
-        {
-            Value = value;
-        }
-
-
-
 
         /// <summary>
         /// Gets the name
@@ -50,6 +32,8 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Validate
         /// </summary>
@@ -67,6 +51,10 @@ namespace RabbitOM.Streaming.Rtsp
         {
             return _value.ToString();
         }
+
+
+
+
 
         /// <summary>
         /// Try to parse

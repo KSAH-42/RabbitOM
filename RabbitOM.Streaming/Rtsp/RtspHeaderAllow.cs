@@ -11,24 +11,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderAllow()
-            : this( new RtspMethodList() )
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="methods">the method list</param>
-        /// <exception cref="ArgumentNullException"/>
-        public RtspHeaderAllow( RtspMethodList methods )
-        {
-            _methods = methods ?? throw new ArgumentNullException( nameof( methods ) );
-        }
-
 
 
         /// <summary>
@@ -46,6 +28,10 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get => _methods;
         }
+
+
+
+
 
         /// <summary>
         /// Validate
@@ -78,6 +64,10 @@ namespace RabbitOM.Streaming.Rtsp
             return writer.Output;
         }
 
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -90,7 +80,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             var parser = new RtspParser( value , RtspSeparator.Comma );
 
-            if ( !parser.ParseHeaders() )
+            if ( ! parser.ParseHeaders() )
             {
                 return false;
             }

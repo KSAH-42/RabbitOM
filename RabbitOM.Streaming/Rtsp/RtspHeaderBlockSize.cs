@@ -11,23 +11,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderBlockSize()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderBlockSize( int value )
-        {
-            Value = value;
-        }
-
-
 
 
         /// <summary>
@@ -49,6 +32,8 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Validate
         /// </summary>
@@ -66,6 +51,10 @@ namespace RabbitOM.Streaming.Rtsp
         {
             return _value.ToString();
         }
+
+
+
+
 
         /// <summary>
         /// Try to parse
