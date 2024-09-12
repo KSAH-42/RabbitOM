@@ -12,24 +12,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderIfModifiedSince()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="value">the value</param>
-        public RtspHeaderIfModifiedSince( DateTime value )
-        {
-            Value = value;
-        }
-
-
-
 
         /// <summary>
         /// Gets the name
@@ -47,6 +29,8 @@ namespace RabbitOM.Streaming.Rtsp
             get => _value;
             set => _value = value.ToUniversalTime();
         }
+
+
 
 
 
