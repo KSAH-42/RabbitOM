@@ -21,6 +21,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -33,6 +36,8 @@ namespace RabbitOM.Streaming.Rtsp
             _startHandle  = new ManualResetEvent( false );
             _stopHandle   = new ManualResetEvent( false );
         }
+
+
 
 
 
@@ -51,7 +56,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStarted
         {
-            get => _startHandle.WaitOne( 0 );
+            get => _startHandle.TryWait( 0 );
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStopping
         {
-            get => _startHandle.WaitOne( 0 ) && _stopHandle.TryWait( 0 );
+            get => _startHandle.TryWait( 0 ) && _stopHandle.TryWait( 0 );
         }
 
         /// <summary>
@@ -147,7 +152,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <exception cref="InvalidOperationException"/>
         public bool Stop( TimeSpan timeout )
         {
-            _stopHandle.TrySet();
+            _stopHandle.Set();
 
             lock ( _lock )
             {
@@ -195,7 +200,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanContinue( TimeSpan timeout )
         {
-            return _startHandle.WaitOne( 0 ) && _stopHandle.WaitOne( timeout ) == false;
+            return _startHandle.TryWait( 0 ) && _stopHandle.TryWait( timeout ) == false;
         }
 
         /// <summary>
@@ -206,12 +211,20 @@ namespace RabbitOM.Streaming.Rtsp
         {
             Action routine = parameter as Action;
 
-            _startHandle.Set();
+            _startHandle.TrySet();
 
-            routine?.TryInvoke();
+			try
+			{
+                routine?.Invoke();
+            }
+			catch ( Exception ex )
+			{
+                OnError( ex );
+			}
 
-            _startHandle.Reset();
+            _startHandle.TryReset();
         }
+
 
 
 
