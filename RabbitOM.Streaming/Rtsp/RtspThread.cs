@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 throw new ArgumentNullException( nameof( action ) );
             }
-            
+
             lock ( _lock )
             {
                 if ( _startHandle.TryWait( 0 ) || _stopHandle.TryWait( 0 ) )
@@ -154,10 +154,10 @@ namespace RabbitOM.Streaming.Rtsp
                     throw new InvalidOperationException();
                 }
 
-                _stopHandle.Set();
-
                 try
                 {
+                    _stopHandle.Set();
+
                     if ( _thread == null || _thread.Join( timeout ) )
                     {
                         _startHandle.TryReset();
