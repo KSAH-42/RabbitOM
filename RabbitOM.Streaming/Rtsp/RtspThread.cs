@@ -160,8 +160,8 @@ namespace RabbitOM.Streaming.Rtsp
 
                     if ( _thread == null || _thread.Join( timeout ) )
                     {
-                        _startHandle.TryReset();
                         _stopHandle.TryReset();
+                        _startHandle.TryReset();
 
                         _thread = null;
 
