@@ -170,7 +170,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// <param name="shutdownTimeout">the shutdown timeout</param>
         public void StopCommunication(TimeSpan shutdownTimeout)
         {
-            if ( ! _thread.Join( shutdownTimeout ) )
+            if ( ! _thread.Stop( shutdownTimeout ) )
             {
                 _session.Abort();
             }

@@ -8,15 +8,15 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspThread
     {
-        private readonly string              _name        = string.Empty;
+        private readonly object _lock;
 
-        private readonly EventWaitHandle     _eventExit   = null;
+        private readonly string _name;
 
-        private Thread                       _thread      = null;
+        private readonly EventWaitHandle _startHandle;
 
-        private Action                       _routine     = null;
+        private readonly EventWaitHandle _stopHandle;
 
-        private Exception                    _exception   = null;
+        private Thread  _thread;
 
 
 
@@ -28,13 +28,10 @@ namespace RabbitOM.Streaming.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public RtspThread( string name )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            _name = name;
-            _eventExit = new ManualResetEvent( false );
+            _name         = name ?? string.Empty;
+            _lock         = new object();
+            _startHandle  = new ManualResetEvent( false );
+            _stopHandle   = new ManualResetEvent( false );
         }
 
 
@@ -50,27 +47,11 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Gets the internal exception
-        /// </summary>
-        public Exception Exception
-        {
-            get => _exception;
-        }
-
-        /// <summary>
-        /// Gets the exit handle
-        /// </summary>
-        public EventWaitHandle ExitHandle
-        {
-            get => _eventExit;
-        }
-
-        /// <summary>
         /// Check if the thread has been started
         /// </summary>
         public bool IsStarted
         {
-            get => _thread != null;
+            get => _startHandle.WaitOne( 0 );
         }
 
         /// <summary>
@@ -78,8 +59,17 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStopping
         {
-            get => _eventExit.TryWait( 0 );
+            get => _startHandle.WaitOne( 0 ) && _stopHandle.TryWait( 0 );
         }
+
+        /// <summary>
+        /// Gets the exit handle
+        /// </summary>
+        public EventWaitHandle ExitHandle
+        {
+            get => _stopHandle;
+        }
+
 
 
 
@@ -99,34 +89,43 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( action ) );
             }
 
-            if ( _thread != null )
+            if ( _startHandle.WaitOne( 0 ) )
             {
                 return false;
             }
 
-            if ( ! _eventExit.TryReset() )
+            lock ( _lock )
             {
-                return false;
-            }
-
-            try
-            {
-                var thread = new Thread( Processing )
+                if ( _thread != null )
                 {
-                    Name         = _name,
-                    IsBackground = true ,
-                };
+                    throw new InvalidOperationException();
+                }
 
-                _routine = action;
-                _thread  = thread;
+                if ( ! _startHandle.TryReset() || ! _stopHandle.TryReset() )
+                {
+                    return false;
+                }
 
-                _thread.Start();
+                try
+                {
+                    var thread = new Thread( Processing )
+                    {
+                        Name         = _name ,
+                        IsBackground = true  ,
+                    };
 
-                return true;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
+                    thread.Start( action );
+
+                    _thread = thread;
+
+                    _startHandle.Set();
+
+                    return true;
+                }
+                catch ( Exception ex )
+                {
+                    OnError( ex );
+                }
             }
 
             return false;
@@ -137,31 +136,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Stop()
         {
-            var thread = _thread;
-
-            if (thread == null )
-            {
-                return;
-            }
-
-            EnsureCallingThread( thread );
-
-            _eventExit.TrySet();
-
-            try
-            {
-                thread.Join();
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-
-                thread.Abort();
-            }
-            finally
-            {
-                _thread = null;
-            }
+            Stop( Timeout.InfiniteTimeSpan );
         }
 
         /// <summary>
@@ -170,76 +145,38 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
         /// <exception cref="InvalidOperationException"/>
-        public bool Join( TimeSpan timeout )
+        public bool Stop( TimeSpan timeout )
         {
-            var thread = _thread;
+            _stopHandle.TrySet();
 
-            if ( thread == null)
+            lock ( _lock )
             {
-                return true;
-            }
+                if ( _thread == null )
+                {
+                    return true;
+                }
 
-            EnsureCallingThread( thread );
+                if ( _thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
+                {
+                    throw new InvalidOperationException();
+                }
 
-            _eventExit.TrySet();
+                try
+                {
+                    if ( _thread.Join( timeout ) )
+                    {
+                        _thread = null;
 
-            try
-            {
-                return thread.Join( timeout );
-            }
-            catch (Exception ex)
-            {
-                OnError(ex);
+                        return true;
+                    }
+                }
+                catch ( Exception ex )
+                {
+                    OnError( ex );
+                }
             }
         
             return false;
-        }
-
-        /// <summary>
-        /// Alert the thread to leave/stop it's execution
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        /// <exception cref="InvalidOperationException"/>
-        public bool Shutdown()
-        {
-            var thread = _thread;
-
-            if ( thread == null)
-            {
-                return true;
-            }
-
-            EnsureCallingThread( thread );
-
-            return _eventExit.TrySet();
-        }
-
-        /// <summary>
-        /// Abort the thread
-        /// </summary>
-        public void Abort()
-        {
-            var thread = _thread;
-
-            if ( thread == null )
-            {
-                return;
-            }
-
-            EnsureCallingThread( thread );
-
-            _eventExit.TrySet();
-
-            try
-            {
-                thread.Abort();
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            _thread = null;
         }
 
         /// <summary>
@@ -258,55 +195,22 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanContinue( TimeSpan timeout )
         {
-            if ( _thread == null )
-            {
-                return false;
-            }
-
-            return ! _eventExit.TryWait( timeout );
+            return _startHandle.WaitOne( 0 ) && _stopHandle.WaitOne( timeout ) == false;
         }
 
         /// <summary>
         /// Thread function
         /// </summary>
-        private void Processing()
+        /// <param name="parameter">the parameter</param>
+        private void Processing( object parameter )
         {
-            try
-            {
-                _routine?.Invoke();
-            }
-            catch ( Exception ex )
-            {
-                _exception = ex;
-            }
-            finally
-            {
-                _eventExit.Reset();
-            }
-        }
+            Action routine = parameter as Action;
 
+            _startHandle.Set();
 
+            routine?.TryInvoke();
 
-
-
-        /// <summary>
-        /// Ensure that we are not make a call the specific thread.
-        /// For instance, this method ensure that we are not invoking the stop method inside the thread, like a thread that want to stop it self using the public method of this class.
-        /// </summary>
-        /// <param name="thread">the thread</param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="InvalidOperationException"/>
-        private static void EnsureCallingThread( Thread thread )
-        {
-            if (thread == null)
-            {
-                throw new ArgumentNullException( nameof( thread ) );
-            }
-
-            if (thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId)
-            {
-                throw new InvalidOperationException();
-            }
+            _startHandle.Reset();
         }
 
 
@@ -320,7 +224,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="ex">the exception</param>
         private void OnError( Exception ex )
         {
-            _exception = ex;
+            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }
