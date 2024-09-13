@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Gets the exit handle
         /// </summary>
-        public EventWaitHandle ExitHandle
+        public WaitHandle ExitHandle
         {
             get => _stopHandle;
         }
