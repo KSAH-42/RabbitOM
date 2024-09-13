@@ -213,14 +213,14 @@ namespace RabbitOM.Streaming.Rtsp
 
             _startHandle.TrySet();
 
-			try
-			{
+            try
+            {
                 routine?.Invoke();
             }
-			catch ( Exception ex )
-			{
+            catch ( Exception ex )
+            {
                 OnError( ex );
-			}
+            }
 
             _startHandle.TryReset();
         }
