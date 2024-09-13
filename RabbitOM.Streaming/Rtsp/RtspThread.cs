@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Rtsp
 
         private readonly ManualResetEvent _stopHandle;
 
-        private Thread  _thread;
+        private Thread _thread;
 
 
 
@@ -170,6 +170,7 @@ namespace RabbitOM.Streaming.Rtsp
                 {
                     if ( _thread.Join( timeout ) )
                     {
+                        _startHandle.TryReset();
                         _thread = null;
 
                         return true;
@@ -221,8 +222,6 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 OnError( ex );
             }
-
-            _startHandle.TryReset();
         }
 
 
