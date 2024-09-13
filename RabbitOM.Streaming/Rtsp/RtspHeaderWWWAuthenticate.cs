@@ -21,6 +21,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -85,8 +88,11 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -159,6 +165,11 @@ namespace RabbitOM.Streaming.Rtsp
             return writer.Output;
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -175,12 +186,12 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 var type = parser.FirstAuthenticationTypeOrDefault();
 
-                if ( !parser.RemoveFirstSequence( type.ToString() ) || type == RtspAuthenticationType.Unknown )
+                if ( ! parser.RemoveFirstSequence( type.ToString() ) || type == RtspAuthenticationType.Unknown )
                 {
                     return false;
                 }
 
-                if ( !parser.ParseHeaders() )
+                if ( ! parser.ParseHeaders() )
                 {
                     return false;
                 }
@@ -197,7 +208,7 @@ namespace RabbitOM.Streaming.Rtsp
 
                     while ( reader.Read() )
                     {
-                        if ( !reader.SplitElementAsField() )
+                        if ( ! reader.SplitElementAsField() )
                         {
                             continue;
                         }

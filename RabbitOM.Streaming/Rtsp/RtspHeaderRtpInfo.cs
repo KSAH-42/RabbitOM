@@ -15,15 +15,18 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderRtpInfo()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="url">the url</param>
         public RtspHeaderRtpInfo( string url )
@@ -32,7 +35,7 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="url">the url</param>
         /// <param name="sequence">the sequence</param>
@@ -42,17 +45,19 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="url">the url</param>
         /// <param name="sequence">the sequence</param>
         /// <param name="rtpTime">the rtp time</param>
         public RtspHeaderRtpInfo( string url , long sequence , long rtpTime )
         {
-            Url = url;
+            Url      = url;
             Sequence = sequence;
-            RtpTime = rtpTime;
+            RtpTime  = rtpTime;
         }
+
+
 
 
 
@@ -94,8 +99,11 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -130,6 +138,11 @@ namespace RabbitOM.Streaming.Rtsp
             return writer.Output;
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -142,7 +155,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             var parser = new RtspParser( value , RtspSeparator.SemiColon );
 
-            if ( !parser.ParseHeaders() )
+            if ( ! parser.ParseHeaders() )
             {
                 return false;
             }
@@ -155,7 +168,7 @@ namespace RabbitOM.Streaming.Rtsp
 
                 while ( reader.Read() )
                 {
-                    if ( !reader.SplitElementAsField() )
+                    if ( ! reader.SplitElementAsField() )
                     {
                         continue;
                     }

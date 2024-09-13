@@ -11,21 +11,26 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderIfMatch()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="value">the value</param>
         public RtspHeaderIfMatch( string value )
         {
             Value = value;
         }
+
+
 
 
 
@@ -49,13 +54,16 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _value );
+            return ! string.IsNullOrWhiteSpace( _value );
         }
 
         /// <summary>
@@ -67,6 +75,11 @@ namespace RabbitOM.Streaming.Rtsp
             return _value;
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -77,15 +90,12 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new RtspHeaderIfMatch()
-            {
-                Value = value
-            };
+            result = new RtspHeaderIfMatch( value );
 
             return true;
         }

@@ -11,21 +11,27 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderFrom()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="value">the value</param>
         public RtspHeaderFrom( string value )
         {
             Value = value;
         }
+
+
+
 
 
 
@@ -48,13 +54,16 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _value );
+            return ! string.IsNullOrWhiteSpace( _value );
         }
 
         /// <summary>
@@ -76,16 +85,13 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new RtspHeaderFrom()
-            {
-                Value = value
-            };
-
+            result = new RtspHeaderFrom( value );
+            
             return true;
         }
     }

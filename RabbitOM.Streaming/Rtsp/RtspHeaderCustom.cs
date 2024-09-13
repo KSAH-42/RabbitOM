@@ -13,8 +13,14 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
+
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="name">the name</param>
         /// <param name="value">the value</param>
@@ -29,6 +35,9 @@ namespace RabbitOM.Streaming.Rtsp
             _name  = RtspDataConverter.Trim( name );
             _value = RtspDataConverter.Trim( value );
         }
+
+
+
 
 
 
@@ -51,13 +60,16 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _value );
+            return ! string.IsNullOrWhiteSpace( _value );
         }
 
         /// <summary>

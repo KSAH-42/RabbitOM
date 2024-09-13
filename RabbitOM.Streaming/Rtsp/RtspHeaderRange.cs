@@ -8,15 +8,17 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderRange : RtspHeader
     {
-        private RtspStringPair _npt;
+        private RtspStringPair _npt   = RtspStringPair.Empty;
 
-        private RtspStringPair _clock;
+        private RtspStringPair _clock = RtspStringPair.Empty;
 
-        private RtspStringPair _time;
+        private RtspStringPair _time  = RtspStringPair.Empty;
 
 
-        
-        
+
+
+
+
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -53,17 +55,19 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
 
-        
-        
+
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return ! RtspStringPair.IsNullOrEmpty( _npt )
+            return ! RtspStringPair.IsNullOrEmpty( _npt   )
                 || ! RtspStringPair.IsNullOrEmpty( _clock )
-                || ! RtspStringPair.IsNullOrEmpty( _time )
+                || ! RtspStringPair.IsNullOrEmpty( _time  )
                 ;
         }       
         
@@ -102,6 +106,8 @@ namespace RabbitOM.Streaming.Rtsp
 
             return writer.Output;
         }
+
+
 
 
 

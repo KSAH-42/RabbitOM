@@ -111,11 +111,11 @@ namespace RabbitOM.Streaming.Rtsp
             return new RtspHeaderTransport()
             {
                 TransmissionType = RtspTransmissionType.Multicast ,
-                Type = RtspTransportType.RTP_AVP_UDP ,
-                ClientPort = RtspPortPair.NewPortPair( port ) ,
-                Destination = ipAddress ,
-                TTL = ttl ,
-                Mode = mode ,
+                Type             = RtspTransportType.RTP_AVP_UDP ,
+                ClientPort       = RtspPortPair.NewPortPair( port ) ,
+                Destination      = ipAddress ,
+                TTL              = ttl ,
+                Mode             = mode ,
             };
         }
 
@@ -246,7 +246,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -339,6 +339,11 @@ namespace RabbitOM.Streaming.Rtsp
             return writer.Output;
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -351,7 +356,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             var parser = new RtspParser( value , RtspSeparator.SemiColon );
 
-            if ( !parser.ParseHeaders() )
+            if ( ! parser.ParseHeaders() )
             {
                 return false;
             }

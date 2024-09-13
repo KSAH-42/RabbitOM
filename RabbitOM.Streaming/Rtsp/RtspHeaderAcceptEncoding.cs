@@ -11,6 +11,30 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+		public RtspHeaderAcceptEncoding()
+		{
+		}
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+        /// <param name="value">the value</param>
+		public RtspHeaderAcceptEncoding( string value )
+		{
+            Value = value;
+		}
+
+
+
+
+
+
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -30,13 +54,16 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _value );
+            return ! string.IsNullOrWhiteSpace( _value );
         }
 
         /// <summary>
@@ -47,6 +74,11 @@ namespace RabbitOM.Streaming.Rtsp
         {
             return _value;
         }
+
+
+
+
+
 
         /// <summary>
         /// Try to parse
@@ -63,10 +95,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            result = new RtspHeaderAcceptEncoding()
-            {
-                Value = value
-            };
+            result = new RtspHeaderAcceptEncoding( value );
 
             return true;
         }

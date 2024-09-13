@@ -5,9 +5,31 @@ namespace RabbitOM.Streaming.Rtsp
     /// <summary>
     /// Represent a message header
     /// </summary>
-    public sealed class RtspHeaderBandwith : RtspHeader
+    public sealed class RtspHeaderBandwith : RtspHeader , IRtspHeaderValue<long>
     {
         private long _value = 0;
+
+
+
+
+
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+		public RtspHeaderBandwith()
+		{
+		}
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+        /// <param name="value">the value</param>
+		public RtspHeaderBandwith( long value )
+		{
+            Value = value;
+		}
+
 
 
 
@@ -34,8 +56,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -56,6 +79,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -71,10 +95,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            result = new RtspHeaderBandwith()
-            {
-                Value = RtspDataConverter.ConvertToLong( value )
-            };
+            result = new RtspHeaderBandwith( RtspDataConverter.ConvertToLong( value ) );
 
             return true;
         }

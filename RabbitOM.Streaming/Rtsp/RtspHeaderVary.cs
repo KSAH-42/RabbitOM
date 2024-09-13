@@ -7,27 +7,8 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderVary : RtspHeader
     {
-        private readonly RtspStringCollection _headerNames = null;
+        private readonly RtspStringCollection _headerNames = new RtspStringCollection();
 
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspHeaderVary()
-            : this( new RtspStringCollection() )
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="headerNames">the header names</param>
-        /// <exception cref="ArgumentNullException"/>
-        public RtspHeaderVary( RtspStringCollection headerNames )
-        {
-            _headerNames = headerNames ?? throw new ArgumentNullException( nameof( headerNames ) );
-        }
 
 
 
@@ -51,8 +32,11 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -87,6 +71,11 @@ namespace RabbitOM.Streaming.Rtsp
             return writer.Output;
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -99,7 +88,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             var parser = new RtspParser( value , RtspSeparator.Comma );
 
-            if ( !parser.ParseHeaders() )
+            if ( ! parser.ParseHeaders() )
             {
                 return false;
             }

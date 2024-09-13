@@ -11,21 +11,26 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderScale()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="value">the value</param>
         public RtspHeaderScale( float value )
         {
             Value = value;
         }
+
+
 
 
 
@@ -49,8 +54,11 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true</returns>
         public override bool TryValidate()
@@ -67,6 +75,11 @@ namespace RabbitOM.Streaming.Rtsp
             return _value.ToString( "G2" , CultureInfo.InvariantCulture );
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -77,15 +90,12 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new RtspHeaderScale()
-            {
-                Value = RtspDataConverter.ConvertToFloat( value , NumberStyles.Any , CultureInfo.InvariantCulture )
-            };
+            result = new RtspHeaderScale( RtspDataConverter.ConvertToFloat( value , NumberStyles.Any , CultureInfo.InvariantCulture ) );
 
             return true;
         }

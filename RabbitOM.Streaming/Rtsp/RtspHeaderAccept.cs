@@ -3,11 +3,34 @@
 namespace RabbitOM.Streaming.Rtsp
 {
     /// <summary>
-    /// Represent a message header
+    /// Represent the accept message header
     /// </summary>
     public sealed class RtspHeaderAccept : RtspHeader
     {
         private readonly RtspStringCollection _mimes = new RtspStringCollection();
+
+
+
+
+
+
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+        public RtspHeaderAccept()
+		{
+		}
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+        /// <param name="mime">the mime</param>
+		public RtspHeaderAccept( string mime )
+		{
+            _mimes.Add( mime );
+		}
+
 
 
 
@@ -35,8 +58,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()

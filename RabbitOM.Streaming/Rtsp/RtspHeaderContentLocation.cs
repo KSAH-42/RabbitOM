@@ -13,6 +13,29 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+		public RtspHeaderContentLocation()
+		{
+
+		}
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+        /// <param name="value">the value</param>
+		public RtspHeaderContentLocation( string value )
+		{
+            Value = value;
+		}
+
+
+
+
+
+
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -34,8 +57,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -56,6 +80,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -71,10 +96,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
-            result = new RtspHeaderContentLocation()
-            {
-                Value = value
-            };
+            result = new RtspHeaderContentLocation( value );
 
             return true;
         }

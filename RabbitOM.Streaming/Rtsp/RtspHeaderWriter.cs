@@ -20,15 +20,16 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderWriter()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="separator">the separator</param>
         public RtspHeaderWriter( RtspSeparator separator )
@@ -37,15 +38,16 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="separator">the separator</param>
         /// <param name="operator">the operator</param>
         public RtspHeaderWriter( RtspSeparator separator , RtspOperator @operator )
         {
             Separator = separator;
-            Operator = @operator;
+            Operator  = @operator;
         }
+
 
 
 
@@ -106,6 +108,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
         /// Check if an element can be written
         /// </summary>
@@ -113,7 +116,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanWrite( string value )
         {
-            return !string.IsNullOrWhiteSpace( value );
+            return ! string.IsNullOrWhiteSpace( value );
         }
 
         /// <summary>
@@ -124,8 +127,8 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanWrite( string parameterName , string parameterValue )
         {
-            return !string.IsNullOrWhiteSpace( parameterName )
-                && !string.IsNullOrWhiteSpace( parameterValue );
+            return ! string.IsNullOrWhiteSpace( parameterName )
+                && ! string.IsNullOrWhiteSpace( parameterValue );
         }
 
         /// <summary>

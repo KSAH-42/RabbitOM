@@ -13,6 +13,28 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+		public RtspHeaderIfModifiedSince()
+		{
+		}
+
+        /// <summary>
+        /// Initialize a new instance of header class
+        /// </summary>
+        /// <param name="value">the value</param>
+		public RtspHeaderIfModifiedSince( DateTime value )
+		{
+            Value = value;
+		}
+
+
+
+
+
+
         /// <summary>
         /// Gets the name
         /// </summary>
@@ -34,8 +56,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -52,6 +75,11 @@ namespace RabbitOM.Streaming.Rtsp
             return RtspDataConverter.ConvertToString( _value , RtspDateTimeFormatType.GmtFormat );
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -62,15 +90,12 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new RtspHeaderIfModifiedSince()
-            {
-                Value = RtspDataConverter.ConvertToDateTimeAsGMT( value )
-            };
+            result = new RtspHeaderIfModifiedSince( RtspDataConverter.ConvertToDateTimeAsGMT( value ) );
 
             return true;
         }

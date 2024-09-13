@@ -16,6 +16,8 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -50,10 +52,12 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="comments">the comments</param>
         public RtspHeaderUserAgent( string product , string version , string comments )
         {
-            Product = product;
-            Version = version;
+            Product  = product;
+            Version  = version;
             Comments = comments;
         }
+
+
 
 
 
@@ -95,14 +99,17 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return !string.IsNullOrWhiteSpace( _product )
-                && !string.IsNullOrWhiteSpace( _version );
+            return ! string.IsNullOrWhiteSpace( _product )
+                && ! string.IsNullOrWhiteSpace( _version );
         }
 
         /// <summary>
@@ -125,6 +132,11 @@ namespace RabbitOM.Streaming.Rtsp
 
             return writer.Output;
         }
+
+
+
+
+
 
         /// <summary>
         /// Try to parse
@@ -157,8 +169,8 @@ namespace RabbitOM.Streaming.Rtsp
 
             result = new RtspHeaderUserAgent()
             {
-                Product = tokens[0] ,
-                Version = parts[0] ,
+                Product  = tokens[ 0 ] ,
+                Version  = parts [ 0 ] ,
                 Comments = parts.Length > 1 ? string.Join( " " , parts , 1 , parts.Length - 1 ) : string.Empty ,
             };
 

@@ -11,21 +11,26 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderDate()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="value">the value</param>
         public RtspHeaderDate( DateTime value )
         {
             Value = value;
         }
+
+
 
 
 
@@ -49,18 +54,16 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( _value == DateTime.MinValue || _value == DateTime.MaxValue )
-            {
-                return false;
-            }
-
-            return true;
+            return _value != DateTime.MinValue && _value != DateTime.MaxValue;
         }
 
         /// <summary>
@@ -82,15 +85,12 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new RtspHeaderDate()
-            {
-                Value = RtspDataConverter.ConvertToDateTimeAsGMT( value )
-            };
+            result = new RtspHeaderDate( RtspDataConverter.ConvertToDateTimeAsGMT( value ) );
 
             return true;
         }

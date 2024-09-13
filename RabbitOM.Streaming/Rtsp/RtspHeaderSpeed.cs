@@ -12,21 +12,25 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         public RtspHeaderSpeed()
         {
         }
 
         /// <summary>
-        /// Constructor
+        /// Initialize a new instance of a header class
         /// </summary>
         /// <param name="value">the value</param>
         public RtspHeaderSpeed( long value )
         {
             Value = value;
         }
+
+
 
 
 
@@ -50,8 +54,11 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+
+
+
         /// <summary>
-        /// Validate
+        /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
@@ -68,6 +75,11 @@ namespace RabbitOM.Streaming.Rtsp
             return _value.ToString();
         }
 
+
+
+
+
+
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -78,15 +90,12 @@ namespace RabbitOM.Streaming.Rtsp
         {
             result = null;
 
-            if (string.IsNullOrWhiteSpace(value))
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new RtspHeaderSpeed()
-            {
-                Value = RtspDataConverter.ConvertToLong( value )
-            };
+            result = new RtspHeaderSpeed( RtspDataConverter.ConvertToLong( value ) );
 
             return true;
         }
