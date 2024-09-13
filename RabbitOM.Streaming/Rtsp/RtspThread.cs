@@ -93,22 +93,17 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 throw new ArgumentNullException( nameof( action ) );
             }
-
-            if ( _startHandle.WaitOne( 0 ) )
-            {
-                return false;
-            }
-
+            
             lock ( _lock )
             {
+                if ( _startHandle.TryWait( 0 ) || _stopHandle.TryWait( 0 ) )
+                {
+                    return false;
+                }
+
                 if ( _thread != null )
                 {
                     throw new InvalidOperationException();
-                }
-
-                if ( ! _startHandle.TryReset() || ! _stopHandle.TryReset() )
-                {
-                    return false;
                 }
 
                 try
@@ -152,25 +147,22 @@ namespace RabbitOM.Streaming.Rtsp
         /// <exception cref="InvalidOperationException"/>
         public bool Stop( TimeSpan timeout )
         {
-            _stopHandle.Set();
-
             lock ( _lock )
             {
-                if ( _thread == null )
-                {
-                    return true;
-                }
-
-                if ( _thread.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
+                if ( _thread?.ManagedThreadId == Thread.CurrentThread.ManagedThreadId )
                 {
                     throw new InvalidOperationException();
                 }
 
+                _stopHandle.Set();
+
                 try
                 {
-                    if ( _thread.Join( timeout ) )
+                    if ( _thread == null || _thread.Join( timeout ) )
                     {
                         _startHandle.TryReset();
+                        _stopHandle.TryReset();
+
                         _thread = null;
 
                         return true;
