@@ -12,9 +12,9 @@ namespace RabbitOM.Streaming.Rtsp
 
         private readonly string _name;
 
-        private readonly EventWaitHandle _startHandle;
+        private readonly ManualResetEvent _startHandle;
 
-        private readonly EventWaitHandle _stopHandle;
+        private readonly ManualResetEvent _stopHandle;
 
         private Thread  _thread;
 

@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private readonly object _lock;
 
-        private readonly EventWaitHandle _handle;
+        private readonly ManualResetEvent _handle;
 
         private readonly Queue<TElement> _collection;
 
@@ -123,7 +123,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Gets the handle
         /// </summary>
-        private EventWaitHandle Handle
+        private ManualResetEvent Handle
         {
             get
             {

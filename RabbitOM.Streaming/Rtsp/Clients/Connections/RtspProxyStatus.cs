@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private uint                         _numberOfErrors  = 0;
 
-        private readonly EventWaitHandle     _eventHandle     = new ManualResetEvent( false );
+        private readonly ManualResetEvent    _eventHandle     = new ManualResetEvent( false );
 
 
 

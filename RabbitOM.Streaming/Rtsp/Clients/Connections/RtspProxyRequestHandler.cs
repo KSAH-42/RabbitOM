@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     {
         private readonly object _lock;
 
-        private readonly EventWaitHandle _completionHandle;
+        private readonly ManualResetEvent _completionHandle;
 
         private readonly RtspMessageRequest _request;
 
@@ -31,8 +31,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <exception cref="ArgumentNullException"/>
         public RtspProxyRequestHandler( RtspMessageRequest request )
         {
-            _request = request ?? throw new ArgumentNullException( nameof( request ) );
-            _lock = new object();
+            _request          = request ?? throw new ArgumentNullException( nameof( request ) );
+            _lock             = new object();
             _completionHandle = new ManualResetEvent( false );
         }
 
