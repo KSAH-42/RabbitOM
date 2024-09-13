@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
         
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
