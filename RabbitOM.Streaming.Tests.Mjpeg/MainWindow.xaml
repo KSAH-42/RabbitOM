@@ -25,6 +25,7 @@
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/toy.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/movie.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/earth.avi"/>
+			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/test2.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/fruit.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/butterfly.mpg" />
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/park.mp4" />
