@@ -202,22 +202,12 @@ namespace RabbitOM.Streaming.Sdp
         }
 
         /// <summary>
-        /// Find a field at the desired index
-        /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance, otherwise null is return</returns>
-        public TField ElementAtOrDefault(int index)
-        {
-            return _collection.ElementAtOrDefault(index);
-        }
-
-        /// <summary>
         /// Gets the enumerator
         /// </summary>
         /// <returns>returns an enumerator</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return _collection.GetEnumerator();
         }
 
         /// <summary>
