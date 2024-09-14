@@ -346,6 +346,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                     isOpened = _socket.IsCreated;
 
                     _socket.Shutdown();
+
+                    OnReleasing();
+
                     _socket.Close();
 
                     OnReleased();
@@ -666,7 +669,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Init internal resources
+        /// Occurs when initialization must be done
         /// </summary>
         private void OnInitialized()
         {
@@ -681,14 +684,22 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Release internal resources
+        /// Occurs before releasing resources
+        /// </summary>
+        private void OnReleasing()
+        {
+            _requestManager.Stop();
+        }
+
+        /// <summary>
+        /// Occurs when resources must be ended
         /// </summary>
         private void OnReleased()
         {
             _requestManager.Stop();
             _mediaEventManager.Stop();
             _eventManager.Stop();
-
+           
             _status.TurnOff();
 
             _informations.ResetAll();
