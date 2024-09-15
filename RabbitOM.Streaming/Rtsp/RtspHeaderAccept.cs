@@ -21,17 +21,17 @@ namespace RabbitOM.Streaming.Rtsp
         /// Initialize a new instance of header class
         /// </summary>
         public RtspHeaderAccept()
-		{
-		}
+        {
+        }
 
         /// <summary>
         /// Initialize a new instance of header class
         /// </summary>
         /// <param name="mime">the mime</param>
-		public RtspHeaderAccept( string mime )
-		{
+        public RtspHeaderAccept( string mime )
+        {
             AddMime( mime );
-		}
+        }
 
 
 
