@@ -10,24 +10,17 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Represent an empty 
         /// </summary>
-        public readonly static RtspCredentials Empty = new RtspCredentials();
+        public readonly static RtspCredentials Empty = new RtspCredentials( string.Empty , string.Empty );
 
 
 
 
-        private readonly string _userName = string.Empty;
+        private readonly string _userName;
 
-        private readonly string _password = string.Empty;
-
-
+        private readonly string _password;
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        private RtspCredentials()
-        {
-        }
+
 
         /// <summary>
         /// Contructor

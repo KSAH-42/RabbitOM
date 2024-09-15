@@ -83,15 +83,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// </summary>
         public void Run()
         {
-            _eventListener.Start( () =>
-            {
-                while ( WaitEvents() )
-                {
-                    DoEvents();
-                }
-
-                DoEvents();
-            } );
+            _eventListener.Start( DoEvents );
         }
 
         /// <summary>
@@ -162,26 +154,27 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
         /// <summary>
-        /// Wait events
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        private bool WaitEvents()
-        {
-            return RtspEventQueue.Wait( _eventQueue , _eventListener.ExitHandle );
-        }
-
-        /// <summary>
         /// Pump event
         /// </summary>
         private void DoEvents()
         {
-            while ( _eventQueue.Any() )
+            void PumpEvents()
             {
-                if ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
+                while ( _eventQueue.Any() )
                 {
-                    DoDispatch( eventArgs );
+                    if ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
+                    {
+                        DoDispatch( eventArgs );
+                    }
                 }
+            };
+
+            while ( RtspEventQueue.Wait( _eventQueue , _eventListener.ExitHandle ) )
+            {
+                PumpEvents();
             }
+
+            PumpEvents();
         }
 
         /// <summary>
