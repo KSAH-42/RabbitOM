@@ -148,18 +148,16 @@ namespace RabbitOM.Streaming.Rtsp
 
             foreach ( var mime in _mimes )
             {
-                if ( string.IsNullOrWhiteSpace( mime ) )
+                if ( ! string.IsNullOrWhiteSpace( mime ) )
                 {
-                    continue;
-                }
+                    if ( writer.IsAppended )
+                    {
+                        writer.WriteSeparator();
+                        writer.WriteSpace();
+                    }
 
-                if ( writer.IsAppended )
-                {
-                    writer.WriteSeparator();
-                    writer.WriteSpace();
+                    writer.Write( mime );
                 }
-
-                writer.Write( mime );
             }
 
             return writer.Output;
