@@ -150,7 +150,7 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 if ( ! string.IsNullOrWhiteSpace( mime ) )
                 {
-                    if ( writer.IsAppended )
+                    if ( ! writer.IsEmpty )
                     {
                         writer.WriteSeparator();
                         writer.WriteSpace();

@@ -124,18 +124,16 @@ namespace RabbitOM.Streaming.Rtsp
 
             foreach ( var header in _headersNames )
             {
-                if ( string.IsNullOrWhiteSpace( header ) )
+                if ( ! string.IsNullOrWhiteSpace( header ) )
                 {
-                    continue;
-                }
+                    if ( ! writer.IsEmpty )
+                    {
+                        writer.WriteSeparator();
+                        writer.WriteSpace();
+                    }
 
-                if ( writer.IsAppended )
-                {
-                    writer.WriteSeparator();
-                    writer.WriteSpace();
+                    writer.Write( header );
                 }
-
-                writer.Write( header );
             }
 
             return writer.Output;

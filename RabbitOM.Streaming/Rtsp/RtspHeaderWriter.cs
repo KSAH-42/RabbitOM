@@ -91,9 +91,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Check if the output length is empty
         /// </summary>
-        public bool IsAppended
+        public bool IsEmpty
         {
-            get => _builder.Length > 0;
+            get => _builder.Length <= 0;
         }
 
         /// <summary>

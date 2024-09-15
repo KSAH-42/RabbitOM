@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             if ( ! RtspStringPair.IsNullOrEmpty( _clock ) )
             {
-                if ( writer.IsAppended )
+                if ( ! writer.IsEmpty )
                 {
                     writer.WriteSeparator();
                 }
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             if ( ! RtspStringPair.IsNullOrEmpty( _time ) )
             {
-                if ( writer.IsAppended )
+                if ( ! writer.IsEmpty )
                 {
                     writer.WriteSeparator();
                 }

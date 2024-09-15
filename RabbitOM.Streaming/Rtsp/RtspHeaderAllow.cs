@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             foreach ( var method in _methods )
             {
-                if ( writer.IsAppended )
+                if ( ! writer.IsEmpty )
                 {
                     writer.WriteSeparator();
                     writer.WriteSpace();
