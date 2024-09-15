@@ -16,7 +16,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-
         /// <summary>
         /// Initialize a new instance of header class
         /// </summary>
