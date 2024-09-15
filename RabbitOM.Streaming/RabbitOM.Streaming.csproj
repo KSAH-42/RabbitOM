@@ -242,7 +242,6 @@
     <Compile Include="Rtsp\RtspSHA256AuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspSHA512AuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
-    <Compile Include="Rtsp\RtspStringCollection.cs" />
     <Compile Include="Rtsp\RtspStringPair.cs" />
     <Compile Include="Rtsp\RtspStringReader.cs" />
     <Compile Include="Rtsp\RtspTcpSocket.cs" />

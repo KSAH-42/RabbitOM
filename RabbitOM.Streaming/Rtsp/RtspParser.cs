@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtsp
 {
@@ -15,7 +17,9 @@ namespace RabbitOM.Streaming.Rtsp
 
         private string                        _firstElement        = string.Empty;
 
-        private readonly RtspStringCollection _headers             = new RtspStringCollection();
+        private int                           _maximumOfHeaders    = 2000;
+
+        private readonly HashSet<string>      _headers             = new HashSet<string>();
 
 
 
@@ -70,6 +74,16 @@ namespace RabbitOM.Streaming.Rtsp
             set => _text = RtspDataConverter.Trim( value );
         }
 
+        /// <summary>
+        /// Gets / Sets the maximum of headers
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException" />
+        public int MaximumOfHeaders
+        {
+            get => _maximumOfHeaders;
+            set => _maximumOfHeaders = value > 0 ? value : throw new ArgumentOutOfRangeException( nameof( value ) );
+        }
+
 
 
 
@@ -96,7 +110,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// Gets the parsed headers
         /// </summary>
         /// <returns>returns a collection of headers</returns>
-        public RtspStringCollection GetParsedHeaders()
+        public ICollection<string> GetParsedHeaders()
         {
             return _headers;
         }
@@ -118,10 +132,20 @@ namespace RabbitOM.Streaming.Rtsp
 
             foreach ( string token in tokens )
             {
-                _headers.TryAdd( token.Trim() );
+                if ( _maximumOfHeaders <= _headers.Count )
+                {
+                    break;
+                }
+
+                string header = token.Trim();
+
+                if ( ! string.IsNullOrWhiteSpace( header ) )
+                {
+                    _headers.Add( header );
+                }
             }
 
-            return _headers.Any();
+            return _headers.Count > 0;
         }
 
         /// <summary>
@@ -139,14 +163,14 @@ namespace RabbitOM.Streaming.Rtsp
 
             var tokens = _text.Split( new char[] { ' ' } , StringSplitOptions.RemoveEmptyEntries );
 
-            if ( tokens == null || tokens.Length <= 1 )
+            if ( tokens.Length <= 1 )
             {
                 return false;
             }
 
-            _firstElement = tokens[0].Trim();
+            _firstElement = tokens[ 0 ].Trim();
 
-            return !string.IsNullOrWhiteSpace( _firstElement );
+            return ! string.IsNullOrWhiteSpace( _firstElement );
         }
 
         /// <summary>

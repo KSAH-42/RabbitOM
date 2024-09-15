@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtsp
 {
@@ -7,12 +9,20 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderVary : RtspHeader
     {
-        private readonly RtspStringCollection _headerNames = new RtspStringCollection();
+        private readonly HashSet<string> _headersNames = new HashSet<string>();
 
 
 
 
 
+
+        /// <summary>
+        /// Gets the maximum allowed headers names
+        /// </summary>
+        public static int MaximumOfHeadersNames 
+        {
+            get => 500;
+        }
 
         /// <summary>
         /// Gets the name
@@ -23,13 +33,74 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Gets the header names
+        /// Gets the headers names
         /// </summary>
-        public RtspStringCollection HeaderNames
+        public IReadOnlyCollection<string> HeadersNames
         {
-            get => _headerNames;
+            get => _headersNames;
         }
 
+
+
+
+
+
+        /// <summary>
+        /// Can add a header name
+        /// </summary>
+        /// <param name="name">the header name</param>
+        /// <exception cref="ArgumentException"/>
+        public bool CanAddHeaderName( string name )
+        {
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                return false;
+            }
+
+            return ! _headersNames.Contains( name ) && _headersNames.Count < MaximumOfHeadersNames;
+        }
+
+        /// <summary>
+        /// Add a new header name
+        /// </summary>
+        /// <param name="name">the header name</param>
+        /// <exception cref="InvalidOperationException"/>
+        public void AddHeaderName( string name )
+        {
+            if ( ! CanAddHeaderName( name ) || ! _headersNames.Add( name ) )
+            {
+                throw new InvalidOperationException( nameof( name ) );
+            }
+        }
+
+        /// <summary>
+        /// Add a new header name
+        /// </summary>
+        /// <param name="name">the name</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddHeaderName( string name )
+        {
+            return CanAddHeaderName( name ) && _headersNames.Add( name );
+        }
+
+        /// <summary>
+        /// Remove an existing header name
+        /// </summary>
+        /// <param name="name">the name</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool RemoveHeaderName( string name )
+        {
+            return _headersNames.Remove( name );
+        }
+
+        /// <summary>
+        /// Remove all header names
+        /// </summary>
+        public void RemoveAllHeadersNames()
+        {
+            _headersNames.Clear();
+        }
+        
 
 
 
@@ -41,7 +112,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return _headerNames.Any();
+            return _headersNames.Count > 0;
         }
 
         /// <summary>
@@ -52,7 +123,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             var writer = new RtspHeaderWriter( RtspSeparator.Comma );
 
-            foreach ( var header in _headerNames )
+            foreach ( var header in _headersNames )
             {
                 if ( string.IsNullOrWhiteSpace( header ) )
                 {
@@ -99,7 +170,7 @@ namespace RabbitOM.Streaming.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.HeaderNames.TryAdd( reader.GetElement() );
+                    result.TryAddHeaderName( reader.GetElement() );
                 }
 
                 return true;

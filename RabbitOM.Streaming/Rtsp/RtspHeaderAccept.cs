@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtsp
 {
@@ -7,7 +9,7 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderAccept : RtspHeader
     {
-        private readonly RtspStringCollection _mimes = new RtspStringCollection();
+        private readonly HashSet<string> _mimes = new HashSet<string>();
 
 
 
@@ -28,9 +30,8 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="mime">the mime</param>
 		public RtspHeaderAccept( string mime )
 		{
-            _mimes.Add( mime );
+            AddMime( mime );
 		}
-
 
 
 
@@ -46,9 +47,9 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Gets / Sets the mime types
+        /// Gets the mime types
         /// </summary>
-        public RtspStringCollection Mimes
+        public IReadOnlyCollection<string> Mimes
         {
             get => _mimes;
         }
@@ -58,14 +59,82 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
+        /// <summary>
+        /// Can add a mime value
+        /// </summary>
+        /// <param name="mime">the mime</param>
+        /// <exception cref="ArgumentException"/>
+        public bool CanAddMime( string mime )
+        {
+            if ( string.IsNullOrWhiteSpace( mime ) )
+            {
+                return false;
+            }
 
+            return ! _mimes.Contains( mime ) && _mimes.Count < MaximumOfMimes;
+        }
+
+        /// <summary>
+        /// Add a new mime value
+        /// </summary>
+        /// <param name="mime">the mime</param>
+        /// <exception cref="InvalidOperationException"/>
+        public void AddMime( string mime )
+        {
+            if ( ! CanAddMime( mime ) || ! _mimes.Add( mime ) )
+            {
+                throw new InvalidOperationException( nameof( mime ) );
+            }
+        }
+
+        /// <summary>
+        /// Add a new mime value
+        /// </summary>
+        /// <param name="mime">the mime</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddMime( string mime )
+        {
+            return CanAddMime( mime ) && _mimes.Add( mime );
+        }
+
+        /// <summary>
+        /// Remove an existing mime value
+        /// </summary>
+        /// <param name="mime">the mime</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool RemoveMime( string mime )
+        {
+            return _mimes.Remove( mime );
+        }
+
+        /// <summary>
+        /// Remove all mimes
+        /// </summary>
+        public void RemoveAllMimes()
+        {
+            _mimes.Clear();
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Gets the maximume of allowed mimes
+        /// </summary>
+        public static int MaximumOfMimes
+        {
+            get => 1000;
+        }
+        
         /// <summary>
         /// Try validate
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            return _mimes.Any();
+            return _mimes.Count > 0;
         }
 
         /// <summary>
@@ -103,7 +172,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-
         /// <summary>
         /// Create an new instance of the accept header
         /// </summary>
@@ -112,7 +180,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             RtspHeaderAccept header = new RtspHeaderAccept();
 
-            header.Mimes.TryAdd( mime );
+            header.TryAddMime( mime );
 
             return header;
         }
@@ -140,7 +208,7 @@ namespace RabbitOM.Streaming.Rtsp
 
                 while ( reader.Read() )
                 {
-                    result.Mimes.TryAdd( reader.GetElement() );
+                    result.TryAddMime( reader.GetElement() );
                 }
 
                 return true;
