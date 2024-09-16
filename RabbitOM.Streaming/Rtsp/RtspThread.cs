@@ -8,13 +8,27 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspThread
     {
+        private sealed class ThreadStatus
+        {
+            private long _status;
+            public bool IsEnabled  => Interlocked.Read( ref _status ) != 0;
+            public void Enable()   => Interlocked.Exchange( ref _status , 1 );
+            public void Disable()  => Interlocked.Exchange( ref _status , 0 );
+        }
+
+
+
+
+
+
+
         private readonly object _lock;
 
         private readonly string _name;
 
-        private readonly ManualResetEvent _startHandle;
-
         private readonly ManualResetEvent _stopHandle;
+
+        private readonly ThreadStatus _status;
 
         private Thread _thread;
 
@@ -31,10 +45,10 @@ namespace RabbitOM.Streaming.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public RtspThread( string name )
         {
-            _name         = name ?? string.Empty;
-            _lock         = new object();
-            _startHandle  = new ManualResetEvent( false );
-            _stopHandle   = new ManualResetEvent( false );
+            _name       = name ?? string.Empty;
+            _lock       = new object();
+            _stopHandle = new ManualResetEvent( false );
+            _status     = new ThreadStatus();
         }
 
 
@@ -56,7 +70,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStarted
         {
-            get => _startHandle.TryWait( 0 );
+            get => _status.IsEnabled;
         }
 
         /// <summary>
@@ -64,7 +78,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStopping
         {
-            get => _startHandle.TryWait( 0 ) && _stopHandle.TryWait( 0 );
+            get => _status.IsEnabled && _stopHandle.TryWait( 0 );
         }
 
         /// <summary>
@@ -94,16 +108,16 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( action ) );
             }
 
+            if ( _status.IsEnabled )
+            {
+                return false;
+            }
+
             lock ( _lock )
             {
-                if ( _startHandle.TryWait( 0 ) || _stopHandle.TryWait( 0 ) )
+                if ( _thread != null || _stopHandle.TryWait( 0 ) )
                 {
                     return false;
-                }
-
-                if ( _thread != null )
-                {
-                    throw new InvalidOperationException();
                 }
 
                 try
@@ -118,7 +132,7 @@ namespace RabbitOM.Streaming.Rtsp
 
                     _thread = thread;
 
-                    _startHandle.Set();
+                    _status.Enable();
 
                     return true;
                 }
@@ -161,7 +175,7 @@ namespace RabbitOM.Streaming.Rtsp
                     if ( _thread == null || _thread.Join( timeout ) )
                     {
                         _stopHandle.TryReset();
-                        _startHandle.TryReset();
+                        _status.Disable();
 
                         _thread = null;
 
@@ -193,7 +207,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanContinue( TimeSpan timeout )
         {
-            return _startHandle.TryWait( 0 ) && _stopHandle.TryWait( timeout ) == false;
+            return _status.IsEnabled && _stopHandle.TryWait( timeout ) == false;
         }
 
         /// <summary>
@@ -204,7 +218,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             Action routine = parameter as Action;
 
-            _startHandle.TrySet();
+            _status.Enable();
 
             try
             {
