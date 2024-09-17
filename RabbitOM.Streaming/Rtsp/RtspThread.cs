@@ -8,27 +8,13 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspThread
     {
-        private sealed class ThreadStatus
-        {
-            private long _status;
-            public bool IsEnabled  => Interlocked.Read( ref _status ) != 0;
-            public void Enable()   => Interlocked.Exchange( ref _status , 1 );
-            public void Disable()  => Interlocked.Exchange( ref _status , 0 );
-        }
-
-
-
-
-
-
-
         private readonly object _lock;
 
         private readonly string _name;
 
         private readonly ManualResetEvent _stopHandle;
 
-        private readonly ThreadStatus _status;
+        private readonly ManualResetEvent _status;
 
         private Thread _thread;
 
@@ -48,7 +34,7 @@ namespace RabbitOM.Streaming.Rtsp
             _name       = name ?? string.Empty;
             _lock       = new object();
             _stopHandle = new ManualResetEvent( false );
-            _status     = new ThreadStatus();
+            _status     = new ManualResetEvent( false );
         }
 
 
@@ -70,7 +56,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStarted
         {
-            get => _status.IsEnabled;
+            get => _status.IsSignaled();
         }
 
         /// <summary>
@@ -78,7 +64,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStopping
         {
-            get => _status.IsEnabled && _stopHandle.TryWait( 0 );
+            get => _status.IsSignaled() && _stopHandle.IsSignaled();
         }
 
         /// <summary>
@@ -108,14 +94,14 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( action ) );
             }
 
-            if ( _status.IsEnabled )
+            if ( _status.IsSignaled() )
             {
                 return false;
             }
 
             lock ( _lock )
             {
-                if ( _thread != null || _stopHandle.TryWait( 0 ) )
+                if ( _thread != null || _stopHandle.IsSignaled() )
                 {
                     return false;
                 }
@@ -132,7 +118,7 @@ namespace RabbitOM.Streaming.Rtsp
 
                     _thread = thread;
 
-                    _status.Enable();
+                    _status.TrySet();
 
                     return true;
                 }
@@ -175,7 +161,7 @@ namespace RabbitOM.Streaming.Rtsp
                     if ( _thread == null || _thread.Join( timeout ) )
                     {
                         _stopHandle.TryReset();
-                        _status.Disable();
+                        _status.TryReset();
 
                         _thread = null;
 
@@ -207,7 +193,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanContinue( TimeSpan timeout )
         {
-            return _status.IsEnabled && _stopHandle.TryWait( timeout ) == false;
+            return _status.IsSignaled() && _stopHandle.TryWait( timeout ) == false;
         }
 
         /// <summary>
@@ -218,7 +204,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             Action routine = parameter as Action;
 
-            _status.Enable();
+            _status.TrySet();
 
             try
             {

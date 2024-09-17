@@ -195,6 +195,25 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
+        /// <summary>
+        /// Get the actual status
+        /// </summary>
+        /// <param name="handle">the handle</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool IsSignaled( this WaitHandle handle )
+        {
+            try
+            {
+                return handle?.WaitOne( 0 ) ?? false;
+            }
+            catch ( Exception ex )
+            {
+                OnException( ex );
+            }
+
+            return false;
+        }
+
 
 
 
