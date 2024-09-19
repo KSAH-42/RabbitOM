@@ -13,7 +13,7 @@ A [rtsp](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support Unicast TCP (interleaved mode) / Unicast UDP / Multicast Streaming transports
 * Support multiple types of authentications: basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support auto reconnection in case of network failures
-* Support of event Handlers for connection loss, receiving packet, etc...
+* Support events Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
 * Thread safe, except the sdp classes and some rtp classes
 * Reduce memory copy for large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
