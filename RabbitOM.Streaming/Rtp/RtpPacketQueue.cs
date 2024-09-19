@@ -102,7 +102,7 @@ namespace RabbitOM.Streaming.Rtp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return new Queue<RtpPacket>( queue.OrderBy( packet => packet.SequenceNumber ) );
+            return queue.OrderBy( packet => packet.SequenceNumber );
         }
 
 
