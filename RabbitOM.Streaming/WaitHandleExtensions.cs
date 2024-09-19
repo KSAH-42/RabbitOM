@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 
-namespace RabbitOM.Streaming.Rtsp
+namespace RabbitOM.Streaming
 {
     /// <summary>
     /// Represent an extension class
     /// </summary>
-    public static class RtspWaitHandleExtensions
+    public static class WaitHandleExtensions
     {
         /// <summary>
         /// Try to set

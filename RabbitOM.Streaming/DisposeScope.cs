@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Rtsp
+namespace RabbitOM.Streaming
 {
     /// <summary>
     /// Represent a class used to perform actions when the dispose method is called or after the using scope.
     /// </summary>
-    internal class RtspDisposeScope : IDisposable
+    public sealed class DisposeScope : IDisposable
     {
         private readonly Stack<Action> _actions = new Stack<Action>();
-
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public RtspDisposeScope()
+        public DisposeScope()
         {
         }
 
@@ -24,7 +23,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         /// <param name="action">the action</param>
         /// <exception cref="ArgumentNullException"/>
-        public RtspDisposeScope( Action action )
+        public DisposeScope( Action action )
         {
             AddAction( action );
         }
