@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Rtsp
     /// <summary>
     /// Represent a class used to perform actions when the dispose method is called or after the using scope.
     /// </summary>
-    internal sealed class RtspDisposeScope : IDisposable
+    internal class RtspDisposeScope : IDisposable
     {
         private readonly Stack<Action> _actions = new Stack<Action>();
 
@@ -38,12 +38,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <exception cref="ArgumentNullException"/>
         public void AddAction( Action action )
         {
-            if ( action == null )
-            {
-                throw new ArgumentNullException( nameof( action ) );
-            }
-
-            _actions.Push( action );
+            _actions.Push( action ?? throw new ArgumentNullException( nameof( action ) ) );
         }
 
         /// <summary>
