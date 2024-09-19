@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             result = null;
 
-            if ( OnAggregating( packet ) )
+            if ( OnValidating( packet ) )
             {
                 return _assembler.TryAssemble( packet , out result );
             }
@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         /// <param name="packet">the packet</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        private bool OnAggregating( RtpPacket packet )
+        private bool OnValidating( RtpPacket packet )
         {
             if ( packet == null )
             {

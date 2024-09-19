@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             result = null;
 
-            if ( OnAggregating( packet ) )
+            if ( OnValidating( packet ) )
             {
                 return _assembler.TryAssemble( packet , out result );
             }
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
 
         
-        private bool OnAggregating( RtpPacket packet )
+        private bool OnValidating( RtpPacket packet )
         {
             if ( packet == null )
             {
