@@ -113,15 +113,15 @@ namespace RabbitOM.Streaming.Rtp
             packet.Marker          = (byte)       ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
             packet.Type            = (PacketType) ( buffer[ 1 ] & 0x7F );
             packet.SequenceNumber  = (ushort)     ( buffer[ 2 ] << 8   );
-            packet.SequenceNumber += (ushort)     ( buffer[ 3 ]        );
+            packet.SequenceNumber |= (ushort)     ( buffer[ 3 ]        );
             packet.TimeStamp       = (uint) ( buffer[ 4 ] << 24  );
-            packet.TimeStamp      += (uint) ( buffer[ 5 ] << 16  );
-            packet.TimeStamp      += (uint) ( buffer[ 6 ] << 8   );
-            packet.TimeStamp      += (uint) ( buffer[ 7 ] << 0   );
+            packet.TimeStamp      |= (uint) ( buffer[ 5 ] << 16  );
+            packet.TimeStamp      |= (uint) ( buffer[ 6 ] << 8   );
+            packet.TimeStamp      |= (uint) ( buffer[ 7 ] << 0   );
             packet.SSRC            = (uint) ( buffer[ 8 ] << 24  );
-            packet.SSRC           += (uint) ( buffer[ 9 ] << 16  );
-            packet.SSRC           += (uint) ( buffer[ 10 ]<< 8   );
-            packet.SSRC           +=          buffer[ 11 ];
+            packet.SSRC           |= (uint) ( buffer[ 9 ] << 16  );
+            packet.SSRC           |= (uint) ( buffer[ 10 ]<< 8   );
+            packet.SSRC           |=          buffer[ 11 ];
 
             packet.SequenceNumber = (ushort) ( packet.SequenceNumber % ( ushort.MaxValue + 1 ) );
 
