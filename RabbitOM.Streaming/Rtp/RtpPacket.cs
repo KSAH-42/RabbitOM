@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Rtp
 {
     /// <summary>
-    /// Represent the packet class
+    /// Represent the rtp packet class
     /// </summary>
     public sealed class RtpPacket
     {
@@ -16,16 +16,6 @@ namespace RabbitOM.Streaming.Rtp
         /// Gets / Sets the padding state
         /// </summary>
         public bool HasPadding { get; set; }
-
-        /// <summary>
-        /// Gets / Sets the extensions usage state
-        /// </summary>
-        public bool HasExtension { get; set; }
-
-        /// <summary>
-        /// Gets / Sets the the number of contributing sources
-        /// </summary>
-        public ushort NumberOfCSRC { get; set; }
 
         /// <summary>
         /// Gets / Sets the marker state
@@ -46,6 +36,16 @@ namespace RabbitOM.Streaming.Rtp
         /// Gets / Sets the timestamp
         /// </summary>
         public uint TimeStamp { get; set; }
+
+        /// <summary>
+        /// Gets / Sets the extension usage state
+        /// </summary>
+        public bool HasExtension { get; set; }
+
+        /// <summary>
+        /// Gets / Sets the the number of contributing sources
+        /// </summary>
+        public ushort NumberOfCSRC { get; set; }
 
         /// <summary>
         /// Gets / Sets the sequence source
