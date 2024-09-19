@@ -207,22 +207,11 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false.</returns>
         public bool TryValidate()
         {
-            if ( _clockRate == 0)
-            {
-                return false;
-            }
+            return _clockRate != 0
 
-            if (string.IsNullOrWhiteSpace(_encoder))
-            {
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(_controlUri))
-            {
-                return false;
-            }
-
-            return true;
+                && ! string.IsNullOrWhiteSpace( _encoder )
+                && ! string.IsNullOrWhiteSpace( _controlUri )
+                ;
         }
     }
 }
