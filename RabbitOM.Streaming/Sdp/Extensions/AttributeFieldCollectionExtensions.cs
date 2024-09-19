@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Sdp.Extensions
 
             if ( result == null )
             {
-                throw new InvalidOperationException("The returns field is null");
+                throw new InvalidOperationException("no field found");
             }
 
             return result;
