@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
     /// <summary>
     /// Represent the internal proxy endoint class
     /// </summary>
-    public sealed class RtspProxyEndPoint
+    internal sealed class RtspProxyEndPoint
     {
         private readonly object _lock = new object();
 
