@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     public sealed class RtspHeaderTransport : RtspHeader
     {
-        private RtspTransportType     _type             = RtspTransportType.Unknown;
+        private RtspTransportType     _transportType    = RtspTransportType.Unknown;
 
         private RtspTransmissionType  _transmissionType = RtspTransmissionType.Unknown;
 
@@ -55,8 +55,8 @@ namespace RabbitOM.Streaming.Rtsp
             return new RtspHeaderTransport()
             {
                 TransmissionType = RtspTransmissionType.Unicast ,
-                Type = RtspTransportType.RTP_AVP_TCP ,
-                InterleavedPort = RtspPortPair.NewPortPair( port )
+                TransportType    = RtspTransportType.RTP_AVP_TCP ,
+                InterleavedPort  = RtspPortPair.NewPortPair( port )
             };
         }
 
@@ -70,8 +70,8 @@ namespace RabbitOM.Streaming.Rtsp
             return new RtspHeaderTransport()
             {
                 TransmissionType = RtspTransmissionType.Unicast ,
-                Type = RtspTransportType.RTP_AVP_UDP ,
-                ClientPort = RtspPortPair.NewPortPair( port )
+                TransportType    = RtspTransportType.RTP_AVP_UDP ,
+                ClientPort       = RtspPortPair.NewPortPair( port )
             };
         }
 
@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Rtsp
             return new RtspHeaderTransport()
             {
                 TransmissionType = RtspTransmissionType.Multicast ,
-                Type             = RtspTransportType.RTP_AVP_UDP ,
+                TransportType    = RtspTransportType.RTP_AVP_UDP ,
                 ClientPort       = RtspPortPair.NewPortPair( port ) ,
                 Destination      = ipAddress ,
                 TTL              = ttl ,
@@ -135,10 +135,10 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Gets / Sets the transport
         /// </summary>
-        public RtspTransportType Type
+        public RtspTransportType TransportType
         {
-            get => _type;
-            set => _type = value;
+            get => _transportType;
+            set => _transportType = value;
         }
 
         /// <summary>
@@ -251,17 +251,8 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( _type == RtspTransportType.Unknown )
-            {
-                return false;
-            }
-
-            if ( _transmissionType == RtspTransmissionType.Unknown )
-            {
-                return false;
-            }
-
-            return true;
+            return _transportType    != RtspTransportType.Unknown  
+                && _transmissionType != RtspTransmissionType.Unknown;
         }
 
         /// <summary>
@@ -270,14 +261,14 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a string value</returns>
         public override string ToString()
         {
-            if ( _type == RtspTransportType.Unknown || _transmissionType == RtspTransmissionType.Unknown )
+            if ( _transportType == RtspTransportType.Unknown || _transmissionType == RtspTransmissionType.Unknown )
             {
                 return string.Empty;
             }
 
             var writer = new RtspHeaderWriter( RtspSeparator.SemiColon , RtspOperator.Equality );
 
-            writer.Write( RtspDataConverter.ConvertToString( _type ) );
+            writer.Write( RtspDataConverter.ConvertToString( _transportType ) );
             writer.WriteSeparator();
 
             writer.Write( RtspDataConverter.ConvertToString( _transmissionType ) );
@@ -427,12 +418,12 @@ namespace RabbitOM.Streaming.Rtsp
 
                         if ( reader.IsRtpAvpElementType || reader.IsRtpAvpUdpElementType )
                         {
-                            result.Type = RtspTransportType.RTP_AVP_UDP;
+                            result.TransportType = RtspTransportType.RTP_AVP_UDP;
                         }
 
                         if ( reader.IsRtpAvpTcpElementType )
                         {
-                            result.Type = RtspTransportType.RTP_AVP_TCP;
+                            result.TransportType = RtspTransportType.RTP_AVP_TCP;
                         }
 
                         if ( reader.IsMulticastElementType )
