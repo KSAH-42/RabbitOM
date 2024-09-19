@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         private readonly RtspClientSessionDescriptor _descriptor       = new RtspClientSessionDescriptor();
 
-        private readonly RtspMethodList          _supportedMethods = new RtspMethodList();
+        private readonly RtspMethodList              _supportedMethods = new RtspMethodList();
 
         private string                               _sessionId        = string.Empty;
 
