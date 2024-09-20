@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                 _selectedTrack = null;
 
-                return SessionDescriptor.TryParse( text , out _sdp ) && _sdp != null;
+                return SessionDescriptor.TryParse( text , out _sdp );
             }
         }
 
