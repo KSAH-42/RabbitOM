@@ -571,7 +571,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 throw new ArgumentNullException( nameof( proxy ) );
             }
 
-
             switch ( e )
             {
                 case RtspPacketReceivedEventArgs eventArgs:
