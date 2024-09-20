@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegFrameBuilder _builder;
 
-        private readonly RtpPacketAssembler _assembler;
+        private readonly RtpPacketAggregator _assembler;
 
 
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _builder   = builder ?? throw new ArgumentNullException( nameof( builder ) );
 
-            _assembler = new RtpPacketAssembler();
+            _assembler = new RtpPacketAggregator();
         }
 
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             if ( OnValidating( packet ) )
             {
-                return _assembler.TryAssemble( packet , out result );
+                return _assembler.TryAggregate( packet , out result );
             }
 
             _assembler.Clear();

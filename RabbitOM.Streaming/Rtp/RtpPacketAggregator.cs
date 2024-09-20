@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Rtp
     /// And it can become an abstract class or it can used a priority queue without modifing all XXXFrameAggregator class.
     /// This class has been introduce to avoid coupling based on inheritance by using a BaseFrameAggregator class, this is the main reason.
     /// </summary>
-    public sealed class RtpPacketAssembler
+    public sealed class RtpPacketAggregator
     {
         private readonly RtpPacketQueue _queue = new RtpPacketQueue();
 
@@ -54,28 +54,24 @@ namespace RabbitOM.Streaming.Rtp
         /// <remarks>
         ///     <para>If the method succeed, all pending <see cref="Packets"/> will be removed.</para>
         /// </remarks>
-        public bool TryAssemble( RtpPacket packet , out IEnumerable<RtpPacket> packets )
+        public bool TryAggregate( RtpPacket packet , out IEnumerable<RtpPacket> packets )
         {
             packets = default;
 
-            if ( null == packet )
+            if ( _queue.TryEnqueue( packet ) )
             {
-                return false;
-            }
+                OnPacketAdded( packet );
 
-            _queue.Enqueue( packet );
+                if ( packet.Marker )
+                {
+                    packets = IsUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
 
-            OnPacketAdded( packet );
+                    _queue.Clear();
 
-            if ( packet.Marker )
-            {
-                packets = IsUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
+                    IsUnOrdered = false;
 
-                _queue.Clear();
-
-                IsUnOrdered = false;
-
-                return true;
+                    return true;
+                }
             }
 
             return false;

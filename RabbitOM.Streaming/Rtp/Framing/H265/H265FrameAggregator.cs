@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
     {
         private readonly H265FrameBuilder _builder;
 
-        private readonly RtpPacketAssembler _assembler;
+        private readonly RtpPacketAggregator _assembler;
 
 
 
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
         {
             _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
 
-            _assembler = new RtpPacketAssembler();
+            _assembler = new RtpPacketAggregator();
         }
 
 
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
             if ( OnValidating( packet ) )
             {
-                return _assembler.TryAssemble( packet , out result );
+                return _assembler.TryAggregate( packet , out result );
             }
 
             _assembler.Clear();
