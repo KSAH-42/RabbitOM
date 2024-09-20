@@ -156,23 +156,6 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait( RtspQueue<TElement> queue , int timeout )
-        {
-            if ( queue == null )
-            {
-                throw new ArgumentNullException( nameof( queue ) );
-            }
-
-            return queue.Handle.TryWait( timeout );
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
         public static bool Wait( RtspQueue<TElement> queue , TimeSpan timeout )
         {
             if (queue == null)
@@ -198,29 +181,6 @@ namespace RabbitOM.Streaming.Rtsp
             }
 
             return queue.Handle.TryWait( cancellationHandle );
-        }
-
-        /// <summary>
-        /// Wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="queue">the queue</param>
-        /// <param name="timeout">the timeout</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RtspQueue<TElement> queue, int timeout, EventWaitHandle cancellationHandle)
-        {
-            if ( queue == null )
-            {
-                throw new ArgumentNullException( nameof( queue ) );
-            }
-
-            if ( cancellationHandle == null )
-            {
-                throw new ArgumentNullException( nameof( cancellationHandle ) );
-            }
-
-            return queue.Handle.TryWait( timeout , cancellationHandle );
         }
 
         /// <summary>
