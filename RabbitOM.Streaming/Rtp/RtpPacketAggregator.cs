@@ -13,6 +13,10 @@ namespace RabbitOM.Streaming.Rtp
     {
         private readonly RtpPacketQueue _queue = new RtpPacketQueue();
 
+        private uint? _currentSequenceNumber;
+
+        private bool _isUnOrdered;
+
 
 
 
@@ -29,8 +33,7 @@ namespace RabbitOM.Streaming.Rtp
         /// </summary>
         public uint? CurrentSequenceNumber
         {
-            get;
-            private set;
+            get => _currentSequenceNumber;
         }
 
         /// <summary>
@@ -38,8 +41,7 @@ namespace RabbitOM.Streaming.Rtp
         /// </summary>
         public bool IsUnOrdered
         {
-            get;
-            private set;
+            get => _isUnOrdered;
         }
 
 
@@ -64,11 +66,11 @@ namespace RabbitOM.Streaming.Rtp
 
                 if ( packet.Marker )
                 {
-                    packets = IsUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
+                    packets = _isUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
 
                     _queue.Clear();
 
-                    IsUnOrdered = false;
+                    _isUnOrdered = false;
 
                     return true;
                 }
@@ -84,8 +86,8 @@ namespace RabbitOM.Streaming.Rtp
         {
             _queue.Clear();
 
-            CurrentSequenceNumber = null;
-            IsUnOrdered           = false;
+            _currentSequenceNumber = null;
+            _isUnOrdered = false;
         }
 
 
@@ -97,18 +99,18 @@ namespace RabbitOM.Streaming.Rtp
         /// <param name="packet">the packet</param>
         private void OnPacketAdded( RtpPacket packet )
         {
-            if ( CurrentSequenceNumber.HasValue )
+            if ( _currentSequenceNumber.HasValue )
             {
-                if ( CurrentSequenceNumber > packet.SequenceNumber )
+                if ( _currentSequenceNumber > packet.SequenceNumber )
                 {
-                    if ( CurrentSequenceNumber != ushort.MaxValue )
+                    if ( _currentSequenceNumber != ushort.MaxValue )
                     {
-                        IsUnOrdered = true;
+                        _isUnOrdered = true;
                     }
                 }
             }
 
-            CurrentSequenceNumber = packet.SequenceNumber;
+            _currentSequenceNumber = packet.SequenceNumber;
         }
     }
 }
