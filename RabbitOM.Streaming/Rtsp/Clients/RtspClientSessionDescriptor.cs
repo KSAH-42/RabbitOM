@@ -1,11 +1,11 @@
-﻿using RabbitOM.Streaming.Codecs;
-using RabbitOM.Streaming.Sdp;
-using RabbitOM.Streaming.Sdp.Extensions;
-using System;
+﻿using System;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Rtsp.Clients
-{    
+{
+    using RabbitOM.Streaming.Sdp;
+    using RabbitOM.Streaming.Sdp.Extensions;
+
     /// <summary>
     /// Represent the client session descriptor
     /// </summary>
