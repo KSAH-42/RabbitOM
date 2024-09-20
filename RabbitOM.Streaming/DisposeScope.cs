@@ -11,26 +11,11 @@ namespace RabbitOM.Streaming
         private readonly Stack<Action> _actions = new Stack<Action>();
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public DisposeScope()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="action">the action</param>
-        /// <exception cref="ArgumentNullException"/>
-        public DisposeScope( Action action )
-        {
-            AddAction( action );
-        }
 
 
 
-        /// <summary>
+
+        //// <summary>
         /// Add an action
         /// </summary>
         /// <param name="action">the action</param>
@@ -59,6 +44,31 @@ namespace RabbitOM.Streaming
 
                 action.TryInvoke();
             }
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Create an scope
+        /// </summary>
+        /// <param name="action">the action</param>
+        /// <returns>returns an new instance</returns>
+        /// <exception cref="ArgumentNullException"/
+        public static DisposeScope NewScope( Action action )
+        {
+            if ( action == null )
+            {
+                throw new ArgumentNullException( nameof( action ) );
+            }
+
+            DisposeScope scope = new DisposeScope();
+
+            scope.AddAction( action );
+
+            return scope;
         }
     }
 }
