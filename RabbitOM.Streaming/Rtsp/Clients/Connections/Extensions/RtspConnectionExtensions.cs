@@ -24,11 +24,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections.Extensions
         /// </summary>
         /// <param name="connection">the connection</param>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static async Task<bool> OpenAsync( this IRtspConnection connection , string uri , RtspCredentials credentials )
+        public static async Task<bool> OpenAsync( this IRtspConnection connection , string uri , string userName , string password )
         {
-            return await Task.Run( () => connection.TryOpen( uri , credentials ) );
+            return await Task.Run( () => connection.TryOpen( uri , userName , password ) );
         }
 
         /// <summary>

@@ -99,11 +99,19 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Gets the credentials
+        /// Gets the user name
         /// </summary>
-        public RtspCredentials Credentials
+        public string UserName
         {
-            get => _proxy.Credentials;
+            get => _proxy.UserName;
+        }
+
+        /// <summary>
+        /// Gets the password
+        /// </summary>
+        public string Password
+        {
+            get => _proxy.Password;
         }
 
         /// <summary>
@@ -138,24 +146,23 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         /// <param name="uri">the uri</param>
         /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
         /// <exception cref="Exception"/>
         public void Open(string uri)
         {
-            _proxy.Open(uri);
+            _proxy.Open( uri );
         }
 
         /// <summary>
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
-        /// <exception cref="ArgumentNullException"/>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
         /// <exception cref="ArgumentException"/>
         /// <exception cref="Exception"/>
-        public void Open(string uri, RtspCredentials credentials)
+        public void Open(string uri, string userName , string password )
         {
-            _proxy.Open(uri,credentials);
+            _proxy.Open( uri , userName , password );
         }
 
         /// <summary>
@@ -172,11 +179,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// Try to open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryOpen( string uri , RtspCredentials credentials )
+        public bool TryOpen( string uri , string userName , string password )
         {
-            return _proxy.TryOpen( uri , credentials );
+            return _proxy.TryOpen( uri , userName , password );
         }
 
         /// <summary>

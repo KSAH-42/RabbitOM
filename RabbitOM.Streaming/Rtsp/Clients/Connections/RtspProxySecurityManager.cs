@@ -94,10 +94,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
                 uri.ClearCredentials();
                 
-                var credentials = _proxy.Credentials ?? RtspCredentials.Empty;
-
-                _factory.UserName = credentials.UserName;
-                _factory.Password = credentials.Password;
+                _factory.UserName = _proxy.UserName;
+                _factory.Password = _proxy.Password;
 
                 if ( _factory.CanCreateBasicAuthorization() )
                 {

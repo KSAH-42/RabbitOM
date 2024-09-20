@@ -148,7 +148,6 @@
     <Compile Include="Rtsp\RtspAuthorizationFactory.cs" />
     <Compile Include="Rtsp\RtspBasicAuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspChunkQueue.cs" />
-    <Compile Include="Rtsp\RtspCredentials.cs" />
     <Compile Include="Rtsp\RtspDataConverter.cs" />
     <Compile Include="Rtsp\RtspDateTimeFormatType.cs" />
     <Compile Include="Rtsp\RtspDeliveryMode.cs" />

@@ -15,7 +15,9 @@ namespace RabbitOM.Streaming.Rtsp
 
         private TimeSpan _sendTimeout;
 
-        private RtspCredentials _credentials;
+        private string _userName;
+
+        private string _password;
 
 
 
@@ -45,15 +47,15 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Gets / Sets the credentials
+        /// Gets / Sets the user name
         /// </summary>
-        public RtspCredentials Credentials
+        public string UserName
         {
             get
             {
                 lock ( _lock )
                 {
-                    return _credentials ?? RtspCredentials.Empty;
+                    return _userName ?? string.Empty;
                 }
             }
 
@@ -61,7 +63,29 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 lock ( _lock )
                 {
-                    _credentials = value;
+                    _userName = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets / Sets the password
+        /// </summary>
+        public string Password
+        {
+            get
+            {
+                lock ( _lock )
+                {
+                    return _password ?? string.Empty;
+                }
+            }
+
+            set
+            {
+                lock ( _lock )
+                {
+                    _password = value;
                 }
             }
         }

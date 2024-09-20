@@ -198,11 +198,19 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Gets the credentials
+        /// Gets the user name
         /// </summary>
-        public RtspCredentials Credentials
+        public string UserName
         {
-            get => _endPoint.Credentials;
+            get => _endPoint.UserName;
+        }
+
+        /// <summary>
+        /// Gets the user password
+        /// </summary>
+        public string Password
+        {
+            get => _endPoint.Password;
         }
 
         /// <summary>
@@ -238,20 +246,21 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         /// <param name="uri">the uri</param>
         /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ObjectDisposedException"/>
+        /// <exception cref="Exception"/>
         public void Open( string uri )
         {
-            Open( uri , RtspCredentials.Empty );
+            Open( uri , string.Empty , string.Empty );
         }
 
         /// <summary>
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
         /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ObjectDisposedException"/>
-        public void Open( string uri , RtspCredentials credentials )
+        /// <exception cref="Exception"/>
+        public void Open( string uri , string userName , string password )
         {
             EnsureNotDispose();
 
@@ -260,12 +269,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 throw new ArgumentNullException( nameof( uri ) );
             }
 
-            if ( credentials == null )
-            {
-                throw new ArgumentNullException( nameof( credentials ) );
-            }
-
-            if ( ! TryOpen( uri , credentials ) )
+            if ( ! TryOpen( uri , userName , password ) )
             {
                 throw new Exception("Open failure");
             }
@@ -278,16 +282,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <returns>returns true for a success otherwise false</returns>
         public bool TryOpen( string uri )
         {
-            return TryOpen( uri , RtspCredentials.Empty );
+            return TryOpen( uri , string.Empty , string.Empty );
         }
 
         /// <summary>
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
         /// <returns>returns true for a success otherwise false</returns>
-        public bool TryOpen( string uri , RtspCredentials credentials )
+        public bool TryOpen( string uri , string userName , string password )
         {
             if ( string.IsNullOrWhiteSpace( uri ) )
             {
@@ -304,7 +309,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                     }
 
                     _endPoint.Uri = uri;
-                    _endPoint.Credentials = credentials;
+                    _endPoint.UserName = userName;
+                    _endPoint.Password = password;
 
                     var rtspUri = RtspUri.Create( uri );
 

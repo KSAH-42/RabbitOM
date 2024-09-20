@@ -63,9 +63,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         }
 
         /// <summary>
-        /// Gets the credentials
+        /// Gets the user name
         /// </summary>
-        RtspCredentials Credentials
+        string UserName
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the password
+        /// </summary>
+        string Password
         {
             get;
         }
@@ -108,8 +116,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
-        void Open(string uri, RtspCredentials credentials);
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
+        void Open(string uri, string userName , string password );
 
         /// <summary>
         /// Open the connection
@@ -122,9 +131,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// Open the connection
         /// </summary>
         /// <param name="uri">the uri</param>
-        /// <param name="credentials">the credentials</param>
+        /// <param name="userName">the user name</param>
+        /// <param name="password">the password</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        bool TryOpen( string uri , RtspCredentials credentials );
+        bool TryOpen( string uri , string userName , string password );
 
         /// <summary>
         /// Close the connection

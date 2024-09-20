@@ -176,7 +176,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                 _informations.Reset();
 
-                if ( ! _connection.TryOpen( _configuration.Uri , new RtspCredentials( _configuration.UserName , _configuration.Password ) ) )
+                if ( ! _connection.TryOpen( _configuration.Uri , _configuration.UserName , _configuration.Password ) )
                 {
                     throw new RtspClientException( RtspClientErrorCode.ConnectionFailed , "Connection failed" );
                 }
