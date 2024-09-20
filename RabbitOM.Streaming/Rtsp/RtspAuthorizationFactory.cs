@@ -7,7 +7,39 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     internal sealed class RtspAuthorizationFactory
     {
-        private RtspHeaderWWWAuthenticate _header = null;
+        private RtspHeaderWWWAuthenticate _header;
+
+        private string _userName = string.Empty;
+
+        private string _password = string.Empty;
+
+
+
+
+
+        /// <summary>
+        /// Gets / Sets the username
+        /// </summary>
+        public string UserName
+        {
+            get => _userName;
+            set => _userName = value ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Gets / Sets the password
+        /// </summary>
+        public string Password
+        {
+            get => _password;
+            set => _password = value ?? string.Empty;
+        }
+
+
+
+
+
+
 
         /// <summary>
         /// Initialize
@@ -91,25 +123,28 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Create an authorization header
         /// </summary>
-        /// <param name="credentials">the credentials</param>
         /// <returns>returns a header, otherwise null</returns>
-        public RtspHeader CreateBasicAuthorization( RtspCredentials credentials )
+        public RtspHeader CreateBasicAuthorization()
         {
-            if ( _header == null || credentials == null )
+            if ( _header == null )
             {
                 return null;
             }
 
-            var challenge = new RtspBasicAuthorizationChallenge( credentials );
+            var challenge = new RtspBasicAuthorizationChallenge()
+            {
+                UserName = _userName ,
+                Password = _password
+            };
 
-            if ( !challenge.TryValidate() )
+            if ( ! challenge.TryValidate() )
             {
                 return null;
             }
 
             return new RtspHeaderAuthorization()
             {
-                Type = RtspAuthenticationType.Basic ,
+                Type     = RtspAuthenticationType.Basic ,
                 Response = challenge.CreateAuthorization()
             };
         }
@@ -117,61 +152,56 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Create an authorization header
         /// </summary>
-        /// <param name="credentials">the credentials</param>
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <returns>returns a header, otherwise null</returns>
-        public RtspHeader CreateDigestAuthorization( RtspCredentials credentials , RtspMethod method , string uri )
+        public RtspHeader CreateDigestAuthorization( RtspMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RtspMD5AuthorizationChallenge( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RtspMD5AuthorizationChallenge() , method , uri );
         }
 
         /// <summary>
         /// Create an authorization header
         /// </summary>
-        /// <param name="credentials">the credentials</param>
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <returns>returns a header, otherwise null</returns>
-        public RtspHeader CreateDigestMD5Authorization( RtspCredentials credentials , RtspMethod method , string uri )
+        public RtspHeader CreateDigestMD5Authorization( RtspMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RtspMD5AuthorizationChallenge( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RtspMD5AuthorizationChallenge() , method , uri );
         }
 
         /// <summary>
         /// Create an authorization header
         /// </summary>
-        /// <param name="credentials">the credentials</param>
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <returns>returns a header, otherwise null</returns>
-        public RtspHeader CreateDigestSHA1Authorization( RtspCredentials credentials , RtspMethod method , string uri )
+        public RtspHeader CreateDigestSHA1Authorization( RtspMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RtspSHA1AuthorizationChallenge( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RtspSHA1AuthorizationChallenge() , method , uri );
         }
 
         /// <summary>
         /// Create an authorization header
         /// </summary>
-        /// <param name="credentials">the credentials</param>
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <returns>returns a header, otherwise null</returns>
-        public RtspHeader CreateDigestSHA256Authorization( RtspCredentials credentials , RtspMethod method , string uri )
+        public RtspHeader CreateDigestSHA256Authorization( RtspMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RtspSHA256AuthorizationChallenge( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RtspSHA256AuthorizationChallenge() , method , uri );
         }
 
         /// <summary>
         /// Create an authorization header
         /// </summary>
-        /// <param name="credentials">the credentials</param>
         /// <param name="method">the method</param>
         /// <param name="uri">the uri</param>
         /// <returns>returns a header, otherwise null</returns>
-        public RtspHeader CreateDigestSHA512Authorization( RtspCredentials credentials , RtspMethod method , string uri )
+        public RtspHeader CreateDigestSHA512Authorization( RtspMethod method , string uri )
         {
-            return CreateDigestAuthorization( new RtspSHA512AuthorizationChallenge( credentials ) , method , uri );
+            return CreateDigestAuthorization( new RtspSHA512AuthorizationChallenge() , method , uri );
         }
 
         /// <summary>
@@ -188,10 +218,12 @@ namespace RabbitOM.Streaming.Rtsp
                 return null;
             }
 
-            challenge.Method = method;
-            challenge.Uri    = uri;
-            challenge.Realm  = _header.Realm;
-            challenge.Nonce  = _header.Nonce;
+            challenge.Method   = method;
+            challenge.Uri      = uri;
+            challenge.Realm    = _header.Realm;
+            challenge.Nonce    = _header.Nonce;
+            challenge.UserName = _userName;
+            challenge.Password = _password;
 
             if ( ! challenge.TryValidate() )
             {
@@ -200,12 +232,12 @@ namespace RabbitOM.Streaming.Rtsp
 
             return new RtspHeaderAuthorization()
             {
-                Type = RtspAuthenticationType.Digest ,
-                Realm = _header.Realm ,
-                Nonce = _header.Nonce ,
-                Opaque = _header.Opaque ,
-                Uri = challenge.Uri ,
-                UserName = challenge.Credentials.UserName ,
+                Type     = RtspAuthenticationType.Digest ,
+                Realm    = _header.Realm ,
+                Nonce    = _header.Nonce ,
+                Opaque   = _header.Opaque ,
+                Uri      = challenge.Uri ,
+                UserName = challenge.UserName ,
                 Response = challenge.CreateAuthorization()
             };
         }

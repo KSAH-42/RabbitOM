@@ -96,34 +96,37 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                 
                 var credentials = _proxy.Credentials ?? RtspCredentials.Empty;
 
+                _factory.UserName = credentials.UserName;
+                _factory.Password = credentials.Password;
+
                 if ( _factory.CanCreateBasicAuthorization() )
                 {
-                    return request.Headers.TryAddOrUpdate( _factory.CreateBasicAuthorization( credentials ) );
+                    return request.Headers.TryAddOrUpdate( _factory.CreateBasicAuthorization() );
                 }
 
                 if ( _factory.CanCreateDigestAuthorization() )
                 {
                     if ( _factory.CanCreateDigestMD5Authorization() )
                     {
-                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestMD5Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestMD5Authorization( request.Method , uri.ToString() ) );
                     }
 
                     if ( _factory.CanCreateDigestSHA1Authorization() )
                     {
-                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA1Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA1Authorization( request.Method , uri.ToString() ) );
                     }
 
                     if ( _factory.CanCreateDigestSHA256Authorization() )
                     {
-                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA256Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA256Authorization( request.Method , uri.ToString() ) );
                     }
 
                     if ( _factory.CanCreateDigestSHA512Authorization() )
                     {
-                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA512Authorization( credentials , request.Method , uri.ToString() ) );
+                        return request.Headers.TryAddOrUpdate( _factory.CreateDigestSHA512Authorization( request.Method , uri.ToString() ) );
                     }
 
-                    return request.Headers.TryAddOrUpdate( _factory.CreateDigestAuthorization( credentials , request.Method , uri.ToString() ) );
+                    return request.Headers.TryAddOrUpdate( _factory.CreateDigestAuthorization( request.Method , uri.ToString() ) );
                 }
 
                 return false;

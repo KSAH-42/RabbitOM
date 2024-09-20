@@ -15,20 +15,6 @@ namespace RabbitOM.Streaming.Rtsp
 
         private string                   _nonce       = string.Empty;
 
-        private readonly RtspCredentials _credentials = RtspCredentials.Empty;
-
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="credentials">the credentials</param>
-        /// <exception cref="ArgumentNullException"/>
-        protected RtspDigestAuthorizationChallenge( RtspCredentials credentials )
-        {
-            _credentials = credentials ?? throw new ArgumentNullException( nameof( credentials ) );
-        }
 
 
 
@@ -69,13 +55,6 @@ namespace RabbitOM.Streaming.Rtsp
             set => _nonce = value ?? string.Empty;
         }
 
-        /// <summary>
-        /// Gets the credentials
-        /// </summary>
-        public override RtspCredentials Credentials
-        {
-            get => _credentials;
-        }
 
 
 
@@ -86,15 +65,14 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public override bool TryValidate()
         {
-            if ( _method == RtspMethod.UnDefined )
-            {
-                return false;
-            }
-
-            return !string.IsNullOrWhiteSpace( _uri )
-                && !string.IsNullOrWhiteSpace( _realm )
-                && !string.IsNullOrWhiteSpace( _nonce )
-                && _credentials.TryValidate();
+            return _method != RtspMethod.UnDefined
+                
+                && ! string.IsNullOrWhiteSpace( _uri   )
+                && ! string.IsNullOrWhiteSpace( _realm )
+                && ! string.IsNullOrWhiteSpace( _nonce )
+         
+                && base.TryValidate()
+                ;
         }
     }
 }

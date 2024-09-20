@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private readonly RtspProxyStatus _status;
 
-        private readonly RtspProxyEndPoint _endPoint;
+        private readonly RtspEndPoint _endPoint;
 
         private bool _isDisposed;
 
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _eventManager      = new RtspProxyEventManager( this );
             _mediaEventManager = new RtspProxyEventManager( this );
             _status            = new RtspProxyStatus();
-            _endPoint          = new RtspProxyEndPoint();
+            _endPoint          = new RtspEndPoint();
         }
 
 

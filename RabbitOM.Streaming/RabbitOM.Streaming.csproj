@@ -84,7 +84,7 @@
     <Compile Include="Rtp\RtpPacketQueue.cs" />
     <Compile Include="Rtp\RtpPacket.cs" />
     <Compile Include="Rtp\PacketType.cs" />
-    <Compile Include="Rtsp\Clients\Connections\RtspProxyEndPoint.cs" />
+    <Compile Include="Rtsp\RtspEndPoint.cs" />
     <Compile Include="Rtsp\Clients\Connections\RtspProxyEventManager.cs" />
     <Compile Include="Rtsp\Clients\RtspClientCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Clients\RtspClientCommunicationStoppedEventArgs.cs" />
