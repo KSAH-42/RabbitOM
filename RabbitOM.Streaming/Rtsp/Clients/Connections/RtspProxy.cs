@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
         private readonly RtspProxyStatus _status;
 
-        private readonly RtspEndPoint _endPoint;
+        private readonly RtspSettings _settings;
 
         private bool _isDisposed;
 
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             _eventManager      = new RtspProxyEventManager( this );
             _mediaEventManager = new RtspProxyEventManager( this );
             _status            = new RtspProxyStatus();
-            _endPoint          = new RtspEndPoint();
+            _settings          = new RtspSettings();
         }
 
 
@@ -178,7 +178,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public string Uri
         {
-            get => _endPoint.Uri;
+            get => _settings.Uri;
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public TimeSpan ReceiveTimeout
         {
-            get => _endPoint.ReceiveTimeout;
+            get => _settings.ReceiveTimeout;
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public TimeSpan SendTimeout
         {
-            get => _endPoint.SendTimeout;
+            get => _settings.SendTimeout;
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public string UserName
         {
-            get => _endPoint.UserName;
+            get => _settings.UserName;
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// </summary>
         public string Password
         {
-            get => _endPoint.Password;
+            get => _settings.Password;
         }
 
         /// <summary>
@@ -308,11 +308,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                         return false;
                     }
 
-                    _endPoint.Uri = uri;
-                    _endPoint.UserName = userName;
-                    _endPoint.Password = password;
+                    _settings.Uri      = uri;
+                    _settings.UserName = userName;
+                    _settings.Password = password;
 
-                    var rtspUri = RtspUri.Create( uri );
+                    var rtspUri = RtspUri.Create( _settings.Uri );
 
                     if ( ! _socket.Connect( rtspUri.Host , rtspUri.Port ) )
                     {
@@ -466,7 +466,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 if ( _socket.SetReceiveTimeout( timeout ) )
                 {
-                    _endPoint.ReceiveTimeout = timeout;
+                    _settings.ReceiveTimeout = timeout;
 
                     return true;
                 }
@@ -486,7 +486,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 if ( _socket.SetSendTimeout( timeout ) )
                 {
-                    _endPoint.SendTimeout = timeout;
+                    _settings.SendTimeout = timeout;
 
                     return true;
                 }

@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtsp
+namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 {
     /// <summary>
-    /// Represent the internal proxy endoint class
+    /// Represent the internal proxy settings
     /// </summary>
-    public sealed class RtspEndPoint
+    public sealed class RtspSettings
     {
         private readonly object _lock = new object();
 
