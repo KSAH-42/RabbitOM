@@ -46,7 +46,9 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public void Initialize()
         {
-            _header = null;
+            _header   = null;
+            _userName = string.Empty;
+            _password = string.Empty;
         }
 
         /// <summary>
