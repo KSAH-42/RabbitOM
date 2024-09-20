@@ -99,54 +99,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// Dispatch an event
         /// </summary>
         /// <param name="e">the event</param>
-        public void DispatchEvent( RtspClientCommunicationStartedEventArgs e )
+        public void DispatchEvent( EventArgs e )
         {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event</param>
-        public void DispatchEvent( RtspClientCommunicationStoppedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event</param>
-        public void DispatchEvent( RtspClientConnectedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event</param>
-        public void DispatchEvent( RtspClientDisconnectedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event</param>
-        public void DispatchEvent(RtspPacketReceivedEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
-        }
-
-        /// <summary>
-        /// Dispatch an event
-        /// </summary>
-        /// <param name="e">the event</param>
-        public void DispatchEvent( RtspClientErrorEventArgs e )
-        {
-            _eventQueue.Enqueue( e );
+            _eventQueue.TryEnqueue( e );
         }
 
 

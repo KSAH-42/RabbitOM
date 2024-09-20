@@ -59,10 +59,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
         /// <param name="e">the event args</param>
         public void Dispatch( EventArgs e )
         {
-            if ( e != null )
-            {
-                _eventQueue.Enqueue( e );
-            }
+            _eventQueue.TryEnqueue( e );
         }
 
 
@@ -79,7 +76,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             {
                 while ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
                 {
-                    _proxy.RaiseEvent( eventArgs );
+                    RtspProxy.RaiseEvent( _proxy , eventArgs );
                 }
             }
 

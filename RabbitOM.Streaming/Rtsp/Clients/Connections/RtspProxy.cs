@@ -552,40 +552,54 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
             return _status.WaitActivation( timeout );
         }
 
+
+
+
+
+
+
         /// <summary>
         /// Raise the event
         /// </summary>
+        /// <param name="proxy">the proxy</param>
         /// <param name="e">the event args</param>
-        public void RaiseEvent( EventArgs e )
+        /// <exception cref="ArgumentNullException"/>
+        public static void RaiseEvent( RtspProxy proxy , EventArgs e )
         {
+            if ( proxy == null )
+            {
+                throw new ArgumentNullException( nameof( proxy ) );
+            }
+
+
             switch ( e )
             {
                 case RtspPacketReceivedEventArgs eventArgs:
-                    OnDataReceived( eventArgs );
+                    proxy.OnDataReceived( eventArgs );
                     break;
 
                 case RtspConnectionOpenedEventArgs eventArgs:
-                    OnOpened( eventArgs );
+                    proxy.OnOpened( eventArgs );
                     break;
 
                 case RtspConnectionClosedEventArgs eventArgs:
-                    OnClosed( eventArgs );
+                    proxy.OnClosed( eventArgs );
                     break;
 
                 case RtspMessageSendedEventArgs eventArgs:
-                    OnMessageSended( eventArgs );
+                    proxy.OnMessageSended( eventArgs );
                     break;
 
                 case RtspMessageReceivedEventArgs eventArgs:
-                    OnMessageReceived( eventArgs );
+                    proxy.OnMessageReceived( eventArgs );
                     break;
 
                 case RtspAuthenticationFailedEventArgs eventArgs:
-                    OnAuthenticationFailed( eventArgs );
+                    proxy.OnAuthenticationFailed( eventArgs );
                     break;
 
                 case RtspConnectionErrorEventArgs eventArgs:
-                    OnError( eventArgs );
+                    proxy.OnError( eventArgs );
                     break;
             }
         }

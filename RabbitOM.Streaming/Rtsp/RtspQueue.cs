@@ -10,11 +10,8 @@ namespace RabbitOM.Streaming.Rtsp
     /// Represent the base generic queue
     /// </summary>
     /// <typeparam name="TElement">the element type</typeparam>
-    public partial class RtspQueue<TElement> 
-        : IEnumerable 
-        , IEnumerable<TElement>
-        , ICollection
-        , IReadOnlyCollection<TElement>
+    public partial class RtspQueue<TElement> : IEnumerable , IEnumerable<TElement> , ICollection, IReadOnlyCollection<TElement>
+        where TElement : class
     {
         private readonly object _lock;
 
@@ -307,18 +304,26 @@ namespace RabbitOM.Streaming.Rtsp
         /// Enqueue an element
         /// </summary>
         /// <param name="element">the element</param>
+        /// <exception cref="ArgumentNullException"/>
         public void Enqueue( TElement element )
         {
+            if ( element == null )
+            {
+                throw new ArgumentNullException( nameof( element ) );
+            }
+
             lock ( _lock )
             {
                 using ( _scope )
                 {
-                    if ( OnValidate( element ) )
+                    if ( ! OnValidate( element ) )
                     {
-                        OnEnqueue( element );
-
-                        _collection.Enqueue( element );
+                        throw new ArgumentException( nameof( element ) );
                     }
+
+                    OnEnqueue( element );
+
+                    _collection.Enqueue( element );
                 }
             }
         }
@@ -334,6 +339,36 @@ namespace RabbitOM.Streaming.Rtsp
                 using ( _scope )
                 {
                     return _collection.Dequeue();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enqueue an element
+        /// </summary>
+        /// <param name="element">the element</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryEnqueue( TElement element )
+        {
+            if ( element == null )
+            {
+                return false;
+            }
+
+            lock ( _lock )
+            {
+                using ( _scope )
+                {
+                    if ( ! OnValidate( element ) )
+                    {
+                        return false;
+                    }
+
+                    OnEnqueue( element );
+
+                    _collection.Enqueue( element );
+
+                    return  true;
                 }
             }
         }

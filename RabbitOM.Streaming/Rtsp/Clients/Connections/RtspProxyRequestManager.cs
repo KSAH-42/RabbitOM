@@ -196,7 +196,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
 
                     Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
 
-                    _chunks.Enqueue( data );
+                    _chunks.TryEnqueue( data );
                 }
 
                 return bytesReceived;
