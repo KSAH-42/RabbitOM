@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
     /// <summary>
-    /// Represent a packet aggregator. This class is used to reconstructor a group packet that represent a single frame.
+    /// Represent a class used for reconstructing a group packets which represent a single frame.
     /// </summary>
     public sealed class JpegFrameAggregator
     {
         private readonly JpegFrameBuilder _builder;
 
-        private readonly RtpPacketAggregator _assembler;
+        private readonly RtpPacketAggregator _aggregator;
 
 
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             _builder   = builder ?? throw new ArgumentNullException( nameof( builder ) );
 
-            _assembler = new RtpPacketAggregator();
+            _aggregator = new RtpPacketAggregator();
         }
 
 
@@ -44,10 +44,10 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             if ( OnValidating( packet ) )
             {
-                return _assembler.TryAggregate( packet , out result );
+                return _aggregator.TryAggregate( packet , out result );
             }
 
-            _assembler.Clear();
+            _aggregator.Clear();
 
             return false;
         }
@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </summary>
         public void Clear()
         {
-            _assembler.Clear();
+            _aggregator.Clear();
         }
 
 
@@ -87,7 +87,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            if ( _assembler.Packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            if ( _aggregator.Packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
             {
                 return false;
             }
