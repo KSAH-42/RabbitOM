@@ -294,7 +294,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             lock ( _lock )
             {
                 _supportedMethods.Clear();
-                _descriptor.Release();
+                _descriptor.Clear();
                 _sessionId = string.Empty;
                 _isReady   = false;
                 _isPlaying = false;

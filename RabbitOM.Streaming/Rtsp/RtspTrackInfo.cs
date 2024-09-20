@@ -20,19 +20,19 @@ namespace RabbitOM.Streaming.Rtsp
 
         private readonly byte _payloadType;
 
-        private readonly string _encoder = string.Empty;
+        private readonly string _encoder;
 
         private readonly uint _clockRate;
 
-        private readonly string _controlUri = string.Empty;
+        private readonly string _controlUri;
 
-        private readonly string _profileId = string.Empty;
+        private readonly string _profileId;
 
-        private readonly string _sps = string.Empty;
+        private readonly string _sps;
 
-        private readonly string _pps = string.Empty;
+        private readonly string _pps;
 
-        private readonly string _vps = string.Empty;
+        private readonly string _vps;
 
         
         
@@ -62,13 +62,13 @@ namespace RabbitOM.Streaming.Rtsp
         public RtspTrackInfo(byte payloadType, string encoder, uint clockRate, string controlUri, string profileId, string sps, string pps, string vps)
         {
             _payloadType = payloadType;
-            _encoder     = (encoder ?? string.Empty);
+            _encoder     = encoder;
             _clockRate   = clockRate;
-            _controlUri  = (controlUri ?? string.Empty);
-            _profileId   = (profileId ?? string.Empty);
-            _sps = (sps ?? string.Empty);
-            _pps = (pps ?? string.Empty);
-            _vps = (vps ?? string.Empty);
+            _controlUri  = controlUri;
+            _profileId   = profileId;
+            _sps         = sps;
+            _pps         = pps;
+            _vps         = vps;
         }
 
 
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public string Encoder
         {
-            get => _encoder;
+            get => _encoder ?? string.Empty;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public string ControlUri
         {
-            get => _controlUri;
+            get => _controlUri ?? string.Empty;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public string ProfileId
         {
-            get => _profileId;
+            get => _profileId ?? string.Empty;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public string SPS
         {
-            get => _sps;
+            get => _sps ?? string.Empty;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public string PPS
         {
-            get => _pps;
+            get => _pps ?? string.Empty;
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public string VPS
         {
-            get => _vps;
+            get => _vps ?? string.Empty;
         }
 
 

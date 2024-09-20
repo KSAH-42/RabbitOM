@@ -11,12 +11,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// </summary>
     internal sealed class RtspClientSessionDescriptor
     {
-        private readonly object     _lock                = new object();
+        private readonly object     _lock          = new object();
 
-        private SessionDescriptor   _sdp                 = null; 
+        private SessionDescriptor   _sdp           = null;
 
-        private RtspTrackInfo       _selectedTrack       = RtspTrackInfo.Empty;
-        
+        private RtspTrackInfo       _selectedTrack = null;
+
 
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 lock ( _lock )
                 {
-                    return _selectedTrack;
+                    return _selectedTrack ?? RtspTrackInfo.Empty;
                 }
             }
         }
@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         }
 
         /// <summary>
-        /// Create
+        /// Extract
         /// </summary>
         /// <param name="text">the text</param>
         /// <returns>returns true for a success, otherwise false</returns>
@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                     return false;
                 }
 
-                _selectedTrack = RtspTrackInfo.Empty;
+                _selectedTrack = null;
 
                 return SessionDescriptor.TryParse( text , out _sdp ) && _sdp != null;
             }
@@ -78,12 +78,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// <summary>
         /// Release internal members
         /// </summary>
-        public void Release()
+        public void Clear()
         {
             lock ( _lock )
             {
                 _sdp = null;
-                _selectedTrack = RtspTrackInfo.Empty;
+                _selectedTrack = null;
             }
         }
 
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         {
             lock ( _lock )
             {
-                _selectedTrack = RtspTrackInfo.Empty;
+                _selectedTrack = null;
 
                 if ( _sdp == null )
                 {
@@ -121,12 +121,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                     return false;
                 }
 
-                // TODO: This section need to be refactored: It is probably better to create an base class and a derivated class to different encoding settings
-                // mediaTrack.Encoding as MJPEGEncoding or as H264Encoding
-                // Perhpas include SPS or PPS into the configuration class
-                // client.Configuration.Encoding.SPS
-                // client.Configuration.Encoding.PPS
-
                 if ( string.IsNullOrWhiteSpace( mediaTrack.Format.SPS ) )
                 { 
                     mediaTrack.Format.SPS = FormatAttributeValue.Default_H264_SPS;
@@ -147,14 +141,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                     _selectedTrack = RtspTrackInfo.NewVideoTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId , mediaTrack.Format.SPS , mediaTrack.Format.PPS );
                 }
 
-                if ( _selectedTrack != null )
-                {
-                    return true;
-                }
-
-                _selectedTrack = RtspTrackInfo.Empty;
-
-                return false;
+                return _selectedTrack != null;
             }
         }
     }
