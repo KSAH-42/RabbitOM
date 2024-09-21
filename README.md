@@ -1,8 +1,8 @@
-# A resilent rtsp client based on the .net framework
+# A resilent RTSP client based on the .net framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-A [rtsp](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw audio/video streams. 
+A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw audio/video streams. 
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.png)
 
