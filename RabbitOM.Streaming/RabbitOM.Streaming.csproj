@@ -56,6 +56,7 @@
     <Compile Include="Rtp\Framing\H265\H265FrameFactory.cs" />
     <Compile Include="Rtp\Framing\H265\H265FrameBuilderConfiguration.cs" />
     <Compile Include="Rtp\Framing\H265\NalUnitType.cs" />
+    <Compile Include="Rtp\Framing\Jpeg\JpegFragmentQueue.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegQuantizer.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegQuantizationTableFactory.cs" />
     <Compile Include="Rtp\Framing\Jpeg\JpegImage.cs" />

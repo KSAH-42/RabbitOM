@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -10,7 +9,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     {
         private readonly JpegStreamWriter _writer = new JpegStreamWriter();
 
-        private readonly Queue<JpegFragment> _fragments = new Queue<JpegFragment>();
+        private readonly JpegFragmentQueue _fragments = new JpegFragmentQueue();
 
         private JpegFragment _firstFragment;
 
