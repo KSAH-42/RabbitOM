@@ -11,6 +11,8 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * No external dependencies
 * Easy to used
 * Support Unicast TCP (interleaved mode) / Unicast UDP / Multicast Streaming transports
+* Support RTSP message reordering when multiple requests are sended and responses arrive in a different order
+* Support request / response handshake when receiving video streams on the same tcp channel used for sending requests and receiving responses
 * Support multiple types of authentications: basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support auto reconnection in case of network failures
 * Support events Handlers for connection loss, receiving packet, etc...
@@ -19,7 +21,6 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Reduce memory copy for large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
-* Support RTSP message reordering when multiple requests are sended and responses arrive in a different order
 * Support RTP packet reordering
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
