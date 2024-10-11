@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             _lock       = new object();
             _collection = new Queue<TElement>( capacity );
-            _eventHandle     = new ManualResetEventSlim( false );
+            _eventHandle= new ManualResetEventSlim( false );
             _scope      = new Scope( this );
         }
 
