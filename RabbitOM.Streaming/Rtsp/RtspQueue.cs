@@ -191,7 +191,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static bool Wait(RtspQueue<TElement> queue, TimeSpan timeout, EventWaitHandle cancellationHandle)
+        public static bool Wait(RtspQueue<TElement> queue, TimeSpan timeout, WaitHandle cancellationHandle )
         {
             if (queue == null)
             {
