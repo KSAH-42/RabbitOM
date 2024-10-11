@@ -12,9 +12,9 @@ namespace RabbitOM.Streaming.Rtsp
 
         private readonly string _name;
 
-        private readonly ManualResetEvent _startHandle;
+        private readonly ManualResetEventSlim _startHandle;
 
-        private readonly ManualResetEvent _stopHandle;
+        private readonly ManualResetEventSlim _stopHandle;
 
         private Thread _thread;
 
@@ -33,8 +33,8 @@ namespace RabbitOM.Streaming.Rtsp
         {
             _name       = name ?? string.Empty;
             _lock       = new object();
-            _startHandle= new ManualResetEvent( false );
-            _stopHandle = new ManualResetEvent( false );
+            _startHandle= new ManualResetEventSlim( false );
+            _stopHandle = new ManualResetEventSlim( false );
         }
 
 
@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStarted
         {
-            get => _startHandle.IsSignaled();
+            get => _startHandle.IsSet;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public bool IsStopping
         {
-            get => _startHandle.IsSignaled() && _stopHandle.IsSignaled();
+            get => _startHandle.IsSet && _stopHandle.IsSet;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         public WaitHandle ExitHandle
         {
-            get => _stopHandle;
+            get => _stopHandle.WaitHandle;
         }
 
 
@@ -188,7 +188,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanContinue( TimeSpan timeout )
         {
-            return _startHandle.IsSignaled() && _stopHandle.TryWait( timeout ) == false;
+            return _startHandle.IsSet && _stopHandle.TryWait( timeout ) == false;
         }
 
         /// <summary>
