@@ -156,6 +156,7 @@
     <Compile Include="Rtsp\RtspDigestAuthorizationChallenge.cs" />
     <Compile Include="DisposeScope.cs" />
     <Compile Include="Rtsp\RtspEventQueue.cs" />
+    <Compile Include="WaitHandleExtensions.EventSlim.cs" />
     <Compile Include="WaitHandleExtensions.cs" />
     <Compile Include="Rtsp\RtspHashAlgorithm.cs" />
     <Compile Include="Rtsp\RtspHeader.cs" />

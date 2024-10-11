@@ -13,11 +13,18 @@ namespace RabbitOM.Streaming
         /// </summary>
         /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TrySet( this EventWaitHandle handle )
+        public static bool TrySet( this ManualResetEventSlim handle )
         {
+            if ( handle == null )
+			{
+                return false;
+			}
+
             try
             {
-                return handle?.Set() ?? false;
+                handle.Set();
+
+                return true;
             }
             catch ( Exception ex )
             {
@@ -32,11 +39,17 @@ namespace RabbitOM.Streaming
         /// </summary>
         /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryReset( this EventWaitHandle handle )
+        public static bool TryReset( this ManualResetEventSlim handle )
         {
+            if ( handle == null )
+			{
+                return false;
+			}
+
             try
             {
-                return handle?.Reset() ?? false;
+                handle.Reset();
+                return true;
             }
             catch ( Exception ex )
             {
@@ -51,11 +64,11 @@ namespace RabbitOM.Streaming
         /// </summary>
         /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryWait( this WaitHandle handle )
+        public static bool TryWait( this ManualResetEventSlim handle )
         {
             try
             {
-                return handle?.WaitOne() ?? false;
+                return handle?.Wait( Timeout.Infinite ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -70,7 +83,7 @@ namespace RabbitOM.Streaming
         /// </summary>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryWait( this WaitHandle handle , WaitHandle cancellationHandle )
+        public static bool TryWait( this ManualResetEventSlim handle , WaitHandle cancellationHandle )
         {
             if ( handle == null || cancellationHandle == null )
             {
@@ -81,7 +94,7 @@ namespace RabbitOM.Streaming
             {
                 var handles = new WaitHandle[]
                 {
-                    cancellationHandle , handle
+                    cancellationHandle , handle.WaitHandle
                 };
 
                 return WaitHandle.WaitAny( handles ) == 1;
@@ -100,11 +113,11 @@ namespace RabbitOM.Streaming
         /// <param name="handle">the handle</param>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryWait( this WaitHandle handle , int timeout )
+        public static bool TryWait( this ManualResetEventSlim handle , int timeout )
         {
             try
             {
-                return handle?.WaitOne( timeout ) ?? false;
+                return handle?.Wait( timeout ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -120,11 +133,11 @@ namespace RabbitOM.Streaming
         /// <param name="handle">the handle</param>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryWait( this WaitHandle handle , TimeSpan timeout )
+        public static bool TryWait( this ManualResetEventSlim handle , TimeSpan timeout )
         {
             try
             {
-                return handle?.WaitOne( timeout ) ?? false;
+                return handle?.Wait( timeout ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -141,7 +154,7 @@ namespace RabbitOM.Streaming
         /// <param name="timeout">the timeout</param>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public static bool TryWait( this WaitHandle handle , int timeout , WaitHandle cancellationHandle )
+        public static bool TryWait( this ManualResetEventSlim handle , int timeout , WaitHandle cancellationHandle )
         {
             if ( handle == null || cancellationHandle == null )
             {
@@ -152,7 +165,7 @@ namespace RabbitOM.Streaming
             {
                 var handles = new WaitHandle[]
                 {
-                    cancellationHandle , handle
+                    cancellationHandle , handle.WaitHandle
                 };
 
                 return WaitHandle.WaitAny( handles , timeout ) == 1;
@@ -171,7 +184,7 @@ namespace RabbitOM.Streaming
         /// <param name="timeout">the timeout</param>
         /// <param name="cancellationHandle">the cancellation handle</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public static bool TryWait( this WaitHandle handle , TimeSpan timeout , WaitHandle cancellationHandle )
+        public static bool TryWait( this ManualResetEventSlim handle , TimeSpan timeout , WaitHandle cancellationHandle )
         {
             if ( handle == null || cancellationHandle == null )
             {
@@ -182,7 +195,7 @@ namespace RabbitOM.Streaming
             {
                 var handles = new WaitHandle[]
                 {
-                    cancellationHandle , handle
+                    cancellationHandle , handle.WaitHandle
                 };
 
                 return WaitHandle.WaitAny( handles , timeout ) == 1;
@@ -193,43 +206,6 @@ namespace RabbitOM.Streaming
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Get the actual status
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsSignaled( this WaitHandle handle )
-        {
-            try
-            {
-                return handle?.WaitOne( 0 ) ?? false;
-            }
-            catch ( Exception ex )
-            {
-                OnException( ex );
-            }
-
-            return false;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Fired when an exception occurs
-        /// </summary>
-        /// <param name="ex">the exception</param>
-        private static void OnException( Exception ex )
-        {
-            if ( ex == null )
-            {
-                return;
-            }
-
-            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }

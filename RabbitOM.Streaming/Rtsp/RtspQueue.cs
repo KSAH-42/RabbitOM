@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private readonly object _lock;
 
-        private readonly ManualResetEvent _handle;
+        private readonly ManualResetEventSlim _eventHandle;
 
         private readonly Queue<TElement> _collection;
 
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Rtsp
 
             _lock       = new object();
             _collection = new Queue<TElement>( capacity );
-            _handle     = new ManualResetEvent( false );
+            _eventHandle     = new ManualResetEventSlim( false );
             _scope      = new Scope( this );
         }
 
@@ -118,13 +118,13 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Gets the handle
+        /// Gets the event handle
         /// </summary>
-        private ManualResetEvent Handle
+        private ManualResetEventSlim EventHandle
         {
             get
             {
-                return _handle;
+                return _eventHandle;
             }
         }
 
@@ -146,7 +146,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return queue.Handle.TryWait();
+            return queue.EventHandle.TryWait();
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return queue.Handle.TryWait( cancellationHandle );
+            return queue.EventHandle.TryWait( cancellationHandle );
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException( nameof( queue ) );
             }
 
-            return queue.Handle.TryWait( timeout );
+            return queue.EventHandle.TryWait( timeout );
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace RabbitOM.Streaming.Rtsp
                 throw new ArgumentNullException(nameof(cancellationHandle));
             }
 
-            return queue.Handle.TryWait( timeout, cancellationHandle);
+            return queue.EventHandle.TryWait( timeout, cancellationHandle);
         }
 
 
