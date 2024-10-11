@@ -200,7 +200,7 @@ namespace RabbitOM.Streaming
         /// </summary>
         /// <param name="handle">the handle</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsSignaled( this WaitHandle handle )
+        public static bool IsSet( this WaitHandle handle )
         {
             try
             {
