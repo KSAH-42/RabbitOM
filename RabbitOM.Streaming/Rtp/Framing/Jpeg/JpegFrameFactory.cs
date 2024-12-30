@@ -8,41 +8,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
     /// </summary>
     public sealed class JpegFrameFactory : IDisposable
     {
-        private readonly JpegImageBuilder _imageBuilder;
-
-
-
-
-
-
-        /// <summary>
-        /// Initialize an instance
-        /// </summary>
-        public JpegFrameFactory()
-        {
-            _imageBuilder = new JpegImageBuilder();
-        }
-
-
-
-
-
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        public void Dispose()
-        {
-            _imageBuilder.Dispose();
-        }
-
-        /// <summary>
-        /// Clear
-        /// </summary>
-        public void Clear()
-        {
-            _imageBuilder.Clear();
-        }
+        private readonly JpegImageBuilder _imageBuilder = new JpegImageBuilder();
 
         /// <summary>
         /// Try to create a frame from aggregated packets
@@ -84,6 +50,22 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             result = JpegFrame.NewFrame( _imageBuilder.BuildImage() );
 
             return true;
+        }
+
+        /// <summary>
+        /// Clear
+        /// </summary>
+        public void Clear()
+        {
+            _imageBuilder.Clear();
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            _imageBuilder.Dispose();
         }
     }
 }
