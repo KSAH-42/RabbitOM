@@ -142,35 +142,26 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns a string</returns>
         public string ToString( bool ignoreCredentials )
         {
-            try
+            var builder = new UriBuilder()
             {
-                var builder = new UriBuilder()
-                {
-                    Scheme = DefaultScheme ,
-                    Host   = _host ,
-                    Path   = _path ,
-                    Query  = _query
-                };
+                Scheme = DefaultScheme ,
+                Host   = _host ,
+                Path   = _path ,
+                Query  = _query
+            };
 
-                if ( _port != DefaultPort )
-                {
-                    builder.Port = _port;
-                }
-
-                if ( ! ignoreCredentials && ! string.IsNullOrWhiteSpace( _userName ) )
-                {
-                    builder.UserName = _userName;
-                    builder.Password = _password;
-                }
-
-                return builder.ToString();
-            }
-            catch ( Exception ex )
+            if ( _port != DefaultPort )
             {
-                System.Diagnostics.Debug.WriteLine( ex );
+                builder.Port = _port;
             }
 
-            return string.Empty;
+            if ( ! ignoreCredentials && ! string.IsNullOrWhiteSpace( _userName ) )
+            {
+                builder.UserName = _userName;
+                builder.Password = _password;
+            }
+
+            return builder.ToString();
         }
 
         /// <summary>
@@ -189,74 +180,12 @@ namespace RabbitOM.Streaming.Rtsp
         /// <summary>
         /// Remove the credentials
         /// </summary>
-        public void ClearCredentials()
+        public void RemoveCredentials()
         {
             _userName = string.Empty;
             _password = string.Empty;
         }
 
-        /// <summary>
-        /// Perform a copy from a different instance
-        /// </summary>
-        /// <param name="uri">the uri</param>
-        public void CopyFrom( RtspUri uri )
-        {
-            if ( uri == null || object.ReferenceEquals( uri , this ) )
-            {
-                return;
-            }
-
-            _userName = uri._userName;
-            _password = uri._password;
-            _host = uri._host;
-            _port = uri._port;
-            _path = uri._path;
-            _query = uri._query;
-        }
-
-        /// <summary>
-        /// Combine the uri
-        /// </summary>
-        /// <param name="sdpControlUri">the control uri from the sdp document</param>
-        /// <returns>returns a string</returns>
-        public string ToControlUri( string sdpControlUri )
-        {
-            if ( string.IsNullOrWhiteSpace( sdpControlUri ) )
-            {
-                return ToString();
-            }
-
-            var trackUri = sdpControlUri.Replace( " " , "" );
-
-            if ( Uri.IsWellFormedUriString( trackUri , UriKind.RelativeOrAbsolute ) )
-            {
-                if ( trackUri.StartsWith( DefaultScheme , StringComparison.OrdinalIgnoreCase ) )
-                {
-                    return trackUri;
-                }
-            }
-
-            while ( trackUri.StartsWith( "/" ) )
-            {
-                trackUri = trackUri.Remove( 0 , 1 );
-            }
-
-            string rtspUri = ToString();
-
-            while ( rtspUri.EndsWith( "/" ) )
-            {
-                rtspUri = rtspUri.Remove( rtspUri.Length - 1 , 1 );
-            }
-
-            string finalRtspUri = rtspUri + "/" + trackUri;
-
-            if ( Uri.IsWellFormedUriString( finalRtspUri , UriKind.RelativeOrAbsolute ) )
-            {
-                return finalRtspUri;
-            }
-
-            return string.Empty;
-        }
 
 
 
@@ -282,17 +211,6 @@ namespace RabbitOM.Streaming.Rtsp
             }
 
             return rtspUri.StartsWith( DefaultScheme , StringComparison.OrdinalIgnoreCase );
-        }
-
-
-        /// <summary>
-        /// Try to parse
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns an instance</returns>
-        public static RtspUri Create( string value )
-        {
-            return TryParse( value , out RtspUri result ) ? result : new RtspUri();
         }
 
         /// <summary>
@@ -393,6 +311,49 @@ namespace RabbitOM.Streaming.Rtsp
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Combine the uri
+        /// </summary>
+        /// <param name="sdpControlUri">the control uri from the sdp document</param>
+        /// <returns>returns a string</returns>
+        /// <exception cref="ArgumentNullException"/>
+        public static string CombineWith( RtspUri uri , string sdpControlUri )
+        {
+            if ( uri == null )
+            {
+                throw new ArgumentNullException( nameof( uri ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( sdpControlUri ) )
+            {
+                throw new ArgumentNullException( nameof( sdpControlUri ) );
+            }
+
+            var trackUri = sdpControlUri.Trim();
+
+            if ( Uri.IsWellFormedUriString( trackUri , UriKind.RelativeOrAbsolute ) )
+            {
+                if ( trackUri.StartsWith( DefaultScheme , StringComparison.OrdinalIgnoreCase ) )
+                {
+                    return trackUri;
+                }
+            }
+
+            while ( trackUri.StartsWith( "/" ) )
+            {
+                trackUri = trackUri.Remove( 0 , 1 );
+            }
+
+            string rtspUri = uri.ToString();
+
+            while ( rtspUri.EndsWith( "/" ) )
+            {
+                rtspUri = rtspUri.Remove( rtspUri.Length - 1 );
+            }
+
+            return rtspUri + "/" + trackUri;
         }
     }
 }

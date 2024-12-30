@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                     return false;
                 }
 
-                uri.ClearCredentials();
+                uri.RemoveCredentials();
                 
                 _factory.UserName = _proxy.UserName;
                 _factory.Password = _proxy.Password;

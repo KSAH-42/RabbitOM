@@ -312,7 +312,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Connections
                     _settings.UserName = userName;
                     _settings.Password = password;
 
-                    var rtspUri = RtspUri.Create( _settings.Uri );
+                    if ( ! RtspUri.TryParse( _settings.Uri, out RtspUri rtspUri ) )
+                    {
+                        return false;
+                    }
 
                     if ( ! _socket.Connect( rtspUri.Host , rtspUri.Port ) )
                     {

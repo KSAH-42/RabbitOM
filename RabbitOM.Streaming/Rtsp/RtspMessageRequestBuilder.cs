@@ -7,11 +7,11 @@ namespace RabbitOM.Streaming.Rtsp
     /// <summary>
     /// Represent a message request builder
     /// </summary>
-    public sealed class RtspMessageRequestBuilder
+    public class RtspMessageRequestBuilder
     {
         private readonly object                  _lock            = new object();
 
-        private readonly RtspMethod          _method          = RtspMethod.UnDefined;
+        private readonly RtspMethod              _method          = RtspMethod.UnDefined;
 
         private readonly string                  _uri             = string.Empty;
 
@@ -31,13 +31,13 @@ namespace RabbitOM.Streaming.Rtsp
 
         private byte                             _ttl             = 0;
 
-        private string                           _acceptHeader          = string.Empty;
+        private string                           _acceptHeader    = string.Empty;
 
         private string                           _contentType     = string.Empty;
 
         private readonly StringBuilder           _body            = new StringBuilder();
 
-        private readonly RtspHeaderCollection          _headers         = new RtspHeaderCollection();
+        private readonly RtspHeaderCollection    _headers         = new RtspHeaderCollection();
 
 
 
@@ -978,11 +978,16 @@ namespace RabbitOM.Streaming.Rtsp
         {
             lock ( _lock )
             {
+                if ( ! RtspUri.TryParse( _uri , out RtspUri uri ) )
+                {
+                    uri = new RtspUri();
+                }
+                else
+                {
+                    uri.RemoveCredentials();
+                }
+
                 RtspMessageRequest request = null;
-
-                var uri = RtspUri.Create( _uri );
-
-                uri.ClearCredentials();
 
                 if ( string.IsNullOrWhiteSpace( _controlUri ) )
                 {
@@ -990,57 +995,71 @@ namespace RabbitOM.Streaming.Rtsp
                 }
                 else
                 {
-                    request = new RtspMessageRequest( _method , uri.ToControlUri( _controlUri ) );
+                    request = new RtspMessageRequest( _method , RtspUri.CombineWith( uri , _controlUri ) );
                 }
 
-                request.Headers.TryAddOrUpdate( new RtspHeaderCSeq( _sequenceId ) );
-
-                if ( !string.IsNullOrWhiteSpace( _sessionId ) )
-                {
-                    request.Headers.TryAddOrUpdate( new RtspHeaderSession( _sessionId ) );
-                }
-
-                if ( _deliveryMode.HasValue )
-                {
-                    if ( _deliveryMode == RtspDeliveryMode.Tcp )
-                    {
-                        request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewInterleavedTransportHeader() );
-                    }
-
-                    if ( _deliveryMode == RtspDeliveryMode.Udp )
-                    {
-                        request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewUnicastUdpTransportHeader( _unicastPort ) );
-                    }
-
-                    if ( _deliveryMode == RtspDeliveryMode.Multicast )
-                    {
-                        request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewMulticastUdpTransportHeader( _multicastAddress , _multicastPort , _ttl ) );
-                    }
-                }
-
-                if ( ! _headers.IsEmpty )
-                {
-                    request.Headers.TryAddRange( _headers );
-                }
-
-                if ( _body.Length > 0 )
-                {
-                    request.Headers.TryAddOrUpdate( new RtspHeaderContentLength( _body.Length ) );
-
-                    request.Body.Value = _body.ToString();
-                }
-
-                if ( ! string.IsNullOrWhiteSpace( _acceptHeader ) )
-                {
-                    request.Headers.TryAddOrUpdate( RtspHeaderAccept.NewAcceptHeader( _acceptHeader ) );
-                }
-
-                if ( ! string.IsNullOrWhiteSpace( _contentType ) )
-                {
-                    request.Headers.TryAddOrUpdate( new RtspHeaderContentType( _contentType ) );
-                }
+                OnBuildRequest( request );
 
                 return request;
+            }
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Occurs when the request must be builded
+        /// </summary>
+        /// <param name="request">the request</param>
+        protected virtual void OnBuildRequest( RtspMessageRequest request )
+        {
+            request.Headers.TryAddOrUpdate( new RtspHeaderCSeq( _sequenceId ) );
+
+            if ( ! string.IsNullOrWhiteSpace( _sessionId ) )
+            {
+                request.Headers.TryAddOrUpdate( new RtspHeaderSession( _sessionId ) );
+            }
+
+            if ( _deliveryMode.HasValue )
+            {
+                if ( _deliveryMode == RtspDeliveryMode.Tcp )
+                {
+                    request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewInterleavedTransportHeader() );
+                }
+
+                if ( _deliveryMode == RtspDeliveryMode.Udp )
+                {
+                    request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewUnicastUdpTransportHeader( _unicastPort ) );
+                }
+
+                if ( _deliveryMode == RtspDeliveryMode.Multicast )
+                {
+                    request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewMulticastUdpTransportHeader( _multicastAddress , _multicastPort , _ttl ) );
+                }
+            }
+
+            if ( ! _headers.IsEmpty )
+            {
+                request.Headers.TryAddRange( _headers );
+            }
+
+            if ( _body.Length > 0 )
+            {
+                request.Headers.TryAddOrUpdate( new RtspHeaderContentLength( _body.Length ) );
+
+                request.Body.Value = _body.ToString();
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( _acceptHeader ) )
+            {
+                request.Headers.TryAddOrUpdate( RtspHeaderAccept.NewAcceptHeader( _acceptHeader ) );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( _contentType ) )
+            {
+                request.Headers.TryAddOrUpdate( new RtspHeaderContentType( _contentType ) );
             }
         }
     }
