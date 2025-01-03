@@ -101,13 +101,9 @@ namespace RabbitOM.Streaming.Rtp
         {
             if ( _currentSequenceNumber.HasValue )
             {
-                if ( _currentSequenceNumber > packet.SequenceNumber )
-                {
-                    if ( _currentSequenceNumber != ushort.MaxValue )
-                    {
-                        _isUnOrdered = true;
-                    }
-                }
+                var diff = packet.SequenceNumber - _currentSequenceNumber;
+
+                _isUnOrdered = diff != 1 && packet.SequenceNumber > 1;
             }
 
             _currentSequenceNumber = packet.SequenceNumber;
