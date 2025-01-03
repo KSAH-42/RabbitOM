@@ -103,6 +103,7 @@ namespace RabbitOM.Streaming.Rtp
             {
                 var diff = packet.SequenceNumber - _currentSequenceNumber;
 
+                // set this flag on if the difference is too big and ignore when any maximum values was reached and restart with a sequence id equals to zero or one
                 _isUnOrdered = diff != 1 && packet.SequenceNumber > 1;
             }
 
