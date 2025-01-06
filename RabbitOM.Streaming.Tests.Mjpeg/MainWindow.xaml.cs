@@ -1,24 +1,20 @@
 ﻿/*
 
-You can download and configure this rtsp server as a rtsp media source, and it offer many nice features.
+You can download and configure this rtsp server as a rtsp media source: it offer many nice features.
 
 https://www.happytimesoft.com/products/rtsp-server/index.html
 
 go to the rtsp server folder, and add movies and the same folder and edit the xml configuration used by this server. and then launch this sample application.
 
-Otherwise use a security ip camera, and go the web page configuration section, and select the mjpeg or jpeg codec.
+you can also copy the xml configuration file in Resources\Configuration\config.xml an copy and paste this file in folder and run the following command: RtspServer.exe -c config.xml
+
+Otherwise use a security ip camera, and go the web page configuration section, and select the mjpeg codec.
 and then read the manufacturer pdf in order to get the right rtsp uri. 
 Please also, check the rtsp settings on the web page of the camera.
 
-After setting a jpeg rtsp server using the happyRtspServer, please make that you receive the JPEG (not H264,or...) stream using vlc, and then launch this app.
+After configuring a jpeg rtsp server using the happyRtspServer, please make that you can receive the JPEG (not H264,or...) stream using vlc, and then launch this app.
 
 ----------------------------------------------------------------------------------------------
-
- 
- Please read this section it's important, 
-
- First, I know it's boring remarks but please make sure that you uri point to mjpeg rtps source.
-
 
 
  
@@ -26,11 +22,9 @@ After setting a jpeg rtsp server using the happyRtspServer, please make that you
 
  This sample illustrate how to receive video from a MJPEG SOURCE only.
 
- And doesn't contains any optimizations. 
+ this same sample doesn't contains any optimizations on the GUI side. 
 
- If you want better performance do not used a bitmap used in this sample
-
- instead used a WritableBitmap
+ If you want better performance do not used a bitmap used in this sample instead used a WritableBitmap and run you user control a in seperate thread not in the main thread.
 
  About multihreading, you must used the dispatcher and I recomment in this sample to used BeginInvoke method instead of Invoke method.
 

@@ -15,7 +15,8 @@
 	<Grid Margin="1,1,1,1" Background="White" >
 		<TextBlock HorizontalAlignment="Left" Margin="7,5,0,0" TextWrapping="Wrap" Text="MJPEG RTSP URI :" VerticalAlignment="Top" Width="94" TextAlignment="Right"/>
 		<ComboBox x:Name="_uris" IsEditable="True" Height="22" Margin="108,3,79,0" VerticalAlignment="Top" SelectedIndex="0" >
-			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city1.mp4"/>
+            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/screenlive"/>
+            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city1.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city2.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city3.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city4.mp4"/>
