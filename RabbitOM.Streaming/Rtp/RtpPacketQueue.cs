@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtp
         /// </summary>
         public RtpPacketQueue()
         {
-            _collection = new Queue<RtpPacket>();
+            _collection = new Queue<RtpPacket>( 512 );
         }
 
         /// <summary>
