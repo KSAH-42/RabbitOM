@@ -69,7 +69,7 @@
     <Compile Include="Rtp\Framing\RtpMemoryStream.cs" />
     <Compile Include="Codecs\Decoder.cs" />
     <Compile Include="Codecs\IDecoder.cs" />
-    <Compile Include="DelegateExtensions.cs" />
+    <Compile Include="ActionExtensions.cs" />
     <Compile Include="ArrayExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
