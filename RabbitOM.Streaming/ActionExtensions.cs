@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming
     /// <summary>
     /// Represent an helper class used to safely invoke event handler multicast delegate
     /// </summary>
-    public static class DelegateExtensions
+    public static class ActionExtensions
     {
         /// <summary>
         /// Try to invoke an action
