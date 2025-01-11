@@ -53,9 +53,7 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
             result = new EmailField()
             {
                 Address = tokens.ElementAtOrDefault(0),
-                Name    = string.Join( " " , tokens.Skip(1) )
-                                .Replace( "(" , "" )
-                                .Replace( ")" , "" ) ,
+                Name    = string.Join( " " , tokens.Skip(1) ),
             };
 
             return true;
