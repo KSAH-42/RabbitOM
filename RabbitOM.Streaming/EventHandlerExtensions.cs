@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming
                 return false;
             }
 
-            object[] args = new object[] { sender, e };
+            var args = new object[] { sender, e };
 
             bool result = false;
 
