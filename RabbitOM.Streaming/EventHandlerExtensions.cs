@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming
             {
                 try
                 {
-                    invoker.DynamicInvoke( new object[] { sender , e } );
+                    invoker.DynamicInvoke( sender , e );
 
                     result = true;
                 }
