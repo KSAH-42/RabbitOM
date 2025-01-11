@@ -224,11 +224,6 @@ namespace RabbitOM.Streaming
         /// <param name="ex">the exception</param>
         private static void OnException( Exception ex )
         {
-            if ( ex == null )
-            {
-                return;
-            }
-
             System.Diagnostics.Debug.WriteLine( ex );
         }
     }
