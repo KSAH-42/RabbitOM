@@ -47,13 +47,22 @@ namespace RabbitOM.Streaming
                 return false;
             }
 
+            var invokers = handler.GetInvocationList();
+
+            if ( invokers.Length == 0 )
+            {
+                return false;
+            }
+
+            object[] args = new object[] { sender, e };
+
             bool result = false;
 
-            foreach( var invoker in handler.GetInvocationList() )
+            foreach ( var invoker in invokers )
             {
                 try
                 {
-                    invoker.DynamicInvoke( sender , e );
+                    invoker.DynamicInvoke( args );
 
                     result = true;
                 }
