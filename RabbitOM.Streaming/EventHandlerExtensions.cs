@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming
 
             var invokers = handler.GetInvocationList();
 
-            if ( invokers.Length == 0 )
+            if ( invokers.Length == 0 ) // null check is not necessary here
             {
                 return false;
             }
