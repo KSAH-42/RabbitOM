@@ -105,9 +105,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
                 client.Configuration.MediaFormat = RtspMediaFormat.Video;
                 client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
 
-                // For multicast settings, please make sure
-                // that the camera or the video source support multicast 
-
                 // client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast;
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
