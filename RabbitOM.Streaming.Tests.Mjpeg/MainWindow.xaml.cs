@@ -169,9 +169,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
 
         private void OnFrameReceived( object sender , RtpFrameReceivedEventArgs e )
         {
-            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () => 
+            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                new Action( () => OnRenderFrame( sender , e ) ).TryInvoke() ;
+                OnRenderFrame( sender , e );
             } ));
         }
 
