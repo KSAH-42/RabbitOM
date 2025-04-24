@@ -164,6 +164,13 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
+            var interleavedPacket = e.Packet as RtspInterleavedPacket;
+
+            if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
+            {
+                return;
+            }    
+
             _frameBuilder.Write( e.Packet.Data );
         }
 
