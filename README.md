@@ -18,7 +18,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support events Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations
 * Thread safe, except the sdp classes and some rtp classes
-* Reduce memory copy for large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
+* Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 * Support RTP packet reordering
