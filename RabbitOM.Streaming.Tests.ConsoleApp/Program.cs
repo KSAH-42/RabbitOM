@@ -11,6 +11,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.ConsoleApp
 {
     using RabbitOM.Streaming;
+    using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Streaming.Tests.ConsoleApp.Helpers;

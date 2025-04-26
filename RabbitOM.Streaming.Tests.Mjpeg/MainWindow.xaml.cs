@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
-
+            
             _frameBuilder.FrameReceived += OnFrameReceived;
         }
 
@@ -164,13 +164,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            var interleavedPacket = e.Packet as RtspInterleavedPacket;
-
-            if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
-            {
-                return;
-            }    
-
             _frameBuilder.Write( e.Packet.Data );
         }
 
@@ -189,7 +182,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             try
             {
                 var image = new BitmapImage();
-
+                
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.Default;
                 image.StreamSource = new MemoryStream( e.Frame.Data );

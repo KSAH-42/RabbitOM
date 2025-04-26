@@ -47,8 +47,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return _aggregator.TryAggregate( packet , out result );
             }
 
-            _aggregator.Clear();
-
             return false;
         }
 

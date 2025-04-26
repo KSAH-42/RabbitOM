@@ -34,8 +34,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
             {
                 return _aggregator.TryAggregate( packet , out result );
             }
-
-            _aggregator.Clear();
             
             return false;
         }
