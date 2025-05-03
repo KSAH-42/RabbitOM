@@ -44,13 +44,24 @@ namespace RabbitOM.Streaming.Rtp
         /// <param name="collection">the collection</param>
         /// <exception cref="ArgumentNullException"/>
         public RtpPacketQueue( IEnumerable<RtpPacket> collection )
+            : this ( collection , 512 )
+        {
+        }
+
+        /// <summary>
+        /// Initialize a new instance of the packet queue
+        /// </summary>
+        /// <param name="collection">the collection</param>
+        /// <param name="capacity">the capacity</param>
+        /// <exception cref="ArgumentNullException"/>
+        public RtpPacketQueue( IEnumerable<RtpPacket> collection , int capacity)
         {
             if ( collection == null )
             {
                 throw new ArgumentNullException( nameof( collection ) );
             }
 
-            _collection = new Queue<RtpPacket>();
+            _collection = new Queue<RtpPacket>( capacity );
 
             foreach ( var element in collection )
             {
@@ -175,7 +186,7 @@ namespace RabbitOM.Streaming.Rtp
         /// <returns>returns an array</returns>
         public IEnumerable<RtpPacket> AsEnumerable()
         {
-            return new Queue<RtpPacket>( _collection );
+            return new RtpPacketQueue( _collection , _collection.Count );
         }
 
         /// <summary>
