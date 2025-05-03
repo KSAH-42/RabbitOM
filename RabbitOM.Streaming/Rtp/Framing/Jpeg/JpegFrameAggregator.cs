@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// <exception cref="ArgumentNullException"/>
         public JpegFrameAggregator( JpegFrameBuilder builder )
         {
-            _builder   = builder ?? throw new ArgumentNullException( nameof( builder ) );
+            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
 
             _aggregator = new RtpPacketAggregator();
         }
