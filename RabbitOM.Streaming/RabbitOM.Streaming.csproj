@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraySegmentExtensions.cs" />
+    <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Rtp\Framing\H265\FragmentationUnit.cs" />
     <Compile Include="Rtp\Framing\H265\H265PacketConverter.cs" />

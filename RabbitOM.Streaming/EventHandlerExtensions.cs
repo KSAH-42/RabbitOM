@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming
 
             var invokers = handler.GetInvocationList();
 
-            if ( invokers.Length == 0 ) // null check is not necessary here
+            if ( invokers.Length == 0 )
             {
                 return false;
             }
@@ -60,32 +60,10 @@ namespace RabbitOM.Streaming
 
             foreach ( var invoker in invokers )
             {
-                try
-                {
-                    invoker.DynamicInvoke( args );
-
-                    result = true;
-                }
-                catch ( Exception ex )
-                {
-                    OnException( ex );
-                }
+                result |= invoker.TryDynamicInvoke( args );
             }
      
             return result;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Occurs when an exception is triggered
-        /// </summary>
-        /// <param name="ex">the exception</param>
-        private static void OnException( Exception ex )
-        {
-            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }
