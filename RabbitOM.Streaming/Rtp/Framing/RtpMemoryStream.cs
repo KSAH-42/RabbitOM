@@ -24,11 +24,19 @@ namespace RabbitOM.Streaming.Rtp.Framing
         }
 
         /// <summary>
-        /// Gets the lenth
+        /// Gets the length
         /// </summary>
         public long Length
         { 
             get => _stream.Length; 
+        }
+
+        /// <summary>
+        /// Gets the position
+        /// </summary>
+        public long Position
+        { 
+            get => _stream.Position; 
         }
 
         /// <summary>
@@ -68,6 +76,15 @@ namespace RabbitOM.Streaming.Rtp.Framing
         public void SetLength( long value ) 
         {
             _stream.SetLength( value );
+        }
+
+        /// <summary>
+        /// Sets the position
+        /// </summary>
+        /// <param name="value">the value</param>
+        public void SetPosition( long value )
+        { 
+            _stream.Position = value;
         }
         
         /// <summary>

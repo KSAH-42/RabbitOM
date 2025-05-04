@@ -36,6 +36,14 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             get => _stream.Length;
         }
 
+        /// <summary>
+        /// Gets the position
+        /// </summary>
+        public long Position
+        {
+            get => _stream.Position;
+        }
+
 
 
 
@@ -81,6 +89,21 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
             }
 
             _stream.SetLength( value );
+        }
+
+        /// <summary>
+        /// Set the position
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <exception cref="ArgumentException"/>
+        public void SetPosition( long value )
+        {
+            if ( value < 0 )
+            {
+                throw new ArgumentException( nameof( value ) ); 
+            }
+
+            _stream.SetPosition( value );
         }
 
         /// <summary>

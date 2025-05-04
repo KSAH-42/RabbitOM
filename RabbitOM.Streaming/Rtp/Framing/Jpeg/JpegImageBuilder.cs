@@ -105,13 +105,13 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 _writer.WriteHuffmanTables();
                 _writer.WriteStartOfScan();
 
-                _headersPosition = _writer.Length;
+                _headersPosition = _writer.Position;
 
                 OnCreatedHeaders( firstFragment );
             }
             else
             {
-                _writer.SetLength( _headersPosition );
+                _writer.SetPosition( _headersPosition );
             }
 
             while ( _fragments.Count > 0 )
