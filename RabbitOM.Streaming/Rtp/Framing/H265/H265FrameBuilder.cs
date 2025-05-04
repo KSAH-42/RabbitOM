@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
-    // TODO: the implementation is not finished! it mays contains errors
-
     public sealed class H265FrameBuilder : RtpFrameBuilder
     {
         private readonly H265FrameBuilderConfiguration _configuration;
@@ -19,9 +17,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public H265FrameBuilder()
         {
-#if !DEBUG
-            throw new NotImplementedException( "the implementation is not yet finished, this class must not be used in production." );
-#endif
             _configuration = new H265FrameBuilderConfiguration();
             _frameFactory  = new H265FrameFactory( this );
             _aggregator    = new H265FrameAggregator( this );

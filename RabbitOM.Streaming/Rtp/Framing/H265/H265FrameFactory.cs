@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Framing.H265
 {
-    // The following implementation is subject to change or to be removed entirely
-
     public sealed class H265FrameFactory : IDisposable
     {
         private readonly H265FrameBuilder _builder;
@@ -21,6 +19,8 @@ namespace RabbitOM.Streaming.Rtp.Framing.H265
 
         public H265FrameFactory( H265FrameBuilder builder )
         {
+            ExceptionHelper.ThrowOnRelease( "the H265 implementation is not yet finished. It can not be used in production." );
+
             _builder       = builder ?? throw new ArgumentNullException( nameof( builder ) ); ;
 
             _streamBuilder = new H265StreamBuilder();
