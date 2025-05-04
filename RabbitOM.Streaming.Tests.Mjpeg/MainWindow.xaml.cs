@@ -16,7 +16,6 @@ After configuring a jpeg rtsp server using the happyRtspServer, please make that
 
 ----------------------------------------------------------------------------------------------
 
-
  
  No MVVM is used here, this is not the goal
 
