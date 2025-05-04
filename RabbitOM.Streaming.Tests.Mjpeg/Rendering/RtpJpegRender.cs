@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
-using System.Drawing;
 
 namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 {
@@ -13,6 +13,10 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
         private WriteableBitmap _writableBitmap;
         private Int32Rect _rec;
 
+        ~RtpJpegRender()
+        {
+            Dispose( false) ;
+        }
         
         public byte[] Data { get; set; }
         public int DpiX { get; set; } = 96;
@@ -48,7 +52,16 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 
         public void Dispose()
         {
-            Clear();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                Clear();
+            }
         }
 
 
