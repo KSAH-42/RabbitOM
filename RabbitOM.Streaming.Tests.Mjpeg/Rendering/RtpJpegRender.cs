@@ -13,16 +13,27 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
         private WriteableBitmap _writableBitmap;
         private Int32Rect _rec;
 
+
+
+
+
         ~RtpJpegRender()
         {
             Dispose( false) ;
         }
         
+
+
+
+
         public byte[] Data { get; set; }
         public int DpiX { get; set; } = 96;
         public int DpiY { get; set; } = 96;
         public FrameworkElement TargetControl { get; set; } 
         public System.Windows.Media.PixelFormat PixelFormat { get; set; } = PixelFormats.Bgr24;
+
+
+
 
 
         public void Render()
@@ -64,9 +75,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
             }
         }
 
-
-
-
         protected virtual void DrawImage( Bitmap bitmap )
         {
             if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
@@ -86,10 +94,18 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
             bitmap.UnlockBits(bmpData);
         }
 
+
+
+
+
+
         protected virtual void OnException( Exception ex )
         {
             System.Diagnostics.Debug.WriteLine( ex );
         }
+
+
+
 
 
 
