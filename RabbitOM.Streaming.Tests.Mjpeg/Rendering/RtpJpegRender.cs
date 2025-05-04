@@ -1,0 +1,94 @@
+﻿using System;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.Drawing;
+
+namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
+{
+    public class RtpJpegRender : IDisposable
+    {
+        private WriteableBitmap _writableBitmap;
+        private Int32Rect _rec;
+
+        
+        public byte[] Data { get; set; }
+        public int DpiX { get; set; } = 96;
+        public int DpiY { get; set; } = 96;
+        public FrameworkElement TargetControl { get; set; } 
+        public System.Windows.Media.PixelFormat PixelFormat { get; set; } = PixelFormats.Bgr24;
+
+
+        public void Render()
+        {
+            try
+            {
+                using ( var bitmap = new System.Drawing.Bitmap( new MemoryStream(Data)))
+                {
+                    DrawImage( bitmap );
+                }
+            }
+            catch( Exception ex )
+            {
+                OnException( ex );
+            }
+            finally
+            {
+                _writableBitmap?.Unlock();
+            }
+        }
+
+
+        public void Clear()
+        {
+            SetImageSource( TargetControl , _writableBitmap = null );
+        }
+
+        public void Dispose()
+        {
+            Clear();
+        }
+
+
+
+
+        protected virtual void DrawImage( Bitmap bitmap )
+        {
+            if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
+            {
+                _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY,PixelFormat,null);
+                
+                _rec = new Int32Rect(0,0,bitmap.Width,bitmap.Height);
+
+                SetImageSource( TargetControl , _writableBitmap );
+            }                    
+            
+            var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),ImageLockMode.ReadOnly,System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+            _writableBitmap.Lock();
+            _writableBitmap.WritePixels(_rec, bmpData.Scan0, bmpData.Stride * bitmap.Height, bmpData.Stride );
+
+            bitmap.UnlockBits(bmpData);
+        }
+
+        protected virtual void OnException( Exception ex )
+        {
+            System.Diagnostics.Debug.WriteLine( ex );
+        }
+
+
+
+
+        private static void SetImageSource( FrameworkElement element , ImageSource source )
+        {
+            if ( element is System.Windows.Controls.Image image )
+            {
+                image.BeginInit();
+                image.Source = source;
+                image.EndInit();
+            }
+        }
+    }
+}

@@ -22,15 +22,7 @@ After configuring a jpeg rtsp server using the happyRtspServer, please make that
 
  This sample illustrate how to receive video from a MJPEG SOURCE only.
 
- this same sample doesn't contains any optimizations on the GUI side. 
-
- If you want better performance do not used a bitmap used in this sample instead used a WritableBitmap and run you user control a in seperate thread not in the main thread.
-
- About multihreading, you must used the dispatcher and I recomment in this sample to used BeginInvoke method instead of Invoke method.
-
- to get more details scroll down a take a look on the method used for receiving packet. 
-
- If you want to display multiple streams you must refactor this code and go more deeply in wpf.
+ this same sample doesn't contains optimization on the GUI side like hardware accelaration and other WpfThreadings optimizations
 
  This is not the goal of this sample code
             
@@ -39,8 +31,11 @@ After configuring a jpeg rtsp server using the happyRtspServer, please make that
 
 using System;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace RabbitOM.Streaming.Tests.Mjpeg
 {
@@ -51,12 +46,14 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Streaming.Tests.Mjpeg.Extensions;
+    using RabbitOM.Streaming.Tests.Mjpeg.Rendering;
 
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
-        
+        private readonly RtpJpegRender _renderer = new RtpJpegRender();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -85,6 +82,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             
             _frameBuilder.FrameReceived -= OnFrameReceived;
             _frameBuilder.Dispose();
+            _renderer.Dispose();
         }
 
         private void OnButtonControlClick( object sender , RoutedEventArgs e )
@@ -148,6 +146,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
                 _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
+                _renderer.TargetControl = _image;
             } ) );
         }
 
@@ -158,7 +157,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
                 _textBlockInfo.Text = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
-                _image.Source = null;
+                _renderer.Clear();
             } ));
         }
 
@@ -174,28 +173,11 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
                 OnRenderFrame( sender , e );
             } ));
         }
-
+        
         private void OnRenderFrame( object sender , RtpFrameReceivedEventArgs e )
         {
-            // Use a WriteableBitmap instead it's better for this case
-            
-            try
-            {
-                var image = new BitmapImage();
-                
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.Default;
-                image.StreamSource = new MemoryStream( e.Frame.Data );
-                image.EndInit();
-
-                _image.BeginInit();
-                _image.Source = _client.IsCommunicationStopping ? null : image;
-                _image.EndInit();
-            }
-            catch ( Exception ex )
-            {
-                System.Diagnostics.Debug.WriteLine( ex );
-            }
+            _renderer.Data = e.Frame.Data;
+            _renderer.Render();
         }
     }
 }
