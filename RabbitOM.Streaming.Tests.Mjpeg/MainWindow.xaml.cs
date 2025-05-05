@@ -175,8 +175,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
         
         private void OnRenderFrame( object sender , RtpFrameReceivedEventArgs e )
         {
-            _renderer.Data = e.Frame.Data;
-            _renderer.Render();
+            _renderer.Render( e.Frame.Data );
         }
     }
 }

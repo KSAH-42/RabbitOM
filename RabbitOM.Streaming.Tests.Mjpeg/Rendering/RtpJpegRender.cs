@@ -26,7 +26,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 
 
 
-        public byte[] Data { get; set; }
         public int DpiX { get; set; } = 96;
         public int DpiY { get; set; } = 96;
         public FrameworkElement TargetControl { get; set; } 
@@ -36,11 +35,11 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 
 
 
-        public void Render()
+        public void Render( byte[] frame )
         {
             try
             {
-                using ( var bitmap = new System.Drawing.Bitmap( new MemoryStream(Data)))
+                using ( var bitmap = new System.Drawing.Bitmap( new MemoryStream(frame)))
                 {
                     DrawImage( bitmap );
                 }
