@@ -28,8 +28,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 
         public int DpiX { get; set; } = 96;
         public int DpiY { get; set; } = 96;
-        public FrameworkElement TargetControl { get; set; } 
         public bool HighQuality { get; set; }
+        public FrameworkElement TargetControl { get; set; } 
 
 
 
