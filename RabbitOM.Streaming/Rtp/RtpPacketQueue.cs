@@ -1,7 +1,4 @@
-﻿// refactorization: this class may need to used an internal priority queue
-// without using the sort method
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
