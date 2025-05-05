@@ -133,7 +133,7 @@ namespace RabbitOM.Streaming.Rtp.Framing
                 return;
             }
 
-            int delta = buffer.Length - offset;
+            var delta = buffer.Length - offset;
 
             if ( 0 < delta && count <= delta )
             {
