@@ -3,8 +3,8 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 {
