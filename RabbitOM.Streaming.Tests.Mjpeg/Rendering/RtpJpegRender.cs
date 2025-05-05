@@ -11,6 +11,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
     public class RtpJpegRender : IDisposable
     {
         private WriteableBitmap _writableBitmap;
+
         private Int32Rect _region;
 
 
@@ -90,7 +91,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
             _writableBitmap.Lock();
             _writableBitmap.WritePixels(_region, bitmapData.Scan0, bitmapData.Stride * bitmap.Height, bitmapData.Stride );
 
-            bitmap.UnlockBits(bitmapData);
+            bitmap.UnlockBits( bitmapData );
         }
 
 
