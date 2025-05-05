@@ -27,14 +27,8 @@ After configuring a jpeg rtsp server using the happyRtspServer, please make that
             
  */
 
-
 using System;
-using System.IO;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 
 namespace RabbitOM.Streaming.Tests.Mjpeg
 {
@@ -51,7 +45,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
     {
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
-        private readonly RtpJpegRender _renderer = new RtpJpegRender();
+        private readonly RtpRender _renderer = new RtpJpegRender();
 
         public MainWindow()
         {
