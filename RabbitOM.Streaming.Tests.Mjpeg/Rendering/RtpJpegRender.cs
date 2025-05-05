@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
     public class RtpJpegRender : IDisposable
     {
         private WriteableBitmap _writableBitmap;
-        private Int32Rect _rec;
+        private Int32Rect _region;
 
 
 
@@ -80,17 +80,17 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
             {
                 _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY, HighQuality ? PixelFormats.Bgr32 : PixelFormats.Bgr24 ,null);
                 
-                _rec = new Int32Rect(0,0,bitmap.Width,bitmap.Height);
+                _region = new Int32Rect(0,0,bitmap.Width,bitmap.Height);
 
                 SetImageSource( TargetControl , _writableBitmap );
             }                    
             
-            var bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,HighQuality ? System.Drawing.Imaging.PixelFormat.Format32bppRgb : System.Drawing.Imaging.PixelFormat.Format24bppRgb );
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,HighQuality ? System.Drawing.Imaging.PixelFormat.Format32bppRgb : System.Drawing.Imaging.PixelFormat.Format24bppRgb );
 
             _writableBitmap.Lock();
-            _writableBitmap.WritePixels(_rec, bmpData.Scan0, bmpData.Stride * bitmap.Height, bmpData.Stride );
+            _writableBitmap.WritePixels(_region, bitmapData.Scan0, bitmapData.Stride * bitmap.Height, bitmapData.Stride );
 
-            bitmap.UnlockBits(bmpData);
+            bitmap.UnlockBits(bitmapData);
         }
 
 
