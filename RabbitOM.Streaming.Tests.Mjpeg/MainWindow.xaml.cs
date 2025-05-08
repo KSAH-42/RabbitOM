@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Streaming.Tests.Mjpeg.Extensions;
-    using RabbitOM.Streaming.Tests.Mjpeg.Rendering;
+    using RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders;
 
     public partial class MainWindow : Window
     {
@@ -169,7 +169,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
         
         private void OnRenderFrame( object sender , RtpFrameReceivedEventArgs e )
         {
-            _renderer.Render( e.Frame.Data );
+            _renderer.Frame = e.Frame.Data;
+
+            _renderer.Render();
         }
     }
 }

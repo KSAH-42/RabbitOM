@@ -60,8 +60,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Rendering\RtpRender.cs" />
-    <Compile Include="Rendering\RtpJpegRender.cs" />
+    <Compile Include="Drawing\Renders\RtpRender.cs" />
+    <Compile Include="Drawing\Renders\RtpJpegRender.cs" />
+    <Compile Include="Drawing\BitmapDataLocker.cs" />
+    <Compile Include="Drawing\WritableBitmapLocker.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

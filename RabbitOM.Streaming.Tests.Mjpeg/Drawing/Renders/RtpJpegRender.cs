@@ -1,12 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
+namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 {
     public class RtpJpegRender : RtpRender
     {
@@ -25,11 +24,16 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 
 
 
-        public override void Render( byte[] frame )
+        public override void Render()
         {
+            if ( Frame == null )
+            {
+                return;
+            }
+
             try
             {
-                using ( var bitmap = new Bitmap( new MemoryStream(frame)))
+                using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) )
                 {
                     DrawImage( bitmap );
                 }
@@ -37,10 +41,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
             catch( Exception ex )
             {
                 OnException( ex );
-            }
-            finally
-            {
-                _writableBitmap?.Unlock();
             }
         }
 
@@ -64,12 +64,12 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
                 _drawinRegion = new Rectangle(0,0,bitmap.Width,bitmap.Height);
             }                    
             
-            var bitmapData = bitmap.LockBits(_drawinRegion, ImageLockMode.ReadOnly,HighQuality ? System.Drawing.Imaging.PixelFormat.Format32bppRgb : System.Drawing.Imaging.PixelFormat.Format24bppRgb );
-
-            _writableBitmap.Lock();
-            _writableBitmap.WritePixels(_bitmapRegion, bitmapData.Scan0, bitmapData.Stride * bitmap.Height, bitmapData.Stride );
-
-            bitmap.UnlockBits( bitmapData );
+            using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
+            using ( var dataLocker = new BitmapDataLocker(bitmap, _drawinRegion, HighQuality ) )
+            {
+                _writableBitmap.WritePixels(_bitmapRegion, dataLocker.GetScan0() , dataLocker.GetStride() , dataLocker.GetOffset() );
+                _writableBitmap.AddDirtyRect( _bitmapRegion );
+            }
         }
     }
 }

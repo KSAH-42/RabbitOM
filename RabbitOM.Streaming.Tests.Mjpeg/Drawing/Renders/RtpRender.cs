@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
+namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 {
     public abstract class RtpRender : IDisposable
     {
@@ -15,16 +16,21 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Rendering
 
 
 
+        public byte[] Frame { get; set; }
         public bool HighQuality { get; set; }
         public FrameworkElement TargetControl { get; set; } 
 
 
 
 
-
-        public abstract void Render( byte[] frame );
+        public abstract void Render();
 
         public abstract void Clear();
+
+        public virtual void Invalidate()
+        {
+            TargetControl?.InvalidateVisual();
+        }
 
         public void Dispose()
         {
