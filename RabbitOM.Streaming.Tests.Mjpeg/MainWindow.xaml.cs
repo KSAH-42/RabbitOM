@@ -40,6 +40,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Streaming.Tests.Mjpeg.Extensions;
     using RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders;
+    using Microsoft.Win32;
+    using System.Windows.Media;
 
     public partial class MainWindow : Window
     {
@@ -50,6 +52,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
         public MainWindow()
         {
             InitializeComponent();
+
+            RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
         }
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
@@ -75,6 +79,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             
             _frameBuilder.FrameReceived -= OnFrameReceived;
             _frameBuilder.Dispose();
+
             _renderer.Dispose();
         }
 

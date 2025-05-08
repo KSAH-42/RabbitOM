@@ -64,8 +64,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
                 _drawinRegion = new Rectangle(0,0,bitmap.Width,bitmap.Height);
             }                    
             
-            using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
             using ( var dataLocker = new BitmapDataLocker(bitmap, _drawinRegion, HighQuality ) )
+            using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
             {
                 _writableBitmap.WritePixels(_bitmapRegion, dataLocker.GetScan0() , dataLocker.GetStride() , dataLocker.GetOffset() );
                 _writableBitmap.AddDirtyRect( _bitmapRegion );

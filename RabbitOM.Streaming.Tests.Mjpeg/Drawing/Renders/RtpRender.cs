@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,6 +8,11 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 {
     public abstract class RtpRender : IDisposable
     {
+        protected RtpRender()
+        {
+            SystemEvents.PowerModeChanged += OnPowerModeChanged;
+        }
+
         ~RtpRender()
         {
             Dispose( false) ;
@@ -42,12 +48,21 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         {
             if ( disposing )
             {
+                SystemEvents.PowerModeChanged -= OnPowerModeChanged;
                 Clear();
             }
         }
 
 
 
+
+        protected virtual void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            if (e.Mode == PowerModes.Resume)
+            {
+                Invalidate();
+            }
+        }
 
         protected virtual void OnException( Exception ex )
         {
