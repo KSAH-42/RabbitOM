@@ -7,9 +7,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 {
     public abstract class RtpRender : IDisposable
     {
-        protected RtpRender()
+        static RtpRender()
         {
-            SystemEvents.PowerModeChanged += OnPowerModeChanged;
+            RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
         }
 
         ~RtpRender()
@@ -47,21 +47,12 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         {
             if ( disposing )
             {
-                SystemEvents.PowerModeChanged -= OnPowerModeChanged;
                 Clear();
             }
         }
 
 
 
-
-        protected virtual void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
-        {
-            if (e.Mode == PowerModes.Resume)
-            {
-                Invalidate();
-            }
-        }
 
         protected virtual void OnException( Exception ex )
         {
