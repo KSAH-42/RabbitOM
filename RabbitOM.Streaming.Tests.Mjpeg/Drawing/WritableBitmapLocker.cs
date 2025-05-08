@@ -14,8 +14,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
         }
 
         public void Dispose()
-        {
-            _writableBitmap.Unlock();
-        }
+            =>_writableBitmap.Unlock();
     }
 }
