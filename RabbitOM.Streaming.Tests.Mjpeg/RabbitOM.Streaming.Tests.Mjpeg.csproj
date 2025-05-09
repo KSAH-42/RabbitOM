@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Drawing\ScreenInfo.cs" />
     <Compile Include="Drawing\Renders\RtpRender.cs" />
     <Compile Include="Drawing\Renders\RtpJpegRender.cs" />
     <Compile Include="Drawing\BitmapDataLocker.cs" />

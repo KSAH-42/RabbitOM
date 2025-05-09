@@ -16,8 +16,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
 
-        public int DpiX { get; set; } = 96;
-        public int DpiY { get; set; } = 96;
+        public int DpiX { get; set; } = Screen.Current.DpiX;
+        public int DpiY { get; set; } = Screen.Current.DpiY;
 
 
 
@@ -47,6 +47,18 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
             SetImageSource( TargetControl , _writableBitmap = null );
         }
 
+        public override void Invalidate()
+        {
+            if ( _writableBitmap != null )
+            {
+                using ( var locker = new WritableBitmapLocker(_writableBitmap) )
+                {
+                    _writableBitmap.AddDirtyRect( _bitmapRegion );
+                }
+            }
+
+            base.Invalidate();
+        }
 
 
 
@@ -54,7 +66,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         {
             if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
             {
-                _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY, HighQuality ? PixelFormats.Bgr32 : PixelFormats.Bgr24 ,null);
+                _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY, HighQuality ? PixelFormats.Pbgra32 : PixelFormats.Bgr24 ,null);
                 
                 SetImageSource( TargetControl , _writableBitmap );
 
