@@ -24,10 +24,6 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support RTP packet reordering
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
-➡️ Enhancement by adding a new JpegRender which consume less memory (see mjpeg project) in comparison of the previous implementation.
-
-➡️ Enhancement of allocation memory: reducing memory fluctuation and keep it stable
-
 ➡️ RTP HEVC a new implementation is actually in progress
 
 
