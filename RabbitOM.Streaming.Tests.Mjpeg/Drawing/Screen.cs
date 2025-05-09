@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
 
             if ( propertyInfo == null )
             {
-                return 0;
+                throw new ArgumentException( "Property not found" , nameof( propertyName ) );
             }
 
             return (int) propertyInfo.GetValue( null );
