@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Reflection;
 using System.Windows;
+using System.Reflection;
 
 namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
 {
