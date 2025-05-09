@@ -9,158 +9,80 @@ namespace RabbitOM.Streaming.Sdp
     /// </summary>
     public sealed class SessionDescriptor
     {
-        private readonly VersionField                    _version = new VersionField();
-
-        private readonly SessionNameField                _sessionName = new SessionNameField();
-
-        private readonly SessionInformationField         _sessionInformation = new SessionInformationField();
-
-        private readonly UriField                        _uri = new UriField();
-
-        private readonly OriginField                     _origin = new OriginField();
-
-        private readonly EmailFieldCollection            _emails = new EmailFieldCollection();
-
-        private readonly PhoneFieldCollection            _phones = new PhoneFieldCollection();
-
-        private readonly ConnectionField                 _connection = new ConnectionField();
-
-        private readonly BandwithFieldCollection         _bandwiths = new BandwithFieldCollection();
-
-        private readonly TimeFieldCollection             _times = new TimeFieldCollection();
-
-        private readonly RepeatFieldCollection           _repeats = new RepeatFieldCollection();
-
-        private readonly TimeZoneField                   _timeZone = new TimeZoneField();
-                                                        
-        private readonly EncryptionField                 _encryption = new EncryptionField();
-
-        private readonly AttributeFieldCollection        _attributes = new AttributeFieldCollection();
-
-        private readonly MediaDescriptionFieldCollection _mediaDescriptions = new MediaDescriptionFieldCollection();
-
-
-
-
         /// <summary>
         /// Gets the version (mandatory)
         /// </summary>
-        public VersionField Version
-        {
-            get => _version;
-        }
+        public VersionField Version { get; } = new VersionField();
 
         /// <summary>
         /// Gets the originator (mandatory)
         /// </summary>
-        public OriginField Origin
-        {
-            get => _origin;
-        }
+        public OriginField Origin { get; } = new OriginField();
 
         /// <summary>
         /// Gets the session (mandatory)
         /// </summary>
-        public SessionNameField SessionName
-        {
-            get => _sessionName;
-        }
+        public SessionNameField SessionName { get; } = new SessionNameField();
 
         /// <summary>
         /// Gets / Sets the session title (optional)
         /// </summary>
-        public SessionInformationField SessionInformation
-        {
-            get => _sessionInformation;
-        }
+        public SessionInformationField SessionInformation { get; } = new SessionInformationField();
 
         /// <summary>
         /// Gets the time zone (optional)
         /// </summary>
-        public TimeZoneField TimeZone
-        {
-            get => _timeZone;
-        }
+        public TimeZoneField TimeZone { get; } = new TimeZoneField();
 
         /// <summary>
         /// Gets the uri (optional)
         /// </summary>
-        public UriField Uri
-        {
-            get => _uri;
-        }
+        public UriField Uri { get; } = new UriField();
 
         /// <summary>
         /// Gets the emails list (optional)
         /// </summary>
-        public EmailFieldCollection Emails
-        {
-            get => _emails;
-        }
+        public EmailFieldCollection Emails { get; } = new EmailFieldCollection();
 
         /// <summary>
         /// Gets the phones list (optional)
         /// </summary>
-        public PhoneFieldCollection Phones
-        {
-            get => _phones;
-        }
+        public PhoneFieldCollection Phones { get; } = new PhoneFieldCollection();
 
         /// <summary>
         /// Gets the connection infos (optional)
         /// </summary>
-        public ConnectionField Connection
-        {
-            get => _connection;
-        }
+        public ConnectionField Connection { get; } = new ConnectionField();
 
         /// <summary>
         /// Gets the bandwiths list (optional)
         /// </summary>
-        public BandwithFieldCollection Bandwiths
-        {
-            get => _bandwiths;
-        }
+        public BandwithFieldCollection Bandwiths { get; } = new BandwithFieldCollection();
 
         /// <summary>
         /// Gets the times
         /// </summary>
-        public TimeFieldCollection Times
-        {
-            get => _times;
-        }
+        public TimeFieldCollection Times { get; } = new TimeFieldCollection();
 
         /// <summary>
         /// Gets the repeat fields
         /// </summary>
-        public RepeatFieldCollection Repeats
-        {
-            get => _repeats;
-        }
+        public RepeatFieldCollection Repeats { get; } = new RepeatFieldCollection();
 
         /// <summary>
         /// Gets the encryption (optional)
         /// </summary>
-        public EncryptionField Encryption
-        {
-            get => _encryption;
-        }
+        public EncryptionField Encryption { get; } = new EncryptionField();
 
         /// <summary>
         /// Gets the attributes (optional)
         /// </summary>
-        public AttributeFieldCollection Attributes
-        {
-            get => _attributes;
-        }
+        public AttributeFieldCollection Attributes { get; } = new AttributeFieldCollection();
 
         /// <summary>
         /// Gets the media description list
         /// </summary>
-        public MediaDescriptionFieldCollection MediaDescriptions
-        {
-            get => _mediaDescriptions;
-        }
+        public MediaDescriptionFieldCollection MediaDescriptions { get; } = new MediaDescriptionFieldCollection();
 
 
 
