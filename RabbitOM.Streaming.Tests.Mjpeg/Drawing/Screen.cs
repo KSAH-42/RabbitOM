@@ -8,8 +8,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
     {
         Screen()
         {
-            DpiX = GetDpiPropertyValue( "Dpi" );
-            DpiY = GetDpiPropertyValue( "Dpi" );
+            DpiX = DpiY = GetDpiPropertyValue( "Dpi" );
         }
 
 
