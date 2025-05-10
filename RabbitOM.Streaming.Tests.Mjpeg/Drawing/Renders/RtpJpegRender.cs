@@ -10,7 +10,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
     public class RtpJpegRender : RtpRender
     {
         private WriteableBitmap _writableBitmap;
+
         private Int32Rect _bitmapRegion;
+        
         private Rectangle _drawinRegion;
 
 
