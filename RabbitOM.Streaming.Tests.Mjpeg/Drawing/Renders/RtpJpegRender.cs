@@ -25,7 +25,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
         public override bool CanRender()
-            =>  Frame != null || Frame.Length <= 0;
+        {
+            return Frame != null || Frame.Length <= 0;
+        }
 
         public override void Render()
         {
