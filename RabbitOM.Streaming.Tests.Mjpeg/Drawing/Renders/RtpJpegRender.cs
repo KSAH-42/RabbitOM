@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
             try
             {
-                using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) )
+                using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) ) // to be changed using a custom jpeg reader
                 {
                     DrawImage( bitmap );
                 }
