@@ -24,13 +24,11 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
 
+        public override bool CanRender()
+            =>  Frame != null || Frame.Length <= 0;
+
         public override void Render()
         {
-            if ( Frame == null || Frame.Length <= 0 )
-            {
-                return;
-            }
-
             try
             {
                 using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) ) // to be changed using a custom jpeg reader

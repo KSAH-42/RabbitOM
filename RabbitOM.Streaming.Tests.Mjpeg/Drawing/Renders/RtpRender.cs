@@ -27,6 +27,8 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
 
+        public abstract bool CanRender();
+
         public abstract void Render();
 
         public abstract void Clear();

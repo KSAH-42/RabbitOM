@@ -172,7 +172,10 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
         {
             _renderer.Frame = e.Frame.Data;
 
-            _renderer.Render();
+            if ( _renderer.CanRender() )
+            {
+                _renderer.Render();
+            }
         }
     }
 }
