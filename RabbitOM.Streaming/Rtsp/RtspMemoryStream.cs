@@ -42,16 +42,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get
             {
-                try
-                {
-                    return _stream?.CanSeek ?? false;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return false;
+                return _stream?.CanSeek ?? false;
             }
         }
 
@@ -62,16 +53,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get
             {
-                try
-                {
-                    return _stream?.CanRead ?? false;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return false;
+                return _stream?.CanRead ?? false;
             }
         }
 
@@ -82,16 +64,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get
             {
-                try
-                {
-                    return _stream?.CanWrite ?? false;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return false;
+                return _stream?.CanWrite ?? false;
             }
         }
 
@@ -102,51 +75,18 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get
             {
-                try
-                {
-                    return _stream?.Length ?? 0;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return 0;
+                return _stream?.Length ?? 0;
             }
         }
 
         /// <summary>
-        /// Gets / Sets the position
+        /// Gets the position
         /// </summary>
         public long Position
         {
             get
             {
-                try
-                {
-                    return _stream?.Position ?? 0;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return 0;
-            }
-
-            set
-            {
-                try
-                {
-                    if ( _stream != null )
-                    {
-                        _stream.Position = value;
-                    }
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
+                return _stream?.Position ?? 0;
             }
         }
 
@@ -157,70 +97,20 @@ namespace RabbitOM.Streaming.Rtsp
         {
             get
             {
-                try
-                {
-                    return _stream?.Capacity ?? 0;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return -1;
-            }
-
-            set
-            {
-                try
-                {
-                    if ( _stream != null )
-                    {
-                        _stream.Capacity = value;
-                    }
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
+                return _stream?.Capacity ?? -1;
             }
         }
 
         /// <summary>
-        /// Gets the capacity
+        /// Check if the position is located at the end
         /// </summary>
         public bool IsEnded
         {
             get
             {
-                if ( _stream == null )
-                {
-                    return true;
-                }
-
-                try
-                {
-                    var length = _stream.Length;
-
-                    if ( length > 0 )
-                    {
-                        var position = _stream.Position;
-
-                        if ( 0 <= position && position < length )
-                        {
-                            return false;
-                        }
-                    }
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
-                }
-
-                return true;
+                return ! ( _stream != null && 0 <= _stream.Position && _stream.Position < _stream.Length);
             }
         }
-
-
 
 
 
@@ -442,6 +332,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// Move until the value has been found
         /// </summary>
         /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool Search( byte value )
         {
             if ( _stream == null )
@@ -480,6 +371,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// Move until the value has been found
         /// </summary>
         /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool Search( string value )
         {
             return Search( value , false );
@@ -490,6 +382,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// </summary>
         /// <param name="value">the value</param>
         /// <param name="ignoreCase">set true to ignore the case</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool Search( string value , bool ignoreCase )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
@@ -1031,6 +924,7 @@ namespace RabbitOM.Streaming.Rtsp
         {
             return WriteString( value + "\r\n" );
         }
+
         /// <summary>
         /// Write a value
         /// </summary>
@@ -1065,18 +959,51 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         /// <summary>
-        /// Flush
+        /// Try to set the position
         /// </summary>
-        public void Flush()
+        /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TrySetPosition( long value )
         {
             try
             {
-                _stream?.Flush();
+                if ( _stream != null )
+                {
+                    _stream.Position = value;
+
+                    return true;
+                }
             }
             catch ( Exception ex )
             {
                 OnError( ex );
             }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Try to set the capacity
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TrySetCapacity( int value )
+        {
+            try
+            {
+                if ( _stream != null )
+                {
+                    _stream.Capacity = value;
+
+                    return true;
+                }
+            }
+            catch ( Exception ex )
+            {
+                OnError( ex );
+            }
+
+            return false;
         }
 
 
