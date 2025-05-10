@@ -185,7 +185,7 @@ namespace RabbitOM.Streaming.Rtsp
                         _buffer = new byte[bufferSize];
                     }
 
-                    var bytes = _stream.Read(_buffer, 0, _buffer.Length);
+                    var bytes = _stream.Read(_buffer, 0, bufferSize);
 
                     _stream.SetLength(0);
 
