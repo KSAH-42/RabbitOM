@@ -130,23 +130,7 @@ namespace RabbitOM.Streaming.Rtsp
         /// <returns>returns true for a success, otherwise false</returns>
         public bool Create()
         {
-            if ( _stream != null )
-            {
-                return false;
-            }
-
-            try
-            {
-                _stream = new MemoryStream();
-
-                return true;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return true;
+            return Create( DefaultSize );
         }
 
         /// <summary>
@@ -234,10 +218,15 @@ namespace RabbitOM.Streaming.Rtsp
                         _buffer = new byte[bufferSize];
                     }
 
-                    _stream.Read(_buffer, 0, bufferSize);
+                    var bytes = _stream.Read(_buffer, 0, _buffer.Length);
+
                     _stream.SetLength(0);
-                    _stream.Write(_buffer, 0, bufferSize);
-                    _stream.Seek(0, SeekOrigin.Begin);
+
+                    if ( bytes > 0 )
+                    {
+                        _stream.Write(_buffer, 0, bytes);
+                        _stream.Seek(0, SeekOrigin.Begin); // For the next read
+                    }
                 }
             }
             catch ( Exception ex )
