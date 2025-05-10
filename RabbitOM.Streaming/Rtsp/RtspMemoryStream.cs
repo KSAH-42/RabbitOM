@@ -36,39 +36,6 @@ namespace RabbitOM.Streaming.Rtsp
 
 
         /// <summary>
-        /// Check if seek operations are supported
-        /// </summary>
-        public bool CanSeek
-        {
-            get
-            {
-                return _stream?.CanSeek ?? false;
-            }
-        }
-
-        /// <summary>
-        /// Check if read operations are supported
-        /// </summary>
-        public bool CanRead
-        {
-            get
-            {
-                return _stream?.CanRead ?? false;
-            }
-        }
-
-        /// <summary>
-        /// Check if write operations are supported
-        /// </summary>
-        public bool CanWrite
-        {
-            get
-            {
-                return _stream?.CanWrite ?? false;
-            }
-        }
-
-        /// <summary>
         /// Gets the length
         /// </summary>
         public long Length
