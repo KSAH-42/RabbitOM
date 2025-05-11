@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
                     DrawImage( bitmap );
                 }
             }
-            catch( Exception ex )
+            catch ( Exception ex )
             {
                 OnException( ex );
             }
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         {
             if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
             {
-                _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY, HighQuality ? PixelFormats.Pbgra32 : PixelFormats.Bgr24 ,null);
+                _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY, HighQuality ? PixelFormats.Bgr32 : PixelFormats.Bgr24 ,null);
                 
                 SetImageSource( TargetControl , _writableBitmap );
 
@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
             using ( var dataLocker = new BitmapDataLocker(bitmap, _drawinRegion, HighQuality ) )
             using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
             {
-                _writableBitmap.WritePixels(_bitmapRegion, dataLocker.GetScan0() , dataLocker.GetStride() , dataLocker.GetOffset() );
+                _writableBitmap.WritePixels(_bitmapRegion, dataLocker.GetScan0() , dataLocker.GetBufferSize() , dataLocker.GetStride() );
                 _writableBitmap.AddDirtyRect( _bitmapRegion );
             }
         }

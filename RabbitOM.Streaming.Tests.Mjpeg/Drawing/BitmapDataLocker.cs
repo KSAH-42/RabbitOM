@@ -32,10 +32,10 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
         public IntPtr GetScan0() 
             => _data.Scan0; 
         
-        public int GetStride() 
+        public int GetBufferSize() 
             => _data.Stride * _bitmap.Height;
 
-        public int GetOffset() 
+        public int GetStride() 
             => _data.Stride; 
     }
 }
