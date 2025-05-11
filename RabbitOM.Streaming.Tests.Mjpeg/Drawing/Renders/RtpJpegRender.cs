@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 {
-    public class RtpJpegRender : RtpRender
+    public sealed class RtpJpegRender : RtpRender
     {
         private WriteableBitmap _writableBitmap;
 
@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
 
-        protected virtual void DrawImage( Bitmap bitmap )
+        private void DrawImage( Bitmap bitmap )
         {
             if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
             {
