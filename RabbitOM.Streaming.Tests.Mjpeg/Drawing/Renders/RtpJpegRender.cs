@@ -16,6 +16,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         private Rectangle _drawinRegion;
 
 
+
+
+
         public override bool CanRender()
         {
             return Frame != null && Frame.Length > 0;
@@ -25,7 +28,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         {
             try
             {
-                using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) ) // to be changed using a custom jpeg reader
+                using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) )
                 {
                     DrawImage( bitmap );
                 }
@@ -35,6 +38,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
                 OnException( ex );
             }
         }
+
+
+
 
         public override void Clear()
         {
@@ -53,8 +59,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
             base.Invalidate();
         }
-
-
 
         private void DrawImage( Bitmap bitmap )
         {
