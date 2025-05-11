@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 {
@@ -47,7 +48,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return false;
             }
 
-            result = JpegFrame.NewFrame( _imageBuilder.BuildImage() );
+            result = _imageBuilder.BuildFrame();
 
             return true;
         }

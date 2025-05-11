@@ -47,19 +47,5 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         {
             get => _height;
         }
-
-
-
-
-
-        /// <summary>
-        /// Create an new object
-        /// </summary>
-        /// <param name="image">the image data structure info</param>
-        /// <returns>returns an instance</returns>
-        public static JpegFrame NewFrame( JpegImage image )
-        {
-            return new JpegFrame( image.Data , image.Width , image.Height );
-        }
     }
 }

@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         }
 
         /// <summary>
-        /// Build the image from the fragments
+        /// Build the frame from the fragments
         /// </summary>
         /// <returns>returns an instance</returns>
         /// <remarks>
@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         ///     <para> it saved allocation spaces</para>
         ///     <para> and it reused the internal array of <see cref="System.IO.MemoryStream"/> and not creating a new one.</para>
         /// </remarks>
-        public JpegImage BuildImage()
+        public JpegFrame BuildFrame()
         {
             var firstFragment = _fragments.Peek();
 
@@ -121,7 +121,7 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             _writer.WriteEndOfImage();
 
-            return new JpegImage( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
+            return new JpegFrame( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
         }
 
 
