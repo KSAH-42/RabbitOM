@@ -22,7 +22,10 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
         public byte[] Frame { get; set; }
         public bool HighQuality { get; set; } = true;
-        public FrameworkElement TargetControl { get; set; } 
+        public int DpiX { get; set; } = Screen.Current.DpiX;
+        public int DpiY { get; set; } = Screen.Current.DpiY;
+        public FrameworkElement TargetControl { get; set; }     
+
 
 
 

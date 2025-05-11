@@ -16,14 +16,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
         private Rectangle _drawinRegion;
 
 
-
-
-        public int DpiX { get; set; } = Screen.Current.DpiX;
-        public int DpiY { get; set; } = Screen.Current.DpiY;
-
-
-
-
         public override bool CanRender()
         {
             return Frame != null && Frame.Length > 0;
