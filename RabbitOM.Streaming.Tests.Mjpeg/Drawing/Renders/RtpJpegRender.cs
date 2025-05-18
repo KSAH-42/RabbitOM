@@ -19,14 +19,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
 
-        public override bool CanRender()
-        {
-            return Frame != null && Frame.Length > 0;
-        }
-
         public override void Render()
         {
-            try
+            try 
             {
                 using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) )
                 {
@@ -37,14 +32,6 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
             {
                 OnException( ex );
             }
-        }
-
-
-
-
-        public override void Clear()
-        {
-            SetImageSource( TargetControl , _writableBitmap = null );
         }
 
         public override void Invalidate()
@@ -59,6 +46,16 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
             base.Invalidate();
         }
+        
+        public override void Clear()
+        {
+            SetImageSource( TargetControl , _writableBitmap = null );
+        }
+
+
+
+
+
 
         private void DrawImage( Bitmap bitmap )
         {
