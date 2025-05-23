@@ -38,10 +38,9 @@
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>
 		</ComboBox>
 		<Button x:Name="_controlButton" Content="Play" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Top" Width="74" Click="OnButtonControlClick" Height="22"/>
-		<Grid Margin="1,29,1,1" Background="Black">
-			<TextBlock x:Name="_textBlockInfo" FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Grid Margin="1,29,1,1" Background="Black">
+            <TextBlock x:Name="_textBlockInfo" FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Image x:Name="_image"  Stretch="Uniform" Margin="0,0,0,0" SnapsToDevicePixels="True" UseLayoutRounding="True" />
-		</Grid>
-
-	</Grid>
+        </Grid>
+    </Grid>
 </Window>
