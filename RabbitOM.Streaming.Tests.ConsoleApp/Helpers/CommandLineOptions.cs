@@ -12,64 +12,22 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 
 
 
-
-
-        private readonly string _uri = string.Empty;
-
-        private readonly string _userName = string.Empty;
-
-        private readonly string _password = string.Empty;
-
-
-
-
-
-
-		private CommandLineOptions()
-		{
-		}
-
-        public CommandLineOptions( string uri , string userName , string password )
-        {
-            _uri      = uri      ?? string.Empty;
-            _userName = userName ?? string.Empty;
-            _password = password ?? string.Empty;
-        }
-
-
-
-
-
-
-        public string Uri
-        {
-            get => _uri;
-        }
-
-        public string UserName
-        {
-            get => _userName;
-        }
-        public string Password
-        {
-            get => _password;
-        }
-
-
-
+        public string Uri { get; private set; }
+        public string UserName { get; private set; }
+        public string Password { get; private set; }
 
 
 
         public bool TryValidate()
-        {
-            if ( string.IsNullOrWhiteSpace( _uri ) )
+        { 
+            if ( string.IsNullOrWhiteSpace( Uri ) )
             {
                 return false;
             }
 
-            if ( ! string.IsNullOrWhiteSpace( _password ) )
+            if ( ! string.IsNullOrWhiteSpace( Password ) )
             {
-                return ! string.IsNullOrWhiteSpace( _userName );
+                return ! string.IsNullOrWhiteSpace( UserName );
             }
 
             return true;
@@ -92,22 +50,14 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 
 
 
-
-
-
         public static CommandLineOptions Parse( string[] args )
         {
-            if ( args == null )
+            if ( args == null || ! RtspUri.TryParse( args.FirstOrDefault() , out RtspUri uri ) )
             {
                 return CommandLineOptions.Empty;
             }
 
-            if ( ! RtspUri.TryParse( args.FirstOrDefault() , out RtspUri uri ) )
-            {
-                return CommandLineOptions.Empty;
-            }
-
-            return new CommandLineOptions( uri.ToString( true ) , uri.UserName , uri.Password );
+            return new CommandLineOptions() { Uri = uri.ToString( true ) , UserName = uri.UserName , Password = uri.Password };
         }
     }
 }
