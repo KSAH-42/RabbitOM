@@ -22,18 +22,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 
 
 
-        public static CommandLineOptions Parse( string[] args )
-        {
-            if ( args == null || ! RtspUri.TryParse( args.FirstOrDefault() , out RtspUri uri ) )
-            {
-                return CommandLineOptions.Empty;
-            }
-
-            return new CommandLineOptions() { Uri = uri.ToString( true ) , UserName = uri.UserName , Password = uri.Password };
-        }
-
-
-
         public bool TryValidate()
         { 
             if ( string.IsNullOrWhiteSpace( Uri ) )
@@ -41,15 +29,25 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
                 return false;
             }
 
-            if ( ! string.IsNullOrWhiteSpace( Password ) )
-            {
-                return ! string.IsNullOrWhiteSpace( UserName );
-            }
-
-            return true;
+            return ! string.IsNullOrWhiteSpace( Password ) ? 
+                   ! string.IsNullOrWhiteSpace( UserName ) : true;
         }
 
-        public void ShowHelp()
+        
+
+        public static bool TryParse( string[] args , out CommandLineOptions result )
+        {
+            result = default;
+
+            if ( RtspUri.TryParse( args?.FirstOrDefault() , out RtspUri uri ) )
+            {
+                result = new CommandLineOptions() { Uri = uri.ToString( true ) , UserName = uri.UserName , Password = uri.Password };
+            }
+
+            return result != null;
+        }
+
+        public static void ShowHelp()
         {
             string processName = Assembly.GetExecutingAssembly().GetName().Name + ".exe";
 

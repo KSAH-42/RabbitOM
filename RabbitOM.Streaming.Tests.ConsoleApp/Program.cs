@@ -15,6 +15,7 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Streaming.Tests.ConsoleApp.Helpers;
+    using System.Runtime.InteropServices;
 
     class Program
     {
@@ -22,15 +23,13 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp
         {
             try
             {              
-                var options = CommandLineOptions.Parse( args );
-                
-                if ( options.TryValidate() )
+                if ( CommandLineOptions.TryParse( args , out var options ) && options.TryValidate() )
                 {
                     Run( options );
                 }
                 else
                 {
-                    options.ShowHelp();
+                    CommandLineOptions.ShowHelp();
                 }
             }
             finally
