@@ -12,9 +12,25 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 
 
 
+        private CommandLineOptions() { }
+
+
+
         public string Uri { get; private set; }
         public string UserName { get; private set; }
         public string Password { get; private set; }
+
+
+
+        public static CommandLineOptions Parse( string[] args )
+        {
+            if ( args == null || ! RtspUri.TryParse( args.FirstOrDefault() , out RtspUri uri ) )
+            {
+                return CommandLineOptions.Empty;
+            }
+
+            return new CommandLineOptions() { Uri = uri.ToString( true ) , UserName = uri.UserName , Password = uri.Password };
+        }
 
 
 
@@ -46,18 +62,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
             Console.WriteLine( $"{processName} rtsp://127.0.0.1:554/toy.mp4" );
             Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1:554/toy.mp4" );
             Console.WriteLine();
-        }
-
-
-
-        public static CommandLineOptions Parse( string[] args )
-        {
-            if ( args == null || ! RtspUri.TryParse( args.FirstOrDefault() , out RtspUri uri ) )
-            {
-                return CommandLineOptions.Empty;
-            }
-
-            return new CommandLineOptions() { Uri = uri.ToString( true ) , UserName = uri.UserName , Password = uri.Password };
         }
     }
 }
