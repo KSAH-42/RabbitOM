@@ -8,10 +8,6 @@ namespace RabbitOM.Streaming.Tests.ConsoleApp.Helpers
 
     public sealed class CommandLineOptions
     {        
-        public static readonly CommandLineOptions Empty = new CommandLineOptions();
-
-
-
         private CommandLineOptions() { }
 
 
