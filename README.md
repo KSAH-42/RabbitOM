@@ -52,10 +52,10 @@ using ( var client = new RtspClient() )
     {
         var interleavedPacket = e.Packet as RtspInterleavedPacket;
 
-	if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
-	    return;
+		if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
+	    	return;
 	
-	if ( RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
+		if ( RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
             Console.WriteLine( "DataReceived {0}" , packet.Payload.Length );
     };
 
