@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
         public virtual bool CanRender()
         {
-            return TargetControl != null && Frame != null && Frame.Length > 0;
+            return TargetControl != null && Frame?.Length > 0;
         }
 
         public abstract void Render();
