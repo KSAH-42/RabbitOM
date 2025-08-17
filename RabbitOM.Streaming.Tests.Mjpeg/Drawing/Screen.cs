@@ -13,8 +13,9 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
             DpiY = Convert.ToInt32( graphics.DpiY );
         }
 
-        public static Screen Current { get; } = new Screen();
         public int DpiX { get; }
         public int DpiY { get; }
+        
+        public static Screen Current { get; } = new Screen();
     }
 }
