@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
             {
                 using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) )
                 {
-                    DrawImage( bitmap );
+                    OnDraw( bitmap );
                 }
             }
             catch ( Exception ex )
@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing.Renders
 
 
 
-        private void DrawImage( Bitmap bitmap )
+        private void OnDraw( Bitmap bitmap )
         {
             if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
             {
