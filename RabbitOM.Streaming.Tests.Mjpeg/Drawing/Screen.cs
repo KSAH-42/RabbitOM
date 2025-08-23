@@ -7,10 +7,11 @@ namespace RabbitOM.Streaming.Tests.Mjpeg.Drawing
     {
         Screen()
         {
-            var graphics = Graphics.FromHwnd(IntPtr.Zero);
-
-            DpiX = Convert.ToInt32( graphics.DpiX );
-            DpiY = Convert.ToInt32( graphics.DpiY );
+            using (var graphics = Graphics.FromHwnd(IntPtr.Zero) )
+            {
+                DpiX = Convert.ToInt32( graphics.DpiX );
+                DpiY = Convert.ToInt32( graphics.DpiY );
+            }
         }
 
         public int DpiX { get; }
