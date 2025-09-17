@@ -28,9 +28,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
 
             _imageBuilder.Initialize();
 
-            foreach ( RtpPacket packet in packets )
+            foreach ( var packet in packets )
             {
-                if ( ! JpegFragment.TryParse( packet.Payload , out JpegFragment fragment ) )
+                if ( ! JpegFragment.TryParse( packet.Payload , out var fragment ) )
                 {
                     return false;
                 }

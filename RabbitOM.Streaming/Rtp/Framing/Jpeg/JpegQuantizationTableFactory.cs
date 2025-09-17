@@ -48,9 +48,9 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
                 return _table;
             }
 
-            byte[] buffer = new byte[ BaseTable.Length ];
+            var buffer = new byte[ BaseTable.Length ];
 
-            int quantizationFactor = JpegQuantizer.AdaptFactor( factor );
+            var quantizationFactor = JpegQuantizer.AdaptFactor( factor );
 
             for ( int i = 0 ; i < buffer.Length ; ++i )
             {
