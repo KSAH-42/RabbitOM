@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Tests.Mjpeg
             _client.Disconnected -= OnDisconnected;
             _client.PacketReceived -= OnPacketReceived;
             _client.Dispose();
-            
+
             _frameBuilder.FrameReceived -= OnFrameReceived;
             _frameBuilder.Dispose();
 
