@@ -143,8 +143,6 @@ namespace RabbitOM.Streaming.Rtp.Framing.Jpeg
         /// </remarks>
         private bool OnCreatingHeaders( JpegFragment fragment )
         {
-            System.Diagnostics.Debug.Assert( fragment != null );
-
             return _headersPosition               == 0
                 || _firstFragment                 == null 
                 || _firstFragment.Type            != fragment.Type 
