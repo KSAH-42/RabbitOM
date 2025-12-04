@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraySegmentExtensions.cs" />
+    <Compile Include="Rtsp\Clients\Diagnostics\Counters\RtspClientCounter.cs" />
+    <Compile Include="Rtsp\Clients\Diagnostics\Counters\RtspClientNetworkCounter.cs" />
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="Rtsp\RtspAuthenticationType.cs" />
     <Compile Include="Rtsp\RtspAuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspAuthorizationFactory.cs" />
+    <Compile Include="Rtsp\RtspBandwithValue.cs" />
     <Compile Include="Rtsp\RtspBasicAuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspChunkQueue.cs" />
     <Compile Include="Rtsp\RtspDataConverter.cs" />
