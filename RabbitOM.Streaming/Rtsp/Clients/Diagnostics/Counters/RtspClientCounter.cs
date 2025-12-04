@@ -77,22 +77,22 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Diagnostics.Counters
 
         protected virtual void OnStarted( EventArgs e )
         {
-            Started?.Invoke( this , e );
+            Started?.TryInvoke( this , e );
         }
 
         protected virtual void OnStopped( EventArgs e )
         {
-            Stopped?.Invoke( this , e );
+            Stopped?.TryInvoke( this , e );
         }
 
         protected virtual void OnReset( EventArgs e )
         {
-            Reseted?.Invoke( this , e );
+            Reseted?.TryInvoke( this , e );
         }
 
         protected virtual void OnUpdated( EventArgs e )
         {
-            Updated?.Invoke( this , e );
+            Updated?.TryInvoke( this , e );
         }
     }
 }
