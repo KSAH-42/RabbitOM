@@ -151,7 +151,6 @@
     <Compile Include="Rtsp\RtspAuthenticationType.cs" />
     <Compile Include="Rtsp\RtspAuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspAuthorizationFactory.cs" />
-    <Compile Include="Rtsp\RtspBandwithValue.cs" />
     <Compile Include="Rtsp\RtspBasicAuthorizationChallenge.cs" />
     <Compile Include="Rtsp\RtspChunkQueue.cs" />
     <Compile Include="Rtsp\RtspDataConverter.cs" />
