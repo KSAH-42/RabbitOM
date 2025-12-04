@@ -21,7 +21,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Diagnostics.Counters
         public DateTime LastTimeConnection { get; }
         public DateTime LastTimeConnectionError { get; }
         public DateTime LastTimeDisconnection { get; }
-        public DateTime LastTimeDisconnectionError { get; }
         public DateTime LastTimeDataReceived { get; }
         public string CodecType { get; }
         public string MediaType { get; }
