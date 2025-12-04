@@ -28,12 +28,13 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Diagnostics.Counters
         public string MediaTransportType { get; }
         public int NumberOfConnections { get; }
         public int NumberOfConnectionsError { get; }
+        public int NumberOfDisconnections { get; }
         public int NumberOfPacketsReceived { get; }
         public int NumberOfPacketsLost { get; }
         public int NumberOfErrors { get; }
-        public int FrameRatePerSeconds { get; }
-        public int BitRatePerSeconds { get; }
-        public int InputBound { get; }
+        public int FrameRatePerSecond { get; }
+        public int BitRatePerSecond { get; }
+        public int PacketSizeAverage { get; }
         
 
 
@@ -59,12 +60,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients.Diagnostics.Counters
             throw new NotImplementedException();
         }
 
-        public void IncreaseDisconnectionSucceed()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void IncreaseDisconnectionError()
+        public void IncreaseDisconnection()
         {
             throw new NotImplementedException();
         }
