@@ -1,0 +1,30 @@
+﻿using System;
+
+namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
+{
+    /// <summary>
+    /// Represent an event args
+    /// </summary>
+    public class RtspMessageSendedEventArgs : EventArgs
+    {
+        private readonly RtspMessage _message = null;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message">the message</param>
+        /// <exception cref="ArgumentNullException"/>
+        public RtspMessageSendedEventArgs( RtspMessage message )
+        {
+            _message = message ?? throw new ArgumentNullException( nameof( message ) );
+        }
+
+        /// <summary>
+        /// Gets the message
+        /// </summary>
+        public RtspMessage Message
+        {
+            get => _message;
+        }
+    }
+}

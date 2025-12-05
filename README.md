@@ -4,7 +4,7 @@
 
 A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw audio/video streams. 
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Tests.Client.Mjpeg.png)
 
 # Main features
 
@@ -25,6 +25,11 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
 
 ➡️ RTP HEVC a new implementation is actually in progress
+
+⚠️: Breaking changes since the version 2.0.0.0:
+* Namespace reorganization
+* Moving and renaming classes to different namespace
+* Add new class libray to rending using wpf
 
 
 # How to receive raw rtp packets using the rtsp client ?
@@ -211,7 +216,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 This project contains also a sample that demonstrate how to create a video player from a mjpeg rtsp source. 
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Streaming.Tests.Mjpeg.Hik.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Tests.Client.Mjpeg.Hik.png)
 
 # Getting more details ?
 
