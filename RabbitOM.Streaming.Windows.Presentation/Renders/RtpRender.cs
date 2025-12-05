@@ -34,11 +34,6 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         public byte[] Frame { get; set; }
 
         /// <summary>
-        /// Gets / Sets the image quality
-        /// </summary>
-        public bool HighQuality { get; set; } = true;
-
-        /// <summary>
         /// Gets / Sets the Dpi X
         /// </summary>
         public int DpiX { get; set; } = Screen.Current.DpiX;

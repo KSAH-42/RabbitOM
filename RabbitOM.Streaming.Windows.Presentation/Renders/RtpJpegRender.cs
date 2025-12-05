@@ -2,11 +2,13 @@
 using System.IO;
 using System.Drawing;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Streaming.Windows.Presentation.Renders
 {
+    /// <summary>
+    /// Represent a jpeg decoder
+    /// </summary>
     public sealed class RtpJpegRender : RtpRender
     {
         private WriteableBitmap _writableBitmap;
@@ -19,13 +21,18 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
 
 
 
+        /// <summary>
+        /// Do rendering
+        /// </summary>
         public override void Render()
         {
             try 
             {
-                using ( var bitmap = new Bitmap( new MemoryStream( Frame ) ) )
+                var decoder = JpegBitmapDecoder.Create( new MemoryStream( Frame ) , BitmapCreateOptions.IgnoreImageCache , BitmapCacheOption.None );
+                
+                if ( decoder.Frames.Count > 0 )
                 {
-                    OnDraw( bitmap );
+                    OnDraw( decoder.Frames[0] );
                 }
             }
             catch ( Exception ex )
@@ -34,6 +41,9 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
             }
         }
 
+        /// <summary>
+        /// Invalidate
+        /// </summary>
         public override void Invalidate()
         {
             if ( _writableBitmap != null )
@@ -47,6 +57,9 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
             base.Invalidate();
         }
         
+        /// <summary>
+        /// Clear
+        /// </summary>
         public override void Clear()
         {
             SetImageSource( TargetControl , _writableBitmap = null );
@@ -57,23 +70,34 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
 
 
 
-        private void OnDraw( Bitmap bitmap )
+        /// <summary>
+        /// Occurs when the image must be draw
+        /// </summary>
+        /// <param name="source">the source</param>
+        private void OnDraw( BitmapSource source )
         {
-            if ( _writableBitmap == null || _writableBitmap.PixelWidth != bitmap.Width || _writableBitmap.PixelHeight != bitmap.Height )
+            if ( source == null )
             {
-                _writableBitmap = new WriteableBitmap(bitmap.Width,bitmap.Height,DpiX,DpiY, HighQuality ? PixelFormats.Bgr32 : PixelFormats.Bgr24 ,null);
+                return;
+            }
+
+            if ( _writableBitmap == null || _writableBitmap.PixelWidth != source.Width || _writableBitmap.PixelHeight != source.Height )
+            {
+                _writableBitmap = new WriteableBitmap(source.PixelWidth,source.PixelHeight,DpiX,DpiY, source.Format , null);
                 
                 SetImageSource( TargetControl , _writableBitmap );
 
-                _bitmapRegion = new Int32Rect(0,0,bitmap.Width,bitmap.Height);
-                _drawinRegion = new Rectangle(0,0,bitmap.Width,bitmap.Height);
+                _bitmapRegion = new Int32Rect(0,0,source.PixelWidth,source.PixelHeight);
+                _drawinRegion = new Rectangle(0,0,source.PixelWidth,source.PixelHeight);
             }                    
             
-            using ( var dataLocker = new BitmapDataLocker(bitmap, _drawinRegion, HighQuality ) )
-            using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
+            if ( BitmapPixelsData.TryCreate( source, _drawinRegion , out var pixelsData ) )
             {
-                _writableBitmap.WritePixels(_bitmapRegion, dataLocker.GetScan0() , dataLocker.GetBufferSize() , dataLocker.GetStride() );
-                _writableBitmap.AddDirtyRect( _bitmapRegion );
+                using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
+                {
+                    _writableBitmap.WritePixels(_bitmapRegion, pixelsData.Buffer , pixelsData.Stride , 0 );
+                    _writableBitmap.AddDirtyRect( _bitmapRegion );
+                }
             }
         }
     }
