@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
 
         private Int32Rect _bitmapRegion;
         
-        private Rectangle _drawinRegion;
+        private Rectangle _drawingRegion;
 
         private BitmapPixelsData _pixelsData;
 
@@ -89,10 +89,10 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
             {
                 _writableBitmap = new WriteableBitmap(source.PixelWidth,source.PixelHeight,DpiX,DpiY, source.Format , null);
                 
-                SetImageSource( TargetControl , _writableBitmap );
-
                 _bitmapRegion = new Int32Rect(0,0,source.PixelWidth,source.PixelHeight);
-                _drawinRegion = new Rectangle(0,0,source.PixelWidth,source.PixelHeight);
+                _drawingRegion = new Rectangle(0,0,source.PixelWidth,source.PixelHeight);
+
+                SetImageSource( TargetControl , _writableBitmap );
             }   
             
             var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
