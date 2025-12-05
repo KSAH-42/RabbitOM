@@ -26,10 +26,12 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 
 ➡️ RTP HEVC a new implementation is actually in progress
 
-⚠️: Breaking changes since the version 2.0.0.0:
+➡️ Breaking changes since the version 2.0.0.0:
+
 * Namespace reorganization
 * Moving and renaming classes to different namespace
 * Add new class libray to rending using wpf
+* Improve cpu an memory consumption during rending
 
 
 # How to receive raw rtp packets using the rtsp client ?
