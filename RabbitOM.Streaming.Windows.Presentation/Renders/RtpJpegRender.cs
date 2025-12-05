@@ -93,18 +93,13 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
 
                 _bitmapRegion = new Int32Rect(0,0,source.PixelWidth,source.PixelHeight);
                 _drawinRegion = new Rectangle(0,0,source.PixelWidth,source.PixelHeight);
-            }                    
+            }   
             
-            if ( BitmapPixelsData.IsNullOrEmpty( _pixelsData ) )
-            {
-                BitmapPixelsData.TryCreate( source, out _pixelsData );
-            }
-            else
-            {
-                BitmapPixelsData.TryCopy( source, ref _pixelsData );
-            }
-
-            if ( ! BitmapPixelsData.IsNullOrEmpty( _pixelsData ) )
+            var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
+                ? BitmapPixelsData.TryCreate( source, out _pixelsData )
+                : BitmapPixelsData.TryCopy( source, ref _pixelsData );
+            
+            if ( succeed )
             {
                 using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
                 {
