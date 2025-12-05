@@ -17,6 +17,8 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         
         private Rectangle _drawinRegion;
 
+        private BitmapPixelsData _pixelsData;
+
 
 
 
@@ -62,6 +64,8 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         /// </summary>
         public override void Clear()
         {
+            _pixelsData = BitmapPixelsData.Empty;
+
             SetImageSource( TargetControl , _writableBitmap = null );
         }
 
@@ -91,11 +95,20 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
                 _drawinRegion = new Rectangle(0,0,source.PixelWidth,source.PixelHeight);
             }                    
             
-            if ( BitmapPixelsData.TryCreate( source, _drawinRegion , out var pixelsData ) )
+            if ( BitmapPixelsData.IsNullOrEmpty( _pixelsData ) )
+            {
+                BitmapPixelsData.TryCreate( source, out _pixelsData );
+            }
+            else
+            {
+                BitmapPixelsData.TryCopy( source, ref _pixelsData );
+            }
+
+            if ( ! BitmapPixelsData.IsNullOrEmpty( _pixelsData ) )
             {
                 using ( var bitmapLocker = new WritableBitmapLocker( _writableBitmap ) )
                 {
-                    _writableBitmap.WritePixels(_bitmapRegion, pixelsData.Buffer , pixelsData.Stride , 0 );
+                    _writableBitmap.WritePixels(_bitmapRegion, _pixelsData.Buffer , _pixelsData.Stride , 0 );
                     _writableBitmap.AddDirtyRect( _bitmapRegion );
                 }
             }
