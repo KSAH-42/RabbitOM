@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming
                 return s_empty_buffer;
             }
 
-            byte[] result = new byte[ source.Count ];
+            var result = new byte[ source.Count ];
 
             Buffer.BlockCopy( source.Array , source.Offset , result , 0 , result.Length );
 

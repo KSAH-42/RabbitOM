@@ -48,11 +48,11 @@ namespace RabbitOM.Streaming
                 throw new ArgumentNullException( nameof( source ) );
             }
 
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             foreach ( var element in source )
             {
-                string text = element.ToString();
+                var text = element.ToString();
 
                 if ( ! string.IsNullOrEmpty( text ) )
                 {
