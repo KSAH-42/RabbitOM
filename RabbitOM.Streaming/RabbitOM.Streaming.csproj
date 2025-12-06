@@ -156,8 +156,9 @@
     <Compile Include="Net\Rtsp\RtspDeliveryMode.cs" />
     <Compile Include="Net\Rtsp\RtspDigestAlgorithmType.cs" />
     <Compile Include="Net\Rtsp\RtspDigestAuthorizationChallenge.cs" />
-    <Compile Include="DisposeScope.cs" />
+    <Compile Include="Disposer.cs" />
     <Compile Include="Collections\EventConcurrentQueue.cs" />
+    <Compile Include="Threading\ReaderWriterLockProvider.cs" />
     <Compile Include="Threading\WaitHandleExtensions.EventSlim.cs" />
     <Compile Include="Threading\WaitHandleExtensions.cs" />
     <Compile Include="Net\Rtsp\RtspHashAlgorithm.cs" />

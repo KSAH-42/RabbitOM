@@ -135,7 +135,7 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
 
                 _requestHandlers.Add( handler );
 
-                using ( DisposeScope.NewScope( () => _requestHandlers.Remove( handler ) ) )
+                using ( var disposer = new Disposer( () => _requestHandlers.Remove( handler ) ) )
                 {
                     if ( ! _proxy.Send( RtspMessageSerializer.Serialize( request ) ) )
                     {
