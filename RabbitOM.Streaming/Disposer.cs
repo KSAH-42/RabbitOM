@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming
 {
     /// <summary>
-    /// Represent a class used to call a delegate on dispose
+    /// Represent a type used to call a delegate on dispose
     /// </summary>
     public struct Disposer : IDisposable
     {
