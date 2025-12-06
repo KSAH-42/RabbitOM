@@ -34,12 +34,12 @@ namespace RabbitOM.Streaming.Windows.Presentation
 
 
         /// <summary>
-        /// Gets the dpi x
+        /// Gets the number of pixel per inch (unit)
         /// </summary>
         public int DpiX { get; }
 
         /// <summary>
-        /// Gets the dpi y
+        /// Gets the number of pixel per inch (unit)
         /// </summary>
         public int DpiY { get; }
     }

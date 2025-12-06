@@ -34,16 +34,6 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         public byte[] Frame { get; set; }
 
         /// <summary>
-        /// Gets / Sets the Dpi X
-        /// </summary>
-        public int DpiX { get; set; } = Screen.Current.DpiX;
-
-        /// <summary>
-        /// Get / Sets the Dpi Y
-        /// </summary>
-        public int DpiY { get; set; } = Screen.Current.DpiY;
-
-        /// <summary>
         /// Gets / Sets the target control
         /// </summary>
         public FrameworkElement TargetControl { get; set; }     

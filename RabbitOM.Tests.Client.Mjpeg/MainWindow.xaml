@@ -39,6 +39,12 @@
 		</ComboBox>
 		<Button x:Name="_controlButton" Content="Play" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Top" Width="74" Click="OnButtonControlClick" Height="22"/>
         <Grid Margin="1,29,1,1" Background="Black">
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Uniform" Click="OnContextMenuImageUniform" />
+                    <MenuItem Header="Fill"  Click="OnContextMenuImageFill" />
+                </ContextMenu>
+            </Grid.ContextMenu>
             <TextBlock x:Name="_textBlockInfo" FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <Image x:Name="_image"  Stretch="Uniform" Margin="0,0,0,0" SnapsToDevicePixels="True" UseLayoutRounding="True" />
         </Grid>

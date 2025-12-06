@@ -177,5 +177,15 @@ namespace RabbitOM.Tests.Client.Mjpeg
                 _renderer.Render();
             }
         }
+
+        private void OnContextMenuImageUniform( object sender , RoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Uniform;
+        }
+
+        private void OnContextMenuImageFill( object sender , RoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Fill;
+        }
     }
 }
