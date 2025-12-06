@@ -5,23 +5,23 @@
     /// </summary>
     public sealed class SessionDescriptorBuilder
     {
-        private VersionField _version = null;
+        private VersionField _version;
 
-        private OriginField _origin = null;
+        private OriginField _origin;
 
-        private SessionNameField _sessionName = null;
+        private SessionNameField _sessionName;
 
-        private SessionInformationField _sessionInformation = null;
+        private SessionInformationField _sessionInformation;
 
-        private ConnectionField _connection = null;
+        private ConnectionField _connection;
 
-        private UriField _uri = null;
+        private UriField _uri;
 
-        private TimeZoneField _timeZone = null;
+        private TimeZoneField _timeZone;
 
-        private EncryptionField _encryption = null;
+        private EncryptionField _encryption;
 
-        private MediaDescriptionField _currentMediaDescription = null;
+        private MediaDescriptionField _currentMediaDescription;
 
         private readonly EmailFieldCollection _emails = new EmailFieldCollection();
 
