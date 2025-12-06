@@ -6,7 +6,7 @@ using System.Windows.Media.Imaging;
 namespace RabbitOM.Streaming.Windows.Presentation.Renders
 {
     /// <summary>
-    /// Represent a jpeg decoder
+    /// Represent a jpeg render
     /// </summary>
     public sealed class RtpJpegRender : RtpRender
     {
