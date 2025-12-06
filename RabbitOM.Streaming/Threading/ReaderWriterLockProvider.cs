@@ -8,25 +8,7 @@ namespace RabbitOM.Streaming.Threading
     /// </summary>
     public sealed class ReaderWriterLockProvider : IDisposable
     {
-        private readonly ReaderWriterLockSlim _lock;
-        private readonly Disposer _readerLock;
-        private readonly Disposer _writerLock;
-
-
-
-
-        /// <summary>
-        /// Initialize a new instance of the reader writer locks provider
-        /// </summary>
-        public ReaderWriterLockProvider()
-        {
-            _lock = new ReaderWriterLockSlim( LockRecursionPolicy.SupportsRecursion );
-            _readerLock = new Disposer( _lock.ExitReadLock );
-            _writerLock = new Disposer( _lock.ExitWriteLock );
-        } 
-        
-
-
+        private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim( LockRecursionPolicy.SupportsRecursion );
 
         /// <summary>
         /// Gets the reader lock
@@ -37,7 +19,7 @@ namespace RabbitOM.Streaming.Threading
             {
                 _lock.EnterReadLock();
 
-                return _readerLock;
+                return new Disposer( _lock.ExitReadLock );
             }
         }
 
@@ -50,12 +32,9 @@ namespace RabbitOM.Streaming.Threading
             {
                 _lock.EnterWriteLock();
 
-                return _writerLock;
+                return new Disposer( _lock.ExitWriteLock );
             }
         }
-        
-
-
 
         /// <summary>
         /// Release resources
