@@ -70,6 +70,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
                 case HEVCPacketType.FRAGMENTATION: _writer.WriteFU( packet ); break;
 
+                case HEVCPacketType.INVALID:
+                case HEVCPacketType.UNDEFINED:break;
+               
                 default:
                     _writer.Write( packet );
                     break;
