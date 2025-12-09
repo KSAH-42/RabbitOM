@@ -58,39 +58,22 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
         private void OnWritePacket( HEVCPacket packet )
         {
-            System.Diagnostics.Debug.Assert( packet.HeaderType != HEVCPacketType.UNDEFINED && packet.HeaderType != HEVCPacketType.INVALID );
-
-            if ( packet.HeaderType == HEVCPacketType.AGGREGATION )
+            switch ( packet.HeaderType )
             {
-                _writer.WriteAU( packet );
-                return;
-            }
+                case HEVCPacketType.PPS: _writer.WritePPS( packet ); break;
 
-            if ( packet.HeaderType == HEVCPacketType.FRAGMENTATION )
-            {
-                _writer.WriteFU( packet );
-                return;
-            }
+                case HEVCPacketType.SPS: _writer.WriteSPS( packet ); break;
 
-            if ( packet.HeaderType == HEVCPacketType.PPS )
-            {
-                _writer.WritePPS( packet );
-                return;
-            }
+                case HEVCPacketType.VPS: _writer.WriteVPS( packet ); break;
 
-            if ( packet.HeaderType == HEVCPacketType.SPS )
-            {
-                _writer.WriteSPS( packet );
-                return;
-            }
+                case HEVCPacketType.AGGREGATION: _writer.WriteAU( packet ); break;
 
-            if ( packet.HeaderType == HEVCPacketType.VPS )
-            {
-                _writer.WriteVPS( packet );
-                return;
-            }
+                case HEVCPacketType.FRAGMENTATION: _writer.WriteFU( packet ); break;
 
-            _writer.Write( packet );
+                default:
+                    _writer.Write( packet );
+                    break;
+            }
         }
     }
 }
