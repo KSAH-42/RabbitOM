@@ -26,6 +26,21 @@ namespace RabbitOM.Streaming.Net.Sdp
         /// <summary>
         /// Represent field name
         /// </summary>
+        public const string TypeSPropPps = "sprop-pps";
+        
+        /// <summary>
+        /// Represent field name
+        /// </summary>
+        public const string TypeSPropSps = "sprop-sps";
+        
+        /// <summary>
+        /// Represent field name
+        /// </summary>
+        public const string TypeSPropVps = "sprop-vps";
+
+        /// <summary>
+        /// Represent field name
+        /// </summary>
         public const string TypeMode = "mode";
 
         /// <summary>
@@ -71,6 +86,8 @@ namespace RabbitOM.Streaming.Net.Sdp
         private string _sps = string.Empty;
 
         private string _pps = string.Empty;
+
+        private string _vps = string.Empty;
 
         private string _mode = string.Empty;
 
@@ -131,6 +148,15 @@ namespace RabbitOM.Streaming.Net.Sdp
         {
             get => _pps;
             set => _pps = DataConverter.Filter(value);
+        }
+
+        /// <summary>
+        /// Gets / Sets the picture parameter sets value
+        /// </summary>
+        public string VPS
+        {
+            get => _vps;
+            set => _vps = DataConverter.Filter(value);
         }
 
         /// <summary>
@@ -223,6 +249,7 @@ namespace RabbitOM.Streaming.Net.Sdp
             _packetizationMode = info._packetizationMode;
             _sps = info._sps;
             _pps = info._pps;
+            _vps = info._vps;
             _mode = info._mode;
             _sizeLength = info._sizeLength;
             _indexLength = info._indexLength;

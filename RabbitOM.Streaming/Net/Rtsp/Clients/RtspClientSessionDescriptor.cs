@@ -138,7 +138,7 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients
 
                 if ( mediaFormat == RtspMediaFormat.Video )
                 {
-                    _selectedTrack = RtspTrackInfo.NewVideoTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId , mediaTrack.Format.SPS , mediaTrack.Format.PPS );
+                    _selectedTrack = RtspTrackInfo.NewVideoTrackInfo( mediaTrack.RtpMap.PayloadType , mediaTrack.RtpMap.Encoding , mediaTrack.RtpMap.ClockRate , mediaTrack.ControlUri , mediaTrack.Format.ProfileLevelId , mediaTrack.Format.SPS , mediaTrack.Format.PPS , mediaTrack.Format.VPS );
                 }
 
                 return _selectedTrack != null;

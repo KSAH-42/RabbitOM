@@ -158,22 +158,6 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <param name="profileId">the profile identifier</param>
         /// <param name="sps">the sps</param>
         /// <param name="pps">the ppz</param>
-        /// <returns>returns an instance</returns>
-        public static RtspTrackInfo NewVideoTrackInfo(byte payloadType, string encoder, uint clockRate, string controlUri, string profileId, string sps, string pps)
-        {
-            return new RtspTrackInfo(payloadType, encoder, clockRate, controlUri, profileId, sps, pps, string.Empty);
-        }
-
-        /// <summary>
-        /// Create an new video track info
-        /// </summary>
-        /// <param name="payloadType">the payload</param>
-        /// <param name="encoder">the encoder</param>
-        /// <param name="clockRate">the clock rate</param>
-        /// <param name="controlUri">the control uri</param>
-        /// <param name="profileId">the profile identifier</param>
-        /// <param name="sps">the sps</param>
-        /// <param name="pps">the ppz</param>
         /// <param name="vps">the vps</param>
         /// <returns>returns an instance</returns>
         public static RtspTrackInfo NewVideoTrackInfo(byte payloadType, string encoder, uint clockRate, string controlUri, string profileId, string sps, string pps, string vps)

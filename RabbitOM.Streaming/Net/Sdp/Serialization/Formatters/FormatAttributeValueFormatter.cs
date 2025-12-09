@@ -130,19 +130,6 @@ namespace RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
 
                 else
 
-                if (string.Compare(pair.First, FormatAttributeValue.TypeSPropParmeterSets, true) == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(pair.Second))
-                    {
-                        var ppValues = pair.Second.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                        result.SPS = ppValues.ElementAtOrDefault(0);
-                        result.PPS = ppValues.ElementAtOrDefault(1);
-                    }
-                }
-
-                else
-
                 if (string.Compare(pair.First, FormatAttributeValue.TypeMode, true) == 0)
                 {
                     result.Mode = pair.Second;
@@ -174,6 +161,32 @@ namespace RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
                 if (string.Compare(pair.First, FormatAttributeValue.TypeConfiguration, true) == 0)
                 {
                     result.Configuration = pair.Second;
+                }
+
+                if (string.Compare(pair.First, FormatAttributeValue.TypeSPropParmeterSets, true) == 0)
+                {
+                    if (!string.IsNullOrWhiteSpace(pair.Second))
+                    {
+                        var ppValues = pair.Second.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        result.SPS = ppValues.ElementAtOrDefault(0);
+                        result.PPS = ppValues.ElementAtOrDefault(1);
+                    }
+                }
+
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeSPropPps, true) == 0)
+                {
+                    result.PPS = pair.Second;
+                }
+
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeSPropSps, true) == 0)
+                {
+                    result.SPS = pair.Second;
+                }
+
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeSPropVps, true) == 0)
+                {
+                    result.VPS = pair.Second;
                 }
 
                 else

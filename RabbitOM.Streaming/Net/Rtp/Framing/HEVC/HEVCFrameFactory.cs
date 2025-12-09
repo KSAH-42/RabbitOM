@@ -61,13 +61,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
             switch ( packet.HeaderType )
             {
                 case HEVCPacketType.PPS: _writer.WritePPS( packet ); break;
-
                 case HEVCPacketType.SPS: _writer.WriteSPS( packet ); break;
-
                 case HEVCPacketType.VPS: _writer.WriteVPS( packet ); break;
-
                 case HEVCPacketType.AGGREGATION: _writer.WriteAU( packet ); break;
-
                 case HEVCPacketType.FRAGMENTATION: _writer.WriteFU( packet ); break;
 
                 case HEVCPacketType.INVALID:
