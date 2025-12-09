@@ -27,10 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
      
             foreach ( var packet in packets )
             {
-                if ( HEVCPacket.TryParse( packet.Payload , out var naluPacket ) && naluPacket.TryValidate() )
-                {
-                    OnWritePacket( naluPacket );
-                }
+                throw new NotImplementedException();
             }
 
             if ( _writer.Length > 0 && _writer.HasParametersSets() )
