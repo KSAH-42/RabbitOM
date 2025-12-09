@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
                 StartBit  = ( ( buffer.Array[ buffer.Offset + 1 ] >> 7 ) & 0x1 ) == 1 ,
                 StopBit   = ( ( buffer.Array[ buffer.Offset + 1 ] >> 6 ) & 0x1 ) == 1 ,
                 Type      = (byte) (buffer.Array[ buffer.Offset + 1 ] & 0x3F ),
-                Data      = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Count - 1 ),
+                Data      = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Array.Length - (buffer.Offset + 2) ),
             };
 
             return true;

@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
         public bool TryValidate()
         {
-            return HeaderType == HEVCPacketType.UNDEFINED || HeaderType >= HEVCPacketType.INVALID;
+            return true;
         }
 
         public IList<ArraySegment<byte>> GetAggregationUnits()
@@ -67,7 +67,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
             result.HeaderType          = (HEVCPacketType) ( ( header >> 9 ) & 0x3F );
             result.HeaderForbiddenBit  = (byte)           ( ( header >> 15) & 0x1  ) == 1;
 
-            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
+            result.Payload = new ArraySegment<byte>(  buffer.Array , buffer.Offset + 2 , buffer.Array.Length - (buffer.Offset + 2) );
             
             return true;
         }

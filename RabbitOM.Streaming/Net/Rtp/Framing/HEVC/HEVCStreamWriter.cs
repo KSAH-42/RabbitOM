@@ -179,7 +179,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
                 {
                     if ( ! _streamOfFragmentedPackets.IsEmpty )
                     {
-                        throw new InvalidOperationException( "not start fu packet was already received" );
+                        //throw new InvalidOperationException( "not start fu packet was already received" );
                     }
 
                     _streamOfFragmentedPackets.WriteAsUInt16( HEVCPacketFU.CreateHeader( ref fragmentationUnit , packet.Header ) );
@@ -190,7 +190,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
                 {
                     if ( _streamOfFragmentedPackets.IsEmpty )
                     {
-                        throw new InvalidOperationException( "not start fu packet has been received" );
+                        //throw new InvalidOperationException( "not start fu packet has been received" );
                     }
 
                     _streamOfFragmentedPackets.WriteAsBinary( packet.Payload );
@@ -200,7 +200,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
                 {
                     if ( _streamOfFragmentedPackets.IsEmpty )
                     {
-                        throw new InvalidOperationException( "not start fu packet has been received" );
+                        //throw new InvalidOperationException( "not start fu packet has been received" );
                     }
 
                     _streamOfFragmentedPackets.WriteAsBinary( packet.Payload );
