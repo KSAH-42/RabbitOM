@@ -114,64 +114,39 @@ namespace RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
                     result.PayloadType = DataConverter.ConvertToByte(pair.Second);
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeProfileLevelId, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeProfileLevelId, true) == 0)
                 {
                     result.ProfileLevelId = pair.Second;
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypePacketizationMode, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypePacketizationMode, true) == 0)
                 {
                     result.PacketizationMode = DataConverter.ConvertToLong(pair.Second);
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeMode, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeMode, true) == 0)
                 {
                     result.Mode = pair.Second;
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeSizeLength, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeSizeLength, true) == 0)
                 {
                     result.SizeLength = DataConverter.ConvertToNullableLong(pair.Second);
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeIndexLength, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeIndexLength, true) == 0)
                 {
                     result.IndexLength = DataConverter.ConvertToNullableLong(pair.Second);
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeIndexDeltaLength, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeIndexDeltaLength, true) == 0)
                 {
                     result.IndexDeltaLength = DataConverter.ConvertToNullableLong(pair.Second);
                 }
 
-                else
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeConfiguration, true) == 0)
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeConfiguration, true) == 0)
                 {
                     result.Configuration = pair.Second;
-                }
-
-                if (string.Compare(pair.First, FormatAttributeValue.TypeSPropParmeterSets, true) == 0)
-                {
-                    if (!string.IsNullOrWhiteSpace(pair.Second))
-                    {
-                        var ppValues = pair.Second.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                        result.SPS = ppValues.ElementAtOrDefault(0);
-                        result.PPS = ppValues.ElementAtOrDefault(1);
-                    }
                 }
 
                 else if (string.Compare(pair.First, FormatAttributeValue.TypeSPropPps, true) == 0)
@@ -187,6 +162,14 @@ namespace RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
                 else if (string.Compare(pair.First, FormatAttributeValue.TypeSPropVps, true) == 0)
                 {
                     result.VPS = pair.Second;
+                }
+
+                else if (string.Compare(pair.First, FormatAttributeValue.TypeSPropParmeterSets, true) == 0)
+                {
+                    var ppValues = pair.Second?.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    result.SPS = ppValues.ElementAtOrDefault(0);
+                    result.PPS = ppValues.ElementAtOrDefault(1);
                 }
 
                 else
