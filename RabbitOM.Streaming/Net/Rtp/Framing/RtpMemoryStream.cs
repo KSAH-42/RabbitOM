@@ -166,7 +166,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing
 
             if ( memoryStream._stream.TryGetBuffer( out var buffer ) )
             {
-                memoryStream._stream.Write( buffer.Array , buffer.Offset , buffer.Count );
+                _stream.Write( buffer.Array , buffer.Offset , buffer.Count );
             }
         }
 
