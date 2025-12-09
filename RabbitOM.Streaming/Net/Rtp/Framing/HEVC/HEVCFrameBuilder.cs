@@ -17,6 +17,8 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
         public HEVCFrameBuilder()
         {
+            ExceptionHelper.ThrowOnRelease("the implementation is not finished and can not be used in production");
+
             _configuration = new HEVCFrameBuilderConfiguration();
             _frameFactory  = new HEVCFrameFactory( _configuration );
             _aggregator    = new HEVCFrameAggregator( _configuration );

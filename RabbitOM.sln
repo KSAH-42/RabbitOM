@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		ToDo.txt = ToDo.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{C8BA138C-6603-4FBC-8033-5F6ED9E3D6D8}"
