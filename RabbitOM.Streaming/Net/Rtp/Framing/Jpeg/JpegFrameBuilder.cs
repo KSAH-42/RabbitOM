@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
         {
             _configuration = new JpegFrameBuilderConfiguration();
             _factory       = new JpegFrameFactory();
-            _aggregator    = new JpegFrameAggregator( this );
+            _aggregator    = new JpegFrameAggregator( _configuration );
         }
 
 

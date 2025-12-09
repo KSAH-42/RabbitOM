@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
     /// </summary>
     public sealed class JpegFrameAggregator
     {
-        private readonly JpegFrameBuilder _builder;
+        private readonly JpegFrameBuilderConfiguration _configuration;
 
         private readonly RtpPacketAggregator _aggregator;
 
@@ -19,11 +19,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
         /// <summary>
         /// Initialize the aggregator
         /// </summary>
-        /// <param name="builder">the builder</param>
+        /// <param name="configuration">the configuration</param>
         /// <exception cref="ArgumentNullException"/>
-        public JpegFrameAggregator( JpegFrameBuilder builder )
+        public JpegFrameAggregator( JpegFrameBuilderConfiguration configuration )
         {
-            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
+            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 
             _aggregator = new RtpPacketAggregator();
         }
@@ -80,12 +80,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
                 return false;
             }
 
-            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
+            if ( packet.Payload.Count > _configuration.MaximumPayloadSize )
             {
                 return false;
             }
 
-            if ( _aggregator.Packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            if ( _aggregator.Packets.Count > _configuration.NumberOfPacketsPerFrame )
             {
                 return false;
             }
