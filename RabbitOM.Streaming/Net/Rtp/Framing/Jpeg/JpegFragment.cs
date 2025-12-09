@@ -137,7 +137,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
                 return false;
             }
 
-            result.Payload = new ArraySegment<byte>( buffer.Array , offset , buffer.Count - (offset - buffer.Offset) );
+            result.Payload = new ArraySegment<byte>( buffer.Array , offset , buffer.Array.Length - offset );
             
             return true;
         }
