@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.H265
+namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 {
-    public sealed class H265FrameAggregator
+    public sealed class HEVCFrameAggregator
     {
-        private readonly H265FrameBuilder _builder;
+        private readonly HEVCFrameBuilderConfiguration _configuration;
 
         private readonly RtpPacketAggregator _aggregator;
 
@@ -14,9 +14,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.H265
 
 
         
-        public H265FrameAggregator( H265FrameBuilder builder )
+        public HEVCFrameAggregator( HEVCFrameBuilderConfiguration configuration )
         {
-            _builder = builder ?? throw new ArgumentNullException( nameof( builder ) );
+            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 
             _aggregator = new RtpPacketAggregator();
         }
@@ -55,12 +55,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.H265
                 return false;
             }
 
-            if ( packet.Payload.Count > _builder.Configuration.MaximumPayloadSize )
+            if ( packet.Payload.Count > _configuration.MaximumPayloadSize )
             {
                 return false;
             }
 
-            if ( _aggregator.Packets.Count > _builder.Configuration.NumberOfPacketsPerFrame )
+            if ( _aggregator.Packets.Count > _configuration.NumberOfPacketsPerFrame )
             {
                 return false;
             }

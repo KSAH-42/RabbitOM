@@ -1,32 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.H265
+namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 {
-    public sealed class H265FrameBuilder : RtpFrameBuilder
+    public sealed class HEVCFrameBuilder : RtpFrameBuilder
     {
-        private readonly H265FrameBuilderConfiguration _configuration;
+        private readonly HEVCFrameBuilderConfiguration _configuration;
 
-        private readonly H265FrameFactory _frameFactory;
+        private readonly HEVCFrameFactory _frameFactory;
 
-        private readonly H265FrameAggregator _aggregator;
+        private readonly HEVCFrameAggregator _aggregator;
     
 
 
 
 
-        public H265FrameBuilder()
+        public HEVCFrameBuilder()
         {
-            _configuration = new H265FrameBuilderConfiguration();
-            _frameFactory  = new H265FrameFactory( this );
-            _aggregator    = new H265FrameAggregator( this );
+            _configuration = new HEVCFrameBuilderConfiguration();
+            _frameFactory  = new HEVCFrameFactory( _configuration );
+            _aggregator    = new HEVCFrameAggregator( _configuration );
         }
 
 
 
 
 
-        public H265FrameBuilderConfiguration Configuration
+        public HEVCFrameBuilderConfiguration Configuration
         {
             get => _configuration;
         }

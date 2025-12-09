@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <summary>
         /// Represent a header name
         /// </summary>
-        public const string ContentType            = "Content-Type";
+        public const string ContentType            = "Content-HeaderType";
 
         /// <summary>
         /// Represent a header name

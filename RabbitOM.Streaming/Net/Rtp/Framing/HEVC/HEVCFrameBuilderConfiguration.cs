@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.H265
+namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 {
-    public sealed class H265FrameBuilderConfiguration : RtpFrameBuilderConfiguration
+    public sealed class HEVCFrameBuilderConfiguration : RtpFrameBuilderConfiguration
     {
         private byte[] _pps;
 

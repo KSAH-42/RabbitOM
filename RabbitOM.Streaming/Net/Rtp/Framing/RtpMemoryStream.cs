@@ -154,6 +154,23 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing
         }
 
         /// <summary>
+        /// Append
+        /// </summary>
+        /// <param name="memoryStream">the stream</param>
+        public void WriteAsBinary( RtpMemoryStream memoryStream ) 
+        {
+            if ( memoryStream == null || memoryStream.IsEmpty )
+            {
+                return;
+            }
+
+            if ( memoryStream._stream.TryGetBuffer( out var buffer ) )
+            {
+                memoryStream._stream.Write( buffer.Array , buffer.Offset , buffer.Count );
+            }
+        }
+
+        /// <summary>
         /// Write a string
         /// </summary>
         /// <param name="value">the value</param>

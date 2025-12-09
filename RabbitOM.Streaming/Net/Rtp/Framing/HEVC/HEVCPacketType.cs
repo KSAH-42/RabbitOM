@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.H265
+namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 {
-	public enum NalUnitType
+	public enum HEVCPacketType
 	{
         UNDEFINED = -1,
         CODED_SLICE_TRAIL_N = 0,
