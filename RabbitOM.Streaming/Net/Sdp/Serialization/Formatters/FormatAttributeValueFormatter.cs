@@ -103,10 +103,7 @@ namespace RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
 
                 if (result == null)
                 {
-                    result = new FormatAttributeValue()
-                    {
-                        PayloadType = DataConverter.ConvertToByte( tokens.FirstOrDefault() ),
-                    };
+                    result = new FormatAttributeValue() { PayloadType = DataConverter.ConvertToByte( tokens.FirstOrDefault() ) };
                 }
 
                 if (string.Compare(pair.First, AttributeNames.FormatPayload, true) == 0)
