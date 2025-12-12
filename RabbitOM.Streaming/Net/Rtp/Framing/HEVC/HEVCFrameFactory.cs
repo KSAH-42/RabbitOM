@@ -23,81 +23,23 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
                 return false;
             }
 
-            OnPrepare();
+            _writer.SetLength( 0 );
+
+            _writer.PPS = _writer.PPS?.Length > 0 ? _writer.PPS : _configuration.PPS;
+            _writer.SPS = _writer.SPS?.Length > 0 ? _writer.SPS : _configuration.SPS;
+            _writer.VPS = _writer.VPS?.Length > 0 ? _writer.VPS : _configuration.VPS;
      
-            foreach ( var packet in packets )
-            {
-                if ( HEVCPacket.TryParse( packet.Payload , out var naluPacket ) && naluPacket.TryValidate() )
-                {
-                    OnWritePacket( naluPacket );
-                }
-            }
-
-            if ( _writer.Length > 0 && _writer.HasParametersSets() )
-            {
-                result = new HEVCFrame( _writer.ToArray() );
-            }
-
-            return result != null;
+            throw new NotImplementedException();
         }
 
         public void Clear()
         {
             _writer.Clear();
-            _writer.ClearParameters();
         }
 
         public void Dispose()
         {
             _writer.Dispose();
-        }
-
-
-
-
-
-
-        private void OnPrepare()
-        {
-            _writer.Clear();
-
-            _writer.PPS = _writer.PPS?.Length > 0 ? _writer.PPS : _configuration.PPS;
-            _writer.SPS = _writer.SPS?.Length > 0 ? _writer.SPS : _configuration.SPS;
-            _writer.VPS = _writer.VPS?.Length > 0 ? _writer.VPS : _configuration.VPS;
-        }
-
-        private void OnWritePacket( HEVCPacket packet )
-        {
-            switch ( packet.HeaderType )
-            {
-                case HEVCPacketType.PPS: 
-                    _writer.WritePPS( packet ); 
-                    break;
-
-                case HEVCPacketType.SPS: 
-                    _writer.WriteSPS( packet ); 
-                    break;
-
-                case HEVCPacketType.VPS: 
-                    _writer.WriteVPS( packet ); 
-                    break;
-
-                case HEVCPacketType.AGGREGATION: 
-                    _writer.WriteAU( packet ); 
-                    break;
-
-                case HEVCPacketType.FRAGMENTATION: 
-                    _writer.WriteFU( packet ); 
-                    break;
-
-                case HEVCPacketType.INVALID:
-                case HEVCPacketType.UNDEFINED:
-                    break;
-               
-                default:
-                    _writer.Write( packet );
-                    break;
-            }
         }
     }
 }

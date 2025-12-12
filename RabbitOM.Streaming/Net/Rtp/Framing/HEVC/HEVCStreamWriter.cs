@@ -10,7 +10,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
         private readonly RtpMemoryStream _streamOfPackets = new RtpMemoryStream();
         private readonly RtpMemoryStream _streamOfFragmentedPackets = new RtpMemoryStream();
-        private readonly RtpMemoryStream _output = new RtpMemoryStream();
        
 
 
@@ -39,11 +38,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
             set => _vps = value;
         }
 
-        public long Position
-        {
-            get => _streamOfPackets.Position;
-        }
-
         public long Length
         {
             get => _streamOfPackets.Length;
@@ -57,14 +51,17 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
 
 
+
+
+
         
 
 
 
-        public bool HasParametersSets()
-        {
-            return _pps?.Length > 0 && _sps?.Length > 0 && _vps?.Length > 0;
-        }
+
+        
+
+
 
         public void SetLength( int value )
         {
@@ -73,155 +70,91 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
         public void Clear()
         {
-            _streamOfPackets.Clear();
-            _streamOfFragmentedPackets.Clear();
-            _output.Clear();
-        }
-
-        public void ClearParameters()
-        {
             _pps = null;
             _sps = null;
             _vps = null;
+
+            _streamOfPackets.Clear();
         }
 
         public void Dispose()
         {
             Clear();
-            ClearParameters();
-
+            
             _streamOfPackets.Dispose();
             _streamOfFragmentedPackets.Dispose();
-            _output.Dispose();
         }
 
         public byte[] ToArray()
         {
-            _output.SetLength(0);
+            var output = new RtpMemoryStream();
 
             if ( _vps?.Length > 0 )
             {
-                _output.WriteAsBinary( StartCodePrefix );
-                _output.WriteAsBinary( _vps );
+                output.WriteAsBinary( StartCodePrefix );
+                output.WriteAsBinary( _vps );
             }
 
             if ( _sps?.Length > 0 )
             {
-                _output.WriteAsBinary( StartCodePrefix );
-                _output.WriteAsBinary( _sps );
+                output.WriteAsBinary( StartCodePrefix );
+                output.WriteAsBinary( _sps );
             }
 
             if ( _pps?.Length > 0 )
             {
-                _output.WriteAsBinary( StartCodePrefix );
-                _output.WriteAsBinary( _pps );
+                output.WriteAsBinary( StartCodePrefix );
+                output.WriteAsBinary( _pps );
             }
 
-            _output.WriteAsBinary( _streamOfPackets );
+            output.WriteAsBinary( _streamOfPackets );
             
-            return _output.ToArray();
+            return output.ToArray();
         }
 
-        public void WritePPS( HEVCPacket packet )
+        public bool HasParametersSets()
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            _pps = packet.Payload.ToArray();
+            return _pps?.Length > 0 && _sps?.Length > 0 && _vps?.Length > 0;
         }
 
-        public void WriteSPS( HEVCPacket packet )
+        public void Write( RtpPacket packet )
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            _sps = packet.Payload.ToArray();
+            throw new NotImplementedException();
         }
 
-        public void WriteVPS( HEVCPacket packet )
+        public void WritePPS( RtpPacket packet )
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            _vps = packet.Payload.ToArray();
+            throw new NotImplementedException();
         }
 
-        public void WriteAU( HEVCPacket packet )
+        public void WriteSPS( RtpPacket packet )
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            foreach ( var aggregation in packet.GetAggregationUnits() )
-            {
-                _streamOfPackets.WriteAsBinary( StartCodePrefix );
-                _streamOfPackets.WriteAsBinary( aggregation );
-            }
+            throw new NotImplementedException();
         }
 
-        public void WriteFU( HEVCPacket packet )
+        public void WriteVPS( RtpPacket packet )
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            if ( HEVCPacketFU.TryParse( packet.Payload , out var fragmentationUnit ) )
-            {
-                if ( HEVCPacketFU.IsStartPacket( ref fragmentationUnit ) )
-                {
-                    if ( ! _streamOfFragmentedPackets.IsEmpty )
-                    {
-                        //throw new InvalidOperationException( "not start fu packet was already received" );
-                    }
-
-                    _streamOfFragmentedPackets.WriteAsUInt16( HEVCPacketFU.CreateHeader( ref fragmentationUnit , packet.Header ) );
-                    _streamOfFragmentedPackets.WriteAsBinary( packet.Payload );
-                }
-
-                else if ( HEVCPacketFU.IsIntermediaryPacket( ref fragmentationUnit ) )
-                {
-                    if ( _streamOfFragmentedPackets.IsEmpty )
-                    {
-                        //throw new InvalidOperationException( "not start fu packet has been received" );
-                    }
-
-                    _streamOfFragmentedPackets.WriteAsBinary( packet.Payload );
-                }
-
-                else if ( HEVCPacketFU.IsStopPacket( ref fragmentationUnit ) )
-                {
-                    if ( _streamOfFragmentedPackets.IsEmpty )
-                    {
-                        //throw new InvalidOperationException( "not start fu packet has been received" );
-                    }
-
-                    _streamOfFragmentedPackets.WriteAsBinary( packet.Payload );
-
-                    _streamOfPackets.WriteAsBinary( StartCodePrefix );
-                    _streamOfPackets.WriteAsBinary( _streamOfFragmentedPackets );
-
-                    _streamOfFragmentedPackets.Clear();
-                }
-            }
+            throw new NotImplementedException();
         }
 
-        public void Write( HEVCPacket packet )
+        public void WriteAggregation( RtpPacket packet )
         {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
+            throw new NotImplementedException();
+        }
 
-            _streamOfPackets.WriteAsBinary( StartCodePrefix );
-            _streamOfPackets.WriteAsBinary( packet.Payload );
+        public void WriteStartFragmentation( RtpPacket packet )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteStopFragmentation( RtpPacket packet )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteFragmentation( RtpPacket packet )
+        {
+            throw new NotImplementedException();
         }
     }
 }

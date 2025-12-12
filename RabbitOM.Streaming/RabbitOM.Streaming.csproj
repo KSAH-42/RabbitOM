@@ -51,14 +51,14 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="Net\Rtp\Framing\HEVC\Headers\NatUnitType.cs" />
     <Compile Include="Net\Rtp\Framing\HEVC\HEVCFrameAggregator.cs" />
     <Compile Include="Net\Rtp\Framing\HEVC\HEVCFrameBuilder.cs" />
     <Compile Include="Net\Rtp\Framing\HEVC\HEVCFrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\Framing\HEVC\HEVCFrameFactory.cs" />
-    <Compile Include="Net\Rtp\Framing\HEVC\HEVCPacketFU.cs" />
+    <Compile Include="Net\Rtp\Framing\HEVC\Headers\NalUnitFragmentationHeader.cs" />
+    <Compile Include="Net\Rtp\Framing\HEVC\Headers\NalUnitHeader.cs" />
     <Compile Include="Net\Rtp\Framing\HEVC\HEVCFrame.cs" />
-    <Compile Include="Net\Rtp\Framing\HEVC\HEVCPacket.cs" />
-    <Compile Include="Net\Rtp\Framing\HEVC\HEVCPacketType.cs" />
     <Compile Include="Net\Rtp\Framing\HEVC\HEVCStreamWriter.cs" />
     <Compile Include="Net\Rtp\Framing\Jpeg\JpegFragmentQueue.cs" />
     <Compile Include="Net\Rtp\Framing\Jpeg\JpegQuantizer.cs" />

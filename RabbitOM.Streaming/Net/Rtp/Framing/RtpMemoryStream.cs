@@ -62,6 +62,14 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing
         }
         
         /// <summary>
+        /// Close
+        /// </summary>
+        public void Close()
+        {
+            _stream.Close();
+        }
+
+        /// <summary>
         /// Clear
         /// </summary>
         public void Clear()
