@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public sealed class HEVCStreamWriter : IDisposable
+    public sealed class H265StreamWriter : IDisposable
     {
         private static readonly byte[] StartCodePrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
 

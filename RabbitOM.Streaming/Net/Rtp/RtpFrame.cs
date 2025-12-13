@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing
+namespace RabbitOM.Streaming.Net.Rtp
 {
     /// <summary>
     /// Represent base frame class

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
+namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 {
     /// <summary>
     /// Represent the frame builder class

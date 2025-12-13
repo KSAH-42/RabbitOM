@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC.Headers
+namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
 	public enum NatUnitType
 	{

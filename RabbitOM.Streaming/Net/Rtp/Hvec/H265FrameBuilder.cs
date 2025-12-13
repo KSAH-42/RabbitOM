@@ -1,34 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public sealed class HEVCFrameBuilder : RtpFrameBuilder
+    public sealed class H265FrameBuilder : RtpFrameBuilder
     {
-        private readonly HEVCFrameBuilderConfiguration _configuration;
+        private readonly H265FrameBuilderConfiguration _configuration;
 
-        private readonly HEVCFrameFactory _frameFactory;
+        private readonly H265FrameFactory _frameFactory;
 
-        private readonly HEVCFrameAggregator _aggregator;
+        private readonly H265FrameAggregator _aggregator;
     
 
 
 
 
-        public HEVCFrameBuilder()
+        public H265FrameBuilder()
         {
             ExceptionHelper.ThrowOnRelease("the implementation is not finished and can not be used in production");
 
-            _configuration = new HEVCFrameBuilderConfiguration();
-            _frameFactory  = new HEVCFrameFactory( _configuration );
-            _aggregator    = new HEVCFrameAggregator( _configuration );
+            _configuration = new H265FrameBuilderConfiguration();
+            _frameFactory  = new H265FrameFactory( _configuration );
+            _aggregator    = new H265FrameAggregator( _configuration );
         }
 
 
 
 
 
-        public HEVCFrameBuilderConfiguration Configuration
+        public H265FrameBuilderConfiguration Configuration
         {
             get => _configuration;
         }

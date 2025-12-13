@@ -34,8 +34,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
 {
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Net.Rtp;
-    using RabbitOM.Streaming.Net.Rtp.Framing;
-    using RabbitOM.Streaming.Net.Rtp.Framing.Jpeg;
+    using RabbitOM.Streaming.Net.Rtp.Jpeg;
     using RabbitOM.Streaming.Net.Rtsp;
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
@@ -49,7 +48,6 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
         public MainWindow()
         {
-            InitializeComponent();
         }
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )

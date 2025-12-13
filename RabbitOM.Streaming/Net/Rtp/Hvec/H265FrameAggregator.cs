@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public sealed class HEVCFrameAggregator
+    public sealed class H265FrameAggregator
     {
-        private readonly HEVCFrameBuilderConfiguration _configuration;
+        private readonly H265FrameBuilderConfiguration _configuration;
 
         private readonly RtpPacketAggregator _aggregator;
 
@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
 
 
         
-        public HEVCFrameAggregator( HEVCFrameBuilderConfiguration configuration )
+        public H265FrameAggregator( H265FrameBuilderConfiguration configuration )
         {
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 

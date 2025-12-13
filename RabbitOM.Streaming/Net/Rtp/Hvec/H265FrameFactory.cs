@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.HEVC
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public sealed class HEVCFrameFactory : IDisposable
+    public sealed class H265FrameFactory : IDisposable
     {
-        private readonly HEVCFrameBuilderConfiguration _configuration;
-        private readonly HEVCStreamWriter _writer;
+        private readonly H265FrameBuilderConfiguration _configuration;
+        private readonly H265StreamWriter _writer;
 
-        public HEVCFrameFactory( HEVCFrameBuilderConfiguration configuration )
+        public H265FrameFactory( H265FrameBuilderConfiguration configuration )
         {
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
-            _writer = new HEVCStreamWriter();
+            _writer = new H265StreamWriter();
         } 
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )

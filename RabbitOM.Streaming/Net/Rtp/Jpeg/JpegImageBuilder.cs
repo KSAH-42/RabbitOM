@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
+namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 {
     /// <summary>
     /// Represent an image builder class

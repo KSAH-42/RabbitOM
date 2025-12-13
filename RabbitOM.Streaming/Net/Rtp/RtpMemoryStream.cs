@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Net.Rtp.Framing
+namespace RabbitOM.Streaming.Net.Rtp
 {
     /// <summary>
     /// Represent a tolerant memory stream
