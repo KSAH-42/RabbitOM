@@ -133,18 +133,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Framing.Jpeg
         /// Occurs when the image headers need to be renew. If the first fragment doesn't changed there is no way to recreated jpeg headers.
         /// </summary>
         /// <returns>returns true if the headers need to be created</returns>
-        /// <remarks>
-        ///     <para>this method throw an exception if the argument is null.</para>
-        ///     <para>Because if we don't do that, it create a violation of the purpose for the returned value. we can't create headers if the fragment is null or returns any types of values in this case.</para>
-        ///     <para>in others words, we can allow to execute any code for any status returns by this method.</para>
-        ///     <para>an exception must be thrown</para>
-        ///     <para>the null check must done in an other place</para>
-        ///     <para>with the actual implementation, it can not happens but i add it just in case some change some code here, in this class.</para>
-        /// </remarks>
         private bool OnCreatingHeaders( JpegFragment fragment )
         {
+            System.Diagnostics.Debug.Assert( fragment != null );
+
             return _headersPosition               == 0
-                || _firstFragment                 == null 
                 || _firstFragment.Type            != fragment.Type 
                 || _firstFragment.Width           != fragment.Width
                 || _firstFragment.Height          != fragment.Height
