@@ -43,8 +43,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 return;
             }
 
-            Console.WriteLine( "PacketType {0} {1}" , packet.Type , packet.Payload.Count );
-
             RtpFrame frame = null;
 
             lock ( SyncRoot )
