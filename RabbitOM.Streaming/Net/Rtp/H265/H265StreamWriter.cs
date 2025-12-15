@@ -151,7 +151,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                     _streamOfFragmentedPackets.WriteAsUInt16( NalUnitFragmentationHeader.ParseNalHeader( packet.Payload ) );
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
-                else if ( NalUnitFragmentationHeader.IsIntermediaryPacket( ref header ) )
+                else if ( NalUnitFragmentationHeader.IsDataPacket( ref header ) )
                 {
                     Diagnostics.Debug.EnsureCondition( () => ! _streamOfFragmentedPackets.IsEmpty );
 

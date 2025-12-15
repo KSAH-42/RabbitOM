@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
         public static bool IsStopPacket( ref NalUnitFragmentationHeader header )
             => ! header.StartBit && header.StopBit;
 
-        public static bool IsIntermediaryPacket( ref NalUnitFragmentationHeader packet )
+        public static bool IsDataPacket( ref NalUnitFragmentationHeader packet )
             => ! packet.StartBit && ! packet.StopBit;
         
 
