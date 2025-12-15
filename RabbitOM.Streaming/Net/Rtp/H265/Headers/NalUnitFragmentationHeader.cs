@@ -36,6 +36,21 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
         // https://datatracker.ietf.org/doc/html/rfc7798#section-4.4.3
+        // header - 1
+        //  +---------------+---------------+
+        //  |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
+        //  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        //  |F|   Type    |  LayerId  | TID |
+        //  +-------------+-----------------+
+
+        // header
+        //  +---------------+
+        //  |7|6|5|4|3|2|1|0|
+        //  +-+-+-+-+-+-+-+-+
+        //  |S|E|  FuType   |
+        //  +---------------+
+
+        //  [payload........]
         public static bool TryParse( ArraySegment<byte> buffer , out NalUnitFragmentationHeader result )
         {
             result = default;
@@ -45,25 +60,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
                 return false;
             }
             
-            // header - 1
-            //  +---------------+---------------+
-            //  |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
-            //  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-            //  |F|   Type    |  LayerId  | TID |
-            //  +-------------+-----------------+
-
-            // header
-            //  +---------------+
-            //  |7|6|5|4|3|2|1|0|
-            //  +-+-+-+-+-+-+-+-+
-            //  |S|E|  FuType   |
-            //  +---------------+
-
-            //  [payload........]
-
-            
-
-
             var header = buffer.Array[ buffer.Offset + 2 ];
 
             result = new NalUnitFragmentationHeader();
@@ -71,8 +67,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;
             result.FragmentedType = (NatUnitType) ( header & 0x3F );
-
-            
+    
             if ( buffer.Count > 3 )
             {
                 result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 3 , buffer.Array.Length - (buffer.Offset + 3) );
