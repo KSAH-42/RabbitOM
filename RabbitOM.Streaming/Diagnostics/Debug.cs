@@ -6,6 +6,15 @@ namespace RabbitOM.Streaming.Diagnostics
     public static class Debug
     {
         [Conditional( "DEBUG" )]
+        public static void EnsureCondition( bool condition , string message = null )
+        {
+            if ( ! condition )
+            {
+                throw new InvalidOperationException( message );
+            }
+        }
+
+        [Conditional( "DEBUG" )]
         public static void EnsureCondition( Func<bool> condition , string message = null )
         {
             if ( condition == null )
