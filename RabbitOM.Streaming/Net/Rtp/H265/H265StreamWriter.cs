@@ -18,6 +18,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         private byte[] _pps;
         private byte[] _sps;
         private byte[] _vps;
+        private byte[] _paramsBuffer;
 
 
         
@@ -25,19 +26,31 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         public byte[] PPS
         {
             get => _pps;
-            set => _pps = value;
+            set
+            {
+                _pps = value;
+                _paramsBuffer = null;
+            }
         }
 
         public byte[] SPS
         {
             get => _sps;
-            set => _sps = value;
+            set
+            {
+                _sps = value;
+                _paramsBuffer = null; 
+            }
         }
 
         public byte[] VPS
         {
             get => _vps;
-            set => _vps = value;
+            set
+            {
+                _vps = value;
+                _paramsBuffer = null;
+            }
         }
 
         public long Length
@@ -75,6 +88,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _pps = null;
             _sps = null;
             _vps = null;
+            _paramsBuffer = null;
 
             _streamOfPackets.Clear();
         }
@@ -97,6 +111,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public byte[] GetParamtersBuffer()
         {
+            if ( _paramsBuffer?.Length > 0 )
+            {
+                return _paramsBuffer;
+            }
+
             var result = new List<byte>();
             var sps_pps = new List<byte>();
 
@@ -124,7 +143,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 result.AddRange( _vps );
             }
 
-            return result.ToArray();
+            _paramsBuffer = result.ToArray();
+
+            return _paramsBuffer;
         }
 
         public void Write( RtpPacket packet )
@@ -150,7 +171,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 _streamOfPackets.WriteAsBinary( StartCodePrefix );
                 _streamOfPackets.WriteAsBinary( packet.Payload );
 
-                _pps = header.Payload.ToArray();
+                PPS = header.Payload.ToArray();
             }
         }
 
@@ -166,7 +187,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 _streamOfPackets.WriteAsBinary( StartCodePrefix );
                 _streamOfPackets.WriteAsBinary( packet.Payload );
 
-                _sps = header.Payload.ToArray();
+                SPS = header.Payload.ToArray();
             }
         }
 
@@ -182,7 +203,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 _streamOfPackets.WriteAsBinary( StartCodePrefix );
                 _streamOfPackets.WriteAsBinary( packet.Payload );
 
-                _vps = header.Payload.ToArray();
+                VPS = header.Payload.ToArray();
             }
         }
 
