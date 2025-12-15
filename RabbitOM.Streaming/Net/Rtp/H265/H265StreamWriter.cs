@@ -157,7 +157,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
-
                 else if ( NalUnitFragmentationHeader.IsStopPacket( ref header ) )
                 {
                     Diagnostics.Debug.EnsureCondition( () => ! _streamOfFragmentedPackets.IsEmpty );
