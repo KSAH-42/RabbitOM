@@ -17,8 +17,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public H265FrameBuilder()
         {
-            ExceptionHelper.ThrowOnRelease("the implementation is not finished and can not be used in production");
-
             _configuration = new H265FrameBuilderConfiguration();
             _frameFactory  = new H265FrameFactory( _configuration );
             _aggregator    = new H265FrameAggregator( _configuration );
@@ -44,6 +42,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 return;
             }
+
+            Console.WriteLine( "PacketType {0} {1}" , packet.Type , packet.Payload.Count );
 
             RtpFrame frame = null;
 

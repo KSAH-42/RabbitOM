@@ -1,4 +1,7 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Net.Rtp.H265.Headers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
@@ -10,7 +13,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         private readonly RtpMemoryStream _streamOfPackets = new RtpMemoryStream();
         private readonly RtpMemoryStream _streamOfFragmentedPackets = new RtpMemoryStream();
-       
 
 
         private byte[] _pps;
@@ -79,82 +81,155 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public void Dispose()
         {
-            Clear();
-            
             _streamOfPackets.Dispose();
             _streamOfFragmentedPackets.Dispose();
         }
 
         public byte[] ToArray()
         {
-            var output = new RtpMemoryStream();
-
-            if ( _vps?.Length > 0 )
-            {
-                output.WriteAsBinary( StartCodePrefix );
-                output.WriteAsBinary( _vps );
-            }
-
-            if ( _sps?.Length > 0 )
-            {
-                output.WriteAsBinary( StartCodePrefix );
-                output.WriteAsBinary( _sps );
-            }
-
-            if ( _pps?.Length > 0 )
-            {
-                output.WriteAsBinary( StartCodePrefix );
-                output.WriteAsBinary( _pps );
-            }
-
-            output.WriteAsBinary( _streamOfPackets );
-            
-            return output.ToArray();
+            return _streamOfPackets.ToArray();
         }
 
-        public bool HasParametersSets()
+        public bool HasParameters()
         {
             return _pps?.Length > 0 && _sps?.Length > 0 && _vps?.Length > 0;
         }
 
+        public byte[] GetParamtersBuffer()
+        {
+            var result = new List<byte>();
+            var sps_pps = new List<byte>();
+
+            if ( _sps?.Length > 0 )
+            {
+                sps_pps.AddRange( StartCodePrefix );
+                sps_pps.AddRange( _sps );
+            }
+
+            if ( _pps?.Length > 0 )
+            {
+                sps_pps.AddRange( StartCodePrefix );
+                sps_pps.AddRange( _pps );
+            }
+
+            if ( sps_pps.Count > 0 )
+            {
+                result.AddRange( StartCodePrefix );
+                result.AddRange( sps_pps );
+            }
+
+            if ( _vps?.Length > 0 )
+            {
+                result.AddRange( StartCodePrefix );
+                result.AddRange( _vps );
+            }
+
+            return result.ToArray();
+        }
+
         public void Write( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            _streamOfPackets.WriteAsBinary( StartCodePrefix );
+            _streamOfPackets.WriteAsBinary( packet.Payload );
         }
 
         public void WritePPS( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+            {
+                _streamOfPackets.WriteAsBinary( StartCodePrefix );
+                _streamOfPackets.WriteAsBinary( packet.Payload );
+
+                _pps = packet.Payload.ToArray();
+            }
         }
 
         public void WriteSPS( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+            {
+                _streamOfPackets.WriteAsBinary( StartCodePrefix );
+                _streamOfPackets.WriteAsBinary( packet.Payload );
+
+                _sps = packet.Payload.Array.ToArray();
+            }
         }
 
         public void WriteVPS( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+            {
+                _streamOfPackets.WriteAsBinary( StartCodePrefix );
+                _streamOfPackets.WriteAsBinary( packet.Payload );
+
+                _vps = packet.Payload.Array.ToArray();
+            }
         }
 
         public void WriteAggregation( RtpPacket packet )
         {
-            throw new NotImplementedException();
-        }
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
 
-        public void WriteStartFragmentation( RtpPacket packet )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteStopFragmentation( RtpPacket packet )
-        {
-            throw new NotImplementedException();
+            foreach ( var aggregate in NalUnitHeader.ParseAggregates( packet.Payload ) )
+            {
+                _streamOfPackets.WriteAsBinary( StartCodePrefix );
+                _streamOfPackets.WriteAsBinary( aggregate );
+            }
         }
 
         public void WriteFragmentation( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( NalUnitFragmentationHeader.TryParse( packet.Payload , out var header ) )
+            {
+                if ( NalUnitFragmentationHeader.IsStartPacket( ref header ) )
+                {
+                    _streamOfFragmentedPackets.Clear();
+                    _streamOfFragmentedPackets.WriteAsBinary( StartCodePrefix );
+                    _streamOfFragmentedPackets.WriteAsUInt16( header.Head );
+                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
+                }
+                else if ( NalUnitFragmentationHeader.IsIntermediaryPacket( ref header ) )
+                {
+                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
+                }
+
+                else if ( NalUnitFragmentationHeader.IsStopPacket( ref header ) )
+                {
+                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
+                    
+                    _streamOfPackets.WriteAsBinary( _streamOfFragmentedPackets );
+
+                    _streamOfFragmentedPackets.Clear();
+                }
+            }
         }
     }
 }

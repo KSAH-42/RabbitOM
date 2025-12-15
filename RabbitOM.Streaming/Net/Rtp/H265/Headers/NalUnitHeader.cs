@@ -1,17 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
     public struct NalUnitHeader
     {
-        public static readonly NalUnitHeader Empty = new NalUnitHeader();
-
-
-
-
-
         public bool ForbiddenBit { get; private set; }
-        public byte Type { get; private set; }
+        public NatUnitType Type { get; private set; }
         public byte LayerId { get; private set; }
         public byte Tid { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
@@ -20,7 +15,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         
 
+
         
+
+        public static bool IsInvalidOrUnDefined( ref NalUnitHeader header )
+        {
+            return header.Type == NatUnitType.INVALID || header.Type == NatUnitType.UNDEFINED;
+        }
+
         // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
 
         public static bool TryParse( ArraySegment<byte> buffer , out NalUnitHeader result )
@@ -44,10 +46,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             
             result = new NalUnitHeader();
 
-            result.ForbiddenBit  = (byte) ( ( header >> 15) & 0x01 ) == 1;
-            result.Type          = (byte) ( ( header >> 9 ) & 0x3F );
-            result.LayerId       = (byte) ( ( header >> 3 ) & 0x3F );
-            result.Tid           = (byte) (   header        & 0x07 );
+            result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x01 ) == 1;
+            result.Type          = (NatUnitType) ( ( header >> 9 ) & 0x3F );
+            result.LayerId       = (byte)        ( ( header >> 3 ) & 0x3F );
+            result.Tid           = (byte)        (   header        & 0x07 );
 
             if ( buffer.Count >= 3 )
             {
@@ -55,6 +57,27 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             }
 
             return true;
+        }
+
+        public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
+        {
+            var results = new List<ArraySegment<byte>>();
+
+            for ( var index = 0 ; index < buffer.Count - 2 ; )
+            {
+                var size = buffer.Array[ buffer.Offset + index++ ] * 0x100 | buffer.Array[ buffer.Offset + index ];
+
+                var delta = buffer.Count - index++;
+
+                if ( 0 < size && size < delta )
+                {
+                    results.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
+
+                    index += size;
+                }
+            }
+
+            return results;
         }
     } 
 }

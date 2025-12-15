@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Net.Rtp.H265.Headers;
+using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
@@ -25,11 +26,46 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             _writer.SetLength( 0 );
 
-            _writer.PPS = _writer.PPS?.Length > 0 ? _writer.PPS : _configuration.PPS;
-            _writer.SPS = _writer.SPS?.Length > 0 ? _writer.SPS : _configuration.SPS;
-            _writer.VPS = _writer.VPS?.Length > 0 ? _writer.VPS : _configuration.VPS;
+            foreach ( var packet in packets )
+            {
+                if ( ! NalUnitHeader.TryParse( packet.Payload , out var header ) )
+                {
+                    return false;
+                }
+
+                if ( NalUnitHeader.IsInvalidOrUnDefined( ref header ) )
+                {
+                    return false;
+                }
+
+                switch ( header.Type )
+                {
+                    case NatUnitType.PPS: _writer.WritePPS( packet ); break;
+                    case NatUnitType.SPS: _writer.WriteSPS( packet ); break;
+                    case NatUnitType.VPS: _writer.WriteVPS( packet ); break;
+                    case NatUnitType.AGGREGATION: _writer.WriteAggregation( packet ); break;
+                    case NatUnitType.FRAGMENTATION: _writer.WriteFragmentation( packet ); break;
+
+                    default:
+                        _writer.Write( packet );
+                        break;
+                }
+            }
+
+            _writer.PPS = _configuration.PPS;
+            _writer.SPS = _configuration.SPS;
+            _writer.VPS = _configuration.VPS;
      
-            throw new NotImplementedException();
+            //_writer.PPS = _writer.PPS?.Length > 0 ? _writer.PPS : _configuration.PPS;
+            //_writer.SPS = _writer.SPS?.Length > 0 ? _writer.SPS : _configuration.SPS;
+            //_writer.VPS = _writer.VPS?.Length > 0 ? _writer.VPS : _configuration.VPS;
+     
+            if ( _writer.Length > 0 && _writer.HasParameters() )
+            {
+                result = new H265Frame( _writer.ToArray() , _writer.PPS , _writer.SPS , _writer.VPS , _writer.GetParamtersBuffer() );
+            }
+
+            return result != null;
         }
 
         public void Clear()
@@ -39,6 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public void Dispose()
         {
+            _writer.Clear();
             _writer.Dispose();
         }
     }

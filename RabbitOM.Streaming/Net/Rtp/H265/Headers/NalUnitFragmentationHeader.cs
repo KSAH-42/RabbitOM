@@ -11,9 +11,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
 
+        public ushort Head { get; private set; }
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
-        public byte FragmentedType { get; private set; }
+        public NatUnitType FragmentedType { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
         
 
@@ -21,11 +22,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
 
-        public static bool IsStartPacket( ref NalUnitFragmentationHeader packet )
-            => packet.StartBit && ! packet.StopBit;
+        public static bool IsStartPacket( ref NalUnitFragmentationHeader header )
+            => header.StartBit && ! header.StopBit;
 
-        public static bool IsStopPacket( ref NalUnitFragmentationHeader packet )
-            => ! packet.StartBit && packet.StopBit;
+        public static bool IsStopPacket( ref NalUnitFragmentationHeader header )
+            => ! header.StartBit && header.StopBit;
 
         public static bool IsIntermediaryPacket( ref NalUnitFragmentationHeader packet )
             => ! packet.StartBit && ! packet.StopBit;
@@ -61,13 +62,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
             //  [payload........]
 
+
             var header = buffer.Array[ buffer.Offset + 2 ];
 
             result = new NalUnitFragmentationHeader();
 
+            result.Head           = (byte) ( (buffer.Array[ buffer.Offset ] << 8) | (buffer.Array[ buffer.Offset + 1 ] ) );
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;
-            result.FragmentedType = (byte) ( header & 0x3F );
+            result.FragmentedType = (NatUnitType) ( header & 0x3F );
 
             if ( buffer.Count > 3 )
             {
