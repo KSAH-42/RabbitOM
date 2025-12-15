@@ -150,7 +150,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 _streamOfPackets.WriteAsBinary( StartCodePrefix );
                 _streamOfPackets.WriteAsBinary( packet.Payload );
 
-                _pps = packet.Payload.ToArray();
+                _pps = header.Payload.ToArray();
             }
         }
 
@@ -166,7 +166,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 _streamOfPackets.WriteAsBinary( StartCodePrefix );
                 _streamOfPackets.WriteAsBinary( packet.Payload );
 
-                _sps = packet.Payload.Array.ToArray();
+                _sps = header.Payload.ToArray();
             }
         }
 
@@ -182,7 +182,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 _streamOfPackets.WriteAsBinary( StartCodePrefix );
                 _streamOfPackets.WriteAsBinary( packet.Payload );
 
-                _vps = packet.Payload.Array.ToArray();
+                _vps = header.Payload.ToArray();
             }
         }
 
@@ -213,12 +213,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 {
                     _streamOfFragmentedPackets.Clear();
 
-                    int payload_header = (packet.Payload.Array[packet.Payload.Offset] << 8) | (packet.Payload.Array[packet.Payload.Offset+1]);
-                    int nal_header = (payload_header & 0x81FF); 
-                    nal_header = nal_header | ((byte)header.FragmentedType << 9);
-
                     _streamOfFragmentedPackets.WriteAsBinary( StartCodePrefix );
-                    _streamOfFragmentedPackets.WriteAsUInt16( header.Head );
+                    _streamOfFragmentedPackets.WriteAsUInt16( NalUnitFragmentationHeader.ParseNalHeader( packet.Payload ) );
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
                 else if ( NalUnitFragmentationHeader.IsIntermediaryPacket( ref header ) )

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Messaging;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
@@ -12,7 +13,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
 
-        public int Head { get; private set; }
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
         public NatUnitType FragmentedType { get; private set; }
@@ -74,9 +74,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;
             result.FragmentedType = (NatUnitType) ( header & 0x3F );
 
-            result.Head           = (buffer.Array[buffer.Offset] << 8) | (buffer.Array[buffer.Offset+1]);
-            result.Head          &= 0x81FF; 
-            result.Head          |= ((byte)(header & 0x3F)<<9);
             
             if ( buffer.Count > 3 )
             {
@@ -84,6 +81,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             }
 
             return true;
+        }
+
+        public static int ParseNalHeader( ArraySegment<byte> buffer )
+        {
+            var result = (buffer.Array[buffer.Offset] << 8) | (buffer.Array[buffer.Offset+1]);
+
+            result   &= 0x81FF; 
+            result   |= ((byte)(buffer.Array[ buffer.Offset + 2 ] & 0x3F)<<9);
+
+            return result;
         }
     } 
 }
