@@ -23,8 +23,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 * Support RTP packet reordering
 * Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
-
-➡️ RTP HEVC a new implementation is actually in progress
+* Support RTP - H265 / HEVC
 
 ➡️ Breaking changes since the version 2.0.0.0:
 
