@@ -144,19 +144,24 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 if ( NalUnitFragmentationHeader.IsStartPacket( ref header ) )
                 {
-                    _streamOfFragmentedPackets.Clear();
+                    Diagnostics.Debug.EnsureCompletion( () => _streamOfFragmentedPackets.IsEmpty );
 
+                    _streamOfFragmentedPackets.Clear();
                     _streamOfFragmentedPackets.WriteAsBinary( _settings.StartCodePrefix );
                     _streamOfFragmentedPackets.WriteAsUInt16( NalUnitFragmentationHeader.ParseNalHeader( packet.Payload ) );
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
                 else if ( NalUnitFragmentationHeader.IsIntermediaryPacket( ref header ) )
                 {
+                    Diagnostics.Debug.EnsureCompletion( () => ! _streamOfFragmentedPackets.IsEmpty );
+
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
 
                 else if ( NalUnitFragmentationHeader.IsStopPacket( ref header ) )
                 {
+                    Diagnostics.Debug.EnsureCompletion( () => ! _streamOfFragmentedPackets.IsEmpty );
+
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                     
                     _streamOfPackets.WriteAsBinary( _streamOfFragmentedPackets );
