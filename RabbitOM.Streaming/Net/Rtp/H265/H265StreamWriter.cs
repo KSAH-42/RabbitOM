@@ -212,6 +212,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 if ( NalUnitFragmentationHeader.IsStartPacket( ref header ) )
                 {
                     _streamOfFragmentedPackets.Clear();
+
+                    int payload_header = (packet.Payload.Array[packet.Payload.Offset] << 8) | (packet.Payload.Array[packet.Payload.Offset+1]);
+                    int nal_header = (payload_header & 0x81FF); 
+                    nal_header = nal_header | ((byte)header.FragmentedType << 9);
+
                     _streamOfFragmentedPackets.WriteAsBinary( StartCodePrefix );
                     _streamOfFragmentedPackets.WriteAsUInt16( header.Head );
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );

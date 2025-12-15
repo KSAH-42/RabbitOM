@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
@@ -11,7 +12,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
 
-        public ushort Head { get; private set; }
+        public int Head { get; private set; }
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
         public NatUnitType FragmentedType { get; private set; }
@@ -62,16 +63,21 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
             //  [payload........]
 
+            
+
 
             var header = buffer.Array[ buffer.Offset + 2 ];
 
             result = new NalUnitFragmentationHeader();
 
-            result.Head           = (byte) ( (buffer.Array[ buffer.Offset ] << 8) | (buffer.Array[ buffer.Offset + 1 ] ) );
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;
             result.FragmentedType = (NatUnitType) ( header & 0x3F );
 
+            result.Head           = (buffer.Array[buffer.Offset] << 8) | (buffer.Array[buffer.Offset+1]);
+            result.Head          &= 0x81FF; 
+            result.Head          |= ((byte)(header & 0x3F)<<9);
+            
             if ( buffer.Count > 3 )
             {
                 result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 3 , buffer.Array.Length - (buffer.Offset + 3) );

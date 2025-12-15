@@ -26,6 +26,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             _writer.SetLength( 0 );
 
+            _writer.PPS = _configuration.PPS;
+            _writer.SPS = _configuration.SPS;
+            _writer.VPS = _configuration.VPS;
+
             foreach ( var packet in packets )
             {
                 if ( ! NalUnitHeader.TryParse( packet.Payload , out var header ) )
@@ -40,9 +44,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
                 switch ( header.Type )
                 {
-                    case NatUnitType.PPS: _writer.WritePPS( packet ); break;
-                    case NatUnitType.SPS: _writer.WriteSPS( packet ); break;
-                    case NatUnitType.VPS: _writer.WriteVPS( packet ); break;
+                    //case NatUnitType.PPS: _writer.WritePPS( packet ); break;
+                    //case NatUnitType.SPS: _writer.WriteSPS( packet ); break;
+                    //case NatUnitType.VPS: _writer.WriteVPS( packet ); break;
                     case NatUnitType.AGGREGATION: _writer.WriteAggregation( packet ); break;
                     case NatUnitType.FRAGMENTATION: _writer.WriteFragmentation( packet ); break;
 
@@ -52,9 +56,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 }
             }
 
-            _writer.PPS = _configuration.PPS;
-            _writer.SPS = _configuration.SPS;
-            _writer.VPS = _configuration.VPS;
+            
      
             //_writer.PPS = _writer.PPS?.Length > 0 ? _writer.PPS : _configuration.PPS;
             //_writer.SPS = _writer.SPS?.Length > 0 ? _writer.SPS : _configuration.SPS;
