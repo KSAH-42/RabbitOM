@@ -144,7 +144,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 if ( NalUnitFragmentationHeader.IsStartPacket( ref header ) )
                 {
-                    Diagnostics.Debug.EnsureCompletion( () => _streamOfFragmentedPackets.IsEmpty );
+                    Diagnostics.Debug.EnsureCondition( () => _streamOfFragmentedPackets.IsEmpty );
 
                     _streamOfFragmentedPackets.Clear();
                     _streamOfFragmentedPackets.WriteAsBinary( _settings.StartCodePrefix );
@@ -153,14 +153,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 }
                 else if ( NalUnitFragmentationHeader.IsIntermediaryPacket( ref header ) )
                 {
-                    Diagnostics.Debug.EnsureCompletion( () => ! _streamOfFragmentedPackets.IsEmpty );
+                    Diagnostics.Debug.EnsureCondition( () => ! _streamOfFragmentedPackets.IsEmpty );
 
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
 
                 else if ( NalUnitFragmentationHeader.IsStopPacket( ref header ) )
                 {
-                    Diagnostics.Debug.EnsureCompletion( () => ! _streamOfFragmentedPackets.IsEmpty );
+                    Diagnostics.Debug.EnsureCondition( () => ! _streamOfFragmentedPackets.IsEmpty );
 
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                     

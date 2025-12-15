@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Diagnostics
     public static class Debug
     {
         [Conditional( "DEBUG" )]
-        public static void EnsureCompletion( Func<bool> condition , string message = null )
+        public static void EnsureCondition( Func<bool> condition , string message = null )
         {
             if ( condition == null )
             {
