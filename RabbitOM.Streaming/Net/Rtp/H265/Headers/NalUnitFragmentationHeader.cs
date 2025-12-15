@@ -85,12 +85,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         public static int ParseNalHeader( ArraySegment<byte> buffer )
         {
-            var result = (buffer.Array[buffer.Offset] << 8) | (buffer.Array[buffer.Offset+1]);
+            if ( buffer.Count < 3 )
+            {
+                throw new ArgumentNullException( nameof( buffer ) );
+            }
 
-            result   &= 0x81FF; 
-            result   |= ((byte)(buffer.Array[ buffer.Offset + 2 ] & 0x3F)<<9);
+            var result = 0x81FF & ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
 
-            return result;
+            return result |= ( (byte) ( buffer.Array[ buffer.Offset + 2 ] & 0x3F ) << 9 );
         }
     } 
 }

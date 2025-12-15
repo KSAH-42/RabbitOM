@@ -24,7 +24,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
         }
 
         // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
+        
+        //  +---------------+---------------+
+        //  |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
+        //  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        //  |F|   Type    |  LayerId  | TID |
+        //  +-------------+-----------------+
 
+        //  [payload........................]
+            
         public static bool TryParse( ArraySegment<byte> buffer , out NalUnitHeader result )
         {
             result = default;
@@ -34,14 +42,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
                 return false;
             }
 
-            //  +---------------+---------------+
-            //  |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
-            //  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-            //  |F|   Type    |  LayerId  | TID |
-            //  +-------------+-----------------+
-
-            //  [payload........................]
-            
             var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
             
             result = new NalUnitHeader();
