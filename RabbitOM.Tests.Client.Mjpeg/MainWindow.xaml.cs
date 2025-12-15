@@ -39,7 +39,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
     using RabbitOM.Tests.Client.Mjpeg.Extensions;
-   
+    
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
