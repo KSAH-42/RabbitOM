@@ -6,8 +6,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 {
     public sealed class H265StreamWriterSettings
     {
-        private static readonly byte[] StartCodePrefixV1 = { 0x00 , 0x00 , 0x00 , 0x01 };
-        private static readonly byte[] StartCodePrefixV2 = { 0x00 , 0x00 , 0x00 , 0x00 , 0x01 };
+        public static readonly byte[] StartCodePrefixV1 = { 0x00 , 0x00 , 0x00 , 0x01 };
+        public static readonly byte[] StartCodePrefixV2 = { 0x00 , 0x00 , 0x00 , 0x00 , 0x01 };
 
 
 
