@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             return true;
         }
 
-        public static int ParseNalHeader( ArraySegment<byte> buffer )
+        public static int ParseHeader( ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 3 )
             {

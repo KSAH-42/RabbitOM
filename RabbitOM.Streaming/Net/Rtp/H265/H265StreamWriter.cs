@@ -41,6 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         public void Clear()
         {
             _streamOfPackets.Clear();
+            _streamOfFragmentedPackets.Clear();
             _settings.Clear();
         }
 
@@ -148,7 +149,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
                     _streamOfFragmentedPackets.Clear();
                     _streamOfFragmentedPackets.WriteAsBinary( _settings.StartCodePrefix );
-                    _streamOfFragmentedPackets.WriteAsUInt16( NalUnitFragmentationHeader.ParseNalHeader( packet.Payload ) );
+                    _streamOfFragmentedPackets.WriteAsUInt16( NalUnitFragmentationHeader.ParseHeader( packet.Payload ) );
                     _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
                 }
                 else if ( NalUnitFragmentationHeader.IsDataPacket( ref header ) )
@@ -161,10 +162,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 {
                     Diagnostics.Debug.EnsureCondition( ! _streamOfFragmentedPackets.IsEmpty );
 
-                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
-                    
+                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );                    
                     _streamOfPackets.WriteAsBinary( _streamOfFragmentedPackets );
-
                     _streamOfFragmentedPackets.Clear();
                 }
             }
