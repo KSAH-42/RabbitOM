@@ -74,9 +74,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 }
             }
 
-            if ( _writer.Length > 0 && _writer.Settings.HasParameters() )
+            if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.Settings.GetParamsBuffer() );
+                result = new H265Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.Settings.BuildParamsBuffer() );
             }
 
             return result != null;

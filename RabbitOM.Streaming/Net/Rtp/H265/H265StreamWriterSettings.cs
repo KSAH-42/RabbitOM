@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
     public sealed class H265StreamWriterSettings
     {
-        private static readonly byte[] DefaultStartCodePrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
+        private static readonly byte[] StartCodePrefixV1 = { 0x00 , 0x00 , 0x00 , 0x01 };
+        private static readonly byte[] StartCodePrefixV2 = { 0x00 , 0x00 , 0x00 , 0x00 , 0x01 };
 
 
 
+        private byte[] _startCodePrefix = StartCodePrefixV1;
         private byte[] _pps;
         private byte[] _sps;
         private byte[] _vps;
@@ -17,10 +20,19 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         
 
-        public ArraySegment<byte> StartCodePrefix
+        public byte[] StartCodePrefix
         {
-            get => new ArraySegment<byte>( DefaultStartCodePrefix );
+            get => _startCodePrefix;
+            
+            set
+            {
+                ValidateStartCodePrefix( value);
+                
+                _startCodePrefix = value;
+                _paramsBuffer = null;
+            }
         }
+
         
         public byte[] PPS
         {
@@ -68,6 +80,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        public static void ValidateStartCodePrefix( byte[] prefix )
+        {
+            if ( prefix == null )
+            {
+                throw new ArgumentNullException( nameof( prefix ) );
+            }
+
+            if ( ! StartCodePrefixV1.SequenceEqual( prefix ) || ! StartCodePrefixV2.SequenceEqual( prefix ) )
+            {
+                throw new InvalidOperationException( "the start code prefix is invalid" );
+            }
+        }
 
         public static void AssignParameters( H265StreamWriterSettings settings , byte[] pps , byte[] sps , byte[] vps )
         {
@@ -99,12 +123,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
-
-
-
-        public bool HasParameters()
+        public bool TryValidate()
         {
-            return _pps?.Length > 0 && _sps?.Length > 0 && _vps?.Length > 0;
+            return _pps?.Length > 0 && _sps?.Length > 0 && _vps?.Length > 0 && _startCodePrefix?.Length > 0;
         }
 
 
@@ -116,31 +137,32 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _paramsBuffer = null;
         }
 
-
-        public byte[] GetParamsBuffer()
+        public byte[] BuildParamsBuffer()
         {
             if ( _paramsBuffer?.Length > 0 )
             {
                 return _paramsBuffer;
             }
 
+            Diagnostics.Debug.EnsureCondition( _startCodePrefix?.Length > 0 );
+
             var result = new List<byte>();
 
             if ( _sps?.Length > 0 )
             {
-                result.AddRange( StartCodePrefix );
+                result.AddRange( _startCodePrefix );
                 result.AddRange( _sps );
             }
 
             if ( _pps?.Length > 0 )
             {
-                result.AddRange( StartCodePrefix );
+                result.AddRange( _startCodePrefix );
                 result.AddRange( _pps );
             }
 
             if ( _vps?.Length > 0 )
             {
-                result.AddRange( StartCodePrefix );
+                result.AddRange( _startCodePrefix );
                 result.AddRange( _vps );
             }
 
