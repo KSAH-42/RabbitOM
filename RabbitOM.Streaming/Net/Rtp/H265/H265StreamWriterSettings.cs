@@ -128,15 +128,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             return _pps?.Length > 0 && _sps?.Length > 0 && _vps?.Length > 0 && _startCodePrefix?.Length > 0;
         }
 
-
-        public void Clear()
-        {
-            _pps = null;
-            _sps = null;
-            _vps = null;
-            _paramsBuffer = null;
-        }
-
         public byte[] BuildParamsBuffer()
         {
             if ( _paramsBuffer?.Length > 0 )
@@ -169,6 +160,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _paramsBuffer = result.ToArray();
 
             return _paramsBuffer;
+        }
+
+        public void Clear()
+        {
+            _pps = null;
+            _sps = null;
+            _vps = null;
+            _paramsBuffer = null;
         }
     }
 }
