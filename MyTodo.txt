@@ -20,3 +20,15 @@ RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
 RabbitOM.Streaming.Threading
 RabbitOM.Streaming.Windows.Presentation
 RabbitOM.Streaming.Windows.Presentation.Renders
+
+
+And the end, refactor add a graph that rely on media pipeline
+
+RabbitOM.Streaming.Media.ServiceModels
+RabbitOM.Streaming.Media.ServiceModels.Codecs
+RabbitOM.Streaming.Media.ServiceModels.Codecs.Native
+
+RabbitOM.Streaming.Windows.Presentation          // renderes goes here
+RabbitOM.Streaming.Windows.Presentation.Controls // different players classes
+
+// remove RabbitOM.Streaming.Windows.Presentation.Renders
