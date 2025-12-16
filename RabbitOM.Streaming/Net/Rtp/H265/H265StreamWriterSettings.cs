@@ -125,24 +125,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
 
             var result = new List<byte>();
-            var sps_pps = new List<byte>();
 
             if ( _sps?.Length > 0 )
             {
-                sps_pps.AddRange( StartCodePrefix );
-                sps_pps.AddRange( _sps );
+                result.AddRange( StartCodePrefix );
+                result.AddRange( _sps );
             }
 
             if ( _pps?.Length > 0 )
             {
-                sps_pps.AddRange( StartCodePrefix );
-                sps_pps.AddRange( _pps );
-            }
-
-            if ( sps_pps.Count > 0 )
-            {
                 result.AddRange( StartCodePrefix );
-                result.AddRange( sps_pps );
+                result.AddRange( _pps );
             }
 
             if ( _vps?.Length > 0 )
