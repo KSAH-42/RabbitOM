@@ -4,13 +4,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
     public struct NalUnitFragmentationHeader
     {
-        public static readonly NalUnitFragmentationHeader Empty = new NalUnitFragmentationHeader();
-
-
-
-
-
-
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
         public NatUnitType FragmentedType { get; private set; }

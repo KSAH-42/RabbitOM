@@ -7,6 +7,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     public sealed class H265FrameFactory : IDisposable
     {
         private readonly H265FrameBuilderConfiguration _configuration;
+
         private readonly H265StreamWriter _writer;
 
 
