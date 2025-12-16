@@ -13,6 +13,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         private readonly RtpMemoryStream _streamOfParams = new RtpMemoryStream();
 
+        private readonly RtpMemoryStream _output = new RtpMemoryStream();
+
 
 
 
@@ -46,6 +48,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _streamOfPackets.Clear();
             _streamOfFragmentedPackets.Clear();
             _streamOfParams.Clear();
+            _output.Clear();
+
             _settings.Clear();
         }
 
@@ -54,16 +58,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _streamOfPackets.Dispose();
             _streamOfFragmentedPackets.Dispose();
             _streamOfParams.Dispose();
+            _output.Dispose();
         }
 
         public byte[] ToArray()
         {
-            var output = new RtpMemoryStream();
+            _output.SetLength( 0 );
 
-            output.WriteAsBinary( _streamOfParams );
-            output.WriteAsBinary( _streamOfPackets );
+            _output.WriteAsBinary( _streamOfParams );
+            _output.WriteAsBinary( _streamOfPackets );
 
-            return output.ToArray();
+            return _output.ToArray();
         }
         
         public void SetLength( int value )

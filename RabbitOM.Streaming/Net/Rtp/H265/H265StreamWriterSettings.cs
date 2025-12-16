@@ -17,9 +17,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         
 
-        public byte[] StartCodePrefix
+        public ArraySegment<byte> StartCodePrefix
         {
-            get => DefaultStartCodePrefix;
+            get => new ArraySegment<byte>( DefaultStartCodePrefix );
         }
         
         public byte[] PPS
