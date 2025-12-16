@@ -11,6 +11,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         
         private readonly RtpMemoryStream _streamOfFragmentedPackets = new RtpMemoryStream();
 
+        private readonly RtpMemoryStream _streamOfParams = new RtpMemoryStream();
+
 
 
 
@@ -43,6 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         {
             _streamOfPackets.Clear();
             _streamOfFragmentedPackets.Clear();
+            _streamOfParams.Clear();
             _settings.Clear();
         }
 
@@ -50,11 +53,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         {
             _streamOfPackets.Dispose();
             _streamOfFragmentedPackets.Dispose();
+            _streamOfParams.Dispose();
         }
 
         public byte[] ToArray()
         {
-            return _streamOfPackets.ToArray();
+            var output = new RtpMemoryStream();
+
+            output.WriteAsBinary( _streamOfParams );
+            output.WriteAsBinary( _streamOfPackets );
+
+            return output.ToArray();
         }
         
         public void SetLength( int value )
@@ -82,8 +91,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
             {
-                _streamOfPackets.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfPackets.WriteAsBinary( packet.Payload );
+                _streamOfParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfParams.WriteAsBinary( packet.Payload );
 
                 _settings.PPS = header.Payload.ToArray();
             }
@@ -98,8 +107,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
             {
-                _streamOfPackets.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfPackets.WriteAsBinary( packet.Payload );
+                _streamOfParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfParams.WriteAsBinary( packet.Payload );
 
                 _settings.SPS = header.Payload.ToArray();
             }
@@ -114,8 +123,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
             {
-                _streamOfPackets.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfPackets.WriteAsBinary( packet.Payload );
+                _streamOfParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfParams.WriteAsBinary( packet.Payload );
 
                 _settings.VPS = header.Payload.ToArray();
             }
