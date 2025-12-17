@@ -49,8 +49,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             _streamOfNalUnitsParams.Clear();
             
             _output.Clear();
-
-            _settings.Clear();
         }
 
         public void Dispose()

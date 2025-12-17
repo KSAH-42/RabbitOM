@@ -78,7 +78,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.BuildParamsBuffer() );
+                result = new H264Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.CreateParamsBuffer() );
             }
 
             return result != null;
@@ -92,6 +92,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         public void Dispose()
         {
             _writer.Clear();
+            _writer.Settings.Clear();
             _writer.Dispose();
         }
     }

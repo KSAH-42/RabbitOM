@@ -59,8 +59,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _streamOfNalUnitsParams.Clear();
             
             _output.Clear();
-
-            _settings.Clear();
         }
 
         /// <summary>

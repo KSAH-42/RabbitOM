@@ -106,7 +106,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             return _pps?.Length > 0 && _sps?.Length > 0 && _startCodePrefix?.Length > 0;
         }
 
-        public byte[] BuildParamsBuffer()
+        public byte[] CreateParamsBuffer()
         {
             if ( _paramsBuffer?.Length > 0 )
             {
