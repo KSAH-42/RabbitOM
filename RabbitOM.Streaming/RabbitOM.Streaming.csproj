@@ -52,6 +52,7 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="Net\Rtp\H264\H265StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H264\Headers\NalUnit.cs" />
     <Compile Include="Net\Rtp\H264\Headers\NalUnitType.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriter.cs" />
