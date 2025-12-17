@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.Settings.BuildParamsBuffer() );
+                result = new H265Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.Settings.CreateParamsBuffer() );
             }
 
             return result != null;
