@@ -2,6 +2,9 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// Represent the H265 stream writer used to generate a H265 data frame
+    /// </summary>
     public sealed class H265StreamWriter : IDisposable
     {
         private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
@@ -22,12 +25,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
         
-        
+        /// <summary>
+        /// Gets the settings of writer
+        /// </summary>
         public H265StreamWriterSettings Settings
         {
             get => _settings;
         }
 
+        /// <summary>
+        /// Gets the Length
+        /// </summary>
         public long Length
         {
             get => _streamOfNalUnits.Length;
@@ -41,7 +49,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         
 
 
-
+        /// <summary>
+        /// Clear
+        /// </summary>
         public void Clear()
         {
             _streamOfNalUnits.Clear();
@@ -53,6 +63,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _settings.Clear();
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
         public void Dispose()
         {
             _streamOfNalUnits.Dispose();
@@ -62,6 +75,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _output.Dispose();
         }
 
+        /// <summary>
+        /// Generate the data frame
+        /// </summary>
+        /// <returns>returns a byte array</returns>
         public byte[] ToArray()
         {
             _output.SetLength( 0 );
@@ -72,11 +89,20 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             return _output.ToArray();
         }
         
+        /// <summary>
+        /// Set the length
+        /// </summary>
+        /// <param name="value">the size</param>
         public void SetLength( int value )
         {
             _streamOfNalUnits.SetLength( value );
         }
 
+        /// <summary>
+        /// Write a nalu from the rtp packet
+        /// </summary>
+        /// <param name="packet">the rtp packet</param>
+        /// <exception cref="ArgumentNullException"/>
         public void Write( RtpPacket packet )
         {
             if ( packet == null )
@@ -88,6 +114,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             _streamOfNalUnits.WriteAsBinary( packet.Payload );
         }
 
+        /// <summary>
+        /// Write a nalu pps from the rtp packet
+        /// </summary>
+        /// <param name="packet">the rtp packet</param>
+        /// <exception cref="ArgumentNullException"/>
         public void WritePPS( RtpPacket packet )
         {
             if ( packet == null )
@@ -104,6 +135,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
         }
 
+        /// <summary>
+        /// Write a nalu sps from the rtp packet
+        /// </summary>
+        /// <param name="packet">the rtp packet</param>
+        /// <exception cref="ArgumentNullException"/>
         public void WriteSPS( RtpPacket packet )
         {
             if ( packet == null )
@@ -120,6 +156,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
         }
 
+        /// <summary>
+        /// Write a nalu vps from the rtp packet
+        /// </summary>
+        /// <param name="packet">the rtp packet</param>
+        /// <exception cref="ArgumentNullException"/>
         public void WriteVPS( RtpPacket packet )
         {
             if ( packet == null )
@@ -136,6 +177,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
         }
 
+        /// <summary>
+        /// Write aggregated nalus from the rtp packet
+        /// </summary>
+        /// <param name="packet">the rtp packet</param>
+        /// <exception cref="ArgumentNullException"/>
         public void WriteAggregation( RtpPacket packet )
         {
             if ( packet == null )
@@ -150,6 +196,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
         }
 
+        /// <summary>
+        /// Write a partial / fragmented nalu from the rtp packet
+        /// </summary>
+        /// <param name="packet">the rtp packet</param>
+        /// <exception cref="ArgumentNullException"/>
         public void WriteFragmentation( RtpPacket packet )
         {
             if ( packet == null )

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// Represent a H265 frame builder
+    /// </summary>
     public sealed class H265FrameBuilder : RtpFrameBuilder
     {
         private readonly H265FrameBuilderConfiguration _configuration;
@@ -15,6 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Initialize a new instance of a H265 frame builder
+        /// </summary>
         public H265FrameBuilder()
         {
             _configuration = new H265FrameBuilderConfiguration();
@@ -26,6 +32,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Gets the configuration used by the builder
+        /// </summary>
         public H265FrameBuilderConfiguration Configuration
         {
             get => _configuration;
@@ -36,6 +45,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Write data thats comes from the network
+        /// </summary>
+        /// <param name="buffer">the received buffer</param>
         public override void Write( byte[] buffer )
         {
             if ( ! RtpPacket.TryParse( buffer , out RtpPacket packet ) )
@@ -61,6 +74,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
         }
 
+        /// <summary>
+        /// Clear
+        /// </summary>
         public override void Clear()
         {
             lock ( SyncRoot )
@@ -70,6 +86,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">the dispose indicator</param>
         protected override void Dispose( bool disposing )
         {
             if ( ! disposing )

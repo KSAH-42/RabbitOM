@@ -3,12 +3,34 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// Represent a H265 nalu <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4"/>
+    /// </summary>
     public struct H265NalUnit
     {
+        /// <summary>
+        /// Gets the forbiddent bite
+        /// </summary>
         public bool ForbiddenBit { get; private set; }
+
+        /// <summary>
+        /// Gets the type
+        /// </summary>
         public H265NalUnitType Type { get; private set; }
+
+        /// <summary>
+        /// Gets the layer identifier
+        /// </summary>
         public byte LayerId { get; private set; }
+
+        /// <summary>
+        /// Gets the temporal identifier
+        /// </summary>
         public byte Tid { get; private set; }
+
+        /// <summary>
+        /// Gets the optional payload that can be null
+        /// </summary>
         public ArraySegment<byte> Payload { get; private set; }
         
 
@@ -17,22 +39,24 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
         
-
+        /// <summary>
+        /// Just perform a simple validation
+        /// </summary>
+        /// <param name="nalUnit">the nalu</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool IsInvalidOrUnDefined( ref H265NalUnit nalUnit )
         {
             return nalUnit.Type == H265NalUnitType.INVALID || nalUnit.Type == H265NalUnitType.UNDEFINED;
         }
 
-        // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
-        
-        //  +---------------+---------------+
-        //  |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
-        //  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-        //  |F|   Type    |  LayerId  | TID |
-        //  +-------------+-----------------+
 
-        //  [payload........................]
-            
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="buffer">the rtp payload</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = default;
@@ -59,6 +83,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             return true;
         }
 
+        /// <summary>
+        /// Parse aggregate nalu
+        /// </summary>
+        /// <param name="buffer">the rtp payload</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
         {
             var results = new List<ArraySegment<byte>>();

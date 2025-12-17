@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// Represente the H265 frame factory
+    /// </summary>
     public sealed class H265FrameFactory : IDisposable
     {
         private readonly H265FrameBuilderConfiguration _configuration;
@@ -12,9 +15,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+
+
+        /// <summary>
+        /// Initialize a new instance of the H265 frame factory
+        /// </summary>
+        /// <param name="configuration">the configuration object</param>
+        /// <exception cref="ArgumentNullException"/>
         public H265FrameFactory( H265FrameBuilderConfiguration configuration )
         {
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
+
             _writer = new H265StreamWriter();
         } 
 
@@ -22,6 +33,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Try to create the frame
+        /// </summary>
+        /// <param name="packets">the aggregated packets collection</param>
+        /// <param name="result">the output frame</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
             result = null;
@@ -81,11 +98,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             return result != null;
         }
 
+        /// <summary>
+        /// Clear
+        /// </summary>
         public void Clear()
         {
             _writer.Clear();
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
         public void Dispose()
         {
             _writer.Clear();

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// Represente a H265 frame aggregator
+    /// </summary>
     public sealed class H265FrameAggregator
     {
         private readonly H265FrameBuilderConfiguration _configuration;
@@ -13,7 +16,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
-        
+        /// <summary>
+        /// Initialize a new instance of the frame aggregator
+        /// </summary>
+        /// <param name="configuration">the configuration object</param>
+        /// <exception cref="ArgumentNullException"/>
         public H265FrameAggregator( H265FrameBuilderConfiguration configuration )
         {
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
@@ -26,6 +33,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+
+        /// <summary>
+        /// Try to aggregate rtp packet
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        /// <param name="result">the collection of aggregated packet after succeed</param>
+        /// <returns>returns true for a success otherwise false</returns>
         public bool TryAggregate( RtpPacket packet , out IEnumerable<RtpPacket> result )
         {
             result = null;
@@ -38,6 +52,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             return false;
         }
 
+        /// <summary>
+        /// Clear all remaining packets
+        /// </summary>
         public void Clear()
         {
             _aggregator.Clear();
@@ -48,6 +65,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
         
+
+        /// <summary>
+        /// Occurs when validation must be done
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         private bool OnValidating( RtpPacket packet )
         {
             if ( packet == null )

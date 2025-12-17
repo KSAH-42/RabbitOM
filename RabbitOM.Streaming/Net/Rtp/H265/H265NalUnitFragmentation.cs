@@ -2,11 +2,29 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// Represent a H265 fragmented nalu <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-4.4.3"/>
+    /// </summary>
     public struct H265NalUnitFragmentation
     {
+        /// <summary>
+        /// Gets the start bit
+        /// </summary>
         public bool StartBit { get; private set; }
+
+        /// <summary>
+        /// Gets the stop bit
+        /// </summary>
         public bool StopBit { get; private set; }
+
+        /// <summary>
+        /// Gets the fragmented type
+        /// </summary>
         public H265NalUnitType FragmentedType { get; private set; }
+
+        /// <summary>
+        /// Gets the optional payload that can be null
+        /// </summary>
         public ArraySegment<byte> Payload { get; private set; }
         
 
@@ -14,12 +32,27 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Check if the nal start packet
+        /// </summary>
+        /// <param name="nalUnit">the nalu</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool IsStartPacket( ref H265NalUnitFragmentation nalUnit )
             => nalUnit.StartBit && ! nalUnit.StopBit;
 
+        /// <summary>
+        /// Check if the nal packet between a start and a stop
+        /// </summary>
+        /// <param name="nalUnit">the nalu</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool IsStopPacket( ref H265NalUnitFragmentation nalUnit )
             => ! nalUnit.StartBit && nalUnit.StopBit;
 
+        /// <summary>
+        /// Check if the nal stop packet
+        /// </summary>
+        /// <param name="nalUnit">the nalu</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool IsDataPacket( ref H265NalUnitFragmentation nalUnit )
             => ! nalUnit.StartBit && ! nalUnit.StopBit;
         
@@ -28,22 +61,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
-        // https://datatracker.ietf.org/doc/html/rfc7798#section-4.4.3
-        // header - 1
-        //  +---------------+---------------+
-        //  |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
-        //  +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-        //  |F|   Type    |  LayerId  | TID |
-        //  +-------------+-----------------+
-
-        // header
-        //  +---------------+
-        //  |7|6|5|4|3|2|1|0|
-        //  +-+-+-+-+-+-+-+-+
-        //  |S|E|  FuType   |
-        //  +---------------+
-
-        //  [payload........]
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="buffer">the rtp payload</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnitFragmentation result )
         {
             result = default;
@@ -69,11 +92,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             return true;
         }
 
+        /// <summary>
+        /// Parse the nal header (not fragmented header)
+        /// </summary>
+        /// <param name="buffer">the rtp payload</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        /// <exception cref="ArgumentOutOfRangeException"/>
         public static int ParseHeader( ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 3 )
             {
-                throw new ArgumentNullException( nameof( buffer ) );
+                throw new ArgumentOutOfRangeException( nameof( buffer ) );
             }
 
             var result = 0x81FF & ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );

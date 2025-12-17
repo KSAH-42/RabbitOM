@@ -2,6 +2,9 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    /// <summary>
+    /// The H265 nal unit
+    /// </summary>
 	public enum H265NalUnitType
 	{
         UNDEFINED = -1,
