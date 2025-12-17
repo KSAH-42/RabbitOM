@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
     public struct NalUnitHeader
     {
         public bool ForbiddenBit { get; private set; }
-        public NatUnitType Type { get; private set; }
+        public NalUnitType Type { get; private set; }
         public byte LayerId { get; private set; }
         public byte Tid { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         public static bool IsInvalidOrUnDefined( ref NalUnitHeader header )
         {
-            return header.Type == NatUnitType.INVALID || header.Type == NatUnitType.UNDEFINED;
+            return header.Type == NalUnitType.INVALID || header.Type == NalUnitType.UNDEFINED;
         }
 
         // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             result = new NalUnitHeader();
 
             result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x01 ) == 1;
-            result.Type          = (NatUnitType) ( ( header >> 9 ) & 0x3F );
+            result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
             result.LayerId       = (byte)        ( ( header >> 3 ) & 0x3F );
             result.Tid           = (byte)        (   header        & 0x07 );
 

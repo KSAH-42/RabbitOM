@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
     {
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
-        public NatUnitType FragmentedType { get; private set; }
+        public NalUnitType FragmentedType { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
         
 
@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;
-            result.FragmentedType = (NatUnitType) ( header & 0x3F );
+            result.FragmentedType = (NalUnitType) ( header & 0x3F );
     
             if ( buffer.Count > 3 )
             {

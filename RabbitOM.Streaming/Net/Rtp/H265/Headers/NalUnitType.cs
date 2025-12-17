@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
-	public enum NatUnitType
+	public enum NalUnitType
 	{
         UNDEFINED = -1,
         CODED_SLICE_TRAIL_N = 0,

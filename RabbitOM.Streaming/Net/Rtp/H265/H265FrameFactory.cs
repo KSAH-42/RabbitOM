@@ -47,23 +47,23 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                     
                     switch ( header.Type )
                     {
-                        case NatUnitType.PPS: 
+                        case NalUnitType.PPS: 
                             _writer.WritePPS( packet ); 
                             break;
 
-                        case NatUnitType.SPS: 
+                        case NalUnitType.SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
 
-                        case NatUnitType.VPS: 
+                        case NalUnitType.VPS: 
                             _writer.WriteVPS( packet ); 
                             break;
 
-                        case NatUnitType.AGGREGATION: 
+                        case NalUnitType.AGGREGATION: 
                             _writer.WriteAggregation( packet ); 
                             break;
 
-                        case NatUnitType.FRAGMENTATION: 
+                        case NalUnitType.FRAGMENTATION: 
                             _writer.WriteFragmentation( packet ); 
                             break;
 
