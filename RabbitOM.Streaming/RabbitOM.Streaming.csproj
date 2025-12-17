@@ -52,8 +52,15 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
-    <Compile Include="Net\Rtp\H264\H265StreamWriterSettings.cs" />
+    <Compile Include="Net\Rtp\H264\H264StreamWriter.cs" />
+    <Compile Include="Net\Rtp\H264\H264StreamWriterSettings.cs" />
+    <Compile Include="Net\Rtp\H264\H264Frame.cs" />
+    <Compile Include="Net\Rtp\H264\H264FrameAggregator.cs" />
+    <Compile Include="Net\Rtp\H264\H264FrameBuilder.cs" />
+    <Compile Include="Net\Rtp\H264\H264FrameBuilderConfiguration.cs" />
+    <Compile Include="Net\Rtp\H264\H264FrameFactory.cs" />
     <Compile Include="Net\Rtp\H264\Headers\NalUnit.cs" />
+    <Compile Include="Net\Rtp\H264\Headers\NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H264\Headers\NalUnitType.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriter.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriterSettings.cs" />

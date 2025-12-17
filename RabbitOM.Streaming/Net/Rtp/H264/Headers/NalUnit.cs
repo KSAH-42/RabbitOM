@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 {
@@ -19,6 +20,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
         public static bool IsInvalidOrUnDefined( ref NalUnit nalUnit )
         {
             return nalUnit.Type == NalUnitType.UNKNOWN;
+        }
+
+        public static bool IsSingle( ref NalUnit nalUnit )
+        {
+            return NalUnitType.SINGLE_SLICE <= nalUnit.Type && nalUnit.Type <= NalUnitType.SINGLE_RESERVED_K;
         }
 
         // https://datatracker.ietf.org/doc/html/rfc6184#section-1.3
@@ -53,6 +59,27 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
             }
 
             return true;
+        }
+
+        public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
+        {
+            var results = new List<ArraySegment<byte>>();
+
+            for ( var index = 0 ; index < buffer.Count - 2 ; )
+            {
+                var size = buffer.Array[ buffer.Offset + index++ ] * 0x100 | buffer.Array[ buffer.Offset + index ];
+
+                var delta = buffer.Count - index++;
+
+                if ( 0 < size && size < delta )
+                {
+                    results.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
+
+                    index += size;
+                }
+            }
+
+            return results;
         }
     } 
 }
