@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
         {
             result = default;
 
-            if ( buffer.Count <= 2 )
+            if ( buffer.Count < 3 )
             {
                 return false;
             }

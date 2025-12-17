@@ -52,10 +52,11 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="Net\Rtp\H264\Headers\NalUnitHeader.cs" />
     <Compile Include="Net\Rtp\H264\Headers\NalUnitType.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriter.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriterSettings.cs" />
-    <Compile Include="Net\Rtp\H265\Headers\NatUnitType.cs" />
+    <Compile Include="Net\Rtp\H265\Headers\NalUnitType.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameAggregator.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameBuilderConfiguration.cs" />

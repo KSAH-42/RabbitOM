@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
         {
             result = default;
 
-            if ( buffer.Count <= 2 )
+            if ( buffer.Count < 2 )
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             result.LayerId       = (byte)        ( ( header >> 3 ) & 0x3F );
             result.Tid           = (byte)        (   header        & 0x07 );
 
-            if ( buffer.Count >= 3 )
+            if ( buffer.Count > 2 )
             {
                 result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Array.Length - ( buffer.Offset + 2 ) );
             }
