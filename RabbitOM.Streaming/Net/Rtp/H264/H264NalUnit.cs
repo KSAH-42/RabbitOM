@@ -63,23 +63,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
         {
-            var results = new List<ArraySegment<byte>>();
-
-            for ( var index = 0 ; index < buffer.Count - 2 ; )
-            {
-                var size = buffer.Array[ buffer.Offset + index++ ] * 0x100 | buffer.Array[ buffer.Offset + index ];
-
-                var delta = buffer.Count - index++;
-
-                if ( 0 < size && size < delta )
-                {
-                    results.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
-
-                    index += size;
-                }
-            }
-
-            return results;
+            throw new NotImplementedException();
         }
     } 
 }
