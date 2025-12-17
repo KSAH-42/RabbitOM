@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public struct NalUnit
+    public struct H265NalUnit
     {
         public bool ForbiddenBit { get; private set; }
-        public NalUnitType Type { get; private set; }
+        public H265NalUnitType Type { get; private set; }
         public byte LayerId { get; private set; }
         public byte Tid { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
@@ -18,9 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         
 
-        public static bool IsInvalidOrUnDefined( ref NalUnit nalUnit )
+        public static bool IsInvalidOrUnDefined( ref H265NalUnit nalUnit )
         {
-            return nalUnit.Type == NalUnitType.INVALID || nalUnit.Type == NalUnitType.UNDEFINED;
+            return nalUnit.Type == H265NalUnitType.INVALID || nalUnit.Type == H265NalUnitType.UNDEFINED;
         }
 
         // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         //  [payload........................]
             
-        public static bool TryParse( ArraySegment<byte> buffer , out NalUnit result )
+        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = default;
 
@@ -44,10 +44,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
             var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
             
-            result = new NalUnit();
+            result = new H265NalUnit();
 
             result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x01 ) == 1;
-            result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );
+            result.Type          = (H265NalUnitType) ( ( header >> 9 ) & 0x3F );
             result.LayerId       = (byte)        ( ( header >> 3 ) & 0x3F );
             result.Tid           = (byte)        (   header        & 0x07 );
 

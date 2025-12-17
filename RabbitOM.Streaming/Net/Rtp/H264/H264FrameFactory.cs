@@ -1,5 +1,4 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H264.Headers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
@@ -40,34 +39,34 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
      
             foreach ( var packet in packets )
             {
-                if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+                if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
                 {
-                    if ( NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
+                    if ( H264NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
                     {
                         continue;
                     }
                     
                     switch ( nalUnit.Type )
                     {
-                        case NalUnitType.SINGLE_PPS: 
+                        case H264NalUnitType.SINGLE_PPS: 
                             _writer.WritePPS( packet ); 
                             break;
 
-                        case NalUnitType.SINGLE_SPS: 
+                        case H264NalUnitType.SINGLE_SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
 
-                        case NalUnitType.AGGREGATION_STAP_A: 
-                            _writer.WriteAggregation( packet ); 
+                        case H264NalUnitType.AGGREGATION_STAP_A: 
+                            _writer.WriteStapA( packet ); 
                             break;
 
-                        case NalUnitType.FRAGMENTATION_FU_A: 
-                            _writer.WriteFragmentation( packet ); 
+                        case H264NalUnitType.FRAGMENTATION_FU_A: 
+                            _writer.WriteFuA( packet ); 
                             break;
 
                         default:
 
-                            if ( NalUnit.IsSingle( ref nalUnit ) )
+                            if ( H264NalUnit.IsSingle( ref nalUnit ) )
                             {
                                 _writer.Write( packet );
                             }

@@ -1,5 +1,4 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H265.Headers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
@@ -38,32 +37,32 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
      
             foreach ( var packet in packets )
             {
-                if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+                if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
                 {
-                    if ( NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
+                    if ( H265NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
                     {
                         continue;
                     }
                     
                     switch ( nalUnit.Type )
                     {
-                        case NalUnitType.PPS: 
+                        case H265NalUnitType.PPS: 
                             _writer.WritePPS( packet ); 
                             break;
 
-                        case NalUnitType.SPS: 
+                        case H265NalUnitType.SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
 
-                        case NalUnitType.VPS: 
+                        case H265NalUnitType.VPS: 
                             _writer.WriteVPS( packet ); 
                             break;
 
-                        case NalUnitType.AGGREGATION: 
+                        case H265NalUnitType.AGGREGATION: 
                             _writer.WriteAggregation( packet ); 
                             break;
 
-                        case NalUnitType.FRAGMENTATION: 
+                        case H265NalUnitType.FRAGMENTATION: 
                             _writer.WriteFragmentation( packet ); 
                             break;
 

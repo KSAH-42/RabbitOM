@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
+namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    public enum NalUnitType
+    public enum H264NalUnitType
 	{
         UNKNOWN = 0,
 

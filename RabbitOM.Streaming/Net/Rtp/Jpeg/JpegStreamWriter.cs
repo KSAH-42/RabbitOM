@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// </summary>
         /// <param name="data">the data</param>
         /// <exception cref="ArgumentException"/>
-        public void Write( ArraySegment<byte> data )
+        public void WriteData( ArraySegment<byte> data )
         {
             if ( data.Count <= 0 )
             {

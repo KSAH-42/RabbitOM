@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-	public enum NalUnitType
+	public enum H265NalUnitType
 	{
         UNDEFINED = -1,
         CODED_SLICE_TRAIL_N = 0,

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
+namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    public struct NalUnit
+    public struct H264NalUnit
     {
         public bool ForbiddenBit { get; private set; }
-        public NalUnitType Type { get; private set; }
+        public H264NalUnitType Type { get; private set; }
         public byte Nri { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
         
@@ -17,14 +17,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 
         
 
-        public static bool IsInvalidOrUnDefined( ref NalUnit nalUnit )
+        public static bool IsInvalidOrUnDefined( ref H264NalUnit nalUnit )
         {
-            return nalUnit.Type == NalUnitType.UNKNOWN;
+            return nalUnit.Type == H264NalUnitType.UNKNOWN;
         }
 
-        public static bool IsSingle( ref NalUnit nalUnit )
+        public static bool IsSingle( ref H264NalUnit nalUnit )
         {
-            return NalUnitType.SINGLE_SLICE <= nalUnit.Type && nalUnit.Type <= NalUnitType.SINGLE_RESERVED_K;
+            return H264NalUnitType.SINGLE_SLICE <= nalUnit.Type && nalUnit.Type <= H264NalUnitType.SINGLE_RESERVED_K;
         }
 
         // https://datatracker.ietf.org/doc/html/rfc6184#section-1.3
@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
         //  |F|NRI|  Type   |  |                       |
         //  +---------------+  +-----------------------+
             
-        public static bool TryParse( ArraySegment<byte> buffer , out NalUnit result )
+        public static bool TryParse( ArraySegment<byte> buffer , out H264NalUnit result )
         {
             result = default;
 
@@ -47,11 +47,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 
             var header = buffer.Array[ buffer.Offset ];
             
-            result = new NalUnit();
+            result = new H264NalUnit();
 
             result.ForbiddenBit  = (byte)        ( ( header >> 7 ) & 0x01 ) == 1;
             result.Nri           = (byte)        ( ( header >> 5 ) & 0x03 );
-            result.Type          = (NalUnitType) (   header        & 0x1F );
+            result.Type          = (H264NalUnitType) (   header        & 0x1F );
 
             if ( buffer.Count > 1 )
             {

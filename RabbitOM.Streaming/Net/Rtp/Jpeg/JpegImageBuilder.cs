@@ -116,7 +116,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 
             while ( _fragments.Count > 0 )
             {
-                _writer.Write( _fragments.Dequeue().Payload );
+                _writer.WriteData( _fragments.Dequeue().Payload );
             }
 
             _writer.WriteEndOfImage();

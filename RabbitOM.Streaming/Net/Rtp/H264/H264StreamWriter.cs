@@ -1,5 +1,4 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H264.Headers;
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
@@ -96,7 +95,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -112,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -121,45 +120,45 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             }
         }
 
-        public void WriteAggregation( RtpPacket packet )
+        public void WriteStapA( RtpPacket packet )
         {
             if ( packet == null )
             {
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in NalUnit.ParseAggregates( packet.Payload ) )
+            foreach ( var aggregate in H264NalUnit.ParseAggregates( packet.Payload ) )
             {
                 _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnits.WriteAsBinary( aggregate );
             }
         }
 
-        public void WriteFragmentation( RtpPacket packet )
+        public void WriteFuA( RtpPacket packet )
         {
             if ( packet == null )
             {
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnitFragmentation.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnitFragmentation.TryParse( packet.Payload , out var nalUnit ) )
             {
-                if ( NalUnitFragmentation.IsStartPacket( ref nalUnit ) )
+                if ( H264NalUnitFragmentation.IsStartPacket( ref nalUnit ) )
                 {
                     Diagnostics.Debug.EnsureCondition( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
-                    _streamOfNalUnitsFragmented.WriteAsUInt16( NalUnitFragmentation.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteAsUInt16( H264NalUnitFragmentation.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
+                else if ( H264NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
                 {
                     Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( NalUnitFragmentation.IsStopPacket( ref nalUnit ) )
+                else if ( H264NalUnitFragmentation.IsStopPacket( ref nalUnit ) )
                 {
                     Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
 

@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public struct NalUnitFragmentation
+    public struct H265NalUnitFragmentation
     {
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
-        public NalUnitType FragmentedType { get; private set; }
+        public H265NalUnitType FragmentedType { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
         
 
@@ -14,13 +14,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
 
-        public static bool IsStartPacket( ref NalUnitFragmentation nalUnit )
+        public static bool IsStartPacket( ref H265NalUnitFragmentation nalUnit )
             => nalUnit.StartBit && ! nalUnit.StopBit;
 
-        public static bool IsStopPacket( ref NalUnitFragmentation nalUnit )
+        public static bool IsStopPacket( ref H265NalUnitFragmentation nalUnit )
             => ! nalUnit.StartBit && nalUnit.StopBit;
 
-        public static bool IsDataPacket( ref NalUnitFragmentation nalUnit )
+        public static bool IsDataPacket( ref H265NalUnitFragmentation nalUnit )
             => ! nalUnit.StartBit && ! nalUnit.StopBit;
         
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
         //  +---------------+
 
         //  [payload........]
-        public static bool TryParse( ArraySegment<byte> buffer , out NalUnitFragmentation result )
+        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnitFragmentation result )
         {
             result = default;
 
@@ -55,11 +55,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             
             var header = buffer.Array[ buffer.Offset + 2 ];
 
-            result = new NalUnitFragmentation();
+            result = new H265NalUnitFragmentation();
 
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;
-            result.FragmentedType = (NalUnitType) ( header & 0x3F );
+            result.FragmentedType = (H265NalUnitType) ( header & 0x3F );
     
             if ( buffer.Count > 3 )
             {

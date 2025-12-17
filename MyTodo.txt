@@ -1,3 +1,6 @@
+pour les paramsBuffer, ajouter une méthode static quelque part, idéalement la class 
+ H264Frame, et H265Frame
+
 il faut aller dans cette direction, rajouté l'onvif seulement après la refacto du client rtsp et après l'avoir splité en différents receivers, pas avant.
 
 

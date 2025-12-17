@@ -1,5 +1,4 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H265.Headers;
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
@@ -96,7 +95,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -112,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -128,7 +127,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -144,7 +143,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in NalUnit.ParseAggregates( packet.Payload ) )
+            foreach ( var aggregate in H265NalUnit.ParseAggregates( packet.Payload ) )
             {
                 _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnits.WriteAsBinary( aggregate );
@@ -158,24 +157,24 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnitFragmentation.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnitFragmentation.TryParse( packet.Payload , out var nalUnit ) )
             {
-                if ( NalUnitFragmentation.IsStartPacket( ref nalUnit ) )
+                if ( H265NalUnitFragmentation.IsStartPacket( ref nalUnit ) )
                 {
                     Diagnostics.Debug.EnsureCondition( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
-                    _streamOfNalUnitsFragmented.WriteAsUInt16( NalUnitFragmentation.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteAsUInt16( H265NalUnitFragmentation.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
+                else if ( H265NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
                 {
                     Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( NalUnitFragmentation.IsStopPacket( ref nalUnit ) )
+                else if ( H265NalUnitFragmentation.IsStopPacket( ref nalUnit ) )
                 {
                     Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
 
