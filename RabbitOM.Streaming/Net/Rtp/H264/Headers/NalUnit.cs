@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 {
-    public struct NalUnitHeader
+    public struct NalUnit
     {
         public bool ForbiddenBit { get; private set; }
         public NalUnitType Type { get; private set; }
@@ -16,9 +16,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 
         
 
-        public static bool IsInvalidOrUnDefined( ref NalUnitHeader header )
+        public static bool IsInvalidOrUnDefined( ref NalUnit nalUnit )
         {
-            return header.Type == NalUnitType.NALU_TYPE_UNKNOWN;
+            return nalUnit.Type == NalUnitType.UNKNOWN;
         }
 
         // https://datatracker.ietf.org/doc/html/rfc6184#section-1.3
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
         //  |F|NRI|  Type   |  |                       |
         //  +---------------+  +-----------------------+
             
-        public static bool TryParse( ArraySegment<byte> buffer , out NalUnitHeader result )
+        public static bool TryParse( ArraySegment<byte> buffer , out NalUnit result )
         {
             result = default;
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 
             var header = buffer.Array[ buffer.Offset ];
             
-            result = new NalUnitHeader();
+            result = new NalUnit();
 
             result.ForbiddenBit  = (byte)        ( ( header >> 7 ) & 0x01 ) == 1;
             result.Nri           = (byte)        ( ( header >> 5 ) & 0x03 );

@@ -4,18 +4,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Headers
 {
     public enum NalUnitType
 	{
-        NALU_TYPE_UNKNOWN = 0,
-        NALU_TYPE_SLICE = 1,
-        NALU_TYPE_DPA = 2,
-        NALU_TYPE_DPB = 3,
-        NALU_TYPE_DPC = 4,
-        NALU_TYPE_IDR = 5,
-        NALU_TYPE_SEI = 6,
-        NALU_TYPE_SPS = 7,
-        NALU_TYPE_PPS = 8,
-        NALU_TYPE_AUD = 9,
-        NALU_TYPE_EOSEQ = 10,
-        NALU_TYPE_EOSTREAM = 11,
-        NALU_TYPE_FILL = 12,
+        UNKNOWN = 0,
+        SLICE = 1,
+        DPA = 2,
+        DPB = 3,
+        DPC = 4,
+        IDR = 5,
+        SEI = 6,
+        SPS = 7,
+        PPS = 8,
+        AUD = 9,
+        EOSEQ = 10,
+        EOSTREAM = 11,
+        FILL = 12,
     }
 }
