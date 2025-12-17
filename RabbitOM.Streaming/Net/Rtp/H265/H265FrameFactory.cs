@@ -38,14 +38,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
      
             foreach ( var packet in packets )
             {
-                if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+                if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
                 {
-                    if ( NalUnitHeader.IsInvalidOrUnDefined( ref header ) )
+                    if ( NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
                     {
                         continue;
                     }
                     
-                    switch ( header.Type )
+                    switch ( nalUnit.Type )
                     {
                         case NalUnitType.PPS: 
                             _writer.WritePPS( packet ); 

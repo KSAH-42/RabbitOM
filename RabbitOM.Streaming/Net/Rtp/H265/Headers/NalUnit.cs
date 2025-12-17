@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
-    public struct NalUnitHeader
+    public struct NalUnit
     {
         public bool ForbiddenBit { get; private set; }
         public NalUnitType Type { get; private set; }
@@ -18,9 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         
 
-        public static bool IsInvalidOrUnDefined( ref NalUnitHeader header )
+        public static bool IsInvalidOrUnDefined( ref NalUnit nalUnit )
         {
-            return header.Type == NalUnitType.INVALID || header.Type == NalUnitType.UNDEFINED;
+            return nalUnit.Type == NalUnitType.INVALID || nalUnit.Type == NalUnitType.UNDEFINED;
         }
 
         // https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4
@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
         //  [payload........................]
             
-        public static bool TryParse( ArraySegment<byte> buffer , out NalUnitHeader result )
+        public static bool TryParse( ArraySegment<byte> buffer , out NalUnit result )
         {
             result = default;
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
             var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
             
-            result = new NalUnitHeader();
+            result = new NalUnit();
 
             result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x01 ) == 1;
             result.Type          = (NalUnitType) ( ( header >> 9 ) & 0x3F );

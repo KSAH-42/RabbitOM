@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 {
-    public struct NalUnitFragmentationHeader
+    public struct NalUnitFragmentation
     {
         public bool StartBit { get; private set; }
         public bool StopBit { get; private set; }
@@ -14,14 +14,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
 
 
 
-        public static bool IsStartPacket( ref NalUnitFragmentationHeader header )
-            => header.StartBit && ! header.StopBit;
+        public static bool IsStartPacket( ref NalUnitFragmentation nalUnit )
+            => nalUnit.StartBit && ! nalUnit.StopBit;
 
-        public static bool IsStopPacket( ref NalUnitFragmentationHeader header )
-            => ! header.StartBit && header.StopBit;
+        public static bool IsStopPacket( ref NalUnitFragmentation nalUnit )
+            => ! nalUnit.StartBit && nalUnit.StopBit;
 
-        public static bool IsDataPacket( ref NalUnitFragmentationHeader packet )
-            => ! packet.StartBit && ! packet.StopBit;
+        public static bool IsDataPacket( ref NalUnitFragmentation nalUnit )
+            => ! nalUnit.StartBit && ! nalUnit.StopBit;
         
 
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
         //  +---------------+
 
         //  [payload........]
-        public static bool TryParse( ArraySegment<byte> buffer , out NalUnitFragmentationHeader result )
+        public static bool TryParse( ArraySegment<byte> buffer , out NalUnitFragmentation result )
         {
             result = default;
 
@@ -55,7 +55,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Headers
             
             var header = buffer.Array[ buffer.Offset + 2 ];
 
-            result = new NalUnitFragmentationHeader();
+            result = new NalUnitFragmentation();
 
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;

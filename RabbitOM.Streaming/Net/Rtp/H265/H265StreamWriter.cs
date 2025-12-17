@@ -7,11 +7,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     {
         private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
         
-        private readonly RtpMemoryStream _streamOfPackets = new RtpMemoryStream();
+        private readonly RtpMemoryStream _streamOfNalUnits = new RtpMemoryStream();
         
-        private readonly RtpMemoryStream _streamOfFragmentedPackets = new RtpMemoryStream();
+        private readonly RtpMemoryStream _streamOfNalUnitsFragmented = new RtpMemoryStream();
 
-        private readonly RtpMemoryStream _streamOfParams = new RtpMemoryStream();
+        private readonly RtpMemoryStream _streamOfNalUnitsParams = new RtpMemoryStream();
 
         private readonly RtpMemoryStream _output = new RtpMemoryStream();
 
@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public long Length
         {
-            get => _streamOfPackets.Length;
+            get => _streamOfNalUnits.Length;
         }
 
         
@@ -45,9 +45,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public void Clear()
         {
-            _streamOfPackets.Clear();
-            _streamOfFragmentedPackets.Clear();
-            _streamOfParams.Clear();
+            _streamOfNalUnits.Clear();
+            _streamOfNalUnitsFragmented.Clear();
+            _streamOfNalUnitsParams.Clear();
+            
             _output.Clear();
 
             _settings.Clear();
@@ -55,9 +56,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         public void Dispose()
         {
-            _streamOfPackets.Dispose();
-            _streamOfFragmentedPackets.Dispose();
-            _streamOfParams.Dispose();
+            _streamOfNalUnits.Dispose();
+            _streamOfNalUnitsFragmented.Dispose();
+            _streamOfNalUnitsParams.Dispose();
+
             _output.Dispose();
         }
 
@@ -65,15 +67,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         {
             _output.SetLength( 0 );
 
-            _output.WriteAsBinary( _streamOfParams );
-            _output.WriteAsBinary( _streamOfPackets );
+            _output.WriteAsBinary( _streamOfNalUnitsParams );
+            _output.WriteAsBinary( _streamOfNalUnits );
 
             return _output.ToArray();
         }
         
         public void SetLength( int value )
         {
-            _streamOfPackets.SetLength( value );
+            _streamOfNalUnits.SetLength( value );
         }
 
         public void Write( RtpPacket packet )
@@ -83,8 +85,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfPackets.WriteAsBinary( _settings.StartCodePrefix );
-            _streamOfPackets.WriteAsBinary( packet.Payload );
+            _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
+            _streamOfNalUnits.WriteAsBinary( packet.Payload );
         }
 
         public void WritePPS( RtpPacket packet )
@@ -94,12 +96,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfParams.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfParams.WriteAsBinary( packet.Payload );
+                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
-                _settings.PPS = header.Payload.ToArray();
+                _settings.PPS = nalUnit.Payload.ToArray();
             }
         }
 
@@ -110,12 +112,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfParams.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfParams.WriteAsBinary( packet.Payload );
+                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
-                _settings.SPS = header.Payload.ToArray();
+                _settings.SPS = nalUnit.Payload.ToArray();
             }
         }
 
@@ -126,12 +128,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnitHeader.TryParse( packet.Payload , out var header ) )
+            if ( NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfParams.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfParams.WriteAsBinary( packet.Payload );
+                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
-                _settings.VPS = header.Payload.ToArray();
+                _settings.VPS = nalUnit.Payload.ToArray();
             }
         }
 
@@ -142,10 +144,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in NalUnitHeader.ParseAggregates( packet.Payload ) )
+            foreach ( var aggregate in NalUnit.ParseAggregates( packet.Payload ) )
             {
-                _streamOfPackets.WriteAsBinary( _settings.StartCodePrefix );
-                _streamOfPackets.WriteAsBinary( aggregate );
+                _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnits.WriteAsBinary( aggregate );
             }
         }
 
@@ -156,30 +158,30 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( NalUnitFragmentationHeader.TryParse( packet.Payload , out var header ) )
+            if ( NalUnitFragmentation.TryParse( packet.Payload , out var nalUnit ) )
             {
-                if ( NalUnitFragmentationHeader.IsStartPacket( ref header ) )
+                if ( NalUnitFragmentation.IsStartPacket( ref nalUnit ) )
                 {
-                    Diagnostics.Debug.EnsureCondition( _streamOfFragmentedPackets.IsEmpty );
+                    Diagnostics.Debug.EnsureCondition( _streamOfNalUnitsFragmented.IsEmpty );
 
-                    _streamOfFragmentedPackets.Clear();
-                    _streamOfFragmentedPackets.WriteAsBinary( _settings.StartCodePrefix );
-                    _streamOfFragmentedPackets.WriteAsUInt16( NalUnitFragmentationHeader.ParseHeader( packet.Payload ) );
-                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
+                    _streamOfNalUnitsFragmented.Clear();
+                    _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
+                    _streamOfNalUnitsFragmented.WriteAsUInt16( NalUnitFragmentation.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( NalUnitFragmentationHeader.IsDataPacket( ref header ) )
+                else if ( NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
                 {
-                    Diagnostics.Debug.EnsureCondition( ! _streamOfFragmentedPackets.IsEmpty );
+                    Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
 
-                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );
+                    _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( NalUnitFragmentationHeader.IsStopPacket( ref header ) )
+                else if ( NalUnitFragmentation.IsStopPacket( ref nalUnit ) )
                 {
-                    Diagnostics.Debug.EnsureCondition( ! _streamOfFragmentedPackets.IsEmpty );
+                    Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
 
-                    _streamOfFragmentedPackets.WriteAsBinary( header.Payload );                    
-                    _streamOfPackets.WriteAsBinary( _streamOfFragmentedPackets );
-                    _streamOfFragmentedPackets.Clear();
+                    _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );                    
+                    _streamOfNalUnits.WriteAsBinary( _streamOfNalUnitsFragmented );
+                    _streamOfNalUnitsFragmented.Clear();
                 }
             }
         }

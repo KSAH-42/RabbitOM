@@ -52,7 +52,7 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
-    <Compile Include="Net\Rtp\H264\Headers\NalUnitHeader.cs" />
+    <Compile Include="Net\Rtp\H264\Headers\NalUnit.cs" />
     <Compile Include="Net\Rtp\H264\Headers\NalUnitType.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriter.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriterSettings.cs" />
@@ -61,8 +61,8 @@
     <Compile Include="Net\Rtp\H265\H265FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameFactory.cs" />
-    <Compile Include="Net\Rtp\H265\Headers\NalUnitFragmentationHeader.cs" />
-    <Compile Include="Net\Rtp\H265\Headers\NalUnitHeader.cs" />
+    <Compile Include="Net\Rtp\H265\Headers\NalUnitFragmentation.cs" />
+    <Compile Include="Net\Rtp\H265\Headers\NalUnit.cs" />
     <Compile Include="Net\Rtp\H265\H265Frame.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFragmentQueue.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegQuantizer.cs" />
