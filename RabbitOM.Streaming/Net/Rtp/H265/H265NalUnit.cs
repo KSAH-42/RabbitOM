@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     public struct H265NalUnit
     {
         /// <summary>
-        /// Gets the forbiddent bite
+        /// Gets the forbidden bit
         /// </summary>
         public bool ForbiddenBit { get; private set; }
 
