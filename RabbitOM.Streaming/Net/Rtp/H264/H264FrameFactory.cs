@@ -92,8 +92,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         public void Dispose()
         {
-            Clear();
-
             _writer.Dispose();
         }
     }

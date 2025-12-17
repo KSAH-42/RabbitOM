@@ -112,8 +112,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         public void Dispose()
         {
-            Clear();
-
             _writer.Dispose();
         }
     }
