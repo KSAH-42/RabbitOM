@@ -33,3 +33,6 @@ RabbitOM.Streaming.Windows.Presentation          // renderes goes here
 RabbitOM.Streaming.Windows.Presentation.Controls // different players classes
 
 // remove RabbitOM.Streaming.Windows.Presentation.Renders
+
+at the final end, 
+split them as different assemblies
