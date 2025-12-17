@@ -35,7 +35,8 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 
 ➡️ Next arrival things:
 
-* Adding support video encoder for rendering H265 using C++ and WRL
+* Adding support of H264
+* Adding support video encoder for rendering H265 using C++ WRL or COM/ATL
 * Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 
 # How to receive raw rtp packets using the rtsp client ?
