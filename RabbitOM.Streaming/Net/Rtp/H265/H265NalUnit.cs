@@ -70,10 +70,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             
             result = new H265NalUnit();
 
-            result.ForbiddenBit  = (byte)        ( ( header >> 15) & 0x01 ) == 1;
+            result.ForbiddenBit  = (byte)            ( ( header >> 15) & 0x01 ) == 1;
             result.Type          = (H265NalUnitType) ( ( header >> 9 ) & 0x3F );
-            result.LayerId       = (byte)        ( ( header >> 3 ) & 0x3F );
-            result.Tid           = (byte)        (   header        & 0x07 );
+            result.LayerId       = (byte)            ( ( header >> 3 ) & 0x3F );
+            result.Tid           = (byte)            (   header        & 0x07 );
 
             if ( buffer.Count > 2 )
             {
