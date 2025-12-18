@@ -90,8 +90,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <returns>returns true for a success, otherwise false</returns>
         public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
         {
-            // TODO: check this part of code
-
             var results = new List<ArraySegment<byte>>();
 
             var index = buffer.Offset + 2;
@@ -100,12 +98,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 var size = buffer.Array[ index ++ ] * 0x100 | buffer.Array[ index ++ ];
 
-                var delta = buffer.Array.Length - (buffer.Offset + size );
+                var remaingLength = buffer.Array.Length - (buffer.Offset + index);
 
-                if ( 0 < size && size < delta )
+                if ( 0 < size && size <= remaingLength )
                 {
                     results.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
                 }
+
+                index += size ;
             }
 
             return results;
