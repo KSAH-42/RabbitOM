@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
-                _settings.PPS = nalUnit.Payload.ToArray();
+                _settings.PPS = packet.Payload.ToArray();
             }
         }
 
@@ -114,7 +114,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
-                _settings.SPS = nalUnit.Payload.ToArray();
+                _settings.SPS = packet.Payload.ToArray();
             }
         }
 
