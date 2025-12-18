@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
@@ -55,7 +56,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         public static int ParseHeader( ArraySegment<byte> buffer )
         {
-            throw new NotImplementedException();
+            if ( buffer.Count < 2 )
+            {
+                throw new ArgumentOutOfRangeException( nameof( buffer ) );
+            }
+
+            var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
+
+            return ( ( header >> 9 ) & 0x3F );
         }
     } 
 }
