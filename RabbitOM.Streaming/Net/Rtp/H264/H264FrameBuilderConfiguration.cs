@@ -8,8 +8,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         private byte[] _sps;
 
-        private byte[] _vps;
-
 
 
         public byte[] PPS
@@ -46,25 +44,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 lock ( SyncRoot )
                 {
                     _sps = value;
-                }
-            }
-        }
-
-        public byte[] VPS
-        {
-            get
-            {
-                lock ( SyncRoot )
-                {
-                    return _vps;
-                }
-            }
-
-            set
-            {
-                lock ( SyncRoot )
-                {
-                    _vps = value;
                 }
             }
         }

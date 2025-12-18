@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 {
     public sealed class H264StreamWriterSettings
     {
-        public static readonly byte[] StartCodePrefixV1 = { 0x00 , 0x00 , 0x01 };
+        public static readonly byte[] StartCodePrefixV1 = { 0x00 , 0x00 , 0x00 , 0x01 };
 
 
 

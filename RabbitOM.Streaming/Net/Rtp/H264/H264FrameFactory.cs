@@ -14,8 +14,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         public H264FrameFactory( H264FrameBuilderConfiguration configuration )
         {
-            ExceptionHelper.ThrowOnRelease( "DONT use in production - implementation is progress" );
-
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
             _writer = new H264StreamWriter();
         } 
