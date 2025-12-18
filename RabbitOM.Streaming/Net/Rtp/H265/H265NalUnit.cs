@@ -98,9 +98,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 var size = buffer.Array[ index ++ ] * 0x100 | buffer.Array[ index ++ ];
 
-                var remaingLength = buffer.Array.Length - (buffer.Offset + index);
-
-                if ( 0 < size && size <= remaingLength )
+                if ( 0 < size && size <= (buffer.Array.Length - (buffer.Offset + index)) )
                 {
                     results.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
                 }
