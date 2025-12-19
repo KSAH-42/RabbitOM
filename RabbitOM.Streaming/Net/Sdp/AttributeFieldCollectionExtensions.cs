@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Net.Sdp.Extensions
+namespace RabbitOM.Streaming.Net.Sdp
 {
     /// <summary>
     /// Represent the collection for attribute field that a allow duplicate field names

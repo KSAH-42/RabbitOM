@@ -49,22 +49,17 @@ namespace RabbitOM.Streaming.Diagnostics.Counters
             throw new NotImplementedException();
         }
 
-        public void IncreaseConnectionSucceed()
+        public void IncreaseConnectionsSucceed()
         {
             throw new NotImplementedException();
         }
 
-        public void IncreaseConnectionError()
+        public void IncreaseConnectionsError()
         {
             throw new NotImplementedException();
         }
 
-        public void IncreaseDisconnection()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void SetBuffer( byte[] buffer )
+        public void IncreaseDisconnections()
         {
             throw new NotImplementedException();
         }
@@ -74,6 +69,11 @@ namespace RabbitOM.Streaming.Diagnostics.Counters
             throw new NotImplementedException();
         }
 
+        public void SetMediaBuffer( byte[] buffer )
+        {
+            throw new NotImplementedException();
+        }
+        
         public override void Reset()
         {
             throw new NotImplementedException();

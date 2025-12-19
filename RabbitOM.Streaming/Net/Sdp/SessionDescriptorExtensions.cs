@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Sdp.Extensions
+namespace RabbitOM.Streaming.Net.Sdp
 {
     /// <summary>
     /// Represent the session descriptor extension class

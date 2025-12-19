@@ -282,8 +282,8 @@
     <Compile Include="Net\Sdp\EmailFieldCollection.cs" />
     <Compile Include="Net\Sdp\EncoderTypes.cs" />
     <Compile Include="Net\Sdp\EncryptionField.cs" />
-    <Compile Include="Net\Sdp\Extensions\AttributeFieldCollectionExtensions.cs" />
-    <Compile Include="Net\Sdp\Extensions\SessionDescriptorExtensions.cs" />
+    <Compile Include="Net\Sdp\AttributeFieldCollectionExtensions.cs" />
+    <Compile Include="Net\Sdp\SessionDescriptorExtensions.cs" />
     <Compile Include="Net\Sdp\FieldCollection.cs" />
     <Compile Include="Net\Sdp\FormatAttributeValue.cs" />
     <Compile Include="Net\Sdp\ICopyable.cs" />

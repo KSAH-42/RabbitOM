@@ -4,7 +4,6 @@ using System.Linq;
 namespace RabbitOM.Streaming.Net.Rtsp.Clients
 {
     using RabbitOM.Streaming.Net.Sdp;
-    using RabbitOM.Streaming.Net.Sdp.Extensions;
 
     /// <summary>
     /// Represent the client session descriptor
