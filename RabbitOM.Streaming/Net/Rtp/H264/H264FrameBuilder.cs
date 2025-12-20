@@ -72,14 +72,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         protected override void Dispose( bool disposing )
         {
-            if ( ! disposing )
-            {
-                return;
-            }
-
             lock ( SyncRoot )
             {
-                _frameFactory.Dispose();
+                if ( disposing )
+                {
+                    _frameFactory.Dispose();
+                }
+
+                base.Dispose( disposing );
             }
         }
     }
