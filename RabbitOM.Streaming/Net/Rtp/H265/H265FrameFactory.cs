@@ -32,6 +32,31 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Setup the writer
+        /// </summary>
+        public void Setup()
+        {
+            if ( _writer.Settings.StartCodePrefix == null || _writer.Settings.StartCodePrefix.Length == 0 )
+            {
+                _writer.Settings.StartCodePrefix = _configuration.StartCodePrefix;
+            }
+
+            if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
+            {
+                _writer.Settings.PPS = _configuration.PPS;
+            }
+
+            if ( _writer.Settings.SPS == null || _writer.Settings.SPS.Length == 0 )
+            {
+                _writer.Settings.SPS = _configuration.SPS;
+            }
+
+            if ( _writer.Settings.VPS == null || _writer.Settings.VPS.Length == 0 )
+            {
+                _writer.Settings.VPS = _configuration.VPS;
+            }
+        }
 
         /// <summary>
         /// Try to create the frame
@@ -49,9 +74,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
 
             _writer.SetLength( 0 );
-            
-            H265StreamWriterSettings.AssignParameters( _writer.Settings , _configuration.PPS , _configuration.SPS , _configuration.VPS );
-     
+
             foreach ( var packet in packets )
             {
                 if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
@@ -60,7 +83,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                     {
                         continue;
                     }
-                    
+
                     switch ( nalUnit.Type )
                     {
                         case H265NalUnitType.PPS: 
@@ -92,7 +115,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.Settings.CreateParamsBuffer() );
+                result = new H265Frame( _writer.ToArray() , _writer.Settings.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS );
             }
 
             return result != null;

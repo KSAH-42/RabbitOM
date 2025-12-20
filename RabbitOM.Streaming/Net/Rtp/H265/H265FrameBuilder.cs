@@ -10,9 +10,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     {
         private readonly H265FrameBuilderConfiguration _configuration;
 
-        private readonly H265FrameFactory _frameFactory;
-
         private readonly H265FrameAggregator _aggregator;
+
+        private readonly H265FrameFactory _frameFactory;
     
 
 
@@ -24,8 +24,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         public H265FrameBuilder()
         {
             _configuration = new H265FrameBuilderConfiguration();
-            _frameFactory  = new H265FrameFactory( _configuration );
             _aggregator    = new H265FrameAggregator( _configuration );
+            _frameFactory  = new H265FrameFactory( _configuration );
         }
 
 
@@ -44,6 +44,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+        /// <summary>
+        /// Setup the builder
+        /// </summary>
+        public override void Setup()
+        {
+            lock ( SyncRoot )
+            {
+                _frameFactory.Setup();
+            }
+        }
 
         /// <summary>
         /// Write data thats comes from the network

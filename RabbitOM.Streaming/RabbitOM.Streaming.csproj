@@ -62,6 +62,7 @@
     <Compile Include="Net\Rtp\H264\H264NalUnit.cs" />
     <Compile Include="Net\Rtp\H264\H264NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H264\H264NalUnitType.cs" />
+    <Compile Include="Net\Rtp\H265\H265Constants.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriter.cs" />
     <Compile Include="Net\Rtp\H265\H265StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H265\H265NalUnitType.cs" />

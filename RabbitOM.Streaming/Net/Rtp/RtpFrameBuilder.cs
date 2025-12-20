@@ -49,6 +49,22 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
         /// <summary>
+        /// Setup - Generally called when the builder has entierely configured and before the streaming
+        /// </summary>
+        public virtual void Setup() { }
+
+        /// <summary>
+        /// Write a buffer
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        public abstract void Write( byte[] buffer );
+
+        /// <summary>
+        /// Clear generally used to reset the builder
+        /// </summary>
+        public abstract void Clear();
+
+        /// <summary>
         /// Dispose
         /// </summary>
         public void Dispose()
@@ -64,17 +80,6 @@ namespace RabbitOM.Streaming.Net.Rtp
         protected virtual void Dispose( bool disposing )
         {
         }
-
-        /// <summary>
-        /// Clear generally used to reset the builder
-        /// </summary>
-        public abstract void Clear();
-
-        /// <summary>
-        /// Write a buffer
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        public abstract void Write( byte[] buffer );
 
 
 

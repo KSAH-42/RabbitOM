@@ -15,10 +15,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
-        public H264FrameBuilder()
+        private H264FrameBuilder()
         {
-            throw new InvalidOperationException("Implementation not finished");
-
             _configuration = new H264FrameBuilderConfiguration();
             _frameFactory  = new H264FrameFactory( _configuration );
             _aggregator    = new H264FrameAggregator( _configuration );

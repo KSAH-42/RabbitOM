@@ -7,6 +7,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// </summary>
     public sealed class H265FrameBuilderConfiguration : RtpFrameBuilderConfiguration
     {
+        private byte[] _startCodePrefix = H265Constants.StartCodePrefixV1;
+
         private byte[] _pps;
 
         private byte[] _sps;
@@ -15,6 +17,29 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
 
+
+
+        /// <summary>
+        /// Gets / Sets the start code prefix
+        /// </summary>
+        public byte[] StartCodePrefix
+        {
+            get
+            {
+                lock ( SyncRoot )
+                {
+                    return _startCodePrefix;
+                }
+            }
+
+            set
+            {
+                lock ( SyncRoot )
+                {
+                    _startCodePrefix = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Gets / Sets the PPS
