@@ -91,15 +91,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <param name="disposing">true for disposing...</param>
         protected override void Dispose( bool disposing )
         {
-            lock ( SyncRoot )
+            if ( disposing )
             {
-                if ( disposing )
-                {
-                    _factory.Dispose();
-                }
-
-                base.Dispose( disposing );
+                _factory.Dispose();
             }
+
+            base.Dispose( disposing );
         }
     }
 }

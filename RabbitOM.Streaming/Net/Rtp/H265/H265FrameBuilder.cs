@@ -102,15 +102,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="disposing">the dispose indicator</param>
         protected override void Dispose( bool disposing )
         {
-            lock ( SyncRoot )
+            if ( disposing )
             {
-                if ( disposing )
-                {
-                    _frameFactory.Dispose();
-                }
-
-                base.Dispose( disposing );
+                _frameFactory.Dispose();
             }
+
+            base.Dispose( disposing );
         }
     }
 }
