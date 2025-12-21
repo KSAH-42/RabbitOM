@@ -99,9 +99,9 @@ namespace RabbitOM.Streaming.Net.Sdp
         /// <param name="field">the field</param>
         /// <param name="name">the name</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool Equals(AttributeField field, string name )
+        public static bool NameEquals(AttributeField field, string name )
         {
-            return Equals( field , name , true );
+            return NameEquals( field , name , true );
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Sdp
         /// <param name="name">the name</param>
         /// <param name="ignoreCase">set true ignore the case</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool Equals(AttributeField field , string name , bool ignoreCase )
+        public static bool NameEquals(AttributeField field , string name , bool ignoreCase )
         {
             if ( field == null )
             {

@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Net.Sdp
                 throw new ArgumentNullException( nameof( collection ) );
             }
 
-            var result = collection.First( field => AttributeField.Equals( field , name , ignoreCase ) );
+            var result = collection.First( field => AttributeField.NameEquals( field , name , ignoreCase ) );
 
             if ( result == null )
             {
@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming.Net.Sdp
                 throw new ArgumentNullException(nameof(collection));
             }
 
-            return collection.FirstOrDefault( field => AttributeField.Equals( field , name , ignoreCase ) );
+            return collection.FirstOrDefault( field => AttributeField.NameEquals( field , name , ignoreCase ) );
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Net.Sdp
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryGetByName( this AttributeFieldCollection collection , string name, bool ignoreCase , out AttributeField result )
         {
-            result = collection?.FirstOrDefault( field => AttributeField.Equals( field , name , ignoreCase ) );
+            result = collection?.FirstOrDefault( field => AttributeField.NameEquals( field , name , ignoreCase ) );
 
             return result != null;
         }
