@@ -69,8 +69,12 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// </summary>
         public void Dispose()
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
+            lock ( _lock )
+            {
+                Dispose( true );
+
+                GC.SuppressFinalize( this );
+            }
         }
 
         /// <summary>
