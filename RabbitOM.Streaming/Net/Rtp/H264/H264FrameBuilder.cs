@@ -1,5 +1,5 @@
 ﻿/*
- THIS IMPLEMENTATION IS NOT FINISH AND TESTED DO NOT USED IT IN PRODUCTION
+ THIS IMPLEMENTATION IS NOT FINISH AND NOT TESTED DO NOT USED IT IN PRODUCTION
  */
 
 using System;
@@ -39,6 +39,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
+        public override void Setup()
+        {
+            lock ( SyncRoot )
+            {
+                _frameFactory.Setup();
+            }
+        }
 
         public override void Write( byte[] buffer )
         {

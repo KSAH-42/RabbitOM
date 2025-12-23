@@ -4,11 +4,32 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 {
     public sealed class H264FrameBuilderConfiguration : RtpFrameBuilderConfiguration
     {
+        private byte[] _startCodePrefix = H264Constants.StartCodePrefixV1;
+
         private byte[] _pps;
 
         private byte[] _sps;
 
 
+
+        public byte[] StartCodePrefix
+        {
+            get
+            {
+                lock ( SyncRoot )
+                {
+                    return _startCodePrefix;
+                }
+            }
+
+            set
+            {
+                lock ( SyncRoot )
+                {
+                    _startCodePrefix = value;
+                }
+            }
+        }
 
         public byte[] PPS
         {

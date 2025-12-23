@@ -20,7 +20,23 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
+        public void Setup()
+        {
+            if ( _writer.Settings.StartCodePrefix == null || _writer.Settings.StartCodePrefix.Length == 0 )
+            {
+                _writer.Settings.StartCodePrefix = _configuration.StartCodePrefix;
+            }
 
+            if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
+            {
+                _writer.Settings.PPS = _configuration.PPS;
+            }
+
+            if ( _writer.Settings.SPS == null || _writer.Settings.SPS.Length == 0 )
+            {
+                _writer.Settings.SPS = _configuration.SPS;
+            }
+        }
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
@@ -33,8 +49,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             _writer.SetLength( 0 );
             
-            H264StreamWriterSettings.AssignParameters( _writer.Settings , _configuration.PPS , _configuration.SPS );
-     
             foreach ( var packet in packets )
             {
                 if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
@@ -76,7 +90,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264Frame( _writer.ToArray() , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.CreateParamsBuffer() );
+                result = new H264Frame( _writer.ToArray() , _writer.Settings.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS );
             }
 
             return result != null;
