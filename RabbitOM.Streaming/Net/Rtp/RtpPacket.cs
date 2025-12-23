@@ -10,62 +10,62 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// <summary>
         /// Gets / Sets the version
         /// </summary>
-        public byte Version { get; set; }
+        public byte Version { get; private set; }
 
         /// <summary>
         /// Gets / Sets the padding state
         /// </summary>
-        public bool HasPadding { get; set; }
+        public bool HasPadding { get; private set; }
 
         /// <summary>
         /// Gets / Sets the marker state
         /// </summary>
-        public bool Marker { get; set; }
+        public bool Marker { get; private set; }
 
         /// <summary>
         /// Gets / Sets the type
         /// </summary>
-        public PacketType Type { get; set; }
+        public PacketType Type { get; private set; }
 
         /// <summary>
         /// Gets / Sets the sequence number
         /// </summary>
-        public ushort SequenceNumber { get; set; }
+        public ushort SequenceNumber { get; private set; }
 
         /// <summary>
         /// Gets / Sets the timestamp
         /// </summary>
-        public uint TimeStamp { get; set; }
+        public uint TimeStamp { get; private set; }
 
         /// <summary>
         /// Gets / Sets the extension usage state
         /// </summary>
-        public bool HasExtension { get; set; }
+        public bool HasExtension { get; private set; }
 
         /// <summary>
         /// Gets / Sets the the number of contributing sources
         /// </summary>
-        public ushort NumberOfCSRC { get; set; }
+        public ushort NumberOfCSRC { get; private set; }
 
         /// <summary>
         /// Gets / Sets the sequence source
         /// </summary>
-        public uint SSRC { get; set; }
+        public uint SSRC { get; private set; }
 
         /// <summary>
         /// Gets / Sets the extension
         /// </summary>
-        public uint Extension { get; set; }
+        public uint Extension { get; private set; }
 
         /// <summary>
         /// Gets / Sets the contributors sources identifiers
         /// </summary>
-        public int[] CSRCIdentifiers { get; set; }
+        public int[] CSRCIdentifiers { get; private set; }
 
         /// <summary>
         /// Gets / Sets the payload
         /// </summary>
-        public ArraySegment<byte> Payload { get; set; }
+        public ArraySegment<byte> Payload { get; private set; }
 
 
 
