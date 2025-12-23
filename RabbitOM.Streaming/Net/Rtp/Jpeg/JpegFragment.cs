@@ -17,47 +17,47 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <summary>
         /// Gets / Sets the offset
         /// </summary>
-        public int Offset { get; set; }
+        public int Offset { get; private set; }
 
         /// <summary>
         /// Gets / Sets the type
         /// </summary>
-        public int Type { get; set; }
+        public int Type { get; private set; }
 
         /// <summary>
         /// Gets / Sets the width
         /// </summary>
-        public int Width { get; set; }
+        public int Width { get; private set; }
 
         /// <summary>
         /// Gets / Sets the height
         /// </summary>
-        public int Height { get; set; }
+        public int Height { get; private set; }
 
         /// <summary>
         /// Gets / Sets the DRI (Define Restart Interval)
         /// </summary>
-        public int RestartInterval { get; set; }
+        public int RestartInterval { get; private set; }
 
         /// <summary>
         /// Gets / Sets the MBZ (Must Be Zero)
         /// </summary>
-        public int MustBeZero { get; set; }
+        public int MustBeZero { get; private set; }
 
         /// <summary>
         /// Gets / Sets the quantization factor
         /// </summary>
-        public int QFactor { get; set; }
+        public int QFactor { get; private set; }
 
         /// <summary>
         /// Gets / Sets the quantization table
         /// </summary>
-        public ArraySegment<byte> QTable { get; set; }
+        public ArraySegment<byte> QTable { get; private set; }
 
         /// <summary>
         /// Gets / Sets the payload
         /// </summary>
-        public ArraySegment<byte> Payload { get; set; }
+        public ArraySegment<byte> Payload { get; private set; }
 
 
 
