@@ -7,45 +7,26 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// </summary>
     public sealed class JpegFrame : RtpFrame
     {
-        private readonly int _width;
-
-        private readonly int _height;
-
-
-
-
-
         /// <summary>
         /// Initialize a new instance of the jpeg frame
         /// </summary>
         /// <param name="data">the data</param>
         /// <param name="width">the width</param>
         /// <param name="height">the height</param>
-        public JpegFrame( byte[] data , int width , int height )
-            : base ( data )
+        public JpegFrame( byte[] data , int width , int height ) : base ( data )
         {
-            _width  = width;
-            _height = height;
+            Width  = width;
+            Height = height;
         }
-
-
-
-
 
         /// <summary>
         /// Gets the width
         /// </summary>
-        public int Width
-        {
-            get => _width;
-        }
+        public int Width { get; }
 
         /// <summary>
         /// Gets the height
         /// </summary>
-        public int Height
-        {
-            get => _height;
-        }
+        public int Height { get; }
     }
 }

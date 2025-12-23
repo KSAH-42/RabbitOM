@@ -7,11 +7,6 @@ namespace RabbitOM.Streaming.Net.Rtp
     /// </summary>
     public class RtpFrame
     {
-        private readonly byte[] _data;
-
-
-
-
         /// <summary>
         /// Initialize an new instance of the frame class
         /// </summary>
@@ -30,18 +25,12 @@ namespace RabbitOM.Streaming.Net.Rtp
                 throw new ArgumentException( nameof( data ) );
             }
 
-            _data = data;
+            Data = data;
         }
-
-
-
 
         /// <summary>
         /// Gets the data
         /// </summary>
-        public byte[] Data
-        {
-            get => _data;
-        }
+        public byte[] Data { get; }
     }
 }
