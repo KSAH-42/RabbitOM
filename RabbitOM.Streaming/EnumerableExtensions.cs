@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming
 
             foreach ( var element in source )
             {
-                var text = element.ToString();
+                var text = element?.ToString();
 
                 if ( ! string.IsNullOrEmpty( text ) )
                 {

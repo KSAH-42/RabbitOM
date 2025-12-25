@@ -45,11 +45,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly RtpRender _renderer = new RtpJpegRender();
-
-        public MainWindow()
-        {
-        }
-
+        
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
             _client.CommunicationStarted += OnCommunicationStarted;
@@ -57,7 +53,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
-            
+
             _frameBuilder.FrameReceived += OnFrameReceived;
         }
 
