@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <summary>
     /// Represent a class used for reconstructing a group packets which represent a single frame.
     /// </summary>
-    public sealed class JpegFrameAggregator
+    public sealed class JpegPacketAggregator
     {
         private readonly JpegFrameBuilderConfiguration _configuration;
 
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// </summary>
         /// <param name="configuration">the configuration</param>
         /// <exception cref="ArgumentNullException"/>
-        public JpegFrameAggregator( JpegFrameBuilderConfiguration configuration )
+        public JpegPacketAggregator( JpegFrameBuilderConfiguration configuration )
         {
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 
