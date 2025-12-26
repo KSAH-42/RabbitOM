@@ -3,6 +3,7 @@ pour les paramsBuffer, ajouter une méthode static quelque part, idéalement la cl
 
 il faut aller dans cette direction, rajouté l'onvif seulement après la refacto du client rtsp et après l'avoir splité en différents receivers, pas avant.
 
+move the StartCodePrefix fields present in the H264 and H265 namespace into the parent namespace.
 
 RabbitOM.Streaming
 RabbitOM.Streaming.Collections
@@ -17,9 +18,12 @@ RabbitOM.Streaming.Net.Rtp.H264.Headers
 RabbitOM.Streaming.Net.Rtp.H265
 RabbitOM.Streaming.Net.Rtp.H265.Headers
 RabbitOM.Streaming.Net.Rtp.Jpeg
+RabbitOM.Streaming.Net.Rtp.Jpeg.Fragmentation
 RabbitOM.Streaming.Net.Rtsp
 RabbitOM.Streaming.Net.Rtsp.Headers
 RabbitOM.Streaming.Net.Rtsp.Receivers     // replace the client class by individual receivers class, tcp receiver, udp_unicast receiver, udp_multicast receiver, web receiver, tunnel rtsp receiver, sony receiver, and so on.
+                                          // and inject configuration class as immutable object into the constructor and remove locks to speed up time*
+                                          // introduce a receiver manager that wrap the receiver witch can be (the manger) stay as readonly
 RabbitOM.Streaming.Net.Sdp
 RabbitOM.Streaming.Net.Sdp.Serialization
 RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
