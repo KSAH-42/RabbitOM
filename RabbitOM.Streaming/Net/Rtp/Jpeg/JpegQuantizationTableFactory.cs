@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <returns>returns a table</returns>
         public ArraySegment<byte> CreateTable( int factor )
         {
-            Diagnostics.Debug.EnsureCondition( _table.Length == BaseTable.Length );
+            System.Diagnostics.Debug.Assert( _table.Length == BaseTable.Length );
 
             if ( ! _factor.HasValue || _factor != factor )
             {

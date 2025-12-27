@@ -135,7 +135,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <returns>returns true if the headers need to be created</returns>
         private bool OnCreatingHeaders( JpegFragment fragment )
         {
-            Diagnostics.Debug.EnsureCondition( fragment != null );
+            System.Diagnostics.Debug.Assert( fragment != null );
 
             return _headersPosition               == 0
                 || _firstFragment.Type            != fragment.Type 

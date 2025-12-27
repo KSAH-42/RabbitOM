@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
@@ -210,7 +211,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 if ( H265NalUnitFragmentation.IsStartPacket( ref nalUnit ) )
                 {
-                    Diagnostics.Debug.EnsureCondition( _streamOfNalUnitsFragmented.IsEmpty );
+                    Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
@@ -219,13 +220,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 }
                 else if ( H265NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
                 {
-                    Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
+                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
                 else if ( H265NalUnitFragmentation.IsStopPacket( ref nalUnit ) )
                 {
-                    Diagnostics.Debug.EnsureCondition( ! _streamOfNalUnitsFragmented.IsEmpty );
+                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );                    
                     _streamOfNalUnits.WriteAsBinary( _streamOfNalUnitsFragmented );

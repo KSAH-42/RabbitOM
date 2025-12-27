@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArraySegmentExtensions.cs" />
-    <Compile Include="Diagnostics\Debug.cs" />
     <Compile Include="Diagnostics\Counters\Counter.cs" />
     <Compile Include="Diagnostics\Counters\RtspClientCounter.cs" />
     <Compile Include="ExceptionHelper.cs" />
