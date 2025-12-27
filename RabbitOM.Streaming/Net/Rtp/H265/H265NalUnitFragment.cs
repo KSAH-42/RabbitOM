@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent a H265 fragmented nalu <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-4.4.3"/>
     /// </summary>
-    public struct H265NalUnitFragmentation
+    public struct H265NalUnitFragment
     {
         /// <summary>
         /// Gets the start bit
@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsStartPacket( ref H265NalUnitFragmentation nalUnit )
+        public static bool IsStartPacket( ref H265NalUnitFragment nalUnit )
             => nalUnit.StartBit && ! nalUnit.StopBit;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsStopPacket( ref H265NalUnitFragmentation nalUnit )
+        public static bool IsStopPacket( ref H265NalUnitFragment nalUnit )
             => ! nalUnit.StartBit && nalUnit.StopBit;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsDataPacket( ref H265NalUnitFragmentation nalUnit )
+        public static bool IsDataPacket( ref H265NalUnitFragment nalUnit )
             => ! nalUnit.StartBit && ! nalUnit.StopBit;
         
 
@@ -67,7 +67,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="buffer">the rtp payload</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnitFragmentation result )
+        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnitFragment result )
         {
             result = default;
 
@@ -78,7 +78,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             
             var header = buffer.Array[ buffer.Offset + 2 ];
 
-            result = new H265NalUnitFragmentation();
+            result = new H265NalUnitFragment();
 
             result.StartBit       = ( header >> 7 & 0x1 ) == 1;
             result.StopBit        = ( header >> 6 & 0x1 ) == 1;

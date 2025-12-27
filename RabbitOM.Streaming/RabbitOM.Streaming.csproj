@@ -71,7 +71,7 @@
     <Compile Include="Net\Rtp\H265\H265FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameFactory.cs" />
-    <Compile Include="Net\Rtp\H265\H265NalUnitFragmentation.cs" />
+    <Compile Include="Net\Rtp\H265\H265NalUnitFragment.cs" />
     <Compile Include="Net\Rtp\H265\H265NalUnit.cs" />
     <Compile Include="Net\Rtp\H265\H265Frame.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFragmentQueue.cs" />
