@@ -45,11 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
         public static bool IsInvalidOrUnDefined( ref H265NalUnit nalUnit )
-        {
-            return nalUnit.Type == H265NalUnitType.INVALID || nalUnit.Type == H265NalUnitType.UNDEFINED;
-        }
-
-
+            => nalUnit.Type == H265NalUnitType.INVALID || nalUnit.Type == H265NalUnitType.UNDEFINED;
 
         /// <summary>
         /// Try to parse
