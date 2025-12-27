@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+ THIS IMPLEMENTATION IS NOT FINISH AND NOT TESTED DO NOT USED IT IN PRODUCTION
+ */
+
+using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
