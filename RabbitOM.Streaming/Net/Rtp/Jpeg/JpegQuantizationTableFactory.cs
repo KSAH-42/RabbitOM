@@ -27,9 +27,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
             99, 99, 99, 99, 99, 99, 99, 99
         };
 
-        private ArraySegment<byte> _table;
+        private readonly byte[] _table = new byte[ BaseTable.Length ];
 
-        private int _factor;
+        private int? _factor;
 
 
 
@@ -43,25 +43,21 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <returns>returns a table</returns>
         public ArraySegment<byte> CreateTable( int factor )
         {
-            if ( _table.Count > 0 && _factor == factor )
+            Diagnostics.Debug.EnsureCondition( _table.Length == BaseTable.Length );
+
+            if ( ! _factor.HasValue || _factor != factor )
             {
-                return _table;
+                var quantizationFactor = JpegQuantizer.AdaptFactor( factor );
+
+                for ( var i = 0 ; i < _table.Length ; ++ i )
+                {
+                    _table[ i ] = JpegQuantizer.Quantize( BaseTable[ i ] , quantizationFactor );
+                }
+
+                _factor = factor;
             }
 
-            var buffer = new byte[ BaseTable.Length ];
-
-            var quantizationFactor = JpegQuantizer.AdaptFactor( factor );
-
-            for ( int i = 0 ; i < buffer.Length ; ++i )
-            {
-                buffer[ i ] = JpegQuantizer.Quantize( BaseTable[ i ] , quantizationFactor );
-            }
-
-            _table = new ArraySegment<byte>( buffer );
-
-            _factor = factor;
-
-            return _table;
+            return new ArraySegment<byte>( _table );
         }
     }
 }
