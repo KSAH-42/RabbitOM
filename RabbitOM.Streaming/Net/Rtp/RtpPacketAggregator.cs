@@ -60,23 +60,25 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             packets = default;
 
-            if ( _queue.TryEnqueue( packet ) )
+            if ( ! _queue.TryEnqueue( packet ) )
             {
-                OnPacketAdded( packet );
-
-                if ( packet.Marker )
-                {
-                    packets = _isUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
-
-                    _queue.Clear();
-
-                    _isUnOrdered = false;
-
-                    return true;
-                }
+                return false;
             }
 
-            return false;
+            OnPacketAdded( packet );
+
+            if ( ! packet.Marker )
+            {
+                return false;
+            }
+
+            packets = _isUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
+
+            _queue.Clear();
+
+            _isUnOrdered = false;
+
+            return true;
         }
 
         /// <summary>
