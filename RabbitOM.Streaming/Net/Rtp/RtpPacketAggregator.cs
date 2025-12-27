@@ -28,22 +28,6 @@ namespace RabbitOM.Streaming.Net.Rtp
             get => _queue;
         }
 
-        /// <summary>
-        /// Gets the current sequence number
-        /// </summary>
-        public uint? CurrentSequenceNumber
-        {
-            get => _currentSequenceNumber;
-        }
-
-        /// <summary>
-        /// Gets the status if the sequence is ordered or not
-        /// </summary>
-        public bool IsUnOrdered
-        {
-            get => _isUnOrdered;
-        }
-
 
 
 
