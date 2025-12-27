@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return false;
             }
 
-            OnPacketAdded( packet );
+            OnAggregating( packet );
 
             if ( ! packet.Marker )
             {
@@ -58,9 +58,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             packets = _isUnOrdered ? RtpPacketQueue.Sort( _queue ) : _queue.AsEnumerable();
 
-            _queue.Clear();
-
-            _isUnOrdered = false;
+            OnAggregated( packets );
 
             return true;
         }
@@ -72,8 +70,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             _queue.Clear();
 
-            _currentSequenceNumber = null;
-            _isUnOrdered = false;
+            OnClear();
         }
 
 
@@ -83,7 +80,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// Occurs when a packet is added
         /// </summary>
         /// <param name="packet">the packet</param>
-        private void OnPacketAdded( RtpPacket packet )
+        private void OnAggregating( RtpPacket packet )
         {
             if ( _currentSequenceNumber.HasValue )
             {
@@ -93,6 +90,26 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
 
             _currentSequenceNumber = packet.SequenceNumber;
+        }
+
+        /// <summary>
+        /// Occurs when the sequence has been full aggregated
+        /// </summary>
+        /// <param name="packets">the sequence</param>
+        private void OnAggregated( IEnumerable<RtpPacket> packets )
+        {
+            _queue.Clear();
+
+            _isUnOrdered = false;
+        }
+
+        /// <summary>
+        /// Occurs when the clear operation must be done
+        /// </summary>
+        private void OnClear()
+        {
+            _currentSequenceNumber = null;
+            _isUnOrdered = false;
         }
     }
 }
