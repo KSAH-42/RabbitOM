@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <serverip></serverip>               <!-- Specify the IP address RTSP server bindings, if not specified, the RTSP server will bind to the default routing interface IP address -->
+    <serverip></serverip>               <!-- This node can configure multiple instances,meaning that the server can bind multiple IP addresses or domain names -->
+    <serverport>555</serverport>        <!-- Specify the port RTSP server binding, the default is 554 -->   
+    <loop_nums>-1</loop_nums>           <!-- When streaming video files, specify the number of loop playback,-1 means infinite loop -->
+    <multicast>1</multicast>            <!-- Whether to enable rtp multicast function, 0-disable, 1-enable -->
+    <metadata>1</metadata>              <!-- Whether to enable the meta data stream, 0-disable, 1-enable -->
+    <rtsp_over_http>1</rtsp_over_http>  <!-- Whether to enable rtsp over http function, 0-disable,1-enable -->
+    <http_port>80</http_port>           <!-- Specify the HTTP service port for rtsp over http function -->
+    <rtsp_over_https>1</rtsp_over_https><!-- Whether to enable rtsp over https function, 0-disable,1-enable -->
+    <https_port>443</https_port>        <!-- Specify the HTTPS service port for rtsp over https function -->
+    <cert_file>ssl.ca</cert_file>       <!-- Specify the HTTPS service certificate file -->
+    <key_file>ssl.key</key_file>        <!-- Specify the HTTPS service key file -->
+    <need_auth>1</need_auth>            <!-- Whether enable the user authentication function,0-disable,1-enable -->
+    <log_enable>0</log_enable>          <!-- Whether enable the log function,0-disable,1-enable -->
+    <log_level>0</log_level>            <!-- The log level: TRACE 0, DEBUG 1, INFO 2, WARN 3, ERROR 4, FATAL 5 -->
+    
+    <user>                              <!-- Specify the login username password, it can configure multiple nodes -->
+        <username>admin</username>      <!-- The login username -->
+        <password>camera123</password>      <!-- The login password -->
+    </user>
+    
+    <user>
+        <username>user</username>
+        <password>123456</password>
+    </user>
+    
+    <output>                            <!-- Specify the audio and video output parameters, it can configure multiple nodes -->
+        <url>screenlive</url>           <!-- Match URL address, it can be filename, or file extension name, or special suffix -->
+        <video>                         <!-- Specify the video output parameters -->
+            <codec>H265</codec>         <!-- Specify the video stream codec, H264,H265,MP4,JPEG -->
+            <width></width>             <!-- Specify the output video width, If 0 use the original video width (live screen stream use the screen width, camera stream use the default width) -->
+            <height></height>           <!-- Specify the output video height, If 0 use the original video height (live screen stream use the screen height, camera stream use the default height) -->
+            <framerate>0</framerate>     <!-- Specify the output video framerate, If 0 use the original video framerate (live screen use the default value 15, camera stream use the default value 25) -->
+            <bitrate>8000</bitrate>         <!-- Specify the output video bit rate, if 0, automatically calculate the output bit rate, the unit is kb/s -->
+        </video>
+        <audio>                         <!-- Specify the audio output parameters -->
+            <codec>G711U</codec>        <!-- Specify the audio stream codec, G711A,G711U,G722,G726,AAC,OPUS -->
+            <samplerate>8000</samplerate> <!-- Specify the audio sample rate -->
+            <channels>1</channels>      <!-- Specify the audio channel number, 1 is mono, 2 is stereo, If 0 use the original audio channel number (audio device stream use the default value 2) -->
+            <bitrate></bitrate>         <!-- Specify the output audio bit rate, if 0, automatically calculate the output bit rate, the unit is kb/s -->
+        </audio>
+    </output>
+    
+    <output>                            <!-- The default output configuration -->
+        <url></url>
+        <video>
+            <codec>H265</codec>
+			<width>800</width>
+			<height>600</height>
+            <framerate></framerate>
+            <bitrate></bitrate>
+        </video>
+        <audio>
+            <codec>G711U</codec>
+            <samplerate></samplerate>
+            <channels></channels>
+            <bitrate></bitrate>
+        </audio>
+    </output>
+    
+    <proxy>                             <!-- Specify the rtsp proxy parameters, it can configure multiple nodes -->
+        <suffix>proxy</suffix>          <!-- Specify the rtsp stream suffix, you can play the proxy stream from: rtsp://youip/suffix -->        
+        <url></url>                     <!-- The original rtsp/rtmp/http mjpeg stream address -->                           
+        <user></user>                   <!-- Specify the original rtsp/rtmp/http mjpeg stream login user name -->
+        <pass></pass>                   <!-- Specify the original rtsp/rtmp/http mjpeg stream login password -->    
+        <transfer>TCP</transfer>        <!-- Specify the rtsp client transfer protocol, TCP,UDP,MULTICAST -->
+        <output>                        <!-- Specify the stream output parameter. If the parameter does not appear, use the parameters of the original RTSP stream. If it appears and the configured parameters are inconsistent with the parameters of the original RTSP stream, then the transcode output is performed. -->
+            <video>                     <!-- Specify the video output parameters -->
+                <codec></codec>         <!-- Specify the video stream codec, H264,H265,MP4,JPEG -->
+                <width></width>         <!-- Specify the output video width, If 0 use the original video width -->  
+                <height></height>       <!-- Specify the output video height, If 0 use the original video height -->    
+                <framerate></framerate> <!-- Specify the output video framerate, If 0 use the original video framerate --> 
+                <bitrate></bitrate>     <!-- Specify the output video bit rate, if 0, automatically calculate the output bit rate, the unit is kb/s -->
+            </video>
+            <audio>                     <!-- Specify the audio output parameters -->
+                <codec></codec>         <!-- Specify the audio stream codec, G711A,G711U,G722,G726,AAC,OPUS -->
+                <samplerate></samplerate> <!-- Specify the audio sample rate -->
+                <channels></channels>   <!-- Specify the audio channel number, 1 is mono, 2 is stereo, If 0 use the original audio channel number -->
+                <bitrate></bitrate>     <!-- Specify the output audio bit rate, if 0, automatically calculate the output bit rate, the unit is kb/s -->
+            </audio>
+        </output>
+    </proxy>
+    
+    <pusher>                            <!-- Specify the data pusher parameters, it can configure multiple nodes -->
+        <suffix>pusher</suffix>         <!-- Specify the rtsp stream suffix, you can play the pusher stream from: rtsp://youip/suffix -->
+        <video>                         <!-- Specify the the input video data parameters -->
+            <codec>H264</codec>         <!-- Specify the video codec, H264,H265,MP4,JPEG -->    
+        </video>
+        <audio>                         <!-- Specify the the input audio data parameters -->
+            <codec>G711U</codec>        <!-- Specify the audio codec, G711A,G711U,G722,G726,AAC,OPUS -->
+            <samplerate>8000</samplerate> <!-- Specify the audio sample rate -->
+            <channels>1</channels>      <!-- Specify the audio channel number, 1 is mono, 2 is stereo -->
+        </audio>
+        <transfer>                      <!-- Specify the data transfer parameters -->
+            <mode>RTSP</mode>           <!-- Specify the data transer protocol, TCP,UDP,RTSP -->
+            <ip></ip>                   <!-- Specified data receiving IP address, if there is no configuration, the default IP address is used (valid in TCP or UDP mode) -->
+            <vport>50001</vport>        <!-- Specify the video data receiving port (valid in TCP or UDP mode) -->
+            <aport>50002</aport>        <!-- Specify the audio data receiving port (valid in TCP or UDP mode) -->
+        </transfer>
+        <output>                        <!-- Specify the stream output parameter. If the parameter does not appear, use the parameters of the original pusher stream. If it appears and the configured parameters are inconsistent with the parameters of the original pusher stream, then the transcode output is performed -->
+            <video>                     <!-- Specify the video output parameters -->
+                <codec></codec>         <!-- Specify the video stream codec, H264,H265,MP4,JPEG -->
+                <width></width>         <!-- Specify the output video width, If 0 use the original video width -->  
+                <height></height>       <!-- Specify the output video height, If 0 use the original video height -->    
+                <framerate></framerate> <!-- Specify the output video framerate, If 0 use the original video framerate --> 
+                <bitrate></bitrate>     <!-- Specify the output video bit rate, if 0, automatically calculate the output bit rate, the unit is kb/s -->
+            </video>
+            <audio>                     <!-- Specify the audio output parameters -->
+                <codec></codec>         <!-- Specify the audio stream codec, G711A,G711U,G722,G726,AAC,OPUS -->
+                <samplerate></samplerate> <!-- Specify the audio sample rate -->
+                <channels></channels>   <!-- Specify the audio channel number, 1 is mono, 2 is stereo, If 0 use the original audio channel number -->
+                <bitrate></bitrate>     <!-- Specify the output audio bit rate, if 0, automatically calculate the output bit rate, the unit is kb/s -->
+            </audio>
+        </output>
+    </pusher>
+    
+    <backchannel>                       <!-- specify the audio back channel parameters -->
+        <codec>G711U</codec>            <!-- Specify the audio back channel stream codec,G711A,G711U,G722,G726,OPUS -->
+        <samplerate>8000</samplerate>   <!-- Specify the audio back channel sample rate -->
+        <channels>1</channels>          <!-- Specify the audio channel number, 1 is mono, 2 is stereo -->
+    </backchannel>
+</config>
+
