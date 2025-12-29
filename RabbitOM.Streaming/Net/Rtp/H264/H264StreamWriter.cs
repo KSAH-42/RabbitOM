@@ -13,8 +13,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         private readonly RtpMemoryStream _streamOfNalUnitsParams = new RtpMemoryStream();
 
-        private readonly RtpMemoryStream _output = new RtpMemoryStream();
-
 
 
 
@@ -48,8 +46,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
             _streamOfNalUnitsParams.Clear();
-            
-            _output.Clear();
         }
 
         public void Dispose()
@@ -57,18 +53,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             _streamOfNalUnits.Dispose();
             _streamOfNalUnitsFragmented.Dispose();
             _streamOfNalUnitsParams.Dispose();
-
-            _output.Dispose();
         }
 
         public byte[] ToArray()
         {
-            _output.SetLength( 0 );
-
-            //_output.WriteAsBinary( _streamOfNalUnitsParams );
-            _output.WriteAsBinary( _streamOfNalUnits );
-
-            return _output.ToArray();
+            return _streamOfNalUnits.ToArray();
         }
         
         public void SetLength( int value )
