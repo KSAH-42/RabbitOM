@@ -62,7 +62,34 @@
 
                 while ( reader.Read() )
                 {
-                    if ( ! reader.IsUnderMediaSection )
+                    if ( reader.IsUnderMediaSection )
+                    {
+                        if (reader.IsMediaDescriptionHeader)
+                        {
+                            builder.CreateMediaDescription(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsConnectionHeader)
+                        {
+                            builder.SetMediaConnection(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsEncryptionHeader)
+                        {
+                            builder.SetMediaEncryption(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsBandwithHeader)
+                        {
+                            builder.AddMediaBandwith(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsAttributeHeader)
+                        {
+                            builder.AddMediaAttribute(reader.CurrentHeaderValue);
+                        }
+                    }
+                    else
                     {
                         if (reader.IsVersionHeader)
                         {
@@ -132,33 +159,6 @@
                         else if (reader.IsAttributeHeader)
                         {
                             builder.AddAttribute(reader.CurrentHeaderValue);
-                        }
-                    }
-                    else
-                    {
-                        if (reader.IsMediaDescriptionHeader)
-                        {
-                            builder.CreateMediaDescription(reader.CurrentHeaderValue);
-                        }
-
-                        if (reader.IsConnectionHeader)
-                        {
-                            builder.SetMediaConnection(reader.CurrentHeaderValue);
-                        }
-
-                        if (reader.IsEncryptionHeader)
-                        {
-                            builder.SetMediaEncryption(reader.CurrentHeaderValue);
-                        }
-
-                        if (reader.IsBandwithHeader)
-                        {
-                            builder.AddMediaBandwith(reader.CurrentHeaderValue);
-                        }
-
-                        if (reader.IsAttributeHeader)
-                        {
-                            builder.AddMediaAttribute(reader.CurrentHeaderValue);
                         }
                     }
                 }
