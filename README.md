@@ -31,7 +31,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 
 * Namespace reorganization
 * Moving and renaming classes to different namespace
-* Add new class libray to rending using wpf
+* Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
 
 ➡️ Next arrival things:

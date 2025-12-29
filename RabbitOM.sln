@@ -23,6 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Tests.Client.Mjpeg
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{48314992-1774-4F55-BEF3-E4F6272F889E}"
 	ProjectSection(SolutionItems) = preProject
+		Resources\Configuration\config-H264.xml = Resources\Configuration\config-H264.xml
+		Resources\Configuration\config-H265.xml = Resources\Configuration\config-H265.xml
+		Resources\Configuration\config-JPEG.xml = Resources\Configuration\config-JPEG.xml
 		Resources\Configuration\config.xml = Resources\Configuration\config.xml
 	EndProjectSection
 EndProject
