@@ -22,11 +22,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         public void Setup()
         {
-            if ( _writer.Settings.StartCodePrefix == null || _writer.Settings.StartCodePrefix.Length == 0 )
-            {
-                _writer.Settings.StartCodePrefix = _configuration.StartCodePrefix;
-            }
-
             if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
             {
                 _writer.Settings.PPS = _configuration.PPS;
@@ -85,7 +80,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264Frame( _writer.ToArray() , _writer.Settings.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS );
+                result = new H264Frame( _writer.ToArray() , H264StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS );
             }
 
             return result != null;

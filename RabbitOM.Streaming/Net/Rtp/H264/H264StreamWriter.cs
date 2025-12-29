@@ -5,6 +5,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 {
     public sealed class H264StreamWriter : IDisposable
     {
+        internal static readonly byte[] StartCodePrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
+
+
+
+
+
         private readonly H264StreamWriterSettings _settings = new H264StreamWriterSettings();
         
         private readonly RtpMemoryStream _streamOfNalUnits = new RtpMemoryStream();
@@ -72,7 +78,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
+            _streamOfNalUnits.WriteAsBinary( StartCodePrefix );
             _streamOfNalUnits.WriteAsBinary( packet.Payload );
         }
 
@@ -85,7 +91,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
                 _settings.PPS = packet.Payload.ToArray();
@@ -101,7 +107,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
                 _settings.SPS = packet.Payload.ToArray();
@@ -117,7 +123,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             foreach ( var aggregate in H264NalUnit.ParseAggregates( packet.Payload ) )
             {
-                _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnits.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnits.WriteAsBinary( aggregate );
             }
         }
@@ -136,7 +142,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
+                    _streamOfNalUnitsFragmented.WriteAsBinary( StartCodePrefix );
                     _streamOfNalUnitsFragmented.WriteAsByte( H264NalUnitFragmentation.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }

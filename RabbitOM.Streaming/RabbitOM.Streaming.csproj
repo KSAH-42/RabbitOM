@@ -52,7 +52,6 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
-    <Compile Include="Net\Rtp\H264\H264Constants.cs" />
     <Compile Include="Net\Rtp\H264\H264StreamWriter.cs" />
     <Compile Include="Net\Rtp\H264\H264StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H264\H264Frame.cs" />
