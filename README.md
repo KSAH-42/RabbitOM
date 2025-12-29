@@ -11,7 +11,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * No external dependencies
 * Support RTP - RFC 7798 - H265 / HEVC
 * Support RTP - RFC 6184 - H264
-* Support RTP - RFC 2435 - MJPEG with picture reconstruction from packets (new implementation which include memory optimizations)
+* Support RTP - RFC 2435 - MJPEG
 * Support RTP packet reordering
 * Support Unicast TCP (interleaved mode) transport
 * Support Unicast UDP transport 
