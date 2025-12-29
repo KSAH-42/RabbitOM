@@ -1,8 +1,4 @@
-﻿/*
- THIS IMPLEMENTATION IS NOT FINISH AND NOT TESTED DO NOT USED IT IN PRODUCTION
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
@@ -19,7 +15,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
-        private H264FrameBuilder()
+        public H264FrameBuilder()
         {
             _configuration = new H264FrameBuilderConfiguration();
             _frameFactory  = new H264FrameFactory( _configuration );

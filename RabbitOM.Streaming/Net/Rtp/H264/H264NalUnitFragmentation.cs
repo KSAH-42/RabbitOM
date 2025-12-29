@@ -1,8 +1,4 @@
-﻿/*
- THIS IMPLEMENTATION IS NOT FINISH AND NOT TESTED DO NOT USED IT IN PRODUCTION
- */
-
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
@@ -57,16 +53,27 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             return true;
         }
 
-        public static int ParseHeader( ArraySegment<byte> buffer )
+        //      header            payload can be null
+        //  +---------------+  +-----------------------+
+        //  |7|6|5|4|3|2|1|0|  |                       |
+        //  +-+-+-+-+-+-+-+-+  |                       |
+        //  |F|NRI|  Type   |  |                       |
+        //  +---------------+  +-----------------------+
+
+        public static byte ParseHeader( ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 2 )
             {
                 throw new ArgumentOutOfRangeException( nameof( buffer ) );
             }
 
-            var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
+            byte result = 0;
 
-            return ( ( header >> 9 ) & 0x3F );
+            result += (byte) (buffer.Array[ buffer.Offset ] & 0x80);
+            result += (byte) (buffer.Array[ buffer.Offset ] & 0x60);
+            result += (byte) (buffer.Array[ buffer.Offset + 1 ] & 0x1F);
+
+            return result;
         }
     } 
 }

@@ -1,8 +1,4 @@
-﻿/*
- THIS IMPLEMENTATION IS NOT FINISH AND NOT TESTED DO NOT USED IT IN PRODUCTION
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
@@ -61,7 +57,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                     {
                         continue;
                     }
-                    
+
                     switch ( nalUnit.Type )
                     {
                         case H264NalUnitType.SINGLE_PPS: 

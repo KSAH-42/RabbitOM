@@ -1,8 +1,4 @@
-﻿/*
- THIS IMPLEMENTATION IS NOT FINISH AND NOT TESTED DO NOT USED IT IN PRODUCTION
- */
-
-using System;
+﻿using System;
 using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
@@ -69,7 +65,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         {
             _output.SetLength( 0 );
 
-            _output.WriteAsBinary( _streamOfNalUnitsParams );
+            //_output.WriteAsBinary( _streamOfNalUnitsParams );
             _output.WriteAsBinary( _streamOfNalUnits );
 
             return _output.ToArray();
@@ -152,7 +148,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
-                    _streamOfNalUnitsFragmented.WriteAsUInt16( H264NalUnitFragmentation.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteAsByte( H264NalUnitFragmentation.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
                 else if ( H264NalUnitFragmentation.IsDataPacket( ref nalUnit ) )
