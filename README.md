@@ -93,7 +93,9 @@ using ( var client = new RtspClient() )
 
 # About the connection class
 
-First of all, unlike http which is stateless protocol, any rtsp clients must maintain there socket opened during all the time when calling differents methods.
+➡️ First of all, unlike HTTP which is a STATELESS protocol, RTSP is STATEFULL. 
+
+Thats means, that any rtsp clients must keep it's own socket opened during all the time when calling any methods.
 
 The RtspConnection class will give you more features and a direct access to the protocol messaging layer. The following code demonstrate how to list the supported methods available on a security camera:
 
