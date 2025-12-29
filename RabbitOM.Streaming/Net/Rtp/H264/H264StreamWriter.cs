@@ -17,8 +17,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         
         private readonly RtpMemoryStream _streamOfNalUnitsFragmented = new RtpMemoryStream();
 
-        private readonly RtpMemoryStream _streamOfNalUnitsParams = new RtpMemoryStream();
-
 
 
 
@@ -51,14 +49,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         {
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
-            _streamOfNalUnitsParams.Clear();
         }
 
         public void Dispose()
         {
             _streamOfNalUnits.Dispose();
             _streamOfNalUnitsFragmented.Dispose();
-            _streamOfNalUnitsParams.Dispose();
         }
 
         public byte[] ToArray()
@@ -91,9 +87,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
-                _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
-
                 _settings.PPS = packet.Payload.ToArray();
             }
         }
@@ -107,9 +100,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
-                _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
-
                 _settings.SPS = packet.Payload.ToArray();
             }
         }
