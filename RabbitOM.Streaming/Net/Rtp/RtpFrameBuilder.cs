@@ -1,4 +1,7 @@
-﻿using System;
+﻿// TODO: Refactor and used immutable type for configuration, and use constructor injection
+// TODO: removing the lock ??
+
+using System;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
