@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <returns>returns a value</returns>
         public static byte Quantize( int value , int factor )
         {
-            int newVal = ( value * factor + 50 ) / 100;
+            var newVal = ( value * factor + 50 ) / 100;
 
             return ( newVal < 1 ) ? (byte) 0x01 : ( newVal > 0xFF ) ? (byte) 0xFF : (byte) newVal;
         }
