@@ -51,13 +51,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             
             foreach ( var packet in packets )
             {
-                if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+                if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) && ! H264NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
                 {
-                    if ( H264NalUnit.IsInvalidOrUnDefined( ref nalUnit ) )
-                    {
-                        continue;
-                    }
-
                     switch ( nalUnit.Type )
                     {
                         case H264NalUnitType.SINGLE_PPS: 
