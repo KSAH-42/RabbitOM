@@ -22,8 +22,9 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 * Support RTP packet reordering
-* Support RTP - RFC 2435 - frame parsing (MJPEG) and picture reconstruction from packets (new implementation which include memory optimizations)
-* Support RTP - H265 / HEVC
+* Support RTP - RFC 2435 - MJPEG with picture reconstruction from packets (new implementation which include memory optimizations)
+* Support RTP - RFC 6184 - H264
+* Support RTP - RFC 7798 - H265 / HEVC
 
 ➡️ Breaking changes since the version 2.0.0.0:
 
@@ -31,11 +32,9 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Moving and renaming classes to different namespace
 * Add new class libray to rending using wpf
 * Improve cpu an memory consumption during rending
-* adding the support of H265
 
 ➡️ Next arrival things:
 
-* Adding support of H264
 * Adding support video encoder for rendering MPEG using C++ WRL or COM/ATL
 * Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 
