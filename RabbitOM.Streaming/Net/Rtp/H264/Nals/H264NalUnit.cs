@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264
+namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
     public struct H264NalUnit
     {

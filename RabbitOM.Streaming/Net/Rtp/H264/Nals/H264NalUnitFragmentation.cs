@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264
+namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
     public struct H264NalUnitFragmentation
     {

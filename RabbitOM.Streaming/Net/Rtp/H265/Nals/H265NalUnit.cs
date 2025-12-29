@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265
+namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 {
     /// <summary>
     /// Represent a H265 nalu <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4"/>

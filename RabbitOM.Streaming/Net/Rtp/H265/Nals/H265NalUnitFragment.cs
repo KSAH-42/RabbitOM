@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265
+namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 {
     /// <summary>
     /// Represent a H265 fragmented nalu <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-4.4.3"/>

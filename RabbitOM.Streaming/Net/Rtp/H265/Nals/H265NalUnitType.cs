@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265
+namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 {
     /// <summary>
     /// The H265 nal unit
