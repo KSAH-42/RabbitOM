@@ -8,6 +8,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// </summary>
     public sealed class H265StreamWriter : IDisposable
     {
+        internal static readonly byte[] StartCodePrefix = { 0x00 , 0x00 , 0x00 , 0x01 };
+
+
+
+
+
+
         private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
         
         private readonly RtpMemoryStream _streamOfNalUnits = new RtpMemoryStream();
@@ -109,7 +116,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
+            _streamOfNalUnits.WriteAsBinary( StartCodePrefix );
             _streamOfNalUnits.WriteAsBinary( packet.Payload );
         }
 
@@ -127,7 +134,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
                 _settings.PPS = nalUnit.Payload.ToArray();
@@ -148,7 +155,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
                 _settings.SPS = nalUnit.Payload.ToArray();
@@ -169,7 +176,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
             {
-                _streamOfNalUnitsParams.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
 
                 _settings.VPS = nalUnit.Payload.ToArray();
@@ -190,7 +197,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             foreach ( var aggregate in H265NalUnit.ParseAggregates( packet.Payload ) )
             {
-                _streamOfNalUnits.WriteAsBinary( _settings.StartCodePrefix );
+                _streamOfNalUnits.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnits.WriteAsBinary( aggregate );
             }
         }
@@ -214,7 +221,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.WriteAsBinary( _settings.StartCodePrefix );
+                    _streamOfNalUnitsFragmented.WriteAsBinary( StartCodePrefix );
                     _streamOfNalUnitsFragmented.WriteAsUInt16( H265NalUnitFragment.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }

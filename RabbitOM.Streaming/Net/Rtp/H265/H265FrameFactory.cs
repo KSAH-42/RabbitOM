@@ -37,11 +37,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         public void Setup()
         {
-            if ( _writer.Settings.StartCodePrefix == null || _writer.Settings.StartCodePrefix.Length == 0 )
-            {
-                _writer.Settings.StartCodePrefix = _configuration.StartCodePrefix;
-            }
-
             if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
             {
                 _writer.Settings.PPS = _configuration.PPS;
@@ -115,7 +110,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265Frame( _writer.ToArray() , _writer.Settings.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS );
+                result = new H265Frame( _writer.ToArray() , H265StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS );
             }
 
             return result != null;

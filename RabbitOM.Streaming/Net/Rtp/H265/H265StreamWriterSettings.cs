@@ -8,11 +8,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     public sealed class H265StreamWriterSettings
     {
         /// <summary>
-        /// Gets / Sets the start code prefix
-        /// </summary>
-        public byte[] StartCodePrefix { get; set;  }
-
-        /// <summary>
         /// Gets / Sets the pps
         /// </summary>
         public byte[] PPS { get; set; }
@@ -37,7 +32,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return StartCodePrefix?.Length > 0 && PPS?.Length > 0 && SPS?.Length > 0 && VPS?.Length > 0;
+            return PPS?.Length > 0 && SPS?.Length > 0 && VPS?.Length > 0;
         }
         
         /// <summary>
@@ -45,7 +40,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         public void Clear()
         {
-            StartCodePrefix = null;
             PPS = null;
             SPS = null;
             VPS = null;
