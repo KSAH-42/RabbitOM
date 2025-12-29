@@ -4,7 +4,7 @@
     /// Represent a tolerant sdp serializer
     /// </summary>
     /// <remarks>
-    ///    <para>According to the rfc, the serialization mecanism MUST respect a certain order: please follow this link to get more details <see href="https://tools.ietf.org/html/rfc4566#page-39"/></para>
+    ///    <para>It seems that there is a mandatory rule about the serialization order: please follow this link to get more details <see href="https://tools.ietf.org/html/rfc4566#page-39"/></para>
     /// </remarks>
     public static class SessionDescriptorSerializer
     {
@@ -56,112 +56,110 @@
         /// <returns>returns an instance</returns>
         public static SessionDescriptor Deserialize(string input)
         {
-            using (var reader = new SessionDescriptorReader(input))
+            using ( var reader = new SessionDescriptorReader( input ) )
             {
                 var builder = new SessionDescriptorBuilder();
 
-                while (reader.Read())
+                while ( reader.Read() )
                 {
-                    if (reader.IsVersionHeader)
+                    if ( ! reader.IsUnderMediaSection )
                     {
-                        builder.SetVersion(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsOriginHeader)
-                    {
-                        builder.SetOrigin(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsSessionNameHeader)
-                    {
-                        builder.SetSessionName(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsSessionInformationHeader)
-                    {
-                        builder.SetSessionInformation(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsUriHeader)
-                    {
-                        builder.SetUri(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsEmailHeader)
-                    {
-                        builder.AddEmail(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsPhoneHeader)
-                    {
-                        builder.AddPhone(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsConnectionHeader)
-                    {
-                        builder.SetConnection(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsBandwithHeader)
-                    {
-                        builder.AddBandwith(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsTimeHeader)
-                    {
-                        builder.AddTime(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsRepeatHeader)
-                    {
-                        builder.AddRepeat(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsTimeZoneHeader)
-                    {
-                        builder.SetTimeZone(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsEncryptionHeader)
-                    {
-                        builder.SetEncryption(reader.CurrentHeaderValue);
-                    }
-
-                    else if (reader.IsAttributeHeader)
-                    {
-                        builder.AddAttribute(reader.CurrentHeaderValue);
-                    }
-
-                    if (reader.IsUnderMediaSection)
-                    {
-                        do
+                        if (reader.IsVersionHeader)
                         {
-                            if (reader.IsMediaDescriptionHeader)
-                            {
-                                builder.CreateMediaDescription(reader.CurrentHeaderValue);
-                            }
-
-                            if (reader.IsConnectionHeader)
-                            {
-                                builder.SetMediaConnection(reader.CurrentHeaderValue);
-                            }
-
-                            if (reader.IsEncryptionHeader)
-                            {
-                                builder.SetMediaEncryption(reader.CurrentHeaderValue);
-                            }
-
-                            if (reader.IsBandwithHeader)
-                            {
-                                builder.AddMediaBandwith(reader.CurrentHeaderValue);
-                            }
-
-                            if (reader.IsAttributeHeader)
-                            {
-                                builder.AddMediaAttribute(reader.CurrentHeaderValue);
-                            }
+                            builder.SetVersion(reader.CurrentHeaderValue);
                         }
-                        while (reader.Read() && reader.IsUnderMediaSection);
+
+                        else if (reader.IsOriginHeader)
+                        {
+                            builder.SetOrigin(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsSessionNameHeader)
+                        {
+                            builder.SetSessionName(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsSessionInformationHeader)
+                        {
+                            builder.SetSessionInformation(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsUriHeader)
+                        {
+                            builder.SetUri(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsEmailHeader)
+                        {
+                            builder.AddEmail(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsPhoneHeader)
+                        {
+                            builder.AddPhone(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsConnectionHeader)
+                        {
+                            builder.SetConnection(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsBandwithHeader)
+                        {
+                            builder.AddBandwith(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsTimeHeader)
+                        {
+                            builder.AddTime(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsRepeatHeader)
+                        {
+                            builder.AddRepeat(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsTimeZoneHeader)
+                        {
+                            builder.SetTimeZone(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsEncryptionHeader)
+                        {
+                            builder.SetEncryption(reader.CurrentHeaderValue);
+                        }
+
+                        else if (reader.IsAttributeHeader)
+                        {
+                            builder.AddAttribute(reader.CurrentHeaderValue);
+                        }
+                    }
+                    else
+                    {
+                        if (reader.IsMediaDescriptionHeader)
+                        {
+                            builder.CreateMediaDescription(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsConnectionHeader)
+                        {
+                            builder.SetMediaConnection(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsEncryptionHeader)
+                        {
+                            builder.SetMediaEncryption(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsBandwithHeader)
+                        {
+                            builder.AddMediaBandwith(reader.CurrentHeaderValue);
+                        }
+
+                        if (reader.IsAttributeHeader)
+                        {
+                            builder.AddMediaAttribute(reader.CurrentHeaderValue);
+                        }
                     }
                 }
 
