@@ -26,6 +26,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
+        //      header            payload can be null
+        //  +---------------+  +-----------------------+
+        //  |7|6|5|4|3|2|1|0|  |                       |
+        //  +-+-+-+-+-+-+-+-+  |                       |
+        //  |F|NRI|  Type   |  |                       |
+        //  +---------------+  +-----------------------+
+
+
 
 
         public static bool TryParse( ArraySegment<byte> buffer , out H264NalUnitFragmentation result )
@@ -52,13 +60,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             return true;
         }
-
-        //      header            payload can be null
-        //  +---------------+  +-----------------------+
-        //  |7|6|5|4|3|2|1|0|  |                       |
-        //  +-+-+-+-+-+-+-+-+  |                       |
-        //  |F|NRI|  Type   |  |                       |
-        //  +---------------+  +-----------------------+
 
         public static byte ParseHeader( ArraySegment<byte> buffer )
         {

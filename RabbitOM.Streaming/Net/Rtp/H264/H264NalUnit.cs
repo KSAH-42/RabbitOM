@@ -27,6 +27,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             return H264NalUnitType.SINGLE_SLICE <= nalUnit.Type && nalUnit.Type <= H264NalUnitType.SINGLE_RESERVED_K;
         }
 
+
+
+
+
+
         // https://datatracker.ietf.org/doc/html/rfc6184#section-1.3
         
         //      header            payload can be null
@@ -35,7 +40,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         //  +-+-+-+-+-+-+-+-+  |                       |
         //  |F|NRI|  Type   |  |                       |
         //  +---------------+  +-----------------------+
-            
+        
+        
+
+
+
         public static bool TryParse( ArraySegment<byte> buffer , out H264NalUnit result )
         {
             result = default;
@@ -49,9 +58,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             
             result = new H264NalUnit();
 
-            result.ForbiddenBit  = (byte)        ( ( header >> 7 ) & 0x01 ) == 1;
-            result.Nri           = (byte)        ( ( header >> 5 ) & 0x03 );
-            result.Type          = (H264NalUnitType) (   header        & 0x1F );
+            result.Type          = (H264NalUnitType) ( header  & 0x1F );
+            result.ForbiddenBit  = (byte) ( ( header >> 7 ) & 0x01 ) == 1;
+            result.Nri           = (byte) ( ( header >> 5 ) & 0x03 );
 
             if ( buffer.Count > 1 )
             {
