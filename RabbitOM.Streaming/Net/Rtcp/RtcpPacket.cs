@@ -5,28 +5,28 @@ namespace RabbitOM.Streaming.Net.Rtcp
     public struct RtcpPacket
     {
         public byte Version { get; private set; }
+
         public bool Padding { get; private set; }
+        
         public byte ReceptionCount { get; private set; }
+        
         public RtcpPacketType Type { get; private set; }
+        
         public ushort Length { get;private set; }
+        
         public ArraySegment<byte> Payload { get; private set; }
+
+
+
+
 
 
 
         public static bool IsInvalidOrUnDefined( ref RtcpPacket packet )
         {
-            return packet.Version == 0 || packet.Type == RtcpPacketType.UNDEFINED || packet.Payload.Count == 0;
+            return packet.Version == 0 || packet.Type == RtcpPacketType.UNDEFINED || packet.Length == 0 || packet.Payload.Count == 0;
         }
 
-
-
-
-        /*
-          7 6  5  4 3 2 1 0 
-         +----------------+
-         | V | P |   RC   |
-         +----------------+
-         */
         public static bool TryParse( ArraySegment<byte> buffer , out RtcpPacket result )
         {
             result = default;
