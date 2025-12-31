@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     /// </summary>
 	public enum H265NalUnitType
 	{
-        UNDEFINED = -1,
+        UNKNOWN = -1,
         CODED_SLICE_TRAIL_N = 0,
         CODED_SLICE_TRAIL_R = 1,
         CODED_SLICE_TSA_N = 2,
@@ -72,6 +72,5 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         UNSPECIFIED_61 = 61,
         UNSPECIFIED_62 = 62,
         UNSPECIFIED_63 = 63,
-        INVALID = 64,
     }
 }

@@ -40,14 +40,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
         
         /// <summary>
-        /// Just perform a simple validation
-        /// </summary>
-        /// <param name="nalUnit">the nalu</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsInvalidOrUnDefined( ref H265NalUnit nalUnit )
-            => nalUnit.Type == H265NalUnitType.INVALID || nalUnit.Type == H265NalUnitType.UNDEFINED;
-
-        /// <summary>
         /// Try to parse
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
@@ -77,6 +69,23 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Parse the type
+        /// </summary>
+        /// <param name="buffer">the rtp payload</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static H265NalUnitType ParseType( ArraySegment<byte> buffer)
+        {
+            if ( buffer.Count < 2 )
+            {
+                return H265NalUnitType.UNKNOWN;
+            }
+
+            var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
+            
+            return (H265NalUnitType) ( ( header >> 9 ) & 0x3F );
         }
 
         /// <summary>
