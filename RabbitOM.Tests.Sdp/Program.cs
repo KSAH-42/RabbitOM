@@ -1,6 +1,7 @@
 ﻿using RabbitOM.Streaming.Net.Sdp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,11 @@ namespace RabbitOM.Tests.Sdp
             sessionDescriptor.Attributes.Add(new AttributeField("myAttribute1", "myValue1"));
             sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue2"));
             sessionDescriptor.Attributes.Add(new AttributeField("myAttribute2", "myValue3"));
-
+            sessionDescriptor.Emails.Add( new EmailField("a@b.com","a"));
+            sessionDescriptor.Emails.Add( new EmailField("c@d.com","c"));
+            sessionDescriptor.Times.Add( new TimeField(1,2) );
+            sessionDescriptor.Times.Add( new TimeField(3,4) );
+            sessionDescriptor.TimeZone.Value = "Paris";
             sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 78"));
             sessionDescriptor.Phones.Add(new PhoneField("+33 1 12 34 56 79"));
             sessionDescriptor.Uri.Value = "rtsp://192.168.1.11:554/video/channel/1";
