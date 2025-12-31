@@ -83,9 +83,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 return H265NalUnitType.UNKNOWN;
             }
 
-            var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
-            
-            return (H265NalUnitType) ( ( header >> 9 ) & 0x3F );
+            return (H265NalUnitType) ( ( buffer.Array[ buffer.Offset ] >> 1 ) & 0x3F );
         }
 
         /// <summary>
