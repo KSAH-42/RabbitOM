@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 {
     public struct RtcpPacket
     {
-        public int Version { get; private set; }
+        public byte Version { get; private set; }
         public bool Padding { get; private set; }
         public byte ReceptionCount { get; private set; }
         public RtcpPacketType Type { get; private set; }
@@ -13,9 +13,9 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        public static bool IsWellFormed( ref RtcpPacket packet )
+        public static bool IsInvalidOrUnDefined( ref RtcpPacket packet )
         {
-            return packet.Version > 0 && packet.Type > 0 && packet.Payload.Count > 0;
+            return packet.Version == 0 || packet.Type == RtcpPacketType.UNDEFINED || packet.Payload.Count == 0;
         }
 
 
@@ -38,11 +38,11 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
             result = new RtcpPacket();
             
-            result.Version        =  (buffer.Array[ buffer.Offset ] >> 6) & 0x3;
+            result.Version        = (byte) ((buffer.Array[ buffer.Offset ] >> 6) & 0x3);
 
             result.Padding        = ((buffer.Array[ buffer.Offset ] >> 5) & 0x1) == 1;
 
-            result.ReceptionCount =  (byte) (buffer.Array[ buffer.Offset ] & 0x1F);
+            result.ReceptionCount = (byte) (buffer.Array[ buffer.Offset ] & 0x1F);
 
             result.Type           = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
 
