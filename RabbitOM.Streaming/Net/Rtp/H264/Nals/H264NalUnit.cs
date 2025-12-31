@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
