@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// <summary>
         /// Gets / Sets the type
         /// </summary>
-        public PacketType Type { get; private set; }
+        public RtpPacketType Type { get; private set; }
 
         /// <summary>
         /// Gets / Sets the sequence number
@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             packet.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
             packet.Marker          = (byte)       ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
-            packet.Type            = (PacketType) ( buffer[ 1 ] & 0x7F );
+            packet.Type            = (RtpPacketType) ( buffer[ 1 ] & 0x7F );
             packet.SequenceNumber  = (ushort)     ( buffer[ 2 ] << 8   );
             packet.SequenceNumber |= (ushort)     ( buffer[ 3 ]        );
             packet.TimeStamp       = (uint) ( buffer[ 4 ] << 24  );

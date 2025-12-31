@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
                 return false;
             }
 
-            if ( ! packet.TryValidate() || packet.Type != PacketType.JPEG )
+            if ( ! packet.TryValidate() || packet.Type != RtpPacketType.JPEG )
             {
                 return false;
             }

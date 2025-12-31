@@ -65,8 +65,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 return false;
             }
 
-            return packet.Type == PacketType.MPEG4
-                || packet.Type == PacketType.MPEG4_DYNAMIC_A
+            return packet.Type == RtpPacketType.MPEG4
+                || packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
                 ;
         }
     }

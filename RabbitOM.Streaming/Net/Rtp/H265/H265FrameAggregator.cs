@@ -88,11 +88,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 return false;
             }
 
-            return packet.Type == PacketType.MPEG4
-                || packet.Type == PacketType.MPEG4_DYNAMIC_A
-                || packet.Type == PacketType.MPEG4_DYNAMIC_B
-                || packet.Type == PacketType.MPEG4_DYNAMIC_C
-                || packet.Type == PacketType.MPEG4_DYNAMIC_D
+            return packet.Type == RtpPacketType.MPEG4
+                || packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
+                || packet.Type == RtpPacketType.MPEG4_DYNAMIC_B
+                || packet.Type == RtpPacketType.MPEG4_DYNAMIC_C
+                || packet.Type == RtpPacketType.MPEG4_DYNAMIC_D
                 ;
         }
     }

@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp
     /// <summary>
     /// Represent the packet type
     /// </summary>
-    public enum PacketType : byte
+    public enum RtpPacketType : byte
     {
         /// <summary>
         /// PCMU

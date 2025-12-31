@@ -98,7 +98,7 @@
     <Compile Include="Net\Rtp\RtpFrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\RtpPacketQueue.cs" />
     <Compile Include="Net\Rtp\RtpPacket.cs" />
-    <Compile Include="Net\Rtp\PacketType.cs" />
+    <Compile Include="Net\Rtp\RtpPacketType.cs" />
     <Compile Include="Net\Rtsp\Clients\Connections\RtspProxySettings.cs" />
     <Compile Include="Net\Rtsp\Clients\Connections\RtspProxyEventManager.cs" />
     <Compile Include="Net\Rtsp\Clients\RtspClientCommunicationStartedEventArgs.cs" />
