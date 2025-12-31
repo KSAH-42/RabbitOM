@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Jpeg
+namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 {
     /// <summary>
     /// Represent the writer settings class
