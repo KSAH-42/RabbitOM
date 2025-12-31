@@ -70,12 +70,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <returns>returns true for a success, otherwise false</returns>
         private bool OnValidating( RtpPacket packet )
         {
-            if ( packet == null )
-            {
-                return false;
-            }
-
-            if ( ! packet.TryValidate() || packet.Type != RtpPacketType.JPEG )
+            if ( packet == null || ! packet.TryValidate() )
             {
                 return false;
             }
@@ -90,7 +85,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
                 return false;
             }
 
-            return true;
+            return packet.Type == RtpPacketType.JPEG;
         }
     }
 }

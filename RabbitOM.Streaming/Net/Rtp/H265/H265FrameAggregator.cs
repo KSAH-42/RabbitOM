@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <returns>returns true for a success, otherwise false</returns>
         private bool OnValidating( RtpPacket packet )
         {
-            if ( packet == null )
+            if ( packet == null || ! packet.TryValidate() )
             {
                 return false;
             }

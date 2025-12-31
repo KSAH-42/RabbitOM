@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         
         private bool OnValidating( RtpPacket packet )
         {
-            if ( packet == null )
+            if ( packet == null || ! packet.TryValidate() )
             {
                 return false;
             }
