@@ -1,14 +1,10 @@
-﻿using RabbitOM.Streaming.Net.Sdp;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace RabbitOM.Tests.Sdp
 {
-    internal class Program
+    using RabbitOM.Streaming.Net.Sdp;
+
+    class Program
     {
         static void Main( string[] args )
         {
