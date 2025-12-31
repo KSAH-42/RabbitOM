@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
@@ -10,9 +11,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         public byte Nri { get; private set; }
         public ArraySegment<byte> Payload { get; private set; }
         
-
-
-        
+               
 
 
         
@@ -20,11 +19,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         public static bool IsInvalidOrUnDefined( ref H264NalUnit nalUnit )
         {
             return nalUnit.Type == H264NalUnitType.UNKNOWN;
-        }
-
-        public static bool IsSingle( ref H264NalUnit nalUnit )
-        {
-            return H264NalUnitType.SINGLE_SLICE <= nalUnit.Type && nalUnit.Type <= H264NalUnitType.SINGLE_RESERVED_K;
         }
 
 
@@ -68,6 +62,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
             }
 
             return true;
+        }
+
+        public static H264NalUnitType ParseType( ArraySegment<byte> buffer )
+        {
+            return ( buffer.Count < 1 ) ? H264NalUnitType.UNKNOWN : (H264NalUnitType) ( buffer.Array[ buffer.Offset ] & 0x1F );
         }
 
         public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
