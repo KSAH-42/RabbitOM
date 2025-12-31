@@ -74,10 +74,10 @@
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnitFragment.cs" />
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnit.cs" />
     <Compile Include="Net\Rtp\H265\H265Frame.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegFragmentQueue.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegQuantizer.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegQuantizationTableFactory.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegImageBuilder.cs" />
+    <Compile Include="Net\Rtp\Jpeg\Imaging\JpegFragmentQueue.cs" />
+    <Compile Include="Net\Rtp\Jpeg\Imaging\JpegQuantizer.cs" />
+    <Compile Include="Net\Rtp\Jpeg\Imaging\JpegQuantizationTableFactory.cs" />
+    <Compile Include="Net\Rtp\Jpeg\Imaging\JpegImageBuilder.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegStreamWriter.Constants.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegStreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilderConfiguration.cs" />
@@ -86,8 +86,8 @@
     <Compile Include="ActionExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegFragment.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegPacketAggregator.cs" />
+    <Compile Include="Net\Rtp\Jpeg\Imaging\JpegFragment.cs" />
+    <Compile Include="Net\Rtp\Jpeg\JpegFrameAggregator.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameFactory.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegStreamWriter.cs" />

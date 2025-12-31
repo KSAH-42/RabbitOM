@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Jpeg
+namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 {
     /// <summary>
     /// Represent the jpeg fragment queue

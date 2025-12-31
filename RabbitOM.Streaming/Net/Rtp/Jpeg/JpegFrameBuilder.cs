@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 
         private readonly JpegFrameFactory _factory;
         
-        private readonly JpegPacketAggregator _aggregator;
+        private readonly JpegFrameAggregator _aggregator;
 
 
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         {
             _configuration = new JpegFrameBuilderConfiguration();
             _factory       = new JpegFrameFactory();
-            _aggregator    = new JpegPacketAggregator( _configuration );
+            _aggregator    = new JpegFrameAggregator( _configuration );
         }
 
 
