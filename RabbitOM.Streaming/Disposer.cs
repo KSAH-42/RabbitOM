@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming
     /// <summary>
     /// Represent a type used to call a delegate on dispose
     /// </summary>
-    public struct Disposer : IDisposable
+    public sealed class Disposer : IDisposable
     {
         private readonly Action _action;
 
