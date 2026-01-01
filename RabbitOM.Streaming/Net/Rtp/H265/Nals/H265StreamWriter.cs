@@ -216,7 +216,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnitFragment.TryParse( packet.Payload , out var nalUnit ) )
             {
-                if ( H265NalUnitFragment.IsStartPacket( ref nalUnit ) )
+                if ( H265NalUnitFragment.IsStartPacket( nalUnit ) )
                 {
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
@@ -225,13 +225,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                     _streamOfNalUnitsFragmented.WriteAsUInt16( H265NalUnitFragment.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( H265NalUnitFragment.IsDataPacket( ref nalUnit ) )
+                else if ( H265NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
                 }
-                else if ( H265NalUnitFragment.IsStopPacket( ref nalUnit ) )
+                else if ( H265NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 

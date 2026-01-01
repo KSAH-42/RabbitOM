@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// </summary>
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsStartPacket( ref H265NalUnitFragment nalUnit )
+        public static bool IsStartPacket( in H265NalUnitFragment nalUnit )
             => nalUnit.StartBit && ! nalUnit.StopBit;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// </summary>
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsStopPacket( ref H265NalUnitFragment nalUnit )
+        public static bool IsStopPacket( in H265NalUnitFragment nalUnit )
             => ! nalUnit.StartBit && nalUnit.StopBit;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// </summary>
         /// <param name="nalUnit">the nalu</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool IsDataPacket( ref H265NalUnitFragment nalUnit )
+        public static bool IsDataPacket( in H265NalUnitFragment nalUnit )
             => ! nalUnit.StartBit && ! nalUnit.StopBit;
         
 
