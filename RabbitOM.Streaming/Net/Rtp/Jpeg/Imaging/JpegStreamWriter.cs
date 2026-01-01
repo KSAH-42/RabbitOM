@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// </summary>
         /// <param name="data">the data</param>
         /// <exception cref="ArgumentException"/>
-        public void WriteData( ArraySegment<byte> data )
+        public void WriteData( in ArraySegment<byte> data )
         {
             if ( data.Count <= 0 )
             {
@@ -218,7 +218,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// <param name="tableNumber">the table number</param>
         /// <exception cref="ArgumentException"/>
         /// <exception cref="InvalidOperationException"/>
-        public void WriteQuantizationTable( ArraySegment<byte> data , byte tableNumber )
+        public void WriteQuantizationTable( in ArraySegment<byte> data , byte tableNumber )
         {
             if ( data.Count <= 0 )
             {

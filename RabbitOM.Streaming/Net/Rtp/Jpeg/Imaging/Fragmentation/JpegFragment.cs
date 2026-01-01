@@ -84,7 +84,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging.Fragmentation
         /// <param name="buffer">the buffer</param>
         /// <param name="result">the output result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( ArraySegment<byte> buffer , out JpegFragment result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out JpegFragment result )
         {
             result = null;
 
