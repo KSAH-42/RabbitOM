@@ -73,38 +73,37 @@ namespace RabbitOM.Streaming.Net.Rtcp
             {
                 var report = new RtcpReportBlock();
 
-                report.SynchronizationSource |= (uint) payload.Array[    offset ] << 24;
-                report.SynchronizationSource |= (uint) payload.Array[ ++ offset ] << 16;
-                report.SynchronizationSource |= (uint) payload.Array[ ++ offset ] << 8;
-                report.SynchronizationSource |=        payload.Array[ ++ offset ];
+                report.SynchronizationSource |= (uint) payload.Array[ offset ++ ] << 24;
+                report.SynchronizationSource |= (uint) payload.Array[ offset ++ ] << 16;
+                report.SynchronizationSource |= (uint) payload.Array[ offset ++ ] << 8;
+                report.SynchronizationSource |=        payload.Array[ offset ++ ];
 
-                report.FractionLost = payload.Array[ ++ offset ];
+                report.FractionLost = payload.Array[ offset ++ ];
 
-                report.CummulativePacketsLost |= (uint) payload.Array[ ++ offset ] << 16;
-                report.CummulativePacketsLost |= (uint) payload.Array[ ++ offset ] << 8;
-                report.CummulativePacketsLost |=        payload.Array[ ++ offset ];
+                report.CummulativePacketsLost |= (uint) payload.Array[ offset ++ ] << 16;
+                report.CummulativePacketsLost |= (uint) payload.Array[ offset ++ ] << 8;
+                report.CummulativePacketsLost |=        payload.Array[ offset ++ ];
 
-                report.ExtendedHighestSequence |= (uint) payload.Array[ ++ offset ] << 24;
-                report.ExtendedHighestSequence |= (uint) payload.Array[ ++ offset ] << 16;
-                report.ExtendedHighestSequence |= (uint) payload.Array[ ++ offset ] << 8;
-                report.ExtendedHighestSequence |=        payload.Array[ ++ offset ];
+                report.ExtendedHighestSequence |= (uint) payload.Array[ offset ++ ] << 24;
+                report.ExtendedHighestSequence |= (uint) payload.Array[ offset ++ ] << 16;
+                report.ExtendedHighestSequence |= (uint) payload.Array[ offset ++ ] << 8;
+                report.ExtendedHighestSequence |=        payload.Array[ offset ++ ];
 
-                report.InterarrivalJitter |= (uint) payload.Array[ ++ offset ] << 24;
-                report.InterarrivalJitter |= (uint) payload.Array[ ++ offset ] << 16;
-                report.InterarrivalJitter |= (uint) payload.Array[ ++ offset ] << 8;
-                report.InterarrivalJitter |=        payload.Array[ ++ offset ];
+                report.InterarrivalJitter |= (uint) payload.Array[ offset ++ ] << 24;
+                report.InterarrivalJitter |= (uint) payload.Array[ offset ++ ] << 16;
+                report.InterarrivalJitter |= (uint) payload.Array[ offset ++ ] << 8;
+                report.InterarrivalJitter |=        payload.Array[ offset ++ ];
 
-                report.LastSRTimestamp |= (uint) payload.Array[ ++ offset ] << 24;
-                report.LastSRTimestamp |= (uint) payload.Array[ ++ offset ] << 16;
-                report.LastSRTimestamp |= (uint) payload.Array[ ++ offset ] << 8;
-                report.LastSRTimestamp |=        payload.Array[ ++ offset ];
+                report.LastSRTimestamp |= (uint) payload.Array[ offset ++ ] << 24;
+                report.LastSRTimestamp |= (uint) payload.Array[ offset ++ ] << 16;
+                report.LastSRTimestamp |= (uint) payload.Array[ offset ++ ] << 8;
+                report.LastSRTimestamp |=        payload.Array[ offset ++ ];
 
-                report.DelaySinceLastSR |= (uint) payload.Array[ ++ offset ] << 24;
-                report.DelaySinceLastSR |= (uint) payload.Array[ ++ offset ] << 16;
-                report.DelaySinceLastSR |= (uint) payload.Array[ ++ offset ] << 8;
-                report.DelaySinceLastSR |=        payload.Array[ ++ offset ];
+                report.DelaySinceLastSR |= (uint) payload.Array[ offset ++ ] << 24;
+                report.DelaySinceLastSR |= (uint) payload.Array[ offset ++ ] << 16;
+                report.DelaySinceLastSR |= (uint) payload.Array[ offset ++ ] << 8;
+                report.DelaySinceLastSR |=        payload.Array[ offset ++ ];
 
-                ++ offset;
                 reports.Add( report );
             }
 
