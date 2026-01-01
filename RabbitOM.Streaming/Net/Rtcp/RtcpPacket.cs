@@ -43,21 +43,6 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
         /// <summary>
-        /// Check if the packet is invalid
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public static bool IsInvalidOrUnDefined( in RtcpPacket packet )
-        {
-            return packet.Version == 0 || packet.Type == RtcpPacketType.UNDEFINED || packet.Length == 0 || packet.Payload.Count == 0;
-        }
-
-
-
-
-
-
-        /// <summary>
         /// Try to parse
         /// </summary>
         /// <param name="buffer">the buffer</param>
