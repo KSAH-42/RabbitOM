@@ -1,9 +1,10 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H265.Nals;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
+    using RabbitOM.Streaming.Net.Rtp.H265.Nals;
+
     /// <summary>
     /// Represente the H265 frame factory
     /// </summary>

@@ -1,9 +1,10 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H264.Nals;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
+    using RabbitOM.Streaming.Net.Rtp.H264.Nals;
+
     /// <summary>
     /// Represent the H264 frale factory
     /// </summary>
