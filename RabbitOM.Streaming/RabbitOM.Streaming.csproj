@@ -54,8 +54,8 @@
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Net\Rtcp\RtcpPacketType.cs" />
     <Compile Include="Net\Rtcp\RtcpPacket.cs" />
-    <Compile Include="Net\Rtp\H264\H264StreamWriter.cs" />
-    <Compile Include="Net\Rtp\H264\H264StreamWriterSettings.cs" />
+    <Compile Include="Net\Rtp\H264\Nals\H264StreamWriter.cs" />
+    <Compile Include="Net\Rtp\H264\Nals\H264StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H264\H264Frame.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameAggregator.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameBuilder.cs" />
@@ -64,8 +64,8 @@
     <Compile Include="Net\Rtp\H264\Nals\H264NalUnit.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264NalUnitType.cs" />
-    <Compile Include="Net\Rtp\H265\H265StreamWriter.cs" />
-    <Compile Include="Net\Rtp\H265\H265StreamWriterSettings.cs" />
+    <Compile Include="Net\Rtp\H265\Nals\H265StreamWriter.cs" />
+    <Compile Include="Net\Rtp\H265\Nals\H265StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnitType.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameAggregator.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameBuilder.cs" />

@@ -1,8 +1,7 @@
-﻿using RabbitOM.Streaming.Net.Rtp.H265.Nals;
-using System;
+﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265
+namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 {
     /// <summary>
     /// Represent the H265 stream writer used to generate a H265 data frame

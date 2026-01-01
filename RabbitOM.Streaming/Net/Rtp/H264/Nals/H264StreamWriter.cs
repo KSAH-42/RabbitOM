@@ -1,9 +1,8 @@
 ﻿using RabbitOM.Streaming.Net.Rtp.H264.Nals;
-using RabbitOM.Streaming.Net.Rtp.H265.Nals;
 using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264
+namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
     public sealed class H264StreamWriter : IDisposable
     {
