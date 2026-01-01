@@ -2,18 +2,39 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp
 {
+    /// <summary>
+    /// Represent an rtcp packet
+    /// </summary>
     public struct RtcpPacket
     {
+        /// <summary>
+        /// Gets Version
+        /// </summary>
         public byte Version { get; private set; }
 
+        /// <summary>
+        /// Gets the padding flag
+        /// </summary>
         public bool Padding { get; private set; }
         
+        /// <summary>
+        /// Gets the receptions count (number of block reports)
+        /// </summary>
         public byte ReceptionCount { get; private set; }
         
+        /// <summary>
+        /// Gets the type
+        /// </summary>
         public RtcpPacketType Type { get; private set; }
         
+        /// <summary>
+        /// Gets the length
+        /// </summary>
         public ushort Length { get;private set; }
         
+        /// <summary>
+        /// Gets the payload
+        /// </summary>
         public ArraySegment<byte> Payload { get; private set; }
 
 
@@ -21,12 +42,27 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-
+        /// <summary>
+        /// Check if the packet is invalid
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
         public static bool IsInvalidOrUnDefined( ref RtcpPacket packet )
         {
             return packet.Version == 0 || packet.Type == RtcpPacketType.UNDEFINED || packet.Length == 0 || packet.Payload.Count == 0;
         }
 
+
+
+
+
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false.</returns>
         public static bool TryParse( ArraySegment<byte> buffer , out RtcpPacket result )
         {
             result = default;
