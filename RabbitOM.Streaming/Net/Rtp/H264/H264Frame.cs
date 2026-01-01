@@ -30,9 +30,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <summary>
         /// Gets the start code prefix
         /// </summary>
-
         public byte[] StartCodePrefix { get; }
-
 
         /// <summary>
         /// Gets the pps
