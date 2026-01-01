@@ -15,16 +15,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
         
 
-        public static bool IsInvalidOrUnDefined( ref H264NalUnit nalUnit )
-        {
-            return nalUnit.Type == H264NalUnitType.UNKNOWN;
-        }
-
-
-
-
-
-
         // https://datatracker.ietf.org/doc/html/rfc6184#section-1.3
         
         //      header            payload can be null

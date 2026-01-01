@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         }
 
         /// <summary>
-        /// Parse aggregate nalu
+        /// Parse aggregates
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>

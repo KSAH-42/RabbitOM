@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         }
 
         /// <summary>
-        /// Parse the nal header (not fragmented header)
+        /// Parse the nal header and reconstruct it
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>
