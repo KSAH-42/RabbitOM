@@ -11,13 +11,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <summary>
         /// Initialize an new instance of a H265 frame
         /// </summary>
-        /// <param name="data">the data</param>
         /// <param name="startCodePrefix">the start code prefix</param>
         /// <param name="pps">the pps</param>
         /// <param name="sps">the sps</param>
         /// <param name="vps">the vps</param>
-        public H265Frame( byte[] data , byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps ) 
-            : base ( data )
+        /// <param name="data">the data</param>
+        public H265Frame( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] data ) : base ( data )
         {
             StartCodePrefix = startCodePrefix;
             PPS = pps;

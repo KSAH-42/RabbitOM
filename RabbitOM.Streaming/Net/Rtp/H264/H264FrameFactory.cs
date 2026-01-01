@@ -106,7 +106,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264Frame( _writer.ToArray() , H264StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS );
+                result = new H264Frame( H264StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.ToArray() );
             }
 
             return result != null;

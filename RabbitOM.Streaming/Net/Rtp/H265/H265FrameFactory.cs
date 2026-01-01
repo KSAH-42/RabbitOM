@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265Frame( _writer.ToArray() , H265StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS );
+                result = new H265Frame( H265StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
             }
 
             return result != null;
