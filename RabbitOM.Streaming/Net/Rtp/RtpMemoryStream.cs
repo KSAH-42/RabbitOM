@@ -153,7 +153,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// Write a buffer
         /// </summary>
         /// <param name="buffer">the buffer</param>
-        public void WriteAsBinary( ArraySegment<byte> buffer )
+        public void WriteAsBinary( in ArraySegment<byte> buffer )
         {
             if ( buffer.Count > 0 )
             {

@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnitType result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out H265NalUnitType result )
         {
             result = H265NalUnitType.UNKNOWN;
 
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <param name="buffer">the rtp payload</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnit result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out H265NalUnit result )
         {
             result = default;
 
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
+        public static IList<ArraySegment<byte>> ParseAggregates( in ArraySegment<byte> buffer )
         {
             var results = new List<ArraySegment<byte>>();
 

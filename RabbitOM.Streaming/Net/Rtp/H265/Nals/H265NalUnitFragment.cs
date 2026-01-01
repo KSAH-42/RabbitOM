@@ -67,7 +67,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <param name="buffer">the rtp payload</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( ArraySegment<byte> buffer , out H265NalUnitFragment result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out H265NalUnitFragment result )
         {
             result = default;
 
@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>
         /// <exception cref="ArgumentOutOfRangeException"/>
-        public static int ParseHeader( ArraySegment<byte> buffer )
+        public static int ParseHeader( in ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 3 )
             {
