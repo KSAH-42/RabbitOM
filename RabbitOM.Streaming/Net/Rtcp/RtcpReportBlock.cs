@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// <param name="payload">the payload</param>
         /// <returns>returns a collection of reports</returns>
         /// <exception cref="NotImplementedException"/>
-        public static IList<RtcpReportBlock> Parse( ArraySegment<byte> payload )
+        public static IList<RtcpReportBlock> Parse( in ArraySegment<byte> payload )
         {
             if ( payload.Count == 0 )
             {
