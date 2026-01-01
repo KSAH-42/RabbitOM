@@ -2,6 +2,9 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
+    /// <summary>
+    /// Represente the H264 frame builder configuration
+    /// </summary>
     public sealed class H264FrameBuilderConfiguration : RtpFrameBuilderConfiguration
     {
         private byte[] _pps;
@@ -10,6 +13,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
+
+
+        /// <summary>
+        /// Gets / Sets the pps
+        /// </summary>
         public byte[] PPS
         {
             get
@@ -29,6 +37,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             }
         }
 
+        /// <summary>
+        /// Gets / Sets the sps
+        /// </summary>
         public byte[] SPS
         {
             get

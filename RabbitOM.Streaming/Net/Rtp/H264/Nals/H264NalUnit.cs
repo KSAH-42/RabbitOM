@@ -3,11 +3,30 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
+    /// <summary>
+    /// Represent the H264 nal unit
+    /// </summary>
+    /// <seealso cref="https://datatracker.ietf.org/doc/html/rfc6184#section-1.3"/>
     public struct H264NalUnit
     {
+        /// <summary>
+        /// Gets the forbidden bit
+        /// </summary>
         public bool ForbiddenBit { get; private set; }
+
+        /// <summary>
+        /// Gets the type
+        /// </summary>
         public H264NalUnitType Type { get; private set; }
+
+        /// <summary>
+        /// Gets the Nri
+        /// </summary>
         public byte Nri { get; private set; }
+
+        /// <summary>
+        /// Gets the payload
+        /// </summary>
         public ArraySegment<byte> Payload { get; private set; }
         
                
@@ -15,19 +34,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
         
 
-        // https://datatracker.ietf.org/doc/html/rfc6184#section-1.3
         
-        //      header            payload can be null
-        //  +---------------+  +-----------------------+
-        //  |7|6|5|4|3|2|1|0|  |                       |
-        //  +-+-+-+-+-+-+-+-+  |                       |
-        //  |F|NRI|  Type   |  |                       |
-        //  +---------------+  +-----------------------+
-        
-        
-
-
-
+        /// <summary>
+        /// Try to parse the type
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( ArraySegment<byte> buffer , out H264NalUnitType result )
         {
             result = H264NalUnitType.UNKNOWN;
@@ -42,6 +55,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
             return true;
         }
 
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <param name="result">the output result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( ArraySegment<byte> buffer , out H264NalUnit result )
         {
             result = default;
@@ -67,6 +86,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
             return true;
         }
 
+        /// <summary>
+        /// Parse aggregates
+        /// </summary>
+        /// <param name="buffer">the buffer</param>
+        /// <returns>returns a collection of nal aggregates</returns>
         public static IList<ArraySegment<byte>> ParseAggregates( ArraySegment<byte> buffer )
         {
             var results = new List<ArraySegment<byte>>();

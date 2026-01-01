@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
+    /// <summary>
+    /// Represent the H264 frale factory
+    /// </summary>
     public sealed class H264FrameFactory : IDisposable
     {
         private readonly H264FrameBuilderConfiguration _configuration;
@@ -13,6 +16,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
+
+
+
+        /// <summary>
+        /// Initialize a new instance of the frame factory
+        /// </summary>
+        /// <param name="configuration">the configuration</param>
+        /// <exception cref="ArgumentNullException"/>
         public H264FrameFactory( H264FrameBuilderConfiguration configuration )
         {
             _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
@@ -21,6 +32,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
 
 
+
+
+
+
+
+        /// <summary>
+        /// Setup
+        /// </summary>
         public void Setup()
         {
             if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
@@ -34,6 +53,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             }
         }
 
+        /// <summary>
+        /// Try to create the frame
+        /// </summary>
+        /// <param name="packets">the packets</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
         {
             result = null;
@@ -87,12 +112,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             return result != null;
         }
 
+        /// <summary>
+        /// Clear
+        /// </summary>
         public void Clear()
         {
             _writer.Clear();
             _writer.Settings.Clear();
         }
 
+        /// <summary>
+        /// Dispose
+        /// </summary>
         public void Dispose()
         {
             _writer.Dispose();

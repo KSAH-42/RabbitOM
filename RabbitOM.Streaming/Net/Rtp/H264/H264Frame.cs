@@ -3,8 +3,18 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
+    /// <summary>
+    /// Represent a H264 frame
+    /// </summary>
     public sealed class H264Frame : RtpFrame
     {
+        /// <summary>
+        /// Initialize a new instance of a H264 frame
+        /// </summary>
+        /// <param name="data">the data</param>
+        /// <param name="startCodePrefix">the start prefix</param>
+        /// <param name="pps">the pps</param>
+        /// <param name="sps">the sps</param>
         public H264Frame( byte[] data , byte[] startCodePrefix , byte[] pps , byte[] sps ) : base ( data )
         {
             StartCodePrefix = startCodePrefix;
@@ -13,14 +23,39 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         }
 
 
+
+
+
+
+        /// <summary>
+        /// Gets the start code prefix
+        /// </summary>
+
         public byte[] StartCodePrefix { get; }
 
+
+        /// <summary>
+        /// Gets the pps
+        /// </summary>
         public byte[] PPS { get; }
         
+        /// <summary>
+        /// Gets the sps
+        /// </summary>
         public byte[] SPS { get; }
 
 
 
+
+
+
+
+        /// <summary>
+        /// Combine params as buffer
+        /// </summary>
+        /// <param name="frame">the frame</param>
+        /// <returns>returns a buffer</returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static byte[] CreateParamsBuffer( H264Frame frame )
         {
             if ( frame == null )
@@ -31,7 +66,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             return CreateParamsBuffer( frame.StartCodePrefix , frame.PPS , frame.SPS );
         }
 
-
+        /// <summary>
+        /// Combine parameters as a buffer
+        /// </summary>
+        /// <param name="startCodePrefix">the start code</param>
+        /// <param name="pps">the pps</param>
+        /// <param name="sps">the sps</param>
+        /// <returns>returns a buffer</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public static byte[] CreateParamsBuffer( byte[] startCodePrefix , byte[] pps , byte[] sps )
         {
             if ( startCodePrefix == null )
