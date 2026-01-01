@@ -73,38 +73,39 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             foreach ( var packet in packets )
             {
-                var type = H265NalUnit.ParseType( packet.Payload );
-
-                switch ( type )
+                if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnitType type ) )
                 {
-                    case H265NalUnitType.PPS: 
-                        _writer.WritePPS( packet ); 
-                        break;
+                    switch ( type )
+                    {
+                        case H265NalUnitType.PPS: 
+                            _writer.WritePPS( packet ); 
+                            break;
 
-                    case H265NalUnitType.SPS: 
-                        _writer.WriteSPS( packet ); 
-                        break;
+                        case H265NalUnitType.SPS: 
+                            _writer.WriteSPS( packet ); 
+                            break;
 
-                    case H265NalUnitType.VPS: 
-                        _writer.WriteVPS( packet ); 
-                        break;
+                        case H265NalUnitType.VPS: 
+                            _writer.WriteVPS( packet ); 
+                            break;
 
-                    case H265NalUnitType.AGGREGATION: 
-                        _writer.WriteAggregation( packet ); 
-                        break;
+                        case H265NalUnitType.AGGREGATION: 
+                            _writer.WriteAggregation( packet ); 
+                            break;
 
-                    case H265NalUnitType.FRAGMENTATION: 
-                        _writer.WriteFragmentation( packet ); 
-                        break;
+                        case H265NalUnitType.FRAGMENTATION: 
+                            _writer.WriteFragmentation( packet ); 
+                            break;
 
-                    default:
+                        default:
 
-                        if ( type != H265NalUnitType.UNKNOWN )
-                        {
-                            _writer.Write( packet );
-                        }
+                            if ( type != H265NalUnitType.UNKNOWN )
+                            {
+                                _writer.Write( packet );
+                            }
 
-                        break;
+                            break;
+                    }
                 }
             }
 

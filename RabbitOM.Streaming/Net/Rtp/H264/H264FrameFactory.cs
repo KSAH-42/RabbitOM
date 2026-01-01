@@ -47,34 +47,35 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             
             foreach ( var packet in packets )
             {
-                var type = H264NalUnit.ParseType( packet.Payload );
+                if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnitType type ) )
+                {
+                    switch ( type )
+                    {             
+                        case H264NalUnitType.AGGREGATION_STAP_A: 
+                            _writer.WriteStapA( packet ); 
+                            break;
 
-                switch ( type )
-                {             
-                    case H264NalUnitType.AGGREGATION_STAP_A: 
-                        _writer.WriteStapA( packet ); 
-                        break;
+                        case H264NalUnitType.FRAGMENTATION_FU_A: 
+                            _writer.WriteFuA( packet ); 
+                            break;
 
-                    case H264NalUnitType.FRAGMENTATION_FU_A: 
-                        _writer.WriteFuA( packet ); 
-                        break;
+                        case H264NalUnitType.SINGLE_PPS: 
+                            _writer.WritePPS( packet ); 
+                            break;
 
-                    case H264NalUnitType.SINGLE_PPS: 
-                        _writer.WritePPS( packet ); 
-                        break;
+                        case H264NalUnitType.SINGLE_SPS: 
+                            _writer.WriteSPS( packet ); 
+                            break;
 
-                    case H264NalUnitType.SINGLE_SPS: 
-                        _writer.WriteSPS( packet ); 
-                        break;
+                        default:
 
-                    default:
+                            if ( type >= H264NalUnitType.SINGLE_SLICE && type <= H264NalUnitType.SINGLE_RESERVED_K )
+                            {
+                                _writer.Write( packet );
+                            }
 
-                        if ( type >= H264NalUnitType.SINGLE_SLICE && type <= H264NalUnitType.SINGLE_RESERVED_K )
-                        {
-                            _writer.Write( packet );
-                        }
-
-                        break;
+                            break;
+                    }
                 }
             }
 

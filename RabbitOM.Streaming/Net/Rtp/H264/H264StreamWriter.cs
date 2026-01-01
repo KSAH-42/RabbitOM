@@ -1,4 +1,5 @@
 ﻿using RabbitOM.Streaming.Net.Rtp.H264.Nals;
+using RabbitOM.Streaming.Net.Rtp.H265.Nals;
 using System;
 using System.Diagnostics;
 
@@ -86,7 +87,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
             {
                 _settings.PPS = packet.Payload.ToArray();
             }
@@ -99,7 +100,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H264NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
             {
                 _settings.SPS = packet.Payload.ToArray();
             }

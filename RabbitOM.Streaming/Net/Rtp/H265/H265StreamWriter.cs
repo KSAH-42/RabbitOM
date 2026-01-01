@@ -133,7 +133,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -154,7 +154,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
@@ -175,7 +175,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
                 _streamOfNalUnitsParams.WriteAsBinary( StartCodePrefix );
                 _streamOfNalUnitsParams.WriteAsBinary( packet.Payload );
