@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Net.Rtp
     /// </summary>
     public sealed class RtpMemoryStream : IDisposable
     {
-        private readonly MemoryStream _stream = new MemoryStream( 1024 * 10 );
+        private readonly MemoryStream _stream = new MemoryStream();
 
 
 

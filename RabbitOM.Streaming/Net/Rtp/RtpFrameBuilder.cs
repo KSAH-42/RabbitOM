@@ -12,6 +12,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
+
+
+
         public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
 
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
@@ -49,12 +52,16 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public IReadOnlyCollection<RtpPacket> Packets { get => _aggregator.Packets; }
+        public IReadOnlyCollection<RtpPacket> Packets
+        {
+            get => _aggregator.Packets;
+        }
 
-        public int MaximumOfPackets { get; } = DefaultMaximumOfPackets;
+        public int MaximumOfPackets { get; protected set; } = DefaultMaximumOfPackets;
 
-        public int MaximumOfPacketsSize { get; } = DefaultMaximumOfPacketsSize;
+        public int MaximumOfPacketsSize { get; protected set; } = DefaultMaximumOfPacketsSize;
         
+
 
 
 
@@ -137,6 +144,9 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
         }
         
+
+
+
 
 
 
