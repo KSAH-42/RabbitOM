@@ -15,17 +15,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <summary>
         /// Setup
         /// </summary>
+        /// <param name="pps">the pps</param>
+        /// <param name="sps">the sps</param>
         public void Configure( byte[] pps , byte[] sps )
         {
-            if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
-            {
-                _writer.Settings.PPS = pps;
-            }
-
-            if ( _writer.Settings.SPS == null || _writer.Settings.SPS.Length == 0 )
-            {
-                _writer.Settings.SPS = sps;
-            }
+            _writer.Settings.PPS = pps;
+            _writer.Settings.SPS = sps;
         }
 
         /// <summary>
