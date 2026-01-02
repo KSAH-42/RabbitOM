@@ -49,67 +49,24 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
-
-        public void AddPacket( RtpPacket packet )
+        public void AddPacket( byte[] buffer )
         {
-            if ( packet == null )
+            if ( RtpPacket.TryParse( buffer , out var packet ) )
             {
-                throw new ArgumentNullException();
-            }
-
-            if ( ! packet.TryValidate() )
-            {
-                throw new ArgumentException();
-            }
-
-            if ( packet.Payload.Count >= MaximumOfPacketsSize )
-            {
-                throw new ArgumentException();
-            }
-
-            if ( _aggregator.Packets.Count >= MaximumOfPackets )
-            {
-                throw new ArgumentException();
-            }
-
-            var addingPacket = new PacketAddingEventArgs(packet );
-
-            OnPacketAdding( addingPacket );
-
-            if ( ! addingPacket.Continue )
-            {
-                throw new InvalidOperationException();
-            }
-
-            _aggregator.AddPacket( packet );
-
-            OnPacketAdded( new PacketAddedEventArgs(packet) );
-
-            if ( _aggregator.HasCompleteSequence )
-            {
-                if ( _aggregator.HasUnOrderedSequence )
-                {
-                    OnSortingSequence( new SortingSequenceEventArgs( _aggregator.GetSequence() ) );
-
-                    _aggregator.SortSequence();
-                }
-                
-                OnSequenceCompleted( new SequenceCompletedEventArgs( _aggregator.GetSequence() ) );
-
-                _aggregator.RemovePackets();
+                AddPacket( packet );
             }
         }
 
-        public bool TryAddPacket( RtpPacket packet )
+        public void AddPacket( RtpPacket packet )
         {
             if ( packet == null || ! packet.TryValidate() )
             {
-                return false;
+                return;
             }
 
             if ( packet.Payload.Count >= MaximumOfPacketsSize || _aggregator.Packets.Count >= MaximumOfPackets )
             {
-                return false;
+                return;
             }
 
             var addingPacket = new PacketAddingEventArgs(packet );
@@ -118,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
             if ( ! addingPacket.Continue )
             {
-                return false;
+                return;
             }
 
             _aggregator.AddPacket( packet );
@@ -137,16 +94,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
                 OnSequenceCompleted( new SequenceCompletedEventArgs( _aggregator.GetSequence() ) );
 
                 _aggregator.RemovePackets();
-            }
-
-            return true;
-        }
-
-        public void WritePacket( byte[] buffer )
-        {
-            if ( RtpPacket.TryParse( buffer , out var packet ) )
-            {
-                TryAddPacket( packet );
             }
         }
 

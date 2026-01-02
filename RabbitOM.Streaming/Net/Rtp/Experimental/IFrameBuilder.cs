@@ -25,6 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
+        void AddPacket( byte[] buffer );
         void AddPacket( RtpPacket packet );
 
         void RemovePackets();
