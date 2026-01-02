@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// Check if an image can be build
         /// </summary>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool CanBuildImage()
+        public bool CanBuildFrame()
         {
             return _fragments.Count > 0;
         }
