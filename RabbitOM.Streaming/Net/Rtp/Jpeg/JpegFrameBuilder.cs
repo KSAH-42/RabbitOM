@@ -18,9 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         
         protected override void OnCleared( RtpClearedEventArgs e )
         {
-            _factory.Clear();
-
             base.OnCleared( e );
+
+            _factory.Clear();
         }
 
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
