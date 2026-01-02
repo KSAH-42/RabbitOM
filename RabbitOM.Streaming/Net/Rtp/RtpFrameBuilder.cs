@@ -94,19 +94,21 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
-            if ( _aggregator.HasCompleteSequence )
+            if ( ! _aggregator.HasCompleteSequence )
             {
-                if ( _aggregator.HasUnOrderedSequence )
-                {
-                    OnSequenceSorting( new RtpSequenceSortingEventArgs( _aggregator.GetSequence() ) );
-
-                    _aggregator.SortSequence();
-                }
-                
-                OnSequenceCompleted( new RtpSequenceCompletedEventArgs( _aggregator.GetSequence() ) );
-
-                _aggregator.RemovePackets();
+                return;
             }
+
+            if ( _aggregator.HasUnOrderedSequence )
+            {
+                OnSequenceSorting( new RtpSequenceSortingEventArgs( _aggregator.GetSequence() ) );
+
+                _aggregator.SortSequence();
+            }
+                
+            OnSequenceCompleted( new RtpSequenceCompletedEventArgs( _aggregator.GetSequence() ) );
+
+            _aggregator.RemovePackets();
         }
 
         public void RemovePackets()
