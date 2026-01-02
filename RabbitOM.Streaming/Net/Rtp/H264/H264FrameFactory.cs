@@ -12,13 +12,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     {
         private readonly H264StreamWriter _writer = new H264StreamWriter();
 
-
-
-
-
-
-
-
         /// <summary>
         /// Setup
         /// </summary>
