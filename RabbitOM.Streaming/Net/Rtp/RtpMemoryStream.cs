@@ -189,7 +189,7 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            var buffer = System.Text.Encoding.ASCII.GetBytes( value );
+            var buffer = System.Text.Encoding.UTF8.GetBytes( value );
 
             if ( buffer.Length > 0 )
             {
