@@ -1,6 +1,9 @@
-﻿using System;
+﻿// TODO: adding errors count, stats ??? 
+// TODO: on the add method, need to discard the actual sequence, in case of receiving one invalid or missing packet ?
+// TODO: add raise static method to call without allocated event args if no subscritions to events
+
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
