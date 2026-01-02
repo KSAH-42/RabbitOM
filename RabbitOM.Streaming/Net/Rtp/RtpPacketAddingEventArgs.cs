@@ -11,6 +11,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         public RtpPacket Packet { get; }
 
-        public bool Continue { get; set; } = true;
+        public bool Continue { get; set; }
     }
 }

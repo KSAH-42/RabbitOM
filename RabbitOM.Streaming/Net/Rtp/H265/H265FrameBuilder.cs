@@ -26,21 +26,21 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         protected override void OnCleared( RtpClearedEventArgs e )
         {
-            base.OnCleared( e );
-
             _frameFactory.Clear();
+
+            base.OnCleared( e );
         }
 
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
-            base.OnPacketAdding( e );
-
             e.Continue = e.Packet.Type == RtpPacketType.MPEG4
                       || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
                       || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_B
                       || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_C
                       || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_D
                       ;
+            
+            base.OnPacketAdding( e );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
