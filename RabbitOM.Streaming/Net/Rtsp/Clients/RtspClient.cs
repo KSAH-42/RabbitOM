@@ -1,4 +1,5 @@
-﻿using RabbitOM.Streaming.Threading;
+﻿// TODO: remove the client class, add replace it by individual receivers 
+using RabbitOM.Streaming.Threading;
 using System;
 
 namespace RabbitOM.Streaming.Net.Rtsp.Clients
