@@ -82,6 +82,16 @@
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriter.Constants.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilderConfiguration.cs" />
+    <Compile Include="Net\Rtp\Experimental\DefaultPacketAggregator.cs" />
+    <Compile Include="Net\Rtp\Experimental\FrameBuilder.cs" />
+    <Compile Include="Net\Rtp\Experimental\PacketAggregator.cs" />
+    <Compile Include="Net\Rtp\Experimental\IFrameBuilder.cs" />
+    <Compile Include="Net\Rtp\Experimental\ClearedEventArgs.cs" />
+    <Compile Include="Net\Rtp\Experimental\FrameReceivedEventArgs.cs" />
+    <Compile Include="Net\Rtp\Experimental\SequenceCompletedEventArgs.cs" />
+    <Compile Include="Net\Rtp\Experimental\SortingSequenceEventArgs.cs" />
+    <Compile Include="Net\Rtp\Experimental\PacketAddedEventArgs.cs" />
+    <Compile Include="Net\Rtp\Experimental\PacketAddingEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAggregator.cs" />
     <Compile Include="Net\Rtp\RtpMemoryStream.cs" />
     <Compile Include="ActionExtensions.cs" />
