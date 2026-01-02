@@ -6,9 +6,11 @@ namespace RabbitOM.Streaming.Net.Rtp
 {
     public abstract class RtpFrameBuilder : IFrameBuilder , IDisposable
     {
+        public const int DefaultMTU = 1500;
+
         public const int DefaultMaximumOfPackets = 1000;
 
-        public const int DefaultMaximumOfPacketsSize = 1500 * 3;
+        public const int DefaultMaximumOfPacketsSize = DefaultMTU * 4;
 
 
 
