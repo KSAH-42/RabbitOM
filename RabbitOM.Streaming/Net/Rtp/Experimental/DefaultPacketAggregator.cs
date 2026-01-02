@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
             if ( _isCompleted )
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException( "The aggregator contains remaining packets and full sequence, add packet will break the sequence. Retrieve the sequence if you need it and then you must remove all remaining packets will are considered useless." );
             }
 
             _packets.Enqueue( packet );

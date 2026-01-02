@@ -12,13 +12,13 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
-        public event EventHandler<PacketAddingEventArgs> PacketAdding;
-
         public event EventHandler<PacketAddedEventArgs> PacketAdded;
 
-        public event EventHandler<SortingSequenceEventArgs> SortingSequence;
+        public event EventHandler<PacketAddingEventArgs> PacketAdding;
 
         public event EventHandler<SequenceCompletedEventArgs> SequenceCompleted;
+
+        public event EventHandler<SequenceSortingEventArgs> SequenceSorting;
 
         public event EventHandler<FrameReceivedEventArgs> FrameReceived;
 
@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
             {
                 if ( _aggregator.HasUnOrderedSequence )
                 {
-                    OnSortingSequence( new SortingSequenceEventArgs( _aggregator.GetSequence() ) );
+                    OnSequenceSorting( new SequenceSortingEventArgs( _aggregator.GetSequence() ) );
 
                     _aggregator.SortSequence();
                 }
@@ -141,34 +141,34 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
-        protected virtual void OnPacketAdding( PacketAddingEventArgs e )
-        {
-            PacketAdding?.Invoke( this , e );
-        }
-
         protected virtual void OnPacketAdded( PacketAddedEventArgs e )
         {
             PacketAdded?.Invoke( this , e );
         }
 
-        protected virtual void OnSortingSequence( SortingSequenceEventArgs e )
+        protected virtual void OnPacketAdding( PacketAddingEventArgs e )
         {
-            SortingSequence?.Invoke( this , e );
+            PacketAdding?.TryInvoke( this , e );
         }
 
         protected virtual void OnSequenceCompleted( SequenceCompletedEventArgs e )
         {
-            SequenceCompleted?.Invoke( this , e );
+            SequenceCompleted?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnSequenceSorting( SequenceSortingEventArgs e )
+        {
+            SequenceSorting?.TryInvoke( this , e );
         }
 
         protected virtual void OnFrameReceived( FrameReceivedEventArgs e )
         {
-            FrameReceived?.Invoke( this , e );
+            FrameReceived?.TryInvoke( this , e );
         }
 
         protected virtual void OnCleared( ClearedEventArgs e )
         {
-            Cleared?.Invoke( this , e );
+            Cleared?.TryInvoke( this , e );
         }
     }
 }

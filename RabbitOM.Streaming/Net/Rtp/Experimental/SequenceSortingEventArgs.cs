@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.Experimental
 {
-    public class SortingSequenceEventArgs : EventArgs
+    public class SequenceSortingEventArgs : EventArgs
     {
-        public SortingSequenceEventArgs( IReadOnlyCollection<RtpPacket> packets ) 
+        public SequenceSortingEventArgs( IReadOnlyCollection<RtpPacket> packets ) 
         {
             Packets = packets ?? throw new ArgumentNullException( nameof( packets ) );
         }

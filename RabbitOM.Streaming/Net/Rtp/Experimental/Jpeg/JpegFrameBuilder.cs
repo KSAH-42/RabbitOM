@@ -7,12 +7,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental.Jpeg
     public class JpegFrameBuilder : FrameBuilder
     {
         private readonly JpegFrameFactory _factory = new JpegFrameFactory();
-        
-
-
-
-
-
 
         protected override void Dispose( bool disposing )
         {
@@ -24,13 +18,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental.Jpeg
             base.Dispose( disposing );
         }
         
-
-
-
-
-
-        
-
         protected override void OnCleared( ClearedEventArgs e )
         {
             _factory.Clear();
@@ -40,9 +27,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental.Jpeg
 
         protected override void OnPacketAdding( PacketAddingEventArgs e )
         {
-            e.Continue = e.Packet.Type == RtpPacketType.JPEG;
-
             base.OnPacketAdding( e );
+
+            e.Continue = e.Packet.Type == RtpPacketType.JPEG;
         }
 
         protected override void OnSequenceCompleted( SequenceCompletedEventArgs e )

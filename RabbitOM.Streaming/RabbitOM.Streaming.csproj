@@ -90,7 +90,7 @@
     <Compile Include="Net\Rtp\Experimental\ClearedEventArgs.cs" />
     <Compile Include="Net\Rtp\Experimental\FrameReceivedEventArgs.cs" />
     <Compile Include="Net\Rtp\Experimental\SequenceCompletedEventArgs.cs" />
-    <Compile Include="Net\Rtp\Experimental\SortingSequenceEventArgs.cs" />
+    <Compile Include="Net\Rtp\Experimental\SequenceSortingEventArgs.cs" />
     <Compile Include="Net\Rtp\Experimental\PacketAddedEventArgs.cs" />
     <Compile Include="Net\Rtp\Experimental\PacketAddingEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAggregator.cs" />

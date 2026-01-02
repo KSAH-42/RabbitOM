@@ -5,17 +5,17 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 {
     public interface IFrameBuilder
     {
-        event EventHandler<PacketAddingEventArgs> PacketAdding;
-
         event EventHandler<PacketAddedEventArgs> PacketAdded;
 
-        event EventHandler<SortingSequenceEventArgs> SortingSequence;
+        event EventHandler<PacketAddingEventArgs> PacketAdding;
 
         event EventHandler<SequenceCompletedEventArgs> SequenceCompleted;
 
-        event EventHandler<ClearedEventArgs> Cleared;
+        event EventHandler<SequenceSortingEventArgs> SequenceSorting;
 
         event EventHandler<FrameReceivedEventArgs> FrameReceived;
+
+        event EventHandler<ClearedEventArgs> Cleared;
 
 
 
