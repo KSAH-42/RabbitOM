@@ -1,6 +1,5 @@
 ﻿// TODO: adding errors count, stats ??? 
 // TODO: on the add method, need to discard the actual sequence, in case of receiving one invalid or missing packet ?
-// TODO: add raise static method to avoid allocated event args if no subscritions to events
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtp
     {
         public const int DefaultMTU = 1500;
 
-        public const int DefaultMaximumOfPackets = 1000;
+        public const int DefaultMaximumOfPackets = 5000;
 
         public const int DefaultMaximumOfPacketsSize = DefaultMTU * 4;
 
