@@ -9,6 +9,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
         public abstract bool HasCompleteSequence { get; }
         public abstract bool HasUnOrderedSequence { get; }
         
+
+
+
+
+
+
         public abstract void AddPacket( RtpPacket packet );
         public abstract void RemovePackets();
         public abstract void Clear();

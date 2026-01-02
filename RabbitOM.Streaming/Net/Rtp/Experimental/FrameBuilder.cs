@@ -27,7 +27,13 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
+
+
+
         private readonly PacketAggregator _aggregator = new DefaultPacketAggregator();
+        
+
+
 
 
 
@@ -36,6 +42,8 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
         {
             Dispose( false );
         }
+        
+
 
 
 
@@ -46,6 +54,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
         public int MaximumOfPackets { get; } = DefaultMaximumOfPackets;
 
         public int MaximumOfPacketsSize { get; } = DefaultMaximumOfPacketsSize;
+        
+
+
+
 
 
 
@@ -122,6 +134,8 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
                 Clear();
             }
         }
+        
+
 
 
 

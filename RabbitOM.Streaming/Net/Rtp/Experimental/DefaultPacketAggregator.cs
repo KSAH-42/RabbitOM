@@ -15,6 +15,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
         private uint? _currentSequenceNumber;
 
         private IReadOnlyCollection<RtpPacket> _sequence;
+        
+
+
+
 
 
 
@@ -32,6 +36,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
         {
             get => _isUnOrdered;
         }
+        
+
+
+
 
 
 
@@ -84,6 +92,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
         {
             return _sequence ?? _packets;
         }
+        
 
 
 

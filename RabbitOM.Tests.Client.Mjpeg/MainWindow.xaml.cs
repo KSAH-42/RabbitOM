@@ -43,7 +43,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
-        private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
+        private readonly RabbitOM.Streaming.Net.Rtp.Experimental.FrameBuilder _frameBuilder = new RabbitOM.Streaming.Net.Rtp.Experimental.Jpeg.JpegFrameBuilder();
         private readonly RtpRender _renderer = new RtpJpegRender();
         
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
@@ -151,10 +151,10 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            _frameBuilder.Write( e.Packet.Data );
+            _frameBuilder.AddPacket( e.Packet.Data );
         }
 
-        private void OnFrameReceived( object sender , RtpFrameReceivedEventArgs e )
+        private void OnFrameReceived( object sender , RabbitOM.Streaming.Net.Rtp.Experimental.FrameReceivedEventArgs e )
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
@@ -162,7 +162,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
             } ));
         }
         
-        private void OnRenderFrame( object sender , RtpFrameReceivedEventArgs e )
+        private void OnRenderFrame( object sender , RabbitOM.Streaming.Net.Rtp.Experimental.FrameReceivedEventArgs e )
         {
             _renderer.Frame = e.Frame.Data;
 
