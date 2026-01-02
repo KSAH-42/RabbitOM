@@ -1,4 +1,5 @@
-﻿using System;
+﻿// TODO: add support of DON (decoding order number during parsing)
+using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
