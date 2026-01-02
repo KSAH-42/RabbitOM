@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
@@ -35,6 +36,10 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
         
+        private int _maximumOfPackets = DefaultMaximumOfPackets;
+
+        private int _maximumOfPacketsSize = DefaultMaximumOfPacketsSize;
+
 
 
 
@@ -57,9 +62,15 @@ namespace RabbitOM.Streaming.Net.Rtp
             get => _aggregator.Packets;
         }
 
-        public int MaximumOfPackets { get; protected set; } = DefaultMaximumOfPackets;
+        public int MaximumOfPackets
+        {
+            get => _maximumOfPackets;
+        }
 
-        public int MaximumOfPacketsSize { get; protected set; } = DefaultMaximumOfPacketsSize;
+        public int MaximumOfPacketsSize
+        {
+            get => _maximumOfPacketsSize;
+        }
         
 
 
@@ -67,6 +78,11 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
+        public void Configure( int maximumOfPackets , int maximumOfPacketsSize )
+        {
+            _maximumOfPackets = maximumOfPackets > 0 ? maximumOfPackets : throw new ArgumentOutOfRangeException( nameof( maximumOfPackets ) );
+            _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
+        }
 
         public void AddPacket( byte[] buffer )
         {
