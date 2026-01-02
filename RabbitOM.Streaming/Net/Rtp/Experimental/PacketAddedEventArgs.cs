@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
     {
         public PacketAddedEventArgs( RtpPacket packet  )
         {
-            Packet = packet;
+            Packet = packet ?? throw new ArgumentNullException( nameof( packet ) );
         }
 
         public RtpPacket Packet { get; }
