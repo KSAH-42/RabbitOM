@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Net.Rtp.Experimental
+namespace RabbitOM.Streaming.Net.Rtp
 {
-    public sealed class DefaultPacketAggregator : PacketAggregator
+    public sealed class DefaultRtpPacketAggregator : RtpPacketAggregator
     {
         private readonly Queue<RtpPacket> _packets = new Queue<RtpPacket>();
 

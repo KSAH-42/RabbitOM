@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
@@ -8,98 +7,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// </summary>
     public sealed class H265FrameBuilder : RtpFrameBuilder
     {
-        private readonly H265FrameBuilderConfiguration _configuration;
+        private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
-        private readonly H265FrameAggregator _aggregator;
-
-        private readonly H265FrameFactory _frameFactory;
-    
-
-
-
-
-        /// <summary>
-        /// Initialize a new instance of a H265 frame builder
-        /// </summary>
-        public H265FrameBuilder()
+        public void Configure( byte[] pps , byte[] sps , byte[] vps )
         {
-            _configuration = new H265FrameBuilderConfiguration();
-            _aggregator    = new H265FrameAggregator( _configuration );
-            _frameFactory  = new H265FrameFactory( _configuration );
+            _frameFactory.Configure( pps , sps , vps );
         }
 
-
-
-
-
-        /// <summary>
-        /// Gets the configuration used by the builder
-        /// </summary>
-        public H265FrameBuilderConfiguration Configuration
-        {
-            get => _configuration;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Setup the builder
-        /// </summary>
-        public override void Setup()
-        {
-            lock ( SyncRoot )
-            {
-                _frameFactory.Setup();
-            }
-        }
-
-        /// <summary>
-        /// Write data thats comes from the network
-        /// </summary>
-        /// <param name="buffer">the received buffer</param>
-        public override void Write( byte[] buffer )
-        {
-            if ( ! RtpPacket.TryParse( buffer , out RtpPacket packet ) )
-            {
-                return;
-            }
-
-            RtpFrame frame = null;
-
-            lock ( SyncRoot )
-            {
-                if ( ! _aggregator.TryAggregate( packet , out IEnumerable<RtpPacket> packets ) )
-                {
-                    return;
-                }
-
-                if ( ! _frameFactory.TryCreateFrame( packets , out frame ) )
-                {
-                    return;
-                }
-            }
-
-            OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
-        }
-
-        /// <summary>
-        /// Clear
-        /// </summary>
-        public override void Clear()
-        {
-            lock ( SyncRoot )
-            {
-                _aggregator.Clear();
-                _frameFactory.Clear();
-            }
-        }
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        /// <param name="disposing">the dispose indicator</param>
         protected override void Dispose( bool disposing )
         {
             if ( disposing )
@@ -108,6 +22,35 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             }
 
             base.Dispose( disposing );
+        }
+
+        protected override void OnCleared( RtpClearedEventArgs e )
+        {
+            base.OnCleared( e );
+
+            _frameFactory.Clear();
+        }
+
+        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
+        {
+            base.OnPacketAdding( e );
+
+            e.Continue = e.Packet.Type == RtpPacketType.MPEG4
+                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
+                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_B
+                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_C
+                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_D
+                      ;
+        }
+
+        protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
+        {
+            base.OnSequenceCompleted( e );
+
+            if ( _frameFactory.TryCreateFrame( e.Packets , out var frame ) )
+            {
+                OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+            }
         }
     }
 }

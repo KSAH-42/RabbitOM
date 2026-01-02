@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Experimental
+namespace RabbitOM.Streaming.Net.Rtp
 {
-    public class PacketAddedEventArgs : EventArgs
+    public class RtpPacketAddedEventArgs : EventArgs
     {
-        public PacketAddedEventArgs( RtpPacket packet  )
+        public RtpPacketAddedEventArgs( RtpPacket packet  )
         {
             Packet = packet ?? throw new ArgumentNullException( nameof( packet ) );
         }

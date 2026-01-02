@@ -10,26 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     /// </summary>
     public sealed class H264FrameFactory : IDisposable
     {
-        private readonly H264FrameBuilderConfiguration _configuration;
-
-        private readonly H264StreamWriter _writer;
-
-
-
-
-
-
-
-        /// <summary>
-        /// Initialize a new instance of the frame factory
-        /// </summary>
-        /// <param name="configuration">the configuration</param>
-        /// <exception cref="ArgumentNullException"/>
-        public H264FrameFactory( H264FrameBuilderConfiguration configuration )
-        {
-            _configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
-            _writer = new H264StreamWriter();
-        } 
+        private readonly H264StreamWriter _writer = new H264StreamWriter();
 
 
 
@@ -41,16 +22,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <summary>
         /// Setup
         /// </summary>
-        public void Setup()
+        public void Configure( byte[] pps , byte[] sps )
         {
             if ( _writer.Settings.PPS == null || _writer.Settings.PPS.Length == 0 )
             {
-                _writer.Settings.PPS = _configuration.PPS;
+                _writer.Settings.PPS = pps;
             }
 
             if ( _writer.Settings.SPS == null || _writer.Settings.SPS.Length == 0 )
             {
-                _writer.Settings.SPS = _configuration.SPS;
+                _writer.Settings.SPS = sps;
             }
         }
 

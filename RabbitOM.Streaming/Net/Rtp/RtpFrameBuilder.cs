@@ -1,105 +1,174 @@
-﻿// TODO: Refactor and used immutable type for configuration, and use constructor injection
-// TODO: removing the lock ??
-
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    /// <summary>
-    /// Represent the base frame builder class
-    /// </summary>
-    public abstract class RtpFrameBuilder : IDisposable
+    public abstract class RtpFrameBuilder : IFrameBuilder , IDisposable
     {
-        /// <summary>
-        /// Raised when a complete frame has been received
-        /// </summary>
+        public const int DefaultMaximumOfPackets = 1000;
+
+        public const int DefaultMaximumOfPacketsSize = 1500 * 3;
+
+
+
+
+        public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
+
+        public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
+
+        public event EventHandler<RtpSequenceCompletedEventArgs> SequenceCompleted;
+
+        public event EventHandler<RtpSequenceSortingEventArgs> SequenceSorting;
+
         public event EventHandler<RtpFrameReceivedEventArgs> FrameReceived;
 
-
-
-
-
-        private readonly object _lock = new object();
+        public event EventHandler<RtpClearedEventArgs> Cleared;
 
 
 
 
 
-        /// <summary>
-        /// Finalizer
-        /// </summary>
+
+
+        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
+        
+
+
+
+
+
+
         ~RtpFrameBuilder()
         {
             Dispose( false );
         }
+        
 
 
 
 
 
 
-        /// <summary>
-        /// Gets the sync root
-        /// </summary>
-        public object SyncRoot
+        public IReadOnlyCollection<RtpPacket> Packets { get => _aggregator.Packets; }
+
+        public int MaximumOfPackets { get; } = DefaultMaximumOfPackets;
+
+        public int MaximumOfPacketsSize { get; } = DefaultMaximumOfPacketsSize;
+        
+
+
+
+
+
+
+        public void AddPacket( byte[] buffer )
         {
-            get => _lock;
+            if ( RtpPacket.TryParse( buffer , out var packet ) )
+            {
+                AddPacket( packet );
+            }
         }
 
-
-
-
-
-
-        /// <summary>
-        /// Setup - Generally called when the builder has entierely configured and before the streaming
-        /// </summary>
-        public virtual void Setup() { }
-
-        /// <summary>
-        /// Write a buffer
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        public abstract void Write( byte[] buffer );
-
-        /// <summary>
-        /// Clear generally used to reset the builder
-        /// </summary>
-        public abstract void Clear();
-
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        public void Dispose()
+        public void AddPacket( RtpPacket packet )
         {
-            lock ( _lock )
+            if ( packet == null || ! packet.TryValidate() )
             {
-                Dispose( true );
+                return;
             }
 
+            if ( packet.Payload.Count >= MaximumOfPacketsSize || _aggregator.Packets.Count >= MaximumOfPackets )
+            {
+                return;
+            }
+
+            var addingPacket = new RtpPacketAddingEventArgs(packet );
+
+            OnPacketAdding( addingPacket );
+
+            if ( ! addingPacket.Continue )
+            {
+                return;
+            }
+
+            _aggregator.AddPacket( packet );
+
+            OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
+
+            if ( _aggregator.HasCompleteSequence )
+            {
+                if ( _aggregator.HasUnOrderedSequence )
+                {
+                    OnSequenceSorting( new RtpSequenceSortingEventArgs( _aggregator.GetSequence() ) );
+
+                    _aggregator.SortSequence();
+                }
+                
+                OnSequenceCompleted( new RtpSequenceCompletedEventArgs( _aggregator.GetSequence() ) );
+
+                _aggregator.RemovePackets();
+            }
+        }
+
+        public void RemovePackets()
+        {
+            _aggregator.RemovePackets();
+        }
+
+        public void Clear()
+        {
+            _aggregator.Clear();
+
+            OnCleared( new RtpClearedEventArgs() );
+        }
+
+        public void Dispose()
+        {
+            Dispose( true );
             GC.SuppressFinalize( this );
         }
 
-        /// <summary>
-        /// Dispose
-        /// </summary>
-        /// <param name="disposing">true when the dispose method is explicity called</param>
         protected virtual void Dispose( bool disposing )
         {
+            if ( disposing )
+            {
+                Clear();
+            }
+        }
+        
+
+
+
+
+
+
+        protected virtual void OnPacketAdded( RtpPacketAddedEventArgs e )
+        {
+            PacketAdded?.Invoke( this , e );
         }
 
+        protected virtual void OnPacketAdding( RtpPacketAddingEventArgs e )
+        {
+            PacketAdding?.TryInvoke( this , e );
+        }
 
+        protected virtual void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
+        {
+            SequenceCompleted?.TryInvoke( this , e );
+        }
 
+        protected virtual void OnSequenceSorting( RtpSequenceSortingEventArgs e )
+        {
+            SequenceSorting?.TryInvoke( this , e );
+        }
 
-
-
-        /// <summary>
-        /// Fire a frame event received
-        /// </summary>
-        /// <param name="e">the event to fired outside</param>
         protected virtual void OnFrameReceived( RtpFrameReceivedEventArgs e )
         {
             FrameReceived?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnCleared( RtpClearedEventArgs e )
+        {
+            Cleared?.TryInvoke( this , e );
         }
     }
 }

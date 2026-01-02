@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.Experimental
+namespace RabbitOM.Streaming.Net.Rtp
 {
-    public class SequenceSortingEventArgs : EventArgs
+    public class RtpSequenceSortingEventArgs : EventArgs
     {
-        public SequenceSortingEventArgs( IReadOnlyCollection<RtpPacket> packets ) 
+        public RtpSequenceSortingEventArgs( IReadOnlyCollection<RtpPacket> packets ) 
         {
             Packets = packets ?? throw new ArgumentNullException( nameof( packets ) );
         }

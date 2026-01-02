@@ -151,7 +151,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            _frameBuilder.Write( e.Packet.Data );
+            _frameBuilder.AddPacket( e.Packet.Data );
         }
 
         private void OnFrameReceived( object sender , RtpFrameReceivedEventArgs e )
