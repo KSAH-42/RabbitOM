@@ -41,7 +41,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
-
         public void AddPacket( RtpPacket packet )
         {
             if ( packet == null )
@@ -132,6 +131,14 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
             }
 
             return true;
+        }
+
+        public void WritePacket( byte[] buffer )
+        {
+            if ( RtpPacket.TryParse( buffer , out var packet ) )
+            {
+                TryAddPacket( packet );
+            }
         }
 
         public void RemovePackets()
