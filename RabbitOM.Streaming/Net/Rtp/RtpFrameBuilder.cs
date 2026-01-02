@@ -143,7 +143,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         protected virtual void OnPacketAdded( RtpPacketAddedEventArgs e )
         {
-            PacketAdded?.Invoke( this , e );
+            PacketAdded?.TryInvoke( this , e );
         }
 
         protected virtual void OnPacketAdding( RtpPacketAddingEventArgs e )
