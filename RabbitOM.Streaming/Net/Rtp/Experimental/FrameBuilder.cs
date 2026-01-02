@@ -32,6 +32,15 @@ namespace RabbitOM.Streaming.Net.Rtp.Experimental
 
 
 
+        ~FrameBuilder()
+        {
+            Dispose( false );
+        }
+
+
+
+
+
         public IReadOnlyCollection<RtpPacket> Packets { get => _aggregator.Packets; }
 
         public int MaximumOfPackets { get; } = DefaultMaximumOfPackets;
