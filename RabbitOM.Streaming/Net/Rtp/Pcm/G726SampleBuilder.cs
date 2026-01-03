@@ -4,14 +4,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 {
     public class G726SampleBuilder : RtpSampleBuilder
     {
-        public G726SampleBuilder()
-        {
-        }
+        public G726SampleBuilder() { }
 
-        public G726SampleBuilder( G726BitRate bitrate )
-        {
-            BitRate = bitrate;
-        }
+        public G726SampleBuilder( G726BitRate bitrate ) => BitRate = bitrate;
 
         public G726BitRate BitRate { get; } = G726BitRate.Format_16000;
 

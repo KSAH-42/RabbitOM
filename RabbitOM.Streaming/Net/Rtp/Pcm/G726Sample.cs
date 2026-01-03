@@ -22,16 +22,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 
         public static G726Sample NewSample( byte[] data , G726BitRate bitrate )
         {
-            if ( data == null )
-            {
-                throw new ArgumentNullException( nameof( data ) );
-            }
-
-            if ( data.Length == 0 )
-            {
-                throw new ArgumentException( nameof( data ) );
-            }
-
             switch ( bitrate )
             {
                 case G726BitRate.Format_16000: return new G726Sample( data , bitrate , 2 );
