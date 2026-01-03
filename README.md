@@ -9,13 +9,13 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 # Main features
 
 * No external dependencies
-* Support RTP - RFC 7798 - H265 / HEVC
-* Support RTP - RFC 6184 - H264
-* Support RTP - RFC 2435 - MJPEG
-* Support RTP - G711 µ-Law
-* Support RTP - G711 A-Law
-* Support RTP - L16
-* Support RTP - L8
+* Support video format RTP - RFC 7798 - H265 / HEVC
+* Support video format RTP - RFC 6184 - H264
+* Support video format RTP - RFC 2435 - MJPEG
+* Support audio format RTP - G711 µ-Law
+* Support audio format RTP - G711 A-Law
+* Support audio format RTP - L16
+* Support audio format RTP - L8
 * Support RTP packet reordering
 * Support Unicast TCP (interleaved mode) transport
 * Support Unicast UDP transport 
