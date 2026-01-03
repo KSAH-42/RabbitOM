@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
+        private readonly RtpPacketAggregator _aggregator = new DefaultPacketAggregator();
         
        
 

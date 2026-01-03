@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public sealed class DefaultRtpPacketAggregator : RtpPacketAggregator
+    public sealed class DefaultPacketAggregator : RtpPacketAggregator
     {
         private readonly Queue<RtpPacket> _packets = new Queue<RtpPacket>();
 
