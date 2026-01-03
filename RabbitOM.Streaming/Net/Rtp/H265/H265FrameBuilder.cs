@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             base.Dispose( disposing );
         }
 
-        protected override void OnCleared( RtpClearedEventArgs e )
+        protected override void OnCleared( EventArgs e )
         {
             _frameFactory.Clear();
 
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _frameFactory.TryCreateFrame( e.Packets , out var frame ) )
             {
-                OnBuild( new RtpFrameBuildedEventArgs( frame ) );
+                OnBuild( new RtpBuildFrameEventArgs( frame ) );
             }
         }
     }

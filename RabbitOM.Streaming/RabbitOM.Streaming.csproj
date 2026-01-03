@@ -55,8 +55,7 @@
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
     <Compile Include="Net\Rtcp\RtcpPacketType.cs" />
     <Compile Include="Net\Rtcp\RtcpPacket.cs" />
-    <Compile Include="Net\Rtp\Constants.cs" />
-    <Compile Include="Net\Rtp\MediaBuilder.cs" />
+    <Compile Include="Net\Rtp\RtpConstants.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriter.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriterSettings.cs" />
@@ -89,14 +88,13 @@
     <Compile Include="Net\Rtp\Pcm\G711ALawSampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G726Sample.cs" />
     <Compile Include="Net\Rtp\RtpBuildEventArgs.cs" />
-    <Compile Include="Net\Rtp\RtpSampleBuildedEventArgs.cs" />
+    <Compile Include="Net\Rtp\RtpBuildSampleEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpSample.cs" />
     <Compile Include="Net\Rtp\RtpSampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpFrameBuilder.cs" />
     <Compile Include="Net\Rtp\RtpPacketAggregator.cs" />
     <Compile Include="Net\Rtp\IMediaBuilder.cs" />
-    <Compile Include="Net\Rtp\RtpClearedEventArgs.cs" />
-    <Compile Include="Net\Rtp\RtpFrameBuildedEventArgs.cs" />
+    <Compile Include="Net\Rtp\RtpBuildFrameEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpSequenceCompletedEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpSequenceSortingEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAddedEventArgs.cs" />

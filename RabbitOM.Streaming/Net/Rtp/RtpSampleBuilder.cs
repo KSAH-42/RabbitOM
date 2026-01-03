@@ -5,9 +5,27 @@ using System;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpSampleBuilder : MediaBuilder
+    public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
     {
-        private int _maximumOfPacketsSize = Constants.DefaultMaximumOfPacketsSize;
+        public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
+
+        public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
+
+        public event EventHandler<RtpBuildEventArgs> Builded;
+
+        public event EventHandler Cleared;
+
+
+
+        private int _maximumOfPacketsSize = RtpConstants.DefaultMaximumOfPacketsSize;
+
+
+
+
+        ~RtpSampleBuilder()
+        {
+            Dispose( false );
+        }
 
 
 
@@ -25,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
         }
 
-        public override void AddPacket( byte[] buffer )
+        public void AddPacket( byte[] buffer )
         {
             if ( RtpPacket.TryParse( buffer , out var packet ) )
             {
@@ -33,7 +51,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
         }
 
-        public override void AddPacket( RtpPacket packet )
+        public void AddPacket( RtpPacket packet )
         {
             if ( packet == null || ! packet.TryValidate() )
             {
@@ -63,14 +81,29 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            OnBuild( new RtpSampleBuildedEventArgs( sample ) );
+            OnBuild( new RtpBuildSampleEventArgs( sample ) );
         }
 
-        public override void Clear()
+        public void Clear()
         {
-            OnCleared( new RtpClearedEventArgs() );
+            OnCleared( EventArgs.Empty );
         }
-        
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                Clear();
+            }
+        }
+
+
 
 
 
@@ -79,6 +112,32 @@ namespace RabbitOM.Streaming.Net.Rtp
         protected virtual RtpSample CreateSample( RtpPacket packet )
         {
             return new RtpSample( packet.Payload.ToArray() );
+        }
+
+
+
+
+
+
+
+        protected virtual void OnPacketAdding( RtpPacketAddingEventArgs e )
+        {
+            PacketAdding?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnPacketAdded( RtpPacketAddedEventArgs e )
+        {
+            PacketAdded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnBuild( RtpBuildEventArgs e )
+        {
+            Builded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnCleared( EventArgs e )
+        {
+            Cleared?.TryInvoke( this , e );
         }
     }
 }

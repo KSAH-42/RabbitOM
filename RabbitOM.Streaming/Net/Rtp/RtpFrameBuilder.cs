@@ -6,21 +6,34 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : RtpMediaBuilder
+    public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
     {
+        public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
+
+        public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
+
+        public event EventHandler<RtpBuildEventArgs> Builded;
+
+        public event EventHandler Cleared;
+
         public event EventHandler<RtpSequenceCompletedEventArgs> SequenceCompleted;
 
         public event EventHandler<RtpSequenceSortingEventArgs> SequenceSorting;
 
+
+        ~RtpFrameBuilder()
+        {
+            Dispose( false );
+        }
 
 
 
 
         private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
         
-        private int _maximumOfPackets = Constants.DefaultMaximumOfPackets;
+        private int _maximumOfPackets = RtpConstants.DefaultMaximumOfPackets;
 
-        private int _maximumOfPacketsSize = Constants.DefaultMaximumOfPacketsSize;
+        private int _maximumOfPacketsSize = RtpConstants.DefaultMaximumOfPacketsSize;
 
 
 
@@ -54,7 +67,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
         }
 
-        public override void AddPacket( byte[] buffer )
+        public void AddPacket( byte[] buffer )
         {
             if ( RtpPacket.TryParse( buffer , out var packet ) )
             {
@@ -62,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
         }
 
-        public override void AddPacket( RtpPacket packet )
+        public void AddPacket( RtpPacket packet )
         {
             if ( packet == null || ! packet.TryValidate() )
             {
@@ -104,11 +117,25 @@ namespace RabbitOM.Streaming.Net.Rtp
             _aggregator.RemovePackets();
         }
 
-        public override void Clear()
+        public void Clear()
         {
             _aggregator.Clear();
 
-            OnCleared( new RtpClearedEventArgs() );
+            OnCleared( EventArgs.Empty );
+        }
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                Clear();
+            }
         }
         
 
@@ -118,7 +145,25 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
+        protected virtual void OnPacketAdding( RtpPacketAddingEventArgs e )
+        {
+            PacketAdding?.TryInvoke( this , e );
+        }
 
+        protected virtual void OnPacketAdded( RtpPacketAddedEventArgs e )
+        {
+            PacketAdded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnBuild( RtpBuildEventArgs e )
+        {
+            Builded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnCleared( EventArgs e )
+        {
+            Cleared?.TryInvoke( this , e );
+        }
 
         protected virtual void OnSequenceSorting( RtpSequenceSortingEventArgs e )
         {

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public static class Constants
+    public static class RtpConstants
     {
         public const int DefaultMTU = 1500;
 

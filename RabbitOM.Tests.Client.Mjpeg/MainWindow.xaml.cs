@@ -66,7 +66,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
             _client.Disconnected -= OnDisconnected;
             _client.PacketReceived -= OnPacketReceived;
             _client.Dispose();
-
+            
             _frameBuilder.Builded -= OnBuild;
             _frameBuilder.Dispose();
 
@@ -158,11 +158,11 @@ namespace RabbitOM.Tests.Client.Mjpeg
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                OnRenderFrame( sender , e as RtpFrameBuildedEventArgs);
+                OnRenderFrame( sender , e as RtpBuildFrameEventArgs);
             } ));
         }
         
-        private void OnRenderFrame( object sender , RtpFrameBuildedEventArgs e )
+        private void OnRenderFrame( object sender , RtpBuildFrameEventArgs e )
         {
             _renderer.Frame = e.Frame.Data;
 
