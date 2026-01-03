@@ -158,13 +158,13 @@ namespace RabbitOM.Tests.Client.Mjpeg
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                OnRenderFrame( sender , e as RtpBuildFrameEventArgs);
+                OnRenderFrame( sender , e );
             } ));
         }
         
-        private void OnRenderFrame( object sender , RtpBuildFrameEventArgs e )
+        private void OnRenderFrame( object sender , RtpBuildEventArgs e )
         {
-            _renderer.Frame = e.Frame.Data;
+            _renderer.Frame = e.MediaContent.Buffer;
 
             if ( _renderer.CanRender() )
             {

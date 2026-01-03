@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <summary>
     /// Represent the a jpeg frame
     /// </summary>
-    public sealed class JpegFrame : RtpFrame
+    public sealed class JpegFrame : MediaContent
     {
         /// <summary>
         /// Initialize a new instance of the jpeg frame

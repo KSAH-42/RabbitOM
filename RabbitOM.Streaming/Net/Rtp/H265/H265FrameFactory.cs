@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="packets">the aggregated packets collection</param>
         /// <param name="result">the output frame</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
+        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H265Frame result )
         {
             result = null;
 

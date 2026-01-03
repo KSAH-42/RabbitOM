@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <param name="packets">the packets</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out RtpFrame result )
+        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H264Frame result )
         {
             result = null;
 

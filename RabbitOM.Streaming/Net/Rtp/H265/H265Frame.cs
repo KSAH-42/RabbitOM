@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent a H265 frame
     /// </summary>
-    public sealed class H265Frame : RtpFrame
+    public sealed class H265Frame : MediaContent
     {
         /// <summary>
         /// Initialize an new instance of a H265 frame

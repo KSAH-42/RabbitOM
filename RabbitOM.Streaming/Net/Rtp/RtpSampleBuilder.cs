@@ -74,14 +74,14 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
-            var sample = CreateSample( packet );
+            var mediaSample = CreateMediaSample( packet );
 
-            if ( sample == null || sample.Data == null || sample.Data.Length == 0 )
+            if ( mediaSample == null || mediaSample.Buffer == null || mediaSample.Buffer.Length == 0 )
             {
                 return;
             }
 
-            OnBuild( new RtpBuildSampleEventArgs( sample ) );
+            OnBuild( new RtpBuildEventArgs( mediaSample ) );
         }
 
         public void Clear()
@@ -109,9 +109,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        protected virtual RtpSample CreateSample( RtpPacket packet )
+        protected virtual MediaContent CreateMediaSample( RtpPacket packet )
         {
-            return new RtpSample( packet.Payload.ToArray() );
+            return new MediaContent( packet.Payload.ToArray() );
         }
 
 

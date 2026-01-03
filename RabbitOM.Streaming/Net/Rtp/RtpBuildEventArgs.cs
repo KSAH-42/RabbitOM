@@ -2,8 +2,15 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpBuildEventArgs : EventArgs
+    public class RtpBuildEventArgs : EventArgs
     {
+        public RtpBuildEventArgs( MediaContent content )
+        {
+            MediaContent = content ?? throw new ArgumentNullException( nameof( content ) );
+        }
+
         public DateTime TimeStamp { get; } = DateTime.Now;
+
+        public MediaContent MediaContent { get; }
     }
 }
