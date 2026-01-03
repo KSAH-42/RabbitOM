@@ -6,21 +6,11 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
+    public abstract class RtpFrameBuilder : RtpMediaBuilder
     {
-        public event EventHandler<RtpFilteringPacketEventArgs> FilteringPacket;
-
-        public event EventHandler<RtpPacketReceivedEventArgs> PacketReceived;
-
         public event EventHandler<RtpSequenceCompletedEventArgs> SequenceCompleted;
 
         public event EventHandler<RtpSequenceSortingEventArgs> SequenceSorting;
-
-        public event EventHandler<RtpFrameReceivedEventArgs> FrameReceived;
-
-        public event EventHandler<RtpClearedEventArgs> Cleared;
-
-
 
 
 
@@ -31,18 +21,6 @@ namespace RabbitOM.Streaming.Net.Rtp
         private int _maximumOfPackets = Constants.DefaultMaximumOfPackets;
 
         private int _maximumOfPacketsSize = Constants.DefaultMaximumOfPacketsSize;
-
-
-
-
-
-
-
-        ~RtpFrameBuilder()
-        {
-            Dispose( false );
-        }
-        
 
 
 
@@ -76,7 +54,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
         }
 
-        public void AddPacket( byte[] buffer )
+        public override void AddPacket( byte[] buffer )
         {
             if ( RtpPacket.TryParse( buffer , out var packet ) )
             {
@@ -84,7 +62,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
         }
 
-        public void AddPacket( RtpPacket packet )
+        public override void AddPacket( RtpPacket packet )
         {
             if ( packet == null || ! packet.TryValidate() )
             {
@@ -96,18 +74,18 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            var filteringPacket = new RtpFilteringPacketEventArgs(packet );
+            var addingPacket = new RtpPacketAddingEventArgs(packet );
 
-            OnFilteringPacket( filteringPacket );
+            OnPacketAdding( addingPacket );
 
-            if ( ! filteringPacket.CanContinue )
+            if ( ! addingPacket.CanContinue )
             {
                 return;
             }
 
             _aggregator.AddPacket( packet );
 
-            OnPacketReceived( new RtpPacketReceivedEventArgs( packet ) );
+            OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
             if ( ! _aggregator.HasCompleteSequence )
             {
@@ -126,25 +104,11 @@ namespace RabbitOM.Streaming.Net.Rtp
             _aggregator.RemovePackets();
         }
 
-        public void Clear()
+        public override void Clear()
         {
             _aggregator.Clear();
 
             OnCleared( new RtpClearedEventArgs() );
-        }
-
-        public void Dispose()
-        {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                Clear();
-            }
         }
         
 
@@ -156,34 +120,14 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        protected virtual void OnFilteringPacket( RtpFilteringPacketEventArgs e )
-        {
-            FilteringPacket?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnPacketReceived( RtpPacketReceivedEventArgs e )
-        {
-            PacketReceived?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
-        {
-            SequenceCompleted?.TryInvoke( this , e );
-        }
-
         protected virtual void OnSequenceSorting( RtpSequenceSortingEventArgs e )
         {
             SequenceSorting?.TryInvoke( this , e );
         }
 
-        protected virtual void OnFrameReceived( RtpFrameReceivedEventArgs e )
+        protected virtual void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
         {
-            FrameReceived?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnCleared( RtpClearedEventArgs e )
-        {
-            Cleared?.TryInvoke( this , e );
+            SequenceCompleted?.TryInvoke( this , e );
         }
     }
 }

@@ -23,11 +23,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
             base.OnCleared( e );
         }
 
-        protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
+        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
             e.CanContinue = e.Packet.Type == RtpPacketType.JPEG;
 
-            base.OnFilteringPacket( e );
+            base.OnPacketAdding( e );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 
             if ( _factory.TryCreateFrame( e.Packets , out var frame ) )
             {
-                OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+                OnBuild( new RtpFrameBuildedEventArgs( frame ) );
             }
         }
     }

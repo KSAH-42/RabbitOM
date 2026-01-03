@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             base.OnCleared( e );
         }
 
-        protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
+        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
             e.CanContinue = e.Packet.Type == RtpPacketType.MPEG4
                          || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                          || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_D
                          ;
             
-            base.OnFilteringPacket( e );
+            base.OnPacketAdding( e );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _frameFactory.TryCreateFrame( e.Packets , out var frame ) )
             {
-                OnFrameReceived( new RtpFrameReceivedEventArgs( frame ) );
+                OnBuild( new RtpFrameBuildedEventArgs( frame ) );
             }
         }
     }

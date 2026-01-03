@@ -14,11 +14,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
         protected override RtpSample CreateSample( RtpPacket packet ) 
             => G726Sample.NewSample( packet.Payload.ToArray() , BitRate );
 
-        protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
+        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
             e.CanContinue = e.Packet.Type == RtpPacketType.G726;
 
-            base.OnFilteringPacket( e );
+            base.OnPacketAdding( e );
         }
     }
 }

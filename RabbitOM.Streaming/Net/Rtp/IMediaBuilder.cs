@@ -4,9 +4,11 @@ namespace RabbitOM.Streaming.Net.Rtp
 {
     public interface IMediaBuilder
     {
-        event EventHandler<RtpFilteringPacketEventArgs> FilteringPacket;
+        event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
-        event EventHandler<RtpPacketReceivedEventArgs> PacketReceived;
+        event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
+
+        event EventHandler<RtpBuildEventArgs> Builded;
 
         event EventHandler<RtpClearedEventArgs> Cleared;
 

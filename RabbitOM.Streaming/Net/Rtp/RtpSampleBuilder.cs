@@ -5,37 +5,9 @@ using System;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
+    public abstract class RtpSampleBuilder : MediaBuilder
     {
-        public event EventHandler<RtpFilteringPacketEventArgs> FilteringPacket;
-
-        public event EventHandler<RtpPacketReceivedEventArgs> PacketReceived;
-
-        public event EventHandler<RtpSampleReceivedEventArgs> SampleReceived;
-
-        public event EventHandler<RtpClearedEventArgs> Cleared;
-
-
-
-
-
-
-
         private int _maximumOfPacketsSize = Constants.DefaultMaximumOfPacketsSize;
-
-
-
-
-
-
-
-        ~RtpSampleBuilder()
-        {
-            Dispose( false );
-        }
-        
-
-
 
 
 
@@ -48,15 +20,12 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-
-
-
         public void Configure( int maximumOfPacketsSize )
         {
             _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
         }
 
-        public void AddPacket( byte[] buffer )
+        public override void AddPacket( byte[] buffer )
         {
             if ( RtpPacket.TryParse( buffer , out var packet ) )
             {
@@ -64,7 +33,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
         }
 
-        public void AddPacket( RtpPacket packet )
+        public override void AddPacket( RtpPacket packet )
         {
             if ( packet == null || ! packet.TryValidate() )
             {
@@ -76,16 +45,16 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            var addingPacket = new RtpFilteringPacketEventArgs( packet );
+            var addingPacket = new RtpPacketAddingEventArgs( packet );
 
-            OnFilteringPacket( addingPacket );
+            OnPacketAdding( addingPacket );
 
             if ( ! addingPacket.CanContinue )
             {
                 return;
             }
 
-            OnPacketReceived( new RtpPacketReceivedEventArgs( packet ) );
+            OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
             var sample = CreateSample( packet );
 
@@ -94,26 +63,12 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            OnSampleReceived( new RtpSampleReceivedEventArgs( sample ) );
+            OnBuild( new RtpSampleBuildedEventArgs( sample ) );
         }
 
-        public void Clear()
+        public override void Clear()
         {
             OnCleared( new RtpClearedEventArgs() );
-        }
-
-        public void Dispose()
-        {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                Clear();
-            }
         }
         
 
@@ -124,32 +79,6 @@ namespace RabbitOM.Streaming.Net.Rtp
         protected virtual RtpSample CreateSample( RtpPacket packet )
         {
             return new RtpSample( packet.Payload.ToArray() );
-        }
-
-
-
-
-
-
-
-        protected virtual void OnFilteringPacket( RtpFilteringPacketEventArgs e )
-        {
-            FilteringPacket?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnPacketReceived( RtpPacketReceivedEventArgs e )
-        {
-            PacketReceived?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnSampleReceived( RtpSampleReceivedEventArgs e )
-        {
-            SampleReceived?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnCleared( RtpClearedEventArgs e )
-        {
-            Cleared?.TryInvoke( this , e );
         }
     }
 }
