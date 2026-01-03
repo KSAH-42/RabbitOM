@@ -69,22 +69,22 @@
                             builder.CreateMediaDescription(reader.CurrentHeaderValue);
                         }
 
-                        if (reader.IsConnectionHeader)
+                        else if (reader.IsConnectionHeader)
                         {
                             builder.SetMediaConnection(reader.CurrentHeaderValue);
                         }
 
-                        if (reader.IsEncryptionHeader)
+                        else if (reader.IsEncryptionHeader)
                         {
                             builder.SetMediaEncryption(reader.CurrentHeaderValue);
                         }
 
-                        if (reader.IsBandwithHeader)
+                        else if (reader.IsBandwithHeader)
                         {
                             builder.AddMediaBandwith(reader.CurrentHeaderValue);
                         }
 
-                        if (reader.IsAttributeHeader)
+                        else if (reader.IsAttributeHeader)
                         {
                             builder.AddMediaAttribute(reader.CurrentHeaderValue);
                         }
