@@ -79,6 +79,10 @@
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriter.Constants.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\DefaultRtpPacketAggregator.cs" />
+    <Compile Include="Net\Rtp\Pcm\L8SampleBuilder.cs" />
+    <Compile Include="Net\Rtp\Pcm\L16SampleBuilder.cs" />
+    <Compile Include="Net\Rtp\Pcm\G711ULawSampleBuilder.cs" />
+    <Compile Include="Net\Rtp\Pcm\G711ALawSampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpSampleReceivedEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpSample.cs" />
     <Compile Include="Net\Rtp\RtpSampleBuilder.cs" />

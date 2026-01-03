@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// <summary>
         /// CN
         /// </summary>
-        CN = 13,
+        R8 = 13,
 
         /// <summary>
         /// MPA

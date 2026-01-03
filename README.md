@@ -12,6 +12,10 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support RTP - RFC 7798 - H265 / HEVC
 * Support RTP - RFC 6184 - H264
 * Support RTP - RFC 2435 - MJPEG
+* Support RTP - G711 µ-Law
+* Support RTP - G711 A-Law
+* Support RTP - L16
+* Support RTP - L8
 * Support RTP packet reordering
 * Support Unicast TCP (interleaved mode) transport
 * Support Unicast UDP transport 
@@ -30,7 +34,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 ➡️ Breaking changes since the version 2.0.0.0:
 
 * Namespace reorganization
-* Rtp layer refactorization and adding support of H264 and H265
+* Rtp layer refactorization and adding support of H264, H265, G711, etc...
 * Moving and renaming classes to different namespace
 * Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
