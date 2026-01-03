@@ -35,11 +35,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
         {
             e.CanContinue = e.Packet.Type == RtpPacketType.MPEG4
-                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
-                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_B
-                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_C
-                      || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_D
-                      ;
+                         || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A
+                         || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_B
+                         || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_C
+                         || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_D
+                         ;
             
             base.OnFilteringPacket( e );
         }
