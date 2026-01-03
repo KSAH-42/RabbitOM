@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 
         protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
         {
-            e.CanContinue = e.Packet.Type == RtpPacketType.G721_726;
+            e.CanContinue = e.Packet.Type == RtpPacketType.G726;
 
             base.OnFilteringPacket( e );
         }

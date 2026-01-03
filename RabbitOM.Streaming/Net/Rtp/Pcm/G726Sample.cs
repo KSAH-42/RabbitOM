@@ -19,7 +19,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 
 
 
-
         public static G726Sample NewSample( byte[] data , G726BitRate bitrate )
         {
             switch ( bitrate )

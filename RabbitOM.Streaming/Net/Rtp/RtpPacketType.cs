@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// <summary>
         /// PCMU
         /// </summary>
-		PCMU = 0,
+		PCM_U = 0,
 
         /// <summary>
         /// FS_1016
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// <summary>
         /// G721_726
         /// </summary>
-        G721_726 = 2,
+        G726 = 2,
 
         /// <summary>
         /// GSM
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// <summary>
         /// PCMA
         /// </summary>
-        PCMA = 8,
+        PCM_A = 8,
 
         /// <summary>
         /// G722
