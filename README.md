@@ -14,6 +14,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support video format RTP - RFC 2435 - MJPEG
 * Support audio format RTP - G711 µ-Law
 * Support audio format RTP - G711 A-Law
+* Support audio format RTP - G726
 * Support audio format RTP - L16
 * Support audio format RTP - L8
 * Support RTP packet reordering
