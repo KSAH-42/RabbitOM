@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             if ( ! packet.TryValidate() )
             {
-                throw new ArgumentException( nameof( packet ) , "the packet seems incorrect" );
+                throw new ArgumentException( nameof( packet ) , "the packet seems to be incorrect" );
             }
 
             if ( DetectLargePayload && packet.Payload.Count > MaximumPayloadSize )
