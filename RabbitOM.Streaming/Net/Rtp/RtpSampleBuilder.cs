@@ -7,16 +7,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 {
     public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
     {
-        public const int DefaultMTU = 1500;
-
-        public const int DefaultMaximumOfPacketsSize = DefaultMTU * 4;
-
-
-
-
-
-
-
         public event EventHandler<RtpFilteringPacketEventArgs> FilteringPacket;
 
         public event EventHandler<RtpPacketReceivedEventArgs> PacketReceived;
@@ -31,7 +21,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private int _maximumOfPacketsSize = DefaultMaximumOfPacketsSize;
+        private int _maximumOfPacketsSize = Constants.DefaultMaximumOfPacketsSize;
 
 
 
