@@ -17,11 +17,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private int _maximumOfPacketsSize = RtpConstants.DefaultMaximumOfPacketsSize;
-
-
-
-
         ~RtpSampleBuilder()
         {
             Dispose( false );
@@ -30,35 +25,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public int MaximumOfPacketsSize
-        {
-            get => _maximumOfPacketsSize;
-        }
-        
-
-
-
-        public void Configure( int maximumOfPacketsSize )
-        {
-            _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
-        }
-
-        public void AddPacket( byte[] buffer )
-        {
-            if ( RtpPacket.TryParse( buffer , out var packet ) )
-            {
-                AddPacket( packet );
-            }
-        }
-
         public void AddPacket( RtpPacket packet )
         {
-            if ( packet == null || ! packet.TryValidate() )
-            {
-                return;
-            }
-
-            if ( packet.Payload.Count >= MaximumOfPacketsSize )
+            if ( packet == null )
             {
                 return;
             }

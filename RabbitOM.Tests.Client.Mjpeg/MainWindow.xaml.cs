@@ -43,6 +43,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
+        private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly RtpRender _renderer = new RtpJpegRender();
         
@@ -151,7 +152,12 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            _frameBuilder.AddPacket( e.Packet.Data );
+            if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) )
+            {
+                _inspector.Inspect( packet );
+
+                _frameBuilder.AddPacket( packet );
+            }
         }
 
         private void OnBuild( object sender , RtpBuildEventArgs e )

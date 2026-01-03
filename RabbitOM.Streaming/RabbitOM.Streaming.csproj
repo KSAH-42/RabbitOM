@@ -56,7 +56,6 @@
     <Compile Include="Net\Rtcp\RtcpPacketType.cs" />
     <Compile Include="Net\Rtcp\RtcpPacket.cs" />
     <Compile Include="Net\Rtp\RtpMediaContent.cs" />
-    <Compile Include="Net\Rtp\RtpConstants.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriter.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriterSettings.cs" />
@@ -89,6 +88,8 @@
     <Compile Include="Net\Rtp\Pcm\G711ALawSampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G726Sample.cs" />
     <Compile Include="Net\Rtp\RtpBuildEventArgs.cs" />
+    <Compile Include="Net\Rtp\DefaultRtpPacketInspector.cs" />
+    <Compile Include="Net\Rtp\RtpPacketInspector.cs" />
     <Compile Include="Net\Rtp\RtpSampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpFrameBuilder.cs" />
     <Compile Include="Net\Rtp\RtpPacketAggregator.cs" />

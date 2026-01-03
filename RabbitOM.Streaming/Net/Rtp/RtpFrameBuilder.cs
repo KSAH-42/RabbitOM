@@ -31,11 +31,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
         
-        private int _maximumOfPackets = RtpConstants.DefaultMaximumOfPackets;
-
-        private int _maximumOfPacketsSize = RtpConstants.DefaultMaximumOfPacketsSize;
-
-
+       
 
 
 
@@ -44,16 +40,6 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             get => _aggregator.Packets;
         }
-
-        public int MaximumOfPackets
-        {
-            get => _maximumOfPackets;
-        }
-
-        public int MaximumOfPacketsSize
-        {
-            get => _maximumOfPacketsSize;
-        }
         
 
 
@@ -61,28 +47,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public void Configure( int maximumOfPackets , int maximumOfPacketsSize )
-        {
-            _maximumOfPackets = maximumOfPackets > 0 ? maximumOfPackets : throw new ArgumentOutOfRangeException( nameof( maximumOfPackets ) );
-            _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
-        }
-
-        public void AddPacket( byte[] buffer )
-        {
-            if ( RtpPacket.TryParse( buffer , out var packet ) )
-            {
-                AddPacket( packet );
-            }
-        }
-
         public void AddPacket( RtpPacket packet )
         {
-            if ( packet == null || ! packet.TryValidate() )
-            {
-                return;
-            }
-
-            if ( packet.Payload.Count >= MaximumOfPacketsSize || _aggregator.Packets.Count >= MaximumOfPackets )
+            if ( packet == null )
             {
                 return;
             }
