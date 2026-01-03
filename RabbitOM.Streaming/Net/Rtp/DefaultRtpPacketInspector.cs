@@ -14,25 +14,20 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         public override void Inspect( RtpPacket packet )
         {
-            if ( ! TryInspect( packet ) )
+            if ( packet == null )
             {
-                throw new InvalidOperationException();
+                throw new ArgumentNullException( nameof( packet ) );
             }
-        }
 
-        public override bool TryInspect( RtpPacket packet )
-        {
-            if ( packet == null || ! packet.TryValidate() )
+            if ( ! packet.TryValidate() )
             {
-                return false;
+                throw new ArgumentException( nameof( packet ) , "the packet seems incorrect" );
             }
 
             if ( DetectLargePayload && packet.Payload.Count > MaximumPayloadSize )
             {
-                return false;
+                throw new InvalidOperationException( "UnAuthorize payload size" );
             }
-
-            return true;
         }
     }
 }
