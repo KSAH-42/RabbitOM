@@ -27,8 +27,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         void AddPacket( RtpPacket packet );
 
-        void RemovePackets();
-
         void Clear();
     }
 }

@@ -138,11 +138,6 @@ namespace RabbitOM.Streaming.Net.Rtp
             _aggregator.RemovePackets();
         }
 
-        public void RemovePackets()
-        {
-            _aggregator.RemovePackets();
-        }
-
         public void Clear()
         {
             _aggregator.Clear();
