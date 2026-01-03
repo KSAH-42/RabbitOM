@@ -97,14 +97,14 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             OnPacketReceived( new RtpPacketReceivedEventArgs( packet ) );
 
-            var buffer = packet.Payload.ToArray();
+            var sample = CreateSample( packet );
 
-            if ( buffer == null || buffer.Length == 0 )
+            if ( sample == null || sample.Data == null || sample.Data.Length == 0 )
             {
                 return;
             }
 
-            OnSampleReceived( new RtpSampleReceivedEventArgs( new RtpSample( buffer ) ) );
+            OnSampleReceived( new RtpSampleReceivedEventArgs( sample ) );
         }
 
         public void Clear()
@@ -128,6 +128,13 @@ namespace RabbitOM.Streaming.Net.Rtp
         
 
 
+
+
+
+        protected virtual RtpSample CreateSample( RtpPacket packet )
+        {
+            return new RtpSample( packet.Payload.ToArray() );
+        }
 
 
 
