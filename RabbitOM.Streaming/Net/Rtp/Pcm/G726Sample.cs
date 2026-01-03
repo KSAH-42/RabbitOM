@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.Pcm
 {
-    public class G726Sample : MediaContent
+    public class G726Sample : RtpMediaContent
     {
         private G726Sample( byte[] data , G726BitRate bitrate , int numberOfBits ) 
             : base( data )

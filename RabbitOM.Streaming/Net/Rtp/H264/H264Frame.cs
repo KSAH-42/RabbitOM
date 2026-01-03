@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     /// <summary>
     /// Represent a H264 frame
     /// </summary>
-    public sealed class H264Frame : MediaContent
+    public sealed class H264Frame : RtpMediaContent
     {
         /// <summary>
         /// Initialize a new instance of a H264 frame

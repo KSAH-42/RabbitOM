@@ -5,7 +5,7 @@ using System;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
+    public abstract class RtpSampleBuilder : IRtpMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
@@ -109,9 +109,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        protected virtual MediaContent CreateMediaSample( RtpPacket packet )
+        protected virtual RtpMediaContent CreateMediaSample( RtpPacket packet )
         {
-            return new MediaContent( packet.Payload.ToArray() );
+            return new RtpMediaContent( packet.Payload.ToArray() );
         }
 
 

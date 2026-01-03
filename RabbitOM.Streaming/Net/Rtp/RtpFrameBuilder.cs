@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
+    public abstract class RtpFrameBuilder : IRtpMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 

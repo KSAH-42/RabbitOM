@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public interface IMediaBuilder
+    public interface IRtpMediaBuilder
     {
         event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
