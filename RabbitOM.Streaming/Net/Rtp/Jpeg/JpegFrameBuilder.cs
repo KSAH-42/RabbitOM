@@ -23,11 +23,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
             base.OnCleared( e );
         }
 
-        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
+        protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
         {
-            e.Continue = e.Packet.Type == RtpPacketType.JPEG;
+            e.CanContinue = e.Packet.Type == RtpPacketType.JPEG;
 
-            base.OnPacketAdding( e );
+            base.OnFilteringPacket( e );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )

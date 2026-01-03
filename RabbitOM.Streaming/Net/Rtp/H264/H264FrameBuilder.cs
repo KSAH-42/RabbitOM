@@ -32,11 +32,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             base.OnCleared( e );
         }
 
-        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
+        protected override void OnFilteringPacket( RtpFilteringPacketEventArgs e )
         {
-            e.Continue = e.Packet.Type == RtpPacketType.MPEG4 || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A;
+            e.CanContinue = e.Packet.Type == RtpPacketType.MPEG4 || e.Packet.Type == RtpPacketType.MPEG4_DYNAMIC_A;
 
-            base.OnPacketAdding( e );
+            base.OnFilteringPacket( e );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )

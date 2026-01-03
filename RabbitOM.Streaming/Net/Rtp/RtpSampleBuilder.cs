@@ -2,15 +2,12 @@
 // TODO: on the add method, need to discard the actual sequence, in case of receiving one invalid or missing packet ?
 
 using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
+    public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
     {
         public const int DefaultMTU = 1500;
-
-        public const int DefaultMaximumOfPackets = 5000;
 
         public const int DefaultMaximumOfPacketsSize = DefaultMTU * 4;
 
@@ -24,11 +21,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         public event EventHandler<RtpPacketReceivedEventArgs> PacketReceived;
 
-        public event EventHandler<RtpSequenceCompletedEventArgs> SequenceCompleted;
-
-        public event EventHandler<RtpSequenceSortingEventArgs> SequenceSorting;
-
-        public event EventHandler<RtpFrameReceivedEventArgs> FrameReceived;
+        public event EventHandler<RtpSampleReceivedEventArgs> SampleReceived;
 
         public event EventHandler<RtpClearedEventArgs> Cleared;
 
@@ -38,10 +31,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
-        
-        private int _maximumOfPackets = DefaultMaximumOfPackets;
-
         private int _maximumOfPacketsSize = DefaultMaximumOfPacketsSize;
 
 
@@ -50,7 +39,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        ~RtpFrameBuilder()
+        ~RtpSampleBuilder()
         {
             Dispose( false );
         }
@@ -60,16 +49,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-
-        public IReadOnlyCollection<RtpPacket> Packets
-        {
-            get => _aggregator.Packets;
-        }
-
-        public int MaximumOfPackets
-        {
-            get => _maximumOfPackets;
-        }
 
         public int MaximumOfPacketsSize
         {
@@ -82,9 +61,8 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public void Configure( int maximumOfPackets , int maximumOfPacketsSize )
+        public void Configure( int maximumOfPacketsSize )
         {
-            _maximumOfPackets = maximumOfPackets > 0 ? maximumOfPackets : throw new ArgumentOutOfRangeException( nameof( maximumOfPackets ) );
             _maximumOfPacketsSize = maximumOfPacketsSize > 0 ? maximumOfPacketsSize : throw new ArgumentOutOfRangeException( nameof( maximumOfPacketsSize ) );
         }
 
@@ -103,45 +81,34 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            if ( packet.Payload.Count >= MaximumOfPacketsSize || _aggregator.Packets.Count >= MaximumOfPackets )
+            if ( packet.Payload.Count >= MaximumOfPacketsSize )
             {
                 return;
             }
 
-            var filteringPacket = new RtpFilteringPacketEventArgs(packet );
+            var addingPacket = new RtpFilteringPacketEventArgs( packet );
 
-            OnFilteringPacket( filteringPacket );
+            OnFilteringPacket( addingPacket );
 
-            if ( ! filteringPacket.CanContinue )
+            if ( ! addingPacket.CanContinue )
             {
                 return;
             }
-
-            _aggregator.AddPacket( packet );
 
             OnPacketReceived( new RtpPacketReceivedEventArgs( packet ) );
 
-            if ( ! _aggregator.HasCompleteSequence )
+            var buffer = packet.Payload.ToArray();
+
+            if ( buffer == null || buffer.Length == 0 )
             {
                 return;
             }
 
-            if ( _aggregator.HasUnOrderedSequence )
-            {
-                OnSequenceSorting( new RtpSequenceSortingEventArgs( _aggregator.GetSequence() ) );
-
-                _aggregator.SortSequence();
-            }
-                
-            OnSequenceCompleted( new RtpSequenceCompletedEventArgs( _aggregator.GetSequence() ) );
-
-            _aggregator.RemovePackets();
+            OnSampleReceived( new RtpSampleReceivedEventArgs( new RtpSample( buffer ) ) );
         }
 
         public void Clear()
         {
-            _aggregator.Clear();
-
             OnCleared( new RtpClearedEventArgs() );
         }
 
@@ -178,19 +145,9 @@ namespace RabbitOM.Streaming.Net.Rtp
             PacketReceived?.TryInvoke( this , e );
         }
 
-        protected virtual void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
+        protected virtual void OnSampleReceived( RtpSampleReceivedEventArgs e )
         {
-            SequenceCompleted?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnSequenceSorting( RtpSequenceSortingEventArgs e )
-        {
-            SequenceSorting?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnFrameReceived( RtpFrameReceivedEventArgs e )
-        {
-            FrameReceived?.TryInvoke( this , e );
+            SampleReceived?.TryInvoke( this , e );
         }
 
         protected virtual void OnCleared( RtpClearedEventArgs e )

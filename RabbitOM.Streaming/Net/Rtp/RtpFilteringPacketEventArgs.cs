@@ -2,13 +2,15 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public class RtpPacketAddedEventArgs : EventArgs
+    public class RtpFilteringPacketEventArgs : EventArgs
     {
-        public RtpPacketAddedEventArgs( RtpPacket packet  )
+        public RtpFilteringPacketEventArgs( RtpPacket packet  )
         {
             Packet = packet ?? throw new ArgumentNullException( nameof( packet ) );
         }
 
         public RtpPacket Packet { get; }
+
+        public bool CanContinue { get; set; }
     }
 }
