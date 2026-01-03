@@ -66,10 +66,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         protected virtual void Dispose( bool disposing )
         {
-            if ( disposing )
-            {
-                Clear();
-            }
         }
 
 
