@@ -218,21 +218,21 @@ namespace RabbitOM.Streaming.Net.Sdp
 
             var result = new BaseFieldCollection();
 
-            result.TryAdd( descriptor.Version );
-            result.TryAdd( descriptor.SessionName );
-            result.TryAdd( descriptor.SessionInformation );
-            result.TryAdd( descriptor.Uri );
-            result.TryAdd( descriptor.Origin );
-            result.TryAddRange( descriptor.Emails );
-            result.TryAddRange( descriptor.Phones );
-            result.TryAdd( descriptor.Connection );
-            result.TryAddRange( descriptor.Bandwiths );
-            result.TryAddRange( descriptor.Times );
-            result.TryAddRange( descriptor.Repeats );
-            result.TryAdd( descriptor.TimeZone );
-            result.TryAdd( descriptor.Encryption );
-            result.TryAddRange( descriptor.Attributes );
-            result.TryAddRange( descriptor.MediaDescriptions );
+            result.Add( descriptor.Version );
+            result.Add( descriptor.SessionName );
+            result.Add( descriptor.SessionInformation );
+            result.Add( descriptor.Uri );
+            result.Add( descriptor.Origin );
+            result.AddRange( descriptor.Emails );
+            result.AddRange( descriptor.Phones );
+            result.Add( descriptor.Connection );
+            result.AddRange( descriptor.Bandwiths );
+            result.AddRange( descriptor.Times );
+            result.AddRange( descriptor.Repeats );
+            result.Add( descriptor.TimeZone );
+            result.Add( descriptor.Encryption );
+            result.AddRange( descriptor.Attributes );
+            result.AddRange( descriptor.MediaDescriptions );
 
             return result;
         }
