@@ -89,6 +89,16 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
         /// <summary>
+        /// Check if the rtp packet is a dynamic type
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        /// <returns>returns true for a success otherwise false</returns>
+        public static bool IsDynamicType( RtpPacket packet )
+        {
+            return packet != null && RtpPacketType.DYNAMIC_1 <= packet.Type && packet.Type <= RtpPacketType.DYNAMIC_32;
+        }
+
+        /// <summary>
         /// Try to parse
         /// </summary>
         /// <param name="buffer">the input buffer</param>

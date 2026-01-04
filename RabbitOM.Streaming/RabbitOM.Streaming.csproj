@@ -55,6 +55,7 @@
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
     <Compile Include="Net\Rtcp\RtcpPacketType.cs" />
     <Compile Include="Net\Rtcp\RtcpPacket.cs" />
+    <Compile Include="Net\Rtp\Pcm\L24SampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpMediaElement.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriter.cs" />
