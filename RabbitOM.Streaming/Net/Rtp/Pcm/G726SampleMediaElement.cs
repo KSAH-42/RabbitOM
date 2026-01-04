@@ -4,19 +4,16 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 {
     public class G726SampleMediaElement : RtpMediaElement
     {
-        private G726SampleMediaElement( byte[] data , G726BitRate bitrate , int numberOfBits ) 
-            : base( data )
+        private G726SampleMediaElement( byte[] data , G726BitRate bitrate , int numberOfBits ) : base( data )
         {
             BitRate = bitrate;
             NumberOfBits = numberOfBits;
         }
 
 
-
         public G726BitRate BitRate { get; }
 
-        public int NumberOfBits { get; }        
-
+        public int NumberOfBits { get; }
 
 
         public static G726SampleMediaElement NewSample( byte[] data , G726BitRate bitrate )
