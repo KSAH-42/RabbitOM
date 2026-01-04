@@ -11,8 +11,6 @@ namespace RabbitOM.Streaming.Net.Rtp
     {
         public const int DefaultMTU = 1500;
 
-        public const int DefaultMinimumOfPacketsSize = 100;
-
         public const int DefaultMaximumOfPacketsSize = DefaultMTU * 4;
 
 
@@ -23,7 +21,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public int? MinimumPayloadSize { get; set; } = DefaultMinimumOfPacketsSize;
+        public int? MinimumPayloadSize { get; set; } 
 
         public int? MaximumPayloadSize { get; set; } = DefaultMaximumOfPacketsSize;
 

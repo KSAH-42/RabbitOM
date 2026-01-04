@@ -58,16 +58,11 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// <exception cref="NotImplementedException"/>
         public static IList<RtcpReportBlock> Parse( in ArraySegment<byte> payload )
         {
-            if ( payload.Count == 0 )
-            {
-                return new List<RtcpReportBlock>();
-            }
-
             var reports = new List<RtcpReportBlock>();
             
             var offset  = payload.Offset;
             
-            while ( (offset + Size) <= payload.Array.Length )
+            while ( (offset + Size) <= payload.Array?.Length )
             {
                 var report = new RtcpReportBlock();
 
