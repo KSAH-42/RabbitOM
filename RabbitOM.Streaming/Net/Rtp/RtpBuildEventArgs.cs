@@ -9,8 +9,6 @@ namespace RabbitOM.Streaming.Net.Rtp
             MediaContent = content ?? throw new ArgumentNullException( nameof( content ) );
         }
 
-        public DateTime TimeStamp { get; } = DateTime.Now;
-
         public RtpMediaElement MediaContent { get; }
     }
 }
