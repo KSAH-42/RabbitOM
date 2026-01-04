@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 {
     public class G726SampleMediaElement : RtpMediaElement
     {
-        private G726SampleMediaElement( byte[] data , G726BitRate bitrate , int numberOfBits ) : base( data )
+        private G726SampleMediaElement( G726BitRate bitrate , int numberOfBits , byte[] data ) : base( data )
         {
             BitRate = bitrate;
             NumberOfBits = numberOfBits;
@@ -20,10 +20,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
         {
             switch ( bitrate )
             {
-                case G726BitRate.Format_16000: return new G726SampleMediaElement( data , bitrate , 2 );
-                case G726BitRate.Format_24000: return new G726SampleMediaElement( data , bitrate , 3 );
-                case G726BitRate.Format_32000: return new G726SampleMediaElement( data , bitrate , 4 );
-                case G726BitRate.Format_40000: return new G726SampleMediaElement( data , bitrate , 5 );
+                case G726BitRate.Format_16000: return new G726SampleMediaElement( bitrate , 2 , data );
+                case G726BitRate.Format_24000: return new G726SampleMediaElement( bitrate , 3 , data );
+                case G726BitRate.Format_32000: return new G726SampleMediaElement( bitrate , 4 , data );
+                case G726BitRate.Format_40000: return new G726SampleMediaElement( bitrate , 5 , data );
             }
 
             throw new NotSupportedException();
