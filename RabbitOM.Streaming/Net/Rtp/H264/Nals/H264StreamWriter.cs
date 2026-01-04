@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 {
+    using RabbitOM.Streaming.IO;
+
     /// <summary>
     /// Represent a H264 stream writer
     /// </summary>
@@ -16,9 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
         private readonly H264StreamWriterSettings _settings = new H264StreamWriterSettings();
         
-        private readonly RtpMemoryStream _streamOfNalUnits = new RtpMemoryStream();
+        private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
         
-        private readonly RtpMemoryStream _streamOfNalUnitsFragmented = new RtpMemoryStream();
+        private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
 
 
 

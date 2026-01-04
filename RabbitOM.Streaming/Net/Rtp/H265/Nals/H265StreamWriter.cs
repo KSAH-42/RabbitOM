@@ -3,6 +3,8 @@ using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 {
+    using RabbitOM.Streaming.IO;
+
     /// <summary>
     /// Represent the H265 stream writer used to generate a H265 data frame
     /// </summary>
@@ -17,13 +19,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
         private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
         
-        private readonly RtpMemoryStream _streamOfNalUnits = new RtpMemoryStream();
+        private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
         
-        private readonly RtpMemoryStream _streamOfNalUnitsFragmented = new RtpMemoryStream();
+        private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
 
-        private readonly RtpMemoryStream _streamOfNalUnitsParams = new RtpMemoryStream();
+        private readonly MemoryStreamBuffer _streamOfNalUnitsParams = new MemoryStreamBuffer();
 
-        private readonly RtpMemoryStream _output = new RtpMemoryStream();
+        private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
 
 
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Net.Rtp
+namespace RabbitOM.Streaming.IO
 {
     /// <summary>
-    /// Represent a tolerant memory stream
+    /// Represent a tolerant memory stream writer
     /// </summary>
-    public sealed class RtpMemoryStream : IDisposable
+    public sealed class MemoryStreamBuffer : IDisposable
     {
         private readonly MemoryStream _stream = new MemoryStream();
 
@@ -165,7 +165,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         /// Append
         /// </summary>
         /// <param name="memoryStream">the stream</param>
-        public void WriteAsBinary( RtpMemoryStream memoryStream ) 
+        public void WriteAsBinary( MemoryStreamBuffer memoryStream ) 
         {
             if ( memoryStream == null || memoryStream.IsEmpty )
             {

@@ -97,7 +97,7 @@
     <Compile Include="Net\Rtp\RtpSequenceSortingEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAddedEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAddingEventArgs.cs" />
-    <Compile Include="Net\Rtp\RtpMemoryStream.cs" />
+    <Compile Include="IO\MemoryStreamBuffer.cs" />
     <Compile Include="ActionExtensions.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
