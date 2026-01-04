@@ -35,7 +35,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 ➡️ Breaking changes since the version 2.0.0.0:
 
 * Namespace reorganization
-* Rtp layer refactorization and adding add packet inspection, adding support of H264, H265, G711, etc...
+* Rtp layer refactorization and adding add packet inspection, adding support of H264, H265, G711, and so on.
 * Moving and renaming classes to different namespace
 * Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
