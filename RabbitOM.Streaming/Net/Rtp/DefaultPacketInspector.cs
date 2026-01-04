@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Net.Rtp
 {
     // TODO: adding the detection of large sequence
-    // TODO: adding rtp stats
+    // TODO: adding rtp stats, not necessary the bandwith it should be done elsewehere
     // TODO: adding event handler for triggering inspection reports ?
     public sealed class DefaultPacketInspector : RtpPacketInspector
     {
