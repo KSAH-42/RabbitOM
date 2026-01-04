@@ -123,7 +123,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
             _writer.WriteEndOfImage();
 
-            return new JpegFrameMediaElement( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
+            return new JpegFrameMediaElement( firstFragment.Width , firstFragment.Height , _writer.ToArray() );
         }
 
 

@@ -14,8 +14,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <param name="startCodePrefix">the start prefix</param>
         /// <param name="pps">the pps</param>
         /// <param name="sps">the sps</param>
-        /// <param name="data">the data</param>
-        public H264FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] data ) : base ( data )
+        /// <param name="buffer">the buffer</param>
+        public H264FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] buffer ) : base ( buffer )
         {
             StartCodePrefix = startCodePrefix;
             PPS = pps;
