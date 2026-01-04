@@ -3,6 +3,8 @@
 namespace RabbitOM.Streaming.Net.Rtp
 {
     // TODO: adding the detection of large sequence
+    // TODO: adding rtp stats
+    // TODO: adding event handler for triggering inspection reports ?
     public sealed class DefaultPacketInspector : RtpPacketInspector
     {
         public const int DefaultMTU = 1500;
