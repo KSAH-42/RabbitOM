@@ -15,11 +15,30 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <param name="pps">the pps</param>
         /// <param name="sps">the sps</param>
         /// <param name="buffer">the buffer</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
         public H264FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] buffer ) : base ( buffer )
         {
-            StartCodePrefix = startCodePrefix;
-            PPS = pps;
-            SPS = sps;
+            if ( startCodePrefix == null )
+            {
+                throw new ArgumentNullException(  nameof( startCodePrefix ) );
+            }
+
+            if ( pps == null )
+            {
+                throw new ArgumentNullException(  nameof( pps ) );
+            }
+
+            if ( sps == null )
+            {
+                throw new ArgumentNullException(  nameof( sps ) );
+            }
+
+            StartCodePrefix = startCodePrefix.Length > 0 ? startCodePrefix : throw new ArgumentException( nameof( startCodePrefix ) );
+            
+            PPS = pps.Length > 0 ? pps : throw new ArgumentException( nameof( pps ) );
+            
+            SPS = sps.Length > 0 ? sps : throw new ArgumentException( nameof( sps ) );
         }
 
 

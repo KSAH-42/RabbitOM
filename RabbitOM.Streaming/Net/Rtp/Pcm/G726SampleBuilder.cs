@@ -7,12 +7,16 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
         public G726SampleBuilder() { }
 
         public G726SampleBuilder( G726BitRate bitrate ) 
-            => BitRate = bitrate;
+        {
+            BitRate = bitrate;
+        }
 
         public G726BitRate BitRate { get; }
 
         protected override RtpMediaElement CreateMediaSample( RtpPacket packet ) 
-            => new G726SampleMediaElement( BitRate , packet.Payload.ToArray() );
+        {
+            return new G726SampleMediaElement( BitRate , packet.Payload.ToArray() );
+        }
 
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
