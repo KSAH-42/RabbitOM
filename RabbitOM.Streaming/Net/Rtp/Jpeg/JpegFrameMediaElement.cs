@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <summary>
     /// Represent the a jpeg frame
     /// </summary>
-    public sealed class JpegFrame : RtpMediaContent
+    public sealed class JpegFrameMediaElement : RtpMediaElement
     {
         /// <summary>
         /// Initialize a new instance of the jpeg frame
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <param name="data">the data</param>
         /// <param name="width">the width</param>
         /// <param name="height">the height</param>
-        public JpegFrame( byte[] data , int width , int height ) : base ( data )
+        public JpegFrameMediaElement( byte[] data , int width , int height ) : base ( data )
         {
             Width  = width;
             Height = height;

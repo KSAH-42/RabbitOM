@@ -74,9 +74,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        protected virtual RtpMediaContent CreateMediaSample( RtpPacket packet )
+        protected virtual RtpMediaElement CreateMediaSample( RtpPacket packet )
         {
-            return new RtpMediaContent( packet.Payload.ToArray() );
+            return new RtpMediaElement( packet.Payload.ToArray() );
         }
 
 

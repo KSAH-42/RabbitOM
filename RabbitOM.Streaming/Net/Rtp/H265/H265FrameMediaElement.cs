@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent a H265 frame
     /// </summary>
-    public sealed class H265Frame : RtpMediaContent
+    public sealed class H265FrameMediaElement : RtpMediaElement
     {
         /// <summary>
         /// Initialize an new instance of a H265 frame
@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="sps">the sps</param>
         /// <param name="vps">the vps</param>
         /// <param name="data">the data</param>
-        public H265Frame( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] data ) : base ( data )
+        public H265FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] data ) : base ( data )
         {
             StartCodePrefix = startCodePrefix;
             PPS = pps;
@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// </summary>
         /// <returns>returns the buffer</returns>
         /// <exception cref="ArgumentNullException"/>
-        public static byte[] CreateParamsBuffer( H265Frame frame )
+        public static byte[] CreateParamsBuffer( H265FrameMediaElement frame )
         {
             if ( frame == null )
             {

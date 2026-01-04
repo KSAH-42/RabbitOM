@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public class RtpMediaContent
+    public class RtpMediaElement
     {
-        public RtpMediaContent( byte[] buffer )
+        public RtpMediaElement( byte[] buffer )
         {
             if ( buffer == null )
             {

@@ -55,11 +55,11 @@
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
     <Compile Include="Net\Rtcp\RtcpPacketType.cs" />
     <Compile Include="Net\Rtcp\RtcpPacket.cs" />
-    <Compile Include="Net\Rtp\RtpMediaContent.cs" />
+    <Compile Include="Net\Rtp\RtpMediaElement.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriter.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriterSettings.cs" />
-    <Compile Include="Net\Rtp\H264\H264Frame.cs" />
+    <Compile Include="Net\Rtp\H264\H264FrameMediaElement.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameFactory.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264NalUnit.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="Net\Rtp\H265\H265FrameFactory.cs" />
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnitFragment.cs" />
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnit.cs" />
-    <Compile Include="Net\Rtp\H265\H265Frame.cs" />
+    <Compile Include="Net\Rtp\H265\H265FrameMediaElement.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\Fragmentation\JpegFragmentQueue.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegQuantizer.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegQuantizationTableFactory.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Net\Rtp\Pcm\L16SampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G711ULawSampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G711ALawSampleBuilder.cs" />
-    <Compile Include="Net\Rtp\Pcm\G726Sample.cs" />
+    <Compile Include="Net\Rtp\Pcm\G726SampleMediaElement.cs" />
     <Compile Include="Net\Rtp\RtpBuildEventArgs.cs" />
     <Compile Include="Net\Rtp\DefaultPacketInspector.cs" />
     <Compile Include="Net\Rtp\RtpPacketInspector.cs" />
@@ -105,7 +105,7 @@
     <Compile Include="Net\Rtp\Jpeg\Imaging\Fragmentation\JpegFragment.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameFactory.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriter.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegFrame.cs" />
+    <Compile Include="Net\Rtp\Jpeg\JpegFrameMediaElement.cs" />
     <Compile Include="Net\Rtp\RtpPacket.cs" />
     <Compile Include="Net\Rtp\RtpPacketType.cs" />
     <Compile Include="Net\Rtsp\Clients\Connections\RtspProxySettings.cs" />

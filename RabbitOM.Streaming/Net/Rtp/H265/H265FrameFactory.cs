@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="packets">the aggregated packets collection</param>
         /// <param name="result">the output frame</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H265Frame result )
+        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H265FrameMediaElement result )
         {
             result = null;
 
@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265Frame( H265StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
+                result = new H265FrameMediaElement( H265StreamWriter.StartCodePrefix , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
             }
 
             return result != null;
