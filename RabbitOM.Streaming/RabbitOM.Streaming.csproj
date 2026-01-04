@@ -80,13 +80,11 @@
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriter.Constants.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\DefaultPacketAggregator.cs" />
-    <Compile Include="Net\Rtp\Pcm\G726BitRate.cs" />
     <Compile Include="Net\Rtp\Pcm\G726SampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\L8SampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\L16SampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G711ULawSampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G711ALawSampleBuilder.cs" />
-    <Compile Include="Net\Rtp\Pcm\G726SampleMediaElement.cs" />
     <Compile Include="Net\Rtp\RtpBuildEventArgs.cs" />
     <Compile Include="Net\Rtp\DefaultPacketInspector.cs" />
     <Compile Include="Net\Rtp\RtpPacketInspector.cs" />
