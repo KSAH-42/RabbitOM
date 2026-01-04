@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            OnBuild( new RtpBuildEventArgs( mediaSample ) );
+            OnBuilded( new RtpBuildEventArgs( mediaSample ) );
         }
 
         public void Clear()
@@ -95,7 +95,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             PacketAdded?.TryInvoke( this , e );
         }
 
-        protected virtual void OnBuild( RtpBuildEventArgs e )
+        protected virtual void OnBuilded( RtpBuildEventArgs e )
         {
             Builded?.TryInvoke( this , e );
         }
