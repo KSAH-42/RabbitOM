@@ -4,29 +4,33 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
 {
     public class G726SampleMediaElement : RtpMediaElement
     {
-        private G726SampleMediaElement( G726BitRate bitrate , int numberOfBits , byte[] data ) : base( data )
-        {
-            BitRate = bitrate;
-            NumberOfBits = numberOfBits;
-        }
-
+        public G726SampleMediaElement( G726BitRate bitrate , byte[] data ) : base( data )
+            => BitRate = bitrate;
 
         public G726BitRate BitRate { get; }
 
-        public int NumberOfBits { get; }
-
-
-        public static G726SampleMediaElement NewSample( byte[] data , G726BitRate bitrate )
+        public static int CountBits( G726SampleMediaElement sample )
         {
-            switch ( bitrate )
+            if ( sample == null )
             {
-                case G726BitRate.Format_16000: return new G726SampleMediaElement( bitrate , 2 , data );
-                case G726BitRate.Format_24000: return new G726SampleMediaElement( bitrate , 3 , data );
-                case G726BitRate.Format_32000: return new G726SampleMediaElement( bitrate , 4 , data );
-                case G726BitRate.Format_40000: return new G726SampleMediaElement( bitrate , 5 , data );
+                throw new ArgumentNullException( nameof( sample ) );
             }
 
-            throw new NotSupportedException();
+            if ( sample.Buffer == null || sample.Buffer.Length == 0 )
+            {
+                return 0;
+            }
+
+            switch ( sample.BitRate )
+            {
+                case G726BitRate.Format_16000: return 2;
+                case G726BitRate.Format_24000: return 3;
+                case G726BitRate.Format_32000: return 4;
+                case G726BitRate.Format_40000: return 5;
+
+                default:
+                    throw new NotSupportedException();
+            }
         }
     }
 }
