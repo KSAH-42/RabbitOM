@@ -118,7 +118,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             PacketAdded?.TryInvoke( this , e );
         }
 
-        protected virtual void OnBuild( RtpBuildEventArgs e )
+        protected virtual void OnBuilded( RtpBuildEventArgs e )
         {
             Builded?.TryInvoke( this , e );
         }
