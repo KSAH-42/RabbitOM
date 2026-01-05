@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming
     /// <summary>
     /// Number helper class
     /// </summary>
-    public static class Numeric
+    public static class Numerics
     {
         /// <summary>
         /// Gets the value inside the boundary and limit the value if it comes outside the boundaries

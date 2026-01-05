@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming
     /// <summary>
     /// Represent an helper class used to safely invoke delegate
     /// </summary>
-    internal static class ExceptionHelper
+    public static class ExceptionHelper
     {
         /// <summary>
         /// Throw an exception if we are in release mode
