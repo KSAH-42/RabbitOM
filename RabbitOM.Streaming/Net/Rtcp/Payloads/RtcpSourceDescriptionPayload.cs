@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Packets
+namespace RabbitOM.Streaming.Net.Rtcp.Payloads
 {
-    public struct RtcpSourceDescriptionPacket
+    public struct RtcpSourceDescriptionPayload
     {
         public uint SynchronizationSourceId { get; private set; }
 
@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        public static bool TryParse( in ArraySegment<byte> payload , out RtcpSourceDescriptionPacket result )
+        public static bool TryParse( in ArraySegment<byte> payload , out RtcpSourceDescriptionPayload result )
         {
             throw new NotImplementedException();
         }

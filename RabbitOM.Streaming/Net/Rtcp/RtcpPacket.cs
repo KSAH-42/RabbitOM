@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Packets
+namespace RabbitOM.Streaming.Net.Rtcp
 {
     /// <summary>
     /// Represent an rtcp packet
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
         public bool Padding { get; private set; }
         
         /// <summary>
-        /// Gets the parameter (it can be RC, the subtype, etc...)
+        /// Gets the parameter (it can be RC, or ST, etc...)
         /// </summary>
         public byte SpecificParameter { get; private set; }
         
@@ -59,15 +59,15 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
             result = new RtcpPacket();
             
-            result.Version = (byte) ((buffer.Array[ buffer.Offset ] >> 6) & 0x3);
+            result.Version           = (byte)       ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x3 );
 
-            result.Padding = ((buffer.Array[ buffer.Offset ] >> 5) & 0x1) == 1;
+            result.Padding           =              ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
 
-            result.SpecificParameter = (byte) (buffer.Array[ buffer.Offset ] & 0x1F);
+            result.SpecificParameter = (byte)         ( buffer.Array[ buffer.Offset ] & 0x1F );
 
-            result.Type = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
+            result.Type              = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
 
-            result.Length = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
+            result.Length            = (ushort)       ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
 
             if ( buffer.Count >= 5 )
             {
