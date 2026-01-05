@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         public uint PacketCount { get; private set; }
 
-        public uint BytesSend { get; private set; }
+        public uint OctetCount { get; private set; }
 
 
         public static bool TryParse( in ArraySegment<byte> payload , out RtcpSenderReportPacket result )
