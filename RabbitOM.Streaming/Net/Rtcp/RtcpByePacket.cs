@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp
 {
-    public struct RtcpBytePacket
+    public struct RtcpByePacket
     {
         public uint[] SynchronizationSourcesIds { get; private set; }
 
@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        public static bool TryParse( in ArraySegment<byte> payload , int count , out RtcpBytePacket result )
+        public static bool TryParse( in ArraySegment<byte> payload , int count , out RtcpByePacket result )
         {
             throw new NotImplementedException();
         }
