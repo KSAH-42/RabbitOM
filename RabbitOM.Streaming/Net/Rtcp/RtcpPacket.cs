@@ -28,11 +28,6 @@ namespace RabbitOM.Streaming.Net.Rtcp
         public RtcpPacketType Type { get; private set; }
         
         /// <summary>
-        /// Gets the length
-        /// </summary>
-        public ushort Length { get;private set; }
-        
-        /// <summary>
         /// Gets the payload
         /// </summary>
         public ArraySegment<byte> Payload { get; private set; }
@@ -67,11 +62,12 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
             result.Type              = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
 
-            result.Length            = (ushort)       ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
-
             if ( buffer.Count >= 5 )
             {
-                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 4 , buffer.Array.Length - ( buffer.Offset + 4 ) );
+                var length = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
+                var count  = ( buffer.Array.Length - ( buffer.Offset + 4 ) );
+
+                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 4 , length < count ? length : count );
             }
 
             return true;
