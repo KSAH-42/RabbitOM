@@ -3,12 +3,12 @@
 namespace RabbitOM.Streaming
 {
     /// <summary>
-    /// Clamp helper class
+    /// Number helper class
     /// </summary>
-    public static class Clamping
+    public static class Numeric
     {
         /// <summary>
-        /// Gets the value inside the boundary
+        /// Gets the value inside the boundary and limit the value if it comes outside the boundaries
         /// </summary>
         /// <param name="value">the value</param>
         /// <param name="min">the min</param>
