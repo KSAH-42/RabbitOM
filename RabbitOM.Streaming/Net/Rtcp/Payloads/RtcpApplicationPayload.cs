@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Payloads
 
             var offset = payload.Offset;
 
-            result.SynchronizationSourceId |= (uint) ( payload.Array[ offset ++ ] << 24 );
+            result.SynchronizationSourceId  = (uint) ( payload.Array[ offset ++ ] << 24 );
             result.SynchronizationSourceId |= (uint) ( payload.Array[ offset ++ ] << 16 );
             result.SynchronizationSourceId |= (uint) ( payload.Array[ offset ++ ] << 8  );
             result.SynchronizationSourceId |=          payload.Array[ offset ++ ];

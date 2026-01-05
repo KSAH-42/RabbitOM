@@ -35,33 +35,33 @@ namespace RabbitOM.Streaming.Net.Rtcp
             
             var offset = payload.Offset;
             
-            result.SynchronizationSource |= (uint) payload.Array[ offset ++ ] << 24;
+            result.SynchronizationSource  = (uint) payload.Array[ offset ++ ] << 24;
             result.SynchronizationSource |= (uint) payload.Array[ offset ++ ] << 16;
             result.SynchronizationSource |= (uint) payload.Array[ offset ++ ] << 8;
             result.SynchronizationSource |=        payload.Array[ offset ++ ];
 
             result.FractionLost = payload.Array[ offset ++ ];
 
-            result.CummulativePacketsLost |= (uint) payload.Array[ offset ++ ] << 16;
+            result.CummulativePacketsLost  = (uint) payload.Array[ offset ++ ] << 16;
             result.CummulativePacketsLost |= (uint) payload.Array[ offset ++ ] << 8;
             result.CummulativePacketsLost |=        payload.Array[ offset ++ ];
 
-            result.ExtendedHighestSequence |= (uint) payload.Array[ offset ++ ] << 24;
+            result.ExtendedHighestSequence  = (uint) payload.Array[ offset ++ ] << 24;
             result.ExtendedHighestSequence |= (uint) payload.Array[ offset ++ ] << 16;
             result.ExtendedHighestSequence |= (uint) payload.Array[ offset ++ ] << 8;
             result.ExtendedHighestSequence |=        payload.Array[ offset ++ ];
 
-            result.InterarrivalJitter |= (uint) payload.Array[ offset ++ ] << 24;
+            result.InterarrivalJitter  = (uint) payload.Array[ offset ++ ] << 24;
             result.InterarrivalJitter |= (uint) payload.Array[ offset ++ ] << 16;
             result.InterarrivalJitter |= (uint) payload.Array[ offset ++ ] << 8;
             result.InterarrivalJitter |=        payload.Array[ offset ++ ];
 
-            result.LastSRTimestamp |= (uint) payload.Array[ offset ++ ] << 24;
+            result.LastSRTimestamp  = (uint) payload.Array[ offset ++ ] << 24;
             result.LastSRTimestamp |= (uint) payload.Array[ offset ++ ] << 16;
             result.LastSRTimestamp |= (uint) payload.Array[ offset ++ ] << 8;
             result.LastSRTimestamp |=        payload.Array[ offset ++ ];
 
-            result.DelaySinceLastSR |= (uint) payload.Array[ offset ++ ] << 24;
+            result.DelaySinceLastSR  = (uint) payload.Array[ offset ++ ] << 24;
             result.DelaySinceLastSR |= (uint) payload.Array[ offset ++ ] << 16;
             result.DelaySinceLastSR |= (uint) payload.Array[ offset ++ ] << 8;
             result.DelaySinceLastSR |=        payload.Array[ offset ++ ];

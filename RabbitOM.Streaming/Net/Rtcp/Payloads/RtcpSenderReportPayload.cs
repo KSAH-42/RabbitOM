@@ -37,12 +37,12 @@ namespace RabbitOM.Streaming.Net.Rtcp.Payloads
 
             var offset = payload.Offset;
 
-            result.SynchronizationSourceId |= (uint) ( payload.Array[ offset ++ ] << 24 );
+            result.SynchronizationSourceId  = (uint) ( payload.Array[ offset ++ ] << 24 );
             result.SynchronizationSourceId |= (uint) ( payload.Array[ offset ++ ] << 16 );
             result.SynchronizationSourceId |= (uint) ( payload.Array[ offset ++ ] << 8  );
             result.SynchronizationSourceId |=          payload.Array[ offset ++ ];
             
-            result.NtpTimeStamp |= (ulong) payload.Array[ offset ++ ] << 56;
+            result.NtpTimeStamp  = (ulong) payload.Array[ offset ++ ] << 56;
             result.NtpTimeStamp |= (ulong) payload.Array[ offset ++ ] << 48;
             result.NtpTimeStamp |= (ulong) payload.Array[ offset ++ ] << 40;
             result.NtpTimeStamp |= (ulong) payload.Array[ offset ++ ] << 32;
@@ -51,17 +51,17 @@ namespace RabbitOM.Streaming.Net.Rtcp.Payloads
             result.NtpTimeStamp |= (ulong) payload.Array[ offset ++ ] << 8;
             result.NtpTimeStamp |= payload.Array[ offset ++ ] ;
 
-            result.RtpTimeStamp |= (uint) payload.Array[ offset ++ ] << 24;
+            result.RtpTimeStamp  = (uint) payload.Array[ offset ++ ] << 24;
             result.RtpTimeStamp |= (uint) payload.Array[ offset ++ ] << 16;
             result.RtpTimeStamp |= (uint) payload.Array[ offset ++ ] << 8;
             result.RtpTimeStamp |= payload.Array[ offset ++ ];
 
-            result.PacketCount |= (uint) payload.Array[ offset ++ ] << 24;
+            result.PacketCount  = (uint) payload.Array[ offset ++ ] << 24;
             result.PacketCount |= (uint) payload.Array[ offset ++ ] << 16;
             result.PacketCount |= (uint) payload.Array[ offset ++ ] << 8;
             result.PacketCount |= payload.Array[ offset ++ ];
 
-            result.OctetCount |= (uint) payload.Array[ offset ++ ] << 24;
+            result.OctetCount  = (uint) payload.Array[ offset ++ ] << 24;
             result.OctetCount |= (uint) payload.Array[ offset ++ ] << 16;
             result.OctetCount |= (uint) payload.Array[ offset ++ ] << 8;
             result.OctetCount |= payload.Array[ offset ++ ];

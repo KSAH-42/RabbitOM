@@ -61,7 +61,7 @@
     <Compile Include="Net\Rtcp\Payloads\RtcpSenderReportPayload.cs" />
     <Compile Include="Net\Rtcp\RtcpSourceDescriptionItem.cs" />
     <Compile Include="Net\Rtcp\Payloads\RtcpSourceDescriptionPayload.cs" />
-    <Compile Include="Numeric.cs" />
+    <Compile Include="Numerics.cs" />
     <Compile Include="Net\Rtp\Pcm\L24SampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpMediaElement.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
