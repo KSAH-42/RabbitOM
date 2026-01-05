@@ -1,14 +1,12 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtcp
+namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
-    public struct RtcpApplicationPacket
+    public struct RtcpSourceDescriptionPacket
     {
         public uint SynchronizationSourceId { get; private set; }
 
-        public string Name { get; private set; }
-
-        public string Data { get; private set; }
+        public RtcpSourceDescriptionItem[] Items { get; private set; }
 
 
 

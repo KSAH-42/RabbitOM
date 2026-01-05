@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtcp
+namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
     /// <summary>
     /// Represent the packet type
