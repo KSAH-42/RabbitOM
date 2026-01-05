@@ -6,11 +6,11 @@ namespace RabbitOM.Streaming.Net.Rtcp
     {
         public uint[] SynchronizationSourcesIds { get; private set; }
 
+        public string Option { get; private set; }
 
 
 
-
-        public static RtcpBytePacket Parse( in ArraySegment<byte> payload , int count )
+        public static bool TryParse( in ArraySegment<byte> payload , int count , out RtcpBytePacket result )
         {
             throw new NotImplementedException();
         }

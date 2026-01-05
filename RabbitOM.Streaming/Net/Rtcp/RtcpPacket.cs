@@ -18,9 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtcp
         public bool Padding { get; private set; }
         
         /// <summary>
-        /// Gets the receptions count (number of block reports)
+        /// Gets the number of element count stored on the payload
         /// </summary>
-        public byte ReceptionCount { get; private set; }
+        public byte Count { get; private set; }
         
         /// <summary>
         /// Gets the type
@@ -59,15 +59,15 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
             result = new RtcpPacket();
             
-            result.Version        = (byte) ((buffer.Array[ buffer.Offset ] >> 6) & 0x3);
+            result.Version   = (byte) ((buffer.Array[ buffer.Offset ] >> 6) & 0x3);
 
-            result.Padding        = ((buffer.Array[ buffer.Offset ] >> 5) & 0x1) == 1;
+            result.Padding   = ((buffer.Array[ buffer.Offset ] >> 5) & 0x1) == 1;
 
-            result.ReceptionCount = (byte) (buffer.Array[ buffer.Offset ] & 0x1F);
+            result.Count     = (byte) (buffer.Array[ buffer.Offset ] & 0x1F);
 
-            result.Type           = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
+            result.Type      = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
 
-            result.Length         = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
+            result.Length    = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
 
             if ( buffer.Count >= 5 )
             {
