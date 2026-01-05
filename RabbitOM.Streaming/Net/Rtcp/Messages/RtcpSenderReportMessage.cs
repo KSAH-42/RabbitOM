@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Payloads
+namespace RabbitOM.Streaming.Net.Rtcp.Messages
 {
-    public struct RtcpSenderReportPayload
+    public struct RtcpSenderReportMessage
     {
         public const int MimimunSize = 24;
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Payloads
 
 
 
-        public static bool TryParse( in ArraySegment<byte> payload , out RtcpSenderReportPayload result )
+        public static bool TryParse( in ArraySegment<byte> payload , out RtcpSenderReportMessage result )
         {
             result = default;
             

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Payloads
+namespace RabbitOM.Streaming.Net.Rtcp.Messages
 {
-    public struct RtcpReceiverReportPayload
+    public struct RtcpReceiverReportMessage
     {
         public uint SynchronizationSourceId { get; private set; }
 
         public RtcpReportBlock[] Reports { get; private set; }
 
-        public static bool TryParse( in ArraySegment<byte> payload , out RtcpReceiverReportPayload result )
+        public static bool TryParse( in ArraySegment<byte> payload , out RtcpReceiverReportMessage result )
         {
             result = default ;
 

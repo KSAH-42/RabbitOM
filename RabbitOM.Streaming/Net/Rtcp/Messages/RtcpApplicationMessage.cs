@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Payloads
+namespace RabbitOM.Streaming.Net.Rtcp.Messages
 {
-    public struct RtcpApplicationPayload
+    public struct RtcpApplicationMessage
     {
         public uint SynchronizationSourceId { get; private set; }
 
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Payloads
 
 
 
-        public static bool TryParse( in ArraySegment<byte> payload , out RtcpApplicationPayload result )
+        public static bool TryParse( in ArraySegment<byte> payload , out RtcpApplicationMessage result )
         {
             result = default;
 
