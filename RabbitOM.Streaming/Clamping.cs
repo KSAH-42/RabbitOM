@@ -3,9 +3,9 @@
 namespace RabbitOM.Streaming
 {
     /// <summary>
-    /// Math help class
+    /// Clamp helper class
     /// </summary>
-    public static class MathHelper
+    public static class Clamping
     {
         /// <summary>
         /// Gets the value inside the boundary

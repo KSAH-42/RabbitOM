@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.IO
         /// <summary>
         /// Gets the position
         /// </summary>
-        public override long Position { get => _stream.Position; set => _stream.Position = MathHelper.Clamp( value , 0 , _stream.Length ); }
+        public override long Position { get => _stream.Position; set => _stream.Position = Clamping.Clamp( value , 0 , _stream.Length ); }
         
         /// <summary>
         /// Check the read operation is supported
@@ -106,7 +106,7 @@ namespace RabbitOM.Streaming.IO
         /// <param name="value">the value</param>
         public void SetPosition( long value )
         { 
-            _stream.Position = MathHelper.Clamp( value , 0 , _stream.Length );
+            _stream.Position = Clamping.Clamp( value , 0 , _stream.Length );
         }
 
         /// <summary>
