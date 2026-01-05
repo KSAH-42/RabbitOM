@@ -19,10 +19,10 @@ namespace RabbitOM.Streaming
         {
             if ( min > max )
             {
-                throw new ArgumentOutOfRangeException( nameof( min ) );
+                throw new ArgumentException( nameof( min ) );
             }
 
-            return value <= min ? min : value >= max ? max : value;
+            return value < min ? min : value > max ? max : value;
         }
     }
 }
