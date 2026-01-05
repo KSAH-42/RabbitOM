@@ -120,7 +120,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new ArgumentException( nameof( data ) );
             }
 
-            _stream.WriteAsBinary( data );
+            _stream.Write( data );
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// </summary>
         public void WriteStartOfImage()
         {
-            _stream.WriteAsBinary( StartOfImageMarker );
+            _stream.Write( StartOfImageMarker );
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// </summary>
         public void WriteEndOfImage()
         {
-            _stream.WriteAsBinary( EndOfImageMarker );
+            _stream.Write( EndOfImageMarker );
         }
 
         /// <summary>
@@ -152,16 +152,16 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new InvalidOperationException( "the length header field is too big" );
             }
 
-            _stream.WriteAsBinary( ApplicationJFIFMarker );
-            _stream.WriteAsUInt16( length );
-            _stream.WriteAsBinary( IdentifierJFIF );
-            _stream.WriteAsByte( _settings.VersionMajor );
-            _stream.WriteAsByte( _settings.VersionMinor );
-            _stream.WriteAsByte( _settings.Unit );
-            _stream.WriteAsUInt16( _settings.XDensity );
-            _stream.WriteAsUInt16( _settings.YDensity );
-            _stream.WriteAsByte( 0 );
-            _stream.WriteAsByte( 0 );
+            _stream.Write( ApplicationJFIFMarker );
+            _stream.WriteUInt16( length );
+            _stream.Write( IdentifierJFIF );
+            _stream.WriteByte( _settings.VersionMajor );
+            _stream.WriteByte( _settings.VersionMinor );
+            _stream.WriteByte( _settings.Unit );
+            _stream.WriteUInt16( _settings.XDensity );
+            _stream.WriteUInt16( _settings.YDensity );
+            _stream.WriteByte( 0 );
+            _stream.WriteByte( 0 );
         }
 
         /// <summary>
@@ -172,10 +172,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         {
             if ( value > 0 )
             {
-                _stream.WriteAsBinary( RestartIntervalMarker );
-                _stream.WriteAsByte( 0x00 );
-                _stream.WriteAsByte( 0x04 );
-                _stream.WriteAsUInt16( value );
+                _stream.Write( RestartIntervalMarker );
+                _stream.WriteByte( 0x00 );
+                _stream.WriteByte( 0x04 );
+                _stream.WriteUInt16( value );
             }
         }
         
@@ -234,10 +234,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new InvalidOperationException( "the length header field is too big" );
             }
             
-            _stream.WriteAsBinary( QuantizationTableMarker );
-            _stream.WriteAsUInt16( length );
-            _stream.WriteAsByte( tableNumber );
-            _stream.WriteAsBinary( data );
+            _stream.Write( QuantizationTableMarker );
+            _stream.WriteUInt16( length );
+            _stream.WriteByte( tableNumber );
+            _stream.Write( data );
         }
 
         /// <summary>
@@ -280,22 +280,22 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
             byte componentParameterB = quantizationTable.Count <= 64 ? (byte) 0x00 : (byte) 0x01;
 
-            _stream.WriteAsBinary( StartOfFrameMarker );
-            _stream.WriteAsByte( 0x00 );
-            _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( 0x08 );
-            _stream.WriteAsUInt16( height );
-            _stream.WriteAsUInt16( width );
-            _stream.WriteAsByte( 0x03 );
-            _stream.WriteAsByte( 0x01 );
-            _stream.WriteAsByte( componentParameterA );
-            _stream.WriteAsByte( 0x00 );
-            _stream.WriteAsByte( 0x02 );
-            _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( componentParameterB );
-            _stream.WriteAsByte( 0x03 );
-            _stream.WriteAsByte( 0x11 );
-            _stream.WriteAsByte( componentParameterB );
+            _stream.Write( StartOfFrameMarker );
+            _stream.WriteByte( 0x00 );
+            _stream.WriteByte( 0x11 );
+            _stream.WriteByte( 0x08 );
+            _stream.WriteUInt16( height );
+            _stream.WriteUInt16( width );
+            _stream.WriteByte( 0x03 );
+            _stream.WriteByte( 0x01 );
+            _stream.WriteByte( componentParameterA );
+            _stream.WriteByte( 0x00 );
+            _stream.WriteByte( 0x02 );
+            _stream.WriteByte( 0x11 );
+            _stream.WriteByte( componentParameterB );
+            _stream.WriteByte( 0x03 );
+            _stream.WriteByte( 0x11 );
+            _stream.WriteByte( componentParameterB );
         }
 
         /// <summary>
@@ -311,9 +311,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new InvalidOperationException( "the length header field is too big" );
             }
 
-            _stream.WriteAsBinary( StartOfScanMarker );
-            _stream.WriteAsUInt16( length );
-            _stream.WriteAsBinary( StartOfScanPayload );
+            _stream.Write( StartOfScanMarker );
+            _stream.WriteUInt16( length );
+            _stream.Write( StartOfScanPayload );
         }
 
         /// <summary>
@@ -344,11 +344,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new InvalidOperationException( "the length header field is too big" );
             }
 
-            _stream.WriteAsBinary( HuffmanTableMarker );
-            _stream.WriteAsUInt16( length );
-            _stream.WriteAsByte( (byte) ( ( tableClass << 4 ) | tableNo ) );
-            _stream.WriteAsBinary( codes );
-            _stream.WriteAsBinary( symbols );
+            _stream.Write( HuffmanTableMarker );
+            _stream.WriteUInt16( length );
+            _stream.WriteByte( (byte) ( ( tableClass << 4 ) | tableNo ) );
+            _stream.Write( codes );
+            _stream.Write( symbols );
         }
 
         /// <summary>
@@ -382,9 +382,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new InvalidOperationException( "the length header field is too big" );
             }
 
-            _stream.WriteAsBinary( CommentsMarker );
-            _stream.WriteAsUInt16( length );
-            _stream.WriteAsString( text );
+            _stream.Write( CommentsMarker );
+            _stream.WriteUInt16( length );
+            _stream.WriteString( text );
         }
     }
 }

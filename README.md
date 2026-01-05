@@ -18,13 +18,13 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Support audio format RTP - L24
 * Support audio format RTP - L16
 * Support audio format RTP - L8
+* Support multiple types of authentications: basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support RTP packet reordering
+* Support RTSP message reordering when multiple requests are sended and responses arrive in a different order
 * Support Unicast TCP (interleaved mode) transport
 * Support Unicast UDP transport 
 * Support Multicast transport
-* Support RTSP message reordering when multiple requests are sended and responses arrive in a different order
 * Support request / response handshake when receiving video streams on the same tcp channel used for sending requests and receiving responses
-* Support multiple types of authentications: basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support auto reconnection in case of network failures
 * Support events Handlers for connection loss, receiving packet, etc...
 * Provide classes to access to the SDP informations

@@ -102,8 +102,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfNalUnits.WriteAsBinary( StartCodePrefix );
-            _streamOfNalUnits.WriteAsBinary( packet.Payload );
+            _streamOfNalUnits.Write( StartCodePrefix );
+            _streamOfNalUnits.Write( packet.Payload );
         }
 
         /// <summary>
@@ -156,8 +156,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             foreach ( var aggregate in H264NalUnit.ParseAggregates( packet.Payload ) )
             {
-                _streamOfNalUnits.WriteAsBinary( StartCodePrefix );
-                _streamOfNalUnits.WriteAsBinary( aggregate );
+                _streamOfNalUnits.Write( StartCodePrefix );
+                _streamOfNalUnits.Write( aggregate );
             }
         }
 
@@ -180,22 +180,22 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.WriteAsBinary( StartCodePrefix );
-                    _streamOfNalUnitsFragmented.WriteAsByte( H264NalUnitFragment.ParseHeader( packet.Payload ) );
-                    _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
+                    _streamOfNalUnitsFragmented.Write( StartCodePrefix );
+                    _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragment.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H264NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
-                    _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H264NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
-                    _streamOfNalUnitsFragmented.WriteAsBinary( nalUnit.Payload );                    
-                    _streamOfNalUnits.WriteAsBinary( _streamOfNalUnitsFragmented );
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
+                    _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
                     _streamOfNalUnitsFragmented.Clear();
                 }
             }
