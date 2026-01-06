@@ -42,7 +42,60 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         public static bool TryParse( RtcpMessage message , out SenderReportPacket result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( message == null || message.Payload.Count < MimimunSize )
+            {
+                return false;
+            }
+
+            var offset = message.Payload.Offset;
+
+            result = new SenderReportPacket() { Version = message.Version };
+
+            result.SynchronizationSourceId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
+            result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
+            result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 8  );
+            result.SynchronizationSourceId |=          message.Payload.Array[ offset ++ ];
+            
+            result.NtpTimeStamp  = (ulong) message.Payload.Array[ offset ++ ] << 56;
+            result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 48;
+            result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 40;
+            result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 32;
+            result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 24;
+            result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 16;
+            result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 8;
+            result.NtpTimeStamp |= message.Payload.Array[ offset ++ ] ;
+
+            result.RtpTimeStamp  = (uint) message.Payload.Array[ offset ++ ] << 24;
+            result.RtpTimeStamp |= (uint) message.Payload.Array[ offset ++ ] << 16;
+            result.RtpTimeStamp |= (uint) message.Payload.Array[ offset ++ ] << 8;
+            result.RtpTimeStamp |= message.Payload.Array[ offset ++ ];
+
+            result.NumberOfPackets  = (uint) message.Payload.Array[ offset ++ ] << 24;
+            result.NumberOfPackets |= (uint) message.Payload.Array[ offset ++ ] << 16;
+            result.NumberOfPackets |= (uint) message.Payload.Array[ offset ++ ] << 8;
+            result.NumberOfPackets |= message.Payload.Array[ offset ++ ];
+
+            result.NumberOfBytes  = (uint) message.Payload.Array[ offset ++ ] << 24;
+            result.NumberOfBytes |= (uint) message.Payload.Array[ offset ++ ] << 16;
+            result.NumberOfBytes |= (uint) message.Payload.Array[ offset ++ ] << 8;
+            result.NumberOfBytes |= message.Payload.Array[ offset ++ ];
+
+            if ( message.Payload.Count > MimimunSize )
+            {
+                while ( ( offset + RtcpReportBlock.Size ) <= message.Payload.Array.Length )
+                {
+                    if ( RtcpReportBlock.TryParse( new ArraySegment<byte>( message.Payload.Array , offset , RtcpReportBlock.Size ) , out var report ) )
+                    {
+                        result.AddReport( report );
+                    }
+
+                    offset += RtcpReportBlock.Size;
+                }
+            }
+
+            return true;
         }
     }
 }
