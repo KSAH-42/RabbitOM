@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
                 return false;
             }
 
-            result = new SourceDescriptionPacket();
+            result = new SourceDescriptionPacket() { Version = message.Version };
 
             var offset = message.Payload.Offset;
 

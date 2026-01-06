@@ -44,6 +44,8 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
             var offset = message.Payload.Offset;
 
+            result = new ReceiverReportPacket() { Version = message.Version };
+
             result.SynchronizationSourceId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 8  );

@@ -32,7 +32,47 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         public static bool TryParse( RtcpMessage message , out ByePacket result )
         {
-            throw new NotImplementedException();
+            result = null;
+            
+            if ( message == null || message.Payload.Count == 0 )
+            {
+                return false;
+            }
+
+            result = new ByePacket() { Version = message.Version };
+
+            var offset = message.Payload.Offset;
+
+            for ( var i = 0 ; i < message.SpecificParameter ; ++ i )
+            {
+                if ( offset + 4 < message.Payload.Array.Length )
+                {
+                    uint synchId = 0;
+
+                    synchId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
+                    synchId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
+                    synchId |= (uint) ( message.Payload.Array[ offset ++ ] << 8 );
+                    synchId |= (uint) ( message.Payload.Array[ offset ++ ] );
+
+                    result.AddSynchronizationSourceId( synchId );
+
+                    offset += 4;
+                }
+            }
+
+            if ( offset < message.Payload.Array.Length )
+            {
+                var textBuffer = new byte[ message.Payload.Array[ offset ++ ] ];
+
+                for ( var i = 0 ; i < textBuffer.Length && offset < message.Payload.Array.Length - 1 ; ++ i )
+                {
+                    textBuffer[ i ] = message.Payload.Array[ offset ++ ];
+                }
+
+                result.Reason = System.Text.Encoding.ASCII.GetString( textBuffer );
+            }
+
+            return true;
         }
     }
 }
