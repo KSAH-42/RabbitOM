@@ -10,9 +10,22 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        public IReadOnlyList<uint> SynchronizationSourcesIds { get; private set; }
-        
+        private readonly List<uint> _synchronizationSourcesIds = new List<uint>();
+
+
+
+
         public string Reason { get; private set; }
+        
+        public IReadOnlyList<uint>SynchronizationSourcesIds { get => _synchronizationSourcesIds; }
+
+
+
+
+        private void AddSynchronizationSourceId( uint id )
+        {
+            _synchronizationSourcesIds.Add( id );
+        }
 
 
 

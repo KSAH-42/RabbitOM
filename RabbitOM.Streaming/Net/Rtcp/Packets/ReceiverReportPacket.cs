@@ -9,10 +9,23 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
+        private readonly List<RtcpReportBlock> _reports = new List<RtcpReportBlock>();
+
+
+
 
         public uint SynchronizationSourceId { get; private set; }
         
-        public IReadOnlyList<RtcpReportBlock> Reports { get; private set; }
+        public IReadOnlyList<RtcpReportBlock> Reports { get => _reports; }
+
+
+
+
+
+        private void AddReport( RtcpReportBlock report )
+        {
+            _reports.Add( report ?? throw new ArgumentNullException( nameof( report ) ) );
+        }
 
 
 
