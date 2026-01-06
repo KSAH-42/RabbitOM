@@ -34,7 +34,28 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         public static bool TryParse( RtcpMessage message , out SourceDescriptionPacket result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( message == null || message.Payload.Count < RtcpSourceDescriptionItem.MinimumSize )
+            {
+                return false;
+            }
+
+            result = new SourceDescriptionPacket();
+
+            var offset = message.Payload.Offset;
+
+            while ( offset + RtcpSourceDescriptionItem.MinimumSize <= message.Payload.Array.Length )
+            {
+                if ( RtcpSourceDescriptionItem.TryParse( new ArraySegment<byte>( message.Payload.Array , offset , message.Payload.Count - RtcpSourceDescriptionItem.MinimumSize ) , out var item ) )
+                {
+                    result.AddItem( item );
+                }
+
+                offset += RtcpSourceDescriptionItem.MinimumSize + item?.Value?.Length ?? 0 ;
+            }
+
+            return true;
         }
     }
 }

@@ -8,6 +8,11 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets.Serialization
         {
             if ( RtcpMessage.TryParse( buffer , out var message ) )
             {
+                if ( message.Version <= RtcpPacket.DefaultVersion )
+                {
+                    throw new NotSupportedException();
+                }
+
                 if ( message.Type == ApplicationPacket.PacketType )
                 {
                     if ( ApplicationPacket.TryParse( message , out var result ) )
