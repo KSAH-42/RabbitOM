@@ -26,6 +26,11 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// Gets the type
         /// </summary>
         public byte Type { get; private set; }
+
+        /// <summary>
+        /// Gets the length
+        /// </summary>
+        public ushort Length { get; private set; }
         
         /// <summary>
         /// Gets the payload
@@ -58,14 +63,11 @@ namespace RabbitOM.Streaming.Net.Rtcp
             result.Padding           =        ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
             result.SpecificParameter = (byte) (   buffer.Array[ buffer.Offset ] & 0x1F );
             result.Type              = (byte)     buffer.Array[ buffer.Offset + 1 ];
+            result.Length            = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
 
             if ( buffer.Count >= 5 )
-            {
-                var length = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
-                
-                var count  = ( buffer.Array.Length - ( buffer.Offset + 4 ) );
-                
-                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 4 , Math.Min( count , length ) );
+            {    
+                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 4 , Math.Min( result.Length , ( buffer.Array.Length - ( buffer.Offset + 4 ) ) ) );
             }
 
             return true;
