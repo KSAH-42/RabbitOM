@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     using RabbitOM.Streaming.Net.Rtp.H264.Nals;
 
     /// <summary>
-    /// Represent the H264 frale factory
+    /// Represent the H264 frame factory
     /// </summary>
     public sealed class H264FrameFactory : IDisposable
     {

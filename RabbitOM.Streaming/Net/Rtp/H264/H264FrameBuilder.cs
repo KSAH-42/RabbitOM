@@ -4,7 +4,7 @@ using System;
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
     /// <summary>
-    /// Represent a H264 frame builder
+    /// Represent an MPEG H264 frame builder
     /// </summary>
     public sealed class H264FrameBuilder : RtpFrameBuilder
     {
