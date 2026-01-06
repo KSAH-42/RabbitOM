@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        public static bool TryParse( in ArraySegment<byte> buffer , out ApplicationPacket result )
+        public static bool TryParse( RtcpMessage message , out ApplicationPacket result )
         {
             throw new NotImplementedException();
         }

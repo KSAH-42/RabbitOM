@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
     /// <summary>
     /// Represent an rtcp message
     /// </summary>
-    internal struct RtcpMessage
+    public sealed class RtcpMessage
     {
         /// <summary>
         /// Gets Version

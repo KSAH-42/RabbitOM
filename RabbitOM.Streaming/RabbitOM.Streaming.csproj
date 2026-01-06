@@ -57,6 +57,7 @@
     <Compile Include="Net\Rtcp\Packets\ReceiverReportPacket.cs" />
     <Compile Include="Net\Rtcp\Packets\RtcpPacket.cs" />
     <Compile Include="Net\Rtcp\Packets\SenderReportPacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\Serialization\RtcpPacketSerializer.cs" />
     <Compile Include="Net\Rtcp\Packets\SourceDescriptionPacket.cs" />
     <Compile Include="Net\Rtcp\RtcpMessage.cs" />
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
