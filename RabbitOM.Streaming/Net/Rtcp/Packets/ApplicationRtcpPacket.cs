@@ -1,0 +1,21 @@
+﻿using System;
+
+namespace RabbitOM.Streaming.Net.Rtcp.Packets
+{
+    public sealed class ApplicationRtcpPacket : RtcpPacket
+    {
+        public uint SynchronizationSourceId { get; private set; }
+        
+        public string Name { get; private set; }
+        
+        public string Data { get; private set; }
+
+
+
+
+        public static bool TryParse( in ArraySegment<byte> buffer , out ApplicationRtcpPacket result )
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

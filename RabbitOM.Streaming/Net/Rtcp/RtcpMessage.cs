@@ -3,9 +3,9 @@
 namespace RabbitOM.Streaming.Net.Rtcp
 {
     /// <summary>
-    /// Represent an rtcp packet
+    /// Represent an rtcp message
     /// </summary>
-    public struct RtcpPacket
+    public struct RtcpMessage
     {
         /// <summary>
         /// Gets Version
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// <summary>
         /// Gets the type
         /// </summary>
-        public RtcpPacketType Type { get; private set; }
+        public byte Type { get; private set; }
         
         /// <summary>
         /// Gets the payload
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// <param name="buffer">the buffer</param>
         /// <param name="result">the output result</param>
         /// <returns>returns true for a success, otherwise false.</returns>
-        public static bool TryParse( in ArraySegment<byte> buffer , out RtcpPacket result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out RtcpMessage result )
         {
             result = default;
 
@@ -52,15 +52,15 @@ namespace RabbitOM.Streaming.Net.Rtcp
                 return false;
             }
 
-            result = new RtcpPacket();
+            result = new RtcpMessage();
             
-            result.Version           = (byte)       ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x3 );
+            result.Version = (byte) ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x3 );
 
-            result.Padding           =              ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
+            result.Padding = ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
 
-            result.SpecificParameter = (byte)         ( buffer.Array[ buffer.Offset ] & 0x1F );
+            result.SpecificParameter = (byte) ( buffer.Array[ buffer.Offset ] & 0x1F );
 
-            result.Type              = (RtcpPacketType) buffer.Array[ buffer.Offset + 1 ];
+            result.Type = (byte) buffer.Array[ buffer.Offset + 1 ];
 
             if ( buffer.Count >= 5 )
             {

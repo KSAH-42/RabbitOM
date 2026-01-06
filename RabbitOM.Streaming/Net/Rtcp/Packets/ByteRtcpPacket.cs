@@ -1,14 +1,17 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Messages
+namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
-    public struct RtcpByeMessage
+    public sealed class ByteRtcpPacket : RtcpPacket
     {
         public uint[] SynchronizationSourcesIds { get; private set; }
         
         public string Reason { get; private set; }
 
-        public static bool TryParse( in ArraySegment<byte> payload , int count , out RtcpByeMessage result )
+
+
+
+        public static bool TryParse( in ArraySegment<byte> buffer , out ByteRtcpPacket result )
         {
             throw new NotImplementedException();
         }

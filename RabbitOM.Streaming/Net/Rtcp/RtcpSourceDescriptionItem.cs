@@ -2,10 +2,12 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp
 {
-    public struct RtcpSourceDescriptionItem
+    public sealed class RtcpSourceDescriptionItem
     {
         public byte Type { get; private set; }
+        
         public string Value { get; private set; }
+
 
 
 
