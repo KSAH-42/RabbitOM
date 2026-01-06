@@ -52,12 +52,12 @@
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
-    <Compile Include="Net\Rtcp\Packets\ApplicationRtcpPacket.cs" />
-    <Compile Include="Net\Rtcp\Packets\ByteRtcpPacket.cs" />
-    <Compile Include="Net\Rtcp\Packets\ReceiverReportRtcpPacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\ApplicationPacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\BytePacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\ReceiverReportPacket.cs" />
     <Compile Include="Net\Rtcp\Packets\RtcpPacket.cs" />
-    <Compile Include="Net\Rtcp\Packets\SenderReportRtcpPacket.cs" />
-    <Compile Include="Net\Rtcp\Packets\SourceDescriptionRtcpPacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\SenderReportPacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\SourceDescriptionPacket.cs" />
     <Compile Include="Net\Rtcp\RtcpMessage.cs" />
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
     <Compile Include="Net\Rtcp\RtcpSourceDescriptionItem.cs" />

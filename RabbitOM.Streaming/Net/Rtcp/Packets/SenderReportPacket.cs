@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
-    public sealed class SenderReportRtcpPacket : RtcpPacket
+    public sealed class SenderReportPacket : RtcpPacket
     {
         public const int MimimunSize = 24;
         
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        public static bool TryParse( in ArraySegment<byte> buffer , out SenderReportRtcpPacket result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out SenderReportPacket result )
         {
             throw new NotImplementedException();
         }

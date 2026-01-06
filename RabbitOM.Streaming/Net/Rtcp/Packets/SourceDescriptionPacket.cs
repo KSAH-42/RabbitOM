@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
-    public sealed class SourceDescriptionRtcpPacket : RtcpPacket
+    public sealed class SourceDescriptionPacket : RtcpPacket
     {
         public uint SynchronizationSourceId { get; private set; }
         
@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        public static bool TryParse( in ArraySegment<byte> buffer , out SourceDescriptionRtcpPacket result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out SourceDescriptionPacket result )
         {
             throw new NotImplementedException();
         }
