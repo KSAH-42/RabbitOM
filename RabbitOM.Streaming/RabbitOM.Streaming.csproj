@@ -53,7 +53,7 @@
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Net\Rtcp\Packets\ApplicationPacket.cs" />
-    <Compile Include="Net\Rtcp\Packets\BytePacket.cs" />
+    <Compile Include="Net\Rtcp\Packets\ByePacket.cs" />
     <Compile Include="Net\Rtcp\Packets\ReceiverReportPacket.cs" />
     <Compile Include="Net\Rtcp\Packets\RtcpPacket.cs" />
     <Compile Include="Net\Rtcp\Packets\SenderReportPacket.cs" />

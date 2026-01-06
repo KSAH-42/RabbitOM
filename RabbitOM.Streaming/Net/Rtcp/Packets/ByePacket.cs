@@ -2,8 +2,13 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
-    public sealed class BytePacket : RtcpPacket
+    public sealed class ByePacket : RtcpPacket
     {
+        public const int PacketType = 203;
+
+
+
+
         public uint[] SynchronizationSourcesIds { get; private set; }
         
         public string Reason { get; private set; }
@@ -11,7 +16,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        public static bool TryParse( in ArraySegment<byte> buffer , out BytePacket result )
+        public static bool TryParse( in ArraySegment<byte> buffer , out ByePacket result )
         {
             throw new NotImplementedException();
         }

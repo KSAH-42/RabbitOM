@@ -4,6 +4,11 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
     public sealed class ReceiverReportPacket : RtcpPacket
     {
+        public const int PacketType = 201;
+
+
+
+
         public uint SynchronizationSourceId { get; private set; }
         
         public RtcpReportBlock[] Reports { get; private set; }
