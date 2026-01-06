@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
             {
                 buffer.Clear();
 
-                while( offset < ( message.Payload.Array.Length ) )
+                while( offset < message.Payload.Array.Length )
                 {
                     buffer.Add( message.Payload.Array[ offset ++ ] );
                 }
