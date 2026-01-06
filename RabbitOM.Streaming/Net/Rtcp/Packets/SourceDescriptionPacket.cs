@@ -9,9 +9,11 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-
         private readonly List<RtcpSourceDescriptionItem> _items = new List<RtcpSourceDescriptionItem>();
 
+
+
+        public SourceDescriptionPacket( byte version ) : base ( version ) { }
 
 
 
@@ -41,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
                 return false;
             }
 
-            result = new SourceDescriptionPacket() { Version = message.Version };
+            result = new SourceDescriptionPacket( message.Version );
 
             var offset = message.Payload.Offset;
 

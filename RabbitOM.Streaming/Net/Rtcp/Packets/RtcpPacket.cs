@@ -4,8 +4,11 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
     public abstract class RtcpPacket
     {
-        public const uint DefaultVersion = 2;
+        public const byte DefaultVersion = 2;
 
-        public uint Version { get; protected set; }
+
+        protected RtcpPacket( byte version ) { Version = version; }
+
+        public byte Version { get; private set; }
     }
 }

@@ -10,6 +10,8 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
         public const int MinimumSize = 8;
 
 
+        public ApplicationPacket( byte version ) : base ( version ) { }
+
 
 
         public uint SynchronizationSourceId { get; private set; }
@@ -32,7 +34,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
             var offset = message.Payload.Offset;
 
-            result = new ApplicationPacket() { Version = result.Version };
+            result = new ApplicationPacket( message.Version );
 
             result.SynchronizationSourceId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );

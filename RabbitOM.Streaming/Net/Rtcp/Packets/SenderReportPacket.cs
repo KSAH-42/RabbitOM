@@ -16,6 +16,12 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
+
+        public SenderReportPacket( byte version ) : base ( version ) { }
+
+
+
+
         public uint SynchronizationSourceId { get; private set; }
         
         public ulong NtpTimeStamp { get; private set; }
@@ -51,7 +57,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
             var offset = message.Payload.Offset;
 
-            result = new SenderReportPacket() { Version = message.Version };
+            result = new SenderReportPacket( message.Version );
 
             result.SynchronizationSourceId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );

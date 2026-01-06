@@ -14,6 +14,9 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
+        public ByePacket( byte version ) : base ( version ) { }
+
+
 
         public string Reason { get; private set; }
         
@@ -39,7 +42,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
                 return false;
             }
 
-            result = new ByePacket() { Version = message.Version };
+            result = new ByePacket( message.Version );
 
             var offset = message.Payload.Offset;
 
