@@ -7,7 +7,12 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
         public const byte DefaultVersion = 2;
 
 
-        protected RtcpPacket( byte version ) { Version = version; }
+        protected RtcpPacket( byte version )
+        { 
+            Version = version; 
+
+            ExceptionHelper.ThrowOnRelease("this implementation is not yet finished");
+        }
 
         public byte Version { get; private set; }
     }
