@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
@@ -11,7 +12,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         public uint SynchronizationSourceId { get; private set; }
         
-        public RtcpReportBlock[] Reports { get; private set; }
+        public IReadOnlyList<RtcpReportBlock> Reports { get; private set; }
 
 
 

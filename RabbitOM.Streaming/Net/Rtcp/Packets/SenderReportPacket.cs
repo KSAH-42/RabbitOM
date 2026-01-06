@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
@@ -18,11 +19,11 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
         
         public uint RtpTimeStamp { get; private set; }
         
-        public uint PacketCount { get; private set; }
+        public uint NumberOfPackets { get; private set; }
         
-        public uint OctetCount { get; private set; }
+        public uint NumberOfBytes { get; private set; }
         
-        public RtcpReportBlock[] Reports { get; private set; }
+        public IReadOnlyList<RtcpReportBlock> Reports { get; private set; }
 
 
 
