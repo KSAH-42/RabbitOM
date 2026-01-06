@@ -54,20 +54,18 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
             result = new RtcpMessage();
             
-            result.Version = (byte) ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x3 );
-
-            result.Padding = ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
-
-            result.SpecificParameter = (byte) ( buffer.Array[ buffer.Offset ] & 0x1F );
-
-            result.Type = (byte) buffer.Array[ buffer.Offset + 1 ];
+            result.Version           = (byte) ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x3 );
+            result.Padding           =        ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
+            result.SpecificParameter = (byte) (   buffer.Array[ buffer.Offset ] & 0x1F );
+            result.Type              = (byte)     buffer.Array[ buffer.Offset + 1 ];
 
             if ( buffer.Count >= 5 )
             {
                 var length = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
+                
                 var count  = ( buffer.Array.Length - ( buffer.Offset + 4 ) );
-
-                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 4 , length < count ? length : count );
+                
+                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 4 , Math.Min( count , length ) );
             }
 
             return true;
