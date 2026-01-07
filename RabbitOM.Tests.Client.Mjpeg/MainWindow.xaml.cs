@@ -35,7 +35,6 @@ namespace RabbitOM.Tests.Client.Mjpeg
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Net.Rtp;
     using RabbitOM.Streaming.Net.Rtp.Jpeg;
-    using RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging;
     using RabbitOM.Streaming.Net.Rtsp;
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
@@ -44,7 +43,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
-        private readonly RtpPacketInspector _inspector = new DefaultPacketInspector();
+        private readonly DefaultPacketInspector _inspector = new DefaultPacketInspector();
         private readonly JpegFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly JpegRenderer _renderer = new JpegRenderer();
         

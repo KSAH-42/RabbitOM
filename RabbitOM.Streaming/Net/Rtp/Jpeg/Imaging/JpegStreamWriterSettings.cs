@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         public UInt16 YDensity { get; set; } = 1;
 
         /// <summary>
-        /// Gets / Sets the resolution fallback settings
+        /// Gets / Sets the resolution fallback value
         /// </summary>
         public ResolutionInfo ResolutionFallback { get; set; }
     }

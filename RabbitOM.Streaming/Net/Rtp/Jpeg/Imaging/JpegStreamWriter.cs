@@ -256,16 +256,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new ArgumentException( nameof( type ) );
             }
 
-            if ( width <= 0 ) 
+            if ( width <= 0 || height <= 0 ) 
             {
-                width = _settings.ResolutionFallback.Width;
-            }
-
-            if ( height <= 0 )
-            {
+                width  = _settings.ResolutionFallback.Width;
                 height = _settings.ResolutionFallback.Height;
             }
-            
+
             if ( width <= 0 || height <= 0 )
             {
                 throw new ArgumentException( "No resolution fallback available" , nameof( width ) );
