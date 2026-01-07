@@ -64,8 +64,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Renders\RtpJpegRender.cs" />
-    <Compile Include="Renders\RtpRender.cs" />
+    <Compile Include="Renders\JpegRenderer.cs" />
+    <Compile Include="Renders\Renderer.cs" />
     <Compile Include="WritableBitmapLocker.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

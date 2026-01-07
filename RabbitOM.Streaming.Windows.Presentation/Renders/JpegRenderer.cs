@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
     /// <summary>
     /// Represent a jpeg render
     /// </summary>
-    public sealed class RtpJpegRender : RtpRender
+    public sealed class JpegRenderer : Renderer
     {
         private WriteableBitmap _writableBitmap;
 

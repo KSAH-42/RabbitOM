@@ -46,7 +46,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultPacketInspector();
         private readonly JpegFrameBuilder _frameBuilder = new JpegFrameBuilder();
-        private readonly RtpRender _renderer = new RtpJpegRender();
+        private readonly JpegRenderer _renderer = new JpegRenderer();
         
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {

@@ -7,9 +7,9 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
     /// <summary>
     /// Represent the base render class
     /// </summary>
-    public abstract class RtpRender : IDisposable
+    public abstract class Renderer : IDisposable
     {
-        static RtpRender()
+        static Renderer()
         {
             RenderOptions.ProcessRenderMode = System.Windows.Interop.RenderMode.SoftwareOnly;
         }
@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         /// <summary>
         /// Release resources
         /// </summary>
-        ~RtpRender()
+        ~Renderer()
         {
             Dispose( false) ;
         }
