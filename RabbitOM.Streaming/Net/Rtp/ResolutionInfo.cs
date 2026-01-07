@@ -1,26 +1,26 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
+namespace RabbitOM.Streaming.Net.Rtp
 {
     /// <summary>
-    /// Represent the jpeg resolution info
+    /// Represent the resolution info
     /// </summary>
-    public struct JpegResolution
+    public struct ResolutionInfo
     {
         /// <summary>
         /// A resolution
         /// </summary>
-        public static readonly JpegResolution Resolution_1280x960 = new JpegResolution( 1280 , 960 );
+        public static readonly ResolutionInfo Resolution_1280x960 = new ResolutionInfo( 1280 , 960 );
 
         /// <summary>
         /// A resolution
         /// </summary>
-        public static readonly JpegResolution Resolution_2040x2040 = new JpegResolution( 2040 , 2040 );
+        public static readonly ResolutionInfo Resolution_2040x2040 = new ResolutionInfo( 2040 , 2040 );
 
         /// <summary>
         /// A resolution
         /// </summary>
-        public static readonly JpegResolution Resolution_3840x2160 = new JpegResolution( 3840 , 2160 );
+        public static readonly ResolutionInfo Resolution_3840x2160 = new ResolutionInfo( 3840 , 2160 );
 
 
 
@@ -32,14 +32,14 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// <param name="width">the width</param>
         /// <param name="height">the height</param>
         /// <exception cref="ArgumentException"/>
-        public JpegResolution( int width , int height )
+        public ResolutionInfo( int width , int height )
         {
-            if ( width <= 2 )
+            if ( width < 2 )
             {
                 throw new ArgumentException( nameof( width ) );
             }
 
-            if ( height <= 2 )
+            if ( height < 2 )
             {
                 throw new ArgumentException( nameof( height ) );
             }

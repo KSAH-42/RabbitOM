@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// <summary>
         /// Gets / Sets the resolution fallback
         /// </summary>
-        public JpegResolution ResolutionFallback
+        public ResolutionInfo ResolutionFallback
         {
             get => _writer.Settings.ResolutionFallback;
             set => _writer.Settings.ResolutionFallback = value;
