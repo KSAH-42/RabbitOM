@@ -37,6 +37,7 @@
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/lake.mpg" />
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/water.mpg" />
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/video.mp4" />
+            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1/video4K.mp4" />
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>

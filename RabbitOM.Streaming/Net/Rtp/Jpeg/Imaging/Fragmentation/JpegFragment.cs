@@ -64,19 +64,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging.Fragmentation
 
 
 
-        /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryValidate()
-        {
-            return Type >= 0 && Width >= 2 && Height >= 2 && Payload.Count > 0;
-        }
-
-
-
-
-
 
         /// <summary>
         /// Try to parse

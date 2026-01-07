@@ -35,6 +35,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Net.Rtp;
     using RabbitOM.Streaming.Net.Rtp.Jpeg;
+    using RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging;
     using RabbitOM.Streaming.Net.Rtsp;
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
@@ -44,7 +45,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     {
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultPacketInspector();
-        private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
+        private readonly JpegFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly RtpRender _renderer = new RtpJpegRender();
         
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
@@ -134,8 +135,11 @@ namespace RabbitOM.Tests.Client.Mjpeg
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
+                // resolution fallback are used in case where the camera can not deliver the width and height, it's happen when the resolution become to big and can not be placed in the rtp jpeg packet, this is an official limitation of rtp rfc. 
+                _frameBuilder.ConfigureResolutionFallBack( JpegResolution.Resolution_2040x2040 );
                 _renderer.TargetControl = _image;
+
+                _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
             } ) );
         }
 

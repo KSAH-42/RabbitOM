@@ -19,7 +19,14 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
 
 
-
+        /// <summary>
+        /// Gets / Sets the resolution fallback
+        /// </summary>
+        public JpegResolution ResolutionFallBack
+        {
+            get => _writer.Settings.ResolutionFallBack;
+            set => _writer.Settings.ResolutionFallBack = value;
+        }
 
 
         /// <summary>
@@ -49,6 +56,16 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         }
 
         /// <summary>
+        /// Can add a fragment
+        /// </summary>
+        /// <param name="fragment">the fragment</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool CanAddFragment( JpegFragment fragment )
+        {
+            return fragment != null && fragment.Type >= 0 && fragment.Payload.Count > 0;
+        }
+
+        /// <summary>
         /// Add a fragment
         /// </summary>
         /// <param name="fragment">the fragment</param>
@@ -56,16 +73,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         public void AddFragment( JpegFragment fragment )
         {
             _fragments.Enqueue( fragment ?? throw new ArgumentNullException( nameof( fragment ) ) );
-        }
-
-        /// <summary>
-        /// Check if the fragment can be added
-        /// </summary>
-        /// <param name="fragment">the fragment</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool CanAddFragment( JpegFragment fragment )
-        {
-            return fragment != null && fragment.TryValidate();
         }
 
         /// <summary>

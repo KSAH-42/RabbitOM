@@ -62,6 +62,7 @@
     <Compile Include="Net\Rtcp\RtcpMessage.cs" />
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
     <Compile Include="Net\Rtcp\RtcpSourceDescriptionItem.cs" />
+    <Compile Include="Net\Rtp\Jpeg\Imaging\JpegResolution.cs" />
     <Compile Include="Numerics.cs" />
     <Compile Include="Net\Rtp\Pcm\L24SampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpMediaElement.cs" />

@@ -31,5 +31,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// Gets / Sets the Y density value
         /// </summary>
         public UInt16 YDensity { get; set; } = 1;
+
+        /// <summary>
+        /// Gets / Sets the fallback resolution where resolution can be determine if the rtp payload does not contains resolutions info. this case happen when the resolution is big and can not be store on the rtp payload / jpeg fragment.
+        /// </summary>
+        public JpegResolution ResolutionFallBack { get; set; }
     }
 }

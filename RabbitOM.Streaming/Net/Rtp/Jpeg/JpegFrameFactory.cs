@@ -14,6 +14,21 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         private readonly JpegImageBuilder _imageBuilder = new JpegImageBuilder();
 
         /// <summary>
+        /// Configure
+        /// </summary>
+        /// <param name="resolutionFallBack">the resolution fallback</param>
+        /// <exception cref="ArgumentNullException"/>
+        public void ConfigureResolutionFallBack( JpegResolution resolutionFallBack )
+        {
+            if ( JpegResolution.IsNullOrEmpty( resolutionFallBack ) )
+            {
+                throw new ArgumentNullException( nameof( resolutionFallBack ) );
+            }
+
+            _imageBuilder.ResolutionFallBack = resolutionFallBack;
+        }
+
+        /// <summary>
         /// Try to create a frame from aggregated packets
         /// </summary>
         /// <param name="packets">the packets</param>

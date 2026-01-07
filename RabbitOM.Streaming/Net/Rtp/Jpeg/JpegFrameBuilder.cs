@@ -1,10 +1,16 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging;
+using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 {
     public class JpegFrameBuilder : RtpFrameBuilder
     {
         private readonly JpegFrameFactory _factory = new JpegFrameFactory();
+
+        public void ConfigureResolutionFallBack( JpegResolution resolutionFallback )
+        {
+            _factory.ConfigureResolutionFallBack( resolutionFallback );
+        }
 
         protected override void Dispose( bool disposing )
         {
