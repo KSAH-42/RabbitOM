@@ -258,12 +258,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
             if ( width <= 0 ) 
             {
-                width = _settings.ResolutionFallBack?.Width ?? 0;
+                width = _settings.ResolutionFallback.Width;
             }
 
             if ( height <= 0 )
             {
-                height = _settings.ResolutionFallBack?.Height ?? 0;
+                height = _settings.ResolutionFallback.Height;
             }
             
             if ( width <= 0 || height <= 0 )

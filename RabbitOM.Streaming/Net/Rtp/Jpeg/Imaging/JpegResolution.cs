@@ -5,13 +5,8 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
     /// <summary>
     /// Represent the jpeg resolution info
     /// </summary>
-    public sealed class JpegResolution
+    public struct JpegResolution
     {
-        /// <summary>
-        /// A resolution
-        /// </summary>
-        public static readonly JpegResolution Empty = new JpegResolution();
-
         /// <summary>
         /// A resolution
         /// </summary>
@@ -29,12 +24,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
 
 
-
-
-        /// <summary>
-        /// Initialize an instance of the resolution info
-        /// </summary>
-        private JpegResolution() { }
 
 
         /// <summary>
@@ -72,20 +61,5 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// Gets the height
         /// </summary>
         public int Height { get; private set; }
-
-
-
-
-
-
-        /// <summary>
-        /// Check if the resolution infos are valid
-        /// </summary>
-        /// <param name="resolution">resolution info</param>
-        /// <returns>return true for a sucess, otherwise false</returns>
-        public static bool IsNullOrEmpty( JpegResolution resolution )
-        {
-            return resolution == null || object.ReferenceEquals( resolution , Empty );
-        }
     }
 }
