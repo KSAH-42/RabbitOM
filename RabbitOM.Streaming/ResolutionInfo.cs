@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp
+namespace RabbitOM.Streaming
 {
     /// <summary>
     /// Represent the resolution info
