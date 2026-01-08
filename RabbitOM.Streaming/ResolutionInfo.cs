@@ -10,6 +10,11 @@ namespace RabbitOM.Streaming
         /// <summary>
         /// A resolution
         /// </summary>
+        public static readonly ResolutionInfo Resolution_800x600 = new ResolutionInfo( 800 , 600 );
+
+        /// <summary>
+        /// A resolution
+        /// </summary>
         public static readonly ResolutionInfo Resolution_1280x960 = new ResolutionInfo( 1280 , 960 );
 
         /// <summary>

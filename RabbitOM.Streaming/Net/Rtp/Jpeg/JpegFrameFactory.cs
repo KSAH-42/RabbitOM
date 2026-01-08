@@ -16,16 +16,16 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <summary>
         /// Configure
         /// </summary>
-        /// <param name="fallbackSettings">the fallback settings</param>
+        /// <param name="settings">the settings</param>
         /// <exception cref="ArgumentNullException"/>
-        public void Configure( JpegFallbackSettings fallbackSettings )
+        public void Configure( JpegFrameBuilderSettings settings )
         {
-            if ( fallbackSettings == null )
+            if ( settings == null )
             {
-                throw new ArgumentNullException( nameof( fallbackSettings ) );
+                throw new ArgumentNullException( nameof( settings ) );
             }
 
-            _imageBuilder.ResolutionFallback = fallbackSettings.Resolution;
+            _imageBuilder.ResolutionFallback = settings.ResolutionFallBack;
         }
 
         /// <summary>

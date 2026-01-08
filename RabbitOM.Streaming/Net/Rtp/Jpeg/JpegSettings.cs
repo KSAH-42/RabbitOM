@@ -5,20 +5,20 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <summary>
     /// Represent the jpeg fallback settins
     /// </summary>
-    public sealed class JpegFallbackSettings
+    public sealed class JpegSettings
     {
         /// <summary>
         /// Initialize an instance of the fallback settings
         /// </summary>
-        /// <param name="resolution">the resolution</param>
-        public JpegFallbackSettings( in ResolutionInfo resolution )
+        /// <param name="resolutionFallBack">the resolution</param>
+        public JpegSettings( in ResolutionInfo resolutionFallBack )
         {
-            Resolution = resolution;
+            ResolutionFallBack = resolutionFallBack;
         }
 
         /// <summary>
         /// Gets the resolution
         /// </summary>
-        public ResolutionInfo Resolution { get; private set; }
+        public ResolutionInfo ResolutionFallBack { get; private set; }
     }
 }

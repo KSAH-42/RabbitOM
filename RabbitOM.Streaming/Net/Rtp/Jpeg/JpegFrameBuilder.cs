@@ -6,9 +6,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     {
         private readonly JpegFrameFactory _factory = new JpegFrameFactory();
 
-        public void Configure( JpegFallbackSettings fallbackSettings )
+        public void Configure( JpegSettings settings )
         {
-            _factory.Configure( fallbackSettings );
+            _factory.Configure( settings );
         }
 
         protected override void Dispose( bool disposing )
