@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 {
-    internal struct H266NalUnitFragmentation
+    public struct H266NalUnitFragmentation
     {
         public bool StartBit { get; private set; }
 

@@ -66,6 +66,7 @@
     <Compile Include="Net\Rtp\H265\H265Settings.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
+    <Compile Include="Net\Rtp\StartCodePrefix.cs" />
     <Compile Include="ResolutionInfo.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegSettings.cs" />
     <Compile Include="Numerics.cs" />
