@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
 
 
-        private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
+        private readonly H265WriterSettings _settings = new H265WriterSettings();
         
         private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
         
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <summary>
         /// Gets the settings of writer
         /// </summary>
-        public H265StreamWriterSettings Settings
+        public H265WriterSettings Settings
         {
             get => _settings;
         }
@@ -216,7 +216,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnitFragment.TryParse( packet.Payload , Settings.UseDONL ,  out var nalUnit ) )
+            if ( H265NalUnitFragment.TryParse( packet.Payload , Settings.DONL ,  out var nalUnit ) )
             {
                 if ( H265NalUnitFragment.IsStartPacket( nalUnit ) )
                 {

@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// </summary>
         /// <param name="settings">the settings</param>
         /// <exception cref="ArgumentNullException"/>
-        public void Configure( JpegFrameBuilderSettings settings )
+        public void Configure( JpegSettings settings )
         {
             if ( settings == null )
             {

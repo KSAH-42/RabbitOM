@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     /// <summary>
     /// Represent a H265 stream writer settings class
     /// </summary>
-    public sealed class H265StreamWriterSettings
+    public sealed class H265WriterSettings
     {
         /// <summary>
         /// Gets / Sets the pps
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <summary>
         /// Gets / Sets the DONL usage
         /// </summary>
-        public bool UseDONL { get; set; }
+        public bool DONL { get; set; }
 
 
 
@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
             PPS = null;
             SPS = null;
             VPS = null;
-            UseDONL = false;
+            DONL = false;
         }
     }
 }
