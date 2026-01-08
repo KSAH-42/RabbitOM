@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             {
                 var count = donl ? 5 : 3;
 
-                if ( buffer.Array.Length - buffer.Offset < count )
+                if ( buffer.Array.Length - ( buffer.Offset + count ) < count )
                 {
                     return false;
                 }
