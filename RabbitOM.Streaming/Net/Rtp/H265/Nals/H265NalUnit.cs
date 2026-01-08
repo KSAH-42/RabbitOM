@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <summary>
         /// Gets the temporal identifier
         /// </summary>
-        public byte Tid { get; private set; }
+        public byte TemportalId { get; private set; }
 
         /// <summary>
         /// Gets the optional payload that can be null
@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
             result.ForbiddenBit  = (byte)            ( ( header >> 15) & 0x01 ) == 1;
             result.Type          = (H265NalUnitType) ( ( header >> 9 ) & 0x3F );
             result.LayerId       = (byte)            ( ( header >> 3 ) & 0x3F );
-            result.Tid           = (byte)            (   header        & 0x07 );
+            result.TemportalId   = (byte)            (   header        & 0x07 );
 
             if ( buffer.Count > 2 )
             {
