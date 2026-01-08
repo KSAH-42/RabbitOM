@@ -25,14 +25,6 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        private void AddItem( RtcpSourceDescriptionItem item )
-        {
-            _items.Add( item ?? throw new ArgumentNullException( nameof( item ) ) );
-        }
-
-
-
-
 
         public static bool TryParse( RtcpMessage message , out SourceDescriptionPacket result )
         {
@@ -51,7 +43,9 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
             {
                 if ( RtcpSourceDescriptionItem.TryParse( new ArraySegment<byte>( message.Payload.Array , offset , message.Payload.Count - RtcpSourceDescriptionItem.MinimumSize ) , out var item ) )
                 {
-                    result.AddItem( item );
+                    System.Diagnostics.Debug.Assert( item != null );
+
+                    result._items.Add( item );
                 }
 
                 offset += RtcpSourceDescriptionItem.MinimumSize + item?.Value?.Length ?? 0 ;

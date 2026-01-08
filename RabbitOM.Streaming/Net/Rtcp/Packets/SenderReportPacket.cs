@@ -37,15 +37,6 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        private void AddReport( RtcpReportBlock report )
-        {
-            _reports.Add( report ?? throw new ArgumentNullException( nameof( report ) ) );
-        }
-
-
-
-
-
         public static bool TryParse( RtcpMessage message , out SenderReportPacket result )
         {
             result = null;
@@ -94,7 +85,9 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
                 {
                     if ( RtcpReportBlock.TryParse( new ArraySegment<byte>( message.Payload.Array , offset , RtcpReportBlock.Size ) , out var report ) )
                     {
-                        result.AddReport( report );
+                        System.Diagnostics.Debug.Assert( report != null );
+
+                        result._reports.Add( report );
                     }
 
                     offset += RtcpReportBlock.Size;

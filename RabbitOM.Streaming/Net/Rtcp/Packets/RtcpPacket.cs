@@ -9,9 +9,9 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         protected RtcpPacket( byte version )
         { 
-            Version = version; 
-
             ExceptionHelper.ThrowOnRelease("this implementation is not yet finished");
+
+            Version = version; 
         }
 
         public byte Version { get; private set; }

@@ -25,14 +25,6 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
 
 
-        private void AddSynchronizationSourceId( uint id )
-        {
-            _synchronizationSourcesIds.Add( id );
-        }
-
-
-
-
         public static bool TryParse( RtcpMessage message , out ByePacket result )
         {
             result = null;
@@ -50,14 +42,14 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
             {
                 if ( offset + 4 < message.Payload.Array.Length )
                 {
-                    uint synchId = 0;
+                    uint sscrId = 0;
 
-                    synchId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
-                    synchId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
-                    synchId |= (uint) ( message.Payload.Array[ offset ++ ] << 8 );
-                    synchId |= (uint) ( message.Payload.Array[ offset ++ ] );
+                    sscrId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
+                    sscrId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
+                    sscrId |= (uint) ( message.Payload.Array[ offset ++ ] << 8 );
+                    sscrId |= (uint) ( message.Payload.Array[ offset ++ ] );
 
-                    result.AddSynchronizationSourceId( synchId );
+                    result._synchronizationSourcesIds.Add( sscrId );
 
                     offset += 4;
                 }
