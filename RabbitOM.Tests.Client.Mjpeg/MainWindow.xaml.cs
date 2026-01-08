@@ -1,30 +1,27 @@
 ﻿/*
 
-You can download and configure this rtsp server as a rtsp media source: it offer many nice features.
+This sample illustrate how to receive video from a MJPEG SOURCE only.
+
+After configuring a jpeg rtsp server using the happyRtspServer, 
+
+please make that you can receive the JPEG using VLC before launching this app
+
+Download and configure this rtsp server:
 
 https://www.happytimesoft.com/products/rtsp-server/index.html
 
 go to the rtsp server folder, and add movies and the same folder and edit the xml configuration used by this server. and then launch this sample application.
 
-you can also copy the xml configuration file in Resources\Configuration\config.xml an copy and paste this file in folder and run the following command: RtspServer.exe -c config.xml
+you can also copy the configuration files located in Resources\Configuration\ folder
+
+and run using the following command: 
+
+RtspServer.exe -c config-JPEG.xml
 
 Otherwise use a security ip camera, and go the web page configuration section, and select the mjpeg codec.
 and then read the manufacturer pdf in order to get the right rtsp uri. 
 Please also, check the rtsp settings on the web page of the camera.
 
-After configuring a jpeg rtsp server using the happyRtspServer, please make that you can receive the JPEG (not H264,or...) stream using vlc, and then launch this app.
-
-----------------------------------------------------------------------------------------------
-
- 
- No MVVM is used here, this is not the goal
-
- This sample illustrate how to receive video from a MJPEG SOURCE only.
-
- this same sample doesn't contains optimization on the GUI side like hardware accelaration and other WpfThreadings optimizations
-
- This is not the goal of this sample code
-            
  */
 
 using System;

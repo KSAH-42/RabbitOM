@@ -10,9 +10,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
-        public void Configure( byte[] pps , byte[] sps , byte[] vps )
+        public void Configure( byte[] pps , byte[] sps , byte[] vps , bool useDonl = false )
         {
-            _frameFactory.Configure( pps , sps , vps );
+            _frameFactory.Configure( pps , sps , vps , useDonl );
         }
 
         protected override void Dispose( bool disposing )

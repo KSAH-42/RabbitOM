@@ -216,7 +216,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnitFragment.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H265NalUnitFragment.TryParse( packet.Payload , Settings.UseDONL ,  out var nalUnit ) )
             {
                 if ( H265NalUnitFragment.IsStartPacket( nalUnit ) )
                 {

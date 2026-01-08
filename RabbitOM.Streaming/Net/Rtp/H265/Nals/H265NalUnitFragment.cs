@@ -65,9 +65,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// Try to parse
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
+        /// <param name="donl">the flag for decoded order number</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( in ArraySegment<byte> buffer , out H265NalUnitFragment result )
+        public static bool TryParse( in ArraySegment<byte> buffer , bool donl , out H265NalUnitFragment result )
         {
             result = default;
 
@@ -86,7 +87,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     
             if ( buffer.Count > 3 )
             {
-                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 3 , buffer.Array.Length - (buffer.Offset + 3) );
+                var offset = donl ? 5 : 3 ;
+                
+                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + offset , buffer.Array.Length - ( buffer.Offset + offset ) );
             }
 
             return true;

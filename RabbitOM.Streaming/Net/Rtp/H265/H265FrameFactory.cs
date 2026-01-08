@@ -18,11 +18,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="pps">the pps</param>
         /// <param name="sps">the sps</param>
         /// <param name="vps">the vps</param>
-        public void Configure( byte[] pps , byte[] sps , byte[] vps )
+        /// <param name="useDonl">donl flag</param>
+        public void Configure( byte[] pps , byte[] sps , byte[] vps , bool useDonl )
         {
             _writer.Settings.PPS = pps;
             _writer.Settings.SPS = sps;
             _writer.Settings.VPS = vps;
+            _writer.Settings.UseDONL = useDonl;
         }
 
         /// <summary>
