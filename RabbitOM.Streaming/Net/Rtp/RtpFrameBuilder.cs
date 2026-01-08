@@ -21,10 +21,17 @@ namespace RabbitOM.Streaming.Net.Rtp
         public event EventHandler<RtpSequenceSortingEventArgs> SequenceSorting;
 
 
+
+
+
+
+
         ~RtpFrameBuilder()
         {
             Dispose( false );
         }
+
+
 
 
 
@@ -40,7 +47,11 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             get => _aggregator.Packets;
         }
-        
+
+        protected RtpPacketAggregator Aggregator
+        {
+            get => _aggregator;
+        }
 
 
 
