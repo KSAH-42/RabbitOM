@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             if ( buffer.Count > 2 )
             {
-                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Array.Length - (buffer.Offset + 2) );
+                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             }
 
             return true;
