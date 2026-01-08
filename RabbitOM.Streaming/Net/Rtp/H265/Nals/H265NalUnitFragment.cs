@@ -87,9 +87,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     
             if ( buffer.Count > 3 )
             {
-                var offset = donl ? 5 : 3 ;
+                var count = donl ? 5 : 3 ;
                 
-                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + offset , buffer.Array.Length - ( buffer.Offset + offset ) );
+                result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + count , buffer.Count - count);
             }
 
             return true;
