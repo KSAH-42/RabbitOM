@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
                 return false;
             }
 
-            var header = buffer.Array[ buffer.Offset ] + buffer.Array[ buffer.Offset + 1 ];
+            var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
 
             result = new H266NalUnit();
 

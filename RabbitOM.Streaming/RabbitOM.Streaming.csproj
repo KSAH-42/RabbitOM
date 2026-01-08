@@ -64,6 +64,7 @@
     <Compile Include="Net\Rtcp\RtcpSourceDescriptionItem.cs" />
     <Compile Include="Net\Rtp\H264\H264Settings.cs" />
     <Compile Include="Net\Rtp\H265\H265Settings.cs" />
+    <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
     <Compile Include="ResolutionInfo.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegSettings.cs" />
