@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
 
 
-        private readonly H265WriterSettings _settings = new H265WriterSettings();
+        private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
         
         private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
         
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <summary>
         /// Gets the settings of writer
         /// </summary>
-        public H265WriterSettings Settings
+        public H265StreamWriterSettings Settings
         {
             get => _settings;
         }

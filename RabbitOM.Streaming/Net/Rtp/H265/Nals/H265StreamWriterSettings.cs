@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     /// <summary>
     /// Represent a H265 stream writer settings class
     /// </summary>
-    public sealed class H265WriterSettings
+    public sealed class H265StreamWriterSettings
     {
         /// <summary>
         /// Gets / Sets the pps
