@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 {
-    public struct H266NalUnit
+    internal struct H266NalUnit
     {
         public bool ForbiddenBit { get; private set; }
 

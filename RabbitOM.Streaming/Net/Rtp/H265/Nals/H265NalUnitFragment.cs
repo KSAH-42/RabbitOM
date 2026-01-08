@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
             {
                 var count = donl ? 5 : 3;
 
-                if ( buffer.Array.Length - ( buffer.Offset + count ) < count )
+                if ( buffer.Count - count < 0 )
                 {
                     return false;
                 }
