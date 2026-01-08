@@ -8,9 +8,32 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
+
+
+
+
+        private RtcpSourceDescriptionItem()
+        {
+        }
+
+        public RtcpSourceDescriptionItem( byte type , string value )
+        {
+            Type = type;
+            Value = value ?? string.Empty;
+        }
+        
+
+
+
+
+
+
         public byte Type { get; private set; }
         
         public string Value { get; private set; }
+        
+
+
 
 
 
@@ -39,7 +62,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
                     textBuffer[ i ] = payload.Array[ ++ offset ];
                 }
 
-                result.Value = System.Text.Encoding.ASCII.GetString( textBuffer );
+                result.Value = System.Text.Encoding.ASCII.GetString( textBuffer ) ?? string.Empty;
             }
 
             return true;

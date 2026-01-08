@@ -9,6 +9,30 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
+
+
+
+        private RtcpReportBlock()
+        {
+        }
+
+        public RtcpReportBlock( uint synchronizationSource , byte fractionLost , uint cummulativePacketsLost , uint extendedHighestSequence , uint interArrivalJitter , uint lastSRTimestamp , uint delaySinceLastSR )
+        {
+            SynchronizationSource = synchronizationSource;
+            FractionLost = fractionLost;
+            CummulativePacketsLost = cummulativePacketsLost;
+            ExtendedHighestSequence = extendedHighestSequence;
+            InterArrivalJitter = interArrivalJitter;
+            LastSRTimestamp = lastSRTimestamp;
+            DelaySinceLastSR = delaySinceLastSR;
+        }
+        
+
+
+
+
+
+
         public uint SynchronizationSource { get; private set; }
         
         public byte FractionLost { get; private set; }
@@ -17,11 +41,14 @@ namespace RabbitOM.Streaming.Net.Rtcp
         
         public uint ExtendedHighestSequence { get; private set; }
         
-        public uint InterarrivalJitter { get; private set; }
+        public uint InterArrivalJitter { get; private set; }
         
         public uint LastSRTimestamp { get; private set; }
         
         public uint DelaySinceLastSR { get; private set; }
+
+
+
 
 
 
@@ -53,10 +80,10 @@ namespace RabbitOM.Streaming.Net.Rtcp
             result.ExtendedHighestSequence |= (uint) buffer.Array[ offset ++ ] << 8;
             result.ExtendedHighestSequence |=        buffer.Array[ offset ++ ];
 
-            result.InterarrivalJitter  = (uint) buffer.Array[ offset ++ ] << 24;
-            result.InterarrivalJitter |= (uint) buffer.Array[ offset ++ ] << 16;
-            result.InterarrivalJitter |= (uint) buffer.Array[ offset ++ ] << 8;
-            result.InterarrivalJitter |=        buffer.Array[ offset ++ ];
+            result.InterArrivalJitter  = (uint) buffer.Array[ offset ++ ] << 24;
+            result.InterArrivalJitter |= (uint) buffer.Array[ offset ++ ] << 16;
+            result.InterArrivalJitter |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.InterArrivalJitter |=        buffer.Array[ offset ++ ];
 
             result.LastSRTimestamp  = (uint) buffer.Array[ offset ++ ] << 24;
             result.LastSRTimestamp |= (uint) buffer.Array[ offset ++ ] << 16;

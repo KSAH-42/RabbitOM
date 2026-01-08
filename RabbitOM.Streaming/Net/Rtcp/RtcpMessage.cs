@@ -8,6 +8,37 @@ namespace RabbitOM.Streaming.Net.Rtcp
     public sealed class RtcpMessage
     {
         /// <summary>
+        /// Initialize a new instance of rtcp message class
+        /// </summary>
+        private RtcpMessage()
+        {
+        }
+
+        /// <summary>
+        /// Initialize a new instance of rtcp message class
+        /// </summary>
+        /// <param name="version">the version</param>
+        /// <param name="padding">the padding</param>
+        /// <param name="specificParameter">the specific parameter</param>
+        /// <param name="type">the type</param>
+        /// <param name="length">the length</param>
+        /// <param name="payload">the payload</param>
+        public RtcpMessage( byte version , bool padding , byte specificParameter , byte type , ushort length , ArraySegment<byte> payload )
+        {
+            Version = version;
+            Padding = padding;
+            SpecificParameter = specificParameter;
+            Type = type;
+            Length = length;
+            Payload = payload;
+        }
+        
+
+
+
+
+
+        /// <summary>
         /// Gets Version
         /// </summary>
         public byte Version { get; private set; }
@@ -62,7 +93,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
             result.Version           = (byte) ( ( buffer.Array[ buffer.Offset ] >> 6 ) & 0x3 );
             result.Padding           =        ( ( buffer.Array[ buffer.Offset ] >> 5 ) & 0x1 ) == 1;
             result.SpecificParameter = (byte) (   buffer.Array[ buffer.Offset ] & 0x1F );
-            result.Type              = (byte)     buffer.Array[ buffer.Offset + 1 ];
+            result.Type              =            buffer.Array[ buffer.Offset + 1 ];
             result.Length            = (ushort) ( buffer.Array[ buffer.Offset + 2 ] * 0x100 + buffer.Array[ buffer.Offset + 3 ]);
 
             if ( buffer.Count >= 5 )
