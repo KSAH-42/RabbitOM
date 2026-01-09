@@ -5,7 +5,7 @@ using System;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpSampleBuilder : IRtpMediaBuilder , IDisposable
+    public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 

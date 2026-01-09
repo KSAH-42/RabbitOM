@@ -66,7 +66,7 @@
     <Compile Include="Net\Rtp\H265\H265FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
-    <Compile Include="Net\Rtp\IBuilderConfigurer.cs" />
+    <Compile Include="Net\Rtp\IConfigurer.cs" />
     <Compile Include="Net\Rtp\StartCodePrefix.cs" />
     <Compile Include="ResolutionInfo.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilderConfiguration.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="Net\Rtp\RtpSampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpFrameBuilder.cs" />
     <Compile Include="Net\Rtp\RtpPacketAggregator.cs" />
-    <Compile Include="Net\Rtp\IRtpMediaBuilder.cs" />
+    <Compile Include="Net\Rtp\IMediaBuilder.cs" />
     <Compile Include="Net\Rtp\RtpSequenceCompletedEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpSequenceSortingEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAddedEventArgs.cs" />
