@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// Setup
         /// </summary>
         /// <param name="settings">the settings</param>
-        public void Configure( H264Settings settings )
+        public void Configure( H264FrameBuilderConfiguration settings )
         {
             if ( settings == null )
             {

@@ -6,11 +6,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent an MPEG H265 frame builder
     /// </summary>
-    public sealed class H265FrameBuilder : RtpFrameBuilder
+    public sealed class H265FrameBuilder : RtpFrameBuilder , IBuilderConfigurer<H265FrameBuilderConfiguration>
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
-        public void Configure( H265Settings settings )
+        public void Configure( H265FrameBuilderConfiguration settings )
         {
             _frameFactory.Configure( settings );
         }

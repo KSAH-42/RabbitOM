@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent a H265 settings class
     /// </summary>
-    public sealed class H265Settings
+    public sealed class H265FrameBuilderConfiguration
     {
         /// <summary>
         /// Initialize a new instance of settings class
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="pps">pps</param>
         /// <param name="sps">sps</param>
         /// <param name="vps">vps</param>
-        public H265Settings( byte[] pps , byte[] sps , byte[] vps )
+        public H265FrameBuilderConfiguration( byte[] pps , byte[] sps , byte[] vps )
             : this ( pps , sps , vps , false )
         {
         }
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <param name="sps">sps</param>
         /// <param name="vps">vps</param>
         /// <param name="donl">donl</param>
-        public H265Settings( byte[] pps , byte[] sps , byte[] vps , bool donl )
+        public H265FrameBuilderConfiguration( byte[] pps , byte[] sps , byte[] vps , bool donl )
         {
             PPS = pps;
             SPS = sps;

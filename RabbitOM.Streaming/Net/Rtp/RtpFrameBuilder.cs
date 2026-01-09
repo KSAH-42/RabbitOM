@@ -2,7 +2,6 @@
 // TODO: on the add method, need to discard the actual sequence, in case of receiving one invalid or missing packet ?
 
 using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
@@ -39,21 +38,6 @@ namespace RabbitOM.Streaming.Net.Rtp
         private readonly RtpPacketAggregator _aggregator = new DefaultPacketAggregator();
         
        
-
-
-
-
-        public IReadOnlyCollection<RtpPacket> Packets
-        {
-            get => _aggregator.Packets;
-        }
-
-        protected RtpPacketAggregator Aggregator
-        {
-            get => _aggregator;
-        }
-
-
 
 
 

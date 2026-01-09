@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 {
-    public class JpegFrameBuilder : RtpFrameBuilder
+    public class JpegFrameBuilder : RtpFrameBuilder , IBuilderConfigurer<JpegFrameBuilderConfiguration>
     {
         private readonly JpegFrameFactory _factory = new JpegFrameFactory();
 
-        public void Configure( JpegSettings settings )
+        public void Configure( JpegFrameBuilderConfiguration settings )
         {
             _factory.Configure( settings );
         }

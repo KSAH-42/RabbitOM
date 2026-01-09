@@ -62,13 +62,14 @@
     <Compile Include="Net\Rtcp\RtcpMessage.cs" />
     <Compile Include="Net\Rtcp\RtcpReportBlock.cs" />
     <Compile Include="Net\Rtcp\RtcpSourceDescriptionItem.cs" />
-    <Compile Include="Net\Rtp\H264\H264Settings.cs" />
-    <Compile Include="Net\Rtp\H265\H265Settings.cs" />
+    <Compile Include="Net\Rtp\H264\H264FrameBuilderConfiguration.cs" />
+    <Compile Include="Net\Rtp\H265\H265FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
+    <Compile Include="Net\Rtp\IBuilderConfigurer.cs" />
     <Compile Include="Net\Rtp\StartCodePrefix.cs" />
     <Compile Include="ResolutionInfo.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegSettings.cs" />
+    <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilderConfiguration.cs" />
     <Compile Include="Numerics.cs" />
     <Compile Include="Net\Rtp\Pcm\L24SampleBuilder.cs" />
     <Compile Include="Net\Rtp\RtpMediaElement.cs" />
