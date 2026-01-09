@@ -32,20 +32,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         {
             e.CanContinue = e.Packet.Type == RtpPacketType.JPEG;
 
-            // add code to detect resolution settings when rtp extension is detected
-            // save it and update factory settings or decide to inject it on the TryCreateFrame method
-            // see code method below
-
             base.OnPacketAdding( e );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
         {
             base.OnSequenceCompleted( e );
-
-            // see code method upper
-            // add code to detect resolution settings when rtp extension is detected
-            // save it and update factory settings or decide to inject it on the TryCreateFrame method
 
             if ( _factory.TryCreateFrame( e.Packets , out var frame ) )
             {

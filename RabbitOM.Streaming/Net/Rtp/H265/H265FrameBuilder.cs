@@ -1,11 +1,7 @@
-﻿// TODO: add support of DON (decoding order number during parsing)
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    /// <summary>
-    /// Represent an MPEG H265 frame builder
-    /// </summary>
     public sealed class H265FrameBuilder : RtpFrameBuilder , IBuilderConfigurer<H265FrameBuilderConfiguration>
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();

@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    /// <summary>
-    /// Represent an MPEG H264 frame builder
-    /// </summary>
     public sealed class H264FrameBuilder : RtpFrameBuilder , IBuilderConfigurer<H264FrameBuilderConfiguration>
     {
         private readonly H264FrameFactory _frameFactory = new H264FrameFactory();
