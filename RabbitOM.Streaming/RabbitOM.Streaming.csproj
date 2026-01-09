@@ -64,6 +64,7 @@
     <Compile Include="Net\Rtcp\RtcpSourceDescriptionItem.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H265\H265FrameBuilderConfiguration.cs" />
+    <Compile Include="Net\Rtp\H266\Nals\H266StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
     <Compile Include="Net\Rtp\IConfigurer.cs" />

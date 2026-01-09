@@ -43,10 +43,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             result = new H266NalUnitFragmentation();
 
-            result.StartBit          = ( ( header >> 7 ) & 0x1 ) == 1;
-            result.StopBit           = ( ( header >> 6 ) & 0x1 ) == 1;
-
             result.FragmentationType = (byte) ( header & 0x1F );
+
+            result.StartBit = ( ( header >> 7 ) & 0x1 ) == 1;
+            result.StopBit  = ( ( header >> 6 ) & 0x1 ) == 1;
 
             if ( buffer.Count > 3 )
             {
