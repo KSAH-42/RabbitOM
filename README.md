@@ -44,6 +44,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 ➡️ Next arrival things:
 
 * Adding RTCP layer 
+* Adding H266
 * Adding support video decoder for rendering MPEG using C++ WRL or COM/ATL
 * Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 

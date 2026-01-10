@@ -40,9 +40,9 @@ namespace RabbitOM.Tests.Client.Mjpeg
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
-        private readonly DefaultPacketInspector _inspector = new DefaultPacketInspector();
-        private readonly JpegFrameBuilder _frameBuilder = new JpegFrameBuilder();
-        private readonly JpegRenderer _renderer = new JpegRenderer();
+        private readonly RtpPacketInspector _inspector = new DefaultPacketInspector();
+        private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
+        private readonly Renderer _renderer = new JpegRenderer();
         
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -133,9 +133,11 @@ namespace RabbitOM.Tests.Client.Mjpeg
             {
                 _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
                 
-                // resolution fallback are used in case where rtsp server can not deliver the width and height due of the jpeg rtp rfc limitation, it's happen when the resolution become to big and can not be placed in the rtp jpeg packet.
+                var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
 
-                _frameBuilder.Configure( new JpegFrameBuilderConfiguration( ResolutionInfo.Resolution_2040x2040 ) );
+                // resolution fallback are used in case where rtsp server can not deliver the width and height due of the jpeg rtp rfc limitation, it's happen when the resolution become to big and can not be placed in the rtp jpeg packet.
+                
+                configurer?.Configure( new JpegFrameBuilderConfiguration( ResolutionInfo.Resolution_2040x2040 ) );
                 
                 _renderer.TargetControl = _image;
             } ) );
