@@ -47,7 +47,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Adding support video decoder for rendering MPEG using C++ WRL or COM/ATL
 * Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 
-* ⚠️ COMING REFACTORY: the RtspClient class WILL BE REMOVED totally and will REPLACED by a better implementation with immutable types and builder, and other nices things
+* ⚠️ COMING REFACTORY: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
 
 # How to receive raw rtp packets using the rtsp client ?
 
