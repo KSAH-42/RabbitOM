@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Packets
+namespace RabbitOM.Streaming.Net.Rtcp
 {
     public abstract class RtcpPacket
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtcp.Packets
+namespace RabbitOM.Streaming.Net.Rtcp
 {
     public sealed class SenderReportPacket : RtcpPacket
     {
