@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        public static bool TryParse( RtcpMessage message , out ReceiverReportPacket result )
+        public static bool TryCreateFrom( RtcpMessage message , out ReceiverReportPacket result )
         {
             result = default ;
 

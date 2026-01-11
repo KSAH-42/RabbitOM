@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 
                 if ( message.Type == ApplicationPacket.PacketType )
                 {
-                    if ( ApplicationPacket.TryParse( message , out var result ) )
+                    if ( ApplicationPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 
                 else if ( message.Type == ByePacket.PacketType )
                 {
-                    if ( ByePacket.TryParse( message , out var result ) )
+                    if ( ByePacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 
                 else if ( message.Type == ReceiverReportPacket.PacketType )
                 {
-                    if ( ReceiverReportPacket.TryParse( message , out var result ) )
+                    if ( ReceiverReportPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 
                 else if ( message.Type == SenderReportPacket.PacketType )
                 {
-                    if ( SenderReportPacket.TryParse( message , out var result ) )
+                    if ( SenderReportPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 
                 else if ( message.Type == SourceDescriptionPacket.PacketType )
                 {
-                    if ( SourceDescriptionPacket.TryParse( message , out var result ) )
+                    if ( SourceDescriptionPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
