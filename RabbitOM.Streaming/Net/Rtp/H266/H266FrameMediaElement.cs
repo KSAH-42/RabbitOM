@@ -1,8 +1,8 @@
 ﻿namespace RabbitOM.Streaming.Net.Rtp.H266
 {
-    public class H266MediaElement : RtpMediaElement
+    public class H266FrameMediaElement : RtpMediaElement
     {
-        public H266MediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] buffer ) : base ( buffer )
+        public H266FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] buffer ) : base ( buffer )
         {
             // TODO: refactor futur duplicated code with H265 media element class ?
 

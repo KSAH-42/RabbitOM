@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <param name="packets">the packets</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H264MediaElement result )
+        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H264FrameMediaElement result )
         {
             result = null;
 
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264MediaElement( StartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.ToArray() );
+                result = new H264FrameMediaElement( StartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.ToArray() );
             }
 
             return result != null;

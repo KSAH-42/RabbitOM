@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         ///     <para> it saved allocation spaces</para>
         ///     <para> and it reused the internal array of <see cref="System.IO.MemoryStream"/> and not creating a new one.</para>
         /// </remarks>
-        public JpegMediaElement BuildFrame()
+        public JpegFrameMediaElement BuildFrame()
         {
             var firstFragment = _fragments.Peek();
 
@@ -130,7 +130,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
             _writer.WriteEndOfImage();
 
-            return new JpegMediaElement( firstFragment.Width , firstFragment.Height , _writer.ToArray() );
+            return new JpegFrameMediaElement( firstFragment.Width , firstFragment.Height , _writer.ToArray() );
         }
 
 

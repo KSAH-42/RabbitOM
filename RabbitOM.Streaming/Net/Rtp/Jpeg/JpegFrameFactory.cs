@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <param name="packets">the packets</param>
         /// <param name="result">the output result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out JpegMediaElement result )
+        public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out JpegFrameMediaElement result )
         {
             result = null;
 
