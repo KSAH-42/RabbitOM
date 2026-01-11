@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
         public byte LayerId { get; private set; }
 
-        public byte Type { get; private set; }
+        public H266NalUnitType Type { get; private set; }
 
         public byte TemporalId { get; private set; }
 
@@ -35,9 +35,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             result.ForbiddenBit = ( ( header >> 15 ) & 0x1 ) == 1;
             result.ZBit         = ( ( header >> 14 ) & 0x1 ) == 1;
-            result.LayerId      = (byte) ( ( header >> 8 ) & 0x3F );
-            result.Type         = (byte) ( ( header >> 3 ) & 0x1F );
-            result.TemporalId   = (byte) ( header & 0x07 );
+            result.Type         = (H266NalUnitType) ( ( header >> 3 ) & 0x1F );
+            result.LayerId      = (byte)            ( ( header >> 8 ) & 0x3F );
+            result.TemporalId   = (byte)              ( header & 0x07 );
 
             if ( buffer.Count > 2 )
             {

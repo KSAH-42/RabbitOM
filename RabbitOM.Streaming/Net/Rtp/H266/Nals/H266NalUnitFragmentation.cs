@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
         public bool StopBit { get; private set; }
 
-        public byte FragmentationType { get; private set; }
+        public H266NalUnitType FragmentationType { get; private set; }
 
         public ArraySegment<byte> Payload { get; private set; }
 
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             result = new H266NalUnitFragmentation();
 
-            result.FragmentationType = (byte) ( header & 0x1F );
+            result.FragmentationType = (H266NalUnitType) ( header & 0x1F );
 
             result.StartBit = ( ( header >> 7 ) & 0x1 ) == 1;
             result.StopBit  = ( ( header >> 6 ) & 0x1 ) == 1;
