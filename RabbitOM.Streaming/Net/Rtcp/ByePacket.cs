@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 {
     public sealed class ByePacket : RtcpPacket
     {
-        public const int PacketType = 203;
+        public const int Type = 203;
 
 
 

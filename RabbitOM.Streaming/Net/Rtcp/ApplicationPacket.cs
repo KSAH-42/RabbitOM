@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 {
     public sealed class ApplicationPacket : RtcpPacket
     {
-        public const int PacketType = 204;
+        public const int Type = 204;
 
         public const int MinimumSize = 8;
 

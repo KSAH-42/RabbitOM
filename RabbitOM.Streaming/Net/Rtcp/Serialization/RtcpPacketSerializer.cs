@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                     throw new NotSupportedException();
                 }
 
-                if ( message.Type == ApplicationPacket.PacketType )
+                if ( message.Type == ApplicationPacket.Type )
                 {
                     if ( ApplicationPacket.TryCreateFrom( message , out var result ) )
                     {
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                     }
                 }
 
-                else if ( message.Type == ByePacket.PacketType )
+                else if ( message.Type == ByePacket.Type )
                 {
                     if ( ByePacket.TryCreateFrom( message , out var result ) )
                     {
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                     }
                 }
 
-                else if ( message.Type == ReceiverReportPacket.PacketType )
+                else if ( message.Type == ReceiverReportPacket.Type )
                 {
                     if ( ReceiverReportPacket.TryCreateFrom( message , out var result ) )
                     {
@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                     }
                 }
 
-                else if ( message.Type == SenderReportPacket.PacketType )
+                else if ( message.Type == SenderReportPacket.Type )
                 {
                     if ( SenderReportPacket.TryCreateFrom( message , out var result ) )
                     {
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                     }
                 }
 
-                else if ( message.Type == SourceDescriptionPacket.PacketType )
+                else if ( message.Type == SourceDescriptionPacket.Type )
                 {
                     if ( SourceDescriptionPacket.TryCreateFrom( message , out var result ) )
                     {

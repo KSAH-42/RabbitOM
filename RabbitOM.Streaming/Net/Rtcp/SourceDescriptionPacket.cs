@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 {
     public sealed class SourceDescriptionPacket : RtcpPacket
     {
-        public const int PacketType = 202;
+        public const int Type = 202;
 
 
 

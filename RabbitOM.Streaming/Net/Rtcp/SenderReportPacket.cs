@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 {
     public sealed class SenderReportPacket : RtcpPacket
     {
-        public const int PacketType = 200;
+        public const int Type = 200;
 
         public const int MimimunSize = 24;
         
