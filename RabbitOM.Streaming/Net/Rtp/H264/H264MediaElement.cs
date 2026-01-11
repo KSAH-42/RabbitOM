@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265
+namespace RabbitOM.Streaming.Net.Rtp.H264
 {
     /// <summary>
-    /// Represent a H265 frame
+    /// Represent a H264 frame
     /// </summary>
-    public sealed class H265FrameMediaElement : RtpMediaElement
+    public sealed class H264MediaElement : RtpMediaElement
     {
         /// <summary>
-        /// Initialize an new instance of a H265 frame
+        /// Initialize a new instance of a H264 frame
         /// </summary>
-        /// <param name="startCodePrefix">the start code prefix</param>
+        /// <param name="startCodePrefix">the start prefix</param>
         /// <param name="pps">the pps</param>
         /// <param name="sps">the sps</param>
-        /// <param name="vps">the vps</param>
         /// <param name="buffer">the buffer</param>
         /// <exception cref="ArgumentNullException"/>
         /// <exception cref="ArgumentException"/>
-        public H265FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] buffer ) : base ( buffer )
+        public H264MediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] buffer ) : base ( buffer )
         {
             if ( startCodePrefix == null )
             {
@@ -35,19 +34,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException(  nameof( sps ) );
             }
 
-            if ( vps == null )
-            {
-                throw new ArgumentNullException(  nameof( vps ) );
-            }
-
             StartCodePrefix = startCodePrefix.Length > 0 ? startCodePrefix : throw new ArgumentException( nameof( startCodePrefix ) );
             
             PPS = pps.Length > 0 ? pps : throw new ArgumentException( nameof( pps ) );
             
             SPS = sps.Length > 0 ? sps : throw new ArgumentException( nameof( sps ) );
-            
-            VPS = vps.Length > 0 ? vps : throw new ArgumentException( nameof( vps ) );
         }
+
 
 
 
@@ -59,19 +52,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         public byte[] StartCodePrefix { get; }
 
         /// <summary>
-        /// Gets the PPS
+        /// Gets the pps
         /// </summary>
         public byte[] PPS { get; }
         
         /// <summary>
-        /// Gets the SPS
+        /// Gets the sps
         /// </summary>
         public byte[] SPS { get; }
 
-        /// <summary>
-        /// Gets the VPS
-        /// </summary>
-        public byte[] VPS { get; }
 
 
 
@@ -79,28 +68,31 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
 
         /// <summary>
-        /// Build the params buffers if some properties has been changed
+        /// Combine params as buffer
         /// </summary>
-        /// <returns>returns the buffer</returns>
-        /// <exception cref="ArgumentNullException"/>
-        public static byte[] CreateParamsBuffer( H265FrameMediaElement frame )
+        /// <param name="frame">the frame</param>
+        /// <returns>returns a buffer</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static byte[] CreateParamsBuffer( H264MediaElement frame )
         {
             if ( frame == null )
             {
                 throw new ArgumentNullException( nameof( frame ) );
             }
 
-            return CreateParamsBuffer( frame.StartCodePrefix , frame.PPS , frame.SPS , frame.VPS );
+            return CreateParamsBuffer( frame.StartCodePrefix , frame.PPS , frame.SPS );
         }
 
-
         /// <summary>
-        /// Build the params buffers if some properties has been changed
+        /// Combine parameters as a buffer
         /// </summary>
-        /// <returns>returns the buffer</returns>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
-        public static byte[] CreateParamsBuffer( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps )
+        /// <param name="startCodePrefix">the start code</param>
+        /// <param name="pps">the pps</param>
+        /// <param name="sps">the sps</param>
+        /// <returns>returns a buffer</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public static byte[] CreateParamsBuffer( byte[] startCodePrefix , byte[] pps , byte[] sps )
         {
             if ( startCodePrefix == null )
             {
@@ -124,12 +116,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             {
                 result.AddRange( startCodePrefix );
                 result.AddRange( pps );
-            }
-
-            if ( vps?.Length > 0 )
-            {
-                result.AddRange( startCodePrefix );
-                result.AddRange( vps );
             }
 
             return result.ToArray();

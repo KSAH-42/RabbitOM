@@ -67,7 +67,7 @@
     <Compile Include="Net\Rtp\H266\H266FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H266\H266FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H266\H266FrameFactory.cs" />
-    <Compile Include="Net\Rtp\H266\H266FrameMediaElement.cs" />
+    <Compile Include="Net\Rtp\H266\H266MediaElement.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266StreamWriter.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
@@ -82,7 +82,7 @@
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriter.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264StreamWriterSettings.cs" />
-    <Compile Include="Net\Rtp\H264\H264FrameMediaElement.cs" />
+    <Compile Include="Net\Rtp\H264\H264MediaElement.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H264\H264FrameFactory.cs" />
     <Compile Include="Net\Rtp\H264\Nals\H264NalUnit.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="Net\Rtp\H265\H265FrameFactory.cs" />
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnitFragment.cs" />
     <Compile Include="Net\Rtp\H265\Nals\H265NalUnit.cs" />
-    <Compile Include="Net\Rtp\H265\H265FrameMediaElement.cs" />
+    <Compile Include="Net\Rtp\H265\H265MediaElement.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\Fragmentation\JpegFragmentQueue.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegQuantizer.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegQuantizationTableFactory.cs" />
@@ -126,7 +126,7 @@
     <Compile Include="Net\Rtp\Jpeg\Imaging\Fragmentation\JpegFragment.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameFactory.cs" />
     <Compile Include="Net\Rtp\Jpeg\Imaging\JpegStreamWriter.cs" />
-    <Compile Include="Net\Rtp\Jpeg\JpegFrameMediaElement.cs" />
+    <Compile Include="Net\Rtp\Jpeg\JpegMediaElement.cs" />
     <Compile Include="Net\Rtp\RtpPacket.cs" />
     <Compile Include="Net\Rtp\RtpPacketType.cs" />
     <Compile Include="Net\Rtsp\Clients\Connections\RtspProxySettings.cs" />

@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
             throw new NotImplementedException();
         }
 
-        public bool TryCreate( IEnumerable<RtpPacket> packets , out H266FrameMediaElement result )
+        public bool TryCreate( IEnumerable<RtpPacket> packets , out H266MediaElement result )
         {
             throw new NotImplementedException();
         }
