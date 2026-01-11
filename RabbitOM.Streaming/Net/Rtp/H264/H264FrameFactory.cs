@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     /// <summary>
     /// Represent the H264 frame factory
     /// </summary>
-    public sealed class H264FrameFactory : IDisposable
+    internal sealed class H264FrameFactory : IDisposable
     {
         private readonly H264StreamWriter _writer = new H264StreamWriter();
 

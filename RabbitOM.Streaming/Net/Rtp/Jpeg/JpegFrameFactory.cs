@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <summary>
     /// Represent a frame factory class
     /// </summary>
-    public sealed class JpegFrameFactory : IDisposable
+    internal sealed class JpegFrameFactory : IDisposable
     {
         private readonly JpegImageBuilder _imageBuilder = new JpegImageBuilder();
 
