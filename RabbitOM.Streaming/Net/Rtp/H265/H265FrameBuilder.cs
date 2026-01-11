@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public sealed class H265FrameBuilder : RtpFrameBuilder , IConfigurer<H265FrameBuilderConfiguration>
+    public class H265FrameBuilder : RtpFrameBuilder , IConfigurer<H265FrameBuilderConfiguration>
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
