@@ -68,6 +68,7 @@
     <Compile Include="Net\Rtp\H266\H266FrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\H266\H266FrameFactory.cs" />
     <Compile Include="Net\Rtp\H266\H266MediaElement.cs" />
+    <Compile Include="Net\Rtp\H266\Nals\H266NalUnitType.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266StreamWriter.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266StreamWriterSettings.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
