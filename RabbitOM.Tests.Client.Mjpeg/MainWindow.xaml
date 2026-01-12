@@ -48,6 +48,7 @@
                 <ContextMenu>
                     <MenuItem Header="Uniform" Click="OnContextMenuImageUniform" />
                     <MenuItem Header="Fill"  Click="OnContextMenuImageFill" />
+                    <MenuItem Header="Resolution" Click="OnChangeResolution" />
                 </ContextMenu>
             </Grid.ContextMenu>
             <TextBlock x:Name="_textBlockInfo" FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />

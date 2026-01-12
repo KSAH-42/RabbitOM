@@ -43,6 +43,8 @@ namespace RabbitOM.Tests.Client.Mjpeg
         private readonly RtpPacketInspector _inspector = new DefaultPacketInspector();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly Renderer _renderer = new JpegRenderer();
+        private ResolutionInfo _resolutionInfo = ResolutionInfo.Resolution_2040x2040;
+        private bool _replaceResolution;
         
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -133,11 +135,10 @@ namespace RabbitOM.Tests.Client.Mjpeg
             {
                 _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
                 
-                var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
-
                 // resolution fallback are used in case where rtsp server can not deliver the width and height due of the jpeg rtp rfc limitation, it's happen when the resolution become to big and can not be placed in the rtp jpeg packet.
-                
-                configurer?.Configure( new JpegFrameBuilderConfiguration( ResolutionInfo.Resolution_2040x2040 ) );
+                var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
+                    
+                configurer?.Configure( new JpegFrameBuilderConfiguration( _resolutionInfo , _replaceResolution ) );
                 
                 _renderer.TargetControl = _image;
             } ) );
@@ -190,6 +191,25 @@ namespace RabbitOM.Tests.Client.Mjpeg
         private void OnContextMenuImageFill( object sender , RoutedEventArgs e )
         {
             _image.Stretch = System.Windows.Media.Stretch.Fill;
+        }
+
+        private void OnChangeResolution( object sender , RoutedEventArgs e )
+        {
+            var dialog = new Dialogs.ResolutionSettingsDialog() 
+            { 
+                Owner = Window.GetWindow( this ) ,
+                ResolutionHeight = _resolutionInfo.Height ,
+                ResolutionWidth = _resolutionInfo.Width ,
+                ReplaceResolution = _replaceResolution,
+            };
+
+            var result = dialog.ShowDialog();
+
+            if ( result.HasValue && result.Value )
+            {
+                _resolutionInfo = new ResolutionInfo( dialog.ResolutionWidth , dialog.ResolutionHeight );
+                _replaceResolution = dialog.ReplaceResolution;
+            }
         }
     }
 }

@@ -256,7 +256,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
                 throw new ArgumentException( nameof( type ) );
             }
 
-            if ( width <= 0 || height <= 0 ) 
+            if ( width <= 0 || height <= 0 || _settings.ForceResolutionFallBack ) 
             {
                 width  = _settings.ResolutionFallback.Width;
                 height = _settings.ResolutionFallback.Height;
