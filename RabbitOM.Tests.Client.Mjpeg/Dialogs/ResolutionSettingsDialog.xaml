@@ -12,6 +12,7 @@
         WindowStyle="ToolWindow"
         ResizeMode="NoResize"
         >
+    
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}" CanExecute="OnCanAcceptSettings" Executed="OnAcceptSettings" />
@@ -19,60 +20,89 @@
     </Window.CommandBindings>
 
     <Grid>
-        <TextBlock Margin="0,20,2,2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   TextAlignment="Right"
-                   Width="50"
-                   Text="Width :"
-                   />
 
-        <TextBox Margin="55,20,10,0" 
-                 VerticalAlignment="Top" 
-                 TextWrapping="Wrap"
-                 Text="{Binding Path=ResolutionWidth,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
-                 />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35" />
+        </Grid.RowDefinitions>
 
-        <TextBlock Margin="0,50,2,2"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   TextAlignment="Right"
-                   Width="50"
-                   Text="Height :"
-                   />
+        <Grid Grid.Row="0">
 
-        <TextBox  Margin="56,50,10,0"
-                  VerticalAlignment="Top" 
-                  TextWrapping="Wrap"
-                  Text="{Binding Path=ResolutionHeight,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
-                  />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <CheckBox Margin="55,79,0,0" 
-                  HorizontalAlignment="Left" 
-                  VerticalAlignment="Top"
-                  Content="Replace" 
-                  IsThreeState="False"
-                  IsChecked="{Binding Path=ReplaceResolution,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}} }"
-                  />
+            <Grid Grid.Column="0">
 
-        <Button Margin="0,0,100,10" 
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Right"
-                Width="80"
-                Height="20"
-                IsCancel="True" 
-                Content="Cancel"
-                />
+                <TextBlock Margin="0,20,2,2"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           TextAlignment="Right"
+                           Width="50"
+                           Text="Width :"
+                           />
+                
+                <TextBlock Margin="0,50,2,2"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           TextAlignment="Right"
+                           Width="50"
+                           Text="Height :"
+                           />
 
-        <Button Margin="60,0,10,10" 
-                VerticalAlignment="Bottom" 
-                HorizontalAlignment="Right"
-                Width="80"
-                Height="20"
-                IsCancel="False"
-                IsDefault="True"
-                Content="Ok"
-                Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}"
-                />
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                <TextBox Margin="0,20,10,0" 
+                         VerticalAlignment="Top" 
+                         TextWrapping="Wrap"
+                         Text="{Binding Path=ResolutionWidth,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                         />
+
+                <TextBox  Margin="0,50,10,0"
+                          VerticalAlignment="Top" 
+                          TextWrapping="Wrap"
+                          Text="{Binding Path=ResolutionHeight,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
+                          />
+
+                <CheckBox Margin="0,79,0,0" 
+                          HorizontalAlignment="Left" 
+                          VerticalAlignment="Top"
+                          Content="Replace" 
+                          IsThreeState="False"
+                          IsChecked="{Binding Path=ReplaceResolution,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}} }"
+                          />
+
+            </Grid>
+            
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Button Margin="0,0,100,10" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Right"
+                    Width="80"
+                    Height="20"
+                    IsCancel="True" 
+                    Content="Cancel"
+                    />
+
+            <Button Margin="60,0,10,10" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Right"
+                    Width="80"
+                    Height="20"
+                    IsCancel="False"
+                    IsDefault="True"
+                    Content="Ok"
+                    Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}"
+                    />
+
+        </Grid>
+        
     </Grid>
+    
 </Window>
