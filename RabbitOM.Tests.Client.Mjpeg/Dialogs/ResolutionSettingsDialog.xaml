@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Tests.Client.Mjpeg.Dialogs"
+        xmlns:converters="clr-namespace:RabbitOM.Tests.Client.Mjpeg.Converters"
         mc:Ignorable="d"
         Title="Resolution Settings" 
         Height="180" 
@@ -12,6 +13,12 @@
         WindowStyle="ToolWindow"
         ResizeMode="NoResize"
         >
+
+    <Window.Resources>
+
+        <converters:IntValueConverter x:Key="IntValueConverter" />
+
+    </Window.Resources>
     
     <Window.CommandBindings>
 
@@ -58,13 +65,13 @@
                 <TextBox Margin="0,20,10,0" 
                          VerticalAlignment="Top" 
                          TextWrapping="Wrap"
-                         Text="{Binding Path=ResolutionWidth,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                         Text="{Binding Path=ResolutionWidth,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
                          />
 
                 <TextBox  Margin="0,50,10,0"
                           VerticalAlignment="Top" 
                           TextWrapping="Wrap"
-                          Text="{Binding Path=ResolutionHeight,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
+                          Text="{Binding Path=ResolutionHeight,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
                           />
 
                 <CheckBox Margin="0,79,0,0" 

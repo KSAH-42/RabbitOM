@@ -73,6 +73,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Converters\IntValueConverter.cs" />
     <Compile Include="Dialogs\ResolutionSettingsDialog.xaml.cs">
       <DependentUpon>ResolutionSettingsDialog.xaml</DependentUpon>
     </Compile>
