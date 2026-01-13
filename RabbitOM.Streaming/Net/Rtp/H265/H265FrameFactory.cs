@@ -98,7 +98,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         public void Clear()
         {
             _writer.Clear();
-            _writer.ClearRawParameters();
             _writer.Settings.Clear();
         }
 
