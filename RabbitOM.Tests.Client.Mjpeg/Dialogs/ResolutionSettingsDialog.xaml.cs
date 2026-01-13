@@ -15,7 +15,9 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 
 
 
+
         public static RoutedCommand AcceptButtonCommand = new RoutedCommand();
+
 
 
 
@@ -59,6 +61,8 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
             get => (bool) GetValue( ReplaceResolutionProperty );
             set => SetValue( ReplaceResolutionProperty , value );
         }
+
+
 
 
 
