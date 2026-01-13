@@ -1,7 +1,4 @@
-﻿// TODO: adding errors count, stats ??? 
-// TODO: on the add method, need to discard the actual sequence, in case of receiving one invalid or missing packet ?
-
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
