@@ -62,6 +62,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
             _output.Clear();
         }
 
+        /// <summary>
+        /// Clear paramaters
+        /// </summary>
         public void ClearParameters()
         {
             _rawSPS = null;
