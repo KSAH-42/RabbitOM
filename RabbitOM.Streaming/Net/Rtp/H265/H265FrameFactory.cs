@@ -16,6 +16,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// Configure
         /// </summary>
         /// <param name="settings">the settings</param>
+        /// <exception cref="ArgumentNullException"/>
         public void Configure( H265FrameBuilderConfiguration settings )
         {
             if ( settings == null )
