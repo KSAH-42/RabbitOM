@@ -16,9 +16,14 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         
         private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
 
-        private readonly MemoryStreamBuffer _streamOfNalUnitsParams = new MemoryStreamBuffer();
-
         private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
+
+        private byte[] _rawVPS;
+
+        private byte[] _rawSPS;
+
+        private byte[] _rawPPS;
+
 
 
 
@@ -49,7 +54,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
 
 
-        
 
 
         /// <summary>
@@ -59,9 +63,17 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         {
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
-            _streamOfNalUnitsParams.Clear();
-            
             _output.Clear();
+        }
+
+        /// <summary>
+        /// Clear raw parameters sets
+        /// </summary>
+        public void ClearRawParameters()
+        {
+            _rawVPS = null;
+            _rawSPS = null;
+            _rawPPS = null;
         }
 
         /// <summary>
@@ -71,7 +83,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         {
             _streamOfNalUnits.Dispose();
             _streamOfNalUnitsFragmented.Dispose();
-            _streamOfNalUnitsParams.Dispose();
 
             _output.Dispose();
         }
@@ -84,7 +95,24 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         {
             _output.SetLength( 0 );
 
-            _output.Write( _streamOfNalUnitsParams );
+            if ( _rawVPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawVPS );
+            }
+
+            if ( _rawSPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawSPS );
+            }
+
+            if ( _rawPPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawPPS );
+            }
+
             _output.Write( _streamOfNalUnits );
 
             return _output.ToArray();
@@ -129,8 +157,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
-                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
-                _streamOfNalUnitsParams.Write( packet.Payload );
+                _rawVPS = packet.Payload.ToArray();
 
                 _settings.VPS = nalUnit.Payload.ToArray();
             }
@@ -150,8 +177,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
-                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
-                _streamOfNalUnitsParams.Write( packet.Payload );
+                _rawSPS = packet.Payload.ToArray();
 
                 _settings.SPS = nalUnit.Payload.ToArray();
             }
@@ -171,8 +197,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
-                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
-                _streamOfNalUnitsParams.Write( packet.Payload );
+                _rawPPS = packet.Payload.ToArray();
 
                 _settings.PPS = nalUnit.Payload.ToArray();
             }
