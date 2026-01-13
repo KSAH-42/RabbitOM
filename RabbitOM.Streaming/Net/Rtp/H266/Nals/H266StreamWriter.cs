@@ -53,22 +53,22 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         {
             _output.SetLength( 0 );
 
-            if ( _settings.RawVPS?.Length > 0 )
+            if ( _settings.VPS?.Length > 0 )
             {
                 _output.Write( StartCodePrefix.Default );
-                _output.Write( _settings.RawVPS );
+                _output.Write( _settings.VPS );
             }
 
-            if ( _settings.RawSPS?.Length > 0 )
+            if ( _settings.SPS?.Length > 0 )
             {
                 _output.Write( StartCodePrefix.Default );
-                _output.Write( _settings.RawSPS );
+                _output.Write( _settings.SPS );
             }
 
-            if ( _settings.RawPPS?.Length > 0 )
+            if ( _settings.PPS?.Length > 0 )
             {
                 _output.Write( StartCodePrefix.Default );
-                _output.Write( _settings.RawPPS );
+                _output.Write( _settings.PPS );
             }
 
             _output.Write( _streamOfNalUnits );
@@ -102,8 +102,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
             {
-                _settings.RawVPS = packet.Payload.ToArray();
-                _settings.VPS = nalUnit.Payload.ToArray();
+                _settings.VPS = packet.Payload.ToArray();
             }
         }
 
@@ -116,8 +115,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
             {
-                _settings.RawSPS = packet.Payload.ToArray();
-                _settings.SPS = nalUnit.Payload.ToArray();
+                _settings.SPS = packet.Payload.ToArray();
             }
         }
 
@@ -130,8 +128,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
             {
-                _settings.RawPPS = packet.Payload.ToArray();
-                _settings.PPS = nalUnit.Payload.ToArray();
+                _settings.PPS = packet.Payload.ToArray();
             }
         }
 
