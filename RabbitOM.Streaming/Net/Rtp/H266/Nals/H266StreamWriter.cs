@@ -13,9 +13,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         
         private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
 
-        private readonly MemoryStreamBuffer _streamOfNalUnitsParams = new MemoryStreamBuffer();
-
         private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
+
+        private byte[] _rawVPS;
+
+        private byte[] _rawSPS;
+
+        private byte[] _rawPPS;
 
 
 
@@ -38,16 +42,21 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         {
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
-            _streamOfNalUnitsParams.Clear();
             
             _output.Clear();
+        }
+
+        public void ClearParameters()
+        {
+            _rawVPS = null;
+            _rawSPS = null;
+            _rawPPS = null;
         }
 
         public void Dispose()
         {
             _streamOfNalUnits.Dispose();
             _streamOfNalUnitsFragmented.Dispose();
-            _streamOfNalUnitsParams.Dispose();
 
             _output.Dispose();
         }
@@ -56,7 +65,24 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         {
             _output.SetLength( 0 );
 
-            _output.Write( _streamOfNalUnitsParams );
+            if ( _rawVPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawVPS );
+            }
+
+            if ( _rawSPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawSPS );
+            }
+
+            if ( _rawPPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawPPS );
+            }
+
             _output.Write( _streamOfNalUnits );
 
             return _output.ToArray();
@@ -78,41 +104,46 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             _streamOfNalUnits.Write( packet.Payload );
         }
 
-        public void WritePPS( RtpPacket packet )
+        
+        public void WriteVPS( RtpPacket packet )
         {
-           if ( packet == null )
+            if ( packet == null )
             {
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
             if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
             {
-                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
-                _streamOfNalUnitsParams.Write( packet.Payload );
-
-                _settings.PPS = nalUnit.Payload.ToArray();
+                _rawVPS = packet.Payload.ToArray();
+                _settings.VPS = nalUnit.Payload.ToArray();
             }
         }
 
         public void WriteSPS( RtpPacket packet )
         {
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
             if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
             {
-                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
-                _streamOfNalUnitsParams.Write( packet.Payload );
-
+                _rawSPS = packet.Payload.ToArray();
                 _settings.SPS = nalUnit.Payload.ToArray();
             }
         }
 
-        public void WriteVPS( RtpPacket packet )
+        public void WritePPS( RtpPacket packet )
         {
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
             if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
             {
-                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
-                _streamOfNalUnitsParams.Write( packet.Payload );
-
-                _settings.VPS = nalUnit.Payload.ToArray();
+                _rawPPS = packet.Payload.ToArray();
+                _settings.PPS = nalUnit.Payload.ToArray();
             }
         }
 
