@@ -22,7 +22,10 @@
     
     <Window.CommandBindings>
 
-        <CommandBinding Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}" CanExecute="OnCanAcceptSettings" Executed="OnAcceptSettings" />
+        <CommandBinding Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}" 
+                        CanExecute="OnCanAcceptSettings" 
+                        Executed="OnAcceptSettings" 
+                        />
 
     </Window.CommandBindings>
 
