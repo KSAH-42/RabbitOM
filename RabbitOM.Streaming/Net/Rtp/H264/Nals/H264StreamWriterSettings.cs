@@ -17,17 +17,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         /// </summary>
         public byte[] PPS { get; set; }
 
-        /// <summary>
-        /// Gets / Sets the raw sps
-        /// </summary>
-        public byte[] RawSPS { get; set; }
-        
-        /// <summary>
-        /// Gets / Sets the raw pps
-        /// </summary>
-        public byte[] RawPPS { get; set; }
-
-
         
 
 
@@ -38,9 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         /// <returns></returns>
         public bool TryValidate()
         {
-            return SPS?.Length > 0 && RawSPS?.Length > 0 
-                && PPS?.Length > 0 && RawPPS?.Length > 0
-                ;
+            return SPS?.Length > 0 && PPS?.Length > 0 ;
         }
 
         /// <summary>
@@ -50,9 +37,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         {
             SPS = null;
             PPS = null;
-
-            RawSPS = null;
-            RawPPS = null;
         }
     }
 }
