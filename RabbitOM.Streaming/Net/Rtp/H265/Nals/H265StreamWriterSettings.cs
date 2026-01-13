@@ -8,9 +8,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     public sealed class H265StreamWriterSettings
     {
         /// <summary>
-        /// Gets / Sets the pps
+        /// Gets / Sets the vps
         /// </summary>
-        public byte[] PPS { get; set; }
+        public byte[] VPS { get; set; }
 
         /// <summary>
         /// Gets / Sets the SPS
@@ -18,9 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         public byte[] SPS { get; set; }
 
         /// <summary>
-        /// Gets / Sets the vps
+        /// Gets / Sets the pps
         /// </summary>
-        public byte[] VPS { get; set; }
+        public byte[] PPS { get; set; }
 
         /// <summary>
         /// Gets / Sets the DONL usage
@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return PPS?.Length > 0 && SPS?.Length > 0 && VPS?.Length > 0;
+            return VPS?.Length > 0 && SPS?.Length > 0 && PPS?.Length > 0;
         }
         
         /// <summary>
@@ -45,9 +45,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// </summary>
         public void Clear()
         {
-            PPS = null;
-            SPS = null;
             VPS = null;
+            SPS = null;
+            PPS = null;
             DONL = false;
         }
     }

@@ -10,33 +10,33 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <summary>
         /// Initialize a new instance of settings class
         /// </summary>
-        /// <param name="pps">pps</param>
-        /// <param name="sps">sps</param>
         /// <param name="vps">vps</param>
-        public H265FrameBuilderConfiguration( byte[] pps , byte[] sps , byte[] vps )
-            : this ( pps , sps , vps , false )
+        /// <param name="sps">sps</param>
+        /// <param name="pps">pps</param>
+        public H265FrameBuilderConfiguration( byte[] vps , byte[] sps , byte[] pps )
+            : this ( vps , sps , pps , false )
         {
         }
 
         /// <summary>
         /// Initialize a new instance of settings class
         /// </summary>
-        /// <param name="pps">pps</param>
-        /// <param name="sps">sps</param>
         /// <param name="vps">vps</param>
+        /// <param name="sps">sps</param>
+        /// <param name="pps">pps</param>
         /// <param name="donl">donl</param>
-        public H265FrameBuilderConfiguration( byte[] pps , byte[] sps , byte[] vps , bool donl )
+        public H265FrameBuilderConfiguration( byte[] vps , byte[] sps , byte[] pps , bool donl )
         {
-            PPS = pps;
-            SPS = sps;
             VPS = vps;
+            SPS = sps;
+            PPS = pps;
             DONL = donl;
         }
 
         /// <summary>
-        /// Gets / Sets the pps
+        /// Gets / Sets the vps
         /// </summary>
-        public byte[] PPS { get; }
+        public byte[] VPS { get; }
 
         /// <summary>
         /// Gets / Sets the SPS
@@ -44,9 +44,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         public byte[] SPS { get; }
 
         /// <summary>
-        /// Gets / Sets the vps
+        /// Gets / Sets the pps
         /// </summary>
-        public byte[] VPS { get; }
+        public byte[] PPS { get; }
 
         /// <summary>
         /// Gets / Sets the DONL usage

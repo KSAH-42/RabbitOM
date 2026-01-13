@@ -116,11 +116,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         }
 
         /// <summary>
-        /// Write a nalu pps from the rtp packet
+        /// Write a nalu vps from the rtp packet
         /// </summary>
         /// <param name="packet">the rtp packet</param>
         /// <exception cref="ArgumentNullException"/>
-        public void WritePPS( RtpPacket packet )
+        public void WriteVPS( RtpPacket packet )
         {
             if ( packet == null )
             {
@@ -132,7 +132,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
                 _streamOfNalUnitsParams.Write( packet.Payload );
 
-                _settings.PPS = nalUnit.Payload.ToArray();
+                _settings.VPS = nalUnit.Payload.ToArray();
             }
         }
 
@@ -158,11 +158,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         }
 
         /// <summary>
-        /// Write a nalu vps from the rtp packet
+        /// Write a nalu pps from the rtp packet
         /// </summary>
         /// <param name="packet">the rtp packet</param>
         /// <exception cref="ArgumentNullException"/>
-        public void WriteVPS( RtpPacket packet )
+        public void WritePPS( RtpPacket packet )
         {
             if ( packet == null )
             {
@@ -174,7 +174,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
                 _streamOfNalUnitsParams.Write( packet.Payload );
 
-                _settings.VPS = nalUnit.Payload.ToArray();
+                _settings.PPS = nalUnit.Payload.ToArray();
             }
         }
 

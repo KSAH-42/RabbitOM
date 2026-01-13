@@ -23,9 +23,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 throw new ArgumentNullException( nameof( settings ) );
             }
 
-            _writer.Settings.PPS  = settings.PPS;
-            _writer.Settings.SPS  = settings.SPS;
             _writer.Settings.VPS  = settings.VPS;
+            _writer.Settings.SPS  = settings.SPS;
+            _writer.Settings.PPS  = settings.PPS;
             _writer.Settings.DONL = settings.DONL;
         }
 
@@ -52,18 +52,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 {
                     switch ( type )
                     {
-                        case H265NalUnitType.PPS: 
-                            _writer.WritePPS( packet ); 
+                        case H265NalUnitType.VPS: 
+                            _writer.WriteVPS( packet ); 
                             break;
 
                         case H265NalUnitType.SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
-
-                        case H265NalUnitType.VPS: 
-                            _writer.WriteVPS( packet ); 
+                        
+                        case H265NalUnitType.PPS: 
+                            _writer.WritePPS( packet ); 
                             break;
-
+                        
                         case H265NalUnitType.AGGREGATION: 
                             _writer.WriteAggregation( packet ); 
                             break;
@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H265FrameMediaElement( StartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
+                result = new H265FrameMediaElement( StartCodePrefix.Default , _writer.Settings.VPS , _writer.Settings.SPS , _writer.Settings.PPS , _writer.ToArray() );
             }
 
             return result != null;
