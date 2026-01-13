@@ -16,7 +16,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         
         private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
 
+        private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
 
+        private byte[] _rawSPS;
+
+        private byte[] _rawPPS;
 
 
 
@@ -55,6 +59,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         {
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
+            _output.Clear();
+        }
+
+        public void ClearParameters()
+        {
+            _rawSPS = null;
+            _rawPPS = null;
         }
 
         /// <summary>
@@ -64,6 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         {
             _streamOfNalUnits.Dispose();
             _streamOfNalUnitsFragmented.Dispose();
+            _output.Dispose();
         }
 
         /// <summary>
@@ -72,7 +84,23 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         /// <returns>returns an array</returns>
         public byte[] ToArray()
         {
-            return _streamOfNalUnits.ToArray();
+            _output.SetLength( 0 );
+
+            if ( _rawSPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawSPS );
+            }
+
+            if ( _rawPPS?.Length > 0 )
+            {
+                _output.Write( StartCodePrefix.Default );
+                _output.Write( _rawPPS );
+            }
+
+            _output.Write( _streamOfNalUnits );
+
+            return _output.ToArray();
         }
         
         /// <summary>
@@ -101,24 +129,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         }
 
         /// <summary>
-        /// Write pps
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <exception cref="ArgumentNullException"/>
-        public void WritePPS( RtpPacket packet )
-        {
-            if ( packet == null )
-            {
-                throw new ArgumentNullException( nameof( packet ) );
-            }
-
-            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
-            {
-                _settings.PPS = packet.Payload.ToArray();
-            }
-        }
-
-        /// <summary>
         /// Write the sps
         /// </summary>
         /// <param name="packet">the packet</param>
@@ -132,7 +142,27 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
             {
-                _settings.SPS = packet.Payload.ToArray();
+                _rawSPS = packet.Payload.ToArray();
+                _settings.SPS = nalUnit.Payload.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Write pps
+        /// </summary>
+        /// <param name="packet">the packet</param>
+        /// <exception cref="ArgumentNullException"/>
+        public void WritePPS( RtpPacket packet )
+        {
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
+            {
+                _rawPPS = packet.Payload.ToArray();
+                _settings.PPS = nalUnit.Payload.ToArray();
             }
         }
 

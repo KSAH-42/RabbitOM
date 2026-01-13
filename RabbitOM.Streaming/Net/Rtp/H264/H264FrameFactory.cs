@@ -23,8 +23,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 throw new ArgumentNullException( nameof( settings ) );
             }
 
-            _writer.Settings.PPS = settings.PPS;
             _writer.Settings.SPS = settings.SPS;
+            _writer.Settings.PPS = settings.PPS;
         }
 
         /// <summary>
@@ -50,20 +50,20 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 {
                     switch ( type )
                     {             
-                        case H264NalUnitType.AGGREGATION_STAP_A: 
-                            _writer.WriteStapA( packet ); 
-                            break;
-
-                        case H264NalUnitType.FRAGMENTATION_FU_A: 
-                            _writer.WriteFuA( packet ); 
+                        case H264NalUnitType.SINGLE_SPS: 
+                            _writer.WriteSPS( packet ); 
                             break;
 
                         case H264NalUnitType.SINGLE_PPS: 
                             _writer.WritePPS( packet ); 
                             break;
 
-                        case H264NalUnitType.SINGLE_SPS: 
-                            _writer.WriteSPS( packet ); 
+                        case H264NalUnitType.AGGREGATION_STAP_A: 
+                            _writer.WriteStapA( packet ); 
+                            break;
+
+                        case H264NalUnitType.FRAGMENTATION_FU_A: 
+                            _writer.WriteFuA( packet ); 
                             break;
 
                         default:
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264FrameMediaElement( StartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.ToArray() );
+                result = new H264FrameMediaElement( StartCodePrefix.Default , _writer.Settings.SPS , _writer.Settings.PPS , _writer.ToArray() );
             }
 
             return result != null;

@@ -10,22 +10,22 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
         /// <summary>
         /// Initialize a new instance of settings class
         /// </summary>
-        /// <param name="pps">pps</param>
         /// <param name="sps">sps</param>
-        public H264FrameBuilderConfiguration( byte[] pps , byte[] sps )
+        /// <param name="pps">pps</param>
+        public H264FrameBuilderConfiguration( byte[] sps , byte[] pps )
         {
-            PPS = pps;
             SPS = sps;
+            PPS = pps;
         }
 
         /// <summary>
-        /// Gets / Sets the pps
-        /// </summary>
-        public byte[] PPS { get; }
-
-        /// <summary>
-        /// Gets / Sets the SPS
+        /// Gets / Sets the sps
         /// </summary>
         public byte[] SPS { get; }
+
+        /// <summary>
+        /// Gets / Sets the PPS
+        /// </summary>
+        public byte[] PPS { get; }
     }
 }
