@@ -8,6 +8,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
     public sealed class H266StreamWriterSettings
     {
         /// <summary>
+        /// Gets / Sets the DONL usage
+        /// </summary>
+        public bool DONL { get; set; }
+
+        /// <summary>
         /// Gets / Sets the pps
         /// </summary>
         public byte[] PPS { get; set; }
@@ -23,10 +28,21 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         public byte[] VPS { get; set; }
 
         /// <summary>
-        /// Gets / Sets the DONL usage
+        /// Gets / Sets the raw pps
         /// </summary>
-        public bool DONL { get; set; }
+        public byte[] RawPPS { get; set; }
 
+        /// <summary>
+        /// Gets / Sets the raw SPS
+        /// </summary>
+        public byte[] RawSPS { get; set; }
+
+        /// <summary>
+        /// Gets / Sets the raw vps
+        /// </summary>
+        public byte[] RawVPS { get; set; }
+
+        
 
 
 
@@ -37,7 +53,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         /// <returns>returns true for a success, otherwise false</returns>
         public bool TryValidate()
         {
-            return PPS?.Length > 0 && SPS?.Length > 0 && VPS?.Length > 0;
+            return VPS?.Length > 0 && RawVPS?.Length > 0
+                && SPS?.Length > 0 && RawSPS?.Length > 0
+                && PPS?.Length > 0 && RawPPS?.Length > 0
+                ;
         }
         
         /// <summary>
@@ -45,10 +64,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         /// </summary>
         public void Clear()
         {
+            DONL = false;
+
             PPS = null;
             SPS = null;
             VPS = null;
-            DONL = false;
+
+            RawPPS = null;
+            RawSPS = null;
+            RawVPS = null;
         }
     }
 }

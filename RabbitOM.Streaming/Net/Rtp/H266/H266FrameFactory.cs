@@ -82,7 +82,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
         public void Clear()
         {
             _writer.Clear();
-            _writer.ClearParameters();
             _writer.Settings.Clear();
         }
         public void Dispose()
