@@ -22,6 +22,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         /// </summary>
         public byte[] VPS { get; set; }
 
+        /// <summary>
+        /// Gets / Sets the DONL usage
+        /// </summary>
+        public bool DONL { get; set; }
+
 
 
 
@@ -43,6 +48,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             PPS = null;
             SPS = null;
             VPS = null;
+            DONL = false;
         }
     }
 }

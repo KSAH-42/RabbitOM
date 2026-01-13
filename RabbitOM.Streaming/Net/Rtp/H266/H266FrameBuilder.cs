@@ -6,6 +6,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
     {
         private readonly H266FrameFactory _frameFactory = new H266FrameFactory();
 
+        public H266FrameBuilder() => ExceptionHelper.ThrowOnRelease("the implementation of this class is not finished, and should not be used");
+
         public void Configure( H266FrameBuilderConfiguration configuration )
         {
             _frameFactory.Configure( configuration );

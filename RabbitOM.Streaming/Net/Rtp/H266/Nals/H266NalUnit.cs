@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 {
@@ -19,6 +20,20 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
 
 
+
+        public static bool TryParse( in ArraySegment<byte> buffer , out H266NalUnitType result )
+        {
+            result = H266NalUnitType.UNKNOWN;
+
+            if ( buffer.Count < 2 )
+            {
+                return false;
+            }
+
+            result = (H266NalUnitType) ( ( buffer.Array[ buffer.Offset ] >> 3 ) & 0x3F );
+
+            return true;
+        }
 
         public static bool TryParse( in ArraySegment<byte> buffer , out H266NalUnit result )
         {
@@ -46,5 +61,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             return true;
         }
+
+        public static IList<ArraySegment<byte>> ParseAggregates( in ArraySegment<byte> buffer )
+        {
+            throw new NotImplementedException();
+        }       
     }           
 }

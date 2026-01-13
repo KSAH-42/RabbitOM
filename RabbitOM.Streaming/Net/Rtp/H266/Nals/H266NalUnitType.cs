@@ -2,8 +2,10 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 {
-    public enum H266NalUnitType : byte
+    public enum H266NalUnitType
     {
+        UNKNOWN = -1,
+
         TRAIL_N = 0,
         TRAIL_R = 1,
 

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 {
-    public struct H266NalUnitFragmentation
+    public struct H266NalUnitFragment
     {
         public bool StartBit { get; private set; }
 
@@ -17,20 +17,20 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
 
 
-        public static bool IsStartPacket( in H266NalUnitFragmentation nalu )
+        public static bool IsStartPacket( in H266NalUnitFragment nalu )
             => nalu.StartBit && ! nalu.StopBit;
 
-        public static bool IsStopPacket( in H266NalUnitFragmentation nalu )
+        public static bool IsStopPacket( in H266NalUnitFragment nalu )
             => ! nalu.StartBit && nalu.StopBit;
 
-        public static bool IsDataPacket( in H266NalUnitFragmentation nalu )
+        public static bool IsDataPacket( in H266NalUnitFragment nalu )
             => ! nalu.StartBit && ! nalu.StopBit;
 
 
 
 
 
-        public static bool TryParse( in ArraySegment<byte> buffer , bool donl , out H266NalUnitFragmentation result )
+        public static bool TryParse( in ArraySegment<byte> buffer , bool donl , out H266NalUnitFragment result )
         {
             result = default;
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             var header = buffer.Array[ buffer.Offset + 2 ];
 
-            result = new H266NalUnitFragmentation();
+            result = new H266NalUnitFragment();
 
             result.FragmentationType = (H266NalUnitType) ( header & 0x1F );
 
@@ -61,6 +61,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             }
 
             return true;
+        }
+
+        public static int ParseHeader( in ArraySegment<byte> buffer )
+        {
+            throw new NotImplementedException();
         }
     }           
 }

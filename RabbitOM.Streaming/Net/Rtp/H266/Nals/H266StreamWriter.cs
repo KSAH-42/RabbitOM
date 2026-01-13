@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 {
@@ -11,6 +12,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
         private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
         
         private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
+
+        private readonly MemoryStreamBuffer _streamOfNalUnitsParams = new MemoryStreamBuffer();
 
         private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
 
@@ -33,52 +36,133 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _streamOfNalUnits.Clear();
+            _streamOfNalUnitsFragmented.Clear();
+            _streamOfNalUnitsParams.Clear();
+            
+            _output.Clear();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _streamOfNalUnits.Dispose();
+            _streamOfNalUnitsFragmented.Dispose();
+            _streamOfNalUnitsParams.Dispose();
+
+            _output.Dispose();
         }
 
         public byte[] ToArray()
         {
-            throw new NotImplementedException();
+            _output.SetLength( 0 );
+
+            _output.Write( _streamOfNalUnitsParams );
+            _output.Write( _streamOfNalUnits );
+
+            return _output.ToArray();
         }
         
         public void SetLength( int value )
         {
-            throw new NotImplementedException();
+            _streamOfNalUnits.SetLength( value );
         }
 
         public void Write( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            _streamOfNalUnits.Write( StartCodePrefix.Default );
+            _streamOfNalUnits.Write( packet.Payload );
         }
 
         public void WritePPS( RtpPacket packet )
         {
-            throw new NotImplementedException();
+           if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
+            {
+                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
+                _streamOfNalUnitsParams.Write( packet.Payload );
+
+                _settings.PPS = nalUnit.Payload.ToArray();
+            }
         }
 
         public void WriteSPS( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
+            {
+                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
+                _streamOfNalUnitsParams.Write( packet.Payload );
+
+                _settings.SPS = nalUnit.Payload.ToArray();
+            }
         }
 
         public void WriteVPS( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
+            {
+                _streamOfNalUnitsParams.Write( StartCodePrefix.Default );
+                _streamOfNalUnitsParams.Write( packet.Payload );
+
+                _settings.VPS = nalUnit.Payload.ToArray();
+            }
         }
 
         public void WriteAggregation( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            foreach ( var aggregate in H266NalUnit.ParseAggregates( packet.Payload ) )
+            {
+                _streamOfNalUnits.Write( StartCodePrefix.Default );
+                _streamOfNalUnits.Write( aggregate );
+            }
         }
 
         public void WriteFragmentation( RtpPacket packet )
         {
-            throw new NotImplementedException();
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( H266NalUnitFragment.TryParse( packet.Payload ,_settings.DONL , out var nalUnit ) )
+            {
+                if ( H266NalUnitFragment.IsStartPacket( nalUnit ) )
+                {
+                    Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
+
+                    _streamOfNalUnitsFragmented.Clear();
+                    _streamOfNalUnitsFragmented.Write( StartCodePrefix.Default );
+                    _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                }
+                else if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )
+                {
+                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
+
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                }
+                else if ( H266NalUnitFragment.IsStopPacket( nalUnit ) )
+                {
+                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
+
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
+                    _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
+                    _streamOfNalUnitsFragmented.Clear();
+                }
+            }
         }
     }
 }

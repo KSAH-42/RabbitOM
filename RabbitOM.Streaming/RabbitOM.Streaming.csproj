@@ -71,7 +71,7 @@
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitType.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266StreamWriter.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266StreamWriterSettings.cs" />
-    <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragmentation.cs" />
+    <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragment.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
     <Compile Include="Net\Rtp\IConfigurer.cs" />
     <Compile Include="Net\Rtp\StartCodePrefix.cs" />

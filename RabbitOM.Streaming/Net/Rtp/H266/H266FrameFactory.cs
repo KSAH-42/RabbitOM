@@ -11,21 +11,82 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
         public void Configure( H266FrameBuilderConfiguration configuration )
         {
-            throw new NotImplementedException();
+            if ( configuration == null )
+            {
+                throw new ArgumentNullException( nameof( configuration ) );
+            }
+
+            _writer.Settings.DONL = configuration.DONL;
+            _writer.Settings.PPS = configuration.PPS;
+            _writer.Settings.SPS = configuration.SPS;
+            _writer.Settings.VPS = configuration.VPS;
         }
 
         public bool TryCreate( IEnumerable<RtpPacket> packets , out H266FrameMediaElement result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( packets == null )
+            {
+                return false;
+            }
+
+            _writer.SetLength( 0 );
+
+            foreach ( var packet in packets )
+            {
+                if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnitType type ) )
+                {
+                    switch ( type )
+                    {
+                        case H266NalUnitType.PPS: 
+                            _writer.WritePPS( packet ); 
+                            break;
+
+                        case H266NalUnitType.SPS: 
+                            _writer.WriteSPS( packet ); 
+                            break;
+
+                        case H266NalUnitType.VPS: 
+                            _writer.WriteVPS( packet ); 
+                            break;
+
+                        case H266NalUnitType.RSVNVCL_28: 
+                            _writer.WriteAggregation( packet ); 
+                            break;
+
+                        case H266NalUnitType.RSVNVCL_29: 
+                            _writer.WriteFragmentation( packet ); 
+                            break;
+
+                        default:
+
+                            if ( type != H266NalUnitType.UNKNOWN )
+                            {
+                                _writer.Write( packet );
+                            }
+
+                            break;
+                    }
+                }
+            }
+
+            if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
+            {
+                result = new H266FrameMediaElement( StartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
+            }
+
+            return result != null;
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _writer.Clear();
+            _writer.Settings.Clear();
         }
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _writer.Dispose();
         }
     }
 }
