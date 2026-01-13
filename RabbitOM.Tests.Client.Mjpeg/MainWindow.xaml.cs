@@ -198,8 +198,8 @@ namespace RabbitOM.Tests.Client.Mjpeg
             var dialog = new Dialogs.ResolutionSettingsDialog() 
             { 
                 Owner = Window.GetWindow( this ) ,
-                ResolutionHeight = _resolutionInfo.Height ,
-                ResolutionWidth = _resolutionInfo.Width ,
+                HeightResolution = _resolutionInfo.Height ,
+                WidthResolution = _resolutionInfo.Width ,
                 ReplaceResolution = _replaceResolution,
             };
 
@@ -207,7 +207,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
             if ( result.HasValue && result.Value )
             {
-                _resolutionInfo = new ResolutionInfo( dialog.ResolutionWidth , dialog.ResolutionHeight );
+                _resolutionInfo = new ResolutionInfo( dialog.WidthResolution , dialog.HeightResolution );
                 _replaceResolution = dialog.ReplaceResolution;
             }
         }

@@ -23,12 +23,12 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 
         public static readonly DependencyProperty ResolutionWidthProperty 
             = DependencyProperty.Register(
-                "ResolutionWidth", typeof(int),
+                "WidthResolution", typeof(int),
                     typeof(ResolutionSettingsDialog) );
 
         public static readonly DependencyProperty ResolutionHeightProperty 
             = DependencyProperty.Register(
-                "ResolutionHeight", typeof(int),
+                "HeightResolution", typeof(int),
                     typeof(ResolutionSettingsDialog) );
 
         public static readonly DependencyProperty ReplaceResolutionProperty 
@@ -42,13 +42,13 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 
 
 
-        public int ResolutionWidth
+        public int WidthResolution
         {
             get => (int) GetValue( ResolutionWidthProperty );
             set => SetValue( ResolutionWidthProperty , value );
         }
 
-        public int ResolutionHeight
+        public int HeightResolution
         {
             get => (int) GetValue( ResolutionHeightProperty );
             set => SetValue( ResolutionHeightProperty , value );
@@ -66,7 +66,7 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 
         private void OnCanAcceptSettings( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = ResolutionWidth > 0 && ResolutionHeight > 0;
+            e.CanExecute = WidthResolution > 0 && HeightResolution > 0;
         }
 
         private void OnAcceptSettings( object sender , ExecutedRoutedEventArgs e )

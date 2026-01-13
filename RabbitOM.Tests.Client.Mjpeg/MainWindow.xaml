@@ -48,6 +48,7 @@
                 <ContextMenu>
                     <MenuItem Header="Uniform" Click="OnContextMenuImageUniform" />
                     <MenuItem Header="Fill"  Click="OnContextMenuImageFill" />
+                    <Separator/>
                     <MenuItem Header="Resolution" Click="OnChangeResolution" />
                 </ContextMenu>
             </Grid.ContextMenu>
