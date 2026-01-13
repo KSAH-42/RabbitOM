@@ -18,10 +18,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
         private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
 
-        private byte[] _rawSPS;
-
-        private byte[] _rawPPS;
-
 
 
 
@@ -63,15 +59,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         }
 
         /// <summary>
-        /// Clear paramaters
-        /// </summary>
-        public void ClearParameters()
-        {
-            _rawSPS = null;
-            _rawPPS = null;
-        }
-
-        /// <summary>
         /// Dispose
         /// </summary>
         public void Dispose()
@@ -89,16 +76,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         {
             _output.SetLength( 0 );
 
-            if ( _rawSPS?.Length > 0 )
+            if ( _settings.RawSPS?.Length > 0 )
             {
                 _output.Write( StartCodePrefix.Default );
-                _output.Write( _rawSPS );
+                _output.Write( _settings.RawSPS );
             }
 
-            if ( _rawPPS?.Length > 0 )
+            if ( _settings.RawPPS?.Length > 0 )
             {
                 _output.Write( StartCodePrefix.Default );
-                _output.Write( _rawPPS );
+                _output.Write( _settings.RawPPS );
             }
 
             _output.Write( _streamOfNalUnits );
@@ -145,7 +132,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
             {
-                _rawSPS = packet.Payload.ToArray();
+                _settings.RawSPS = packet.Payload.ToArray();
                 _settings.SPS = nalUnit.Payload.ToArray();
             }
         }
@@ -164,7 +151,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
             {
-                _rawPPS = packet.Payload.ToArray();
+                _settings.RawPPS = packet.Payload.ToArray();
                 _settings.PPS = nalUnit.Payload.ToArray();
             }
         }
