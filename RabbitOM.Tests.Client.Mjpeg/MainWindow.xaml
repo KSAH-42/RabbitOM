@@ -46,8 +46,8 @@
         <Grid Margin="1,29,1,1" Background="Black">
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Uniform" Click="OnContextMenuImageUniform" />
                     <MenuItem Header="Fill"  Click="OnContextMenuImageFill" />
+                    <MenuItem Header="Uniform" Click="OnContextMenuImageUniform" />
                     <Separator/>
                     <MenuItem Header="Resolution" Click="OnChangeResolution" />
                 </ContextMenu>
