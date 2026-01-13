@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        private readonly List<uint> _synchronizationSourcesIds = new List<uint>();
+        private readonly List<uint> _sscrIds = new List<uint>();
 
 
 
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
         public string Reason { get; private set; }
         
-        public IReadOnlyList<uint>SynchronizationSourcesIds { get => _synchronizationSourcesIds; }
+        public IReadOnlyList<uint>SynchronizationSourcesIds { get => _sscrIds; }
 
 
 
@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
                     sscrId |= (uint) ( message.Payload.Array[ offset ++ ] << 8 );
                     sscrId |= (uint) ( message.Payload.Array[ offset ++ ] );
 
-                    result._synchronizationSourcesIds.Add( sscrId );
+                    result._sscrIds.Add( sscrId );
 
                     offset += 4;
                 }
