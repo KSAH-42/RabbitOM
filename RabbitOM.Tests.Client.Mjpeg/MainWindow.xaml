@@ -100,11 +100,11 @@
               
                 <ContextMenu>
                 
-                    <MenuItem Header="Fill"  
+                    <MenuItem Header="Stretch"  
                               Command="{x:Static local:MainWindow.ImageFillCommand}" 
                               />
                     
-                    <MenuItem Header="Uniform" 
+                    <MenuItem Header="Normal" 
                               Command="{x:Static local:MainWindow.ImageUniformCommand}" 
                               />
                     
