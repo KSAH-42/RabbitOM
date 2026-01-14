@@ -8,9 +8,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
 
-        public event EventHandler<RtpBuildEventArgs> Builded;
+        public event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
-        public event EventHandler Cleared;
+        public event EventHandler<RtpClearedEventArgs> Cleared;
 
 
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             if ( packet == null )
             {
-                return;
+                throw new ArgumentNullException( nameof( packet ) );
             }
 
             var addingPacket = new RtpPacketAddingEventArgs( packet );
@@ -47,12 +47,12 @@ namespace RabbitOM.Streaming.Net.Rtp
                 return;
             }
 
-            OnBuilded( new RtpBuildEventArgs( mediaSample ) );
+            OnBuilded( new RtpMediaBuildedEventArgs( mediaSample ) );
         }
 
         public void Clear()
         {
-            OnCleared( EventArgs.Empty );
+            OnCleared( RtpClearedEventArgs.Default );
         }
 
         public void Dispose()
@@ -92,12 +92,12 @@ namespace RabbitOM.Streaming.Net.Rtp
             PacketAdded?.TryInvoke( this , e );
         }
 
-        protected virtual void OnBuilded( RtpBuildEventArgs e )
+        protected virtual void OnBuilded( RtpMediaBuildedEventArgs e )
         {
-            Builded?.TryInvoke( this , e );
+            MediaBuilded?.TryInvoke( this , e );
         }
 
-        protected virtual void OnCleared( EventArgs e )
+        protected virtual void OnCleared( RtpClearedEventArgs e )
         {
             Cleared?.TryInvoke( this , e );
         }

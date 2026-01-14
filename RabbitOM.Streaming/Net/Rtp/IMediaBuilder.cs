@@ -8,9 +8,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
 
-        event EventHandler<RtpBuildEventArgs> Builded;
+        event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
-        event EventHandler Cleared;
+        event EventHandler<RtpClearedEventArgs> Cleared;
 
         void AddPacket( RtpPacket packet );
 

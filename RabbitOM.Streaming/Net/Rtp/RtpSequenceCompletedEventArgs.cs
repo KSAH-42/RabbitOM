@@ -3,13 +3,10 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public class RtpSequenceCompletedEventArgs : EventArgs
+    public class RtpSequenceCompletedEventArgs : RtpSequenceEventArgs
     {
-        public RtpSequenceCompletedEventArgs( IReadOnlyCollection<RtpPacket> packets ) 
+        public RtpSequenceCompletedEventArgs( IReadOnlyCollection<RtpPacket> packets ) : base ( packets )
         {
-            Packets = packets ?? throw new ArgumentNullException( nameof( packets ) );
         }
-
-        public IReadOnlyCollection<RtpPacket> Packets { get; }
     }
 }

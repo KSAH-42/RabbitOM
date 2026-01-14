@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
             base.Dispose( disposing );
         }
         
-        protected override void OnCleared( EventArgs e )
+        protected override void OnCleared( RtpClearedEventArgs e )
         {
             _factory.Clear();
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 
             if ( _factory.TryCreateFrame( e.Packets , out var frame ) )
             {
-                OnBuilded( new RtpBuildEventArgs( frame ) );
+                OnBuilded( new RtpMediaBuildedEventArgs( frame ) );
             }
         }
     }

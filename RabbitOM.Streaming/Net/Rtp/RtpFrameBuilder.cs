@@ -8,14 +8,17 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
 
-        public event EventHandler<RtpBuildEventArgs> Builded;
+        public event EventHandler<RtpSequenceEventArgs> SequenceSorting;
 
-        public event EventHandler Cleared;
+        public event EventHandler<RtpSequenceEventArgs> SequenceSorted;
 
-        public event EventHandler<RtpSequenceCompletedEventArgs> SequenceCompleted;
+        public event EventHandler<RtpSequenceEventArgs> SequenceCompleted;
 
-        public event EventHandler<RtpSequenceSortingEventArgs> SequenceSorting;
+        public event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
+        public event EventHandler<RtpClearedEventArgs> Cleared;
+
+        
 
 
 
@@ -43,7 +46,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             if ( packet == null )
             {
-                return;
+                throw new ArgumentNullException( nameof( packet ) );
             }
 
             var addingPacket = new RtpPacketAddingEventArgs(packet );
@@ -66,9 +69,11 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             if ( _aggregator.HasUnOrderedSequence )
             {
-                OnSequenceSorting( new RtpSequenceSortingEventArgs( _aggregator.GetSequence() ) );
+                OnSequenceSorting( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
 
                 _aggregator.SortSequence();
+
+                OnSequenceSorted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
             }
                 
             OnSequenceCompleted( new RtpSequenceCompletedEventArgs( _aggregator.GetSequence() ) );
@@ -80,7 +85,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             _aggregator.Clear();
 
-            OnCleared( EventArgs.Empty );
+            OnCleared( RtpClearedEventArgs.Default );
         }
 
         public void Dispose()
@@ -110,24 +115,29 @@ namespace RabbitOM.Streaming.Net.Rtp
             PacketAdded?.TryInvoke( this , e );
         }
 
-        protected virtual void OnBuilded( RtpBuildEventArgs e )
-        {
-            Builded?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnCleared( EventArgs e )
-        {
-            Cleared?.TryInvoke( this , e );
-        }
-
-        protected virtual void OnSequenceSorting( RtpSequenceSortingEventArgs e )
+        protected virtual void OnSequenceSorting( RtpSequenceEventArgs e )
         {
             SequenceSorting?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnSequenceSorted( RtpSequenceEventArgs e )
+        {
+            SequenceSorted?.TryInvoke( this , e );
         }
 
         protected virtual void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
         {
             SequenceCompleted?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnBuilded( RtpMediaBuildedEventArgs e )
+        {
+            MediaBuilded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnCleared( RtpClearedEventArgs e )
+        {
+            Cleared?.TryInvoke( this , e );
         }
     }
 }

@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
             base.Dispose( disposing );
         }
 
-        protected override void OnCleared( EventArgs e )
+        protected override void OnCleared( RtpClearedEventArgs e )
         {
             _frameFactory.Clear();
 
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
             if ( _frameFactory.TryCreate( e.Packets , out var frame ) )
             {
-                OnBuilded( new RtpBuildEventArgs( frame ) );
+                OnBuilded( new RtpMediaBuildedEventArgs( frame ) );
             }
         }
     }

@@ -74,6 +74,8 @@
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnitFragment.cs" />
     <Compile Include="Net\Rtp\H266\Nals\H266NalUnit.cs" />
     <Compile Include="Net\Rtp\IConfigurer.cs" />
+    <Compile Include="Net\Rtp\RtpClearedEventArgs.cs" />
+    <Compile Include="Net\Rtp\RtpSequenceEventArgs.cs" />
     <Compile Include="Net\Rtp\StartCodePrefix.cs" />
     <Compile Include="ResolutionInfo.cs" />
     <Compile Include="Net\Rtp\Jpeg\JpegFrameBuilderConfiguration.cs" />
@@ -109,7 +111,7 @@
     <Compile Include="Net\Rtp\Pcm\L16SampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G711ULawSampleBuilder.cs" />
     <Compile Include="Net\Rtp\Pcm\G711ALawSampleBuilder.cs" />
-    <Compile Include="Net\Rtp\RtpBuildEventArgs.cs" />
+    <Compile Include="Net\Rtp\RtpMediaBuildedEventArgs.cs" />
     <Compile Include="Net\Rtp\DefaultPacketInspector.cs" />
     <Compile Include="Net\Rtp\RtpPacketInspector.cs" />
     <Compile Include="Net\Rtp\RtpSampleBuilder.cs" />
@@ -117,7 +119,6 @@
     <Compile Include="Net\Rtp\RtpPacketAggregator.cs" />
     <Compile Include="Net\Rtp\IMediaBuilder.cs" />
     <Compile Include="Net\Rtp\RtpSequenceCompletedEventArgs.cs" />
-    <Compile Include="Net\Rtp\RtpSequenceSortingEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAddedEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpPacketAddingEventArgs.cs" />
     <Compile Include="IO\MemoryStreamBuffer.cs" />
