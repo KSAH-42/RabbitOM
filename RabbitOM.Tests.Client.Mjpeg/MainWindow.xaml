@@ -110,7 +110,7 @@
                     
                     <Separator/>
                     
-                    <MenuItem Header="Resolution" 
+                    <MenuItem Header="Resolution fallback" 
                               Command="{x:Static local:MainWindow.ConfigureResolutionCommand}" 
                               />
                     
