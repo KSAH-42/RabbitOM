@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtcp
 {
-    public sealed class SourceDescriptionPacket : RtcpPacket
+    public sealed class RtcpSourceDescriptionPacket : RtcpPacket
     {
         public const int Type = 202;
 
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        public SourceDescriptionPacket( byte version ) : base ( version ) { }
+        public RtcpSourceDescriptionPacket( byte version ) : base ( version ) { }
 
 
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        public static bool TryCreateFrom( RtcpMessage message , out SourceDescriptionPacket result )
+        public static bool TryCreateFrom( RtcpMessage message , out RtcpSourceDescriptionPacket result )
         {
             result = null;
 
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
                 return false;
             }
 
-            result = new SourceDescriptionPacket( message.Version );
+            result = new RtcpSourceDescriptionPacket( message.Version );
 
             var offset = message.Payload.Offset;
 

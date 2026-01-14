@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private readonly RtpPacketAggregator _aggregator = new DefaultPacketAggregator();
+        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator();
         
        
 
@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Net.Rtp
                 OnSequenceSorted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
             }
                 
-            OnSequenceCompleted( new RtpSequenceCompletedEventArgs( _aggregator.GetSequence() ) );
+            OnSequenceCompleted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
 
             _aggregator.RemovePackets();
         }
@@ -125,7 +125,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             SequenceSorted?.TryInvoke( this , e );
         }
 
-        protected virtual void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
+        protected virtual void OnSequenceCompleted( RtpSequenceEventArgs e )
         {
             SequenceCompleted?.TryInvoke( this , e );
         }

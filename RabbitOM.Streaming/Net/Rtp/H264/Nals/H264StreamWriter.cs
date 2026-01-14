@@ -78,13 +78,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             if ( _settings.SPS?.Length > 0 )
             {
-                _output.Write( StartCodePrefix.Default );
+                _output.Write( RtpStartCodePrefix.Default );
                 _output.Write( _settings.SPS );
             }
 
             if ( _settings.PPS?.Length > 0 )
             {
-                _output.Write( StartCodePrefix.Default );
+                _output.Write( RtpStartCodePrefix.Default );
                 _output.Write( _settings.PPS );
             }
 
@@ -114,7 +114,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfNalUnits.Write( StartCodePrefix.Default );
+            _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
             _streamOfNalUnits.Write( packet.Payload );
         }
 
@@ -168,7 +168,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
             foreach ( var aggregate in H264NalUnit.ParseAggregates( packet.Payload ) )
             {
-                _streamOfNalUnits.Write( StartCodePrefix.Default );
+                _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
                 _streamOfNalUnits.Write( aggregate );
             }
         }
@@ -192,7 +192,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.Write( StartCodePrefix.Default );
+                    _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragment.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }

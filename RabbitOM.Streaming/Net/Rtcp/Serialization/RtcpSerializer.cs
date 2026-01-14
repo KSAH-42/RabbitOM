@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 {
-    public static class RtcpPacketSerializer
+    public static class RtcpSerializer
     {
         public static RtcpPacket Deserialize( in ArraySegment<byte> buffer )
         {
@@ -13,41 +13,41 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                     throw new NotSupportedException();
                 }
 
-                if ( message.Type == ApplicationPacket.Type )
+                if ( message.Type == RtcpApplicationPacket.Type )
                 {
-                    if ( ApplicationPacket.TryCreateFrom( message , out var result ) )
+                    if ( RtcpApplicationPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
                 }
 
-                else if ( message.Type == ByePacket.Type )
+                else if ( message.Type == RtcpByePacket.Type )
                 {
-                    if ( ByePacket.TryCreateFrom( message , out var result ) )
+                    if ( RtcpByePacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
                 }
 
-                else if ( message.Type == ReceiverReportPacket.Type )
+                else if ( message.Type == RtcpReceiverReportPacket.Type )
                 {
-                    if ( ReceiverReportPacket.TryCreateFrom( message , out var result ) )
+                    if ( RtcpReceiverReportPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
                 }
 
-                else if ( message.Type == SenderReportPacket.Type )
+                else if ( message.Type == RtcpSenderReportPacket.Type )
                 {
-                    if ( SenderReportPacket.TryCreateFrom( message , out var result ) )
+                    if ( RtcpSenderReportPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }
                 }
 
-                else if ( message.Type == SourceDescriptionPacket.Type )
+                else if ( message.Type == RtcpSourceDescriptionPacket.Type )
                 {
-                    if ( SourceDescriptionPacket.TryCreateFrom( message , out var result ) )
+                    if ( RtcpSourceDescriptionPacket.TryCreateFrom( message , out var result ) )
                     {
                         return result;
                     }

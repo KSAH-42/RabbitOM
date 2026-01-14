@@ -80,19 +80,19 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( _settings.VPS?.Length > 0 )
             {
-                _output.Write( StartCodePrefix.Default );
+                _output.Write( RtpStartCodePrefix.Default );
                 _output.Write( _settings.VPS );
             }
 
             if ( _settings.SPS?.Length > 0 )
             {
-                _output.Write( StartCodePrefix.Default );
+                _output.Write( RtpStartCodePrefix.Default );
                 _output.Write( _settings.SPS );
             }
 
             if ( _settings.PPS?.Length > 0 )
             {
-                _output.Write( StartCodePrefix.Default );
+                _output.Write( RtpStartCodePrefix.Default );
                 _output.Write( _settings.PPS );
             }
 
@@ -122,7 +122,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfNalUnits.Write( StartCodePrefix.Default );
+            _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
             _streamOfNalUnits.Write( packet.Payload );
         }
 
@@ -194,7 +194,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             foreach ( var aggregate in H265NalUnit.ParseAggregates( packet.Payload ) )
             {
-                _streamOfNalUnits.Write( StartCodePrefix.Default );
+                _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
                 _streamOfNalUnits.Write( aggregate );
             }
         }
@@ -218,7 +218,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.Write( StartCodePrefix.Default );
+                    _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.ParseHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }

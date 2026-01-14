@@ -40,7 +40,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
-        private readonly RtpPacketInspector _inspector = new DefaultPacketInspector();
+        private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly Renderer _renderer = new JpegRenderer();
         private ResolutionInfo _resolutionInfo = ResolutionInfo.Resolution_2040x2040;
@@ -48,12 +48,13 @@ namespace RabbitOM.Tests.Client.Mjpeg
         
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
+            
             _client.CommunicationStarted += OnCommunicationStarted;
             _client.CommunicationStopped += OnCommunicationStopped;
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
-
+            
             _frameBuilder.MediaBuilded += OnBuildFrame;
         }
 

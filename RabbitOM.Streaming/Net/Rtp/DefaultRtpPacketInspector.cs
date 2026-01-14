@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Net.Rtp
     // TODO: adding rtp stats, not necessary something related to the bandwith because it should be done elsewehere
     // TODO: adding event handler for triggering inspection reports ?
     // TODO: for perf reason, the inspector can run at particular times, not at each call
-    public sealed class DefaultPacketInspector : RtpPacketInspector
+    public sealed class DefaultRtpPacketInspector : RtpPacketInspector
     {
         public const int DefaultMTU = 1500;
 

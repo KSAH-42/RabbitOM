@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H264FrameMediaElement( StartCodePrefix.Default , _writer.Settings.SPS , _writer.Settings.PPS , _writer.ToArray() );
+                result = new H264FrameMediaElement( RtpStartCodePrefix.Default , _writer.Settings.SPS , _writer.Settings.PPS , _writer.ToArray() );
             }
 
             return result != null;

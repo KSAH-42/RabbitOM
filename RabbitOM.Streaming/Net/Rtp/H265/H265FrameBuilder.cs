@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             base.OnPacketAdding( e );
         }
 
-        protected override void OnSequenceCompleted( RtpSequenceCompletedEventArgs e )
+        protected override void OnSequenceCompleted( RtpSequenceEventArgs e )
         {
             base.OnSequenceCompleted( e );
 

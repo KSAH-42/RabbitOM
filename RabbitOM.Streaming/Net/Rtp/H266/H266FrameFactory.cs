@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H266FrameMediaElement( StartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
+                result = new H266FrameMediaElement( RtpStartCodePrefix.Default , _writer.Settings.PPS , _writer.Settings.SPS , _writer.Settings.VPS , _writer.ToArray() );
             }
 
             return result != null;

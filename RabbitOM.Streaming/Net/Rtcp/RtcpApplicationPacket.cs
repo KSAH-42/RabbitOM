@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtcp
 {
-    public sealed class ApplicationPacket : RtcpPacket
+    public sealed class RtcpApplicationPacket : RtcpPacket
     {
         public const int Type = 204;
 
         public const int MinimumSize = 8;
 
 
-        public ApplicationPacket( byte version ) : base ( version ) { }
+        public RtcpApplicationPacket( byte version ) : base ( version ) { }
 
 
 
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
 
 
-        public static bool TryCreateFrom( RtcpMessage message , out ApplicationPacket result )
+        public static bool TryCreateFrom( RtcpMessage message , out RtcpApplicationPacket result )
         {
             result = null;
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
 
             var offset = message.Payload.Offset;
 
-            result = new ApplicationPacket( message.Version );
+            result = new RtcpApplicationPacket( message.Version );
 
             result.SynchronizationSourceId  = (uint) ( message.Payload.Array[ offset ++ ] << 24 );
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
