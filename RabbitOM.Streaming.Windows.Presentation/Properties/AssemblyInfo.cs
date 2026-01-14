@@ -48,6 +48,6 @@ using System.Windows;
 //      Numéro de build
 //      Révision
 //
-[assembly: AssemblyVersion( "2.0.0.0" )]
-[assembly: AssemblyFileVersion( "2.0.0.0" )]
+[assembly: AssemblyVersion( "2.0.0.1" )]
+[assembly: AssemblyFileVersion( "2.0.0.1" )]
 [assembly: Guid( "66BAAFCD-BA9F-479B-8130-6C8C31ADE980" )]
