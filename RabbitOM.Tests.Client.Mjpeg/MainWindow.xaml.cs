@@ -36,7 +36,8 @@ namespace RabbitOM.Tests.Client.Mjpeg
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
     using RabbitOM.Tests.Client.Mjpeg.Extensions;
-    
+    using System.Windows.Input;
+
     public partial class MainWindow : Window
     {
         private readonly RtspClient _client = new RtspClient();
@@ -45,17 +46,29 @@ namespace RabbitOM.Tests.Client.Mjpeg
         private readonly Renderer _renderer = new JpegRenderer();
         private ResolutionInfo _resolutionInfo = ResolutionInfo.Resolution_2040x2040;
         private bool _replaceResolution;
+
+
+
+
+
+        public static readonly RoutedCommand ImageFillCommand = new RoutedCommand();
+        public static readonly RoutedCommand ImageUniformCommand = new RoutedCommand();
+        public static readonly RoutedCommand ConfigureResolutionCommand = new RoutedCommand();
         
+
+
+
+
+
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
-            
             _client.CommunicationStarted += OnCommunicationStarted;
             _client.CommunicationStopped += OnCommunicationStopped;
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
             
-            _frameBuilder.MediaBuilded += OnBuildFrame;
+            _frameBuilder.MediaBuilded += OnBuildFrame;            
         }
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
@@ -184,17 +197,32 @@ namespace RabbitOM.Tests.Client.Mjpeg
             }
         }
 
-        private void OnContextMenuImageUniform( object sender , RoutedEventArgs e )
+        private void OnCanExecuteImageFill( object sender , CanExecuteRoutedEventArgs e )
         {
-            _image.Stretch = System.Windows.Media.Stretch.Uniform;
+            e.CanExecute = _client.IsCommunicationStarted;
         }
 
-        private void OnContextMenuImageFill( object sender , RoutedEventArgs e )
+        private void OnCanExecuteImageUniform( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsCommunicationStarted;
+        }
+
+        private void OnCanExecuteConfigureResolution( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = ! _client.IsCommunicationStarted;
+        }
+
+        private void OnExecuteImageFill( object sender , ExecutedRoutedEventArgs e )
         {
             _image.Stretch = System.Windows.Media.Stretch.Fill;
         }
 
-        private void OnChangeResolution( object sender , RoutedEventArgs e )
+        private void OnExecuteImageUniform( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Uniform;
+        }
+
+        private void OnExecuteConfigureResolution( object sender , RoutedEventArgs e )
         {
             var dialog = new Dialogs.ResolutionSettingsDialog() 
             { 

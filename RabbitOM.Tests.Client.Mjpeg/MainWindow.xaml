@@ -11,10 +11,47 @@
 		Loaded="OnWindowLoaded" 
 		Closing="OnWindowClosing"
 		Background="Azure" 
+        FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
 		>
+    
+    <Window.CommandBindings>
+        
+        <CommandBinding Command="{x:Static local:MainWindow.ImageFillCommand}" 
+                        CanExecute="OnCanExecuteImageFill"
+                        Executed="OnExecuteImageFill"
+                        />
+
+        <CommandBinding Command="{x:Static local:MainWindow.ImageUniformCommand}" 
+                        CanExecute="OnCanExecuteImageUniform"
+                        Executed="OnExecuteImageUniform"
+                        />
+
+        <CommandBinding Command="{x:Static local:MainWindow.ConfigureResolutionCommand}" 
+                        CanExecute="OnCanExecuteConfigureResolution"
+                        Executed="OnExecuteConfigureResolution"
+                        />
+
+    </Window.CommandBindings>
+    
 	<Grid Margin="1,1,1,1" Background="White" >
-		<TextBlock HorizontalAlignment="Left" Margin="7,5,0,0" TextWrapping="Wrap" Text="MJPEG RTSP URI :" VerticalAlignment="Top" Width="94" TextAlignment="Right"/>
-		<ComboBox x:Name="_uris" IsEditable="True" Height="22" Margin="108,3,79,0" VerticalAlignment="Top" SelectedIndex="0" >
+
+        <TextBlock Margin="7,5,0,0"
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Top" 
+                   Width="94" 
+                   TextAlignment="Right"
+                   TextWrapping="Wrap" 
+                   Text="MJPEG RTSP URI :" 
+                   />
+
+        <ComboBox x:Name="_uris" 
+                  Margin="108,3,79,0" 
+                  VerticalAlignment="Top" 
+                  SelectedIndex="0" 
+                  Height="22" 
+                  IsEditable="True" 
+                  >
+            
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city1.mp4"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city2.mp4"/>
@@ -41,19 +78,62 @@
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102"/>
 			<ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>
+            
 		</ComboBox>
-		<Button x:Name="_controlButton" Content="Play" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Top" Width="74" Click="OnButtonControlClick" Height="22"/>
-        <Grid Margin="1,29,1,1" Background="Black">
+
+        <Button x:Name="_controlButton" 
+                Margin="0,3,2,0" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+                Width="74" 
+                Height="22"
+                Content="Play" 
+                Click="OnButtonControlClick" 
+                />
+
+        <Grid x:Name="ImageGrid"
+              Margin="1,29,1,1" 
+              Background="Black" 
+              >
+            
             <Grid.ContextMenu>
+              
                 <ContextMenu>
-                    <MenuItem Header="Fill"  Click="OnContextMenuImageFill" />
-                    <MenuItem Header="Uniform" Click="OnContextMenuImageUniform" />
+                
+                    <MenuItem Header="Fill"  
+                              Command="{x:Static local:MainWindow.ImageFillCommand}" 
+                              />
+                    
+                    <MenuItem Header="Uniform" 
+                              Command="{x:Static local:MainWindow.ImageUniformCommand}" 
+                              />
+                    
                     <Separator/>
-                    <MenuItem Header="Resolution" Click="OnChangeResolution" />
+                    
+                    <MenuItem Header="Resolution" 
+                              Command="{x:Static local:MainWindow.ConfigureResolutionCommand}" 
+                              />
+                    
                 </ContextMenu>
+            
             </Grid.ContextMenu>
-            <TextBlock x:Name="_textBlockInfo" FontSize="20" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <Image x:Name="_image"  Stretch="Uniform" Margin="0,0,0,0" SnapsToDevicePixels="True" UseLayoutRounding="True" />
+            
+            <TextBlock x:Name="_textBlockInfo" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" 
+                       FontSize="20" 
+                       Foreground="White" 
+                       />
+            
+            <Image x:Name="_image"  
+                   Margin="0,0,0,0" 
+                   Stretch="Uniform" 
+                   SnapsToDevicePixels="True" 
+                   UseLayoutRounding="True" 
+                   />
+            
         </Grid>
+        
     </Grid>
+    
 </Window>
