@@ -224,7 +224,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
         private void OnExecuteConfigureResolution( object sender , RoutedEventArgs e )
         {
-            var dialog = new Dialogs.ResolutionSettingsDialog() 
+            var dialog = new Dialogs.ResolutionFallBackSettingsDialog() 
             { 
                 Owner = Window.GetWindow( this ) ,
                 HeightResolution = _resolutionInfo.Height ,

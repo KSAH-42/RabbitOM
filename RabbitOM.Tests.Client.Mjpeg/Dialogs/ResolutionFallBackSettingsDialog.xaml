@@ -1,4 +1,4 @@
-﻿<Window x:Class="RabbitOM.Tests.Client.Mjpeg.Dialogs.ResolutionSettingsDialog"
+﻿<Window x:Class="RabbitOM.Tests.Client.Mjpeg.Dialogs.ResolutionFallBackSettingsDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Tests.Client.Mjpeg.Dialogs"
         xmlns:converters="clr-namespace:RabbitOM.Tests.Client.Mjpeg.Converters"
         mc:Ignorable="d"
-        Title="Resolution Settings" 
+        Title="Resolution fallback settings" 
         Height="180" 
         Width="270"
         WindowStartupLocation="CenterOwner"
@@ -22,7 +22,7 @@
     
     <Window.CommandBindings>
 
-        <CommandBinding Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}" 
+        <CommandBinding Command="{x:Static local:ResolutionFallBackSettingsDialog.AcceptButtonCommand}" 
                         CanExecute="OnCanAcceptSettings" 
                         Executed="OnAcceptSettings" 
                         />
@@ -65,17 +65,43 @@
 
             <Grid Grid.Column="1">
 
-                <TextBox Margin="0,20,10,0" 
-                         VerticalAlignment="Top" 
-                         TextWrapping="Wrap"
-                         Text="{Binding Path=WidthResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
-                         />
-
-                <TextBox  Margin="0,50,10,0"
+                <ComboBox Margin="0,20,10,0" 
                           VerticalAlignment="Top" 
-                          TextWrapping="Wrap"
-                          Text="{Binding Path=HeightResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
-                          />
+                          IsEditable="True"
+                          Text="{Binding Path=WidthResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
+                          >
+        
+                    <ComboBox.Items>
+                        <ComboBoxItem>800</ComboBoxItem>
+                        <ComboBoxItem>1280</ComboBoxItem>
+                        <ComboBoxItem>1920</ComboBoxItem>
+                        <ComboBoxItem>2040</ComboBoxItem>
+                        <ComboBoxItem>2560</ComboBoxItem>
+                        <ComboBoxItem>2592</ComboBoxItem>
+                        <ComboBoxItem>3840</ComboBoxItem>
+                        <ComboBoxItem>4000</ComboBoxItem>
+                    </ComboBox.Items>
+                    
+                </ComboBox>
+
+                    <ComboBox Margin="0,50,10,0"
+                              VerticalAlignment="Top" 
+                              IsEditable="True"
+                              Text="{Binding Path=HeightResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
+                              >
+
+                    <ComboBox.Items>
+                        <ComboBoxItem>600</ComboBoxItem>
+                        <ComboBoxItem>720</ComboBoxItem>
+                        <ComboBoxItem>1080</ComboBoxItem>
+                        <ComboBoxItem>2040</ComboBoxItem>
+                        <ComboBoxItem>1440</ComboBoxItem>
+                        <ComboBoxItem>1944</ComboBoxItem>
+                        <ComboBoxItem>2160</ComboBoxItem>
+                        <ComboBoxItem>3000</ComboBoxItem>
+                    </ComboBox.Items>
+                        
+                </ComboBox>
 
                 <CheckBox Margin="0,79,0,0" 
                           HorizontalAlignment="Left" 
@@ -108,7 +134,7 @@
                     IsCancel="False"
                     IsDefault="True"
                     Content="Ok"
-                    Command="{x:Static local:ResolutionSettingsDialog.AcceptButtonCommand}"
+                    Command="{x:Static local:ResolutionFallBackSettingsDialog.AcceptButtonCommand}"
                     />
 
         </Grid>

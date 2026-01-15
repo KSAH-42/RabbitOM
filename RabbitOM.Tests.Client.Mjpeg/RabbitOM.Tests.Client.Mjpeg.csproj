@@ -61,7 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Dialogs\ResolutionSettingsDialog.xaml">
+    <Page Include="Dialogs\ResolutionFallBackSettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -74,8 +74,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\IntValueConverter.cs" />
-    <Compile Include="Dialogs\ResolutionSettingsDialog.xaml.cs">
-      <DependentUpon>ResolutionSettingsDialog.xaml</DependentUpon>
+    <Compile Include="Dialogs\ResolutionFallBackSettingsDialog.xaml.cs">
+      <DependentUpon>ResolutionFallBackSettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">

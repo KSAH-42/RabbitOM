@@ -4,9 +4,9 @@ using System.Windows.Input;
 
 namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 {
-    public partial class ResolutionSettingsDialog : Window
+    public partial class ResolutionFallBackSettingsDialog : Window
     {
-        public ResolutionSettingsDialog()
+        public ResolutionFallBackSettingsDialog()
         {
             InitializeComponent();
         }
@@ -26,17 +26,17 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
         public static readonly DependencyProperty ResolutionWidthProperty 
             = DependencyProperty.Register(
                 "WidthResolution", typeof(int),
-                    typeof(ResolutionSettingsDialog) );
+                    typeof(ResolutionFallBackSettingsDialog) );
 
         public static readonly DependencyProperty ResolutionHeightProperty 
             = DependencyProperty.Register(
                 "HeightResolution", typeof(int),
-                    typeof(ResolutionSettingsDialog) );
+                    typeof(ResolutionFallBackSettingsDialog) );
 
         public static readonly DependencyProperty ReplaceResolutionProperty 
             = DependencyProperty.Register(
                 "ReplaceResolution", typeof(bool),
-                    typeof(ResolutionSettingsDialog) );
+                    typeof(ResolutionFallBackSettingsDialog) );
 
         
 
