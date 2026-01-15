@@ -16,10 +16,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
                 throw new ArgumentNullException( nameof( configuration ) );
             }
 
+            _writer.Settings.PPS  = configuration.PPS;
+            _writer.Settings.SPS  = configuration.SPS;
+            _writer.Settings.VPS  = configuration.VPS;
             _writer.Settings.DONL = configuration.DONL;
-            _writer.Settings.PPS = configuration.PPS;
-            _writer.Settings.SPS = configuration.SPS;
-            _writer.Settings.VPS = configuration.VPS;
         }
 
         public bool TryCreate( IEnumerable<RtpPacket> packets , out H266FrameMediaElement result )

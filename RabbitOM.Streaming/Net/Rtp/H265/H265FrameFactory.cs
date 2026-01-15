@@ -15,19 +15,19 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
         /// <summary>
         /// Configure
         /// </summary>
-        /// <param name="settings">the settings</param>
+        /// <param name="configuration">the configuration</param>
         /// <exception cref="ArgumentNullException"/>
-        public void Configure( H265FrameBuilderConfiguration settings )
+        public void Configure( H265FrameBuilderConfiguration configuration )
         {
-            if ( settings == null )
+            if ( configuration == null )
             {
-                throw new ArgumentNullException( nameof( settings ) );
+                throw new ArgumentNullException( nameof( configuration ) );
             }
 
-            _writer.Settings.VPS  = settings.VPS;
-            _writer.Settings.SPS  = settings.SPS;
-            _writer.Settings.PPS  = settings.PPS;
-            _writer.Settings.DONL = settings.DONL;
+            _writer.Settings.VPS  = configuration.VPS;
+            _writer.Settings.SPS  = configuration.SPS;
+            _writer.Settings.PPS  = configuration.PPS;
+            _writer.Settings.DONL = configuration.DONL;
         }
 
         /// <summary>

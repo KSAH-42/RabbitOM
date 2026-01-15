@@ -6,9 +6,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
-        public void Configure( H265FrameBuilderConfiguration settings )
+        public void Configure( H265FrameBuilderConfiguration configuration )
         {
-            _frameFactory.Configure( settings );
+            _frameFactory.Configure( configuration );
         }
 
         protected override void Dispose( bool disposing )
