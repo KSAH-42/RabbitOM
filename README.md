@@ -42,7 +42,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
 
-➡️ Next arrivls:
+➡️ Next arriavls:
 
 * Adding RTCP layer 
 * Adding H266
@@ -50,6 +50,10 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 
 * ⚠️ COMING REFACTORY: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
+
+ About thread safety:
+
+As mentioned below, most of classs are thread safe except sdp classes and rtp classes. Rtp sample and frame builder are not thread safety there are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to used only inside a thread. Any interaction with that, calls must be marshalled.
 
 # How to receive raw rtp packets using the rtsp client ?
 
