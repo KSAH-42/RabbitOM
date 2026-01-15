@@ -42,7 +42,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
 
-➡️ Nextarrivals:
+➡️ Next arrivals:
 
 * Adding RTCP layer 
 * Adding H266
