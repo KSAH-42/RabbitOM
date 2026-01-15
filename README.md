@@ -53,7 +53,8 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 
  About thread safety:
 
-As mentioned below, most of classs are thread safe except sdp classes and rtp classes. Rtp sample and frame builder are not thread safe, there are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to used only inside a thread. Any interaction with that, must used marshalling calls instead.
+As mentioned below, most of classs are thread safe except sdp classes and rtp classes. Rtp sample and frame builder are not thread safe, there are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to used only inside a thread. Any interaction with that, must used marshalling calls instead. Synchronized class will be introduce by using something simalar to the proxy pattern that take in the ctor a base class used a lock combine with a queue that receive event from subscibption done on the receive object. tests are ok, it may be possible that these class will not be add at this moment, it will be add it it be comes a necessity.
+
 
 # How to receive raw rtp packets using the rtsp client ?
 
