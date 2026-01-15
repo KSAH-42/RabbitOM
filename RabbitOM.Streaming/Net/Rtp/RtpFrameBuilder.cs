@@ -41,11 +41,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="packet"></param>
-        /// <exception cref="ArgumentNullException"></exception>
         public void AddPacket( RtpPacket packet )
         {
             if ( packet == null )
