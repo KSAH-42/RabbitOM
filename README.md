@@ -51,9 +51,9 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 
 * ⚠️ COMING REFACTORY: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
 
- About thread safety:
+➡️ About thread safety:
 
-As mentioned below, most of classs are thread safe except sdp classes and rtp classes. Rtp sample and frame builder are not thread safe, there are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to used only inside a thread. Any interaction with that, must used marshalling calls instead. Synchronized class will be introduce by using something simalar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption done on the receive object. Tests are great, but it may be possible that these class will not be add at this moment, for inheritance refactoring. So at this times, it will be added if it it be comes a necessity.
+As mentioned below, most of classs are thread safe except sdp classes and rtp classes. Rtp sample and frame builder are not thread safe, there are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to be used only inside a thread. Any interactions with that, must used marshalling calls instead. Synchronized class will be introduce by using something similar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption handlers hook on the receive object passed into the ctor. Tests are successfull, but it may be possible that these class will not be add for the future. So at this moment, and for inheritance refactoring reasons theses classes are not present. So at this times, nothing of that but it will be added if it it be comes a necessity.
 
 
 # How to receive raw rtp packets using the rtsp client ?
