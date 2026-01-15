@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             if ( ! _aggregator.HasCompleteSequence )
             {
-                return;
+                return ;
             }
 
             try
