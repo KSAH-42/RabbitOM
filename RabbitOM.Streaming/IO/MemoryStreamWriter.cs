@@ -13,11 +13,6 @@ namespace RabbitOM.Streaming.IO
 
 
         /// <summary>
-        /// Gets the capacity
-        /// </summary>
-        public long Capacity { get => _stream.Capacity; }
-
-        /// <summary>
         /// Gets the length
         /// </summary>
         public long Length { get => _stream.Length; }
@@ -92,27 +87,6 @@ namespace RabbitOM.Streaming.IO
             }
 
             _stream.Write( buffer , 0 , buffer.Length );
-        }
-
-        /// <summary>
-        /// Write
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <param name="offset">the offset</param>
-        /// <param name="count">the count</param>
-        public void Write( byte[] buffer , int offset , int count )
-        {
-            if ( buffer == null || buffer.Length <= 0 || offset < 0 || count <= 0 )
-            {
-                return;
-            }
-
-            if ( buffer.Length - offset < count )
-            {
-                return;
-            }
-
-            _stream.Write( buffer , offset , count );
         }
 
         /// <summary>
