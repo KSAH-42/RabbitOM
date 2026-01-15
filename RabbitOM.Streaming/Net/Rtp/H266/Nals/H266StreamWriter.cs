@@ -9,11 +9,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
     {
         private readonly H266StreamWriterSettings _settings = new H266StreamWriterSettings();
         
-        private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
         
-        private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _streamOfNalUnitsFragmented = new MemoryStreamWriter();
 
-        private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
 
 
 

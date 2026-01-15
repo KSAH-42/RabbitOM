@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
     /// </summary>
     public sealed partial class JpegStreamWriter : IDisposable
     {
-        private readonly MemoryStreamBuffer _stream = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _stream = new MemoryStreamWriter();
 
         private readonly JpegQuantizationTableFactory _quantizationTableFactory = new JpegQuantizationTableFactory();
         

@@ -12,11 +12,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     {
         private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
         
-        private readonly MemoryStreamBuffer _streamOfNalUnits = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
         
-        private readonly MemoryStreamBuffer _streamOfNalUnitsFragmented = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _streamOfNalUnitsFragmented = new MemoryStreamWriter();
 
-        private readonly MemoryStreamBuffer _output = new MemoryStreamBuffer();
+        private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
 
         
 

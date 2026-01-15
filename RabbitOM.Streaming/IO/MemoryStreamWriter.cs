@@ -6,12 +6,9 @@ namespace RabbitOM.Streaming.IO
     /// <summary>
     /// Represent a tolerant memory stream wrapper
     /// </summary>
-    public sealed class MemoryStreamBuffer : Stream
+    public sealed class MemoryStreamWriter : IDisposable
     {
         private readonly MemoryStream _stream = new MemoryStream();
-
-
-
 
 
 
@@ -23,28 +20,13 @@ namespace RabbitOM.Streaming.IO
         /// <summary>
         /// Gets the length
         /// </summary>
-        public override long Length { get => _stream.Length; }
+        public long Length { get => _stream.Length; }
 
         /// <summary>
         /// Gets the position
         /// </summary>
-        public override long Position { get => _stream.Position; set => _stream.Position = Numerics.Clamp( value , 0 , _stream.Length ); }
+        public long Position { get => _stream.Position; }
         
-        /// <summary>
-        /// Check the read operation is supported
-        /// </summary>
-        public override bool CanRead { get => _stream.CanRead; }
-
-        /// <summary>
-        /// Check the seek operation is supported
-        /// </summary>
-        public override bool CanSeek { get => _stream.CanSeek; }
-
-        /// <summary>
-        /// Check the write operation is supported
-        /// </summary>
-        public override bool CanWrite { get => _stream.CanWrite; }
-
         /// <summary>
         /// Check if the stream is empty
         /// </summary>
@@ -57,13 +39,6 @@ namespace RabbitOM.Streaming.IO
 
 
         /// <summary>
-        /// Flush the stream - this method do nothing
-        /// </summary>
-        public override void Flush()
-        {
-        }
-
-        /// <summary>
         /// Clear
         /// </summary>
         public void Clear()
@@ -74,7 +49,7 @@ namespace RabbitOM.Streaming.IO
         /// <summary>
         /// Close
         /// </summary>
-        public override void Close()
+        public void Close()
         {
             _stream.Close();
         }
@@ -82,20 +57,16 @@ namespace RabbitOM.Streaming.IO
         /// <summary>
         /// Dispose
         /// </summary>
-        /// <param name="disposing">the dispose</param>
-        protected override void Dispose( bool disposing ) 
+        public void Dispose()
         {
-            if ( disposing )
-            {
-                _stream.Dispose();
-            }
+            _stream.Dispose();
         }
-        
+
         /// <summary>
         /// Set the length
         /// </summary>
         /// <param name="value">a positive value</param>
-        public override void SetLength( long value ) 
+        public void SetLength( long value ) 
         {
             _stream.SetLength( value > 0 ? value : 0 );
         }
@@ -107,44 +78,6 @@ namespace RabbitOM.Streaming.IO
         public void SetPosition( long value )
         { 
             _stream.Position = Numerics.Clamp( value , 0 , _stream.Length );
-        }
-
-        /// <summary>
-        /// Seek to a new position
-        /// </summary>
-        /// <param name="offset">the offset</param>
-        /// <param name="origin">the origin</param>
-        /// <returns>returns the new position</returns>
-        public override long Seek( long offset , SeekOrigin origin )
-        {
-            return _stream.Seek( offset , origin );
-        }
-
-        /// <summary>
-        /// Read
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <param name="offset">the offset</param>
-        /// <param name="count">the count</param>
-        /// <returns>returns the number of bytes readen</returns>
-        public override int Read( byte[] buffer , int offset , int count )
-        {
-            if ( buffer == null || buffer.Length <= 0 || offset < 0 || count < 0 )
-            {
-                return -1;
-            }
-
-            if ( buffer.Length - offset < count )
-            {
-                return -1;
-            }
-
-            if ( count == 0 )
-            {
-                return 0;
-            }
-
-            return _stream.Read( buffer , offset , count );
         }
 
         /// <summary>
@@ -167,7 +100,7 @@ namespace RabbitOM.Streaming.IO
         /// <param name="buffer">the buffer</param>
         /// <param name="offset">the offset</param>
         /// <param name="count">the count</param>
-        public override void Write( byte[] buffer , int offset , int count )
+        public void Write( byte[] buffer , int offset , int count )
         {
             if ( buffer == null || buffer.Length <= 0 || offset < 0 || count <= 0 )
             {
@@ -200,7 +133,7 @@ namespace RabbitOM.Streaming.IO
         /// Append
         /// </summary>
         /// <param name="memoryStream">the stream</param>
-        public void Write( MemoryStreamBuffer memoryStream ) 
+        public void Write( MemoryStreamWriter memoryStream ) 
         {
             if ( memoryStream == null || memoryStream.IsEmpty )
             {
@@ -217,7 +150,7 @@ namespace RabbitOM.Streaming.IO
         /// Write a value
         /// </summary>
         /// <param name="value">the value</param>
-        public override void WriteByte( byte value ) 
+        public void WriteByte( byte value ) 
         {
             _stream.WriteByte( value );
         }

@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             {
                 return;
             }
-                
+
             try
             {
                 if ( _aggregator.HasUnOrderedSequence )
