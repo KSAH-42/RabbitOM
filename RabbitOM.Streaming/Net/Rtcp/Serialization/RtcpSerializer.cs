@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
             {
                 if ( message.Version < RtcpPacket.DefaultVersion )
                 {
-                    throw new NotSupportedException();
+                    throw new NotSupportedException( $"Invalid version: {message.Version}" );
                 }
 
                 if ( message.Type == RtcpApplicationPacket.Type )
@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Serialization
                 }
                 else
                 {
-                    throw new NotSupportedException();
+                    throw new NotSupportedException( $"Unsupported message type: {message.Type}" );
                 }
             }
 
