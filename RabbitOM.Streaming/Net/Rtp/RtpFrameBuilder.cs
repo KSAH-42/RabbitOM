@@ -62,7 +62,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
-            if ( !_aggregator.HasCompleteSequence )
+            if ( ! _aggregator.HasCompleteSequence )
             {
                 return;
             }
