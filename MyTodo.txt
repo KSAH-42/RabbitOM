@@ -7,16 +7,15 @@ move the StartCodePrefix fields present in the H264 and H265 namespace into the 
 
 RabbitOM.Streaming
 RabbitOM.Streaming.Collections
-RabbitOM.Streaming.Codecs                 // C++ WRL component or COM / ATL skip p/invoke and support of DirectX for hardware acceleration by creating individual C++ coclass, coclass must be as free threading appartement where STA is the default, skip it, to avoid COM marshalling. wrl is more suitable to avoid com registration issue even it can be solve by a using manifest file
 RabbitOM.Streaming.Diagnostics            // add the logger
 RabbitOM.Streaming.Diagnostics.Counters
-RabbitOM.Streaming.IO                     // add recording features here
+RabbitOM.Streaming.IO                     // stream class helpers, binary reader, and so on, add add recording features here
 RabbitOM.Streaming.Net.Sockets
 RabbitOM.Streaming.Net.Rtp
 RabbitOM.Streaming.Net.Rtp.H264
-RabbitOM.Streaming.Net.Rtp.H264.Headers
+RabbitOM.Streaming.Net.Rtp.H264.Nals
 RabbitOM.Streaming.Net.Rtp.H265
-RabbitOM.Streaming.Net.Rtp.H265.Headers
+RabbitOM.Streaming.Net.Rtp.H265.Nals
 RabbitOM.Streaming.Net.Rtp.Jpeg
 RabbitOM.Streaming.Net.Rtp.Jpeg.Fragmentation
 RabbitOM.Streaming.Net.Rtsp
@@ -28,6 +27,7 @@ RabbitOM.Streaming.Net.Sdp
 RabbitOM.Streaming.Net.Sdp.Serialization
 RabbitOM.Streaming.Net.Sdp.Serialization.Formatters
 RabbitOM.Streaming.Threading
+RabbitOM.Streaming.Windows.Codecs                 // C++ WRL component or COM / ATL skip p/invoke and support of DirectX for hardware acceleration by creating individual C++ coclass, coclass must be as free threading appartement where STA is the default, skip it, to avoid COM marshalling. wrl is more suitable to avoid com registration issue even it can be solve by a using manifest file
 RabbitOM.Streaming.Windows.Presentation
 RabbitOM.Streaming.Windows.Presentation.Renders
 
