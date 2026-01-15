@@ -62,23 +62,28 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
-            if ( ! _aggregator.HasCompleteSequence )
+            if ( !_aggregator.HasCompleteSequence )
             {
                 return;
             }
-
-            if ( _aggregator.HasUnOrderedSequence )
-            {
-                OnSequenceSorting( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
-
-                _aggregator.SortSequence();
-
-                OnSequenceSorted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
-            }
                 
-            OnSequenceCompleted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+            try
+            {
+                if ( _aggregator.HasUnOrderedSequence )
+                {
+                    OnSequenceSorting( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
 
-            _aggregator.RemovePackets();
+                    _aggregator.SortSequence();
+
+                    OnSequenceSorted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+                }
+
+                OnSequenceCompleted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+            }
+            finally
+            {
+                _aggregator.RemovePackets();
+            }
         }
 
         public void Clear()
