@@ -70,7 +70,7 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 
         private void OnCanAcceptSettings( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = WidthResolution > 0 && HeightResolution > 0;
+            e.CanExecute = WidthResolution >= 2 && HeightResolution >= 2;
         }
 
         private void OnAcceptSettings( object sender , ExecutedRoutedEventArgs e )
