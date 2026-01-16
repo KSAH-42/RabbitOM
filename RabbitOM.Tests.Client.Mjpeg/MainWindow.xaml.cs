@@ -40,25 +40,16 @@ namespace RabbitOM.Tests.Client.Mjpeg
 
     public partial class MainWindow : Window
     {
+        public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
+        public static readonly RoutedCommand UniformImageCommand = new RoutedCommand();
+        public static readonly RoutedCommand ConfigureResolutionCommand = new RoutedCommand();
+        
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly Renderer _renderer = new JpegRenderer();
         private ResolutionInfo _resolutionInfo = ResolutionInfo.Resolution_2040x2040;
         private bool _replaceResolution;
-
-
-
-
-
-        public static readonly RoutedCommand ImageFillCommand = new RoutedCommand();
-        public static readonly RoutedCommand ImageUniformCommand = new RoutedCommand();
-        public static readonly RoutedCommand ConfigureResolutionCommand = new RoutedCommand();
-        
-
-
-
-
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -197,29 +188,29 @@ namespace RabbitOM.Tests.Client.Mjpeg
             }
         }
 
-        private void OnCanExecuteImageFill( object sender , CanExecuteRoutedEventArgs e )
+        private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = _client.IsCommunicationStarted;
         }
 
-        private void OnCanExecuteImageUniform( object sender , CanExecuteRoutedEventArgs e )
+        private void OnExecuteFillImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Fill;
+        }
+
+        private void OnCanExecuteUniformImage( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = _client.IsCommunicationStarted;
+        }
+
+        private void OnExecuteUniformImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Uniform;
         }
 
         private void OnCanExecuteConfigureResolution( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = ! _client.IsCommunicationStarted;
-        }
-
-        private void OnExecuteImageFill( object sender , ExecutedRoutedEventArgs e )
-        {
-            _image.Stretch = System.Windows.Media.Stretch.Fill;
-        }
-
-        private void OnExecuteImageUniform( object sender , ExecutedRoutedEventArgs e )
-        {
-            _image.Stretch = System.Windows.Media.Stretch.Uniform;
         }
 
         private void OnExecuteConfigureResolution( object sender , RoutedEventArgs e )

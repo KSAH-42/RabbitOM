@@ -15,15 +15,15 @@
 		>
     
     <Window.CommandBindings>
-        
-        <CommandBinding Command="{x:Static local:MainWindow.ImageFillCommand}" 
-                        CanExecute="OnCanExecuteImageFill"
-                        Executed="OnExecuteImageFill"
+
+        <CommandBinding Command="{x:Static local:MainWindow.FillImageCommand}" 
+                        CanExecute="OnCanExecuteFillImage"
+                        Executed="OnExecuteFillImage"
                         />
 
-        <CommandBinding Command="{x:Static local:MainWindow.ImageUniformCommand}" 
-                        CanExecute="OnCanExecuteImageUniform"
-                        Executed="OnExecuteImageUniform"
+        <CommandBinding Command="{x:Static local:MainWindow.UniformImageCommand}" 
+                        CanExecute="OnCanExecuteUniformImage"
+                        Executed="OnExecuteUniformImage"
                         />
 
         <CommandBinding Command="{x:Static local:MainWindow.ConfigureResolutionCommand}" 
@@ -101,11 +101,11 @@
                 <ContextMenu>
                 
                     <MenuItem Header="Stretch"  
-                              Command="{x:Static local:MainWindow.ImageFillCommand}" 
+                              Command="{x:Static local:MainWindow.FillImageCommand}" 
                               />
                     
                     <MenuItem Header="Normal" 
-                              Command="{x:Static local:MainWindow.ImageUniformCommand}" 
+                              Command="{x:Static local:MainWindow.UniformImageCommand}" 
                               />
                     
                     <Separator/>
