@@ -26,6 +26,7 @@ Please also, check the rtsp settings on the web page of the camera.
 
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace RabbitOM.Tests.Client.Mjpeg
 {
@@ -36,7 +37,6 @@ namespace RabbitOM.Tests.Client.Mjpeg
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
     using RabbitOM.Tests.Client.Mjpeg.Extensions;
-    using System.Windows.Input;
 
     public partial class MainWindow : Window
     {
