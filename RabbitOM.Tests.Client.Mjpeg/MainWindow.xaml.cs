@@ -1,6 +1,8 @@
 ﻿/*
 
-This sample illustrate how to receive video from a MJPEG SOURCE only.
+This sample illustrate how to receive video from a Mjpeg source only. 
+
+For H254, or H265, etc... others indivuals samples will be provided.
 
 After configuring a jpeg rtsp server using the happyRtspServer, 
 
