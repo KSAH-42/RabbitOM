@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                 return false;
             }
 
-            _writer.SetLength( 0 );
+            _writer.Clear();
             
             foreach ( var packet in packets )
             {

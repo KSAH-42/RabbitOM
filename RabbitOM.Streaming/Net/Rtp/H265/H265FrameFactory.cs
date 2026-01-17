@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                 return false;
             }
 
-            _writer.SetLength( 0 );
+            _writer.Clear();
 
             foreach ( var packet in packets )
             {

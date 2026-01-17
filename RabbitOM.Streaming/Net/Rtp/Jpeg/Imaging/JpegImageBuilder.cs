@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
         /// <summary>
         /// Can add a fragment
-        /// </summary>
+        /// </summarCy>
         /// <param name="fragment">the fragment</param>
         /// <returns>returns true for a success, otherwise false</returns>
         public bool CanAddFragment( JpegFragment fragment )

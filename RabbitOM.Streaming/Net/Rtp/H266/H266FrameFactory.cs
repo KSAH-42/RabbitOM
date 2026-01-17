@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
                 return false;
             }
 
-            _writer.SetLength( 0 );
+            _writer.Clear();
 
             foreach ( var packet in packets )
             {
