@@ -2,7 +2,7 @@
 {
     public class H266FrameMediaElement : RtpMediaElement
     {
-        public H266FrameMediaElement( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps , byte[] buffer ) : base ( buffer )
+        public H266FrameMediaElement( byte[] buffer , byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps ) : base ( buffer )
         {
             // TODO: refactor futur duplicated code with H265 media element class ?
 

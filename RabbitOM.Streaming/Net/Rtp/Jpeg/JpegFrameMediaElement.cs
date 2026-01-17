@@ -10,10 +10,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// <summary>
         /// Initialize a new instance of the jpeg frame
         /// </summary>
+        /// <param name="buffer">the buffer</param>
         /// <param name="width">the width</param>
         /// <param name="height">the height</param>
-        /// <param name="buffer">the buffer</param>
-        public JpegFrameMediaElement( int width , int height , byte[] buffer ) : base ( buffer )
+        public JpegFrameMediaElement( byte[] buffer , int width , int height ) : base ( buffer )
         {
             Width  = width;
             Height = height;
