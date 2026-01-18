@@ -6,6 +6,8 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 {
     public partial class ResolutionFallBackSettingsDialog : Window
     {
+        public static RoutedCommand AcceptButtonCommand = new RoutedCommand();
+
         public ResolutionFallBackSettingsDialog()
         {
             InitializeComponent();
@@ -14,32 +16,20 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
 
 
 
-
-
-        public static RoutedCommand AcceptButtonCommand = new RoutedCommand();
-
-
-
-
-
-
         public static readonly DependencyProperty ResolutionWidthProperty 
             = DependencyProperty.Register(
-                "WidthResolution", typeof(int),
+                "WidthResolution", typeof(int) ,
                     typeof(ResolutionFallBackSettingsDialog) );
 
         public static readonly DependencyProperty ResolutionHeightProperty 
             = DependencyProperty.Register(
-                "HeightResolution", typeof(int),
+                "HeightResolution", typeof(int) ,
                     typeof(ResolutionFallBackSettingsDialog) );
 
         public static readonly DependencyProperty ReplaceResolutionProperty 
             = DependencyProperty.Register(
-                "ReplaceResolution", typeof(bool),
+                "ReplaceResolution", typeof(bool) ,
                     typeof(ResolutionFallBackSettingsDialog) );
-
-        
-
 
 
 
@@ -61,9 +51,6 @@ namespace RabbitOM.Tests.Client.Mjpeg.Dialogs
             get => (bool) GetValue( ReplaceResolutionProperty );
             set => SetValue( ReplaceResolutionProperty , value );
         }
-
-
-
 
 
 
