@@ -8,6 +8,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represente the H265 frame factory
     /// </summary>
+    /// <remarks>
+    ///     <para>this is class is mark as internal, to force the focus of people to use builder instead of this class</para>
+    /// </remarks>
     internal sealed class H265FrameFactory : IDisposable
     {
         private readonly H265StreamWriter _writer = new H265StreamWriter();
