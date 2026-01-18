@@ -21,20 +21,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
 
 
-        public static bool TryParse( in ArraySegment<byte> buffer , out H266NalUnitType result )
-        {
-            result = H266NalUnitType.UNKNOWN;
-
-            if ( buffer.Count < 2 )
-            {
-                return false;
-            }
-
-            result = (H266NalUnitType) ( ( buffer.Array[ buffer.Offset ] >> 3 ) & 0x3F );
-
-            return true;
-        }
-
         public static bool TryParse( in ArraySegment<byte> buffer , out H266NalUnit result )
         {
             result = default;
@@ -58,6 +44,20 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             {
                 result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             }
+
+            return true;
+        }
+
+        public static bool TryParse( in ArraySegment<byte> buffer , out H266NalUnitType result )
+        {
+            result = H266NalUnitType.UNKNOWN;
+
+            if ( buffer.Count < 2 )
+            {
+                return false;
+            }
+
+            result = (H266NalUnitType) ( ( buffer.Array[ buffer.Offset ] >> 3 ) & 0x3F );
 
             return true;
         }

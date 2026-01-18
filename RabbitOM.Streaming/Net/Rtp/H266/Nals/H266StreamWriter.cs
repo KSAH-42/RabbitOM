@@ -161,7 +161,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.CreateHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )

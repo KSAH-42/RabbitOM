@@ -27,6 +27,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             => ! nalu.StartBit && ! nalu.StopBit;
 
 
+        
 
 
 
@@ -43,10 +44,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
             result = new H266NalUnitFragment();
 
-            result.FragmentationType = (H266NalUnitType) ( header & 0x1F );
-
             result.StartBit = ( ( header >> 7 ) & 0x1 ) == 1;
             result.StopBit  = ( ( header >> 6 ) & 0x1 ) == 1;
+
+            result.FragmentationType = (H266NalUnitType) ( header & 0x1F );
 
             if ( buffer.Count > 3 )
             {
@@ -63,9 +64,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             return true;
         }
 
-        public static int ParseHeader( in ArraySegment<byte> buffer )
+        public static int CreateHeader( in ArraySegment<byte> buffer )
         {
-            throw new NotImplementedException();
+            if ( buffer.Array == null || buffer.Count < 3 )
+            {
+                return 0;
+            }
+
+            var result = 0xFF07 & ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
+
+            return result |= ( (byte) ( buffer.Array[ buffer.Offset + 2 ] & 0x1F ) << 3 );
         }
     }           
 }
