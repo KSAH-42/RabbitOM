@@ -50,25 +50,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
         
         /// <summary>
-        /// Parse the type
-        /// </summary>
-        /// <param name="buffer">the rtp payload</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( in ArraySegment<byte> buffer , out H265NalUnitType result )
-        {
-            result = H265NalUnitType.UNKNOWN;
-
-            if ( buffer.Count < 2 )
-            {
-                return false;
-            }
-
-            result = (H265NalUnitType) ( ( buffer.Array[ buffer.Offset ] >> 1 ) & 0x3F );
-
-            return true;
-        }
-
-        /// <summary>
         /// Try to parse
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
@@ -96,6 +77,25 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
             {
                 result.Payload = new ArraySegment<byte>( buffer.Array , buffer.Offset + 2 , buffer.Count - 2 );
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Parse the type
+        /// </summary>
+        /// <param name="buffer">the rtp payload</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryParse( in ArraySegment<byte> buffer , out H265NalUnitType result )
+        {
+            result = H265NalUnitType.UNKNOWN;
+
+            if ( buffer.Count < 2 )
+            {
+                return false;
+            }
+
+            result = (H265NalUnitType) ( ( buffer.Array[ buffer.Offset ] >> 1 ) & 0x3F );
 
             return true;
         }
