@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             var index = buffer.Offset + 2;
             
-            while ( ( index += (donl ? 2 : 0 ) ) < buffer.Array.Length - 2 )
+            while ( ( index += ( donl ? 2 : 0 ) ) < buffer.Array.Length - 2 )
             {
                 var size = buffer.Array[ index ++ ] * 0x100 | buffer.Array[ index ++ ];
 
