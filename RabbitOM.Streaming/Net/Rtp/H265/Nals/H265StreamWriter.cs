@@ -192,7 +192,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in H265NalUnit.ParseAggregates( packet.Payload ) )
+            foreach ( var aggregate in H265NalUnit.ParseAggregates( packet.Payload , _settings.DONL ) )
             {
                 _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
                 _streamOfNalUnits.Write( aggregate );

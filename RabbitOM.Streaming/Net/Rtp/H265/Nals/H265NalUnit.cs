@@ -104,14 +104,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// Parse aggregates
         /// </summary>
         /// <param name="buffer">the rtp payload</param>
+        /// <param name="donl">the donl</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static IList<ArraySegment<byte>> ParseAggregates( in ArraySegment<byte> buffer )
+        public static IList<ArraySegment<byte>> ParseAggregates( in ArraySegment<byte> buffer , bool donl )
         {
             var results = new List<ArraySegment<byte>>();
 
             var index = buffer.Offset + 2;
             
-            while ( index < buffer.Array.Length - 2 )
+            while ( ( index += (donl ? 2 : 0 ) ) < buffer.Array.Length - 2 )
             {
                 var size = buffer.Array[ index ++ ] * 0x100 | buffer.Array[ index ++ ];
 
@@ -120,7 +121,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                     results.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
                 }
 
-                index += size ;
+                index += size;
             }
 
             return results;
