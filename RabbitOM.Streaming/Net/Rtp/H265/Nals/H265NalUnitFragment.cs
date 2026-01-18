@@ -106,7 +106,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>
         /// <exception cref="ArgumentOutOfRangeException"/>
-        public static int ParseHeader( in ArraySegment<byte> buffer )
+        public static int CreateHeader( in ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 3 )
             {

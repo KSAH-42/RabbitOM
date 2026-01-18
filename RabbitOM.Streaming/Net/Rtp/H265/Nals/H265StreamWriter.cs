@@ -219,7 +219,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.CreateHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H265NalUnitFragment.IsDataPacket( nalUnit ) )

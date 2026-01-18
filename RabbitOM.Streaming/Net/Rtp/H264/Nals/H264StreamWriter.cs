@@ -193,7 +193,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragment.ParseHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragment.CreateHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H264NalUnitFragment.IsDataPacket( nalUnit ) )

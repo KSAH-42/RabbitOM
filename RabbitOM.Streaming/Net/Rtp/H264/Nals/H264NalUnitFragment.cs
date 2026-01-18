@@ -104,7 +104,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
         /// <param name="buffer">the buffer</param>
         /// <returns>returns true for a success, otherwise false</returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static byte ParseHeader( in ArraySegment<byte> buffer )
+        public static byte CreateHeader( in ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 2 )
             {
