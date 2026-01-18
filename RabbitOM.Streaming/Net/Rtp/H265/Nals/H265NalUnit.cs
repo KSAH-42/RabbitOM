@@ -7,6 +7,15 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
     /// Represent a H265 nalu
     /// </summary>
     /// <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-1.1.4"/>
+    /// <remarks>
+    /// <para>
+    ///     +---------------+---------------+
+    ///     |7|6|5|4|3|2|1|0|7|6|5|4|3|2|1|0|
+    ///     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    ///     |F|   Type    |  LayerId  | TID |
+    ///     +-------------+-----------------+
+    /// </para>
+    /// </remarks>
     public struct H265NalUnit
     {
         /// <summary>
@@ -73,7 +82,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
             {
                 return false;
             }
-
+            
             var header = ( buffer.Array[ buffer.Offset ] << 8 ) | ( buffer.Array[ buffer.Offset + 1 ] );
             
             result = new H265NalUnit();
