@@ -371,9 +371,6 @@
     <Compile Include="Net\Sdp\ValueTime.cs" />
     <Compile Include="Net\Sdp\VersionField.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="ReadMe-TestInfo.txt" />
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
