@@ -120,7 +120,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 
             foreach ( var unit in H264PayloadStapA.Parse( packet.Payload ).NalUnits )
             {
-                if ( H264NalUnit.TryParse( unit , out var nalUnit ) && ! nalUnit.ForbiddenBit )
+                if ( ! H264NalUnit.IsNullOrForbidden( unit ) )
                 {
                     _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnits.Write( unit );

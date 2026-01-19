@@ -10,6 +10,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads.Entities
         public ArraySegment<byte> Payload { get; private set; }
         
 
+
+        public static bool IsNullOrForbidden( in ArraySegment<byte> buffer )
+        {
+            return buffer.Count <= 0 || ( ( buffer.Array[ buffer.Offset ] >> 7 ) & 0x01 ) == 1;
+        }
+
+
        
         public static bool TryParse( in ArraySegment<byte> buffer , out H264NalUnit result )
         {
