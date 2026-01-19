@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
         private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
         private readonly MemoryStreamWriter _streamOfNalUnitsFragmented = new MemoryStreamWriter();
         private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
-        private bool _discardFragmentedNals;
+        private bool _skipFragmentedNals;
 
 
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
         {
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
-            _discardFragmentedNals = false;
+            _skipFragmentedNals = false;
             _output.Clear();
         }
 
@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
             if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
                 _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
-                _streamOfNalUnits.Write( packet.Payload );
+                _streamOfNalUnits.Write( packet.Payload );   
             }
         }
 
@@ -135,9 +135,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H264NalUnitFragmentA.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnitFragmentA.TryParse( packet.Payload , out var nalUnit )  )
             {
-                _discardFragmentedNals |= nalUnit.ForbiddenBit;
+                _skipFragmentedNals |= nalUnit.ForbiddenBit;
 
                 if ( H264NalUnitFragmentA.IsStartPacket( nalUnit ) )
                 {
@@ -147,31 +147,38 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragmentA.ReConstructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+
+                    return;
                 }
-                else if ( H264NalUnitFragmentA.IsDataPacket( nalUnit ) )
+
+                if ( H264NalUnitFragmentA.IsDataPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+
+                    return;
                 }
-                else if ( H264NalUnitFragmentA.IsStopPacket( nalUnit ) )
+
+                if ( H264NalUnitFragmentA.IsStopPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
-                    if ( ! _discardFragmentedNals )
+                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
+
+                    if ( ! _skipFragmentedNals )
                     {
-                        _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
                         _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
                     }
 
                     _streamOfNalUnitsFragmented.Clear();
-                    _discardFragmentedNals = false;
+                    _skipFragmentedNals = false;
+
+                    return;
                 }
             }
-            else
-            {
-                _discardFragmentedNals = true;
-            }
+            
+            _skipFragmentedNals = true;
         }
     }
 }
