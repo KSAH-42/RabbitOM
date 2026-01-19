@@ -140,10 +140,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in H266PayloadAggregate.Parse( packet.Payload , _settings.DONL ).NalUnits )
+            foreach ( var nalUnit in H266PayloadAggregate.Parse( packet.Payload , _settings.DONL ).NalUnits )
             {
                 _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
-                _streamOfNalUnits.Write( aggregate );
+                _streamOfNalUnits.Write( nalUnit );
             }
         }
 
