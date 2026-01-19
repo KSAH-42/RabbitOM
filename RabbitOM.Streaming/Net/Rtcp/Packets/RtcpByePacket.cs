@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtcp
+namespace RabbitOM.Streaming.Net.Rtcp.Packets
 {
     public sealed class RtcpByePacket : RtcpPacket
     {
