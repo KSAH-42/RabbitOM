@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H266
 {
-    using RabbitOM.Streaming.Net.Rtp.H266.Nals;
+    using RabbitOM.Streaming.Net.Rtp.H266.Payloads;
 
     internal sealed class H266FrameFactory : IDisposable
     {
@@ -35,33 +35,33 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
             foreach ( var packet in packets )
             {
-                if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnitType type ) )
+                if ( H266Payload.TryParse( packet.Payload , out var payload ) )
                 {
-                    switch ( type )
+                    switch ( payload.Type )
                     {
-                        case H266NalUnitType.PPS: 
+                        case H266PayloadType.PPS: 
                             _writer.WritePPS( packet ); 
                             break;
 
-                        case H266NalUnitType.SPS: 
+                        case H266PayloadType.SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
 
-                        case H266NalUnitType.VPS: 
+                        case H266PayloadType.VPS: 
                             _writer.WriteVPS( packet ); 
                             break;
 
-                        case H266NalUnitType.RSVNVCL_28: 
+                        case H266PayloadType.RSVNVCL_28: 
                             _writer.WriteAggregation( packet ); 
                             break;
 
-                        case H266NalUnitType.RSVNVCL_29: 
+                        case H266PayloadType.RSVNVCL_29: 
                             _writer.WriteFragmentation( packet ); 
                             break;
 
                         default:
 
-                            if ( type != H266NalUnitType.UNKNOWN )
+                            if ( payload.Type != H266PayloadType.UNKNOWN )
                             {
                                 _writer.Write( packet );
                             }

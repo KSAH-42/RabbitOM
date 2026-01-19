@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 {
     using RabbitOM.Streaming.IO;
+    using RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities;
 
     public sealed class H266StreamWriter : IDisposable
     {
@@ -139,7 +140,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in H266NalUnit.ParseAggregates( packet.Payload , _settings.DONL ) )
+            foreach ( var aggregate in H266PayloadAggregate.Parse( packet.Payload , _settings.DONL ).NalUnits )
             {
                 _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
                 _streamOfNalUnits.Write( aggregate );
@@ -161,7 +162,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.CreateHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.ReContructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )

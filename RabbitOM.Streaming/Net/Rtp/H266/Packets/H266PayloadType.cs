@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 {
-    public enum H266NalUnitType
+    public enum H266PayloadType
     {
         UNKNOWN = -1,
 

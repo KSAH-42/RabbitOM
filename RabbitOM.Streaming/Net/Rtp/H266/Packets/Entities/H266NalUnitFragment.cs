@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities
 {
     public struct H266NalUnitFragment
     {
@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
 
         public bool StopBit { get; private set; }
 
-        public H266NalUnitType FragmentationType { get; private set; }
+        public byte FragmentationType { get; private set; }
 
         public ArraySegment<byte> Payload { get; private set; }
 
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             result.StartBit = ( ( header >> 7 ) & 0x1 ) == 1;
             result.StopBit  = ( ( header >> 6 ) & 0x1 ) == 1;
 
-            result.FragmentationType = (H266NalUnitType) ( header & 0x1F );
+            result.FragmentationType = (byte) ( header & 0x1F );
 
             if ( buffer.Count > 3 )
             {
@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Nals
             return true;
         }
 
-        public static int CreateHeader( in ArraySegment<byte> buffer )
+        public static int ReContructHeader( in ArraySegment<byte> buffer )
         {
             if ( buffer.Array == null || buffer.Count < 3 )
             {
