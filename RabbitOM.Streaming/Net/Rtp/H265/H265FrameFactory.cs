@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    using RabbitOM.Streaming.Net.Rtp.H265.Nals;
+    using RabbitOM.Streaming.Net.Rtp.H265.Payloads;
 
     /// <summary>
     /// Represente the H265 frame factory
@@ -52,33 +52,33 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             foreach ( var packet in packets )
             {
-                if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnitType type ) )
+                if ( H265Payload.TryParse( packet.Payload , out var payload ) )
                 {
-                    switch ( type )
+                    switch ( payload.Type )
                     {
-                        case H265NalUnitType.VPS: 
+                        case H265PayloadType.VPS: 
                             _writer.WriteVPS( packet ); 
                             break;
 
-                        case H265NalUnitType.SPS: 
+                        case H265PayloadType.SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
                         
-                        case H265NalUnitType.PPS: 
+                        case H265PayloadType.PPS: 
                             _writer.WritePPS( packet ); 
                             break;
                         
-                        case H265NalUnitType.AGGREGATION: 
+                        case H265PayloadType.AGGREGATION: 
                             _writer.WriteAggregation( packet ); 
                             break;
 
-                        case H265NalUnitType.FRAGMENTATION: 
+                        case H265PayloadType.FRAGMENTATION: 
                             _writer.WriteFragmentation( packet ); 
                             break;
 
                         default:
 
-                            if ( type != H265NalUnitType.UNKNOWN )
+                            if ( payload.Type != H265PayloadType.UNKNOWN )
                             {
                                 _writer.Write( packet );
                             }

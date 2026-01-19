@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
 {
     /// <summary>
     /// Represent a H265 stream writer settings class

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
 {
     using RabbitOM.Streaming.IO;
+    using RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities;
 
     /// <summary>
     /// Represent the H265 stream writer used to generate a H265 data frame
@@ -140,6 +141,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
+                Debug.Assert( ! nalUnit.ForbiddenBit );
+
                 _settings.VPS = packet.Payload.ToArray();
             }
         }
@@ -158,6 +161,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
+                Debug.Assert( ! nalUnit.ForbiddenBit );
+
                 _settings.SPS = packet.Payload.ToArray();
             }
         }
@@ -176,6 +181,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
             {
+                Debug.Assert( ! nalUnit.ForbiddenBit );
+
                 _settings.PPS = packet.Payload.ToArray();
             }
         }
@@ -192,7 +199,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in H265NalUnit.ParseAggregates( packet.Payload , _settings.DONL ) )
+            foreach ( var aggregate in H265PayloadAggregation.Parse( packet.Payload , _settings.DONL ).NalUnits )
             {
                 _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
                 _streamOfNalUnits.Write( aggregate );
@@ -219,7 +226,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.CreateHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.ReConstructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
                 else if ( H265NalUnitFragment.IsDataPacket( nalUnit ) )

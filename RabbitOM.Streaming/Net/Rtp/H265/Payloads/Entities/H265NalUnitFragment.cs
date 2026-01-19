@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities
 {
     /// <summary>
     /// Represent a H265 fragmented nalu <seealso cref="https://datatracker.ietf.org/doc/html/rfc7798#section-4.4.3"/>
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <summary>
         /// Gets the fragmented type
         /// </summary>
-        public H265NalUnitType FragmentedType { get; private set; }
+        public byte FragmentedType { get; private set; }
 
         /// <summary>
         /// Gets the optional payload that can be null
@@ -61,6 +61,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
 
 
+        
         /// <summary>
         /// Try to parse
         /// </summary>
@@ -81,9 +82,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
 
             result = new H265NalUnitFragment();
 
-            result.StartBit       = ( header >> 7 & 0x1 ) == 1;
-            result.StopBit        = ( header >> 6 & 0x1 ) == 1;
-            result.FragmentedType = (H265NalUnitType) ( header & 0x3F );
+            result.StartBit       =        ( header >> 7 & 0x1 ) == 1;
+            result.StopBit        =        ( header >> 6 & 0x1 ) == 1;
+            result.FragmentedType = (byte) ( header & 0x3F );
     
             if ( buffer.Count > 3 )
             {
@@ -106,7 +107,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
         /// <param name="buffer">the rtp payload</param>
         /// <returns>returns true for a success, otherwise false</returns>
         /// <exception cref="ArgumentOutOfRangeException"/>
-        public static int CreateHeader( in ArraySegment<byte> buffer )
+        public static int ReConstructHeader( in ArraySegment<byte> buffer )
         {
             if ( buffer.Count < 3 )
             {

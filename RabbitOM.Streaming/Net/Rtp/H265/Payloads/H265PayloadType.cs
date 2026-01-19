@@ -1,11 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
 {
-    /// <summary>
-    /// The H265 nal unit
-    /// </summary>
-	public enum H265NalUnitType
+    public enum H265PayloadType
 	{
         UNKNOWN = -1,
         CODED_SLICE_TRAIL_N = 0,
