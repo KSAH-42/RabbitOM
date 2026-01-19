@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RabbitOM.Tests.Client.Mjpeg.Converters
 {
