@@ -1,66 +1,43 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
 {
     using RabbitOM.Streaming.IO;
+    using RabbitOM.Streaming.Net.Rtp.H264.Packets.Entities;
 
-    /// <summary>
-    /// Represent a H264 stream writer
-    /// </summary>
     public sealed class H264StreamWriter : IDisposable
     {
         private readonly H264StreamWriterSettings _settings = new H264StreamWriterSettings();
-        
         private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
-        
         private readonly MemoryStreamWriter _streamOfNalUnitsFragmented = new MemoryStreamWriter();
-
         private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
+        private bool _discardFragmentedNals;
 
 
 
-
-
-
-        /// <summary>
-        /// Gets the settings
-        /// </summary>
         public H264StreamWriterSettings Settings
         {
             get => _settings;
         }
 
-        /// <summary>
-        /// Gets the length
-        /// </summary>
         public long Length
         {
             get => _streamOfNalUnits.Length;
         }
 
         
-
-
-
-
         
 
 
-
-        /// <summary>
-        /// Clear
-        /// </summary>
         public void Clear()
         {
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
+            _discardFragmentedNals = false;
             _output.Clear();
         }
 
-        /// <summary>
-        /// Dispose
-        /// </summary>
         public void Dispose()
         {
             _streamOfNalUnits.Dispose();
@@ -68,10 +45,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
             _output.Dispose();
         }
 
-        /// <summary>
-        /// Generate a buffer
-        /// </summary>
-        /// <returns>returns an array</returns>
         public byte[] ToArray()
         {
             _output.SetLength( 0 );
@@ -93,20 +66,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
             return _output.ToArray();
         }
         
-        /// <summary>
-        /// Set the length
-        /// </summary>
-        /// <param name="value">the new length</param>
         public void SetLength( int value )
         {
             _streamOfNalUnits.SetLength( value );
         }
 
-        /// <summary>
-        /// Write
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <exception cref="ArgumentNullException"/>
         public void Write( RtpPacket packet )
         {
             if ( packet == null )
@@ -114,15 +78,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
-            _streamOfNalUnits.Write( packet.Payload );
+            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
+            {
+                _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
+                _streamOfNalUnits.Write( packet.Payload );
+            }
         }
 
-        /// <summary>
-        /// Write the sps
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <exception cref="ArgumentNullException"/>
         public void WriteSPS( RtpPacket packet )
         {
             if ( packet == null )
@@ -130,17 +92,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
+            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
-                _settings.SPS = packet.Payload.ToArray();
+               _settings.SPS = packet.Payload.ToArray();
             }
         }
 
-        /// <summary>
-        /// Write pps
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <exception cref="ArgumentNullException"/>
         public void WritePPS( RtpPacket packet )
         {
             if ( packet == null )
@@ -148,17 +105,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) )
+            if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
                 _settings.PPS = packet.Payload.ToArray();
             }
         }
 
-        /// <summary>
-        /// Write a STAP A
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <exception cref="ArgumentNullException"/>
         public void WriteStapA( RtpPacket packet )
         {
             if ( packet == null )
@@ -166,18 +118,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in H264NalUnit.ParseAggregates( packet.Payload ) )
+            foreach ( var unit in H264PacketStapA.Parse( packet.Payload ).NalUnits )
             {
-                _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
-                _streamOfNalUnits.Write( aggregate );
+                if ( H264NalUnit.TryParse( unit , out var nalUnit ) && ! nalUnit.ForbiddenBit )
+                {
+                    _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
+                    _streamOfNalUnits.Write( unit );
+                }
             }
         }
 
-        /// <summary>
-        /// Write a FU A
-        /// </summary>
-        /// <param name="packet">the packet</param>
-        /// <exception cref="ArgumentNullException"/>
         public void WriteFuA( RtpPacket packet )
         {
             if ( packet == null )
@@ -185,31 +135,42 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H264NalUnitFragment.TryParse( packet.Payload , out var nalUnit ) )
+            if ( H264NalUnitFragmentA.TryParse( packet.Payload , out var nalUnit ) )
             {
-                if ( H264NalUnitFragment.IsStartPacket( nalUnit ) )
+                _discardFragmentedNals |= nalUnit.ForbiddenBit;
+
+                if ( H264NalUnitFragmentA.IsStartPacket( nalUnit ) )
                 {
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Clear();
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragment.CreateHeader( packet.Payload ) );
+                    _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragmentA.ReConstructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
-                else if ( H264NalUnitFragment.IsDataPacket( nalUnit ) )
+                else if ( H264NalUnitFragmentA.IsDataPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
                 }
-                else if ( H264NalUnitFragment.IsStopPacket( nalUnit ) )
+                else if ( H264NalUnitFragmentA.IsStopPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
-                    _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
+                    if ( ! _discardFragmentedNals )
+                    {
+                        _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
+                        _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
+                    }
+
                     _streamOfNalUnitsFragmented.Clear();
+                    _discardFragmentedNals = false;
                 }
+            }
+            else
+            {
+                _discardFragmentedNals = true;
             }
         }
     }

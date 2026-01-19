@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Nals
+namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
 {
     /// <summary>
-    /// Represent the H264 nal type
+    /// Represent the H264 payload format type
     /// </summary>
-    public enum H264NalUnitType
+    public enum H264PacketType
 	{
         /// <summary>
         /// Unknown

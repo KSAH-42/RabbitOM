@@ -3,23 +3,12 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    using RabbitOM.Streaming.Net.Rtp.H264.Nals;
+    using RabbitOM.Streaming.Net.Rtp.H264.Packets;
 
-    /// <summary>
-    /// Represent the H264 frame factory
-    /// </summary>
-    /// <remarks>
-    ///     <para>this is class is mark as internal, to force the focus of people to use builder instead of this class</para>
-    /// </remarks>
     internal sealed class H264FrameFactory : IDisposable
     {
         private readonly H264StreamWriter _writer = new H264StreamWriter();
 
-        /// <summary>
-        /// Setup
-        /// </summary>
-        /// <param name="configuration">the configuration</param>
-        /// <exception cref="ArgumentNullException"/>
         public void Configure( H264FrameBuilderConfiguration configuration )
         {
             if ( configuration == null )
@@ -31,12 +20,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             _writer.Settings.PPS = configuration.PPS;
         }
 
-        /// <summary>
-        /// Try to create the frame
-        /// </summary>
-        /// <param name="packets">the packets</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H264FrameMediaElement result )
         {
             result = null;
@@ -50,29 +33,29 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             
             foreach ( var packet in packets )
             {
-                if ( H264NalUnit.TryParse( packet.Payload , out H264NalUnitType type ) )
+                if ( H264Packet.TryParse( packet.Payload , out var format ) )
                 {
-                    switch ( type )
+                    switch ( format.Type )
                     {             
-                        case H264NalUnitType.SINGLE_SPS: 
+                        case H264PacketType.SINGLE_SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
 
-                        case H264NalUnitType.SINGLE_PPS: 
-                            _writer.WritePPS( packet ); 
+                        case H264PacketType.SINGLE_PPS: 
+                            _writer.WritePPS( packet );
                             break;
 
-                        case H264NalUnitType.AGGREGATION_STAP_A: 
+                        case H264PacketType.AGGREGATION_STAP_A: 
                             _writer.WriteStapA( packet ); 
                             break;
 
-                        case H264NalUnitType.FRAGMENTATION_FU_A: 
+                        case H264PacketType.FRAGMENTATION_FU_A: 
                             _writer.WriteFuA( packet ); 
                             break;
 
                         default:
 
-                            if ( type >= H264NalUnitType.SINGLE_SLICE && type <= H264NalUnitType.SINGLE_RESERVED_K )
+                            if ( format.Type >= H264PacketType.SINGLE_SLICE && format.Type <= H264PacketType.SINGLE_RESERVED_K )
                             {
                                 _writer.Write( packet );
                             }
@@ -93,18 +76,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             return result != null;
         }
 
-        /// <summary>
-        /// Clear
-        /// </summary>
         public void Clear()
         {
             _writer.Clear();
             _writer.Settings.Clear();
         }
 
-        /// <summary>
-        /// Dispose
-        /// </summary>
         public void Dispose()
         {
             _writer.Dispose();
