@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
     /// <summary>
     /// Represent the H264 payload format type
     /// </summary>
-    public enum H264PayloadType
+    public enum H264PayloadType : byte
 	{
         /// <summary>
         /// Unknown

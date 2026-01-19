@@ -60,12 +60,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
                             break;
 
                         default:
-
-                            if ( payload.Type != H266PayloadType.UNKNOWN )
-                            {
-                                _writer.Write( packet );
-                            }
-
+                            _writer.Write( packet );
                             break;
                     }
                 }

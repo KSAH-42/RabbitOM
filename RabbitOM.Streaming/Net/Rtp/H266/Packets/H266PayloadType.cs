@@ -2,10 +2,8 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 {
-    public enum H266PayloadType
+    public enum H266PayloadType : byte
     {
-        UNKNOWN = -1,
-
         TRAIL_N = 0,
         TRAIL_R = 1,
 

@@ -2,9 +2,8 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
 {
-    public enum H265PayloadType
+    public enum H265PayloadType : byte
 	{
-        UNKNOWN = -1,
         CODED_SLICE_TRAIL_N = 0,
         CODED_SLICE_TRAIL_R = 1,
         CODED_SLICE_TSA_N = 2,
