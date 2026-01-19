@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
+namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 {
     public sealed class H264StreamWriterSettings
     {

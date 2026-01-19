@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    using RabbitOM.Streaming.Net.Rtp.H264.Packets;
+    using RabbitOM.Streaming.Net.Rtp.H264.Payloads;
 
     internal sealed class H264FrameFactory : IDisposable
     {
@@ -33,29 +33,29 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             
             foreach ( var packet in packets )
             {
-                if ( H264Packet.TryParse( packet.Payload , out var format ) )
+                if ( H264Payload.TryParse( packet.Payload , out var payload ) )
                 {
-                    switch ( format.Type )
+                    switch ( payload.Type )
                     {             
-                        case H264PacketType.SINGLE_SPS: 
+                        case H264PayloadType.SINGLE_SPS: 
                             _writer.WriteSPS( packet ); 
                             break;
 
-                        case H264PacketType.SINGLE_PPS: 
+                        case H264PayloadType.SINGLE_PPS: 
                             _writer.WritePPS( packet );
                             break;
 
-                        case H264PacketType.AGGREGATION_STAP_A: 
+                        case H264PayloadType.AGGREGATION_STAP_A: 
                             _writer.WriteStapA( packet ); 
                             break;
 
-                        case H264PacketType.FRAGMENTATION_FU_A: 
+                        case H264PayloadType.FRAGMENTATION_FU_A: 
                             _writer.WriteFuA( packet ); 
                             break;
 
                         default:
 
-                            if ( format.Type >= H264PacketType.SINGLE_SLICE && format.Type <= H264PacketType.SINGLE_RESERVED_K )
+                            if ( payload.Type >= H264PayloadType.SINGLE_SLICE && payload.Type <= H264PayloadType.SINGLE_RESERVED_K )
                             {
                                 _writer.Write( packet );
                             }

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
+namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 {
     using RabbitOM.Streaming.IO;
-    using RabbitOM.Streaming.Net.Rtp.H264.Packets.Entities;
+    using RabbitOM.Streaming.Net.Rtp.H264.Payloads.Entities;
 
     public sealed class H264StreamWriter : IDisposable
     {
@@ -118,7 +118,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var unit in H264PacketStapA.Parse( packet.Payload ).NalUnits )
+            foreach ( var unit in H264PayloadStapA.Parse( packet.Payload ).NalUnits )
             {
                 if ( H264NalUnit.TryParse( unit , out var nalUnit ) && ! nalUnit.ForbiddenBit )
                 {

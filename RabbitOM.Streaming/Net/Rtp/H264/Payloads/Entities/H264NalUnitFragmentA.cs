@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Packets.Entities
+namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads.Entities
 {
     public struct H264NalUnitFragmentA
     {

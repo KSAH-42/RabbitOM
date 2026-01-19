@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
+namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 {
-    public struct H264PacketStapA
+    public struct H264PayloadStapA
     {
         public IReadOnlyCollection<ArraySegment<byte>> NalUnits { get; private set; }
 
-        public static H264PacketStapA Parse( in ArraySegment<byte> buffer )
+        public static H264PayloadStapA Parse( in ArraySegment<byte> buffer )
         {
             var units = new List<ArraySegment<byte>>();
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Packets
                 index += size ;
             }
 
-            return new H264PacketStapA() { NalUnits = units };
+            return new H264PayloadStapA() { NalUnits = units };
         }
     } 
 }
