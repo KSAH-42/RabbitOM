@@ -33,7 +33,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
-➡️ Breaking changes since the version 2.0..2:
+➡️ Breaking changes since the version 2.0.0.2:
 
 * for H264,H265, args passed as parameters set passed to the builder configuration ctor has changed.
 * Refactorization of rtp layers as (H264,H265,H266)
