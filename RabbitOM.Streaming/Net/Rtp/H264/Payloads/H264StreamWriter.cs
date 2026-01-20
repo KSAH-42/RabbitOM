@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
             }
         }
 
-        public void WriteStapA( RtpPacket packet )
+        public void WriteSTAP_A( RtpPacket packet )
         {
             if ( packet == null )
             {
@@ -128,7 +128,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
             }
         }
 
-        public void WriteFuA( RtpPacket packet )
+        public void WriteFU_A( RtpPacket packet )
         {
             if ( packet == null )
             {

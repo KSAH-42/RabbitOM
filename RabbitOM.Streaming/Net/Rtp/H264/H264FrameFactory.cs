@@ -46,11 +46,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
                             break;
 
                         case H264PayloadType.AGGREGATION_STAP_A: 
-                            _writer.WriteStapA( packet ); 
+                            _writer.WriteSTAP_A( packet ); 
                             break;
 
                         case H264PayloadType.FRAGMENTATION_FU_A: 
-                            _writer.WriteFuA( packet ); 
+                            _writer.WriteFU_A( packet ); 
                             break;
 
                         default:
