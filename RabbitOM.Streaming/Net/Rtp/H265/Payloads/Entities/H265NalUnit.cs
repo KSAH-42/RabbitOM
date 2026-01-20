@@ -44,7 +44,16 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities
         
 
 
+
+        /// <summary>
+        /// Verify the forbidden bit
+        /// </summary>
+        /// <param name="buffer">the buffer to be parsed</param>
+        /// <returns>returns true if no buffer, or if the bit status is set to true</returns>
+        public static bool IsNullOrForbidden( in ArraySegment<byte> buffer )
+            => buffer.Count <= 0 || ( ( buffer.Array[ buffer.Offset ] >> 7 ) & 0x01 ) == 1;
         
+
 
 
         

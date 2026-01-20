@@ -19,6 +19,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
 
         private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
 
+        private bool _skipFragmentedNals;
         
 
 
@@ -55,6 +56,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
         /// </summary>
         public void Clear()
         {
+            _skipFragmentedNals = false;
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
             _output.Clear();
@@ -139,10 +141,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
-                Debug.Assert( ! nalUnit.ForbiddenBit );
-
                 _settings.VPS = packet.Payload.ToArray();
             }
         }
@@ -159,10 +159,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
-                Debug.Assert( ! nalUnit.ForbiddenBit );
-
                 _settings.SPS = packet.Payload.ToArray();
             }
         }
@@ -179,10 +177,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) )
+            if ( H265NalUnit.TryParse( packet.Payload , out H265NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
-                Debug.Assert( ! nalUnit.ForbiddenBit );
-
                 _settings.PPS = packet.Payload.ToArray();
             }
         }
@@ -199,10 +195,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var aggregate in H265PayloadAggregation.Parse( packet.Payload , _settings.DONL ).NalUnits )
+            foreach ( var nalUnit in H265PayloadAggregation.Parse( packet.Payload , _settings.DONL ).NalUnits )
             {
-                _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
-                _streamOfNalUnits.Write( aggregate );
+                if ( ! H265NalUnit.IsNullOrForbidden( nalUnit ) )
+                {
+                    _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
+                    _streamOfNalUnits.Write( nalUnit );
+                }
             }
         }
 
@@ -220,6 +219,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
 
             if ( H265NalUnitFragment.TryParse( packet.Payload , Settings.DONL ,  out var nalUnit ) )
             {
+                _skipFragmentedNals |= nalUnit.ForbiddenBit;
+
                 if ( H265NalUnitFragment.IsStartPacket( nalUnit ) )
                 {
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
@@ -228,22 +229,30 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.ReConstructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    return;
                 }
-                else if ( H265NalUnitFragment.IsDataPacket( nalUnit ) )
+                
+                if ( H265NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    return;
                 }
-                else if ( H265NalUnitFragment.IsStopPacket( nalUnit ) )
+                
+                if ( H265NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
                     _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
                     _streamOfNalUnitsFragmented.Clear();
+                    _skipFragmentedNals = false;
+                    return;
                 }
             }
+
+            _skipFragmentedNals = false;
         }
     }
 }

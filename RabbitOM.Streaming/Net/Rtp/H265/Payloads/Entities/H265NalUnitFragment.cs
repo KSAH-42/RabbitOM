@@ -8,6 +8,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities
     public struct H265NalUnitFragment
     {
         /// <summary>
+        /// Gets ther forbidden bit
+        /// </summary>
+        public bool ForbiddenBit { get; private set; }
+
+        /// <summary>
         /// Gets the start bit
         /// </summary>
         public bool StartBit { get; private set; }
@@ -78,13 +83,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities
                 return false;
             }
             
-            var header = buffer.Array[ buffer.Offset + 2 ];
-
             result = new H265NalUnitFragment();
 
-            result.StartBit       =        ( header >> 7 & 0x1 ) == 1;
-            result.StopBit        =        ( header >> 6 & 0x1 ) == 1;
-            result.FragmentedType = (byte) ( header & 0x3F );
+            result.ForbiddenBit   =        ( ( buffer.Array[ buffer.Offset + 0 ] >> 7 ) & 0x1  ) == 1;
+            result.StartBit       =        ( ( buffer.Array[ buffer.Offset + 2 ] >> 7 ) & 0x1  ) == 1;
+            result.StopBit        =        ( ( buffer.Array[ buffer.Offset + 2 ] >> 6 ) & 0x1  ) == 1;
+            result.FragmentedType = (byte) ( ( buffer.Array[ buffer.Offset + 2 ]      ) & 0x3F );
     
             if ( buffer.Count > 3 )
             {
