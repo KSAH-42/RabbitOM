@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
     /// <summary>
     /// Represent a H265 stream writer settings class
     /// </summary>
-    public sealed class H266StreamWriterSettings
+    public sealed class H265StreamWriterSettings
     {
         /// <summary>
         /// Gets / Sets the DONL usage
@@ -13,9 +13,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
         public bool DONL { get; set; }
 
         /// <summary>
-        /// Gets / Sets the pps
+        /// Gets / Sets the vps
         /// </summary>
-        public byte[] PPS { get; set; }
+        public byte[] VPS { get; set; }
 
         /// <summary>
         /// Gets / Sets the SPS
@@ -23,11 +23,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
         public byte[] SPS { get; set; }
 
         /// <summary>
-        /// Gets / Sets the vps
+        /// Gets / Sets the pps
         /// </summary>
-        public byte[] VPS { get; set; }
+        public byte[] PPS { get; set; }
 
-        
+
 
 
 
@@ -47,9 +47,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
         public void Clear()
         {
             DONL = false;
-            PPS = null;
-            SPS = null;
             VPS = null;
+            SPS = null;
+            PPS = null;
         }
     }
 }

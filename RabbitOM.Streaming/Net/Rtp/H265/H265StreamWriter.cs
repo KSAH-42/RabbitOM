@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
+namespace RabbitOM.Streaming.Net.Rtp.H265
 {
     using RabbitOM.Streaming.IO;
+    using RabbitOM.Streaming.Net.Rtp.H265.Payloads;
     using RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities;
 
     /// <summary>
