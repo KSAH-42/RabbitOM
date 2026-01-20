@@ -157,21 +157,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                 if ( H266NalUnitFragment.IsStartPacket( nalUnit ) )
                 {
                     OnWriteFragementationStart( packet , nalUnit );
-
                     return;
                 }
 
                 if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
                     OnWriteFragementationData( packet , nalUnit );
-
                     return;
                 }
 
                 if ( H266NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
                     OnWriteFragementationStop( packet , nalUnit );
-
                     return;
                 }
             }

@@ -139,21 +139,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
                 if ( H264NalUnitFragmentA.IsStartPacket( nalUnit ) )
                 {
                     OnWriteStartFU_A( packet , nalUnit );
-
                     return;
                 }
 
                 if ( H264NalUnitFragmentA.IsDataPacket( nalUnit ) )
                 {
                     OnWriteDataFU_A( packet , nalUnit );
-
                     return;
                 }
 
                 if ( H264NalUnitFragmentA.IsStopPacket( nalUnit ) )
                 {
                     OnWriteStopFU_A( packet , nalUnit );
-
                     return;
                 }
             }

@@ -211,21 +211,18 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                 if ( H265NalUnitFragment.IsStartPacket( nalUnit ) )
                 {
                     OnWriteFragmentationStart( packet , nalUnit );
-
                     return;
                 }
                 
                 if ( H265NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
                     OnWriteFragmentationData( packet , nalUnit );
-
                     return;
                 }
                 
                 if ( H265NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
                     OnWriteFragmentationStop( packet , nalUnit);
-
                     return;
                 }
             }
