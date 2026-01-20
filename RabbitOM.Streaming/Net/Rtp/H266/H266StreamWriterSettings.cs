@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
     /// <summary>
     /// Represent a H265 stream writer settings class
     /// </summary>
-    public sealed class H266StreamWriterSettings
+    internal sealed class H266StreamWriterSettings
     {
         /// <summary>
         /// Gets / Sets the DONL usage

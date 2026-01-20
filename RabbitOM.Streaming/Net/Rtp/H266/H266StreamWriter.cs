@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
     using RabbitOM.Streaming.Net.Rtp.H266.Payloads;
     using RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities;
 
-    public sealed class H266StreamWriter : IDisposable
+    internal sealed class H266StreamWriter : IDisposable
     {
         private readonly H266StreamWriterSettings _settings = new H266StreamWriterSettings();
         private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
