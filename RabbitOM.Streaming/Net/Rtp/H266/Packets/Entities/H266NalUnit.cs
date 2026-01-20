@@ -18,6 +18,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities
 
 
 
+        public static bool IsNullOrForbidden( in ArraySegment<byte> buffer )
+            => buffer.Count <= 0 || ( ( buffer.Array[ buffer.Offset ] >> 7 ) & 0x1 ) == 1;
+
 
 
         public static bool TryParse( in ArraySegment<byte> buffer , out H266NalUnit result )

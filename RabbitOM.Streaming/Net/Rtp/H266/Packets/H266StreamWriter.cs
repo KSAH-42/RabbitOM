@@ -16,6 +16,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 
         private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
 
+        private bool _skipFragmentedNals;
 
 
 
@@ -36,9 +37,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 
         public void Clear()
         {
+            _skipFragmentedNals = false;
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
-            
             _output.Clear();
         }
 
@@ -46,7 +47,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
         {
             _streamOfNalUnits.Dispose();
             _streamOfNalUnitsFragmented.Dispose();
-
             _output.Dispose();
         }
 
@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
+            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
                 _settings.VPS = packet.Payload.ToArray();
             }
@@ -114,7 +114,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
+            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
                 _settings.SPS = packet.Payload.ToArray();
             }
@@ -127,7 +127,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) )
+            if ( H266NalUnit.TryParse( packet.Payload , out H266NalUnit nalUnit ) && ! nalUnit.ForbiddenBit )
             {
                 _settings.PPS = packet.Payload.ToArray();
             }
@@ -142,8 +142,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 
             foreach ( var nalUnit in H266PayloadAggregate.Parse( packet.Payload , _settings.DONL ).NalUnits )
             {
-                _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
-                _streamOfNalUnits.Write( nalUnit );
+                if ( ! H266NalUnit.IsNullOrForbidden( nalUnit ) )
+                {
+                    _streamOfNalUnits.Write( RtpStartCodePrefix.Default );
+                    _streamOfNalUnits.Write( nalUnit );
+                }
             }
         }
 
@@ -156,6 +159,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 
             if ( H266NalUnitFragment.TryParse( packet.Payload ,_settings.DONL , out var nalUnit ) )
             {
+                _skipFragmentedNals |= nalUnit.ForbiddenBit;
+
                 if ( H266NalUnitFragment.IsStartPacket( nalUnit ) )
                 {
                     Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
@@ -164,22 +169,33 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.ReContructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+
+                    return;
                 }
-                else if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )
+
+                if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+
+                    return;
                 }
-                else if ( H266NalUnitFragment.IsStopPacket( nalUnit ) )
+
+                if ( H266NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
                     _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
                     _streamOfNalUnitsFragmented.Clear();
+                    _skipFragmentedNals = false;
+
+                    return;
                 }
             }
+
+            _skipFragmentedNals = true;
         }
     }
 }

@@ -4,6 +4,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities
 {
     public struct H266NalUnitFragment
     {
+        public bool ForbiddenBit { get; private set; }
+
         public bool StartBit { get; private set; }
 
         public bool StopBit { get; private set; }
@@ -40,14 +42,13 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities
                 return false;
             }
 
-            var header = buffer.Array[ buffer.Offset + 2 ];
-
             result = new H266NalUnitFragment();
 
-            result.StartBit = ( ( header >> 7 ) & 0x1 ) == 1;
-            result.StopBit  = ( ( header >> 6 ) & 0x1 ) == 1;
+            result.ForbiddenBit = ( ( buffer.Array[ buffer.Offset     ] >> 7 ) & 0x1 ) == 1;
+            result.StartBit     = ( ( buffer.Array[ buffer.Offset + 2 ] >> 7 ) & 0x1 ) == 1;
+            result.StopBit      = ( ( buffer.Array[ buffer.Offset + 2 ] >> 6 ) & 0x1 ) == 1;
 
-            result.FragmentationType = (byte) ( header & 0x1F );
+            result.FragmentationType = (byte) ( buffer.Array[ buffer.Offset + 2 ] & 0x1F );
 
             if ( buffer.Count > 3 )
             {
