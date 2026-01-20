@@ -9,14 +9,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
     public sealed class H266StreamWriter : IDisposable
     {
         private readonly H266StreamWriterSettings _settings = new H266StreamWriterSettings();
-        
         private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
-        
         private readonly MemoryStreamWriter _streamOfNalUnitsFragmented = new MemoryStreamWriter();
-
         private readonly MemoryStreamWriter _output = new MemoryStreamWriter();
-
         private bool _skipFragmentedNals;
+
+
 
 
 
@@ -163,39 +161,68 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 
                 if ( H266NalUnitFragment.IsStartPacket( nalUnit ) )
                 {
-                    Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
-
-                    _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.ReContructHeader( packet.Payload ) );
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    OnWriteFragementationStart( packet , nalUnit );
 
                     return;
                 }
 
                 if ( H266NalUnitFragment.IsDataPacket( nalUnit ) )
                 {
-                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    OnWriteFragementationData( packet , nalUnit );
 
                     return;
                 }
 
                 if ( H266NalUnitFragment.IsStopPacket( nalUnit ) )
                 {
-                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
-                    _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
-                    _streamOfNalUnitsFragmented.Clear();
-                    _skipFragmentedNals = false;
+                    OnWriteFragementationStop( packet , nalUnit );
 
                     return;
                 }
             }
 
             _skipFragmentedNals = true;
+        }
+
+
+
+
+
+        private void OnWriteFragementationStart( RtpPacket packet , in H266NalUnitFragment nalUnit )
+        {
+            Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
+
+            if ( ! _skipFragmentedNals )
+            {
+                _streamOfNalUnitsFragmented.Clear();
+                _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
+                _streamOfNalUnitsFragmented.WriteUInt16( H266NalUnitFragment.ReContructHeader( packet.Payload ) );
+                _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+            }
+        }
+
+        private void OnWriteFragementationData( RtpPacket packet , in H266NalUnitFragment nalUnit )
+        {
+            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
+
+            if ( ! _skipFragmentedNals )
+            {
+                _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+            }
+        }
+
+        private void OnWriteFragementationStop( RtpPacket packet , in H266NalUnitFragment nalUnit )
+        {
+            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
+
+            if ( ! _skipFragmentedNals )
+            {
+                _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
+                _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
+            }
+            
+            _streamOfNalUnitsFragmented.Clear();
+            _skipFragmentedNals = false;
         }
     }
 }

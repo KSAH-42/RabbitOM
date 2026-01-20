@@ -16,6 +16,8 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 
 
 
+
+
         public H264StreamWriterSettings Settings
         {
             get => _settings;
@@ -25,9 +27,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
         {
             get => _streamOfNalUnits.Length;
         }
+        
 
-        
-        
+
 
 
         public void Clear()
@@ -141,44 +143,68 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 
                 if ( H264NalUnitFragmentA.IsStartPacket( nalUnit ) )
                 {
-                    Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
-
-                    _streamOfNalUnitsFragmented.Clear();
-                    _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
-                    _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragmentA.ReConstructHeader( packet.Payload ) );
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    OnWriteStartFU_A( packet , nalUnit );
 
                     return;
                 }
 
                 if ( H264NalUnitFragmentA.IsDataPacket( nalUnit ) )
                 {
-                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    OnWriteDataFU_A( packet , nalUnit );
 
                     return;
                 }
 
                 if ( H264NalUnitFragmentA.IsStopPacket( nalUnit ) )
                 {
-                    Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
-                    _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
-
-                    if ( ! _skipFragmentedNals )
-                    {
-                        _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
-                    }
-
-                    _streamOfNalUnitsFragmented.Clear();
-                    _skipFragmentedNals = false;
+                    OnWriteStopFU_A( packet , nalUnit );
 
                     return;
                 }
             }
             
             _skipFragmentedNals = true;
+        }
+        
+
+
+
+
+        private void OnWriteStartFU_A( RtpPacket packet , in H264NalUnitFragmentA nalUnit )
+        {
+            Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
+
+            if ( ! _skipFragmentedNals )
+            {
+                _streamOfNalUnitsFragmented.Clear();
+                _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
+                _streamOfNalUnitsFragmented.WriteByte( H264NalUnitFragmentA.ReConstructHeader( packet.Payload ) );
+                _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+            }
+        }
+
+        private void OnWriteDataFU_A( RtpPacket packet , in H264NalUnitFragmentA nalUnit )
+        {
+            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
+
+            if ( ! _skipFragmentedNals )
+            {
+                _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+            }
+        }
+
+        private void OnWriteStopFU_A( RtpPacket packet , in H264NalUnitFragmentA nalUnit )
+        {
+            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );                
+
+            if ( ! _skipFragmentedNals )
+            {
+                _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
+            }
+
+            _streamOfNalUnitsFragmented.Clear();
+            _skipFragmentedNals = false;
         }
     }
 }
