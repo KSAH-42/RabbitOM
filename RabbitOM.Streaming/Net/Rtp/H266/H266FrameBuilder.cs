@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
     {
         private readonly H266FrameFactory _frameFactory = new H266FrameFactory();
 
-        public H266FrameBuilder() => ExceptionHelper.ThrowOnRelease("the implementation of this class is not finished, and should not be used");
+        public H266FrameBuilder() => throw new NotSupportedException("the implementation is not tested with multiple products and server, and it can not be used until this code has been removed");
 
         public void Configure( H266FrameBuilderConfiguration configuration )
         {
