@@ -6,6 +6,11 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
     {
         public H266PayloadType Type { get; private set; }
 
+
+        public static bool IsSlice( in H266Payload payload )
+            => payload.Type >= H266PayloadType.TRAIL && payload.Type <= H266PayloadType.RSV_IRAP_11;
+
+
         public static bool TryParse( in ArraySegment<byte> buffer , out H266Payload result )
         {
             result = default;

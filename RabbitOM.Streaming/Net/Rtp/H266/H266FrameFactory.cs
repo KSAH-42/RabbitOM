@@ -51,16 +51,21 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
                             _writer.WriteVPS( packet ); 
                             break;
 
-                        case H266PayloadType.RSVNVCL_28: 
+                        case H266PayloadType.RSV_NVCL_28: 
                             _writer.WriteAggregation( packet ); 
                             break;
 
-                        case H266PayloadType.RSVNVCL_29: 
+                        case H266PayloadType.RSV_NVCL_29: 
                             _writer.WriteFragmentation( packet ); 
                             break;
 
                         default:
-                            _writer.Write( packet );
+
+                            if ( H266Payload.IsSlice( payload ) )
+                            {
+                                _writer.Write( packet );
+                            }
+
                             break;
                     }
                 }

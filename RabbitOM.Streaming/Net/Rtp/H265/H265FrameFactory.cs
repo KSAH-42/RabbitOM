@@ -77,7 +77,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
                             break;
 
                         default:
-                            _writer.Write( packet );
+
+                            if ( H265Payload.IsSlice( payload ) )
+                            {
+                                _writer.Write( packet );
+                            }
+
                             break;
                     }
                 }

@@ -55,7 +55,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
                         default:
 
-                            if ( payload.Type >= H264PayloadType.SINGLE_SLICE && payload.Type <= H264PayloadType.SINGLE_RESERVED_K )
+                            if ( H264Payload.IsSlice( payload ) )
                             {
                                 _writer.Write( packet );
                             }
