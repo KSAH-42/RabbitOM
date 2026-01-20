@@ -68,11 +68,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
             return _output.ToArray();
         }
         
-        public void SetLength( int value )
-        {
-            _streamOfNalUnits.SetLength( value );
-        }
-
         public void Write( RtpPacket packet )
         {
             if ( packet == null )

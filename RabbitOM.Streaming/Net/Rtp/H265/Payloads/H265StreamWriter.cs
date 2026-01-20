@@ -101,15 +101,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
         }
         
         /// <summary>
-        /// Set the length
-        /// </summary>
-        /// <param name="value">the size</param>
-        public void SetLength( int value )
-        {
-            _streamOfNalUnits.SetLength( value );
-        }
-
-        /// <summary>
         /// Write a nalu from the rtp packet
         /// </summary>
         /// <param name="packet">the rtp packet</param>
