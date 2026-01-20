@@ -11,10 +11,10 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads.Entities
         
 
 
+
         public static bool IsNullOrForbidden( in ArraySegment<byte> buffer )
-        {
-            return buffer.Count <= 0 || ( ( buffer.Array[ buffer.Offset ] >> 7 ) & 0x01 ) == 1;
-        }
+            => buffer.Count <= 0 || ( ( buffer.Array[ buffer.Offset ] >> 7 ) & 0x01 ) == 1;
+        
 
 
        

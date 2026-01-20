@@ -32,9 +32,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H264.Payloads
 
         public void Clear()
         {
+            _skipFragmentedNals = false;
             _streamOfNalUnits.Clear();
             _streamOfNalUnitsFragmented.Clear();
-            _skipFragmentedNals = false;
             _output.Clear();
         }
 
