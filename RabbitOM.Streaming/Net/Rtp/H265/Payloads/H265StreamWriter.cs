@@ -229,6 +229,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                     _streamOfNalUnitsFragmented.Write( RtpStartCodePrefix.Default );
                     _streamOfNalUnitsFragmented.WriteUInt16( H265NalUnitFragment.ReConstructHeader( packet.Payload ) );
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    
                     return;
                 }
                 
@@ -237,6 +238,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                     Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
 
                     _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
+                    
                     return;
                 }
                 
@@ -248,11 +250,12 @@ namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads
                     _streamOfNalUnits.Write( _streamOfNalUnitsFragmented );
                     _streamOfNalUnitsFragmented.Clear();
                     _skipFragmentedNals = false;
+
                     return;
                 }
             }
 
-            _skipFragmentedNals = false;
+            _skipFragmentedNals = true;
         }
     }
 }
