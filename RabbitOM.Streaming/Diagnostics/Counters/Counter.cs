@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Diagnostics.Counters
         
         protected Counter( string name , string description )
         {
-            ExceptionHelper.ThrowOnRelease("this is not finished");
+            ExceptionHelper.ThrowNotImplementedOnRelease("this is not finished");
         }
 
         ~Counter()

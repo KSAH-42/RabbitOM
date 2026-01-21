@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Net.Rtcp.Packets
 
         protected RtcpPacket( byte version )
         { 
-            ExceptionHelper.ThrowOnRelease("do not used this implementation, because it is not yet finished");
+            ExceptionHelper.ThrowNotImplementedOnRelease("do not used this implementation, because it is not yet finished");
 
             Version = version; 
         }

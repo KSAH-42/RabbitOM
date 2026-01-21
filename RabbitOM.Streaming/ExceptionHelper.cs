@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming
         /// </summary>
         /// <param name="message">the message</param>
         /// <exception cref="NotImplementedException"/>
-        public static void ThrowOnRelease( string message )
+        public static void ThrowNotImplementedOnRelease( string message )
         {
 #if !DEBUG
             throw new NotImplementedException( message );
