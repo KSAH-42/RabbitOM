@@ -22,11 +22,6 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public override IReadOnlyCollection<RtpPacket> Packets
-        {
-            get => _packets;
-        }
-
         public override bool HasCompleteSequence
         {
             get => _isCompleted;
@@ -36,6 +31,11 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
             get => _isUnOrdered;
         }
+        public override IReadOnlyCollection<RtpPacket> Packets
+        {
+            get => _packets;
+        }
+
         
 
 
@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             if ( _isCompleted )
             {
-                throw new InvalidOperationException( "The aggregator contains remaining packets and full sequence, add packet will break the sequence. Retrieve the sequence if you need it and then you must remove all remaining packets will are considered useless." );
+                throw new InvalidOperationException( "The aggregator contains remaining packets and full sequence, adding one more packet will break the sequence. Please, retrieve the sequence if you need it and remove all remaining packets." );
             }
 
             _packets.Enqueue( packet );

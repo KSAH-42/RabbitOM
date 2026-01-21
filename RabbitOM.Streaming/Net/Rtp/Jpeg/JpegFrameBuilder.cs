@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 
             if ( _factory.TryCreateFrame( e.Packets , out var frame ) )
             {
-                OnBuilded( new RtpMediaBuildedEventArgs( frame ) );
+                OnMediaBuilded( new RtpMediaBuildedEventArgs( frame ) );
             }
         }
     }

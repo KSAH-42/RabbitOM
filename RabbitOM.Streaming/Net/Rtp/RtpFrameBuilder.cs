@@ -134,7 +134,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             SequenceCompleted?.TryInvoke( this , e );
         }
 
-        protected virtual void OnBuilded( RtpMediaBuildedEventArgs e )
+        protected virtual void OnMediaBuilded( RtpMediaBuildedEventArgs e )
         {
             MediaBuilded?.TryInvoke( this , e );
         }

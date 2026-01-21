@@ -120,10 +120,10 @@ namespace RabbitOM.Streaming.Net.Rtp
             packet.HasExtension    = (byte) ( ( buffer[ 0 ] >> 4 ) & 0x1 ) == 1;
             packet.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
-            packet.Marker          = (byte)       ((buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
+            packet.Marker          = (byte)        ( ( buffer[ 1 ] >> 7   ) & 0x1 ) != 0;
             packet.Type            = (RtpPacketType) ( buffer[ 1 ] & 0x7F );
-            packet.SequenceNumber  = (ushort)     ( buffer[ 2 ] << 8   );
-            packet.SequenceNumber |= (ushort)     ( buffer[ 3 ]        );
+            packet.SequenceNumber  = (ushort)        ( buffer[ 2 ] << 8   );
+            packet.SequenceNumber |= (ushort)        ( buffer[ 3 ]        );
             packet.TimeStamp       = (uint) ( buffer[ 4 ] << 24  );
             packet.TimeStamp      |= (uint) ( buffer[ 5 ] << 16  );
             packet.TimeStamp      |= (uint) ( buffer[ 6 ] << 8   );

@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
             if ( _frameFactory.TryCreate( e.Packets , out var frame ) )
             {
-                OnBuilded( new RtpMediaBuildedEventArgs( frame ) );
+                OnMediaBuilded( new RtpMediaBuildedEventArgs( frame ) );
             }
         }
     }

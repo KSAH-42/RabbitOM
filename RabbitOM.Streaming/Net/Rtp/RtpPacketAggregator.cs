@@ -5,9 +5,9 @@ namespace RabbitOM.Streaming.Net.Rtp
 {
     public abstract class RtpPacketAggregator
     {
-        public abstract IReadOnlyCollection<RtpPacket> Packets { get; } 
         public abstract bool HasCompleteSequence { get; }
         public abstract bool HasUnOrderedSequence { get; }
+        public abstract IReadOnlyCollection<RtpPacket> Packets { get; } 
         
 
         public abstract void AddPacket( RtpPacket packet );

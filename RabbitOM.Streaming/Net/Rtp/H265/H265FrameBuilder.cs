@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
             if ( _frameFactory.TryCreateFrame( e.Packets , out var frame ) )
             {
-                OnBuilded( new RtpMediaBuildedEventArgs( frame ) );
+                OnMediaBuilded( new RtpMediaBuildedEventArgs( frame ) );
             }
         }
     }
