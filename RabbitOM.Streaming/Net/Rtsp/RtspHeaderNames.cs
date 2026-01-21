@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <summary>
         /// Represent a header name
         /// </summary>
-        public const string ContentType            = "Content-HeaderType";
+        public const string ContentType            = "Content-Type";
 
         /// <summary>
         /// Represent a header name
@@ -160,7 +160,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <summary>
         /// Represent a header name
         /// </summary>
-        public const string IfMatch                = "IfMatch";
+        public const string IfMatch                = "If-Match";
 
         /// <summary>
         /// Represent a header name
