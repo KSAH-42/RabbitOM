@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Tests.Client.Mjpeg.Dialogs"
         xmlns:converters="clr-namespace:RabbitOM.Tests.Client.Mjpeg.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Resolution fallback settings" 
-        Height="180" 
-        Width="270"
+        Height="200" 
+        Width="305"
         WindowStartupLocation="CenterOwner"
         WindowStyle="ToolWindow"
         ResizeMode="NoResize"
@@ -17,6 +18,28 @@
     <Window.Resources>
 
         <converters:IntValueConverter x:Key="IntValueConverter" />
+        
+        <x:Array x:Key="ResolutionWidthValues" Type="system:String">
+            <system:String>800</system:String>
+            <system:String>1280</system:String>
+            <system:String>1920</system:String>
+            <system:String>2040</system:String>
+            <system:String>2560</system:String>
+            <system:String>2592</system:String>
+            <system:String>3840</system:String>
+            <system:String>4000</system:String>
+        </x:Array>
+
+        <x:Array x:Key="ResolutionHeightValues" Type="system:String">
+            <system:String>600</system:String>
+            <system:String>720</system:String>
+            <system:String>1080</system:String>
+            <system:String>2040</system:String>
+            <system:String>1440</system:String>
+            <system:String>1944</system:String>
+            <system:String>2160</system:String>
+            <system:String>3000</system:String>
+        </x:Array>
 
     </Window.Resources>
     
@@ -32,14 +55,23 @@
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Width="auto" >
+            
+            <TextBlock Margin="1,5,1,0"
+                       Text="Change resolution settings only if the rtp stream does not contains theses values"
+                       FontSize="8"
+                       />
+        </Grid>
+        
+        <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -69,44 +101,20 @@
                           VerticalAlignment="Top" 
                           IsEditable="True"
                           Text="{Binding Path=WidthResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay,Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}}}" 
-                          >
-        
-                    <ComboBox.Items>
-                        <ComboBoxItem>800</ComboBoxItem>
-                        <ComboBoxItem>1280</ComboBoxItem>
-                        <ComboBoxItem>1920</ComboBoxItem>
-                        <ComboBoxItem>2040</ComboBoxItem>
-                        <ComboBoxItem>2560</ComboBoxItem>
-                        <ComboBoxItem>2592</ComboBoxItem>
-                        <ComboBoxItem>3840</ComboBoxItem>
-                        <ComboBoxItem>4000</ComboBoxItem>
-                    </ComboBox.Items>
-                    
-                </ComboBox>
+                          ItemsSource="{StaticResource ResolutionWidthValues}"
+                          />
 
-                    <ComboBox Margin="0,50,10,0"
-                              VerticalAlignment="Top" 
-                              IsEditable="True"
-                              Text="{Binding Path=HeightResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
-                              >
-
-                    <ComboBox.Items>
-                        <ComboBoxItem>600</ComboBoxItem>
-                        <ComboBoxItem>720</ComboBoxItem>
-                        <ComboBoxItem>1080</ComboBoxItem>
-                        <ComboBoxItem>2040</ComboBoxItem>
-                        <ComboBoxItem>1440</ComboBoxItem>
-                        <ComboBoxItem>1944</ComboBoxItem>
-                        <ComboBoxItem>2160</ComboBoxItem>
-                        <ComboBoxItem>3000</ComboBoxItem>
-                    </ComboBox.Items>
-                        
-                </ComboBox>
+                <ComboBox Margin="0,50,10,0"
+                          VerticalAlignment="Top" 
+                          IsEditable="True"
+                          Text="{Binding Path=HeightResolution,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource IntValueConverter} , RelativeSource={RelativeSource AncestorType={x:Type Window}} }" 
+                          ItemsSource="{StaticResource ResolutionHeightValues}"
+                          />
 
                 <CheckBox Margin="0,79,0,0" 
                           HorizontalAlignment="Left" 
                           VerticalAlignment="Top"
-                          Content="Replace" 
+                          Content="Replace resolution" 
                           IsThreeState="False"
                           IsChecked="{Binding Path=ReplaceResolution,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay, RelativeSource={RelativeSource AncestorType={x:Type Window}} }"
                           />
@@ -115,9 +123,9 @@
             
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
-            <Button Margin="0,0,100,10" 
+            <Button Margin="0,0,95,10" 
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Right"
                     Width="80"
