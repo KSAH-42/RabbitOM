@@ -111,7 +111,7 @@ using ( var client = new RtspClient() )
 
 ➡️ First of all, unlike HTTP which is a STATELESS protocol, RTSP is STATEFULL. 
 
-Thats means, that any rtsp clients must keep it's own socket opened during all the time when calling any methods. For instance, in case receiving streams using interleaved mode, the socket can not be opened and closed at each times, and also, the server can send a message spontaneously to the client to ask the clients options, whats the methods it supports, please don't trust people who say the opposite thing. Read the rfc, and look the c->s (client to server) and c<-s (that mean...) 
+Thats means, that any rtsp clients must keep it's own socket opened during all the time when calling any methods. For instance, in case receiving streams using interleaved mode, the socket can not be opened and closed at each times, and also, the server can send a message spontaneously to the client to ask the clients options, whats the methods it supports, please don't trust people who say the opposite thing, the socket should stay open. Please read carefully the rfc, and look the topics that discussed about the handshake between the c->s (client to server) and c<-s. 
 
 The RtspConnection class will give you more features and a direct access to the protocol messaging layer. The following code demonstrate how to list the supported methods available on a security camera:
 
