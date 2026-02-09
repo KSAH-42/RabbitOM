@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
     public class UdpMediaReceiverConfiguration : RtspMediaReceiverConfiguration
     {
-        public int Port { get; }
+        public int RtpPort { get; }
         public TimeSpan ReceiveTranportTimeout { get; }
     }
 }
