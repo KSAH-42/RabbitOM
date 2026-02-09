@@ -79,8 +79,8 @@
     <Compile Include="Net\RtspV2\Receivers\RtspMediaReceiver.cs" />
     <Compile Include="Net\RtspV2\Receivers\RtspMediaReceiverConfiguration.cs" />
     <Compile Include="Net\RtspV2\Receivers\RtspStateMachine.cs" />
-    <Compile Include="Net\RtspV2\Receivers\Sessions\IRtspSession.cs" />
-    <Compile Include="Net\RtspV2\Receivers\Sessions\IRtspStreamingSession.cs" />
+    <Compile Include="Net\RtspV2\Receivers\Sessions\ISession.cs" />
+    <Compile Include="Net\RtspV2\Receivers\Sessions\IStreamingSession.cs" />
     <Compile Include="Net\RtspV2\Receivers\Sessions\MulticastStreamingSession.cs" />
     <Compile Include="Net\RtspV2\Receivers\Sessions\States\StreamingRtspStateMachine.cs" />
     <Compile Include="Net\RtspV2\Receivers\Sessions\TcpStreamingSession.cs" />

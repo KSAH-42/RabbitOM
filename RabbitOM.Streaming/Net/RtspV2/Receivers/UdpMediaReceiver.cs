@@ -34,11 +34,6 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
             throw new NotImplementedException();
         }
 
-        protected override RtspStateMachine CreateStateMachine()
-        {
-            return new StreamingRtspStateMachine( _session );
-        }
-
         protected override void Dispose( bool disposing )
         {
             if ( disposing )
@@ -47,6 +42,11 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
             }
 
             base.Dispose( disposing );
+        }
+
+        protected override RtspStateMachine CreateStateMachine()
+        {
+            return new StreamingRtspStateMachine( _session );
         }
     }
 }
