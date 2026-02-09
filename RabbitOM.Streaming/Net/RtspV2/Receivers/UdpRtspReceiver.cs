@@ -14,11 +14,20 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
             _session = new UdpStreamingSession( this );
         }
 
-        public override bool IsConnected => _session.IsOpened;
+        public override bool IsConnected
+        {
+            get => _session.IsOpened;
+        }
 
-        public override bool IsStreamingStarted => _session.IsStreamingStarted;
+        public override bool IsStreamingStarted
+        {
+            get => _session.IsStreamingStarted;
+        }
 
-        public override bool IsReceivingData => _session.IsReceivingData;
+        public override bool IsReceivingData
+        {
+            get => _session.IsReceivingData;
+        }
 
         public void Configure( UdpRtspReceiverConfiguration configuration )
         {

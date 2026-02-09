@@ -14,11 +14,20 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
             _session = new TcpRtspStreamingSession( this );
         }
 
-        public override bool IsConnected => _session.IsOpened;
+        public override bool IsConnected
+        {
+            get => _session.IsOpened;
+        }
 
-        public override bool IsStreamingStarted => _session.IsStreamingStarted;
+        public override bool IsStreamingStarted
+        {
+            get => _session.IsStreamingStarted;
+        }
 
-        public override bool IsReceivingData => _session.IsReceivingData;
+        public override bool IsReceivingData
+        {
+            get => _session.IsReceivingData;
+        }
 
         public void Configure( TcpRtspReceiverConfiguration configuration )
         {
@@ -27,7 +36,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 
         protected override RtspStateMachine CreateStateMachine()
         {
-            return new StreamingRtspStateMachine(  _session );
+            return new StreamingRtspStateMachine( _session );
         }
 
         protected override void Dispose( bool disposing )
