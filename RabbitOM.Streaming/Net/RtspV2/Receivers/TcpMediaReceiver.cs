@@ -5,13 +5,13 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions;
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States;
 
-    public class UdpRtspReceiver : RtspReceiver, IReceiverConfigurer<UdpRtspReceiverConfiguration>
+    public class TcpMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<TcpMediaReceiverConfiguration>
     {
-        private readonly UdpStreamingSession _session;
+        private readonly TcpRtspStreamingSession _session;
 
-        public UdpRtspReceiver()
+        public TcpMediaReceiver()
         {
-            _session = new UdpStreamingSession( this );
+            _session = new TcpRtspStreamingSession( this );
         }
 
         public override bool IsConnected
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
             get => _session.IsReceivingData;
         }
 
-        public void Configure( UdpRtspReceiverConfiguration configuration )
+        public void Configure( TcpMediaReceiverConfiguration configuration )
         {
             throw new NotImplementedException();
         }

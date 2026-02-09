@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions
 {
-    public interface IRtspSession: IDisposable
+    public interface ISession: IDisposable
     {
         bool IsOpened { get; }
         bool IsStreamingStarted { get; }

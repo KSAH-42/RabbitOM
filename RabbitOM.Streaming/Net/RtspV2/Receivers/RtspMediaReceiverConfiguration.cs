@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
-    public abstract class RtspReceiverConfiguration
+    public abstract class RtspMediaReceiverConfiguration
     {
         public Uri Uri { get; }
         public TimeSpan ReceiveTimeout { get; }

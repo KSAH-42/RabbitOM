@@ -4,9 +4,9 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States
 {
     public sealed class StreamingRtspStateMachine : RtspStateMachine
     {
-        private readonly IRtspStreamingSession _session;
+        private readonly IStreamingSession _session;
 
-        public StreamingRtspStateMachine( IRtspStreamingSession session )
+        public StreamingRtspStateMachine( IStreamingSession session )
         {
             _session = session ?? throw new ArgumentNullException( nameof( session ) );
         } 

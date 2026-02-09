@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions
 {
-    public class UdpStreamingSession : IRtspStreamingSession
+    public class UdpStreamingSession : IStreamingSession
     {
-        private readonly RtspReceiver _receiver;
+        private readonly RtspMediaReceiver _receiver;
 
-        public UdpStreamingSession( RtspReceiver receiver )
+        public UdpStreamingSession( RtspMediaReceiver receiver )
         {
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
         } 

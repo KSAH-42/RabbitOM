@@ -4,8 +4,8 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
     public enum MediaContentType
     {
-        Video = 0, 
-        Audio,
-        MetaData
+        VIDEO = 0, 
+        AUDIO,
+        META_DATA
     }
 }

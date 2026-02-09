@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
     using RabbitOM.Streaming.Threading;
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Events;
 
-    public abstract class RtspReceiver : IReceiver , IDisposable
+    public abstract class RtspMediaReceiver : IReceiver , IDisposable
     {
         public event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;
         public event EventHandler<RtspCommunicationStoppedEventArgs> CommunicationStopped;
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 
 
 
-        ~RtspReceiver()
+        ~RtspMediaReceiver()
         {
             Dispose( false );
         }
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 
 
 
-        public static void RaiseEvents( RtspReceiver receiver , EventArgs e )
+        public static void RaiseEvents( RtspMediaReceiver receiver , EventArgs e )
         {
             if ( receiver == null )
             {

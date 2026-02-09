@@ -5,11 +5,11 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions;
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States;
 
-    public class MulticastRtspReceiver : RtspReceiver, IReceiverConfigurer<MulticastRtspReceiverConfiguration>
+    public class MulticastMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<MulticastMediaReceiverConfiguration>
     {
         private readonly MulticastStreamingSession _session;
 
-        public MulticastRtspReceiver()
+        public MulticastMediaReceiver()
         {
             _session = new MulticastStreamingSession( this );
         }
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
             get => _session.IsReceivingData;
         }
 
-        public void Configure( MulticastRtspReceiverConfiguration configuration )
+        public void Configure( MulticastMediaReceiverConfiguration configuration )
         {
             throw new NotImplementedException();
         }

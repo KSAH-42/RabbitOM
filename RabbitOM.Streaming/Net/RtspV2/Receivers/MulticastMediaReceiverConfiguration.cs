@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
-    public class MulticastRtspReceiverConfiguration : RtspReceiverConfiguration
+    public class MulticastMediaReceiverConfiguration : RtspMediaReceiverConfiguration
     {
         public string IPAddress { get; }
         public int RtpPort { get; }
