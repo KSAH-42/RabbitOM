@@ -4,6 +4,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Events
 {
     public enum StreamingStatus
     {
-        InActive , Active 
+        IN_ACTIVE = 0, 
+        ACTIVE 
     }
 }
