@@ -12,21 +12,13 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private readonly HashSet<RtpPacketType> _packetsTypes = new HashSet<RtpPacketType>();
-
-
-
-
         public int? MinimumPayloadSize { get; set; } 
 
         public int? MaximumPayloadSize { get; set; } = DefaultMaximumOfPacketsSize;
 
         public uint? RecognizedSSRC { get; set; }
 
-        public ISet<RtpPacketType> PacketsTypes
-        {
-            get => _packetsTypes;
-        }
+        public ISet<RtpPacketType> PacketsTypes { get; } = new HashSet<RtpPacketType>();
 
         
 
@@ -59,7 +51,7 @@ namespace RabbitOM.Streaming.Net.Rtp
                 throw new InvalidOperationException( $"UnAuthorize packet: unrecognized ssrc size {packet.SSRC}" );
             }
 
-            if ( _packetsTypes.Count > 0 && ! _packetsTypes.Contains( packet.Type ) )
+            if ( PacketsTypes.Count > 0 && ! PacketsTypes.Contains( packet.Type ) )
             {
                 throw new InvalidOperationException( $"UnAuthorize packet : invalid type {packet.Type}" );
             }
