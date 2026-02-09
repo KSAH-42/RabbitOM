@@ -71,8 +71,8 @@
     <Compile Include="Net\RtspV2\Receivers\Events\RtspStreamingStatusChangedEventArgs.cs" />
     <Compile Include="Net\RtspV2\Receivers\Events\RtspStreamingStoppedEventArgs.cs" />
     <Compile Include="Net\RtspV2\Receivers\Events\StreamingStatus.cs" />
-    <Compile Include="Net\RtspV2\Receivers\IRtspReceiver.cs" />
-    <Compile Include="Net\RtspV2\Receivers\IRtspReceiverConfigurer.cs" />
+    <Compile Include="Net\RtspV2\Receivers\IReceiver.cs" />
+    <Compile Include="Net\RtspV2\Receivers\IReceiverConfigurer.cs" />
     <Compile Include="Net\RtspV2\Receivers\MediaContentType.cs" />
     <Compile Include="Net\RtspV2\Receivers\MulticastRtspReceiver.cs" />
     <Compile Include="Net\RtspV2\Receivers\MulticastRtspReceiverConfiguration.cs" />

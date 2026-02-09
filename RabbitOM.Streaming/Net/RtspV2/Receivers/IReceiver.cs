@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Events;
 
-    public interface IRtspReceiver
+    public interface IReceiver
     {
         event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;
         event EventHandler<RtspCommunicationStoppedEventArgs> CommunicationStopped;

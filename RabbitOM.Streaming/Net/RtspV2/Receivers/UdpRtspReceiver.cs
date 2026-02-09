@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions;
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States;
 
-    public class UdpRtspReceiver : RtspReceiver, IRtspReceiverConfigurer<UdpRtspReceiverConfiguration>
+    public class UdpRtspReceiver : RtspReceiver, IReceiverConfigurer<UdpRtspReceiverConfiguration>
     {
         private readonly UdpStreamingSession _session;
 

@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions;
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States;
 
-    public class MulticastRtspReceiver : RtspReceiver, IRtspReceiverConfigurer<MulticastRtspReceiverConfiguration>
+    public class MulticastRtspReceiver : RtspReceiver, IReceiverConfigurer<MulticastRtspReceiverConfiguration>
     {
         private readonly MulticastStreamingSession _session;
 

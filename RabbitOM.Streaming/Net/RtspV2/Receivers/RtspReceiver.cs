@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Receivers
     using RabbitOM.Streaming.Threading;
     using RabbitOM.Streaming.Net.RtspV2.Receivers.Events;
 
-    public abstract class RtspReceiver : IRtspReceiver , IDisposable
+    public abstract class RtspReceiver : IReceiver , IDisposable
     {
         public event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;
         public event EventHandler<RtspCommunicationStoppedEventArgs> CommunicationStopped;
