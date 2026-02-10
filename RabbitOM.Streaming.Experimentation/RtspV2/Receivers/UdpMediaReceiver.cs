@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
+namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions.States;
+    using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions;
+    using RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States;
 
     public class UdpMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<UdpMediaReceiverConfiguration>
     {

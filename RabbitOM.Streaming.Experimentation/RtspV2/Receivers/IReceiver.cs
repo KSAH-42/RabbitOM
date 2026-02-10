@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
+namespace RabbitOM.Streaming.Net.RtspV2.Receivers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Events;
+    using RabbitOM.Streaming.Net.RtspV2.Receivers.Events;
 
     public interface IReceiver
     {

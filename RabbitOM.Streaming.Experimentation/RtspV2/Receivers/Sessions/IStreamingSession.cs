@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions
+namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions
 {
     public interface IStreamingSession : ISession
     {

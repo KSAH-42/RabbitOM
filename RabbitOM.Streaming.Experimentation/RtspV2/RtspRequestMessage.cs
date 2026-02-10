@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp
+namespace RabbitOM.Streaming.Net.RtspV2
 {
 
     public class RtspRequestMessage

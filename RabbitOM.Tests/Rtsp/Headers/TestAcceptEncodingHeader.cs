@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+using RabbitOM.Streaming.Net.RtspV2.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
                 Assert.Fail(  "parse failed" );
             }
 
-            Assert.IsNotNull( result )
+            Assert.IsNotNull( result );
             Assert.AreEqual( nbElement , result.Encodings.Count );
         }
 

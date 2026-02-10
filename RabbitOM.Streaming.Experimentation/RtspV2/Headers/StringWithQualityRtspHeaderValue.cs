@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
     public sealed class StringWithQualityRtspHeaderValue : IEquatable<StringWithQualityRtspHeaderValue>
     {

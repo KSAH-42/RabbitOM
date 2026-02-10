@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
     public class NotifyReasonRtspHeader : RtspHeader 
     {

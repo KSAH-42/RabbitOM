@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Events
+namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Events
 {
     public enum StreamingStatus
     {

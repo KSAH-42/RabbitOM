@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp
+namespace RabbitOM.Streaming.Net.RtspV2
 {
     public sealed class RtspResponseBody : IDisposable
     {

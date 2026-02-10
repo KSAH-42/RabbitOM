@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
     public class IfMatchRtspHeader : RtspHeader 
     {

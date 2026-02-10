@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
     public static class RtspHeaderParser
     {

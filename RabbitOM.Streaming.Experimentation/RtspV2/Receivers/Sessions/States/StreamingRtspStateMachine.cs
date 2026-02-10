@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions.States
+namespace RabbitOM.Streaming.Net.RtspV2.Receivers.Sessions.States
 {
     public sealed class StreamingRtspStateMachine : RtspStateMachine
     {
