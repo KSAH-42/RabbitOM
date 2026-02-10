@@ -10,17 +10,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrEmpty( seperator ) )
+            if ( string.IsNullOrWhiteSpace( input ) )
             {
-                Debug.Assert( ! string.IsNullOrEmpty( seperator ) );
+                return false;
+            }
 
+            if ( string.IsNullOrEmpty( seperator ) )
+            {
+                Debug.Assert( false , "a seperator must be provided" );
                 return false;
             }
 
             var tokens = input
                 .Split( new string[] { seperator } , StringSplitOptions.RemoveEmptyEntries )
                 .Select( token => token.Trim() )
-                .Where( token => ! string.IsNullOrWhiteSpace( token ) )
+                .Where( token => ! string.IsNullOrEmpty( token ) )
                 .ToArray()
                 ;
 
