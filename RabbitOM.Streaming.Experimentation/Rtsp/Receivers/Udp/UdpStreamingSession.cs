@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
 {
-    public class MulticastStreamingSession : IStreamingSession
+    public class UdpStreamingSession : IStreamingSession
     {
         private readonly RtspMediaReceiver _receiver;
 
-        public MulticastStreamingSession( RtspMediaReceiver receiver )
+        public UdpStreamingSession( RtspMediaReceiver receiver )
         {
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
         } 

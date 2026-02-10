@@ -1,17 +1,14 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Sessions.States;
-
     public class TcpMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<TcpMediaReceiverConfiguration>
     {
-        private readonly TcpRtspStreamingSession _session;
+        private readonly TcpStreamingSession _session;
 
         public TcpMediaReceiver()
         {
-            _session = new TcpRtspStreamingSession( this );
+            _session = new TcpStreamingSession( this );
         }
 
         public override bool IsConnected

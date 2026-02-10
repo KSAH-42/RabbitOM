@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
 {
     public class MulticastMediaReceiverConfiguration : RtspMediaReceiverConfiguration
     {

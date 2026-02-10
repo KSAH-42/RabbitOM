@@ -1,10 +1,8 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Threading;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
-    using RabbitOM.Streaming.Threading;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Events;
-
     public abstract class RtspMediaReceiver : IReceiver , IDisposable
     {
         public event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;

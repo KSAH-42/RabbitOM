@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Events;
-
     public interface IReceiver
     {
         event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;
