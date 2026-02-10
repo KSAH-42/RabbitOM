@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         private readonly List<StringWithQualityRtspHeaderValue> _encodings = new List<StringWithQualityRtspHeaderValue>();
-
+        
 
 
 
@@ -30,88 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _encodings;
         }
-
-
-
-
-
-
-        /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-
-        public override bool TryValidate()
-        {
-            return _encodings.Count > 0;
-        }
-
-        /// <summary>
-        /// Add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
-        public void AddEncoding( StringWithQualityRtspHeaderValue value )
-        {
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( value.Name ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            _encodings.Add( value );
-        }
-
-        /// <summary>
-        /// Try add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddEncoding( StringWithQualityRtspHeaderValue value )
-        {
-            if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
-            {
-                return false;
-            }
-
-            _encodings.Add( value );
-
-            return true;
-        }
-
-        /// <summary>
-        /// Remove an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
-        {
-            _encodings.Remove( value );
-        }
-
-        /// <summary>
-        /// Remove all elements
-        /// </summary>
-        public void RemoveEncodings()
-        {
-            _encodings.Clear();
-        }
-
-        /// <summary>
-        /// Format to string
-        /// </summary>
-        /// <returns>returns a string</returns>
-        public override string ToString()
-        {
-            return string.Join( ", " , _encodings );
-        }
-
-
-
+        
 
 
 
@@ -145,6 +64,83 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+        
+
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public override bool TryValidate()
+        {
+            return _encodings.Count > 0;
+        }
+
+        /// <summary>
+        /// Try add an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddEncoding( StringWithQualityRtspHeaderValue value )
+        {
+            if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
+            {
+                return false;
+            }
+
+            _encodings.Add( value );
+
+            return true;
+        }
+
+        /// <summary>
+        /// Add an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        public void AddEncoding( StringWithQualityRtspHeaderValue value )
+        {
+            if ( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( value.Name ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            _encodings.Add( value );
+        }
+
+        /// <summary>
+        /// Remove an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
+        {
+            _encodings.Remove( value );
+        }
+
+        /// <summary>
+        /// Remove all elements
+        /// </summary>
+        public void RemoveEncodings()
+        {
+            _encodings.Clear();
+        }
+
+        /// <summary>
+        /// Format to string
+        /// </summary>
+        /// <returns>returns a string</returns>
+        public override string ToString()
+        {
+            return string.Join( ", " , _encodings );
         }
     }
 }
