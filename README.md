@@ -51,6 +51,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 
 * ⚠️ COMING REFACTORY: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
+the new implementation is located temporaly in a different assembly (streaming.experimentation)
 
 ➡️ About thread safety:
 

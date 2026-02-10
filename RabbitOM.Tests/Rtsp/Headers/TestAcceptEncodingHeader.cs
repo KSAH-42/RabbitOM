@@ -54,15 +54,18 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestMethod]
         public void TestFormat2()
         {
-            var header = new AcceptLanguageRtspHeader();
+            var header = new AcceptEncodingRtspHeader();
 
             Assert.AreEqual( "" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("a") ) );
             Assert.AreEqual( "a" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("b") ) );
+            Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("b") ) );
             Assert.AreEqual( "a, b" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("c" , 1) ) );
+            Assert.AreEqual( "a, b, c; q=1.0" , header.ToString() );
         }
 
         [TestMethod]

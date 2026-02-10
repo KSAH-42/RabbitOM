@@ -60,6 +60,9 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("en-EN") ) );
             Assert.AreEqual( "fr-FR, en-EN" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("jp-JP" , 1) ) );
+            Assert.AreEqual( "fr-FR, en-EN, jp-JP; q=1.0" , header.ToString() );
         }
 
         [TestMethod]
