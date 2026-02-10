@@ -5,18 +5,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public sealed class RtspMethod
     {
-        public static readonly RtspMethod Options = new RtspMethod( "OPTIONS" );
-        public static readonly RtspMethod Describe = new RtspMethod( "DESCRIBE" );
-        public static readonly RtspMethod Setup = new RtspMethod( "SETUP" );
-        public static readonly RtspMethod Play = new RtspMethod( "PLAY" );
-        public static readonly RtspMethod Pause = new RtspMethod( "PAUSE" );
-        public static readonly RtspMethod Teardown = new RtspMethod( "TEARDOWN" );
-        public static readonly RtspMethod KeepAlive = new RtspMethod( "KEEPALIVE" );
-        public static readonly RtspMethod GetParameter = new RtspMethod( "GET_PARAMETER" );
-        public static readonly RtspMethod SetParameter = new RtspMethod( "SET_PARAMETER" );
-        public static readonly RtspMethod Announce = new RtspMethod( "ANNOUNCE" );
-        public static readonly RtspMethod Redirect = new RtspMethod( "REDIRECT" );
-        public static readonly RtspMethod Record = new RtspMethod( "RECORD" );
+        public static readonly RtspMethod OPTIONS = new RtspMethod( "OPTIONS" );
+        public static readonly RtspMethod DESCRIBE = new RtspMethod( "DESCRIBE" );
+        public static readonly RtspMethod SETUP = new RtspMethod( "SETUP" );
+        public static readonly RtspMethod PLAY = new RtspMethod( "PLAY" );
+        public static readonly RtspMethod PAUSE = new RtspMethod( "PAUSE" );
+        public static readonly RtspMethod TEARDOWN = new RtspMethod( "TEARDOWN" );
+        public static readonly RtspMethod KEEPALIVE = new RtspMethod( "KEEPALIVE" );
+        public static readonly RtspMethod GET_PARAMETER = new RtspMethod( "GET_PARAMETER" );
+        public static readonly RtspMethod SET_PARAMETER = new RtspMethod( "SET_PARAMETER" );
+        public static readonly RtspMethod ANNOUNCE = new RtspMethod( "ANNOUNCE" );
+        public static readonly RtspMethod REDIRECT = new RtspMethod( "REDIRECT" );
+        public static readonly RtspMethod RECORD = new RtspMethod( "RECORD" );
 
 
 
@@ -44,9 +44,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
             var methodName = value.Trim().ToUpper();
 
-            foreach ( PropertyInfo property in typeof( RtspMethod ).GetProperties( BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty ) )
+            foreach ( FieldInfo field in typeof( RtspMethod ).GetFields( BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty ) )
             {
-                var method = property.GetValue( null ) as RtspMethod ;
+                var method = field.GetValue( null ) as RtspMethod ;
 
                 if ( method != null && method.Name == methodName )
                 {
