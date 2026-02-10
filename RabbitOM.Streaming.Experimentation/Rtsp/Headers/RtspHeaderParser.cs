@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            var tokens = StringRtspNormalizer.Normalize( input )
+            var tokens = input
                 .Split( new string[] { seperator } , StringSplitOptions.RemoveEmptyEntries )
                 .Select( token => token.Trim() )
                 .Where( token => ! string.IsNullOrWhiteSpace( token ) )

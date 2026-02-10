@@ -47,11 +47,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return string.Join( ", " , _units );
         }
         
-        public static bool TryParse( string value , out AcceptRangesRtspHeader result )
+        public static bool TryParse( string input , out AcceptRangesRtspHeader result )
         {
             result = null;
 
-            if ( ! RtspHeaderParser.TryParse( value , "," , out var tokens ) )
+            if ( ! RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
                 return false;
             }

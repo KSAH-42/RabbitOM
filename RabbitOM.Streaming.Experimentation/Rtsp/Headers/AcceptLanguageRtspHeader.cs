@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( ! RtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( ! RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
                 return false;
             }
