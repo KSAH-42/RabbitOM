@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         }
 
         [TestMethod]
-        public void TestFormat()
+        public void TestFormat1()
         {
             var header = new AcceptEncodingRtspHeader();
 
@@ -50,6 +50,20 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("b") ) );
             Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("c") ) );
             Assert.AreNotEqual( 0 , header.ToString().Length );
+        }
+
+        [TestMethod]
+        public void TestFormat2()
+        {
+            var header = new AcceptLanguageRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.AreEqual( "a" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("b") ) );
+            Assert.AreEqual( "a, b" , header.ToString() );
         }
 
         [TestMethod]

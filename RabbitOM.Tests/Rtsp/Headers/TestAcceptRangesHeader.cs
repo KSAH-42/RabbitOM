@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RabbitOM.Streaming.Net.RtspV2.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
@@ -44,13 +43,27 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         }
 
         [TestMethod]
-        public void TestFormat()
+        public void TestFormat1()
         {
             var header = new AcceptRangesRtspHeader();
 
             Assert.AreEqual( 0 , header.ToString().Length );
             Assert.AreEqual( true , header.TryAddUnit( "bytes" ) );
             Assert.AreNotEqual( 0 , header.ToString().Length );
+        }
+
+        [TestMethod]
+        public void TestFormat2()
+        {
+            var header = new AcceptRangesRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddUnit( "bytes" ) );
+            Assert.AreEqual( "bytes" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddUnit( "dates" ) );
+            Assert.AreEqual( "bytes, dates" , header.ToString() );
         }
 
         [TestMethod]

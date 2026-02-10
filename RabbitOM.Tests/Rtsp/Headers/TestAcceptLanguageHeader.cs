@@ -50,6 +50,20 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         }
 
         [TestMethod]
+        public void TestFormat2()
+        {
+            var header = new AcceptLanguageRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("fr-FR") ) );
+            Assert.AreEqual( "fr-FR" , header.ToString() );
+
+            Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("en-EN") ) );
+            Assert.AreEqual( "fr-FR, en-EN" , header.ToString() );
+        }
+
+        [TestMethod]
         public void TestCollection()
         {
             var header = new AcceptLanguageRtspHeader();
