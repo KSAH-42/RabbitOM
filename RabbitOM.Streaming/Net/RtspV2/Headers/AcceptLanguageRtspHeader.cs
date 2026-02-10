@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
@@ -6,35 +7,70 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
     {
         public const string TypeName = "Accept-Language";
 
-        public string Value { get; private set; } = string.Empty;
+        private readonly List<StringWithQualityRtspHeaderValue> _encodings = new List<StringWithQualityRtspHeaderValue>();
 
-        public void SetValue( string value )
+        public IReadOnlyList<StringWithQualityRtspHeaderValue> Encodings
         {
-            Value = StringRtspNormalizer.Normalize( value );
+            get => _encodings;
         }
 
         public override bool TryValidate()
         {
-            return StringRtspValidator.TryValidate( Value );
+            return _encodings.Count > 0;
         }
 
-        public override string ToString()
+        public bool TryAddEncoding( StringWithQualityRtspHeaderValue value )
         {
-            return Value;
-        }
-        
-        public static bool TryParse( string value , out AcceptLanguageRtspHeader result )
-        {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
+            if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
             {
                 return false;
             }
 
-            result = new AcceptLanguageRtspHeader();
+            _encodings.Add( value );
 
-            result.SetValue( value );
+            return true;
+        }
+
+        public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
+        {
+            _encodings.Remove( value );
+        }
+
+        public void RemoveAllEncodings()
+        {
+            _encodings.Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , _encodings );
+        }
+
+        public static bool TryParse( string input , out AcceptLanguageRtspHeader result )
+        {
+            result = null;
+
+            if ( ! RtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            {
+                return false;
+            }
+
+            var header = new AcceptLanguageRtspHeader();
+
+            foreach ( var token in tokens )
+            {
+                if ( StringWithQualityRtspHeaderValue.TryParse( token , out var encoding ) )
+                {
+                    header.TryAddEncoding( encoding );
+                }
+            }
+            
+            if ( header.Encodings.Count <= 0 )
+            {
+                return false;
+            }
+
+            result = header;
 
             return true;
         }

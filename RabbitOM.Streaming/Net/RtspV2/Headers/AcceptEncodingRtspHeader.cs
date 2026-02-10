@@ -7,9 +7,9 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
     {
         public const string TypeName = "Accept-Encoding";
 
-        private readonly HashSet<StringWithQualityRtspHeaderValue> _encodings = new HashSet<StringWithQualityRtspHeaderValue>();
+        private readonly List<StringWithQualityRtspHeaderValue> _encodings = new List<StringWithQualityRtspHeaderValue>();
 
-        public IReadOnlyCollection<StringWithQualityRtspHeaderValue> Encodings
+        public IReadOnlyList<StringWithQualityRtspHeaderValue> Encodings
         {
             get => _encodings;
         }
@@ -26,7 +26,9 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
                 return false;
             }
 
-            return _encodings.Add( value );
+            _encodings.Add( value );
+
+            return true;
         }
 
         public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
