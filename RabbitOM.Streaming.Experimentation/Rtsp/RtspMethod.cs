@@ -5,32 +5,33 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public sealed class RtspMethod
     {
+        public static readonly RtspMethod Options = new RtspMethod( "OPTIONS" );
+        public static readonly RtspMethod Describe = new RtspMethod( "DESCRIBE" );
+        public static readonly RtspMethod Setup = new RtspMethod( "SETUP" );
+        public static readonly RtspMethod Play = new RtspMethod( "PLAY" );
+        public static readonly RtspMethod Pause = new RtspMethod( "PAUSE" );
+        public static readonly RtspMethod Teardown = new RtspMethod( "TEARDOWN" );
+        public static readonly RtspMethod KeepAlive = new RtspMethod( "KEEPALIVE" );
+        public static readonly RtspMethod GetParameter = new RtspMethod( "GET_PARAMETER" );
+        public static readonly RtspMethod SetParameter = new RtspMethod( "SET_PARAMETER" );
+        public static readonly RtspMethod Announce = new RtspMethod( "ANNOUNCE" );
+        public static readonly RtspMethod Redirect = new RtspMethod( "REDIRECT" );
+        public static readonly RtspMethod Record = new RtspMethod( "RECORD" );
 
-        private RtspMethod( string name ) => Name = name;
+
+
+        private RtspMethod( string name )
+        {
+            Name = name;
+        }
         
+
+
         public string Name { get; }
 
 
 
-        public static RtspMethod Null { get; } = new RtspMethod( string.Empty );
-        public static RtspMethod Options { get; } = new RtspMethod( "OPTIONS" );
-        public static RtspMethod Describe { get; } = new RtspMethod( "DESCRIBE" );
-        public static RtspMethod Setup { get; } = new RtspMethod( "SETUP" );
-        public static RtspMethod Play { get; } = new RtspMethod( "PLAY" );
-        public static RtspMethod Pause { get; } = new RtspMethod( "PAUSE" );
-        public static RtspMethod Teardown { get; } = new RtspMethod( "TEARDOWN" );
-        public static RtspMethod KeepAlive { get; } = new RtspMethod( "KEEPALIVE" );
-        public static RtspMethod GetParameter { get; } = new RtspMethod( "GET_PARAMETER" );
-        public static RtspMethod SetParameter { get; } = new RtspMethod( "SET_PARAMETER" );
-        public static RtspMethod Announce { get; } = new RtspMethod( "ANNOUNCE" );
-        public static RtspMethod Redirect { get; } = new RtspMethod( "REDIRECT" );
-        public static RtspMethod Record { get; } = new RtspMethod( "RECORD" );
-
-
-
         public override string ToString() => Name;
-
-
 
         public static bool TryParse( string value , out RtspMethod result )
         {

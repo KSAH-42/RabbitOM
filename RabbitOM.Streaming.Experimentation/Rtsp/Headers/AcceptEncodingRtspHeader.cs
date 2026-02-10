@@ -3,22 +3,75 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class AcceptEncodingRtspHeader : RtspHeader 
+    /// <summary>
+    /// Represent an rtsp header
+    /// </summary>
+    public sealed class AcceptEncodingRtspHeader : RtspHeader 
     {
+        /// <summary>
+        /// The type name
+        /// </summary>
         public const string TypeName = "Accept-Encoding";
+
+
+
+
 
         private readonly List<StringWithQualityRtspHeaderValue> _encodings = new List<StringWithQualityRtspHeaderValue>();
 
+
+
+
+
+        /// <summary>
+        /// Gets the encodings
+        /// </summary>
         public IReadOnlyList<StringWithQualityRtspHeaderValue> Encodings
         {
             get => _encodings;
         }
+
+
+
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
 
         public override bool TryValidate()
         {
             return _encodings.Count > 0;
         }
 
+        /// <summary>
+        /// Add an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        public void AddEncoding( StringWithQualityRtspHeaderValue value )
+        {
+            if ( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( value.Name ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            _encodings.Add( value );
+        }
+
+        /// <summary>
+        /// Try add an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryAddEncoding( StringWithQualityRtspHeaderValue value )
         {
             if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
@@ -31,48 +84,67 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
+        /// <summary>
+        /// Remove an element
+        /// </summary>
+        /// <param name="value">the value</param>
         public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
         {
             _encodings.Remove( value );
         }
 
+        /// <summary>
+        /// Remove all elements
+        /// </summary>
         public void RemoveEncodings()
         {
             _encodings.Clear();
         }
 
+        /// <summary>
+        /// Format to string
+        /// </summary>
+        /// <returns>returns a string</returns>
         public override string ToString()
         {
             return string.Join( ", " , _encodings );
         }
 
+
+
+
+
+
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="input">the input</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string input , out AcceptEncodingRtspHeader result )
         {
             result = null;
 
-            if ( ! RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
-                return false;
-            }
+                var header = new AcceptEncodingRtspHeader();
 
-            var header = new AcceptEncodingRtspHeader();
-
-            foreach ( var token in tokens )
-            {
-                if ( StringWithQualityRtspHeaderValue.TryParse( token , out var encoding ) )
+                foreach ( var token in tokens )
                 {
-                    header.TryAddEncoding( encoding );
+                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var encoding ) )
+                    {
+                        header.TryAddEncoding( encoding );
+                    }
+                }
+            
+                if ( header.Encodings.Count > 0 )
+                {
+                    result = header;
                 }
             }
-            
-            if ( header.Encodings.Count <= 0 )
-            {
-                return false;
-            }
 
-            result = header;
-
-            return true;
+            return result != null;
         }
     }
 }
