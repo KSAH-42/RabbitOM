@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -22,10 +21,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
         /// <summary>
         /// Gets the languages
         /// </summary>
+
         public IReadOnlyList<StringWithQualityRtspHeaderValue> Languages
         {
             get => _languages;
