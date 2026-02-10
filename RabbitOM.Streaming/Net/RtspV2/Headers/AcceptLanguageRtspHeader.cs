@@ -7,43 +7,43 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
     {
         public const string TypeName = "Accept-Language";
 
-        private readonly List<StringWithQualityRtspHeaderValue> _encodings = new List<StringWithQualityRtspHeaderValue>();
+        private readonly List<StringWithQualityRtspHeaderValue> _languages = new List<StringWithQualityRtspHeaderValue>();
 
-        public IReadOnlyList<StringWithQualityRtspHeaderValue> Encodings
+        public IReadOnlyList<StringWithQualityRtspHeaderValue> Languages
         {
-            get => _encodings;
+            get => _languages;
         }
 
         public override bool TryValidate()
         {
-            return _encodings.Count > 0;
+            return _languages.Count > 0;
         }
 
-        public bool TryAddEncoding( StringWithQualityRtspHeaderValue value )
+        public bool TryAddLanguage( StringWithQualityRtspHeaderValue value )
         {
             if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
             {
                 return false;
             }
 
-            _encodings.Add( value );
+            _languages.Add( value );
 
             return true;
         }
 
-        public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
+        public void RemoveLanguage( StringWithQualityRtspHeaderValue value )
         {
-            _encodings.Remove( value );
+            _languages.Remove( value );
         }
 
-        public void RemoveAllEncodings()
+        public void RemoveAllLanguages()
         {
-            _encodings.Clear();
+            _languages.Clear();
         }
 
         public override string ToString()
         {
-            return string.Join( ", " , _encodings );
+            return string.Join( ", " , _languages );
         }
 
         public static bool TryParse( string input , out AcceptLanguageRtspHeader result )
@@ -61,11 +61,11 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
             {
                 if ( StringWithQualityRtspHeaderValue.TryParse( token , out var encoding ) )
                 {
-                    header.TryAddEncoding( encoding );
+                    header.TryAddLanguage( encoding );
                 }
             }
             
-            if ( header.Encodings.Count <= 0 )
+            if ( header.Languages.Count <= 0 )
             {
                 return false;
             }

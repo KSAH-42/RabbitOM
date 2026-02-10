@@ -19,12 +19,12 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
         {
             var text = StringRtspNormalizer.Normalize( value );
 
-            if ( string.IsNullOrWhiteSpace( text ) )
+            if ( text.Any( x => char.IsLetterOrDigit( x ) ) || text == "*" )
             {
-                return false;
+                return _units.Add( text );
             }
 
-            return _units.Add( text );
+            return false;
         }
 
         public void RemoveUnit( string value )
@@ -51,7 +51,26 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
         {
             result = null;
 
-            throw new NotImplementedException();
+            if ( ! RtspHeaderParser.TryParse( value , "," , out var tokens ) )
+            {
+                return false;
+            }
+
+            var header = new AcceptRangesRtspHeader();
+
+            foreach ( var token in tokens )
+            {
+                header.TryAddUnit( token );
+            }
+
+            if ( header.Units.Count <= 0 )
+            {
+                return false;
+            }
+
+            result = header;
+
+            return true;
         }
     }
 }

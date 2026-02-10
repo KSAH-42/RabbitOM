@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
     public class ContentEncodingRtspHeader : RtspHeader 
     {
-        public const string TypeName = "Content-Encodings";
+        public const string TypeName = "Content-Languages";
         
 
 

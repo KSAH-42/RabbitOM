@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rtsp\Headers\TestAcceptRangesHeader.cs" />
     <Compile Include="Rtsp\Headers\TestAcceptLanguageHeader.cs" />
     <Compile Include="Rtsp\Headers\TestAcceptEncodingHeader.cs" />
   </ItemGroup>
