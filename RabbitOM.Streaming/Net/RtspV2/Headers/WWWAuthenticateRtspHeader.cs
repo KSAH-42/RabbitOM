@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
         
         public override bool TryValidate()
         {
-            return StringRtspValidator.Validate( _type );
+            return StringRtspValidator.TryValidate( _type );
         }
 
         public override string ToString()

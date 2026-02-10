@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Net.RtspV2.Headers
 {
-    public static class RtspAuthentication
+    public static class RtspAuthenticationTypes
     {
         public const string BasicAuthentication = "Basic";
 
@@ -23,9 +23,8 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
         public const string Sha512Algorithm = "SHA-512";
 
         
-
-
-
+        
+        
         private readonly static HashSet<string> Md5AlgorithmKnows 
             = new [] { "MD5" , "MD5-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
@@ -42,7 +41,7 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
             = new [] { "SHA-512" , "SHA-512-sess" , "SHA512" , "SHA512-sess" , "SHA_512" , "SHA_512-sess" , "SHA512" , "SHA256-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
 
-
+        
 
 
         

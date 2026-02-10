@@ -29,17 +29,17 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
         
         public override bool TryValidate()
         {
-            if ( RtspAuthentication.IsBasicAuthentication( Type ) )
+            if ( RtspAuthenticationTypes.IsBasicAuthentication( Type ) )
             {
-                return StringRtspValidator.Validate( Response );
+                return StringRtspValidator.TryValidate( Response );
             }
 
-            return RtspAuthentication.IsDigestAuthentication( Type ) 
-                 ? StringRtspValidator.Validate( UserName )
-                || StringRtspValidator.Validate( Realm )
-                || StringRtspValidator.Validate( Nonce )
-                || StringRtspValidator.Validate( Response )
-                || StringRtspValidator.ValidateUri( Uri )
+            return RtspAuthenticationTypes.IsDigestAuthentication( Type ) 
+                 ? StringRtspValidator.TryValidate( UserName )
+                || StringRtspValidator.TryValidate( Realm )
+                || StringRtspValidator.TryValidate( Nonce )
+                || StringRtspValidator.TryValidate( Response )
+                || StringRtspValidator.TryValidateUri( Uri )
                  : false
                  ;
         }
