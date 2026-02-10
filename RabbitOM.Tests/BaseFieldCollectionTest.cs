@@ -1,7 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RabbitOM.Streaming.Net.Sdp;
 using System;
 
-namespace RabbitOM.Streaming.Net.Sdp.Tests
+namespace RabbitOM.Streaming.Tests.Sdp
 {
     [TestClass]
     public class BaseFieldCollectionTest

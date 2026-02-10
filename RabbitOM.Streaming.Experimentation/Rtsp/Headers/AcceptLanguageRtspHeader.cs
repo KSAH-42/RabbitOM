@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _languages.Remove( value );
         }
 
-        public void RemoveAllLanguages()
+        public void RemoveLanguages()
         {
             _languages.Clear();
         }

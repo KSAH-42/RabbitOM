@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _encodings.Remove( value );
         }
 
-        public void RemoveAllEncodings()
+        public void RemoveEncodings()
         {
             _encodings.Clear();
         }

@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("b") ) );
             Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("c") ) );
             Assert.AreEqual( 3 , header.Encodings.Count );
-            header.RemoveAllEncodings();
+            header.RemoveEncodings();
             Assert.AreEqual( 0 , header.Encodings.Count );
         }
 

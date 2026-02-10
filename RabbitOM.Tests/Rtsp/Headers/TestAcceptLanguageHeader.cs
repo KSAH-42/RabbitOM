@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("fr-FR") ) );
             Assert.AreEqual( true , header.TryAddLanguage( new StringWithQualityRtspHeaderValue("en-EN") ) );
             Assert.AreEqual( 2 , header.Languages.Count );
-            header.RemoveAllLanguages();
+            header.RemoveLanguages();
             Assert.AreEqual( 0 , header.Languages.Count );
         }
 
