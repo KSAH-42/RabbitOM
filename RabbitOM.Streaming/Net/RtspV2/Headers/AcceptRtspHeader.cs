@@ -7,11 +7,26 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
     {
         public const string TypeName = "Accept";
 
+
+
+
         private readonly List<StringWithQualityRtspHeaderValue> _mimes = new List<StringWithQualityRtspHeaderValue>();
         
+
+
+
         public IReadOnlyList<StringWithQualityRtspHeaderValue> Mimes
         {
             get => _mimes;
+        }
+        
+
+
+
+        
+        public override bool TryValidate()
+        {
+            return Mimes.Count > 0;
         }
 
         public bool TryAddMime( StringWithQualityRtspHeaderValue value )
@@ -35,22 +50,22 @@ namespace RabbitOM.Streaming.Net.RtspV2.Headers
         {
             _mimes.Clear();
         }
-
-        public override bool TryValidate()
-        {
-            return Mimes.Count > 0;
-        }
-
+        
         public override string ToString()
         {
             return string.Join( ", " , _mimes );
         }
+        
 
-        // pattern: application/sdp , application/sdp; q=2, application/rtsl, application/mheg
+
+
+
 
         public static bool TryParse( string value , out AcceptRtspHeader result )
         {
             result = null;
+
+            // pattern: application/sdp , application/sdp; q=2, application/rtsl, application/mheg
 
             throw new NotImplementedException();
         }
