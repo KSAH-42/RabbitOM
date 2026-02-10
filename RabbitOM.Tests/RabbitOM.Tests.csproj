@@ -60,6 +60,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RabbitOM.Streaming.Experimentation\RabbitOM.Streaming.Experimentation.csproj">
+      <Project>{8bfe08d4-319f-4516-8579-e4ec0efebb15}</Project>
+      <Name>RabbitOM.Streaming.Experimentation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">
       <Project>{09233582-17ed-40d4-bc6a-309ecfdb116b}</Project>
       <Name>RabbitOM.Streaming</Name>

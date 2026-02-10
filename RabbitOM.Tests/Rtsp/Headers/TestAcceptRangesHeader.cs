@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RabbitOM.Streaming.Net.RtspV2.Headers;
+using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
@@ -25,7 +25,6 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             }
 
             Assert.IsNotNull( result );
-
             Assert.AreEqual( nbElement , result.Units.Count );
         }
 
