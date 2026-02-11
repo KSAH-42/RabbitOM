@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class CSeqRtspHeader : RtspHeader 
+    public sealed class CSeqRtspHeader : RtspHeader 
     {
         public const string TypeName = "CSeq";
         

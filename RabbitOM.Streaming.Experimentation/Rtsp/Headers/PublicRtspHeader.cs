@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class PublicRtspHeader : RtspHeader 
+    public sealed class PublicRtspHeader : RtspHeader 
     {
         public const string TypeName = "Public";
 

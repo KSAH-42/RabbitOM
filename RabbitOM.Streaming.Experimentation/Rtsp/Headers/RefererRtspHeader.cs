@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class RefererRtspHeader : RtspHeader 
+    public sealed class RefererRtspHeader : RtspHeader 
     {
         public const string TypeName = "Referer";
         

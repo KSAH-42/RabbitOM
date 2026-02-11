@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class TransportRtspHeader : RtspHeader 
+    public sealed class TransportRtspHeader : RtspHeader 
     {
         public const string TypeName = "Transport";
         

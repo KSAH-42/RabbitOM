@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class ViaRtspHeader : RtspHeader 
+    public sealed class ViaRtspHeader : RtspHeader 
     { 
         public const string TypeName = "Via";
         

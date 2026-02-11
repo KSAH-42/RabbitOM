@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class SpeedRtspHeader : RtspHeader 
+    public sealed class SpeedRtspHeader : RtspHeader 
     {
         public const string TypeName = "Speed";
         

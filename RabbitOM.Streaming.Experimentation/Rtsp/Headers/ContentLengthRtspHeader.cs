@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     /// <summary>
     /// Represent a rtsp header
     /// </summary>
-    public class ContentLengthRtspHeader : RtspHeader 
+    public sealed class ContentLengthRtspHeader : RtspHeader 
     {
         public const string TypeName = "Content-Length";
         

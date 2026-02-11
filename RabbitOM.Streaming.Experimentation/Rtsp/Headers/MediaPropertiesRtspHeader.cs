@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class MediaPropertiesRtspHeader : RtspHeader 
+    public sealed class MediaPropertiesRtspHeader : RtspHeader 
     {
         public const string TypeName = "Media-Properties";
 

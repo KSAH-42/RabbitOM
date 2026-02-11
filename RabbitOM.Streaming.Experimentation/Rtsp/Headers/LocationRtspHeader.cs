@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class LocationRtspHeader : RtspHeader 
+    public sealed class LocationRtspHeader : RtspHeader 
     {
         public const string TypeName = "Location";
         

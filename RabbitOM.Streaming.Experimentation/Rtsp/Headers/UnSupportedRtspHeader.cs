@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class UnSupportedRtspHeader : RtspHeader 
+    public sealed class UnSupportedRtspHeader : RtspHeader 
     {
         public const string TypeName = "Unsupported";
 

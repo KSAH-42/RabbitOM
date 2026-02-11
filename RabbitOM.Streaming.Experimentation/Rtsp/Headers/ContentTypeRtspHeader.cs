@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class ContentTypeRtspHeader : RtspHeader 
+    public sealed class ContentTypeRtspHeader : RtspHeader 
     {
         public const string TypeName = "Content-Type";
 

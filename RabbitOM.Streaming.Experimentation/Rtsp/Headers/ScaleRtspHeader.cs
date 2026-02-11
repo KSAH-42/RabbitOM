@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class ScaleRtspHeader : RtspHeader 
+    public sealed class ScaleRtspHeader : RtspHeader 
     {
         public const string TypeName = "Scale";
         

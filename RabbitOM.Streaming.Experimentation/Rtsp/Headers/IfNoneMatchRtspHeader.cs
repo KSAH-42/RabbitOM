@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class IfNoneMatchRtspHeader : RtspHeader 
+    public sealed class IfNoneMatchRtspHeader : RtspHeader 
     {
         public const string TypeName = "If-None-Match";
         

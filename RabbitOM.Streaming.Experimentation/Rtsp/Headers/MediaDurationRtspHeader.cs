@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class MediaDurationRtspHeader : RtspHeader 
+    public sealed class MediaDurationRtspHeader : RtspHeader 
     {
         public const string TypeName = "Media-Duration";
         

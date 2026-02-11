@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     /// <summary>
     /// Represent a rtsp header
     /// </summary>
-    public class AllowRtspHeader : RtspHeader 
+    public sealed class AllowRtspHeader : RtspHeader 
     {
         /// <summary>
         /// The type name

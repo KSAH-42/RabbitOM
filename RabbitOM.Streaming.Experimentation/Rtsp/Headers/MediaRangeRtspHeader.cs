@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class MediaRangeRtspHeader : RtspHeader 
+    public sealed class MediaRangeRtspHeader : RtspHeader 
     {
         public const string TypeName = "Media-Range";
         

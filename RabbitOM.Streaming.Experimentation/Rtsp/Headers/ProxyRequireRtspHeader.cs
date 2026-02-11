@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class ProxyRequireRtspHeader : RtspHeader 
+    public sealed class ProxyRequireRtspHeader : RtspHeader 
     {   
         public const string TypeName = "Proxy-Require";
 

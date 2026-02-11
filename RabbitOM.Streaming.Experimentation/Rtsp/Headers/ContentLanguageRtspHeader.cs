@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     /// <summary>
     /// Represent a rtsp header
     /// </summary>
-    public class ContentLanguageRtspHeader : RtspHeader 
+    public sealed class ContentLanguageRtspHeader : RtspHeader 
     {
         public const string TypeName = "Content-Language";
         

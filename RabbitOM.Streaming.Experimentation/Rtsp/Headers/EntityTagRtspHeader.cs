@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class EntityTagRtspHeader : RtspHeader 
+    public sealed class EntityTagRtspHeader : RtspHeader 
     {
         public const string TypeName = "ETag";
         

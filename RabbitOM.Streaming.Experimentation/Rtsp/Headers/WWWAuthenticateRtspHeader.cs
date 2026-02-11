@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class WWWAuthenticateRtspHeader : RtspHeader
+    public sealed class WWWAuthenticateRtspHeader : RtspHeader
     {
         private string _type = string.Empty;
         private string _realm = string.Empty;

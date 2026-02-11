@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class RetryAfterRtspHeader : RtspHeader 
+    public sealed class RetryAfterRtspHeader : RtspHeader 
     {
         public const string TypeName = "Retry-After";
         

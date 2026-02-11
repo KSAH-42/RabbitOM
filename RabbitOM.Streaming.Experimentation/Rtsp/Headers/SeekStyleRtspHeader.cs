@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class SeekStyleRtspHeader : RtspHeader 
+    public sealed class SeekStyleRtspHeader : RtspHeader 
     {
         public const string TypeName = "Seek-Style";
         

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class NotifyReasonRtspHeader : RtspHeader 
+    public sealed class NotifyReasonRtspHeader : RtspHeader 
     {
         public const string TypeName = "Notify-Reason";
         

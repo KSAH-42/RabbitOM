@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class MaxForwardsRtspHeader : RtspHeader 
+    public sealed class MaxForwardsRtspHeader : RtspHeader 
     {
         public const string TypeName = "Max-Forwards";
         

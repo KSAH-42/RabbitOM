@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class RequireRtspHeader : RtspHeader
+    public sealed class RequireRtspHeader : RtspHeader
     {   
         public const string TypeName = "Require";
 

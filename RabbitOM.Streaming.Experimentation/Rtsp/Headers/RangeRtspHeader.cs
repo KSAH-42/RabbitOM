@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class RangeRtspHeader : RtspHeader 
+    public sealed class RangeRtspHeader : RtspHeader 
     {
         public const string TypeName = "Range";
 

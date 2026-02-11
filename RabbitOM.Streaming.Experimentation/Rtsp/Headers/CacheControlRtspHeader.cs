@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class CacheControlRtspHeader : RtspHeader 
+    public sealed class CacheControlRtspHeader : RtspHeader 
     {
         public const string TypeName = "Cache-Control";
         

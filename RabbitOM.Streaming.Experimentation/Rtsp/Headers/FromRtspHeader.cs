@@ -3,7 +3,7 @@ using System.Net.Mail;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class FromRtspHeader : RtspHeader 
+    public sealed class FromRtspHeader : RtspHeader 
     {
         public const string TypeName = "From";
         

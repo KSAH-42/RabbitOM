@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class VaryRtspHeader : RtspHeader 
+    public sealed class VaryRtspHeader : RtspHeader 
     {
         public const string TypeName = "Vary";
 

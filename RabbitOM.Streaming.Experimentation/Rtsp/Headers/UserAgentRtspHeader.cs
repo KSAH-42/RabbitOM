@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class UserAgentRtspHeader : RtspHeader 
+    public sealed class UserAgentRtspHeader : RtspHeader 
     {
         public const string TypeName = "User-Agent";
         

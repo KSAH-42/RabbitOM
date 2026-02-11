@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class SessionRtspHeader : RtspHeader 
+    public sealed class SessionRtspHeader : RtspHeader 
     {
         public const string TypeName = "Session";
         

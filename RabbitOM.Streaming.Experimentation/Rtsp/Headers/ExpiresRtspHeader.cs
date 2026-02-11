@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class ExpiresRtspHeader : RtspHeader 
+    public sealed class ExpiresRtspHeader : RtspHeader 
     {
         private const string FormatDate = "ddd, dd MMM yyyy HH:mm:ss GMT";
 
