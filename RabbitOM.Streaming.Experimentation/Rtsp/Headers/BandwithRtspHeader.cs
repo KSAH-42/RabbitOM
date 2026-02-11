@@ -55,7 +55,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override bool TryValidate()
         {
-            return BitRate > 0;
+            return BitRate >= 0;
         }
 
         /// <summary>

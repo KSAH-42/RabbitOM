@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override bool TryValidate()
         {
-            return Value > 0;
+            return Value >= 0;
         }
 
         /// <summary>
