@@ -14,11 +14,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return Uri.IsWellFormedUriString( value , UriKind.Absolute );
         }
+        
+        public static bool TryValidateAsContentTD( string value )
+        {
+            return ! string.IsNullOrWhiteSpace( value )
+                && value.Count( x => char.IsLetter( x ) ) > 0
+                && value.Count( x => char.IsDigit( x ) ) >= 0
+                ;
+        }
 
         public static bool TryValidateAsContentSTD( string value )
         {
             // Star Text Digits
-
             if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
@@ -32,14 +39,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Count( x => char.IsLetter( x ) ) > 0
                 && value.Count( x => char.IsDigit( x ) ) >= 0
                 ;
-        }
-
-
-
-
-        private static void OnException( Exception ex )
-        {
-            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }

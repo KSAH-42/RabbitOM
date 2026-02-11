@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( name ) );
             }
 
-            _name = name ?? string.Empty;
+            _name = StringRtspNormalizer.Normalize( name );
             _quality = quality;
         }
 
@@ -53,9 +53,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool Equals( StringWithQualityRtspHeaderValue a , StringWithQualityRtspHeaderValue b , StringComparison comparison )
         {
-            if ( object.Equals( a , b ) )
+            if ( object.ReferenceEquals( a , b ) )
             {
                 return true;
+            }
+
+            if ( object.ReferenceEquals( a , null ) || object.ReferenceEquals( b , null ) )
+            {
+                return false;
             }
 
             if ( ! string.Equals( a?.Name , b?.Name , comparison ) )
@@ -129,7 +134,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override bool Equals( object obj )
         {
-            return base.Equals( obj as StringWithQualityRtspHeaderValue );
+            return Equals( obj as StringWithQualityRtspHeaderValue );
         }
 
         public bool Equals( StringWithQualityRtspHeaderValue obj )

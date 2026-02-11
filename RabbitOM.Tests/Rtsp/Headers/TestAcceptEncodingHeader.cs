@@ -82,6 +82,9 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             header.RemoveEncodings();
             Assert.AreEqual( 0 , header.Encodings.Count );
             Assert.ThrowsException<ArgumentNullException>( () => header.AddEncoding( null ) );
+            Assert.ThrowsException<ArgumentNullException>( () => header.AddEncoding( null ) );
+            Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.ThrowsException<ArgumentException>( () => header.AddEncoding( new StringWithQualityRtspHeaderValue(" a ") ) );
         }
 
         [TestMethod]

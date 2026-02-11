@@ -1,59 +1,137 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    /// <summary>
+    /// Represent a rtsp header
+    /// </summary>
     public class ContentEncodingRtspHeader : RtspHeader 
     {
-        public const string TypeName = "Content-Languages";
+        /// <summary>
+        /// The name
+        /// </summary>
+        public const string TypeName = "Content-Encoding";
         
 
 
 
 
-
-        private string _value;
+        private readonly HashSet<string> _encodings = new HashSet<string>();
         
 
 
 
 
-
-        public string Value
+        /// <summary>
+        /// Gets the encoding
+        /// </summary>
+        public IReadOnlyCollection<string> Encodings
         {
-            get => _value ?? string.Empty;
-            set => _value = value;
-        }
-
-
-
-
-        public override bool TryValidate()
-        {
-            return ! string.IsNullOrWhiteSpace( _value );
-        }
-
-        public override string ToString()
-        {
-            return _value ?? string.Empty;
+            get => _encodings;
         }
         
 
 
 
 
-
-        public static bool TryParse( string value , out ContentEncodingRtspHeader result )
+        /// <summary>
+        /// Try to parse 
+        /// </summary>
+        /// <param name="input">the input</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryParse( string input , out ContentEncodingRtspHeader result )
         {
             result = null;
 
-            if ( string.IsNullOrWhiteSpace( value ) )
+            if ( RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
-                return false;
+                var header = new ContentEncodingRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    header.TryAddEncoding( token );
+                }
+
+                if ( header.Encodings.Count > 0 )
+                {
+                    result = header;
+                }
             }
 
-            result = new ContentEncodingRtspHeader() { Value = value };
+            return result != null;
+        }
+        
 
-            return true;
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public override bool TryValidate()
+        {
+            return _encodings.Count > 0;
+        }
+
+        /// <summary>
+        /// Try to an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool TryAddEncoding( string value )
+        {
+            var encoding = StringRtspNormalizer.Normalize( value );
+
+            if ( StringRtspValidator.TryValidateAsContentTD( encoding ) )
+            {
+                return _encodings.Add( encoding );
+            }
+
+            return false;
+        }
+
+
+        /// <summary>
+        /// Add an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <exception cref="ArgumentNullException"/>
+        /// <exception cref="ArgumentException"/>
+        public void AddEncoding( string value )
+        {
+            if ( ! TryAddEncoding( value ?? throw new ArgumentNullException( nameof( value ) ) ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+        }
+
+        /// <summary>
+        /// Remove an element
+        /// </summary>
+        /// <param name="value">the value</param>
+        public void RemoveEncoding( string value )
+        {
+            _encodings.Remove( StringRtspNormalizer.Normalize( value ) );
+        }
+
+        /// <summary>
+        /// Remove all elements
+        /// </summary>
+        public void RemoveEncodings()
+        {
+            _encodings.Clear();
+        }
+
+        /// <summary>
+        /// Format to string
+        /// </summary>
+        /// <returns>returns a string</returns>
+        public override string ToString()
+        {
+            return string.Join( ", " , _encodings );
         }
     }
 }

@@ -90,6 +90,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 return false;
             }
+            
+            foreach ( var encoding in _encodings )
+            {
+                if ( StringWithQualityRtspHeaderValue.Equals( encoding , value ) )
+                {
+                    return false;
+                }
+            }
 
             _encodings.Add( value );
 
@@ -104,17 +112,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// <exception cref="ArgumentException"/>
         public void AddEncoding( StringWithQualityRtspHeaderValue value )
         {
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( value.Name ) )
+            if ( ! TryAddEncoding( value ?? throw new ArgumentNullException( nameof( value ) ) ) )
             {
                 throw new ArgumentException( nameof( value ) );
             }
-
-            _encodings.Add( value );
         }
 
         /// <summary>
