@@ -19,7 +19,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
         private string _type      = string.Empty;
         private string _username  = string.Empty;
         private string _realm     = string.Empty;
@@ -28,6 +27,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _opaque    = string.Empty;
         private string _uri       = string.Empty;
         private string _response  = string.Empty;
+        private string _qpop      = string.Empty;
+        private string _cnonce    = string.Empty;
 
 
 
@@ -106,6 +107,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _response = StringRtspNormalizer.Normalize( value );
         }
 
+        /// <summary>
+        /// Gets / Sets the qpop
+        /// </summary>
+        public string QPop
+        {
+            get => _qpop;
+            set => _qpop = StringRtspNormalizer.Normalize( value );
+        }
+
+        /// <summary>
+        /// Gets / Sets the cnonce
+        /// </summary>
+        public string CNonce
+        {
+            get => _cnonce;
+            set => _cnonce = StringRtspNormalizer.Normalize( value );
+        }
+
 
 
 
@@ -124,62 +143,71 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var text = StringRtspNormalizer.Normalize( input );
 
-            if ( ! RtspHeaderParser.TryParse( text , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( text , " " , out var tokens ) )
             {
-                return false;
-            }
+                var type = tokens.FirstOrDefault();
 
-            var type = tokens.FirstOrDefault();
-
-            if ( ! RtspHeaderParser.TryParse( text.Replace( type , "" ) , "," , out tokens ) )
-            {
-                return false;
-            }
-
-            result = new AuthorizationRtspHeader()
-            {
-                Type = type,
-            };
-
-            foreach ( var token in tokens )
-            {
-                if ( RtspHeaderParser.TryParse( token , "=" , out var fields ) )
+                if ( string.IsNullOrEmpty( type ) )
                 {
-                    var fieldName  = fields.ElementAtOrDefault( 0 ) ?? string.Empty;
-                    var fieldValue = fields.ElementAtOrDefault( 1 ) ?? string.Empty;
+                    return false;
+                }
+
+                if ( RtspHeaderParser.TryParse( text.Replace( type , "" ) , "," , out tokens ) )
+                {
+                    result = new AuthorizationRtspHeader()
+                    {
+                        Type = type
+                    };
+
+                    foreach ( var token in tokens )
+                    {
+                        if ( RtspHeaderParser.TryParse( token , "=" , out var fields ) )
+                        {
+                            var fieldName  = fields.ElementAtOrDefault( 0 ) ?? string.Empty;
+                            var fieldValue = fields.ElementAtOrDefault( 1 ) ?? string.Empty;
                     
-                    if ( fieldName.Equals( "username" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.UserName = fieldValue;
-                    }
-                    else if ( fieldName.Equals( "realm" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.Realm = fieldValue;
-                    }
-                    else if ( fieldName.Equals( "nonce" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.Nonce = fieldValue;
-                    }
-                    else if ( fieldName.Equals( "domain" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.Domain = fieldValue;
-                    }
-                    else if ( fieldName.Equals( "opaque" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.Opaque = fieldValue;
-                    }
-                    else if ( fieldName.Equals( "uri" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.Uri = fieldValue;
-                    }
-                    else if ( fieldName.Equals( "response" , StringComparison.OrdinalIgnoreCase ) )
-                    {
-                        result.Response = fieldValue;
+                            if ( fieldName.Equals( "username" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.UserName = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "realm" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Realm = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "nonce" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Nonce = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "domain" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Domain = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "opaque" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Opaque = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "uri" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Uri = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "response" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Response = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "qpop" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.QPop = fieldValue;
+                            }
+                            else if ( fieldName.Equals( "cnonce" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.CNonce = fieldValue;
+                            }
+                        }
                     }
                 }
             }
 
-            return true;
+            return result != null;
         }
 
 
@@ -244,12 +272,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     builder.AppendFormat( "opaque=\"{0}\", " , _opaque );
                 }
 
-                if ( ! string.IsNullOrWhiteSpace( _uri ) )
+                builder.AppendFormat( "uri=\"{0}\", " , _uri );
+
+                builder.AppendFormat( "response=\"{0}\" " , _response );
+
+                if ( ! string.IsNullOrWhiteSpace( _qpop ) )
                 {
-                    builder.AppendFormat( "uri=\"{0}\", " , _uri );
+                    builder.AppendFormat( "qpop=\"{0}\", " , _qpop );
                 }
 
-                builder.AppendFormat( "response=\"{0}\"" , _response );
+                if ( ! string.IsNullOrWhiteSpace( _cnonce ) )
+                {
+                    builder.AppendFormat( "cnonce=\"{0}\", " , _cnonce );
+                }
             }
 
             while ( builder[ builder.Length - 1 ] == ',' || builder[ builder.Length - 1 ] == ' ' )
