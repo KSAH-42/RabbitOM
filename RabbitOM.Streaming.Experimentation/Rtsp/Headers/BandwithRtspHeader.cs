@@ -28,21 +28,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// <summary>
         /// Try to parse
         /// </summary>
-        /// <param name="value">the value</param>
+        /// <param name="input">the input</param>
         /// <param name="result">the result</param>
         /// <returns>returns a string</returns>
-        public static bool TryParse( string value , out BandwithRtspHeader result )
+        public static bool TryParse( string input , out BandwithRtspHeader result )
         {
             result = null;
 
-            if ( ! long.TryParse( StringRtspNormalizer.Normalize( value ) , out var bitRate ) )
+            if ( long.TryParse( StringRtspNormalizer.Normalize( input ) , out var value ) )
             {
-                return false;
+                result = new BandwithRtspHeader() { BitRate = value };
             }
 
-            result = new BandwithRtspHeader() { BitRate = bitRate };
-
-            return true;
+            return result != null;
         }
 
 

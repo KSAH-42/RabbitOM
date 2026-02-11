@@ -59,6 +59,7 @@
     <Compile Include="Rtsp\Headers\TestAcceptRangesHeader.cs" />
     <Compile Include="Rtsp\Headers\TestAcceptLanguageHeader.cs" />
     <Compile Include="Rtsp\Headers\TestAcceptEncodingHeader.cs" />
+    <Compile Include="Rtsp\Headers\TestConnectionHeader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

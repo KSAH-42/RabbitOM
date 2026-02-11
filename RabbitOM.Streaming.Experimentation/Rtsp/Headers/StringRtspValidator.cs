@@ -14,5 +14,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute );
         }
+
+        public static bool TryValidateAsContentSTD( string value )
+        {
+            // Star Text Digits
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            if ( value == "*" )
+            {
+                return true;
+            }
+
+            return value.All( x => char.IsLetterOrDigit( x ) )
+                && value.Count( x => char.IsLetter( x ) ) > 0
+                && value.Count( x => char.IsDigit( x ) ) >= 0
+                ;
+        }
     }
 }

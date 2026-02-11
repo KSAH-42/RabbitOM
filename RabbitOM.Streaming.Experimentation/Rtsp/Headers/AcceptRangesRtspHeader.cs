@@ -46,26 +46,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( ! RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
-                return false;
+                var header = new AcceptRangesRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    header.TryAddUnit( token );
+                }
+
+                if ( header.Units.Count > 0 )
+                {
+                    result = header;
+                }
             }
 
-            var header = new AcceptRangesRtspHeader();
-
-            foreach ( var token in tokens )
-            {
-                header.TryAddUnit( token );
-            }
-
-            if ( header.Units.Count <= 0 )
-            {
-                return false;
-            }
-
-            result = header;
-
-            return true;
+            return result != null;
         }
 
 
@@ -90,11 +86,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             var text = StringRtspNormalizer.Normalize( value );
 
-            if ( text.Any( x => char.IsLetterOrDigit( x ) ) || text == "*" )
+            if ( StringRtspValidator.TryValidateAsContentSTD( text ) )
             {
                 return _units.Add( text );
             }
-
+            
             return false;
         }
 
