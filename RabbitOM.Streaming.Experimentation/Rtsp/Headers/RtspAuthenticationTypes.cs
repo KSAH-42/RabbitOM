@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool IsDigestAuthentication( string value )
         {
-            return string.Equals( value?.Trim() , BasicAuthentication , StringComparison.OrdinalIgnoreCase );
+            return string.Equals( value?.Trim() , DigestAuthentication , StringComparison.OrdinalIgnoreCase );
         }
 
         public static bool IsNtlmAuthentication( string value )

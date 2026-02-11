@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
     {
         [TestMethod]
         [DataRow("OPTIONS, DESCRIBE, SETUP, PLAY, PAUSE, TEARDOWN, KEEPALIVE, GET_PARAMETER, SET_PARAMETER, ANNOUNCE, REDIRECT, RECORD, ABC, EDF" , 12 )]
-        [DataRow("  OPTiONS , dESCRIBE, SEtUP, " , 3 )]
+        [DataRow("  OPTiONS  ,\tdESCRIBE, SEtUP, " , 3 )]
         [DataRow(" \r OPTiONS , \n dESCRIBE, SEtUP, " , 3 )]
         [DataRow("  OPTiONS  " , 1 )]
         [DataRow("OPTIONS" , 1 )]
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         public void TestCollection()
         {
             var header = new AllowRtspHeader();
-
+ 
             Assert.AreEqual( 0 , header.Methods.Count );
             Assert.AreEqual( true , header.TryAddMethod( RtspMethod.OPTIONS ) );
             Assert.AreEqual( true , header.TryAddMethod( RtspMethod.DESCRIBE ) );
