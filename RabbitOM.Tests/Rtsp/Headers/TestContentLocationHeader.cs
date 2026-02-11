@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestClass]
-    public class TestContentBaseHeader
+    public class TestContentLocationHeader
     {
         [TestMethod]
         [DataRow("rtsp://127.0.0.1" )]
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
         public void ParseTestSucceed(string input )
         {
-            if ( ! ContentBaseRtspHeader.TryParse( input , out var result ) )
+            if ( ! ContentLocationRtspHeader.TryParse( input , out var result ) )
             {
                 Assert.Fail( "parse failed" );
             }
@@ -50,14 +50,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [DataRow( " rtps :// r " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , ContentBaseRtspHeader.TryParse( input , out var result ) );
+            Assert.AreEqual( false , ContentLocationRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
         [TestMethod]
         public void TestFormat()
         {
-            var header = new ContentBaseRtspHeader();
+            var header = new ContentLocationRtspHeader();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestMethod]
         public void TestValidation()
         {
-            var header = new ContentBaseRtspHeader();
+            var header = new ContentLocationRtspHeader();
 
             Assert.AreEqual( false , header.TryValidate() );
             

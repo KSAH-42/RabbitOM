@@ -19,33 +19,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return ! string.IsNullOrWhiteSpace( value ) && ! value.Any( x => char.IsControl( x ) );
         }
 
-        public static bool TryValidateUri( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var input = value.Trim();
-
-            if ( input.IndexOfAny( ForbiddenChars ) >= 0 )
-            {
-                return false;
-            }
-            
-            if ( AbsoluteUriRegex.IsMatch( input ) )
-            {
-                return Uri.TryCreate(input, UriKind.Absolute, out var uri ) && ! string.IsNullOrWhiteSpace( uri.Scheme );
-            }
-
-            if ( RelativeUriRegex.IsMatch( input ) )
-            {
-                return Uri.TryCreate(input, UriKind.Relative , out var uri ) && ! uri.IsAbsoluteUri;
-            }
-
-            return false;
-        }
-        
         public static bool TryValidateAsContentTD( string value )
         {
             return ! string.IsNullOrWhiteSpace( value )
@@ -70,6 +43,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Count( x => char.IsLetter( x ) ) > 0
                 && value.Count( x => char.IsDigit( x ) ) >= 0
                 ;
+        }
+
+        public static bool TryValidateUri( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            var input = value.Trim();
+
+            if ( input.IndexOfAny( ForbiddenChars ) < 0 )
+            {
+                if ( AbsoluteUriRegex.IsMatch( input ) )
+                {
+                    return Uri.TryCreate(input, UriKind.Absolute, out var uri ) && ! string.IsNullOrWhiteSpace( uri.Scheme );
+                }
+
+                if ( RelativeUriRegex.IsMatch( input ) )
+                {
+                    return Uri.TryCreate(input, UriKind.Relative , out var uri ) && ! uri.IsAbsoluteUri;
+                }
+            }
+            
+            return false;
         }
     }
 }

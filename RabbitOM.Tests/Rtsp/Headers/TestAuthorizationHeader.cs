@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         {
             if ( ! AuthorizationRtspHeader.TryParse( input , out var result ) )
             {
-                Assert.Fail(  "parse failed" );
+                Assert.Fail( "parse failed" );
             }
 
             Assert.IsNotNull( result );

@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         {
             if ( ! ContentLanguageRtspHeader.TryParse( input , out var result ) )
             {
-                Assert.Fail(  "parse failed" );
+                Assert.Fail( "parse failed" );
             }
 
             Assert.IsNotNull( result );

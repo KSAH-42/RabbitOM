@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         {
             if ( ! ContentLengthRtspHeader.TryParse( input , out var result ) )
             {
-                Assert.Fail(  "parse failed" );
+                Assert.Fail( "parse failed" );
             }
 
             Assert.AreEqual( valueToCompare , result.Value );

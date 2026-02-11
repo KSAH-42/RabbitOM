@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rtsp\Headers\TestContentLocationHeader.cs" />
     <Compile Include="Rtsp\Headers\TestContentLengthHeader.cs" />
     <Compile Include="Rtsp\Headers\TestContentLanguageHeader.cs" />
     <Compile Include="Rtsp\Headers\TestContentEncodingHeader.cs" />
