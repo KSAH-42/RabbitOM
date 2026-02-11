@@ -2,30 +2,35 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    /// <summary>
+    /// Represent a rtsp header
+    /// </summary>
     public class BandwithRtspHeader : RtspHeader
     {
+        /// <summary>
+        /// The type name
+        /// </summary>
         public const string TypeName = "Bandwith";
         
 
 
+
+
+        /// <summary>
+        /// Gets / Sets the bit rate
+        /// </summary>
         public long BitRate { get; set; }
 
 
 
-        public override bool TryValidate()
-        {
-            return BitRate > 0;
-        }
-
-        public override string ToString()
-        {
-            return BitRate.ToString();
-        }
 
 
-
-
-        
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="value">the value</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns a string</returns>
         public static bool TryParse( string value , out BandwithRtspHeader result )
         {
             result = null;
@@ -38,6 +43,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             result = new BandwithRtspHeader() { BitRate = bitRate };
 
             return true;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
+
+        public override bool TryValidate()
+        {
+            return BitRate > 0;
+        }
+
+        /// <summary>
+        /// Format to string
+        /// </summary>
+        /// <returns>returns a string</returns>
+        public override string ToString()
+        {
+            return BitRate.ToString();
         }
     }
 }
