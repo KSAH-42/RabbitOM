@@ -2,52 +2,66 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    /// <summary>
+    /// Represent a rtsp header
+    /// </summary>
     public class ContentLengthRtspHeader : RtspHeader 
     {
         public const string TypeName = "Content-Length";
         
 
 
-        private long _value;
 
 
-
-        public long Value
-        {
-            get => _value;
-            set => _value = value;
-        }
-
-
-
-        public override bool TryValidate()
-        {
-            return _value >= 0;
-        }
-
-        public override string ToString()
-        {
-            return _value.ToString();
-        }
-        
+        /// <summary>
+        /// Gets / Sets the value
+        /// </summary>
+        public long Value { get; set; }
 
 
 
 
 
-
-        public static bool TryParse( string value , out ContentLengthRtspHeader result )
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="input">the input</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns a string</returns>
+        public static bool TryParse( string input , out ContentLengthRtspHeader result )
         {
             result = null;
 
-            if ( ! long.TryParse( value , out var number ) )
+            if ( long.TryParse( StringRtspNormalizer.Normalize( input ) , out var value ) )
             {
-                return false;
+                result = new ContentLengthRtspHeader() { Value = value };
             }
 
-            result = new ContentLengthRtspHeader() { Value = number };
+            return result != null;
+        }
 
-            return true;
+
+
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
+
+        public override bool TryValidate()
+        {
+            return Value > 0;
+        }
+
+        /// <summary>
+        /// Format to string
+        /// </summary>
+        /// <returns>returns a string</returns>
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }
