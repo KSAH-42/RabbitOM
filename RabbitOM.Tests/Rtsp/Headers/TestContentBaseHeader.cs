@@ -48,6 +48,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [DataRow( ",,,,,,," )]
         [DataRow( ",d,g,h,ff,h,?," )]
         [DataRow( " , , , , , , , " )]
+        [DataRow( " rtps :// r " )]
         public void ParseTestFailed( string input )
         {
             Assert.AreEqual( false , ContentBaseRtspHeader.TryParse( input , out var result ) );

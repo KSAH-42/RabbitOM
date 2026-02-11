@@ -10,6 +10,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         private static readonly Regex RelativeUriRegex = new Regex( @"^(?:\.\.?/|/|[A-Za-z0-9_\-\.~%]+(?:/[A-Za-z0-9_\-\.~%]*)*|[?].+|#.+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant );
 
+        private static readonly char[] ForbiddenChars = { ' ', '\t', '\r', '\n', '\f', '\v' };
+
+
 
         public static bool TryValidate( string value )
         {
@@ -24,6 +27,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             var input = value.Trim();
+
+            if ( input.IndexOfAny( ForbiddenChars ) >= 0 )
+            {
+                return false;
+            }
             
             if ( AbsoluteUriRegex.IsMatch( input ) )
             {
