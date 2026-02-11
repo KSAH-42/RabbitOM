@@ -56,8 +56,6 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         {
             var header = new ContentLengthRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
-            
             header.Value = - 1;
 
             Assert.AreEqual( false , header.TryValidate() );

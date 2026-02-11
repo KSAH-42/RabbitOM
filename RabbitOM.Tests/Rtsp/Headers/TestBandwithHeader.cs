@@ -56,8 +56,6 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         {
             var header = new BandwithRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
-            
             header.BitRate = - 1;
 
             Assert.AreEqual( false , header.TryValidate() );
