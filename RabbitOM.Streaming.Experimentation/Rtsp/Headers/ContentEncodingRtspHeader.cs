@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<string> _encodings = new HashSet<string>();
+        private readonly HashSet<string> _encodings = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
         
 
 
@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    header.TryAddEncoding( token );
+                    header.TryAddLanguage( token );
                 }
 
                 if ( header.Encodings.Count > 0 )
@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddEncoding( string value )
+        public bool TryAddLanguage( string value )
         {
             var encoding = StringRtspNormalizer.Normalize( value );
 
@@ -102,7 +102,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// <exception cref="ArgumentException"/>
         public void AddEncoding( string value )
         {
-            if ( ! TryAddEncoding( value ?? throw new ArgumentNullException( nameof( value ) ) ) )
+            if ( ! TryAddLanguage( value ?? throw new ArgumentNullException( nameof( value ) ) ) )
             {
                 throw new ArgumentException( nameof( value ) );
             }

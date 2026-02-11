@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<string> _directives = new HashSet<string>();
+        private readonly HashSet<string> _directives = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
         
 
 
