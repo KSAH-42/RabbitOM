@@ -302,7 +302,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 if ( ! string.IsNullOrWhiteSpace( _cnonce ) )
                 {
-                    builder.AppendFormat( "cnonce=\"{0}\", " , _cnonce );
+                    builder.AppendFormat( "cnonce=\"{0}\"" , _cnonce );
                 }
             }
 
