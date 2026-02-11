@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryValidateUri( string value )
         {
-            return Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute );
+            return Uri.IsWellFormedUriString( value , UriKind.Absolute );
         }
 
         public static bool TryValidateAsContentSTD( string value )
@@ -29,10 +29,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return true;
             }
 
-            return value.All( x => char.IsLetterOrDigit( x ) )
-                && value.Count( x => char.IsLetter( x ) ) > 0
+            return value.Count( x => char.IsLetter( x ) ) > 0
                 && value.Count( x => char.IsDigit( x ) ) >= 0
                 ;
+        }
+
+
+
+
+        private static void OnException( Exception ex )
+        {
+            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }

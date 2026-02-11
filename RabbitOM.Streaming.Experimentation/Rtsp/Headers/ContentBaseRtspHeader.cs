@@ -2,57 +2,76 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    /// <summary>
+    /// Represent an rtsp header
+    /// </summary>
     public class ContentBaseRtspHeader : RtspHeader 
     {
+        /// <summary>
+        /// The type name
+        /// </summary>
         public const string TypeName = "Content-Base";
         
 
 
 
-
-
-        private string _value;
+        private string _uri = string.Empty;
         
 
 
 
-
-        public string Value
+        /// <summary>
+        /// Gets / Sets the uri
+        /// </summary>
+        public string Uri
         {
-            get => _value ?? string.Empty;
-            set => _value = value;
+            get => _uri;
+            set => _uri = StringRtspNormalizer.Normalize( value );
         }
 
 
 
 
-        public override bool TryValidate()
-        {
-            return ! string.IsNullOrWhiteSpace( _value );
-        }
-
-        public override string ToString()
-        {
-            return _value ?? string.Empty;
-        }
-        
-
-
-
-
-
-        public static bool TryParse( string value , out ContentBaseRtspHeader result )
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="input">the input</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwiser false</returns>
+        public static bool TryParse( string input , out ContentBaseRtspHeader result )
         {
             result = null;
 
-            if ( string.IsNullOrWhiteSpace( value ) )
+            var uri = StringRtspNormalizer.Normalize( input );
+
+            if ( StringRtspValidator.TryValidateUri( uri ) )
             {
-                return false;
+                result = new ContentBaseRtspHeader() { Uri = uri };
             }
 
-            result = new ContentBaseRtspHeader() { Value = value };
+            return result != null;
+        }
 
-            return true;
+
+
+
+
+        /// <summary>
+        /// Try to validate
+        /// </summary>
+        /// <returns>returns true for a successs, otherwise false</returns>
+        public override bool TryValidate()
+        {
+            return StringRtspValidator.TryValidateUri( _uri );
+        }
+
+        /// <summary>
+        /// Try to format
+        /// </summary>
+        /// <returns>returns a string</returns>
+        public override string ToString()
+        {
+            return _uri;
         }
     }
 }

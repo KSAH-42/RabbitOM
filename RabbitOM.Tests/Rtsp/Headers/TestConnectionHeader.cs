@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( true , header.TryAddDirective( "Keep-Alive" ) );
             Assert.AreEqual( "Close, Keep-Alive" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddDirective( " Keep-Alive " ) );
+            Assert.AreEqual( false , header.TryAddDirective( " Keep-Alive " ) );
             Assert.AreEqual( "Close, Keep-Alive" , header.ToString() );
         }
 
