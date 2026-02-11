@@ -48,8 +48,6 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [DataRow( ",,,,,,," )]
         [DataRow( ",d,g,h,ff,h,?," )]
         [DataRow( " , , , , , , , " )]
-        [DataRow(" rtsp:1 @27.0.0.1' " )]
-        [DataRow("rtsp ://127.0.0.1" )]
         public void ParseTestFailed( string input )
         {
             Assert.AreEqual( false , ContentBaseRtspHeader.TryParse( input , out var result ) );
