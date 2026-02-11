@@ -27,6 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _opaque    = string.Empty;
         private string _uri       = string.Empty;
         private string _response  = string.Empty;
+        private string _algorithm = string.Empty;
         private string _qpop      = string.Empty;
         private string _cnonce    = string.Empty;
 
@@ -105,6 +106,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _response;
             set => _response = StringRtspNormalizer.Normalize( value );
+        }
+        
+        /// <summary>
+        /// Gets / Sets the algorithm
+        /// </summary>
+        public string Algorithm
+        {
+            get => _algorithm;
+            set => _algorithm = StringRtspNormalizer.Normalize( value );
         }
 
         /// <summary>
@@ -194,6 +204,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                             {
                                 result.Response = fieldValue;
                             }
+                            else if ( fieldName.Equals( "algorithm" , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.Algorithm = fieldValue;
+                            }
                             else if ( fieldName.Equals( "qpop" , StringComparison.OrdinalIgnoreCase ) )
                             {
                                 result.QPop = fieldValue;
@@ -275,6 +289,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.AppendFormat( "uri=\"{0}\", " , _uri );
 
                 builder.AppendFormat( "response=\"{0}\" " , _response );
+
+                if ( ! string.IsNullOrWhiteSpace( _algorithm ) )
+                {
+                    builder.AppendFormat( "algorithm=\"{0}\", " , _algorithm );
+                }
 
                 if ( ! string.IsNullOrWhiteSpace( _qpop ) )
                 {

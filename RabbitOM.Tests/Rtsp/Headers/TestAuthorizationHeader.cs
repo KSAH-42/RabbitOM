@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             var header = new AuthorizationRtspHeader();
 
             Assert.AreEqual( false , header.TryValidate() );
-            
+
             header.Type = "basic";
             header.Response = "a1c2a221d12a1d2a1d2";
 
