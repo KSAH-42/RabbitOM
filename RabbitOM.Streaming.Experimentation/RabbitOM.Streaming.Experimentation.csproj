@@ -56,7 +56,6 @@
     <Compile Include="Rtsp\Headers\ContentLanguageRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLocationRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\ContentMD5RtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentTypeRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeader.cs" />

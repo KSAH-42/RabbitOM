@@ -8,43 +8,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
 
 
-        private int _id;
 
-
-
-        public int Id
+        public int Value
         {
-            get => _id;
-            set => _id = value;
-        }
-
-
-        public override bool TryValidate()
-        {
-            return _id >= 0;
-        }
-
-        public override string ToString()
-        {
-            return _id.ToString();
+            get;
+            set;
         }
         
 
 
 
-
-        public static bool TryParse( string value , out CSeqRtspHeader result )
+        public static bool TryParse( string input , out CSeqRtspHeader result )
         {
             result = null;
 
-            if ( ! int.TryParse( value , out var number ) )
+            if ( int.TryParse( StringRtspNormalizer.Normalize( input ) , out var value ) )
             {
-                return false;
+                result = new CSeqRtspHeader() { Value = value };
             }
 
-            result = new CSeqRtspHeader() { Id = number };
+            return result != null;
+        }
+        
 
-            return true;
+
+
+        public override bool TryValidate()
+        {
+            return Value >= 0;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }

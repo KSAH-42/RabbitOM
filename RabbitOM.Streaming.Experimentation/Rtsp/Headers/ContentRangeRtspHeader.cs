@@ -6,29 +6,66 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public const string TypeName = "Content-Range";
         
-        
-        public long? From { get; set; }
-        public bool HasLength { get; set; }
-        public bool HasRange { get; set; }
-        public long? Length { get; set; }
-        public long? To { get; set; }
-        public string Unit { get; set; }
 
-        
-        public override bool TryValidate() 
-            => throw new NotImplementedException();
 
+
+
+        private string _unit = string.Empty;
+        private long? _from;
+        private long? _to;
+        private long? _size;
+
+
+
+
+
+        public string Unit
+        {
+            get => _unit;
+            set => _unit = StringRtspNormalizer.Normalize( value );
+        }
+
+        public long? From
+        {
+            get => _from;
+            set => _from = value;
+        }
+
+        public long? To
+        {
+            get => _to;
+            set => _to = value;
+        }
+
+        public long? Size
+        {
+            get => _size;
+            set => _size = value;
+        }
+        
+
+
+
+
+        public static bool TryParse( string input , out ContentRangeRtspHeader result )
+        {
+            // Content-Range: <unit> <range>/<size>
+            // Content-Range: <unit> <range>/*
+            // Content-Range: <unit> */size
+         
+            throw new NotImplementedException();
+        }
+        
+
+
+
+
+        public override bool TryValidate()
+        {
+            throw new NotImplementedException();
+        }
 
         public override string ToString()
-        {
-            throw new NotImplementedException();
-        }
-        public static ContentRangeRtspHeader Parse( string value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool TryParse( string value , out ContentRangeRtspHeader result )
         {
             throw new NotImplementedException();
         }

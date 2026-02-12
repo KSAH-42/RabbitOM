@@ -6,11 +6,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public static class StringRtspValidator
     {
-        private static readonly Regex AbsoluteUriRegex = new Regex( @"^[A-Za-z][A-Za-z0-9+\-\.]*:[^\s]+$", RegexOptions.Compiled | RegexOptions.CultureInvariant );
+        private static readonly Regex AbsoluteUriExpression = new Regex( @"^[A-Za-z][A-Za-z0-9+\-\.]*:[^\s]+$", RegexOptions.Compiled | RegexOptions.CultureInvariant );
 
-        private static readonly Regex RelativeUriRegex = new Regex( @"^(?:\.\.?/|/|[A-Za-z0-9_\-\.~%]+(?:/[A-Za-z0-9_\-\.~%]*)*|[?].+|#.+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant );
-
-        private static readonly char[] ForbiddenChars = { ' ', '\t', '\r', '\n', '\f', '\v' };
+        private static readonly Regex RelativeUriExpression = new Regex( @"^(?:\.\.?/|/|[A-Za-z0-9_\-\.~%]+(?:/[A-Za-z0-9_\-\.~%]*)*|[?].+|#.+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant );
 
 
 
@@ -54,17 +52,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var input = value.Trim();
 
-            if ( input.IndexOfAny( ForbiddenChars ) < 0 )
+            if ( input.Any( x => char.IsControl( x ) || x == ' ' ) )
             {
-                if ( AbsoluteUriRegex.IsMatch( input ) )
-                {
-                    return Uri.TryCreate(input, UriKind.Absolute, out var uri ) && ! string.IsNullOrWhiteSpace( uri.Scheme );
-                }
+                return false;
+            }
 
-                if ( RelativeUriRegex.IsMatch( input ) )
-                {
-                    return Uri.TryCreate(input, UriKind.Relative , out var uri ) && ! uri.IsAbsoluteUri;
-                }
+            if ( AbsoluteUriExpression.IsMatch( input ) )
+            {
+                return Uri.TryCreate(input, UriKind.Absolute, out var uri ) && ! string.IsNullOrWhiteSpace( uri.Scheme );
+            }
+
+            if ( RelativeUriExpression.IsMatch( input ) )
+            {
+                return Uri.TryCreate(input, UriKind.Relative , out var uri ) && ! uri.IsAbsoluteUri;
             }
             
             return false;

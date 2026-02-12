@@ -306,7 +306,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 }
             }
 
-            while ( builder[ builder.Length - 1 ] == ',' || builder[ builder.Length - 1 ] == ' ' )
+            while ( builder.Length > 0 && ( builder[ builder.Length - 1 ] == ',' || builder[ builder.Length - 1 ] == ' ' ) )
             {
                 builder.Remove( builder.Length - 1 , 1 );
             }
