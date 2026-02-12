@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestClass]
-    public class TestBandwithHeader
+    public class TestCSeqHeader
     {
         [TestMethod]
         [DataRow("4" , 4 )]
@@ -16,12 +16,12 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [DataRow(" '4' " , 4 )]
         public void ParseTestSucceed(string input , int valueToCompare )
         {
-            if ( ! BandwithRtspHeader.TryParse( input , out var result ) )
+            if ( ! CSeqRtspHeader.TryParse( input , out var result ) )
             {
                 Assert.Fail( "parse failed" );
             }
 
-            Assert.AreEqual( valueToCompare , result.BitRate );
+            Assert.AreEqual( valueToCompare , result.Value );
         }
 
         [TestMethod]
@@ -35,18 +35,18 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [DataRow( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , BandwithRtspHeader.TryParse( input , out var result ) );
+            Assert.AreEqual( false , CSeqRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
         [TestMethod]
         public void TestFormat()
         {
-            var header = new BandwithRtspHeader();
+            var header = new CSeqRtspHeader();
 
             Assert.AreEqual( "0" , header.ToString() );
 
-            header.BitRate = 123;
+            header.Value = 123;
 
             Assert.AreEqual( "123" , header.ToString() );
         }
@@ -54,16 +54,16 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestMethod]
         public void TestValidation()
         {
-            var header = new BandwithRtspHeader();
+            var header = new CSeqRtspHeader();
 
-            header.BitRate = - 1;
+            header.Value = - 1;
 
             Assert.AreEqual( false , header.TryValidate() );
             
-            header.BitRate = 0;
+            header.Value = 0;
             Assert.AreEqual( true , header.TryValidate() );
 
-            header.BitRate = 1;
+            header.Value = 1;
             Assert.AreEqual( true , header.TryValidate() );
         }
     }

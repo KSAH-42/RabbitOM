@@ -99,8 +99,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         public void TestValidation()
         {
             var header = new ContentTypeRtspHeader();
-
             Assert.AreEqual( false , header.TryValidate() );
+            
             header.MediaType = "   ";
             Assert.AreEqual( false , header.TryValidate() );
 
