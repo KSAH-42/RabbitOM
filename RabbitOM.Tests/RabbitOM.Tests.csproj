@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtsp\Headers\TestContentTypeHeader.cs" />
     <Compile Include="Sdp\BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rtsp\Headers\TestContentLocationHeader.cs" />

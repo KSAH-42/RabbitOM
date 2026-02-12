@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -14,8 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private long? _from;
         private long? _to;
         private long? _size;
-
-
+        
 
 
 
@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _size;
             set => _size = value;
         }
-        
+
 
 
 
