@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -12,22 +13,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             To = to;
         }
 
-        public long From { get; }
-        public long To { get; }
 
-        public override string ToString()
-        {
-            throw new NotImplementedException();
-        }
+        public long? From { get; }
 
-        public static RangeItem Parse( string value )
-        {
-            throw new NotImplementedException();
-        }
+        public long? To { get; }
+
+
 
         public static bool TryParse( string value , out RangeItem result )
         {
             throw new NotImplementedException();
+        }
+
+
+        public override string ToString()
+        {
+            return From.HasValue && To.HasValue ? $"{From}-{To}" : string.Empty;
         }
     }
 }

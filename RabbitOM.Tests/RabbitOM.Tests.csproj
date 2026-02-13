@@ -50,6 +50,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtsp\Headers\TestContentRangeHeader.cs" />
     <Compile Include="Rtsp\Headers\TestSessionHeader.cs" />
     <Compile Include="Rtsp\Headers\TestCSeqHeader.cs" />
     <Compile Include="Rtsp\Headers\TestContentTypeHeader.cs" />
