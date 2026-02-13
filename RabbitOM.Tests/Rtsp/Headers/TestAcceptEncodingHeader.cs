@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         public void TestValidation()
         {
             var header = new AcceptEncodingRtspHeader();
-
+            
             Assert.AreEqual( false , header.TryValidate() );
             Assert.AreEqual( true , header.TryAddEncoding( new StringWithQualityRtspHeaderValue("a") ) );
             Assert.AreEqual( true , header.TryValidate() );
