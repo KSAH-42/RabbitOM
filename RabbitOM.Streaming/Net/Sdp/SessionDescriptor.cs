@@ -1,9 +1,9 @@
-﻿using RabbitOM.Streaming.Net.Sdp.Validation;
-using RabbitOM.Streaming.Net.Sdp.Serialization;
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Sdp
 {
+    using RabbitOM.Streaming.Net.Sdp.Serialization;
+
     /// <summary>
     /// Represent the session descriptor. For more details please take some times to read the RFC https://tools.ietf.org/html/rfc4566
     /// </summary>

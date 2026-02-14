@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 
-namespace RabbitOM.Streaming.Net.Sdp.Validation
+namespace RabbitOM.Streaming.Net.Sdp
 {
     /// <summary>
     /// Represent a validator help class

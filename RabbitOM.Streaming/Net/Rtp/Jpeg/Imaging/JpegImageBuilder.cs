@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 {
-    using RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging.Fragmentation;
-    
     /// <summary>
     /// Represent an image builder class
     /// </summary>

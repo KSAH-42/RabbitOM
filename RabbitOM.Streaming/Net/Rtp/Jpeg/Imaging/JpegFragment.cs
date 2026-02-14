@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging.Fragmentation
+namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 {
     /// <summary>
     /// Represent the jpeg fragment

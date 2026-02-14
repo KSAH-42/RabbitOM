@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Streaming.Net.Sdp.Validation
+﻿namespace RabbitOM.Streaming.Net.Sdp
 {
     /// <summary>
     /// Represent session descriptor validator

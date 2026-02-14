@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Sdp.Validation
+namespace RabbitOM.Streaming.Net.Sdp
 {
     /// <summary>
     /// Represent session descriptor validator which validate ALL fields presents in the descriptor

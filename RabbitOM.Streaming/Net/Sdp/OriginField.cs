@@ -1,9 +1,9 @@
-﻿using RabbitOM.Streaming.Net.Sdp.Serialization.Formatters;
-using RabbitOM.Streaming.Net.Sdp.Validation;
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Sdp
 {
+    using RabbitOM.Streaming.Net.Sdp.Serialization.Formatters;
+
     /// <summary>
     /// Represent a sdp field
     /// </summary>

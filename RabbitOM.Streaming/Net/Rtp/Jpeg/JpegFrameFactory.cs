@@ -4,8 +4,7 @@ using System.Collections.Generic;
 namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 {
     using RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging;
-    using RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging.Fragmentation;
-
+ 
     /// <summary>
     /// Represent a frame factory class
     /// </summary>

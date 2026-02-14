@@ -1,5 +1,4 @@
-﻿using RabbitOM.Streaming.Net.Sdp.Validation;
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Net.Sdp
 {
