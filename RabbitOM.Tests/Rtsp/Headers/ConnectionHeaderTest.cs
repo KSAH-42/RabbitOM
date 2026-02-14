@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestConnectionHeader
+    public class ConnectionHeaderTest
     {
         [Test]
         [TestCase("Close" , 1 )]

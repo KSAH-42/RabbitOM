@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestSessionHeader
+    public class SessionHeaderTest
     {
         [Test]
         [TestCase("mysessionId" )]

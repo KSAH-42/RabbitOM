@@ -6,7 +6,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestAllowHeader
+    public class AllowHeaderTest
     {
         [Test]
         [TestCase("OPTIONS, DESCRIBE, SETUP, PLAY, PAUSE, TEARDOWN, KEEPALIVE, GET_PARAMETER, SET_PARAMETER, ANNOUNCE, REDIRECT, RECORD, ABC, EDF" , 12 )]

@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestCSeqHeader
+    public class CSeqHeaderTest
     {
         [Test]
         [TestCase("4" , 4 )]

@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestBandwithHeader
+    public class BandwithHeaderTest
     {
         [Test]
         [TestCase("4" , 4 )]

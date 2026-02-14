@@ -5,19 +5,21 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestContentEncodingHeader
+    public class ContentLanguageHeaderTest
     {
         [Test]
-        [TestCase("zip", 1 )]
-        [TestCase("zip,gzip", 2 )]
-        [TestCase("zip, gzip, tar", 3 )]
-        [TestCase(",zip, gzip, tar", 3 )]
-        [TestCase(",\r \n zip, gzip, tar", 3 )]
-        [TestCase(" zip ", 1 )]
-        [TestCase(" zip ,,,,, tar", 2 )]
+        [TestCase("fr", 1 )]
+        [TestCase("fr,en", 2 )]
+        [TestCase("fr-FR,en-EN", 2 )]
+        [TestCase("fr-FR ,en-EN", 2 )]
+        [TestCase("fr-FR, en-EN ", 2 )]
+        [TestCase(" fr-FR , en-EN ", 2 )]
+        [TestCase(" \n \r fr-FR , en-EN ", 2 )]
+        [TestCase(" \r \n fr-FR , en-EN ", 2 )]
+        [TestCase(" fr ,,,,, EN ", 2 )]
         public void ParseTestSucceed(string input , int nbElement )
         {
-            if ( ! ContentEncodingRtspHeader.TryParse( input , out var result ) )
+            if ( ! ContentLanguageRtspHeader.TryParse( input , out var result ) )
             {
                 Assert.Fail( "parse failed" );
             }
@@ -34,23 +36,21 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestCase( ";;;;;;;;" )]
         [TestCase( ",,,,,,," )]
         [TestCase( " , , , , , , , " )]
-        [TestCase( " ?  ,  " )]
-        [TestCase( "*" )]
         public void ParseTestFailed( string input )
         {
-            Assert.IsFalse(  ContentEncodingRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  ContentLanguageRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
         [Test]
         public void TestFormat1()
         {
-            var header = new ContentEncodingRtspHeader();
+            var header = new ContentLanguageRtspHeader();
 
             Assert.AreEqual( 0 , header.ToString().Length );
-            Assert.IsTrue(  header.TryAddLanguage( "zip" ) );
-            Assert.IsTrue(  header.TryAddLanguage( "gzip" ) );
-            Assert.IsTrue(  header.TryAddLanguage( "tar" ) );
+            Assert.IsTrue(  header.TryAddLanguage( "fr" ) );
+            Assert.IsTrue(  header.TryAddLanguage( "en" ) );
+            Assert.IsTrue(  header.TryAddLanguage( "us" ) );
             Assert.AreNotEqual( 0 , header.ToString().Length );
         }
 
@@ -61,14 +61,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            Assert.IsTrue(  header.TryAddLanguage( " gzip " ) );
-            Assert.AreEqual( "gzip" , header.ToString() );
+            Assert.IsTrue(  header.TryAddLanguage( " fr " ) );
+            Assert.AreEqual( "fr" , header.ToString() );
 
-            Assert.IsTrue(  header.TryAddLanguage( " tar " ) );
-            Assert.AreEqual( "gzip, tar" , header.ToString() );
+            Assert.IsTrue(  header.TryAddLanguage( " en " ) );
+            Assert.AreEqual( "fr, en" , header.ToString() );
 
-            Assert.IsFalse(  header.TryAddLanguage( "tar " ) );
-            Assert.AreEqual( "gzip, tar" , header.ToString() );
+            Assert.IsFalse(  header.TryAddLanguage( "en " ) );
+            Assert.AreEqual( "fr, en" , header.ToString() );
         }
 
         [Test]
@@ -77,16 +77,16 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             var header = new ContentEncodingRtspHeader();
 
             Assert.AreEqual( 0 , header.Encodings.Count );
-            Assert.IsTrue(  header.TryAddLanguage( "zip" ) );
-            Assert.IsTrue(  header.TryAddLanguage( "gzip" ) );
-            Assert.IsFalse(  header.TryAddLanguage( "gzip" ) );
-            header.AddEncoding( "tar");
+            Assert.IsTrue(  header.TryAddLanguage( "fr" ) );
+            Assert.IsTrue(  header.TryAddLanguage( "en" ) );
+            Assert.IsFalse(  header.TryAddLanguage( "fr" ) );
+            header.AddEncoding( "us");
             Assert.AreEqual( 3 , header.Encodings.Count );
             header.RemoveEncodings();
             Assert.AreEqual( 0 , header.Encodings.Count );
             Assert.Throws<ArgumentNullException>( () => header.AddEncoding( null ) );
-            Assert.IsTrue(  header.TryAddLanguage( "zip" ) );
-            Assert.Throws<ArgumentException>( () => header.AddEncoding( " zip " ) );
+            Assert.IsTrue(  header.TryAddLanguage( "us" ) );
+            Assert.Throws<ArgumentException>( () => header.AddEncoding( " us " ) );
         }
 
         [Test]
@@ -95,7 +95,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             var header = new ContentEncodingRtspHeader();
 
             Assert.IsFalse(  header.TryValidate() );
-            Assert.IsTrue(  header.TryAddLanguage( "zip") );
+            Assert.IsTrue(  header.TryAddLanguage( "us") );
             Assert.IsTrue(  header.TryValidate() );
         }
     }

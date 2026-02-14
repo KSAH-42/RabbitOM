@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestAuthorizationHeader
+    public class AuthorizationHeaderTest
     {
         [Test]
         [TestCase( "Digest username=\"alice\", realm=\"Streaming Server\", nonce=\"dcd98b7102dd2f0e8b11d0f600bfb0c093\", domain=\"my domain\", opaque=\"my opaque data\", uri=\"rtsp://example.com/media\", response=\"6629fae49393a05397450978507c4ef1\"" )]

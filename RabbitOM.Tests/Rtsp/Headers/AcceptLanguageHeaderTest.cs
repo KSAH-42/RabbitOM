@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestAcceptLanguageHeader
+    public class AcceptLanguageHeaderTest
     {
         [Test]
         [TestCase("fr-FR,en-EN,*;q=0.5" , 3 )]
