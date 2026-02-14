@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestContentTypeHeader
+    public class ContentTypeHeaderTest
     {
         [Test]
         [TestCase("multipart/form-data", 0 )]

@@ -115,25 +115,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rtsp\Headers\TestContentRangeHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestSessionHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestCSeqHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestContentTypeHeader.cs" />
+    <Compile Include="Rtsp\Headers\ContentRangeHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\SessionHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\CSeqHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentTypeHeaderTest.cs" />
     <Compile Include="Sdp\BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rtsp\Headers\TestContentLocationHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestContentLengthHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestContentLanguageHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestContentEncodingHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestAcceptHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestContentBaseHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestBandwithHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestAuthorizationHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestAllowHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestAcceptRangesHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestAcceptLanguageHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestAcceptEncodingHeader.cs" />
-    <Compile Include="Rtsp\Headers\TestConnectionHeader.cs" />
+    <Compile Include="Rtsp\Headers\ContentLocationHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentLengthHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentLanguageHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentEncodingHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AcceptHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentBaseHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\BandwithHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AuthorizationHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AllowHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AcceptRangesHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AcceptLanguageHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AcceptEncodingHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ConnectionHeaderTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming.Experimentation\RabbitOM.Streaming.Experimentation.csproj">

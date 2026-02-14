@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestAcceptEncodingHeader
+    public class AcceptEncodingHeaderTest
     {
         [Test]
         [TestCase("deflate, gzip;q=1.0, *;q=0.5" , 3 )]

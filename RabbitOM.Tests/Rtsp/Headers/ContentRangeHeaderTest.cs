@@ -4,7 +4,7 @@ using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestContentRangeHeader
+    public class ContentRangeHeaderTest
     {
         [Test]
         [TestCase("bytes 0-12/123" )]

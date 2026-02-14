@@ -5,7 +5,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class TestAcceptHeader
+    public class AcceptHeaderTest
     {
         [Test]
         [TestCase("application/sdp, application/text;q=1.0, *;q=0.5" , 3 )]
