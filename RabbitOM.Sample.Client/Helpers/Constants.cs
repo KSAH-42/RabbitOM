@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Tests.Client.Helpers
+namespace RabbitOM.Sample.Client.Helpers
 {
     public static class Constants
     {

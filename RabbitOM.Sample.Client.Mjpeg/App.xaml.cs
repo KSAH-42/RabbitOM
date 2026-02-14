@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace RabbitOM.Tests.Client.Mjpeg
+namespace RabbitOM.Sample.Client.Mjpeg
 {
 	public partial class App : Application
 	{

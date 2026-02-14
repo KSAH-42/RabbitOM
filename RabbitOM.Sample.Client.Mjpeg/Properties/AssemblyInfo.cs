@@ -7,11 +7,11 @@ using System.Windows;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle( "RabbitOM.Tests.Client.Mjpeg" )]
+[assembly: AssemblyTitle( "RabbitOM.Sample.Client.Mjpeg" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Rabbit Corp" )]
-[assembly: AssemblyProduct( "RabbitOM.Tests.Client.Mjpeg" )]
+[assembly: AssemblyProduct( "RabbitOM.Sample.Client.Mjpeg" )]
 [assembly: AssemblyCopyright( "Copyright © Rabbit Corp. 2025" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]

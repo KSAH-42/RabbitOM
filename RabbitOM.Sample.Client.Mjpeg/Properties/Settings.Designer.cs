@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RabbitOM.Tests.Client.Mjpeg.Properties {
+namespace RabbitOM.Sample.Client.Mjpeg.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

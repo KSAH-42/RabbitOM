@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RabbitOM.Tests.Client.Mjpeg.Properties {
+namespace RabbitOM.Sample.Client.Mjpeg.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace RabbitOM.Tests.Client.Mjpeg.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RabbitOM.Tests.Client.Mjpeg.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RabbitOM.Sample.Client.Mjpeg.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

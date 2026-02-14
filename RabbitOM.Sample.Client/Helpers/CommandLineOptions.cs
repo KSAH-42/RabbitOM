@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RabbitOM.Tests.Client.Helpers
+namespace RabbitOM.Sample.Client.Helpers
 {
     using RabbitOM.Streaming.Net.Rtsp;
 

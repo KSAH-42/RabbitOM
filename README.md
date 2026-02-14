@@ -4,7 +4,7 @@
 
 A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw audio/video streams. 
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Tests.Client.Mjpeg.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.png)
 
 # Main features
 
@@ -246,7 +246,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 This project contains also a sample that demonstrate how to create a video player from a mjpeg rtsp source. 
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Tests.Client.Mjpeg.Hik.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
 
 # Getting more details ?
 

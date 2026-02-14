@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace RabbitOM.Tests.Client.Mjpeg
+namespace RabbitOM.Sample.Client.Mjpeg
 {
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Net.Rtp;
@@ -10,7 +10,7 @@ namespace RabbitOM.Tests.Client.Mjpeg
     using RabbitOM.Streaming.Net.Rtsp;
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
-    using RabbitOM.Tests.Client.Mjpeg.Extensions;
+    using RabbitOM.Sample.Client.Mjpeg.Extensions;
 
     public partial class MainWindow : Window
     {

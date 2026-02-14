@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace RabbitOM.Tests.Client.Mjpeg.Extensions
+namespace RabbitOM.Sample.Client.Mjpeg.Extensions
 {
     public static class ControlExtensions
     {

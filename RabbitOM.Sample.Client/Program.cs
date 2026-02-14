@@ -7,15 +7,13 @@
 // Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
 
 using System;
+using RabbitOM.Sample.Client.Helpers;
 
-namespace RabbitOM.Tests.Client
+namespace RabbitOM.Sample.Client
 {
-    using RabbitOM.Streaming;
-    using RabbitOM.Streaming.Net.Rtp;
     using RabbitOM.Streaming.Net.Rtsp;
     using RabbitOM.Streaming.Net.Rtsp.Clients;
-    using RabbitOM.Tests.Client.Helpers;
-
+    
     class Program
     {
         static void Main( string[] args )
