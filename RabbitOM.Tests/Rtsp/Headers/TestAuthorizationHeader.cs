@@ -1,18 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestAuthorizationHeader
     {
-        [TestMethod]
-        [DataRow( "Digest username=\"alice\", realm=\"Streaming Server\", nonce=\"dcd98b7102dd2f0e8b11d0f600bfb0c093\", domain=\"my domain\", opaque=\"my opaque data\", uri=\"rtsp://example.com/media\", response=\"6629fae49393a05397450978507c4ef1\"" )]
-        [DataRow( "\r \n digest usErname = \"alice\" ,       rEalm = \"Streaming Server\" , noncE = \"dcd98b7102dd2f0e8b11d0f600bfb0c093\"   ,  domaiN = \"my domain\" , oPaque = \"my opaque data\" , \r uRi = \"rtsp://example.com/media\" , reSponse \t = \"6629fae49393a05397450978507c4ef1\" " )]
-        [DataRow( "\n \n digest usErname     =    alice      , rEalm = Streaming Server , noncE = dcd98b7102dd2f0e8b11d0f600bfb0c093   ,  domaiN = my domain , oPaque = my opaque data , \r uRi = rtsp://example.com/media , reSponse \t = 6629fae49393a05397450978507c4ef1 " )]
-        [DataRow( "\r \n digest        usErname = 'alice' ,    rEalm = Streaming Server , noncE = dcd98b7102dd2f0e8b11d0f600bfb0c093   ,  domaiN = my domain , oPaque = my opaque data , \r uRi = rtsp://example.com/media , reSponse \t = 6629fae49393a05397450978507c4ef1 " )]
-        [DataRow( "\r \r digest usErname   \t  =       ' alice \" ,        rEalm = Streaming Server , noncE = dcd98b7102dd2f0e8b11d0f600bfb0c093   ,  domaiN = my domain , oPaque = my opaque data , \r uRi = rtsp://example.com/media , reSponse \t = 6629fae49393a05397450978507c4ef1 " )]
+        [Test]
+        [TestCase( "Digest username=\"alice\", realm=\"Streaming Server\", nonce=\"dcd98b7102dd2f0e8b11d0f600bfb0c093\", domain=\"my domain\", opaque=\"my opaque data\", uri=\"rtsp://example.com/media\", response=\"6629fae49393a05397450978507c4ef1\"" )]
+        [TestCase( "\r \n digest usErname = \"alice\" ,       rEalm = \"Streaming Server\" , noncE = \"dcd98b7102dd2f0e8b11d0f600bfb0c093\"   ,  domaiN = \"my domain\" , oPaque = \"my opaque data\" , \r uRi = \"rtsp://example.com/media\" , reSponse \t = \"6629fae49393a05397450978507c4ef1\" " )]
+        [TestCase( "\n \n digest usErname     =    alice      , rEalm = Streaming Server , noncE = dcd98b7102dd2f0e8b11d0f600bfb0c093   ,  domaiN = my domain , oPaque = my opaque data , \r uRi = rtsp://example.com/media , reSponse \t = 6629fae49393a05397450978507c4ef1 " )]
+        [TestCase( "\r \n digest        usErname = 'alice' ,    rEalm = Streaming Server , noncE = dcd98b7102dd2f0e8b11d0f600bfb0c093   ,  domaiN = my domain , oPaque = my opaque data , \r uRi = rtsp://example.com/media , reSponse \t = 6629fae49393a05397450978507c4ef1 " )]
+        [TestCase( "\r \r digest usErname   \t  =       ' alice \" ,        rEalm = Streaming Server , noncE = dcd98b7102dd2f0e8b11d0f600bfb0c093   ,  domaiN = my domain , oPaque = my opaque data , \r uRi = rtsp://example.com/media , reSponse \t = 6629fae49393a05397450978507c4ef1 " )]
         public void ParseTestSucceed(string input )
         {
             if ( ! AuthorizationRtspHeader.TryParse( input , out var result ) )
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             }
 
             Assert.IsNotNull( result );
-            Assert.AreEqual( true , RtspAuthenticationTypes.IsDigestAuthentication( result.Type ) );
+            Assert.IsTrue(  RtspAuthenticationTypes.IsDigestAuthentication( result.Type ) );
             Assert.AreEqual( "alice" , result.UserName );
             Assert.AreEqual( "Streaming Server" , result.Realm );
             Assert.AreEqual( "dcd98b7102dd2f0e8b11d0f600bfb0c093" , result.Nonce );
@@ -31,24 +31,24 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( "6629fae49393a05397450978507c4ef1" , result.Response );
         }
 
-        [TestMethod]
-        [DataRow( "  ,  " )]
-        [DataRow( "    " )]
-        [DataRow( "" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( ",d,g,h,ff,h,?," )]
-        [DataRow( " , , , , , , , " )]
+        [Test]
+        [TestCase( "  ,  " )]
+        [TestCase( "    " )]
+        [TestCase( "" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( ",d,g,h,ff,h,?," )]
+        [TestCase( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , AuthorizationRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  AuthorizationRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
         
-        [TestMethod]
-        [DataRow( "Digest", "alice", "Streaming Server" ,"dcd98b7102dd2f0e8b11d0f600bfb0c093" ,"my domain", "my opaque data" ,"rtsp://127.0.0.1/channel/0" ,"CD29fae49393a05397450978507c4ef1" )]
+        [Test]
+        [TestCase( "Digest", "alice", "Streaming Server" ,"dcd98b7102dd2f0e8b11d0f600bfb0c093" ,"my domain", "my opaque data" ,"rtsp://127.0.0.1/channel/0" ,"CD29fae49393a05397450978507c4ef1" )]
         public void TestFormat(string type,string username,string realm,string nonce,string domain,string opaque,string uri, string response )
         {
             var header = new AuthorizationRtspHeader();
@@ -80,17 +80,17 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( format.Trim() , result.Trim() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new AuthorizationRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
 
             header.Type = "basic";
             header.Response = "a1c2a221d12a1d2a1d2";
 
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }

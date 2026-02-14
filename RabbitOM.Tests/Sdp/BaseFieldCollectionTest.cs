@@ -1,65 +1,72 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Net.Sdp;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Sdp
 {
-    [TestClass]
+    [TestFixture]
     public class BaseFieldCollectionTest
     {
-        public readonly BaseFieldCollection _collection = new BaseFieldCollection();
         
-        [TestMethod]
+        [Test]
         public void SyncRoot_Excpect_IsNotNull()
         {
-            Assert.IsNotNull(_collection.SyncRoot);
+            var collection = new BaseFieldCollection();
+            Assert.IsNotNull(collection.SyncRoot);
         }
 
-        [TestMethod]
+        [Test]
         public void IsSynchronize_Returns_False()
         {
-            Assert.IsFalse(_collection.IsSynchronized);
+            var collection = new BaseFieldCollection();
+            Assert.IsFalse( collection.IsSynchronized);
         }
 
-        [TestMethod]
+        [Test]
         public void IsReadOnly_Returns_False()
         {
-            Assert.IsFalse(_collection.IsReadOnly);
+            var collection = new BaseFieldCollection();
+            Assert.IsFalse( collection.IsReadOnly);
         }
 
-        [TestMethod]
+        [Test]
         public void IsEmpty_Returns_True()
         {
-            Assert.IsTrue(_collection.IsEmpty);
+            var collection = new BaseFieldCollection();
+            Assert.IsTrue( collection.IsEmpty);
         }
 
-        [TestMethod]
+        [Test]
         public void Count_Returns_Zero()
         {
-            Assert.AreEqual(_collection.Count , 0 );
+            var collection = new BaseFieldCollection();
+            Assert.AreEqual(0 , collection.Count );
         }
 
-        [TestMethod]
+        [Test]
         public void Add_Throw_ArgumentNullException()
         {
-            Assert.ThrowsException<ArgumentNullException>( () => _collection.Add( null));
+            var collection = new BaseFieldCollection();
+            Assert.Throws<ArgumentNullException>( () => collection.Add( null));
         }
 
-        [TestMethod]
+        [Test]
         public void AddRang_Throw_ArgumentNullException()
         {
-            Assert.ThrowsException<ArgumentNullException>(() => _collection.AddRange(null));
+            var collection = new BaseFieldCollection();
+            Assert.Throws<ArgumentNullException>(() => collection.AddRange(null));
         }
 
-        [TestMethod]
+        [Test]
         public void Add_NoThrow_Exception()
         {
+            var collection = new BaseFieldCollection();
             try
             {
-                _collection.Add(new AttributeField("A", "1"));
-                _collection.Add(new AttributeField("B", "2"));
-                _collection.Add(new AttributeField("C", "3"));
-                _collection.Add(new AttributeField("C", "3"));
+                collection.Add(new AttributeField("A", "1"));
+                collection.Add(new AttributeField("B", "2"));
+                collection.Add(new AttributeField("C", "3"));
+                collection.Add(new AttributeField("C", "3"));
             }
             catch (Exception ex)
             {

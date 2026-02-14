@@ -1,22 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 using System.Runtime.Serialization;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestSessionHeader
     {
-        [TestMethod]
-        [DataRow("mysessionId" )]
-        [DataRow("mysessionId;;;" )]
-        [DataRow("  mysessionId  " )]
-        [DataRow("  mysessionId  ;;;" )]
-        [DataRow("\r\nmysessionId" )]
-        [DataRow("\r\n'mysessionId'" )]
-        [DataRow("\r\n\"mysessionId\"" )]
-        [DataRow("\r\n\" mysessionId \"" )]
+        [Test]
+        [TestCase("mysessionId" )]
+        [TestCase("mysessionId;;;" )]
+        [TestCase("  mysessionId  " )]
+        [TestCase("  mysessionId  ;;;" )]
+        [TestCase("\r\nmysessionId" )]
+        [TestCase("\r\n'mysessionId'" )]
+        [TestCase("\r\n\"mysessionId\"" )]
+        [TestCase("\r\n\" mysessionId \"" )]
         public void ParseTestSucceed(string input)
         {
             if ( ! SessionRtspHeader.TryParse( input , out var result ) )
@@ -28,14 +28,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( "mysessionId" , result.Identifier );
         }
 
-        [TestMethod]
-        [DataRow("mysessionId;timeout=123" )]
-        [DataRow("mysessionId;timeout=123;" )]
-        [DataRow("mysessionId ; timeout = 123 ;" )]
-        [DataRow("mysessionId ; timeout = '123' ;" )]
-        [DataRow("mysessionId ; timeout = \"123\" ;" )]
-        [DataRow(" mysessionId ; timeout = \"123\" ;" )]
-        [DataRow(" mysessionId ; parameter=321; timeout = \"123\" ;" )]
+        [Test]
+        [TestCase("mysessionId;timeout=123" )]
+        [TestCase("mysessionId;timeout=123;" )]
+        [TestCase("mysessionId ; timeout = 123 ;" )]
+        [TestCase("mysessionId ; timeout = '123' ;" )]
+        [TestCase("mysessionId ; timeout = \"123\" ;" )]
+        [TestCase(" mysessionId ; timeout = \"123\" ;" )]
+        [TestCase(" mysessionId ; parameter=321; timeout = \"123\" ;" )]
         public void ParseTestSucceedWithTimeout(string input)
         {
             if ( ! SessionRtspHeader.TryParse( input , out var result ) )
@@ -48,21 +48,21 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( 123 , result.Timeout );
         }
 
-        [TestMethod]
-        [DataRow( "  ,  " )]
-        [DataRow( "    " )]
-        [DataRow( "" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( " , , , , , , , " )]
+        [Test]
+        [TestCase( "  ,  " )]
+        [TestCase( "    " )]
+        [TestCase( "" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , SessionRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  SessionRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat()
         {
             var header = new SessionRtspHeader();
@@ -76,29 +76,29 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( "mysession;timeout=12" , header.ToString() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new SessionRtspHeader();
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
 
             header.Identifier = ",,,";
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
 
             header.Identifier = "mysession1";
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
 
             header.Timeout = -1;
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
 
             header.Timeout = 0;
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
 
             header.Timeout = 1;
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
 
             header.Timeout = 2;
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }

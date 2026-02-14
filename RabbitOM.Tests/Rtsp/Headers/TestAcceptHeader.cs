@@ -1,19 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestAcceptHeader
     {
-        [TestMethod]
-        [DataRow("application/sdp, application/text;q=1.0, *;q=0.5" , 3 )]
-        [DataRow("application/sdp, application/text;q=1.0", 2)]
-        [DataRow("application/sdp, \r\napplication/xml\t;q=1.0", 2)]
-        [DataRow("application/sdp, " , 1 )]
-        [DataRow("application/sdp ", 1 )]
-        [DataRow("    application/sdp  , * " , 2 )]
+        [Test]
+        [TestCase("application/sdp, application/text;q=1.0, *;q=0.5" , 3 )]
+        [TestCase("application/sdp, application/text;q=1.0", 2)]
+        [TestCase("application/sdp, \r\napplication/xml\t;q=1.0", 2)]
+        [TestCase("application/sdp, " , 1 )]
+        [TestCase("application/sdp ", 1 )]
+        [TestCase("    application/sdp  , * " , 2 )]
         public void ParseTestSucceed(string input , int nbElement )
         {
             if ( ! AcceptRtspHeader.TryParse( input , out var result ) )
@@ -25,73 +25,73 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( nbElement , result.Mimes.Count );
         }
 
-        [TestMethod]
-        [DataRow( "  ,  " )]
-        [DataRow( "    " )]
-        [DataRow( "" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( " , , , , , , , " )]
+        [Test]
+        [TestCase( "  ,  " )]
+        [TestCase( "    " )]
+        [TestCase( "" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , AcceptRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  AcceptRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat1()
         {
             var header = new AcceptRtspHeader();
 
             Assert.AreEqual( 0 , header.ToString().Length );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("b") ) );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("c") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("b") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("c") ) );
             Assert.AreNotEqual( 0 , header.ToString().Length );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat2()
         {
             var header = new AcceptRtspHeader();
 
             Assert.AreEqual( "" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
             Assert.AreEqual( "a" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("b") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("b") ) );
             Assert.AreEqual( "a, b" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("c" , 1) ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("c" , 1) ) );
             Assert.AreEqual( "a, b, c; q=1.0" , header.ToString() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestCollection()
         {
             var header = new AcceptRtspHeader();
 
             Assert.AreEqual( 0 , header.Mimes.Count );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("b") ) );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("c") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("b") ) );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("c") ) );
             header.AddMime( new StringWithQualityRtspHeaderValue( "d" ) );
             Assert.AreEqual( 4 , header.Mimes.Count );
             header.RemoveMimes();
             Assert.AreEqual( 0 , header.Mimes.Count );
-            Assert.ThrowsException<ArgumentNullException>( () => header.AddMime( null ) );
+            Assert.Throws<ArgumentNullException>( () => header.AddMime( null ) );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new AcceptRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
-            Assert.AreEqual( true , header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
+            Assert.IsTrue(  header.TryAddMime( new StringWithQualityRtspHeaderValue("a") ) );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }

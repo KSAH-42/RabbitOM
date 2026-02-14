@@ -1,19 +1,19 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestCSeqHeader
     {
-        [TestMethod]
-        [DataRow("4" , 4 )]
-        [DataRow("\"4\"" , 4 )]
-        [DataRow("'4'" , 4 )]
-        [DataRow(" 4 " , 4 )]
-        [DataRow(" \"4\" " , 4 )]
-        [DataRow(" '4' " , 4 )]
+        [Test]
+        [TestCase("4" , 4 )]
+        [TestCase("\"4\"" , 4 )]
+        [TestCase("'4'" , 4 )]
+        [TestCase(" 4 " , 4 )]
+        [TestCase(" \"4\" " , 4 )]
+        [TestCase(" '4' " , 4 )]
         public void ParseTestSucceed(string input , int valueToCompare )
         {
             if ( ! CSeqRtspHeader.TryParse( input , out var result ) )
@@ -24,22 +24,22 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( valueToCompare , result.Value );
         }
 
-        [TestMethod]
-        [DataRow( "  ,  " )]
-        [DataRow( "    " )]
-        [DataRow( "" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( ",d,g,h,ff,h,?," )]
-        [DataRow( " , , , , , , , " )]
+        [Test]
+        [TestCase( "  ,  " )]
+        [TestCase( "    " )]
+        [TestCase( "" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( ",d,g,h,ff,h,?," )]
+        [TestCase( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , CSeqRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  CSeqRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat()
         {
             var header = new CSeqRtspHeader();
@@ -51,20 +51,20 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( "123" , header.ToString() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new CSeqRtspHeader();
 
             header.Value = - 1;
 
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
             
             header.Value = 0;
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
 
             header.Value = 1;
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }

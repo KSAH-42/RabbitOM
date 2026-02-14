@@ -1,28 +1,28 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestContentBaseHeader
     {
-        [TestMethod]
-        [DataRow("rtsp://127.0.0.1" )]
-        [DataRow("rtsp://127.0.0.1/channel" )]
-        [DataRow("rtsp://127.0.0.1/channel?param=1" )]
-        [DataRow("rtsp://127.0.0.1/channel?param1=1&param2=2" )]
+        [Test]
+        [TestCase("rtsp://127.0.0.1" )]
+        [TestCase("rtsp://127.0.0.1/channel" )]
+        [TestCase("rtsp://127.0.0.1/channel?param=1" )]
+        [TestCase("rtsp://127.0.0.1/channel?param1=1&param2=2" )]
 
-        [DataRow(" rtsp://127.0.0.1" )]
-        [DataRow(" \r rtsp://127.0.0.1/channel" )]
-        [DataRow(" \nrtsp://127.0.0.1/channel?param=1" )]
-        [DataRow(" \n\rrtsp://127.0.0.1/channel?param1=1&param2=2" )]
+        [TestCase(" rtsp://127.0.0.1" )]
+        [TestCase(" \r rtsp://127.0.0.1/channel" )]
+        [TestCase(" \nrtsp://127.0.0.1/channel?param=1" )]
+        [TestCase(" \n\rrtsp://127.0.0.1/channel?param1=1&param2=2" )]
 
-        [DataRow(" 'rtsp://127.0.0.1' " )]
-        [DataRow(" \r 'rtsp://127.0.0.1/channel' " )]
+        [TestCase(" 'rtsp://127.0.0.1' " )]
+        [TestCase(" \r 'rtsp://127.0.0.1/channel' " )]
         
-        [DataRow(" \"rtsp://127.0.0.1\" " )]
-        [DataRow(" \r \"rtsp://127.0.0.1/channel\" " )]
+        [TestCase(" \"rtsp://127.0.0.1\" " )]
+        [TestCase(" \r \"rtsp://127.0.0.1/channel\" " )]
 
         public void ParseTestSucceed(string input )
         {
@@ -35,26 +35,26 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.IsNotNull( result.Uri );
             Assert.AreNotEqual( string.Empty , result.Uri );
             Assert.AreNotEqual( true , string.IsNullOrWhiteSpace( result.Uri ) );
-            Assert.AreEqual( true , Uri.IsWellFormedUriString( result.Uri , UriKind.RelativeOrAbsolute ) );
+            Assert.IsTrue(  Uri.IsWellFormedUriString( result.Uri , UriKind.RelativeOrAbsolute ) );
         }
 
-        [TestMethod]
-        [DataRow( "    " )]
-        [DataRow( "  ,  " )]
-        [DataRow( "" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( ",d,g,h,ff,h,?," )]
-        [DataRow( " , , , , , , , " )]
-        [DataRow( " rtps :// r " )]
+        [Test]
+        [TestCase( "    " )]
+        [TestCase( "  ,  " )]
+        [TestCase( "" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( ",d,g,h,ff,h,?," )]
+        [TestCase( " , , , , , , , " )]
+        [TestCase( " rtps :// r " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , ContentBaseRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  ContentBaseRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat()
         {
             var header = new ContentBaseRtspHeader();
@@ -66,16 +66,16 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( "rtsp://127.0.0.1" , header.ToString() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new ContentBaseRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
             
             header.Uri = " rtsp://127.0.0.1  ";
 
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }

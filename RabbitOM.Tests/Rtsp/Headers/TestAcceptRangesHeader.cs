@@ -1,22 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestAcceptRangesHeader
     {
-        [TestMethod]
-        [DataRow("bytes,date,double" , 3 )]
-        [DataRow(" bytes , date , double " , 3 )]
-        [DataRow("bytes,date,\r\ndouble" , 3 )]
-        [DataRow("bytes,date, " , 2 )]
-        [DataRow("bytes,, " , 1 )]
-        [DataRow("bytes1" , 1 )]
-        [DataRow(" bytes " , 1 )]
-        [DataRow(" * " , 1 )]
-        [DataRow("*" , 1 )]
+        [Test]
+        [TestCase("bytes,date,double" , 3 )]
+        [TestCase(" bytes , date , double " , 3 )]
+        [TestCase("bytes,date,\r\ndouble" , 3 )]
+        [TestCase("bytes,date, " , 2 )]
+        [TestCase("bytes,, " , 1 )]
+        [TestCase("bytes1" , 1 )]
+        [TestCase(" bytes " , 1 )]
+        [TestCase(" * " , 1 )]
+        [TestCase("*" , 1 )]
         public void ParseTestSucceed(string input , int nbElement )
         {
             if ( ! AcceptRangesRtspHeader.TryParse( input , out var result ) )
@@ -28,68 +28,68 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( nbElement , result.Units.Count );
         }
 
-        [TestMethod]
-        [DataRow( "  ,  " )]
-        [DataRow( "    " )]
-        [DataRow( "" )]
-        [DataRow( "12" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( " , , , , , , , " )]
+        [Test]
+        [TestCase( "  ,  " )]
+        [TestCase( "    " )]
+        [TestCase( "" )]
+        [TestCase( "12" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , AcceptRangesRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  AcceptRangesRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat1()
         {
             var header = new AcceptRangesRtspHeader();
 
             Assert.AreEqual( 0 , header.ToString().Length );
-            Assert.AreEqual( true , header.TryAddUnit( "bytes" ) );
+            Assert.IsTrue(  header.TryAddUnit( "bytes" ) );
             Assert.AreNotEqual( 0 , header.ToString().Length );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat2()
         {
             var header = new AcceptRangesRtspHeader();
 
             Assert.AreEqual( "" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddUnit( "bytes" ) );
+            Assert.IsTrue(  header.TryAddUnit( "bytes" ) );
             Assert.AreEqual( "bytes" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddUnit( "dates" ) );
+            Assert.IsTrue(  header.TryAddUnit( "dates" ) );
             Assert.AreEqual( "bytes, dates" , header.ToString() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestCollection()
         {
             var header = new AcceptRangesRtspHeader();
 
             Assert.AreEqual( 0 , header.Units.Count );
-            Assert.AreEqual( false , header.TryAddUnit( "") );
-            Assert.AreEqual( false , header.TryAddUnit( "  ") );
-            Assert.AreEqual( false , header.TryAddUnit( null ) );
-            Assert.AreEqual( true , header.TryAddUnit( "bytes") );
+            Assert.IsFalse(  header.TryAddUnit( "") );
+            Assert.IsFalse(  header.TryAddUnit( "  ") );
+            Assert.IsFalse(  header.TryAddUnit( null ) );
+            Assert.IsTrue(  header.TryAddUnit( "bytes") );
             Assert.AreEqual( 1 , header.Units.Count );
             header.RemoveUnits();
             Assert.AreEqual( 0 , header.Units.Count );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new AcceptRangesRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
-            Assert.AreEqual( true , header.TryAddUnit( "bytes" ) );
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
+            Assert.IsTrue(  header.TryAddUnit( "bytes" ) );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }

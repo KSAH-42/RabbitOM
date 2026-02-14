@@ -1,21 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
-    [TestClass]
+    [TestFixture]
     public class TestConnectionHeader
     {
-        [TestMethod]
-        [DataRow("Close" , 1 )]
-        [DataRow(" Close " , 1 )]
-        [DataRow("  \n \t \r Close  " , 1 )]
-        [DataRow("Close,Keep-Alive" , 2 )]
-        [DataRow(" Close , Keep-Alive " , 2 )]
-        [DataRow(" Close , , Keep-Alive " , 2 )]
-        [DataRow(" Close ,, Keep-Alive " , 2 )]
-        [DataRow(" Close ,, Keep-Alive1 " , 2 )]
+        [Test]
+        [TestCase("Close" , 1 )]
+        [TestCase(" Close " , 1 )]
+        [TestCase("  \n \t \r Close  " , 1 )]
+        [TestCase("Close,Keep-Alive" , 2 )]
+        [TestCase(" Close , Keep-Alive " , 2 )]
+        [TestCase(" Close , , Keep-Alive " , 2 )]
+        [TestCase(" Close ,, Keep-Alive " , 2 )]
+        [TestCase(" Close ,, Keep-Alive1 " , 2 )]
         
         public void ParseTestSucceed(string input , int nbElement )
         {
@@ -28,70 +28,70 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( nbElement , result.Directives.Count );
         }
 
-        [TestMethod]
-        [DataRow( "  ,  " )]
-        [DataRow( "    " )]
-        [DataRow( "" )]
-        [DataRow( null )]
-        [DataRow( ";;;;;;;;" )]
-        [DataRow( ",,,,,,," )]
-        [DataRow( " , , , , , , , " )]
+        [Test]
+        [TestCase( "  ,  " )]
+        [TestCase( "    " )]
+        [TestCase( "" )]
+        [TestCase( null )]
+        [TestCase( ";;;;;;;;" )]
+        [TestCase( ",,,,,,," )]
+        [TestCase( " , , , , , , , " )]
         public void ParseTestFailed( string input )
         {
-            Assert.AreEqual( false , ConnectionRtspHeader.TryParse( input , out var result ) );
+            Assert.IsFalse(  ConnectionRtspHeader.TryParse( input , out var result ) );
             Assert.IsNull( result );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat1()
         {
             var header = new ConnectionRtspHeader();
 
             Assert.AreEqual( 0 , header.ToString().Length );
-            Assert.AreEqual( true , header.TryAddDirective( "Close" ) );
+            Assert.IsTrue(  header.TryAddDirective( "Close" ) );
             Assert.AreNotEqual( 0 , header.ToString().Length );
         }
 
-        [TestMethod]
+        [Test]
         public void TestFormat2()
         {
             var header = new ConnectionRtspHeader();
 
             Assert.AreEqual( "" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddDirective( "Close" ) );
+            Assert.IsTrue(  header.TryAddDirective( "Close" ) );
             Assert.AreEqual( "Close" , header.ToString() );
 
-            Assert.AreEqual( true , header.TryAddDirective( "Keep-Alive" ) );
+            Assert.IsTrue(  header.TryAddDirective( "Keep-Alive" ) );
             Assert.AreEqual( "Close, Keep-Alive" , header.ToString() );
 
-            Assert.AreEqual( false , header.TryAddDirective( " Keep-Alive " ) );
+            Assert.IsFalse(  header.TryAddDirective( " Keep-Alive " ) );
             Assert.AreEqual( "Close, Keep-Alive" , header.ToString() );
         }
 
-        [TestMethod]
+        [Test]
         public void TestCollection()
         {
             var header = new ConnectionRtspHeader();
 
             Assert.AreEqual( 0 , header.Directives.Count );
-            Assert.AreEqual( false , header.TryAddDirective( "") );
-            Assert.AreEqual( false , header.TryAddDirective( "  ") );
-            Assert.AreEqual( false , header.TryAddDirective( null ) );
-            Assert.AreEqual( true , header.TryAddDirective( "Close") );
+            Assert.IsFalse(  header.TryAddDirective( "") );
+            Assert.IsFalse(  header.TryAddDirective( "  ") );
+            Assert.IsFalse(  header.TryAddDirective( null ) );
+            Assert.IsTrue(  header.TryAddDirective( "Close") );
             Assert.AreEqual( 1 , header.Directives.Count );
             header.RemoveDirectives();
             Assert.AreEqual( 0 , header.Directives.Count );
         }
 
-        [TestMethod]
+        [Test]
         public void TestValidation()
         {
             var header = new ConnectionRtspHeader();
 
-            Assert.AreEqual( false , header.TryValidate() );
-            Assert.AreEqual( true , header.TryAddDirective( "Close" ) );
-            Assert.AreEqual( true , header.TryValidate() );
+            Assert.IsFalse(  header.TryValidate() );
+            Assert.IsTrue(  header.TryAddDirective( "Close" ) );
+            Assert.IsTrue(  header.TryValidate() );
         }
     }
 }
