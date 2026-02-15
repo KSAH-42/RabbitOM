@@ -98,6 +98,7 @@
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\UnSupportedRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\Validation\RtspHeaderValidator.cs" />
     <Compile Include="Rtsp\Headers\VaryRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ViaRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeader.cs" />
