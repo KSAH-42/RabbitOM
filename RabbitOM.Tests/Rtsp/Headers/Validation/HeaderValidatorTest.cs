@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase("session=123;timeout=56")]
         [TestCase("Digest username=\"admin\";nonce=\"a1a1a1a11a1a1\";")]
         [TestCase("Digest username='admin';nonce='a1a1a1a11a1a1';")]
-        public void TryValidateStringTestSuccceed( string text )
+        public void EnsureTryValidateSuccceed( string text )
         {
             Assert.IsTrue( RtspHeaderValidator.TryValidate( text ) );
         }
@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase( "AZERTYUIOPQSDFGHJKLMWXCVBN0123456789" )]
         [TestCase( "kader-sahnine" )]
         [TestCase( "kader_sahnine" )]
-        public void TryValidateTokenTestSuccceed( string text )
+        public void EnsureTryValidateAsTokenSucceed( string text )
         {
             Assert.IsTrue( RtspHeaderValidator.TryValidateAsToken( text ) );
         }
@@ -97,7 +97,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase("rtsp://admin:camera123@127.0.0.1:554/screenlive?a=1&b=2")]
         [TestCase("abcdef")]
         [TestCase("abcdef/ght")]
-        public void TryValidateUriTestSucceed( string text )
+        public void EnsureTryValidateAsUriSucceed( string text )
         {
             Assert.IsTrue( RtspHeaderValidator.TryValidateAsUri( text ) );
         }
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase(" '0' ")]
         [TestCase("\"0\"")]
         [TestCase(" \"0\" ")]
-        public void TryValidateLongTestSucceed( string text )
+        public void EnsureTryValidateAsLongSucceed( string text )
         {
             Assert.IsTrue( RtspHeaderValidator.TryValidateAsLong( text ) );
         }
@@ -144,7 +144,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase( " AZERTY\tUIOPQSDFGH JKLMWXCVBN0123456789 " )]
         [TestCase( " AZERTY\vUIOPQSDFGH JKLMWXCVBN0123456789 " )]
         [TestCase( " AZERTY\vUIOPQSDFGH JKLMWXCVBN0123456789\r\n" )]
-        public void TryValidateStringTestFailed( string text )
+        public void EnsureTryValidateFailed( string text )
         {
             Assert.IsFalse( RtspHeaderValidator.TryValidate( text ) );
         }
@@ -193,7 +193,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase(" ")]
         [TestCase(" abcd ")]
         [TestCase("ab cd")]
-        public void TryValidateTokenTestFailed( string text )
+        public void EnsureTryValidateAsTokenFailed( string text )
         {
             Assert.IsFalse( RtspHeaderValidator.TryValidateAsToken( text ) );
         }
@@ -204,7 +204,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase("\r\nrtsp://admin:@127.0.0.1:554/screenlive")]
         [TestCase("rtsp?/127.0.0.1:554/screenlive?a=1&b=2")]
         [TestCase("rtsp?/127.0.0.1:554 /screenlive?a=1&b=2")]
-        public void TryValidateUriTestFailed( string text )
+        public void EnsureTryValidateAsUriFailed( string text )
         {
             Assert.IsFalse( RtspHeaderValidator.TryValidateAsUri( text ) );
         }
@@ -215,7 +215,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase("x")]
         [TestCase("\r\n")]
         [TestCase("\r\n1")]
-        public void TryValidateLongTestFailed( string text )
+        public void EnsureTryValidateAsLongFailed( string text )
         {
             Assert.IsFalse( RtspHeaderValidator.TryValidateAsLong( text ) );
         }
