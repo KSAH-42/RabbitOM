@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
 {
     [TestFixture]
-    public class HeaderValidatorTestSucceed
+    public class HeaderValidatorTest
     {
         [TestCase( "*" )]
         [TestCase( "!")]
@@ -102,6 +102,21 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
             Assert.IsTrue( RtspHeaderValidator.TryValidateUri( text ) );
         }
 
+        [TestCase("-1")]
+        [TestCase("0")]
+        [TestCase("1")]
+        [TestCase(" 1 ")]
+        [TestCase(" 0 ")]
+        [TestCase(" -1 ")]
+        [TestCase("'0'")]
+        [TestCase(" '0' ")]
+        [TestCase("\"0\"")]
+        [TestCase(" \"0\" ")]
+        public void TryValidateLongTestSucceed( string text )
+        {
+            Assert.IsTrue( RtspHeaderValidator.TryValidateLong( text ) );
+        }
+
         [TestCase( null )]
         [TestCase( "\0" )]
         [TestCase( "\r" )]
@@ -191,6 +206,17 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         public void TryValidateUriTestFailed( string text )
         {
             Assert.IsFalse( RtspHeaderValidator.TryValidateUri( text ) );
+        }
+
+        [TestCase( null )]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("x")]
+        [TestCase("\r\n")]
+        [TestCase("\r\n1")]
+        public void TryValidateLongTestFailed( string text )
+        {
+            Assert.IsFalse( RtspHeaderValidator.TryValidateLong( text ) );
         }
     }
 }

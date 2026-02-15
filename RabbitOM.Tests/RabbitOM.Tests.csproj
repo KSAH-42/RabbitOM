@@ -119,8 +119,7 @@
     <Compile Include="Rtsp\Headers\SessionHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\CSeqHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ContentTypeHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\Validation\HeaderValidatorTestSucceed.cs" />
-    <Compile Include="Rtsp\Headers\Validation\HeaderValidatorTestFailed.cs" />
+    <Compile Include="Rtsp\Headers\Validation\HeaderValidatorTest.cs" />
     <Compile Include="Sdp\BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rtsp\Headers\ContentLocationHeaderTest.cs" />

@@ -75,6 +75,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 
         public static bool TryValidateLong( string value )
         {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            if ( value.Any( character => character <= 31 || character >= 127  ) )
+            {
+                return false;
+            }
+
+            value = value.Replace( "\"" , "" ).Replace( "'"  , "" );
+
             return long.TryParse( value , out var number );
         }
     }
