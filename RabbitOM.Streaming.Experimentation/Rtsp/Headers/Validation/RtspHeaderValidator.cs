@@ -12,6 +12,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
         private static readonly Regex RelativeUriExpression = new Regex( @"^(?:\.\.?/|/|[A-Za-z0-9_\-\.~%]+(?:/[A-Za-z0-9_\-\.~%]*)*|[?].+|#.+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant );
         
         private static readonly IReadOnlyCollection<char> ForbiddenTokenChars = new HashSet<char>() { ' ' , '(' , ')' , '[' , ']' , '{' ,  '}' , '<' , '>' , ',' , ';' , ':' , '=' , '?' , '¨' , '¤' , 'é' , 'è' , 'à' , 'ù' , 'ç' };
+        
+        private static readonly IReadOnlyCollection<char> ForbiddenUriChars = new HashSet<char>() { ' ' , '(' , ')' , '[' , ']' , '{' ,  '}' , '<' , '>' , 'é' , 'è' , 'à' , 'ù' , 'ç' };
 
 
 
@@ -55,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 
             var input = value.Trim();
 
-            if ( value.Any( character => character <= 31 || character >= 127  ) )
+            if ( value.Any( character => character <= 31 || character >= 127 || ForbiddenUriChars.Contains( character ) ) )
             {
                 return false;
             }

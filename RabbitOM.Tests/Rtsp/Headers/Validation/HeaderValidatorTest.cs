@@ -203,6 +203,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Validation
         [TestCase("  ")]
         [TestCase("\r\nrtsp://admin:@127.0.0.1:554/screenlive")]
         [TestCase("rtsp?/127.0.0.1:554/screenlive?a=1&b=2")]
+        [TestCase("rtsp?/127.0.0.1:554 /screenlive?a=1&b=2")]
         public void TryValidateUriTestFailed( string text )
         {
             Assert.IsFalse( RtspHeaderValidator.TryValidateUri( text ) );
