@@ -14,17 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var text = new string( value.Where( charatecter => ! char.IsControl( charatecter ) ).ToArray() );
 
-            while ( text.StartsWith( "\"" ) || text.StartsWith( "'" ) || text.StartsWith( " " ) )
-            {
-                text = text.Remove( 0 , 1 );
-            }
-
-            while ( text.EndsWith( "\"" ) || text.EndsWith( "'" ) || text.EndsWith( " " ) )
-            {
-                text = text.Remove( text.Length - 1 , 1 );
-            }
-
-            return text;
+            return text.Trim( new char[] { '\"' , '\'' , ' ' } );
         }
     }
 }
