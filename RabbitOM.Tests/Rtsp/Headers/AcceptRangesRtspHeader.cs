@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
     public class AcceptRangesRtspHeaderTest
     {
         [Test]
-        public void CheckParseSucceed1()
+        public void CheckParseSucceed()
         {
             Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " bytes , utc , ntp " , out var header ) );
             Assert.IsTrue( header.Bytes );
