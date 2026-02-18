@@ -3,6 +3,8 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
     public sealed class MediaDurationRtspHeader
     {
         public static readonly string TypeName = "Media-Duration";

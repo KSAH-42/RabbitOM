@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -55,12 +56,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddLanguage( StringRtspHeader language )
         {
-            if ( ! StringRtspHeader.IsNullOrEmpty( language ) )
+            if ( StringRtspHeader.IsNullOrEmpty( language ) )
             {
-                return _languages.Add( language );
+                return false;
             }
 
-            return true;
+            return _languages.Add( language );
         }
 
         public bool RemoveLanguage( StringRtspHeader encoding )

@@ -55,7 +55,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return value == null || string.IsNullOrWhiteSpace( value.Name ) || object.ReferenceEquals( value , StringRtspHeader.Empty );
         }
-
         
 
 

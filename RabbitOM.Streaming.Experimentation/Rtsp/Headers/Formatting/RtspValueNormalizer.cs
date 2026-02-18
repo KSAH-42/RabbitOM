@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
 {
     public static class RtspValueNormalizer
     {

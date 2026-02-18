@@ -19,11 +19,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
                 return false;
             }
 
-            if ( input.IndexOfAny( separators ) < 0 )
-            {
-                return false;
-            }
-
             var tokens = input
                 .Split( separators , StringSplitOptions.RemoveEmptyEntries )
                 .Select( token => token.Trim() )

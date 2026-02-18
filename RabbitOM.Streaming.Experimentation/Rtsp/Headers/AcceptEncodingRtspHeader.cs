@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -52,12 +53,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddEncoding( StringRtspHeader encoding )
         {
-            if ( ! StringRtspHeader.IsNullOrEmpty( encoding ) )
+            if ( StringRtspHeader.IsNullOrEmpty( encoding ) )
             {
-                return _encodings.Add( encoding );
+                return false;
             }
 
-            return false;
+            return _encodings.Add( encoding );
         }
 
         public bool RemoveEncoding( StringRtspHeader encoding )
