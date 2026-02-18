@@ -14,7 +14,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+
+
         private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>();
+
+
+
+
 
 
         public bool NoCache { get; set; }
@@ -42,6 +49,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public int? StaleIfError { get; set; }
 
         public IReadOnlyDictionary<string,string> Extensions { get => _extensions; }
+
+
 
 
 
@@ -123,6 +132,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return result != null;
         }
+
 
 
 
