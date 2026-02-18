@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var scheme = tokens.First();
                 
-                if ( StringRtspHeaderParser.TryParse( input.Replace( scheme , "" ) , ',' , out tokens ) )
+                if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , ',' , out tokens ) )
                 {
                     result = new AuthorizationRtspHeader(); 
                     
