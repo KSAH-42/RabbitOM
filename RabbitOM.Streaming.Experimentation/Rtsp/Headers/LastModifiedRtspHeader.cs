@@ -1,65 +1,28 @@
 ﻿using System;
-using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class LastModifiedRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class LastModifiedRtspHeader
     {
-        private const string FormatDate = "ddd, dd MMM yyyy HH:mm:ss GMT";
-
-        public const string TypeName = "Last-Modified";
+        public static readonly string TypeName = "Last-Modified";
         
+        public DateTime Value { get; set; }
 
-
-
-
-        private DateTime _value;
-
-
-
-        public DateTime Value
+        public static bool TryParse( string input , out LastModifiedRtspHeader result )
         {
-            get => _value;
-            set => _value = value;
-        }
+            result = DateTimeRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , out var value )
+                ? new LastModifiedRtspHeader() { Value = value }
+                : null
+                ;
 
-
-
-        public override bool TryValidate()
-        {
-            return DateTime.MinValue < _value && _value < DateTime.MaxValue;
+            return result != null;
         }
 
         public override string ToString()
         {
-            return _value.ToUniversalTime().ToString( FormatDate , CultureInfo.InvariantCulture );
-        }
-        
-
-
-
-        public static LastModifiedRtspHeader Parse( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            return TryParse( value , out var result ) ? result : throw new FormatException();
-        }
-
-        public static bool TryParse( string value , out LastModifiedRtspHeader result )
-        {
-            result = null;
-
-            if ( ! DateTime.TryParse( value , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var date ) )
-            {
-                return false;
-            }
-
-            result = new LastModifiedRtspHeader() { Value = date };
-
-            return true;
+            return DateTimeRtspHeaderParser.Format( Value );
         }
     }
 }

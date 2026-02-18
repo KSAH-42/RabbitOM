@@ -1,39 +1,128 @@
 ﻿using System;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class RtpInfoRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class RtpInfoRtspHeader
     {
-        public const string TypeName = "RTP-Info";
+        public static readonly string TypeName = "RTP-Info";
 
 
 
+
+
+        public string Url { get; private set; } = string.Empty;
         
-        public string Url { get; set; }
-        public long Sequence { get; set; }
-        public long Time { get; set; }
+        public string SSRC { get; private set; } = string.Empty;
+
+        public long? Sequence { get; set; }
+        
+        public long? RtpTime { get; set; }
+        
 
 
-        public override bool TryValidate()
+
+
+
+        public static bool TryParse( string input , out RtpInfoRtspHeader result )
         {
-            return ! string.IsNullOrWhiteSpace( Url ) 
-                && Uri.IsWellFormedUriString( Url , UriKind.RelativeOrAbsolute )
-                && Sequence >= 0
-                && Time >= 0
+            result = null;
+
+            input = RtspValueNormalizer.Normalize( input );
+
+            if ( StringRtspHeaderParser.TryParse( input , ';' , out var tokens ) )
+            {
+                result = new RtpInfoRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
+                    {
+                        if ( string.Equals( "url" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            result.SetUrl( parameter.Value );
+                        }
+                        else if ( string.Equals( "seq" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            result.SetSequence( parameter.Value );
+                        }
+                        else if ( string.Equals( "sequence" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            result.SetSequence( parameter.Value );
+                        }
+                        else if ( string.Equals( "rtptime" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            result.SetRtpTime( parameter.Value );
+                        }
+                        else if ( string.Equals( "ssrc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            result.SetSSRC( parameter.Value );
+                        }
+                    }
+                }
+            }
+
+            return result != null;
+        }
+
+
+
+
+
+
+        public void SetUrl( string value )
+        {
+            Url = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetSSRC( string value )
+        {
+            SSRC = RtspValueNormalizer.Normalize( value );
+        }
+        
+        public void SetSequence( string value )
+        {
+            Sequence = long.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) 
+                ? new long?( result ) 
+                : null
                 ;
         }
 
+        public void SetRtpTime( string value )
+        {
+            RtpTime = long.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) 
+                ? new long?( result ) 
+                : null
+                ;
+        }
+        
         public override string ToString()
         {
-            throw new NotImplementedException();
-        }
+            var builder = new StringBuilder();
 
+            if ( ! string.IsNullOrWhiteSpace( Url ) )
+            {
+                builder.AppendFormat( Url.Contains( " " ) ? "url=\"{0}\";" : "url={0};" , Url );
+            }
 
+            if ( Sequence.HasValue )
+            {
+                builder.AppendFormat( "seq={0};" , Sequence );
+            }
 
+            if ( RtpTime.HasValue )
+            {
+                builder.AppendFormat( "rtptime={0};" , RtpTime );
+            }
 
-        public static bool TryParse( string value , out RtpInfoRtspHeader result )
-        {
-            throw new NotImplementedException();
+            if ( ! string.IsNullOrWhiteSpace( SSRC ) )
+            {
+                builder.AppendFormat( SSRC.Contains( " " ) ? "ssrc=\"{0}\";" : "ssrc={0};" , SSRC );
+            }
+
+            return builder.ToString().Trim( ' ' , ';' );
         }
     }
 }

@@ -2,53 +2,27 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class MaxForwardsRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class MaxForwardsRtspHeader
     {
-        public const string TypeName = "Max-Forwards";
+        public static readonly string TypeName = "Max-Forwards";
         
+        public long Value { get; set; }
 
-
-
-
-        private int _value;
-        
-
-
-
-
-        public int Value
+        public static bool TryParse( string input , out MaxForwardsRtspHeader result )
         {
-            get => _value;
-            set => _value = value;
-        }
+            result = long.TryParse( RtspValueNormalizer.Normalize( input ) , out var value )
+                ? new MaxForwardsRtspHeader() { Value = value }
+                : null
+                ;
 
-
-
-
-        public override bool TryValidate()
-        {
-            return true;
+            return result != null;
         }
 
         public override string ToString()
         {
-            return _value.ToString();
-        }
-        
-
-
-        public static bool TryParse( string value , out MaxForwardsRtspHeader result )
-        {
-            result = null;
-
-            if ( ! int.TryParse( value , out var number ) )
-            {
-                return false;
-            }
-
-            result = new MaxForwardsRtspHeader() { Value = number };
-
-            return true;
+            return Value.ToString();
         }
     }
 }

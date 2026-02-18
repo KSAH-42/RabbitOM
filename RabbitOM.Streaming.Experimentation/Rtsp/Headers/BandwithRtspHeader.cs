@@ -2,69 +2,27 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    /// <summary>
-    /// Represent a rtsp header
-    /// </summary>
-    public sealed class BandwithRtspHeader : RtspHeader
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class BandwithRtspHeader
     {
-        /// <summary>
-        /// The type name
-        /// </summary>
-        public const string TypeName = "Bandwith";
+        public static readonly string TypeName = "Bandwith";
         
+        public long Value { get; set; }
 
-
-
-
-        /// <summary>
-        /// Gets / Sets the bit rate
-        /// </summary>
-        public long BitRate { get; set; }
-
-
-
-
-
-        /// <summary>
-        /// Try to parse
-        /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns a string</returns>
         public static bool TryParse( string input , out BandwithRtspHeader result )
         {
-            result = null;
-
-            if ( long.TryParse( StringRtspNormalizer.Normalize( input ) , out var value ) )
-            {
-                result = new BandwithRtspHeader() { BitRate = value };
-            }
+            result = long.TryParse( RtspValueNormalizer.Normalize( input ) , out var value )
+                ? new BandwithRtspHeader() { Value = value }
+                : null
+                ;
 
             return result != null;
         }
 
-
-
-
-
-
-        /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-
-        public override bool TryValidate()
-        {
-            return BitRate >= 0;
-        }
-
-        /// <summary>
-        /// Format to string
-        /// </summary>
-        /// <returns>returns a string</returns>
         public override string ToString()
         {
-            return BitRate.ToString();
+            return Value.ToString();
         }
     }
 }

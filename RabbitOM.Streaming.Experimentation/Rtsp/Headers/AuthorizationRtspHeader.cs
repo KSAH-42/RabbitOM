@@ -4,217 +4,106 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    /// <summary>
-    /// Represent a rtsp header
-    /// </summary>
-    public sealed class AuthorizationRtspHeader : RtspHeader
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class AuthorizationRtspHeader
     {
-        /// <summary>
-        /// The type name
-        /// </summary>
-        public const string TypeName = "Authorization";
+        public static readonly string TypeName = "Authorization";
 
 
 
 
-
-
-        private string _type      = string.Empty;
-        private string _username  = string.Empty;
-        private string _realm     = string.Empty;
-        private string _nonce     = string.Empty;
-        private string _domain    = string.Empty;
-        private string _opaque    = string.Empty;
-        private string _uri       = string.Empty;
-        private string _response  = string.Empty;
-        private string _algorithm = string.Empty;
-        private string _qpop      = string.Empty;
-        private string _cnonce    = string.Empty;
-
-
-
-
-
-
-        /// <summary>
-        /// Gets / Sets the type
-        /// </summary>
-        public string Type
-        {
-            get => _type;
-            set => _type = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the user name
-        /// </summary>
-        public string UserName
-        {
-            get => _username;
-            set => _username = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the realm
-        /// </summary>
-        public string Realm
-        {
-            get => _realm;
-            set => _realm = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the nonce
-        /// </summary>
-        public string Nonce
-        {
-            get => _nonce;
-            set => _nonce = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the domain
-        /// </summary>
-        public string Domain
-        {
-            get => _domain;
-            set => _domain = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the opaque
-        /// </summary>
-        public string Opaque
-        {
-            get => _opaque;
-            set => _opaque = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the uri
-        /// </summary>
-        public string Uri
-        {
-            get => _uri;
-            set => _uri = StringRtspNormalizer.Normalize( value );
-        }
-
-        /// <summary>
-        /// Gets / Sets the response
-        /// </summary>
-        public string Response
-        {
-            get => _response;
-            set => _response = StringRtspNormalizer.Normalize( value );
-        }
+        public string Scheme { get; private set; } = string.Empty;
         
-        /// <summary>
-        /// Gets / Sets the algorithm
-        /// </summary>
-        public string Algorithm
-        {
-            get => _algorithm;
-            set => _algorithm = StringRtspNormalizer.Normalize( value );
-        }
+        public string UserName { get; private set; } = string.Empty;
 
-        /// <summary>
-        /// Gets / Sets the qpop
-        /// </summary>
-        public string QPop
-        {
-            get => _qpop;
-            set => _qpop = StringRtspNormalizer.Normalize( value );
-        }
+        public string Realm { get; private set; } = string.Empty;
+        
+        public string Nonce { get; private set; } = string.Empty;
+        
+        public string Domain { get; private set; } = string.Empty;
 
-        /// <summary>
-        /// Gets / Sets the cnonce
-        /// </summary>
-        public string CNonce
-        {
-            get => _cnonce;
-            set => _cnonce = StringRtspNormalizer.Normalize( value );
-        }
+        public string Opaque { get; private set; } = string.Empty;
+        
+        public string Uri { get; private set; } = string.Empty;
+        
+        public string Response { get; private set; } = string.Empty;
+
+        public string Algorithm { get; private set; } = string.Empty;
+
+        public string CNonce { get; private set; } = string.Empty;
+
+        public string NC { get; private set; } = string.Empty;
+
+        public string QualityOfProtection { get; private set; } = string.Empty;
 
 
 
 
 
-
-
-        /// <summary>
-        /// Try to parse
-        /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string input , out AuthorizationRtspHeader result )
         {
             result = null;
 
-            var text = StringRtspNormalizer.Normalize( input );
+            input = RtspValueNormalizer.Normalize( input );
 
-            if ( RtspHeaderParser.TryParse( text , " " , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , ' ' , out var tokens ) )
             {
-                var type = tokens.FirstOrDefault();
-
-                if ( string.IsNullOrEmpty( type ) )
+                var scheme = tokens.First();
+                
+                if ( StringRtspHeaderParser.TryParse( input.Replace( scheme , "" ) , ',' , out tokens ) )
                 {
-                    return false;
-                }
-
-                if ( RtspHeaderParser.TryParse( text.Replace( type , "" ) , "," , out tokens ) )
-                {
-                    result = new AuthorizationRtspHeader()
-                    {
-                        Type = type
-                    };
+                    result = new AuthorizationRtspHeader(); 
+                    
+                    result.SetScheme( scheme );
 
                     foreach ( var token in tokens )
                     {
-                        if ( RtspHeaderParser.TryParse( token , "=" , out var fields ) )
+                        if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
                         {
-                            var fieldName  = fields.ElementAtOrDefault( 0 ) ?? string.Empty;
-                            var fieldValue = fields.ElementAtOrDefault( 1 ) ?? string.Empty;
-                    
-                            if ( fieldName.Equals( "username" , StringComparison.OrdinalIgnoreCase ) )
+                            if ( string.Equals( "username" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.UserName = fieldValue;
+                                result.SetUserName( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "realm" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "realm" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Realm = fieldValue;
+                                result.SetRealm( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "nonce" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "nonce" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Nonce = fieldValue;
+                                result.SetNonce( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "domain" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "opaque" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Domain = fieldValue;
+                                result.SetOpaque( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "opaque" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "domain" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Opaque = fieldValue;
+                                result.SetDomain( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "uri" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "uri" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Uri = fieldValue;
+                                result.SetUri( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "response" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "response" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Response = fieldValue;
+                                result.SetResponse( parameter.Value );
+                            }                            
+                            else if ( string.Equals( "algorithm" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            {
+                                result.SetAlgorithm( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "algorithm" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "cnonce" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.Algorithm = fieldValue;
+                                result.SetCNonce( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "qpop" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "nc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.QPop = fieldValue;
+                                result.SetNC( parameter.Value );
                             }
-                            else if ( fieldName.Equals( "cnonce" , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( string.Equals( "qop" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                             {
-                                result.CNonce = fieldValue;
+                                result.SetQualityOfProtection( parameter.Value );
                             }
                         }
                     }
@@ -228,90 +117,115 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-        /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public override bool TryValidate()
+        public void SetScheme( string value )
         {
-            if ( RtspAuthenticationTypes.IsBasicAuthentication( _type ) )
-            {
-                return StringRtspValidator.TryValidate( _response );
-            }
-
-            return RtspAuthenticationTypes.IsDigestAuthentication( _type ) ? 
-                   StringRtspValidator.TryValidate( _username )
-                || StringRtspValidator.TryValidate( _realm )
-                || StringRtspValidator.TryValidate( _nonce )
-                || StringRtspValidator.TryValidate( _response )
-                || StringRtspValidator.TryValidateUri( _uri )
-                 : false
-                 ;
+            Scheme = RtspValueNormalizer.Normalize( value );
         }
 
-        /// <summary>
-        /// Format to string
-        /// </summary>
-        /// <returns>returns a string</returns>
+        public void SetUserName( string value )
+        {
+            UserName = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetRealm( string value )
+        {
+            Realm = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetNonce( string value )
+        {
+            Nonce = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetOpaque( string value )
+        {
+            Opaque = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetDomain( string value )
+        {
+            Domain = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetUri( string value )
+        {
+            Uri = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetResponse( string value )
+        {
+            Response = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetAlgorithm( string value )
+        {
+            Algorithm = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetCNonce( string value )
+        {
+            CNonce = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetNC( string value )
+        {
+            NC = RtspValueNormalizer.Normalize( value );
+        }
+
+        public void SetQualityOfProtection( string value )
+        {
+            QualityOfProtection = RtspValueNormalizer.Normalize( value );
+        }
+
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( _type ) )
+            if ( string.IsNullOrWhiteSpace( Scheme ) )
             {
                 return string.Empty;
             }
 
             var builder = new StringBuilder();
 
-            builder.AppendFormat( "{0} " , _type );
+            builder.AppendFormat( "{0} " , Scheme );
 
-            if ( RtspAuthenticationTypes.IsBasicAuthentication( _type ) )
+            builder.AppendFormat( "username=\"{0}\", " , UserName );
+            builder.AppendFormat( "realm=\"{0}\", " , Realm );
+            builder.AppendFormat( "nonce=\"{0}\", " , Nonce );
+
+            if ( ! string.IsNullOrWhiteSpace( Domain ) )
             {
-                builder.Append( _response );
-            }
-            else if ( RtspAuthenticationTypes.IsDigestAuthentication( _type ) )
-            {
-                builder.AppendFormat( "username=\"{0}\", " , _username );
-                builder.AppendFormat( "realm=\"{0}\", " , _realm );
-                builder.AppendFormat( "nonce=\"{0}\", " , _nonce );
-
-                if ( ! string.IsNullOrWhiteSpace( _domain ) )
-                {
-                    builder.AppendFormat( "domain=\"{0}\", " , _domain );
-                }
-
-                if ( ! string.IsNullOrWhiteSpace( _opaque ) )
-                {
-                    builder.AppendFormat( "opaque=\"{0}\", " , _opaque );
-                }
-
-                builder.AppendFormat( "uri=\"{0}\", " , _uri );
-
-                builder.AppendFormat( "response=\"{0}\" " , _response );
-
-                if ( ! string.IsNullOrWhiteSpace( _algorithm ) )
-                {
-                    builder.AppendFormat( "algorithm=\"{0}\", " , _algorithm );
-                }
-
-                if ( ! string.IsNullOrWhiteSpace( _qpop ) )
-                {
-                    builder.AppendFormat( "qpop=\"{0}\", " , _qpop );
-                }
-
-                if ( ! string.IsNullOrWhiteSpace( _cnonce ) )
-                {
-                    builder.AppendFormat( "cnonce=\"{0}\"" , _cnonce );
-                }
+                builder.AppendFormat( "domain=\"{0}\", " , Domain );
             }
 
-            while ( builder.Length > 0 && ( builder[ builder.Length - 1 ] == ',' || builder[ builder.Length - 1 ] == ' ' ) )
+            if ( ! string.IsNullOrWhiteSpace( Opaque ) )
             {
-                builder.Remove( builder.Length - 1 , 1 );
+                builder.AppendFormat( "opaque=\"{0}\", " , Opaque );
             }
 
-            return builder.ToString();
+            builder.AppendFormat( "uri=\"{0}\", " , Uri );
+            builder.AppendFormat( "response=\"{0}\", " , Response );
+
+            if ( ! string.IsNullOrWhiteSpace( Algorithm ) )
+            {
+                builder.AppendFormat( "algorithm=\"{0}\", " , Algorithm );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( CNonce ) )
+            {
+                builder.AppendFormat( "cnonce=\"{0}\", " , CNonce );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( NC ) )
+            {
+                builder.AppendFormat( "nc=\"{0}\", " , NC );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( QualityOfProtection ) )
+            {
+                builder.AppendFormat( "qop=\"{0}\", " , QualityOfProtection );
+            }
+
+            return builder.ToString().Trim( ' ' , ',' );
         }
     }
 }

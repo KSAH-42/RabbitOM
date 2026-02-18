@@ -1,48 +1,29 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class ContentRangeRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using System.Text;
+
+    public sealed class ContentRangeRtspHeader 
     {
-        public const string TypeName = "Content-Range";
+        public static readonly string TypeName = "Content-Range";
         
 
 
 
 
-        private string _unit = string.Empty;
-        private long? _from;
-        private long? _to;
-        private long? _size;
-        
+
+        public string Unit { get; private set; } = string.Empty;
+
+        public long? Start { get; set; }
+
+        public long? End { get; set; }
+
+        public long? Size { get; set; }
 
 
-
-        public string Unit
-        {
-            get => _unit;
-            set => _unit = StringRtspNormalizer.Normalize( value );
-        }
-
-        public long? From
-        {
-            get => _from;
-            set => _from = value;
-        }
-
-        public long? To
-        {
-            get => _to;
-            set => _to = value;
-        }
-
-        public long? Size
-        {
-            get => _size;
-            set => _size = value;
-        }
 
 
 
@@ -51,54 +32,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static bool TryParse( string input , out ContentRangeRtspHeader result )
         {
             result = null;
-
-            // bytes 0-99/5000
-            // bytes 0-99/*
-            // bytes */5000
-
-            if ( RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , " " , out var tokens ) )
+            
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ' ' , out var tokens ) )
             {
-                var unit = tokens.FirstOrDefault();
-
-                if ( string.IsNullOrWhiteSpace( unit ) || unit.IndexOfAny( new char[] { ',' , ';' } ) >= 0 )
+                if ( StringRtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , '/' , out var tokensRange ) )
                 {
-                    return false;
-                }
+                    var header = new ContentRangeRtspHeader();
 
-                var header = new ContentRangeRtspHeader() {  Unit = tokens.FirstOrDefault() };
+                    header.SetUnit( tokens.ElementAtOrDefault( 0 ) );
+                    header.SetRange( tokensRange.ElementAtOrDefault( 0 ) );
+                    header.SetSize( tokensRange.ElementAtOrDefault( 1 ) );
 
-                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out tokens ) || tokens.Length != 2 )
-                {
-                    if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 0 ) , "-" , out var range ) || range.Length != 2 )
+                    if ( header.Start.HasValue && header.End.HasValue )
                     {
-                        if ( long.TryParse( range.FirstOrDefault() , out var from ) )
-                        {
-                            header.From = from;
-                        }
-
-                        if ( long.TryParse( range.LastOrDefault() , out var to ) )
-                        {
-                            header.To = to;
-                        }
+                        result = header;
                     }
-
-                    if ( long.TryParse( tokens.LastOrDefault() , out var size ) )
+                    
+                    else if ( header.Size.HasValue && ! header.Start.HasValue && ! header.End.HasValue )
                     {
-                        header.Size = size;
-                    }
-
-                    if ( tokens.FirstOrDefault() != "*" && ( ! header.From.HasValue || ! header.To.HasValue ) )
-                    {
-                        return false;
-                    }
-
-                    if ( tokens.LastOrDefault() != "*" && ! header.Size.HasValue )
-                    {
-                        return false;
+                        result = header;
                     }
                 }
-
-                result = header;
             }
 
             return result != null;
@@ -107,50 +61,73 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        
 
-        public override bool TryValidate()
+
+        public void SetUnit( string value )
         {
-            if ( From.HasValue && To.HasValue )
-            {
-                return StringRtspValidator.TryValidateAsContentTD( _unit );
-            }
+            Unit = RtspValueNormalizer.Normalize( value );
+        }
 
-            return Size.HasValue && StringRtspValidator.TryValidateAsContentTD( _unit );
+        public void SetRange( string value )
+        {
+            Start = null;
+            End = null;
+
+            if ( StringParameterRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( value ) , '-' , out var range ) )
+            {
+                if ( long.TryParse( range.Name , out var number ) )
+                {
+                    Start = number;
+                }
+
+                if ( long.TryParse( range.Value , out number ) )
+                {
+                    End = number;
+                }
+            }
+        }
+
+        public void SetSize( string value )
+        {
+            Size = null;
+
+            if ( long.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) )
+            {
+                Size = result;
+            }
         }
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( _unit ) )
+            if ( string.IsNullOrWhiteSpace( Unit ) )
             {
                 return string.Empty;
             }
+            
+            var builder = new StringBuilder();
 
-            var buidler = new StringBuilder();
-
-            buidler.AppendFormat( "{0} " , _unit );
-
-            if ( From.HasValue && To.HasValue )
+            if ( Start.HasValue && End.HasValue )
             {
-                buidler.AppendFormat( "{0}-{1}" , From , To );
+                builder.Append( $"{Start}-{End}" );
             }
             else
             {
-                buidler.Append( "*" );
+                builder.Append( "*" );
             }
 
-            buidler.Append( "/" );
+            builder.Append( "/" );
 
             if ( Size.HasValue )
             {
-                buidler.AppendFormat( "{0}" , Size );
+                builder.Append( $"{Size}" );
             }
             else
             {
-                buidler.Append( "*" );
+                builder.Append( "*" );
             }
 
-            return buidler.ToString();
-
+            return builder.ToString();
         }
     }
 }

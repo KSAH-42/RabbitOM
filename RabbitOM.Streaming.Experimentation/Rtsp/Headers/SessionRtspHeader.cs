@@ -1,102 +1,71 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class SessionRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class SessionRtspHeader 
     {
-        public const string TypeName = "Session";
+        public static readonly string TypeName = "Session";
         
+        public string Identifier { get; private set; } = string.Empty;
 
-        private string _identifier = string.Empty;
-
-        private long? _timeout;
-
-
-
-        public string Identifier
-        { 
-            get => _identifier;
-            set => _identifier = StringRtspNormalizer.Normalize( value );
-        }
-
-
-        public long? Timeout
-        {
-            get => _timeout;
-            set => _timeout = value;
-        }
-
-
+        public long? Timeout { get; set; }
 
         public static bool TryParse( string input , out SessionRtspHeader result )
         {
             result = null;
 
-            if ( ! RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ';' , out var tokens ) )
             {
-                return false;
-            }
+                var header = new SessionRtspHeader();
 
-            var identifier = tokens.ElementAtOrDefault( 0 );
+                header.SetIdentifier( tokens.FirstOrDefault() );
 
-            if ( string.IsNullOrWhiteSpace( identifier ) || ! identifier.Any( x => char.IsLetterOrDigit( x ) ) )
-            {
-                return false;
-            }
-
-            result = new SessionRtspHeader() { Identifier = identifier };
-
-            foreach( var token in tokens.Skip( 1 ) )
-            {
-                if ( RtspHeaderParser.TryParse( token , "=" , out var parameters ) )
+                foreach( var token in tokens.Skip( 1 ) )
                 {
-                    var parameterName = parameters.ElementAtOrDefault( 0 );
-                    var parameterValue= StringRtspNormalizer.Normalize( parameters.ElementAtOrDefault( 1 ) );
-
-                    if ( string.Equals( "timeout" , parameterName  , StringComparison.OrdinalIgnoreCase ) )
+                    if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
                     {
-                        if ( long.TryParse( parameterValue , out var timeout ) )
+                        if ( ! string.Equals( "timeout" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
-                            result.Timeout = timeout;
+                            continue;
                         }
+
+                        if ( ! long.TryParse( RtspValueNormalizer.Normalize( parameter.Value ) , out var timeout ) )
+                        {
+                            continue;
+                        }
+
+                        header.Timeout = timeout;
+                        break;
                     }
                 }
+
+                result = header;
             }
 
-            return true;
+            return result != null;
         }
 
-
-
-        public override bool TryValidate()
+        public void SetIdentifier( string value )
         {
-            if ( _timeout.HasValue && _timeout.Value <= 0 )
-            {
-                return false;
-            }
-
-            return StringRtspValidator.TryValidate( _identifier ) && _identifier.Any( x => char.IsLetterOrDigit( x ) );
+            Identifier = RtspValueNormalizer.Normalize( value );
         }
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( _identifier ) )
+            if ( string.IsNullOrWhiteSpace( Identifier ) )
             {
                 return string.Empty;
             }
 
-            var builder = new StringBuilder();
-
-            builder.Append( _identifier );
-
-            if ( _timeout.HasValue )
+            if ( Timeout.HasValue )
             {
-                builder.AppendFormat( ";timeout={0}" , _timeout );
+                return $"{Identifier};timeout={Timeout}";
             }
 
-            return builder.ToString();
+            return Identifier;
         }
     }
 }

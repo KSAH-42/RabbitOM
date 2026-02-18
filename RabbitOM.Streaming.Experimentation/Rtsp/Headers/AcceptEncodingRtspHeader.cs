@@ -3,57 +3,38 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    /// <summary>
-    /// Represent an rtsp header
-    /// </summary>
-    public sealed class AcceptEncodingRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class AcceptEncodingRtspHeader
     {
-        /// <summary>
-        /// The type name
-        /// </summary>
-        public const string TypeName = "Accept-Encoding";
+        public static readonly string TypeName = "Accept-Encoding";
 
 
 
-
-
-        private readonly List<StringWithQualityRtspHeaderValue> _encodings = new List<StringWithQualityRtspHeaderValue>();
-        
+        private readonly HashSet<StringRtspHeader> _encodings = new HashSet<StringRtspHeader>();
 
 
 
-
-        /// <summary>
-        /// Gets the encodings
-        /// </summary>
-        public IReadOnlyList<StringWithQualityRtspHeaderValue> Encodings
+        public IReadOnlyCollection<StringRtspHeader> Encodings
         {
             get => _encodings;
         }
-        
 
 
 
-
-        /// <summary>
-        /// Try to parse
-        /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse( string input , out AcceptEncodingRtspHeader result )
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
             {
                 var header = new AcceptEncodingRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var encoding ) )
+                    if ( StringRtspHeader.TryParse( token , out var encoding ) )
                     {
-                        header.TryAddEncoding( encoding );
+                        header.AddEncoding( encoding );
                     }
                 }
             
@@ -65,80 +46,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return result != null;
         }
-        
 
 
 
 
-        /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public override bool TryValidate()
+        public bool AddEncoding( StringRtspHeader encoding )
         {
-            return _encodings.Count > 0;
-        }
-
-        /// <summary>
-        /// Try add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddEncoding( StringWithQualityRtspHeaderValue value )
-        {
-            if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
+            if ( ! StringRtspHeader.IsNullOrEmpty( encoding ) )
             {
-                return false;
-            }
-            
-            foreach ( var encoding in _encodings )
-            {
-                if ( StringWithQualityRtspHeaderValue.Equals( encoding , value ) )
-                {
-                    return false;
-                }
+                return _encodings.Add( encoding );
             }
 
-            _encodings.Add( value );
-
-            return true;
+            return false;
         }
 
-        /// <summary>
-        /// Add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
-        public void AddEncoding( StringWithQualityRtspHeaderValue value )
+        public bool RemoveEncoding( StringRtspHeader encoding )
         {
-            if ( ! TryAddEncoding( value ?? throw new ArgumentNullException( nameof( value ) ) ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
+            return _encodings.Remove( encoding );
         }
 
-        /// <summary>
-        /// Remove an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        public void RemoveEncoding( StringWithQualityRtspHeaderValue value )
-        {
-            _encodings.Remove( value );
-        }
-
-        /// <summary>
-        /// Remove all elements
-        /// </summary>
         public void RemoveEncodings()
         {
             _encodings.Clear();
         }
 
-        /// <summary>
-        /// Format to string
-        /// </summary>
-        /// <returns>returns a string</returns>
         public override string ToString()
         {
             return string.Join( ", " , _encodings );

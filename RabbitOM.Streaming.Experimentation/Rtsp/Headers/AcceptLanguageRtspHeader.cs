@@ -3,29 +3,21 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    /// <summary>
-    /// Represent an rtsp header
-    /// </summary>
-    public sealed class AcceptLanguageRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class AcceptLanguageRtspHeader
     {
-        /// <summary>
-        /// The type name
-        /// </summary>
-        public const string TypeName = "Accept-Language";
+        public static readonly string TypeName = "Accept-Language";
 
 
 
 
-
-        private readonly List<StringWithQualityRtspHeaderValue> _languages = new List<StringWithQualityRtspHeaderValue>();
-
+        private readonly HashSet<StringRtspHeader> _languages = new HashSet<StringRtspHeader>();
 
 
-        /// <summary>
-        /// Gets the languages
-        /// </summary>
 
-        public IReadOnlyList<StringWithQualityRtspHeaderValue> Languages
+
+        public IReadOnlyCollection<StringRtspHeader> Languages
         {
             get => _languages;
         }
@@ -37,105 +29,53 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( ! RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
             {
-                return false;
-            }
+                var header = new AcceptLanguageRtspHeader();
 
-            var header = new AcceptLanguageRtspHeader();
-
-            foreach ( var token in tokens )
-            {
-                if ( StringWithQualityRtspHeaderValue.TryParse( token , out var encoding ) )
+                foreach ( var token in tokens )
                 {
-                    header.TryAddLanguage( encoding );
+                    if ( StringRtspHeader.TryParse( token , out var language ) )
+                    {
+                        header.AddLanguage( language );
+                    }
+                }
+            
+                if ( header.Languages.Count > 0 )
+                {
+                    result = header;
                 }
             }
-            
-            if ( header.Languages.Count <= 0 )
-            {
-                return false;
-            }
 
-            result = header;
+            return result != null;
+        }
+
+
+
+
+        public bool AddLanguage( StringRtspHeader language )
+        {
+            if ( ! StringRtspHeader.IsNullOrEmpty( language ) )
+            {
+                return _languages.Add( language );
+            }
 
             return true;
         }
 
-
-
-
-        /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public override bool TryValidate()
+        public bool RemoveLanguage( StringRtspHeader encoding )
         {
-            return _languages.Count > 0;
+            return _languages.Remove( encoding );
         }
 
-        /// <summary>
-        /// Try to add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
-        public bool TryAddLanguage( StringWithQualityRtspHeaderValue value )
-        {
-            if ( StringWithQualityRtspHeaderValue.IsNullOrEmpty( value ) )
-            {
-                return false;
-            }
-
-            _languages.Add( value );
-
-            return true;
-        }
-
-        /// <summary>
-        /// Add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
-        public void AddLanguage( StringWithQualityRtspHeaderValue value )
-        {
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( value.Name ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            _languages.Add( value );
-        }
-
-        /// <summary>
-        /// Remove an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        public void RemoveLanguage( StringWithQualityRtspHeaderValue value )
-        {
-            _languages.Remove( value );
-        }
-
-        /// <summary>
-        /// Remove all elements
-        /// </summary>
         public void RemoveLanguages()
         {
             _languages.Clear();
         }
 
-        /// <summary>
-        /// Format to a string
-        /// </summary>
-        /// <returns>returns a string</returns>
         public override string ToString()
         {
             return string.Join( ", " , _languages );
         }
-    } 
+    }
 }

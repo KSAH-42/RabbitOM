@@ -1,52 +1,28 @@
 ﻿using System;
-using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class DateRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class DateRtspHeader
     {
-        private const string FormatDate = "ddd, dd MMM yyyy HH:mm:ss GMT";
-
-        public const string TypeName = "Date";
+        public static readonly string TypeName = "Date";
         
+        public DateTime Value { get; set; }
 
-
-        private DateTime _value;
-
-
-
-        public DateTime Value
+        public static bool TryParse( string input , out DateRtspHeader result )
         {
-            get => _value;
-            set => _value = value;
-        }
+            result = DateTimeRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , out var value )
+                ? new DateRtspHeader() { Value = value }
+                : null
+                ;
 
-
-        public override bool TryValidate()
-        {
-            return DateTime.MinValue < _value && _value < DateTime.MaxValue;
+            return result != null;
         }
 
         public override string ToString()
         {
-            return _value.ToUniversalTime().ToString( FormatDate , CultureInfo.InvariantCulture );
-        }
-        
-
-
-
-        public static bool TryParse( string value , out DateRtspHeader result )
-        {
-            result = null;
-
-            if ( ! DateTime.TryParse( value , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var date ) )
-            {
-                return false;
-            }
-
-            result = new DateRtspHeader() { Value = date };
-
-            return true;
+            return DateTimeRtspHeaderParser.Format( Value );
         }
     }
 }

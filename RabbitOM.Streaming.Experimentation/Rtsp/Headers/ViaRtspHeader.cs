@@ -1,44 +1,81 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class ViaRtspHeader : RtspHeader 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
+    public sealed class ViaRtspHeader 
     { 
-        public const string TypeName = "Via";
+        public static readonly string TypeName = "Via";
         
 
-        public string Comment { get; set; }
-        public string ProtocolName { get; set; }
-        public string ProtocolVersion { get; set; }
-        public string ReceivedBy { get; set; }
 
 
-        public override bool TryValidate()
+        private readonly HashSet<RtspProxy> _proxies = new HashSet<RtspProxy>();
+
+
+
+
+        public IReadOnlyCollection<RtspProxy> Proxies
         {
-            return ! string.IsNullOrWhiteSpace( Comment )
-                || ! string.IsNullOrWhiteSpace( ProtocolName )
-                || ! string.IsNullOrWhiteSpace( ProtocolVersion )
-                || ! string.IsNullOrWhiteSpace( ReceivedBy )
-                ;
+            get => _proxies;
+        }
+        
+
+
+
+        public static bool TryParse( string input , out ViaRtspHeader result )
+        {
+            result = null;
+
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
+            {
+                var header = new ViaRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    if ( RtspProxy.TryParse( token , out var proxy ) )
+                    {
+                        header.AddProxy( proxy );
+                    }
+                }
+
+                if ( header.Proxies.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
+
+
+
+
+        public bool AddProxy( RtspProxy proxy )
+        {
+            if ( proxy != null )
+            {
+                return _proxies.Add( proxy );
+            }
+
+            return false;
+        }
+
+        public bool RemoveProxy( RtspProxy proxy )
+        {
+            return _proxies.Remove( proxy );
+        }
+
+        public void RemoveProxies()
+        {
+            _proxies.Clear();
         }
 
         public override string ToString()
         {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public static ViaRtspHeader Parse( string value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool TryParse( string value , out ViaRtspHeader result )
-        {
-            throw new NotImplementedException();
+            return string.Join( ", " , _proxies );
         }
     }
 }

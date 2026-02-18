@@ -3,56 +3,62 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class PublicRtspHeader : RtspHeader 
-    {
-        public const string TypeName = "Public";
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
 
+    public sealed class PublicRtspHeader 
+    {
+        public static readonly string TypeName = "Allow";
 
 
 
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
+        
 
-
-
-
+        
         public IReadOnlyCollection<RtspMethod> Methods
         {
             get => _methods;
         }
-
-
-
-        public override bool TryValidate()
+        
+        
+        
+        public static bool TryParse( string input , out PublicRtspHeader result )
         {
-            return _methods.Count > 0;
-        }
+            result = null;
 
-        public override string ToString()
-        {
-            return string.Join( ", " , _methods );
-        }
-
-        public bool TryAddMethod( RtspMethod method )
-        {
-            if ( method == null )
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
             {
-                return false;
+                var header = new PublicRtspHeader();
+
+                foreach( var token in tokens )
+                {
+                    if ( RtspMethod.TryParse( RtspValueNormalizer.Normalize( token ) , out var method ) )
+                    {
+                        header.AddMethod( method );
+                    }
+                }
+
+                if ( header.Methods.Count > 0 )
+                {
+                    result = header;
+                }
             }
 
-            return _methods.Add( method );
+            return result != null;
         }
+        
 
-        public void AddMethod( RtspMethod method )
+
+
+        
+        public bool AddMethod( RtspMethod method )
         {
-            if ( method == null )
+            if ( method != null )
             {
-                throw new ArgumentNullException( nameof( method ) );
+                return _methods.Add( method );
             }
 
-            if ( ! _methods.Add( method ) )
-            {
-                throw new ArgumentException( "the element is already added" );
-            }
+            return false;
         }
 
         public void RemoveMethod( RtspMethod method )
@@ -60,42 +66,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _methods.Remove( method );
         }
 
-        public void RemoveAllMethods()
+        public void RemoveMethods()
         {
             _methods.Clear();
         }
-
-
-
-
-
-        public static bool TryParse( string value , out PublicRtspHeader result )
+        
+        public override string ToString()
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var tokens = value.Split( new char[] { ',' } , StringSplitOptions.RemoveEmptyEntries );
-
-            if ( tokens.Length <= 0 )
-            {
-                return false;
-            }
-
-            var header = new PublicRtspHeader();
-
-            foreach ( var token in tokens )
-            {
-                if ( RtspMethod.TryParse( token , out var method ) )
-                {
-                    header.TryAddMethod( method );
-                }
-            }
-
-            return ( result = header.Methods.Count > 0 ? header : null ) != null;
+            return string.Join( ", " , _methods );
         }
     }
 }

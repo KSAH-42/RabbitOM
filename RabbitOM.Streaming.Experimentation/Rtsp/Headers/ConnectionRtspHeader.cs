@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+
     /// <summary>
     /// Represent a rtsp header
     /// </summary>
-    public sealed class ConnectionRtspHeader : RtspHeader 
+    public sealed class ConnectionRtspHeader 
     {
         /// <summary>
         /// The type name
         /// </summary>
-        public const string TypeName = "Connection";
+        public static readonly string TypeName = "Connection";
 
 
 
@@ -46,13 +47,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
             {
                 var header = new ConnectionRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    header.TryAddDirective( token );
+                    header.AddDirective( token );
                 }
 
                 if ( header.Directives.Count > 0 )
@@ -69,24 +70,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         /// <summary>
-        /// Try to validate
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public override bool TryValidate()
-        {
-            return _directives.Count > 0 && _directives.All( StringRtspValidator.TryValidate );
-        }
-
-        /// <summary>
         /// Try to add an element
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool TryAddDirective( string value )
+        public bool AddDirective( string value )
         {
-            var text = StringRtspNormalizer.Normalize( value );
+            var text = RtspValueNormalizer.Normalize( value );
 
-            if ( StringRtspValidator.TryValidateAsContentSTD( text ) )
+            if ( ! string.IsNullOrWhiteSpace( text ) )
             {
                 return _directives.Add( text );
             }
@@ -95,25 +87,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
         /// <summary>
-        /// Add an element
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <exception cref="ArgumentException"/>
-        public void AddDirective( string value )
-        {
-            if ( ! TryAddDirective( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-        }
-
-        /// <summary>
         /// Remove an element
         /// </summary>
         /// <param name="value">the value</param>
         public void RemoveDirective( string value )
         {
-            _directives.Remove( StringRtspNormalizer.Normalize( value ) );
+            _directives.Remove( RtspValueNormalizer.Normalize( value ) );
         }
 
         /// <summary>
