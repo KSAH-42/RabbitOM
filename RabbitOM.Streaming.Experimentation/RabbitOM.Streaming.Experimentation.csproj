@@ -66,7 +66,7 @@
     <Compile Include="Rtsp\Headers\PublicRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspProxy.cs" />
-    <Compile Include="Rtsp\Headers\RtspValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Formatting\RtspValueNormalizer.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
