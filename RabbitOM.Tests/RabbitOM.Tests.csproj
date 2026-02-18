@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AcceptRangesRtspHeader.cs" />
     <Compile Include="Sdp\BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

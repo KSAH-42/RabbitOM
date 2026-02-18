@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -13,17 +13,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<string> _units = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
-        
+       public bool Bytes { get; set; }
+       
+       public bool Ntp { get; set; }
 
+       public bool Smpte { get; set; }
 
+       public bool Clock { get; set; }
 
+       public bool Utc { get; set; }
 
-        public IReadOnlyCollection<string> Units
-        {
-            get => _units;
-        }
-        
 
 
 
@@ -38,13 +37,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    header.AddUnit( token );
+                    if ( string.Equals( "bytes" , token , StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        header.Bytes = true;
+                    }
+                    else if ( string.Equals( "ntp" , token , StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        header.Ntp = true;
+                    }
+                    else if ( string.Equals( "smpte" , token , StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        header.Smpte = true;
+                    }
+                    else if ( string.Equals( "utc" , token , StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        header.Utc = true;
+                    }
+                    else if ( string.Equals( "clock" , token , StringComparison.OrdinalIgnoreCase ) )
+                    {
+                        header.Clock = true;
+                    }
                 }
 
-                if ( header.Units.Count > 0 )
-                {
-                    result = header;
-                }
+                result = header;
             }
 
             return result != null;
@@ -54,31 +69,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddUnit( string value )
-        {
-            var unit = RtspValueNormalizer.Normalize( value );
-
-            if ( string.IsNullOrWhiteSpace( unit ) )
-            {
-                return false;
-            }
-            
-            return _units.Add( unit );
-        }
-
-        public void RemoveUnit( string value )
-        {
-            _units.Remove( RtspValueNormalizer.Normalize( value ) );
-        }
-
-        public void RemoveUnits()
-        {
-            _units.Clear();
-        }
-
         public override string ToString()
         {
-            return string.Join( ", " , _units );
+            var builder = new StringBuilder();
+
+            if ( Bytes )
+            {
+                builder.Append( "bytes, ");
+            }
+
+            if ( Ntp )
+            {
+                builder.Append( "ntp, ");
+            }
+
+            if ( Smpte )
+            {
+                builder.Append( "smpte, ");
+            }
+
+            if ( Utc )
+            {
+                builder.Append( "utc, ");
+            }
+
+            if ( Clock )
+            {
+                builder.Append( "clock, ");
+            }
+
+            return builder.ToString().Trim( ',' , ' ' );
         }
     }
 }
