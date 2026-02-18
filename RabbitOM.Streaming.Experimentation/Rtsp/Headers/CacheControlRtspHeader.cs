@@ -254,7 +254,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public bool RemoveExtensinByName( string name )
+        public bool RemoveExtensionByName( string name )
         {
             return _extensions.Remove( RtspValueNormalizer.Normalize( name ) );
         }
