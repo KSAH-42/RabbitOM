@@ -78,6 +78,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.Append( "bytes, ");
             }
 
+            if ( Clock )
+            {
+                builder.Append( "clock, ");
+            }
+
             if ( Ntp )
             {
                 builder.Append( "ntp, ");
@@ -93,10 +98,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.Append( "utc, ");
             }
 
-            if ( Clock )
-            {
-                builder.Append( "clock, ");
-            }
+            
 
             return builder.ToString().Trim( ',' , ' ' );
         }

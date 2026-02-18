@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 using System;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
@@ -86,6 +87,43 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         {
             Assert.IsFalse( AcceptRangesRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
+        }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new AcceptRangesRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.Bytes = true;
+            Assert.AreEqual( "bytes" , header.ToString() );
+
+            header.Clock = true;
+            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
+            Assert.IsTrue( header.ToString().Contains( "clock" ) );
+            Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 1 );
+            
+            header.Ntp = true;
+            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
+            Assert.IsTrue( header.ToString().Contains( "clock" ) );
+            Assert.IsTrue( header.ToString().Contains( "ntp" ) );
+            Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 2 );
+
+            header.Smpte = true;
+            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
+            Assert.IsTrue( header.ToString().Contains( "clock" ) );
+            Assert.IsTrue( header.ToString().Contains( "ntp" ) );
+            Assert.IsTrue( header.ToString().Contains( "smpte" ) );
+            Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 3 );
+
+            header.Utc = true;
+            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
+            Assert.IsTrue( header.ToString().Contains( "clock" ) );
+            Assert.IsTrue( header.ToString().Contains( "ntp" ) );
+            Assert.IsTrue( header.ToString().Contains( "smpte" ) );
+            Assert.IsTrue( header.ToString().Contains( "utc" ) );
+            Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 4 );
         }
     }
 }
