@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using System.Linq;
 
     public sealed class PublicRtspHeader 
     {
@@ -61,9 +62,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public void RemoveMethod( RtspMethod method )
+        public bool RemoveMethod( RtspMethod method )
         {
-            _methods.Remove( method );
+            return _methods.Remove( method );
+        }
+
+        public bool RemoveMethodByName( string name )
+        {
+            return _methods.Remove( _methods.FirstOrDefault( method => RtspMethod.Equals( method , name ) ) );
         }
 
         public void RemoveMethods()

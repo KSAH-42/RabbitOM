@@ -22,7 +22,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public static RtspMethod SETUP { get; } = new RtspMethod( "SETUP" );
         
-        
         public static RtspMethod PLAY { get; } = new RtspMethod( "PLAY" );
         
         public static RtspMethod PAUSE { get; } = new RtspMethod( "PAUSE" );
@@ -41,6 +40,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
 
+
+
+
+        public static bool Equals( RtspMethod method , string name )
+        {
+            if ( method == null || string.IsNullOrWhiteSpace( name ) )
+            {
+                return false;
+            }
+
+            return string.Equals( method.Name , name?.Trim() , StringComparison.OrdinalIgnoreCase );
+        }
 
 
         
