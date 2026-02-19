@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( StringRtspHeaderParser.TryParse( input , ' ' , out var tokens ) )
             {
-                var scheme = tokens.First();
+                var scheme = tokens.FirstOrDefault();
                 
                 if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , ',' , out tokens ) )
                 {
