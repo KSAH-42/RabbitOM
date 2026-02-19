@@ -66,9 +66,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input , "\'" , "\"" ) , ';' , out var tokens ) )
             {
+                var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
+
+                if ( string.IsNullOrWhiteSpace( name ) )
+                {
+                    return false;
+                }
+
                 double? quality = null;
 
-                foreach ( var token in tokens.Skip( 1 ) )
+                foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                 {
                     if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
                     {
@@ -87,7 +94,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                result = NewString( tokens.FirstOrDefault() , quality );
+                result = NewString( name , quality );
             }
 
             return result != null;
