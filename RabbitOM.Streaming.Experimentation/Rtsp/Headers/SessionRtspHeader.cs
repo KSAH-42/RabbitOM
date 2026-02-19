@@ -4,6 +4,7 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using System.Threading;
 
     public sealed class SessionRtspHeader 
     {
@@ -19,27 +20,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ';' , out var tokens ) )
             {
+                var identifer = tokens.FirstOrDefault( token => ! token.Contains( '=' ) && token.Any( x => char.IsLetterOrDigit(x) ) );
+
+                if ( string.IsNullOrWhiteSpace( identifer ) )
+                {
+                    return false;
+                }
+                
                 var header = new SessionRtspHeader();
 
-                header.SetIdentifier( tokens.FirstOrDefault() );
+                header.SetIdentifier( identifer );
 
-                foreach( var token in tokens.Skip( 1 ) )
+                foreach( var token in tokens )
                 {
                     if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
                     {
-                        if ( ! string.Equals( "timeout" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( string.Equals( "timeout" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
-                            continue;
+                            if ( long.TryParse( RtspValueNormalizer.Normalize( parameter.Value ) , out var timeout ) )
+                            {
+                                header.Timeout = timeout;
+                                break;
+                            }
                         }
-
-                        if ( ! long.TryParse( RtspValueNormalizer.Normalize( parameter.Value ) , out var timeout ) )
-                        {
-                            continue;
-                        }
-
-                        header.Timeout = timeout;
-                        break;
                     }
+                }
+
+                if ( string.IsNullOrWhiteSpace( header.Identifier ) )
+                {
+                    return false;
                 }
 
                 result = header;
