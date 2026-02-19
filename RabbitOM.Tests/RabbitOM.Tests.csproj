@@ -117,6 +117,10 @@
   <ItemGroup>
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\LastModifiedRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ExpiresRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\DateRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeaderTest.cs" />
