@@ -22,8 +22,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.IsTrue( header.Methods.Contains( RtspMethod.OPTIONS ) );
         }
 
-        [TestCase( "OPTIONS,DESCRIBE,SETUP,PLAY,PAUSE,TEARDOWN,KEEPALIVE,SET_PARAMETER,GET_PARAMETER,RECORD,ANNOUNCE,REDIRECT" )]
-        [TestCase( "oPTIONS,'SETUP', DESCRIBE ,PlAY,PAUSE,TEARDOWN,KEEPALIVE,SET_PARAMETER,GET_PARAMETER,RECORD,ANNOUNCE,REDIRECT" )]
+        [TestCase( "OPTIONS,DESCRIBE,SETUP,PLAY,PAUSE,TEARDOWN,ccc,SET_PARAMETER,GET_PARAMETER,RECORD,ANNOUNCE,REDIRECT" )]
+        [TestCase( "oPTIONS,'SETUP', DESCRIBE ,PlAY,PAUSE,TEARDOWN,tttt,SET_PARAMETER,GET_PARAMETER,RECORD,ANNOUNCE,REDIRECT" )]
         
         public void CheckParseSucceed2(string input )
         {
@@ -35,7 +35,6 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.IsTrue( header.Methods.Contains( RtspMethod.PLAY) );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.PAUSE ) );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.TEARDOWN) );
-            Assert.IsTrue( header.Methods.Contains( RtspMethod.KEEPALIVE ) );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.SET_PARAMETER ) );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.GET_PARAMETER) );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.RECORD ) );

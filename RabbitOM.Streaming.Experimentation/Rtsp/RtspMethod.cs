@@ -28,8 +28,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public static RtspMethod TEARDOWN { get; } = new RtspMethod( "TEARDOWN" );
         
-        public static RtspMethod KEEPALIVE { get; } = new RtspMethod( "KEEPALIVE" );
-        
         public static RtspMethod GET_PARAMETER { get; } = new RtspMethod( "GET_PARAMETER" );
         
         public static RtspMethod SET_PARAMETER { get; } = new RtspMethod( "SET_PARAMETER" );
