@@ -6,16 +6,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
 
-    public sealed class RtspProxy 
+    public sealed class RtspProxyInfo 
     { 
-        public static readonly RtspProxy Empty = new RtspProxy( string.Empty , string.Empty , string.Empty , string.Empty );
+        public static readonly RtspProxyInfo Empty = new RtspProxyInfo( string.Empty , string.Empty , string.Empty , string.Empty );
 
 
 
 
 
 
-        private RtspProxy( string protocol , string version , string receivedBy , string comments )
+        private RtspProxyInfo( string protocol , string version , string receivedBy , string comments )
         {
             Protocol = protocol ?? string.Empty;
             Version = version ?? string.Empty;
@@ -40,14 +40,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static RtspProxy NewProxy( string protocol , string version , string receivedBy )
+        public static RtspProxyInfo NewProxy( string protocol , string version , string receivedBy )
         {
             return NewProxy( protocol , version , receivedBy );
         }
 
-        public static RtspProxy NewProxy( string protocol , string version , string receivedBy , string comments )
+        public static RtspProxyInfo NewProxy( string protocol , string version , string receivedBy , string comments )
         {
-            return new RtspProxy( RtspValueNormalizer.Normalize( protocol ) ,
+            return new RtspProxyInfo( RtspValueNormalizer.Normalize( protocol ) ,
                 RtspValueNormalizer.Normalize( version ) , 
                 RtspValueNormalizer.Normalize( receivedBy ) ,
                 RtspValueNormalizer.Normalize( comments , "(" , ")" ) 
@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryParse( string input , out RtspProxy result )
+        public static bool TryParse( string input , out RtspProxyInfo result )
         {
             result = null;
 
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         .FirstOrDefault( token => token.StartsWith( "(" ) && token.EndsWith( ")" ) )
                         ;
 
-                    result = RtspProxy.NewProxy( protocol , version , receivedBy , comments );
+                    result = RtspProxyInfo.NewProxy( protocol , version , receivedBy , comments );
                 }
             }
 

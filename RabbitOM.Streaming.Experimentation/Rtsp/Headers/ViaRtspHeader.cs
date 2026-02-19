@@ -12,12 +12,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<RtspProxy> _proxies = new HashSet<RtspProxy>();
+        private readonly HashSet<RtspProxyInfo> _proxies = new HashSet<RtspProxyInfo>();
 
 
 
 
-        public IReadOnlyCollection<RtspProxy> Proxies
+        public IReadOnlyCollection<RtspProxyInfo> Proxies
         {
             get => _proxies;
         }
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( RtspProxy.TryParse( token , out var proxy ) )
+                    if ( RtspProxyInfo.TryParse( token , out var proxy ) )
                     {
                         header.AddProxy( proxy );
                     }
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddProxy( RtspProxy proxy )
+        public bool AddProxy( RtspProxyInfo proxy )
         {
             if ( proxy != null )
             {
@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public bool RemoveProxy( RtspProxy proxy )
+        public bool RemoveProxy( RtspProxyInfo proxy )
         {
             return _proxies.Remove( proxy );
         }

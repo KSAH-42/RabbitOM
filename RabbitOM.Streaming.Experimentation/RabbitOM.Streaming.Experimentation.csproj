@@ -65,7 +65,7 @@
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\RtspProxy.cs" />
+    <Compile Include="Rtsp\Headers\RtspProxyInfo.cs" />
     <Compile Include="Rtsp\Headers\Formatting\RtspValueNormalizer.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHeader.cs" />

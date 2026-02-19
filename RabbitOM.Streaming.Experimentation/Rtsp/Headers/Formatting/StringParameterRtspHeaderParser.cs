@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
         {
             result = default;
 
-            if ( string.IsNullOrWhiteSpace( input ) || input.IndexOfAny( separators ) < 0 )
+            if ( string.IsNullOrWhiteSpace( input ) ||  input.IndexOfAny( separators ) < 0 )
             {
                 return false;
             }
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
             {
                 return false;
             }
-
+            
             result = new StringParameter( tokens.ElementAtOrDefault( 0 ) , tokens.ElementAtOrDefault( 1 ) );
 
             return true;
