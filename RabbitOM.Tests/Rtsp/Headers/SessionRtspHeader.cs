@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             var header = new SessionRtspHeader();
 
             Assert.AreEqual( "" , header.ToString() );
-
+            
             header.SetIdentifier( "  ABCDEF1234  " );
             Assert.AreEqual( "ABCDEF1234" , header.ToString() );
 

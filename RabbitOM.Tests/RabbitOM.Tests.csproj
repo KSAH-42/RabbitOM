@@ -117,6 +117,9 @@
   <ItemGroup>
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AllowRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\PublicRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\StringRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\LastModifiedRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeaderTest.cs" />
