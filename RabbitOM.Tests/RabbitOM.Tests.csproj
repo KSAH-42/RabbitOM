@@ -131,6 +131,7 @@
     <Compile Include="Rtsp\Headers\CSeqRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptRangesRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Formatting\RtspValueNormalizerTest.cs" />
+    <Compile Include="Rtsp\Headers\UserAgentRtspHeaderTest.cs" />
     <Compile Include="Sdp\BaseFieldCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

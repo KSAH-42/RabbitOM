@@ -8,6 +8,9 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
     [TestFixture]
     public class AcceptEncodingRtspHeaderTest
     {
+        [TestCase( "*" , 1 ) ]
+        [TestCase( "identity" , 1 ) ]
+
         [TestCase( "gzip" , 1 ) ]
         [TestCase( "gzip, deflate" , 2 ) ]
         [TestCase( "gzip, deflate, identity" , 3 ) ]

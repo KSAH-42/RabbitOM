@@ -7,6 +7,7 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
     [TestFixture]
     public class StringRtspHeaderTest
     {
+        [TestCase( "*" , "*" , null )]
         [TestCase( "application" , "application" , null )]
         [TestCase( "application/text" , "application/text" , null )]
         [TestCase( "application/text;" , "application/text" , null )]

@@ -59,6 +59,7 @@
     <Compile Include="Rtsp\Headers\Formatting\DateTimeRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Formatting\StringParameter.cs" />
     <Compile Include="Rtsp\Headers\Formatting\StringParameterRtspHeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\Formatting\SplitOptions.cs" />
     <Compile Include="Rtsp\Headers\Formatting\StringRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\LastModifiedRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeader.cs" />

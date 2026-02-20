@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
-    using System.Linq;
 
     public sealed class UserAgentRtspHeader
     {
         public static readonly string TypeName = "User-Agent";
         
+
 
 
 
@@ -34,50 +35,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            void ParseToken( UserAgentRtspHeader header , string token )
+            var matches = new Regex( @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comments>[^()]*)\)" , RegexOptions.Compiled | RegexOptions.CultureInvariant ).Matches( input );
+
+            if ( matches.Count <= 0 )
             {
-                if ( token.StartsWith( "(") && token.EndsWith( ")" ) )
-                {
-                    if ( string.IsNullOrWhiteSpace( header.Comments ) )
-                    {
-                        header.SetComments( token );
-                    }
-                }
-                else if ( System.Version.TryParse( token.StartsWith( "V") || token.StartsWith("v") ? token.Remove( 0 , 1 ) : token , out var _ ) )
-                {
-                    if ( string.IsNullOrWhiteSpace( header.Version ) )
-                    {
-                        header.SetVersion( token );
-                    }
-                }
-                else
-                {
-                    if ( string.IsNullOrWhiteSpace( header.Product ) )
-                    {
-                        header.SetProduct( token );
-                    }
-                }
-            };
+                return false;
+            }
 
             result = new UserAgentRtspHeader();
 
-            if ( StringRtspHeaderParser.TryParse( input , new char[] { ' ' , '/' } , out var tokens ) )
+            foreach ( Match match in matches )
             {
-                foreach ( var token in tokens )
+                if ( match.Groups["product"].Success )
                 {
-                    ParseToken( result , token );
+                    result.SetProduct( match.Groups["product"].Value );
+                    result.SetVersion( match.Groups["version"].Value );
                 }
-            }
-            else
-            {
-                if ( StringRtspHeaderParser.TryParse( input , '/' , out var productTokens ) )
+                else if ( match.Groups["comments"].Success )
                 {
-                    result.SetProduct( productTokens.ElementAtOrDefault( 0 ) );
-                    result.SetVersion( productTokens.ElementAtOrDefault( 1 ) );
-                }
-                else
-                {
-                    ParseToken( result , input );
+                    result.SetComments( match.Groups["comments"].Value );
                 }
             }
 
