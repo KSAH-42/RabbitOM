@@ -1,5 +1,4 @@
-﻿using RabbitOM.Streaming.Threading;
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
@@ -20,6 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
 
 
+
         ~RtspMediaReceiver()
         {
             Dispose( false );
@@ -29,16 +29,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
 
 
-        private readonly BackgroundWorker _worker = new BackgroundWorker( "RTSP - Receiver" );
 
 
-
-
-
-        public bool IsCommunicationStarted { get => _worker.IsStarted; }
-        public bool IsCommunicationStopping { get => _worker.IsStopping; }
+        public abstract bool IsCommunicationStarted { get; }
+        
+        public abstract bool IsCommunicationStopping { get;}
+       
         public abstract bool IsConnected { get; }
+        
         public abstract bool IsStreamingStarted { get; }
+        
         public abstract bool IsReceivingData { get; }
 
 
@@ -46,45 +46,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
 
 
-        public bool StartCommunication()
-        {
-            return _worker.Start( () =>
-            {
-                OnCommunicationStarted( new RtspCommunicationStartedEventArgs() );
 
-                try
-                {
-                    using ( var stateMachine = CreateStateMachine() )
-                    {
-                        while ( _worker.CanContinue( stateMachine.IdleTime ) )
-                        {
-                            stateMachine.Run();
-                        }
-                    }
-                }
-                catch( Exception ex )
-                {
-                    OnError( new RtspInternalErrorEventArgs( ex.Message ) );
-                }
 
-                OnCommunicationStopped( new RtspCommunicationStoppedEventArgs() );
-            } );
-        }
+        public abstract bool StartCommunication();
 
-        public void StopCommunication()
-        {
-            _worker.Stop();
-        }
+        public abstract void StopCommunication();
 
-        public void StopCommunication(TimeSpan timeout)
-        {
-            _worker.Stop( timeout );
-        }
+        public abstract void StopCommunication(TimeSpan timeout);
+
+        public abstract void BeginStopCommunication();
+
+        public abstract bool EndStopCommunication(TimeSpan timeout);
+
 
         public void Dispose()
         {
-            StopCommunication();
-
             Dispose( true );
 
             GC.SuppressFinalize( this );
@@ -93,16 +69,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         protected virtual void Dispose( bool disposing )
         {
         }
-
-        protected void EnsureNotStarted()
-        {
-            if ( _worker.IsStarted )
-            {
-                throw new InvalidOperationException( "the operation can not be executed while the receiver is still running" );
-            }
-        }
-
-        protected abstract RtspStateMachine CreateStateMachine();
 
 
 

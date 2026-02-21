@@ -4,46 +4,70 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
 {
     public class TcpMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<TcpMediaReceiverConfiguration>
     {
-        private readonly TcpStreamingSession _session;
-
-        public TcpMediaReceiver()
+        public override bool IsCommunicationStarted
         {
-            _session = new TcpStreamingSession( this );
+            get => throw new NotImplementedException();
+        }
+
+        public override bool IsCommunicationStopping
+        {
+            get => throw new NotImplementedException();
         }
 
         public override bool IsConnected
         {
-            get => _session.IsOpened;
+            get => throw new NotImplementedException();
         }
 
         public override bool IsStreamingStarted
         {
-            get => _session.IsStreamingStarted;
+            get => throw new NotImplementedException();
         }
 
         public override bool IsReceivingData
         {
-            get => _session.IsReceivingData;
+            get => throw new NotImplementedException();
         }
+
+
+
+
+
 
         public void Configure( TcpMediaReceiverConfiguration configuration )
         {
             throw new NotImplementedException();
         }
 
-        protected override void Dispose( bool disposing )
+        public override bool StartCommunication()
         {
-            if ( disposing )
-            {
-                _session.Dispose();
-            }
-
-            base.Dispose( disposing );
+            throw new NotImplementedException();
         }
 
-        protected override RtspStateMachine CreateStateMachine()
+        public override void StopCommunication()
         {
-            return new StreamingRtspStateMachine( _session );
+            throw new NotImplementedException();
+        }
+
+        public override void StopCommunication(TimeSpan timeout)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void BeginStopCommunication()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool EndStopCommunication(TimeSpan timeout)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void Dispose( bool disposing )
+        {
+            
+            base.Dispose( disposing );
         }
     }
 }

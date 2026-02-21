@@ -27,7 +27,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
 
         bool StartCommunication();
+
         void StopCommunication();
-        void StopCommunication(TimeSpan timeout);
+
+        void BeginStopCommunication();
+
+        bool EndStopCommunication(TimeSpan timeout);
     }
 }
