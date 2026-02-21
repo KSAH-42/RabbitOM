@@ -72,23 +72,20 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         }
 
         /// <summary>
-        /// Can add a fragment
-        /// </summarCy>
-        /// <param name="fragment">the fragment</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool CanAddFragment( JpegFragment fragment )
-        {
-            return fragment != null && fragment.Type >= 0 && fragment.Payload.Count > 0;
-        }
-
-        /// <summary>
         /// Add a fragment
         /// </summary>
         /// <param name="fragment">the fragment</param>
-        /// <exception cref="ArgumentNullException"/>
-        public void AddFragment( JpegFragment fragment )
+        /// <returns>returns true for a success, otherwise false.</returns>
+        public bool AddFragment( JpegFragment fragment )
         {
-            _fragments.Enqueue( fragment ?? throw new ArgumentNullException( nameof( fragment ) ) );
+            if ( fragment == null )
+            {
+                return false;
+            }
+
+            _fragments.Enqueue( fragment );
+
+            return true;
         }
 
         /// <summary>

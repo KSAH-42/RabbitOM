@@ -55,12 +55,10 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
                     return false;
                 }
 
-                if ( ! _imageBuilder.CanAddFragment( fragment ) )
+                if ( ! _imageBuilder.AddFragment( fragment ) )
                 {
                     return false;
                 }
-
-                _imageBuilder.AddFragment( fragment );
             }
 
             if ( _imageBuilder.CanBuildFrame() )
