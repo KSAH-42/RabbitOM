@@ -115,9 +115,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtsp\Headers\AcceptRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AllowRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\CacheControlRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ConnectionRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />

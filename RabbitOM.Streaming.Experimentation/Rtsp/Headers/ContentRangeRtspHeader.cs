@@ -107,6 +107,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             
             var builder = new StringBuilder();
 
+            builder.Append( $"{Unit} " );
+
             if ( Start.HasValue && End.HasValue )
             {
                 builder.Append( $"{Start}-{End}" );
@@ -127,7 +129,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.Append( "*" );
             }
 
-            return builder.ToString();
+            return builder.ToString().Trim();
         }
     }
 }

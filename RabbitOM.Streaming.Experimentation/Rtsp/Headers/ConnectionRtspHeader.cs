@@ -90,9 +90,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// Remove an element
         /// </summary>
         /// <param name="value">the value</param>
-        public void RemoveDirective( string value )
+        public bool RemoveDirective( string value )
         {
-            _directives.Remove( RtspValueNormalizer.Normalize( value ) );
+            return _directives.Remove( RtspValueNormalizer.Normalize( value ) );
         }
 
         /// <summary>

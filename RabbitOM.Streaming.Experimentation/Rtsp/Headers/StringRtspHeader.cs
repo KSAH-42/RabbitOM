@@ -8,13 +8,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class StringRtspHeader
     {
-        public static readonly StringRtspHeader Empty = new StringRtspHeader( string.Empty , null );
+        public static readonly StringRtspHeader Empty = new StringRtspHeader( string.Empty );
 
 
 
 
+        private StringRtspHeader( string name )
+        {
+            Name = name;
+            Quality = null;
+        }
 
-        private StringRtspHeader( string name , double? quality )
+        private StringRtspHeader( string name , double quality )
         {
             Name = name;
             Quality = quality;
@@ -39,10 +44,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static StringRtspHeader NewString( string value )
         {
-            return NewString( value , null );
+            return NewString( value );
         }
 
-        public static StringRtspHeader NewString( string value , double? quality )
+        public static StringRtspHeader NewString( string value , double quality )
         {
             return new StringRtspHeader( RtspValueNormalizer.Normalize( value ) , quality );
         }
@@ -94,7 +99,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                result = NewString( name , quality );
+                result = quality.HasValue ? NewString( name , quality.Value ) : NewString( name );
             }
 
             return result != null;
@@ -111,12 +116,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            if ( ! Quality.HasValue )
+            if ( Quality.HasValue )
             {
-                return Name;
+                return $"{Name}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}";
             }
 
-            return string.Format( CultureInfo.InvariantCulture, "{0}; q={1:F1}" , Name , Quality );
+            return Name;
         }
     }
 }
