@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
@@ -29,21 +30,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
                 return false;
             }
 
-            var tokens = input.Split( seperators , StringSplitOptions.None );
+            var tokens = input.Split( seperators , StringSplitOptions.None ) as IEnumerable<string>;
             
             if ( options.HasFlag( SplitOptions.TrimEntries ) )
             {
-                tokens = tokens.Select( token => token.Trim() ).ToArray();
+                tokens = tokens.Select( token => token.Trim() );
             }
 
             if ( options.HasFlag( SplitOptions.RemoveEmptyEntries ) )
             {
-                tokens = tokens.Where( token => ! string.IsNullOrWhiteSpace( token ) ).ToArray();
+                tokens = tokens.Where( token => ! string.IsNullOrWhiteSpace( token ) );
             }
 
-            if ( tokens.Length > 0 )
+            if ( tokens.Count() > 0 )
             {
-                result = tokens;
+                result = tokens.ToArray();
             }
 
             return result != null;
