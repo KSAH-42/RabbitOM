@@ -119,9 +119,15 @@
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AllowRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ViaRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\AuthorizationRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\TransportRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\SpeedRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\CacheControlRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />

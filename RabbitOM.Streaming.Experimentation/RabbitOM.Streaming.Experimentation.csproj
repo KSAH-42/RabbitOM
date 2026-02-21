@@ -48,6 +48,7 @@
     <Compile Include="Rtsp\Headers\AcceptRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\AllowRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\AuthorizationRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\BandwithRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\CacheControlRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeader.cs" />

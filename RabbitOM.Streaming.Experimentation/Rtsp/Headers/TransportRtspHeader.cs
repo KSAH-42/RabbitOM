@@ -61,9 +61,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new TransportRtspHeader();
 
-                header.SetTransport( tokens.FirstOrDefault( token => token.Contains( "/" ) ) );
+                header.SetTransport( tokens.Where( token => ! token.Contains( "=" ) ).FirstOrDefault() );
 
-                header.SetTransmission( tokens.FirstOrDefault( token => ! token.Contains( "/" ) && ! token.Contains( "=" ) ) );
+                header.SetTransmission( tokens.Where( token => ! token.Contains( "=" ) ).Skip(1).FirstOrDefault() );
 
                 foreach ( var token in tokens )
                 {
