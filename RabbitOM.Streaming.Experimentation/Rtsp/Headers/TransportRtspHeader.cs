@@ -62,8 +62,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 var header = new TransportRtspHeader();
 
                 header.SetTransport( tokens.Where( token => ! token.Contains( "=" ) ).FirstOrDefault() );
+                
+                if ( string.IsNullOrWhiteSpace( header.Transport ) )
+                {
+                    return false;
+                }
 
                 header.SetTransmission( tokens.Where( token => ! token.Contains( "=" ) ).Skip(1).FirstOrDefault() );
+
+                if ( string.IsNullOrWhiteSpace( header.Transmission ) )
+                {
+                    return false;
+                }
 
                 foreach ( var token in tokens )
                 {
@@ -81,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             header.SetSSRC( parameter.Value );
                         }
-                        if ( string.Equals( "mode" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( string.Equals( "mode" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
                             header.SetMode( parameter.Value );
                         }
@@ -95,34 +105,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else if ( string.Equals( "port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
-                            header.SetPort( parameter.Value );
+                            header.SetPortRange( parameter.Value );
                         }
-                        if ( string.Equals( "client_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( string.Equals( "client_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
-                            header.SetClientPort( parameter.Value );
+                            header.SetClientPortRange( parameter.Value );
                         }
                         else if ( string.Equals( "server_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
-                            header.SetServerPort( parameter.Value );
+                            header.SetServerPortRange( parameter.Value );
                         }
                         else if ( string.Equals( "interleaved" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
-                            header.SetInterleaved( parameter.Value );
+                            header.SetInterleavedRange( parameter.Value );
                         }
                     }
-
-                    if ( string.IsNullOrWhiteSpace( header.Transport ) )
-                    {
-                        return false;
-                    }
-
-                    if ( string.IsNullOrWhiteSpace( header.Transmission ) )
-                    {
-                        return false;
-                    }
-
-                    result = header;
                 }
+                
+                result = header;
             }
 
             return result != null;
@@ -184,7 +184,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
         }
         
-        public void SetClientPort( string value )
+        public void SetClientPortRange( string value )
         {
             ClientPortStart = null;
             ClientPortEnd = null;
@@ -203,7 +203,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
         }
         
-        public void SetServerPort( string value )
+        public void SetServerPortRange( string value )
         {
             ServerPortStart = null;
             ServerPortEnd = null;
@@ -222,7 +222,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
         }
 
-        public void SetPort( string value )
+        public void SetPortRange( string value )
         {
             PortStart = null;
             PortEnd = null;
@@ -241,7 +241,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
         }
 
-        public void SetInterleaved( string value )
+        public void SetInterleavedRange( string value )
         {
             InterleavedStart = null;
             InterleavedEnd = null;
