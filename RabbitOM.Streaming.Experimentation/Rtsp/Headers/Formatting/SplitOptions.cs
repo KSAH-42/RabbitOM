@@ -8,6 +8,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
 
         RemoveEmptyEntries = 1, 
 
-        TrimEntries = 2,  // only present in net core
+        TrimEntries = 2,  // only present in net core (see System.StringSplitOptions)
     }
 }
