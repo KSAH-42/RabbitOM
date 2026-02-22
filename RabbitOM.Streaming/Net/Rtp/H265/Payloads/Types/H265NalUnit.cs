@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities
+namespace RabbitOM.Streaming.Net.Rtp.H265.Payloads.Types
 {
     /// <summary>
     /// Represent a H265 nalu

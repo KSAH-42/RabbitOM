@@ -13,6 +13,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
             "{" ,  "}" , "<" , ">" ,
         };
 
+        private static readonly char[] TrimSeparators =
+        {
+            ' ',
+            '\'',
+            '\"',
+        };
+
+
+
+
+
+
         public static string Normalize( string value )
         {
             return Normalize( value , null );
@@ -40,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
                 }
             }
 
-            return text.Trim( '\"' , '\'' , ' ' );
+            return text.Trim( TrimSeparators );
         }
     }
 }

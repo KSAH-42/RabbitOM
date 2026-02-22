@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 {
     using RabbitOM.Streaming.IO;
     using RabbitOM.Streaming.Net.Rtp.H266.Payloads;
-    using RabbitOM.Streaming.Net.Rtp.H266.Payloads.Entities;
+    using RabbitOM.Streaming.Net.Rtp.H266.Payloads.Types;
 
     internal sealed class H266StreamWriter : IDisposable
     {

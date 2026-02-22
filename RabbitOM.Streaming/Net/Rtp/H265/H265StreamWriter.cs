@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 {
     using RabbitOM.Streaming.IO;
     using RabbitOM.Streaming.Net.Rtp.H265.Payloads;
-    using RabbitOM.Streaming.Net.Rtp.H265.Payloads.Entities;
+    using RabbitOM.Streaming.Net.Rtp.H265.Payloads.Types;
 
     /// <summary>
     /// Represent the H265 stream writer used to generate a H265 data frame
