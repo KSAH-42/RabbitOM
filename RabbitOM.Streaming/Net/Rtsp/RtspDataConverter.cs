@@ -12,6 +12,8 @@ namespace RabbitOM.Streaming.Net.Rtsp
     /// </summary>
     internal static class RtspDataConverter
     {
+        private static readonly char[] SpaceAndQuotesChars = { ' ' , '\'' , '\"' };
+
         /// <summary>
         /// Check if a value can be converted
         /// </summary>
@@ -405,7 +407,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static bool ConvertToBool( string value )
         {
-            return bool.TryParse( value ?? string.Empty , out bool result ) && result;
+            return bool.TryParse( value?.Trim( SpaceAndQuotesChars ) , out bool result ) && result;
         }
 
         /// <summary>
@@ -415,7 +417,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static char ConvertToChar( string value )
         {
-            return char.TryParse( value ?? string.Empty , out char result ) ? result : char.MinValue;
+            return char.TryParse( value?.Trim( SpaceAndQuotesChars ) , out char result ) ? result : char.MinValue;
         }
 
         /// <summary>
@@ -425,7 +427,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static sbyte ConvertToSByte( string value )
         {
-            return sbyte.TryParse( value ?? string.Empty , out sbyte result ) ? result : (sbyte) 0;
+            return sbyte.TryParse( value?.Trim( SpaceAndQuotesChars ) , out sbyte result ) ? result : (sbyte) 0;
         }
 
         /// <summary>
@@ -435,7 +437,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static byte ConvertToByte( string value )
         {
-            return byte.TryParse( value ?? string.Empty , out byte result ) ? result : byte.MinValue;
+            return byte.TryParse( value?.Trim( SpaceAndQuotesChars ) , out byte result ) ? result : byte.MinValue;
         }
 
         /// <summary>
@@ -445,7 +447,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static short ConvertToShort( string value )
         {
-            return short.TryParse( value ?? string.Empty , out short result ) ? result : (short) 0;
+            return short.TryParse( value?.Trim( SpaceAndQuotesChars ) , out short result ) ? result : (short) 0;
         }
 
         /// <summary>
@@ -455,7 +457,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static ushort ConvertToUShort( string value )
         {
-            return ushort.TryParse( value ?? string.Empty , out ushort result ) ? result : ushort.MinValue;
+            return ushort.TryParse( value?.Trim( SpaceAndQuotesChars ) , out ushort result ) ? result : ushort.MinValue;
         }
 
         /// <summary>
@@ -465,7 +467,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static int ConvertToInteger( string value )
         {
-            return int.TryParse( value ?? string.Empty , out int result ) ? result : 0;
+            return int.TryParse( value?.Trim( SpaceAndQuotesChars ) , out int result ) ? result : 0;
         }
 
         /// <summary>
@@ -475,7 +477,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static uint ConvertToUInteger( string value )
         {
-            return uint.TryParse( value ?? string.Empty , out uint result ) ? result : 0;
+            return uint.TryParse( value?.Trim( SpaceAndQuotesChars ) , out uint result ) ? result : 0;
         }
 
         /// <summary>
@@ -485,7 +487,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static long ConvertToLong( string value )
         {
-            return long.TryParse( value ?? string.Empty , out long result ) ? result : 0;
+            return long.TryParse( value?.Trim( SpaceAndQuotesChars ) , out long result ) ? result : 0;
         }
 
         /// <summary>
@@ -495,7 +497,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static ulong ConvertToULong( string value )
         {
-            return ulong.TryParse( value ?? string.Empty , out ulong result ) ? result : 0;
+            return ulong.TryParse( value?.Trim( SpaceAndQuotesChars ) , out ulong result ) ? result : 0;
         }
 
         /// <summary>
@@ -505,7 +507,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static decimal ConvertToDecimal( string value )
         {
-            return decimal.TryParse( value ?? string.Empty , out decimal result ) ? result : 0;
+            return decimal.TryParse( value?.Trim( SpaceAndQuotesChars ) , out decimal result ) ? result : 0;
         }
 
         /// <summary>
@@ -515,7 +517,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static float ConvertToFloat( string value )
         {
-            return float.TryParse( value ?? string.Empty , out float result ) ? result : 0;
+            return float.TryParse( value?.Trim( SpaceAndQuotesChars ) , out float result ) ? result : 0;
         }
 
         /// <summary>
@@ -527,7 +529,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static float ConvertToFloat( string value , NumberStyles styles , IFormatProvider provider )
         {
-            return float.TryParse( value ?? string.Empty , styles , provider , out float result ) ? result : (float) 0;
+            return float.TryParse( value?.Trim( SpaceAndQuotesChars ) , styles , provider , out float result ) ? result : (float) 0;
         }
 
         /// <summary>
@@ -537,7 +539,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static double ConvertToDouble( string value )
         {
-            return double.TryParse( value ?? string.Empty , out double result ) ? result : 0;
+            return double.TryParse( value?.Trim( SpaceAndQuotesChars ) , out double result ) ? result : 0;
         }
 
         /// <summary>
@@ -547,7 +549,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static DateTime ConvertToDateTime( string value )
         {
-            return DateTime.TryParse( value ?? string.Empty , out DateTime result ) ? result : DateTime.MinValue;
+            return DateTime.TryParse( value?.Trim( SpaceAndQuotesChars ) , out DateTime result ) ? result : DateTime.MinValue;
         }
 
         /// <summary>
@@ -563,7 +565,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
                 return DateTime.MinValue;
             }
 
-            return DateTime.TryParseExact( value?.Trim() ?? string.Empty , format , CultureInfo.InvariantCulture , DateTimeStyles.None , out DateTime result ) ? result : DateTime.MinValue;
+            return DateTime.TryParseExact( value?.Trim( SpaceAndQuotesChars ) , format , CultureInfo.InvariantCulture , DateTimeStyles.None , out DateTime result ) ? result : DateTime.MinValue;
         }
 
         /// <summary>
@@ -578,22 +580,9 @@ namespace RabbitOM.Streaming.Net.Rtsp
                 return DateTime.MinValue;
             }
 
-            var formats = new List<string>()
+            if ( DateTime.TryParseExact( value?.Trim( SpaceAndQuotesChars ) , RtspDateTimeFormatType.GmtFormat , CultureInfo.InvariantCulture , DateTimeStyles.None , out DateTime result ) )
             {
-                RtspDateTimeFormatType.GmtFormat ,
-                RtspDateTimeFormatType.GmtFormat1 ,
-                RtspDateTimeFormatType.GmtFormat2 ,
-                RtspDateTimeFormatType.GmtFormat3 ,
-            };
-
-            var text = value.Trim() ?? string.Empty;
-
-            foreach ( var format in formats )
-            {
-                if ( DateTime.TryParseExact( text , format , CultureInfo.InvariantCulture , DateTimeStyles.None , out DateTime result ) )
-                {
-                    return result;
-                }
+                return result;
             }
 
             return DateTime.MinValue;
@@ -606,7 +595,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static TimeSpan ConvertToTimeSpan( string value )
         {
-            return TimeSpan.TryParse( value ?? string.Empty , out TimeSpan result ) ? result : TimeSpan.Zero;
+            return TimeSpan.TryParse( value?.Trim( SpaceAndQuotesChars ) , out TimeSpan result ) ? result : TimeSpan.Zero;
         }
 
         /// <summary>
@@ -616,7 +605,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static Guid ConvertToGuid( string value )
         {
-            return Guid.TryParse( value ?? string.Empty , out Guid result ) ? result : Guid.Empty;
+            return Guid.TryParse( value?.Trim( SpaceAndQuotesChars ) , out Guid result ) ? result : Guid.Empty;
         }
 
         /// <summary>
@@ -626,7 +615,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// <returns>returns a value</returns>
         public static byte[] ConvertToBytes( string value )
         {
-            return ConvertToBytes( value , false );
+            return ConvertToBytes( value?.Trim( SpaceAndQuotesChars ) , false );
         }
 
         /// <summary>
