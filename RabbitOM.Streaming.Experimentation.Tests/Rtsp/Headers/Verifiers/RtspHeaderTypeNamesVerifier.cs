@@ -1,14 +1,12 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
 
     [TestFixture]
     public class RtspHeaderTypeNamesVerifier

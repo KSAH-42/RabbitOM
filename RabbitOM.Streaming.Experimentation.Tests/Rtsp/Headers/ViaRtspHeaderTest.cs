@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers

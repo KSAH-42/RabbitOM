@@ -1,10 +1,10 @@
 ﻿using NUnit.Framework;
-using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-using System;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
     [TestFixture]
     public class AcceptRangesRtspHeaderTest
     {
