@@ -120,6 +120,8 @@
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AllowRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\BlockSizeRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\LocationRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\ContentBaseRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\Types\PortRangeTest.cs" />

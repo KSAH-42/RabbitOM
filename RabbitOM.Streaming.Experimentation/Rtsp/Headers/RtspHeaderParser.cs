@@ -19,6 +19,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return DateTime.TryParse( input , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out result );
         }
 
+        public static bool TryParse( string input , out Uri result )
+        {
+            result = null;
+
+            if ( ! Uri.IsWellFormedUriString( input , UriKind.RelativeOrAbsolute ) )
+            {
+                return false;
+            }
+
+            return Uri.TryCreate( input , UriKind.RelativeOrAbsolute , out result );
+        }
+
         public static bool TryParse( string input , string separator , out string[] result )
         {
             return TryParse( input , new string[] { separator } , out result );

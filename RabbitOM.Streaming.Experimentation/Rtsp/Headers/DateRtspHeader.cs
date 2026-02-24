@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out DateRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , out var value )
+            result = RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , out DateTime value )
                 ? new DateRtspHeader() { Value = value }
                 : null
                 ;
