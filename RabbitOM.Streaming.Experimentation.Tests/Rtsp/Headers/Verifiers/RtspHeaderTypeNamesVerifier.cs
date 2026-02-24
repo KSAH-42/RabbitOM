@@ -38,15 +38,17 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 
                 var value = (field.GetValue( null ) as string).Replace( "-" , "" );
 
-                if ( headerName != value )
+                if ( headerName == value )
                 {
-                    if ( ExceptedCases.Contains( headerName ) && ExceptedCases.Contains( value ) )
-                    {
-                        continue;
-                    }
-
-                    Assert.Fail( "TypeName static member has bad name" , headerName , field.GetValue( null ) );
+                    continue;
                 }
+
+                if ( ExceptedCases.Contains( headerName ) && ExceptedCases.Contains( value ) )
+                {
+                    continue;
+                }
+                
+                Assert.Fail( "TypeName static member has bad name" , headerName , field.GetValue( null ) );
             }
         }
     }
