@@ -115,6 +115,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtsp\Headers\Verifiers\RtspHeaderTypeNamesVerifier.cs" />
     <Compile Include="Rtsp\Headers\AcceptRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />

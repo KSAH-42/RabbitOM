@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class PublicRtspHeader 
     {
-        public static readonly string TypeName = "Allow";
+        public static readonly string TypeName = "Public";
 
 
 
