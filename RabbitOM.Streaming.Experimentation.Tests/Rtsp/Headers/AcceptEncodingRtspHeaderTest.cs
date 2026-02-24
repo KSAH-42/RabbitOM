@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
-    public class AcceptEncodingRtspHeaderTest
+    public class RtspMethodTest
     {
         [TestCase( "*" , 1 ) ]
         [TestCase( "identity" , 1 ) ]
