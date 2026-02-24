@@ -3,13 +3,12 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public struct InterleavedRange
+    public struct InterleavedRange : IEquatable<InterleavedRange>
     {
 
         public static readonly InterleavedRange Zero = new InterleavedRange( 0 , 0 );
 
 
-        public static readonly InterleavedRange Any = new InterleavedRange( 0 , byte.MaxValue );
 
 
 
@@ -19,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             if ( minimum > maximum )
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException( nameof( minimum ) );
             }
 
             Minimum = minimum;
@@ -40,13 +39,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public override string ToString()
+
+        public static bool operator == ( InterleavedRange a , InterleavedRange b )
         {
-            return $"{Minimum}-{Maximum}";
+            return Equals( a , b );
+        }
+
+        public static bool operator != ( InterleavedRange a , InterleavedRange b )
+        {
+            return ! Equals( a , b );
         }
 
 
 
+
+
+
+
+        public static bool Equals( in InterleavedRange a , in InterleavedRange b )
+        {
+            return a.Minimum == b.Minimum && a.Maximum == b.Maximum;
+        }
 
 
         public static bool TryParse( string input , out InterleavedRange result )
@@ -76,6 +89,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
 
             return false;
+        }
+
+
+
+
+
+        public bool Equals( InterleavedRange obj )
+        {
+            return Equals( obj , this );
+        }
+
+        public override bool Equals( object obj )
+        {
+            return obj is InterleavedRange && Equals( (InterleavedRange) obj );
+        }
+
+        public override int GetHashCode()
+        {
+            return Minimum.GetHashCode() ^ Maximum.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return $"{Minimum}-{Maximum}";
         }
     }
 }

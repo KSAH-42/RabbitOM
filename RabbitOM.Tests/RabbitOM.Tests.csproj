@@ -122,6 +122,8 @@
     <Compile Include="Rtsp\Headers\BlockSizeRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\Types\PortRangeTest.cs" />
+    <Compile Include="Rtsp\Headers\Types\InterleavedRangeTest.cs" />
     <Compile Include="Rtsp\Headers\ViaRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AuthorizationRtspHeaderTest.cs" />
