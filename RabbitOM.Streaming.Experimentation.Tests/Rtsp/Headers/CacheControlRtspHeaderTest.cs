@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class CacheControlRtspHeaderTest
     {
         [TestCase( "stale-while-revalidate=12,no-transform,parameter1=a,parameter2=b" )]
-        public void CheckParseSucceed( string input )
+        public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "no-cache" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParseNoCacheSucceed( string input , bool status )
+        public void CheckTryParseNoCacheSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "no-store" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParseNoStoreSucceed( string input , bool status )
+        public void CheckTryParseNoStoreSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "no-transform" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParseNoTransformSucceed( string input , bool status )
+        public void CheckTryParseNoTransformSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "must-revalidate" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParseMustRevalidateSucceed( string input , bool status )
+        public void CheckTryParseMustRevalidateSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "public" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParsePublicSucceed( string input , bool status )
+        public void CheckTryParsePublicSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "private" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParsePrivateSucceed( string input , bool status )
+        public void CheckTryParsePrivateSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "immutable" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParseImmutableSucceed( string input , bool status )
+        public void CheckTryParseImmutableSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -84,7 +84,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "proxy-revalidate" , true )]
         [TestCase( "my-extension" , false )]
-        public void CheckParseProxyRevalidateSucceed( string input , bool status )
+        public void CheckTryParseProxyRevalidateSucceed( string input , bool status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "max-age=1" , 1 )]
         [TestCase( "my-extension" , null )]
-        public void CheckParseMaxAgeSucceed( string input , int? status )
+        public void CheckTryParseMaxAgeSucceed( string input , int? status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -102,7 +102,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "s-maxage=1" , 1 )]
         [TestCase( "my-extension" , null )]
-        public void CheckParseSMaxAgeSucceed( string input , int? status )
+        public void CheckTryParseSMaxAgeSucceed( string input , int? status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -111,7 +111,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "stale-while-revalidate=1" , 1 )]
         [TestCase( "my-extension" , null )]
-        public void CheckParseStaleWhileRevalidateSucceed( string input , int? status )
+        public void CheckTryParseStaleWhileRevalidateSucceed( string input , int? status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -120,7 +120,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "stale-if-error=1" , 1 )]
         [TestCase( "my-extension" , null )]
-        public void CheckParseStaleIfErrorSucceed( string input , int? status )
+        public void CheckTryParseStaleIfErrorSucceed( string input , int? status )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -130,7 +130,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
-        public void CheckParseFailed( string input  )
+        public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( CacheControlRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

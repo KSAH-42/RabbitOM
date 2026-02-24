@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " \"-1.7976931348623" , -1.7976931348623 )]
         [TestCase( " '-1.7976931348623" , -1.7976931348623 )]
 
-        public void CheckParseSucceed( string input , double expectedId )
+        public void CheckTryParseSucceed( string input , double expectedId )
         {
             Assert.IsTrue( MediaDurationRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "\"\"" ) ]
         [TestCase( "\" \"" ) ]
         [TestCase( " \" \" " ) ]
-        public void CheckParseFailed( string input  )
+        public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( MediaDurationRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

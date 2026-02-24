@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "RTP/AVP/UDP;unicast" )]
         [TestCase( " RTP/AVP/UDP ; unicast ;" )]
         [TestCase( "  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseSucceed( string input )
+        public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; source=my source ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; source=my source " )]
         [TestCase( " source=my source ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseSourceSucceed( string input )
+        public void CheckTryParseSourceSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; destination=my destination ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; destination=my destination " )]
         [TestCase( " destination=my destination ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseDestinationSucceed( string input )
+        public void CheckTryParseDestinationSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; ssrc=my ssrc ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; ssrc=my ssrc " )]
         [TestCase( " ssrc=my ssrc ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseSsrcSucceed( string input )
+        public void CheckTryParseSsrcSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; mode=my mode ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; mode=my mode " )]
         [TestCase( " mode=my mode ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseModeSucceed( string input )
+        public void CheckTryParseModeSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -84,7 +84,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; ttl=12 ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; ttl= 12 " )]
         [TestCase( " ttl=12 ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseTtlSucceed( string input )
+        public void CheckTryParseTtlSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -99,7 +99,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; layers=12 ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; layers= 12 " )]
         [TestCase( " layers=12 ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseLayersSucceed( string input )
+        public void CheckTryParseLayersSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -113,7 +113,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; client_port = 1-2 " )]
         [TestCase( " RTP/AVP/UDP ; unicast ; client_port = '1-2' " )]
         [TestCase( "  client_port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseClientPortSucceed( string input )
+        public void CheckTryParseClientPortSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -128,7 +128,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; server_port  = 1-2 " )]
         [TestCase( " RTP/AVP/UDP ; unicast ; server_port  = '1-2' " )]
         [TestCase( "  server_port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseServerPortSucceed( string input )
+        public void CheckTryParseServerPortSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -143,7 +143,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; port  = 1-2 " )]
         [TestCase( " RTP/AVP/UDP ; unicast ; port  = '1-2' " )]
         [TestCase( "  port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParsePortSucceed( string input )
+        public void CheckTryParsePortSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -158,7 +158,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; interleaved  = 1-2 " )]
         [TestCase( " RTP/AVP/UDP ; unicast ; interleaved  = '1-2' " )]
         [TestCase( "  interleaved = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckParseInterleavedSucceed( string input )
+        public void CheckTryParseInterleavedSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -175,7 +175,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "A/B/C;unicast;interLeaved=1-2" )]
         [TestCase( "RTP/AVP/UDP;digitalcast;interLeaved=1-2" )]
         [TestCase( "RTP/AVP/UDP;partialcast;interLeaved=1-2" )]
-        public void CheckParseFailed( string input )
+        public void CheckTryParseFailed( string input )
         {
             Assert.IsFalse( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

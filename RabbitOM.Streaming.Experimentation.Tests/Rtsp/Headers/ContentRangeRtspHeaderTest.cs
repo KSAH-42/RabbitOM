@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "bytes 1-2/3" , "bytes" , 1 , 2 , 3 )]
         [TestCase( "bytes 1-2/*" , "bytes" , 1 , 2 , null )]
         [TestCase( "bytes */3" , "bytes" , null , null , 3 )]
-        public void CheckParseSucceed( string input , string unit , long? start , long? end , long? size )
+        public void CheckTryParseSucceed( string input , string unit , long? start , long? end , long? size )
         {
             Assert.IsTrue( ContentRangeRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
-        public void CheckParseFailed( string input  )
+        public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( ContentRangeRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

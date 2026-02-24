@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "closed, connected" , 2 )]
         [TestCase( "closed, connected, error" , 3 )]
        
-        public void CheckParseSucceed( string input , long count )
+        public void CheckTryParseSucceed( string input , long count )
         {
             Assert.IsTrue( ConnectionRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
-        public void CheckParseFailed( string input  )
+        public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( ConnectionRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

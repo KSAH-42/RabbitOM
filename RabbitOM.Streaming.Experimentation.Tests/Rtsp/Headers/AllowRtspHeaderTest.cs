@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " ,  , OPtIONS " )]
         [TestCase( " ,  , 'OPtIONS' " )]
         [TestCase( " ,  , \"OPtIONS\" " )]
-        public void CheckParseSucceed1(string input )
+        public void CheckTryParseSucceed1(string input )
         {
             Assert.IsTrue( AllowRtspHeader.TryParse( input , out var header ) );
             Assert.AreEqual( 1 , header.Methods.Count);
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "OPTIONS,DESCRIBE,SETUP,PLAY,PAUSE,TEARDOWN,ccc,SET_PARAMETER,GET_PARAMETER,RECORD,ANNOUNCE,REDIRECT" )]
         [TestCase( "oPTIONS,'SETUP', DESCRIBE ,PlAY,PAUSE,TEARDOWN,tttt,SET_PARAMETER,GET_PARAMETER,RECORD,ANNOUNCE,REDIRECT" )]
         
-        public void CheckParseSucceed2(string input )
+        public void CheckTryParseSucceed2(string input )
         {
             Assert.IsTrue( AllowRtspHeader.TryParse( input , out var header ) );
             Assert.Greater( header.Methods.Count , 0 );
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "a=123; , " )]
         [TestCase( "x, y ,z  , " )]
         [TestCase( "OPTION" )]
-        public void CheckParseFailed( string input)
+        public void CheckTryParseFailed( string input)
         {
             Assert.IsFalse( AllowRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

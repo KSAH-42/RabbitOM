@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " 0 - 1234 " , 0 , 1234 )]
         [TestCase( "0-'1234'" , 0 , 1234 )]
         [TestCase( "'0'-'1234'" , 0 , 1234 )]
-        public void CheckParseSucceed( string input , int min , int max )
+        public void CheckTryParseSucceed( string input , int min , int max )
         {
             Assert.IsTrue( PortRange.TryParse( input , out var header ) );
             Assert.AreEqual( min , header.Minimum );
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " " )]
         [TestCase( "-" )]
         [TestCase( "-1234-0" )]
-        public void CheckParseFailed( string input )
+        public void CheckTryParseFailed( string input )
         {
             Assert.IsFalse( PortRange.TryParse( input , out var header ) );
             Assert.AreEqual( 0 , header.Minimum );

@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class ViaRtspHeaderTest
     {
         [TestCase( "RTSP/1.0 proxy1.example.com:8554 (Proxy/3.1)" ) ]
-        public void CheckParseSucceed( string input )
+        public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( ViaRtspHeader.TryParse( input, out var header ) );
             Assert.IsNotNull( header );
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [TestCase( "RTSP/1.0 proxy1.example.com:8554 (Proxy/3.1), HTTP/1.1 proxy2.example.com:8554 (Proxy/4.1)" ) ]
-        public void CheckParseSucceedMultiples( string input )
+        public void CheckTryParseSucceedMultiples( string input )
         {
             Assert.IsTrue( ViaRtspHeader.TryParse( input, out var header ) );
             Assert.IsNotNull( header );

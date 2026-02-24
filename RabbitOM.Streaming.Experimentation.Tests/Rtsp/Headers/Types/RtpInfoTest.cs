@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
     public class RtpInfoTest
     {
         [TestCase( "url=rtsp://127.0.0.1;seq=123;rtptime=321;ssrc=abcdef" )]
-        public void CheckParseSucceed1(string input )
+        public void CheckTryParseSucceed1(string input )
         {
             Assert.IsTrue( RtpInfo.TryParse( input , out var header ) );
             Assert.AreEqual( "rtsp://127.0.0.1" , header.Url );
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         }
 
         [TestCase( "url=rtsp://127.0.0.1;seq=123;rtptime=321;" )]
-        public void CheckParseSucceed2(string input )
+        public void CheckTryParseSucceed2(string input )
         {
             Assert.IsTrue( RtpInfo.TryParse( input , out var header ) );
             Assert.AreEqual( "rtsp://127.0.0.1" , header.Url );
@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         }
 
         [TestCase( "url=rtsp://127.0.0.1;seq=123;rtptime=;" )]
-        public void CheckParseSucceed3(string input )
+        public void CheckTryParseSucceed3(string input )
         {
             Assert.IsTrue( RtpInfo.TryParse( input , out var header ) );
             Assert.AreEqual( "rtsp://127.0.0.1" , header.Url );
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         }
 
         [TestCase( "url=rtsp://127.0.0.1;seq=;" )]
-        public void CheckParseSucceed4(string input )
+        public void CheckTryParseSucceed4(string input )
         {
             Assert.IsTrue( RtpInfo.TryParse( input , out var header ) );
             Assert.AreEqual( "rtsp://127.0.0.1" , header.Url );

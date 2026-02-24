@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class WWWAuthenticateRtspHeaderTest
     {
         [TestCase( "digest realm='my realm',nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
-        public void CheckParseSucceed( string input )
+        public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [TestCase( "digest nonce='my nonce',realm='my realm',opaque='my opaque',stale='my stale',qop='my qop',algorithm='my algorithm'" )]
-        public void CheckParseSucceedDifferentOrder( string input )
+        public void CheckTryParseSucceedDifferentOrder( string input )
         {
             Assert.IsTrue( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
-        public void CheckParseFailed( string input  )
+        public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

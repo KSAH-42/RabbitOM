@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
        [TestCase( "  Tue ,  20  Feb   2024   14:32:10   GMT  " )] 
        [TestCase( " ' Tue, 20 Feb 2024 14:32:10 GMT ' " )]
        [TestCase( " \" Tue ,  20  Feb   2024   14:32:10   GMT  \" " )] 
-       public void CheckParseSucceed( string input )
+       public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( DateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "" ) ]
         [TestCase( " " ) ]
         [TestCase( " 99 Feb 2024 14:32:10 GMT" )]
-        public void CheckParseFailed( string input  )
+        public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( DateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );

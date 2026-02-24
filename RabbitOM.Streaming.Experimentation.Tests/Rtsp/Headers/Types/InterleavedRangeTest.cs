@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " 0 - 255 " , 0 , 255 )]
         [TestCase( "0-'255'" , 0 , 255 )]
         [TestCase( "'0'-'255'" , 0 , 255 )]
-        public void CheckParseSucceed( string input , byte min , byte max )
+        public void CheckTryParseSucceed( string input , byte min , byte max )
         {
             Assert.IsTrue( InterleavedRange.TryParse( input , out var header ) );
             Assert.AreEqual( min , header.Minimum );
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " " )]
         [TestCase( "-" )]
         [TestCase( "255-0" )]
-        public void CheckParseFailed( string input )
+        public void CheckTryParseFailed( string input )
         {
             Assert.IsFalse( InterleavedRange.TryParse( input , out var header ) );
             Assert.AreEqual( 0 , header.Minimum );
