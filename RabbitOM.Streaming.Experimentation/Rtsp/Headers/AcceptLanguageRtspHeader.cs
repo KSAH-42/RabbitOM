@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -10,6 +11,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Accept-Language";
 
+
+
+
+        public readonly Lazy<IReadOnlyCollection<string>> SupportedLanguages = new Lazy<IReadOnlyCollection<string>>( () =>
+        {
+            return new HashSet<string>( CultureInfo.GetCultures( CultureTypes.AllCultures ).Select( culture => culture.Name ) , StringComparer.OrdinalIgnoreCase );
+        });
 
 
 
@@ -37,12 +45,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            foreach ( var culture in CultureInfo.GetCultures( CultureTypes.AllCultures ) )
+            if ( SupportedLanguages.Value.Contains( language.Name ) )
             {
-                if ( string.Equals( culture.Name , language.Name , StringComparison.OrdinalIgnoreCase ) )
-                {
-                    return _languages.Add( language );
-                }
+                return _languages.Add( language );
             }
 
             return false;
