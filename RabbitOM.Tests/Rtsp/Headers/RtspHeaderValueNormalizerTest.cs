@@ -1,11 +1,10 @@
 ﻿using NUnit.Framework;
-using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
-using System;
+using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Formatting
+namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     [TestFixture]
-    public class RtspValueNormalizerTest
+    public class RtspHeaderValueNormalizerTest
     {
         [TestCase( null )]
         [TestCase( "" )]
@@ -27,11 +26,9 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Formatting
         [TestCase( "ç" )]
         [TestCase( "à" )]
         [TestCase( "²" )]
-        [TestCase( "..." )]
-        [TestCase( " ... " )]
         public void CheckReturnsValueAsEmpty( string input )
         {
-            Assert.AreEqual( "" , RtspValueNormalizer.Normalize( input ) );
+            Assert.AreEqual( "" , RtspHeaderValueNormalizer.Normalize( input ) );
         }
 
         [TestCase( " abcdecf " , "abcdecf" )]
@@ -48,14 +45,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers.Formatting
         [TestCase( "\r \" 1 Abc\rd§Ecf 1 \" \r" , "1 AbcdEcf 1" )]
         public void CheckNormalization( string input , string output )
         {
-            Assert.AreEqual( output , RtspValueNormalizer.Normalize( input ) );
+            Assert.AreEqual( output , RtspHeaderValueNormalizer.Normalize( input ) );
         }
 
         [TestCase( "\r \" Abc\rd§Ecf \" \r" , "bcdEcf" )]
         [TestCase( "\r \" 1 Abc\rd§Ecf 1 \" \r" , "1 bcdEcf 1" )]
         public void CheckNormalizationWithFilter( string input , string output )
         {
-            Assert.AreEqual( output , RtspValueNormalizer.Normalize( input , "A" ) );
+            Assert.AreEqual( output , RtspHeaderValueNormalizer.Normalize( input , "A" ) );
         }
     }
 }

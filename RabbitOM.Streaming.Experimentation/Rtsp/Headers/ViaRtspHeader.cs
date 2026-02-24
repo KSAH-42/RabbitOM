@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class ViaRtspHeader 
     { 
@@ -12,12 +12,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<RtspProxyInfo> _proxies = new HashSet<RtspProxyInfo>();
+
+
+
+        private readonly HashSet<ProxyInfo> _proxies = new HashSet<ProxyInfo>();
 
 
 
 
-        public IReadOnlyCollection<RtspProxyInfo> Proxies
+
+
+
+        public IReadOnlyCollection<ProxyInfo> Proxies
         {
             get => _proxies;
         }
@@ -25,35 +31,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryParse( string input , out ViaRtspHeader result )
-        {
-            result = null;
-
-            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
-            {
-                var header = new ViaRtspHeader();
-
-                foreach ( var token in tokens )
-                {
-                    if ( RtspProxyInfo.TryParse( token , out var proxy ) )
-                    {
-                        header.AddProxy( proxy );
-                    }
-                }
-
-                if ( header.Proxies.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
-        }
-
-
-
-
-        public bool AddProxy( RtspProxyInfo proxy )
+        
+        public bool AddProxy( ProxyInfo proxy )
         {
             if ( proxy != null )
             {
@@ -63,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public bool RemoveProxy( RtspProxyInfo proxy )
+        public bool RemoveProxy( ProxyInfo proxy )
         {
             return _proxies.Remove( proxy );
         }
@@ -76,6 +55,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _proxies );
+        }
+
+
+
+
+
+        public static bool TryParse( string input , out ViaRtspHeader result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , "," , out var tokens ) )
+            {
+                var header = new ViaRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    if ( ProxyInfo.TryParse( token , out var proxy ) )
+                    {
+                        header.AddProxy( proxy );
+                    }
+                }
+
+                if ( header.Proxies.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
         }
     }
 }

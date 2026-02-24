@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Text;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class RtpInfoRtspHeader
     {
@@ -13,116 +13,71 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public string Url { get; private set; } = string.Empty;
+        private readonly HashSet<RtpInfo> _infos = new HashSet<RtpInfo>();
+
+
+
+
+
+
+        public IReadOnlyCollection<RtpInfo> Infos
+        {
+            get => _infos;
+        }
+
+
+        public bool AddInfo( RtpInfo info )
+        {
+            if ( info == null )
+            {
+                return false;
+            }
+
+            return _infos.Add( info );
+        }
+
+        public bool RemoveInfo( RtpInfo info )
+        {
+            return _infos.Remove( info );
+        }
+
+        public void RemoveInfos()
+        {
+            _infos.Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , _infos );
+        }
+
+
+                
         
-        public string SSRC { get; private set; } = string.Empty;
-
-        public long? Sequence { get; set; }
         
-        public long? RtpTime { get; set; }
-        
-
-
-
-
-
         public static bool TryParse( string input , out RtpInfoRtspHeader result )
         {
             result = null;
 
-            input = RtspValueNormalizer.Normalize( input );
-
-            if ( StringRtspHeaderParser.TryParse( input , ';' , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
-                result = new RtpInfoRtspHeader();
+                var header = new RtpInfoRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
+                    if ( RtpInfo.TryParse( token , out var info ) )
                     {
-                        if ( string.Equals( "url" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            result.SetUrl( parameter.Value );
-                        }
-                        else if ( string.Equals( "seq" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            result.SetSequence( parameter.Value );
-                        }
-                        else if ( string.Equals( "sequence" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            result.SetSequence( parameter.Value );
-                        }
-                        else if ( string.Equals( "rtptime" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            result.SetRtpTime( parameter.Value );
-                        }
-                        else if ( string.Equals( "ssrc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            result.SetSSRC( parameter.Value );
-                        }
+                        header.AddInfo( info );
                     }
+                }
+
+                if ( header.Infos.Count > 0 )
+                {
+                    result = header;
                 }
             }
 
             return result != null;
-        }
-
-
-
-
-
-
-        public void SetUrl( string value )
-        {
-            Url = RtspValueNormalizer.Normalize( value );
-        }
-
-        public void SetSSRC( string value )
-        {
-            SSRC = RtspValueNormalizer.Normalize( value );
-        }
-        
-        public void SetSequence( string value )
-        {
-            Sequence = long.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) 
-                ? new long?( result ) 
-                : null
-                ;
-        }
-
-        public void SetRtpTime( string value )
-        {
-            RtpTime = long.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) 
-                ? new long?( result ) 
-                : null
-                ;
-        }
-        
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            if ( ! string.IsNullOrWhiteSpace( Url ) )
-            {
-                builder.AppendFormat( Url.Contains( " " ) ? "url=\"{0}\";" : "url={0};" , Url );
-            }
-
-            if ( Sequence.HasValue )
-            {
-                builder.AppendFormat( "seq={0};" , Sequence );
-            }
-
-            if ( RtpTime.HasValue )
-            {
-                builder.AppendFormat( "rtptime={0};" , RtpTime );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( SSRC ) )
-            {
-                builder.AppendFormat( SSRC.Contains( " " ) ? "ssrc=\"{0}\";" : "ssrc={0};" , SSRC );
-            }
-
-            return builder.ToString().Trim( ' ' , ';' );
         }
     }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
-
     /// <summary>
     /// Represent a rtsp header
     /// </summary>
@@ -38,45 +36,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         /// <summary>
-        /// Try to parse
-        /// </summary>
-        /// <param name="input">the input</param>
-        /// <param name="result">the result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( string input , out ConnectionRtspHeader result )
-        {
-            result = null;
-
-            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
-            {
-                var header = new ConnectionRtspHeader();
-
-                foreach ( var token in tokens )
-                {
-                    header.AddDirective( token );
-                }
-
-                if ( header.Directives.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
-        }
-
-
-
-
-
-        /// <summary>
         /// Try to add an element
         /// </summary>
         /// <param name="value">the value</param>
         /// <returns>returns true for a success, otherwise false</returns>
         public bool AddDirective( string value )
         {
-            var text = RtspValueNormalizer.Normalize( value );
+            var text = RtspHeaderValueNormalizer.Normalize( value );
 
             if ( ! string.IsNullOrWhiteSpace( text ) )
             {
@@ -92,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// <param name="value">the value</param>
         public bool RemoveDirective( string value )
         {
-            return _directives.Remove( RtspValueNormalizer.Normalize( value ) );
+            return _directives.Remove( RtspHeaderValueNormalizer.Normalize( value ) );
         }
 
         /// <summary>
@@ -110,6 +76,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _directives );
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// Try to parse
+        /// </summary>
+        /// <param name="input">the input</param>
+        /// <param name="result">the result</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public static bool TryParse( string input , out ConnectionRtspHeader result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , "," , out var tokens ) )
+            {
+                var header = new ConnectionRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    header.AddDirective( token );
+                }
+
+                if ( header.Directives.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
         }
     }
 }

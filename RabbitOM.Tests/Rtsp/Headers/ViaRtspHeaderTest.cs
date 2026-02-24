@@ -5,6 +5,7 @@ using System.Linq;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
     public class ViaRtspHeaderTest
@@ -45,10 +46,10 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Proxies );
 
-            Assert.IsTrue( header.AddProxy( RtspProxyInfo.NewProxy( "RTSP" , "1.0" , "a.b.c" , "some comment" )));
+            Assert.IsTrue( header.AddProxy( new ProxyInfo( "RTSP" , "1.0" , "a.b.c" , "some comment" )));
             Assert.AreEqual( 1 , header.Proxies.Count );
 
-            Assert.IsTrue( header.AddProxy( RtspProxyInfo.NewProxy( "HTTP" , "1.1" , "a.b.c.d" , "some comment" )));
+            Assert.IsTrue( header.AddProxy( new ProxyInfo( "HTTP" , "1.1" , "a.b.c.d" , "some comment" )));
             Assert.AreEqual( 2 , header.Proxies.Count );
 
             Assert.IsFalse( header.AddProxy( null ) );
@@ -61,8 +62,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Proxies );
 
-            Assert.IsTrue( header.AddProxy( RtspProxyInfo.NewProxy( "RTSP" , "1.0" , "a.b.c" , "some comment" )));
-            Assert.IsTrue( header.AddProxy( RtspProxyInfo.NewProxy( "RTSP" , "1.0" , "a.b.c" , "some comment" )));
+            Assert.IsTrue( header.AddProxy( new ProxyInfo( "RTSP" , "1.0" , "a.b.c" , "some comment" )));
+            Assert.IsTrue( header.AddProxy( new ProxyInfo( "RTSP" , "1.0" , "a.b.c" , "some comment" )));
             Assert.IsTrue( header.RemoveProxy( header.Proxies.First() ) );
             Assert.IsFalse( header.RemoveProxy( null ) );
             Assert.AreEqual( 1 , header.Proxies.Count );

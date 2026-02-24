@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
-    using System.Text;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class ContentRangeRtspHeader 
     {
@@ -29,44 +29,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryParse( string input , out ContentRangeRtspHeader result )
-        {
-            result = null;
-            
-            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ' ' , out var tokens ) )
-            {
-                if ( StringRtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , '/' , out var tokensRange ) )
-                {
-                    var header = new ContentRangeRtspHeader();
-
-                    header.SetUnit( tokens.ElementAtOrDefault( 0 ) );
-                    header.SetRange( tokensRange.ElementAtOrDefault( 0 ) );
-                    header.SetSize( tokensRange.ElementAtOrDefault( 1 ) );
-
-                    if ( header.Start.HasValue && header.End.HasValue )
-                    {
-                        result = header;
-                    }
-                    
-                    else if ( header.Size.HasValue && ! header.Start.HasValue && ! header.End.HasValue )
-                    {
-                        result = header;
-                    }
-                }
-            }
-
-            return result != null;
-        }
-        
-
-
-
-        
-
-
         public void SetUnit( string value )
         {
-            Unit = RtspValueNormalizer.Normalize( value );
+            Unit = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetRange( string value )
@@ -74,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Start = null;
             End = null;
 
-            if ( StringParameterRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( value ) , '-' , out var range ) )
+            if ( StringParameter.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , "-" , out var range ) )
             {
                 if ( long.TryParse( range.Name , out var number ) )
                 {
@@ -92,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             Size = null;
 
-            if ( long.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) )
+            if ( long.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var result ) )
             {
                 Size = result;
             }
@@ -130,6 +95,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return builder.ToString().Trim();
+        }
+
+
+
+
+
+                public static bool TryParse( string input , out ContentRangeRtspHeader result )
+        {
+            result = null;
+            
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
+            {
+                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
+                {
+                    var header = new ContentRangeRtspHeader();
+
+                    header.SetUnit( tokens.ElementAtOrDefault( 0 ) );
+                    header.SetRange( tokensRange.ElementAtOrDefault( 0 ) );
+                    header.SetSize( tokensRange.ElementAtOrDefault( 1 ) );
+
+                    if ( header.Start.HasValue && header.End.HasValue )
+                    {
+                        result = header;
+                    }
+                    
+                    else if ( header.Size.HasValue && ! header.Start.HasValue && ! header.End.HasValue )
+                    {
+                        result = header;
+                    }
+                }
+            }
+
+            return result != null;
         }
     }
 }

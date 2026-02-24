@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public enum SplitOptions
+    internal enum SplitOptions
     {
         None = 0 ,
 

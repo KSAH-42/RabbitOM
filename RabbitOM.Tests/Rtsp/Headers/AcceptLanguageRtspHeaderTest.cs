@@ -4,26 +4,28 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
     public class AcceptLanguageRtspHeaderTest
     {
         [TestCase( "fr" , 1 ) ]
         [TestCase( "fr, fr-FR" , 2 ) ]
-        [TestCase( "fr, fr-FR, en-EN" , 3 ) ]
+        [TestCase( "fr, fr-FR, en-GB" , 3 ) ]
 
         [TestCase( " fr " , 1 ) ]
         [TestCase( " fr , fr-FR " , 2 ) ]
-        [TestCase( " fr , fr-FR , en-EN " , 3 ) ]
+        [TestCase( " fr , fr-FR , en-GB" , 3 ) ]
 
         [TestCase( "fr" , 1 ) ]
         [TestCase( "fr,fr-FR" , 2 ) ]
-        [TestCase( "fr,fr-FR,en-EN", 3 ) ]
+        [TestCase( "fr,fr-FR,en-GB", 3 ) ]
 
-        [TestCase( "\fr" , 1 ) ]
+        [TestCase( "\ffr" , 1 ) ]
         [TestCase( "fr,\r\nfr-FR" , 2 ) ]
-        [TestCase( "fr\v,\ffr-FR,\r\nen-EN" , 3 ) ]
+        [TestCase( "fr\v,\ffr-FR,\r\nen-GB" , 3 ) ]
 
+        [TestCase( "fr-FR, en-GB, en-US" , 3 ) ]
         public void CheckTryParseSuccess( string input , int count )
         {
             if ( ! AcceptLanguageRtspHeader.TryParse( input , out var header ) )
@@ -43,6 +45,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestCase( "\r\n" )]
         [TestCase( ",,,," )]
         [TestCase( " , , , , " )]
+        [TestCase( "fr-EN" ) ]
+        [TestCase( "\fr" ) ]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptLanguageRtspHeader.TryParse( input , out var header ) )
@@ -60,14 +64,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
 
-            header.AddLanguage( StringRtspHeader.NewString( "fr-FR" ) );
+            header.AddLanguage( new StringWithQuality( "fr-FR" ) );
             Assert.AreEqual( "fr-FR" , header.ToString() );
 
-            header.AddLanguage( StringRtspHeader.NewString( "en-EN" ) );
-            Assert.AreEqual( "fr-FR, en-EN" , header.ToString() );
+            header.AddLanguage( new StringWithQuality( "en-GB" ) );
+            Assert.AreEqual( "fr-FR, en-GB" , header.ToString() );
 
-            header.AddLanguage( StringRtspHeader.NewString( "us-US" , 1 ) );
-            Assert.AreEqual( "fr-FR, en-EN, us-US; q=1.0" , header.ToString() );
+            header.AddLanguage( new StringWithQuality( "en-US" , 1 ) );
+            Assert.AreEqual( "fr-FR, en-GB, en-US; q=1.0" , header.ToString() );
         }
 
         [Test]
@@ -77,10 +81,13 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Languages );
 
-            header.AddLanguage( StringRtspHeader.NewString( "fr-FR" ) );
+            Assert.IsTrue( header.AddLanguage( new StringWithQuality( "fr-FR" ) ) );
             Assert.AreEqual( 1 , header.Languages.Count );
 
-            header.AddLanguage( StringRtspHeader.NewString( "en-EN" ) );
+            Assert.IsTrue( header.AddLanguage( new StringWithQuality( "en-GB" ) ) );
+            Assert.AreEqual( 2 , header.Languages.Count );
+
+            Assert.IsFalse( header.AddLanguage( new StringWithQuality( "en-EN" ) ) );
             Assert.AreEqual( 2 , header.Languages.Count );
 
             header.RemoveLanguages();

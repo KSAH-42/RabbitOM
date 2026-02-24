@@ -4,6 +4,7 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
     public class AcceptEncodingRtspHeaderTest
@@ -27,8 +28,6 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestCase( "gzip,\r\ndeflate" , 2 ) ]
         [TestCase( "gzip\v,\fdeflate,\r\nidentity" , 3 ) ]
 
-        [TestCase( "gzip_1" , 1 ) ]
-        [TestCase( "gzip-1" , 1 ) ]
         public void CheckTryParseSuccess( string input , int count )
         {
             if ( ! AcceptEncodingRtspHeader.TryParse( input , out var header ) )
@@ -48,6 +47,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestCase( "\r\n" )]
         [TestCase( ",,,," )]
         [TestCase( " , , , , " )]
+        [TestCase( "dzip" )]
+        [TestCase( "dzip, text" )]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptEncodingRtspHeader.TryParse( input , out var header ) )
@@ -65,14 +66,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
 
-            header.AddEncoding( StringRtspHeader.NewString( "application/text" ) );
-            Assert.AreEqual( "application/text" , header.ToString() );
+            header.AddEncoding( new StringWithQuality( "br" ) );
+            Assert.AreEqual( "br" , header.ToString() );
 
-            header.AddEncoding( StringRtspHeader.NewString( "application/json" ) );
-            Assert.AreEqual( "application/text, application/json" , header.ToString() );
+            header.AddEncoding( new StringWithQuality( "gzip" ) );
+            Assert.AreEqual( "br, gzip" , header.ToString() );
 
-            header.AddEncoding( StringRtspHeader.NewString( "application/xml" , 1 ) );
-            Assert.AreEqual( "application/text, application/json, application/xml; q=1.0" , header.ToString() );
+            header.AddEncoding( new StringWithQuality( "identity" , 1 ) );
+            Assert.AreEqual( "br, gzip, identity; q=1.0" , header.ToString() );
         }
 
         [Test]
@@ -82,10 +83,14 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Encodings );
 
-            header.AddEncoding( StringRtspHeader.NewString( "application/text" ) );
+            Assert.IsTrue( header.AddEncoding( new StringWithQuality( "br" ) ) );
             Assert.AreEqual( 1 , header.Encodings.Count );
 
-            header.AddEncoding( StringRtspHeader.NewString( "application/json" ) );
+            Assert.IsTrue( header.AddEncoding( new StringWithQuality( "gzip" ) ) );
+            Assert.AreEqual( 2 , header.Encodings.Count );
+
+            Assert.IsFalse( header.AddEncoding( new StringWithQuality( "gzip" ) ) );
+            Assert.IsFalse( header.AddEncoding( new StringWithQuality( "notsupported" ) ) );
             Assert.AreEqual( 2 , header.Encodings.Count );
 
             header.RemoveEncodings();

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
 {
-    public class TcpMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<TcpMediaReceiverConfiguration>
+    public class TcpMediaReceiver : RtspMediaReceiver, IMediaReceiverConfigurer<TcpMediaReceiverConfiguration>
     {
         public override bool IsCommunicationStarted
         {

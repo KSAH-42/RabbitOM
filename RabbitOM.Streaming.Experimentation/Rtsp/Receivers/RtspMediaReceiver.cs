@@ -2,27 +2,28 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
-    public abstract class RtspMediaReceiver : IReceiver , IDisposable
+    public abstract class RtspMediaReceiver : IMediaReceiver , IDisposable
     {
         public event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;
-
+        
         public event EventHandler<RtspCommunicationStoppedEventArgs> CommunicationStopped;
-
+        
         public event EventHandler<RtspConnectedEventArgs> Connected;
-
+        
         public event EventHandler<RtspDisconnectedEventArgs> Disconnected;
-
+        
         public event EventHandler<RtspStreamingStartedEventArgs> StreamingStarted;
-
+        
         public event EventHandler<RtspStreamingStoppedEventArgs> StreamingStopped;
-
+        
         public event EventHandler<RtspStreamingStatusChangedEventArgs> StreamingStatusChanged;
-
+        
         public event EventHandler<RtspDataReceivedEventArgs> DataReceived;
-
+        
         public event EventHandler<RtspErrorEventArgs> Error;
+        
 
-      
+
 
 
 
@@ -32,8 +33,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         {
             Dispose( false );
         }
+        
 
-      
+
 
 
 
@@ -49,7 +51,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         
         public abstract bool IsReceivingData { get; }
 
-      
+
+
 
 
 
@@ -76,8 +79,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         protected virtual void Dispose( bool disposing )
         {
         }
+        
 
-      
+
 
 
 

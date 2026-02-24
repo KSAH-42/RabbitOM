@@ -1,25 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class AcceptRtspHeader
     {
         public static readonly string TypeName = "Accept";
         
+        public static readonly IReadOnlyCollection<string> SupportedFormats = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "application/sdp",
+            "application/text" ,
+            "application/xml" ,
+            "application/json" ,
+            "application/parameters" ,
+            "application/binary" ,
+            "text" ,
+            "text/sdp" ,
+            "text/xml" ,
+            "text/json" ,
+            "text/plain" ,
+            "text/parameters" ,
+            "sdp" ,
+            "xml" ,
+            "json" ,
+            "binary" ,
+        };
 
 
 
 
-        private readonly HashSet<StringRtspHeader> _mimes = new HashSet<StringRtspHeader>();
+
+
+        private readonly HashSet<StringWithQuality> _mimes = new HashSet<StringWithQuality>();
         
 
 
 
 
-        public IReadOnlyCollection<StringRtspHeader> Mimes
+        public IReadOnlyCollection<StringWithQuality> Mimes
         {
             get => _mimes;
         }
@@ -28,17 +50,52 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public bool AddMime( StringWithQuality mime )
+        {
+            if ( StringWithQuality.IsNullOrEmpty( mime ) )
+            {
+                return false;
+            }
+
+            if ( SupportedFormats.Contains( mime.Name ) )
+            {
+                return _mimes.Add( mime );
+            }
+            
+            return false;
+        }
+
+        public void RemoveMime( StringWithQuality mime )
+        {
+            _mimes.Remove( mime );
+        }
+
+        public void RemoveMimes()
+        {
+            _mimes.Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , _mimes );
+        }
+
+
+
+        
+        
+        
         public static bool TryParse( string input , out AcceptRtspHeader result )
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ',' , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , "," , out var tokens ) )
             {
                 var header = new AcceptRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringRtspHeader.TryParse( token , out var mime ) )
+                    if ( StringWithQuality.TryParse( token , out var mime ) )
                     {
                         header.AddMime( mime );
                     }
@@ -51,35 +108,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
-        }
-        
-
-
-
-
-        public bool AddMime( StringRtspHeader value )
-        {
-            if ( ! StringRtspHeader.IsNullOrEmpty( value ) )
-            {
-                return _mimes.Add( value );
-            }
-
-            return false;
-        }
-
-        public void RemoveMime( StringRtspHeader value )
-        {
-            _mimes.Remove( value );
-        }
-
-        public void RemoveMimes()
-        {
-            _mimes.Clear();
-        }
-
-        public override string ToString()
-        {
-            return string.Join( ", " , _mimes );
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
-    public interface IStreamingSession : ISession
+    public interface IMediaStreamingSession : IMediaSession
     {
         bool StartStreaming();
 

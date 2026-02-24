@@ -21,8 +21,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
             Assert.AreEqual( "rtsp://0.0.0.0" , header.Uri );
             Assert.AreEqual( "my response" , header.Response );
             Assert.AreEqual( "my algorithm" , header.Algorithm );
-            Assert.AreEqual( "my cnonce" , header.CNonce );
-            Assert.AreEqual( "my nc" , header.NC );
+            Assert.AreEqual( "my cnonce" , header.ClientNonce );
+            Assert.AreEqual( "my nc" , header.NonceCount );
             Assert.AreEqual( "my qop" , header.QualityOfProtection );
         }
 

@@ -4,15 +4,16 @@ using System;
 namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
     public class AcceptRtspHeaderTest
     {
-        [TestCase( "applicaton/text" , 1 ) ]
-        [TestCase( "applicaton/text, applicaton/json" , 2 ) ]
+        [TestCase( "application/text" , 1 ) ]
+        [TestCase( "application/text, application/json" , 2 ) ]
 
-        [TestCase( "applicaton/text;q=1" , 1 ) ]
-        [TestCase( "applicaton/text;q=1, applicaton/json;q=2" , 2 ) ]
+        [TestCase( "application/text;q=1" , 1 ) ]
+        [TestCase( "application/text;q=1, application/json;q=2" , 2 ) ]
 
 
         public void CheckTryParseSuccess( string input , int count )
@@ -35,6 +36,8 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
         [TestCase( ",,,," )]
         [TestCase( " , , , , " )]
         [TestCase( " ;, ;, ;=,;q=1, " )]
+        [TestCase( "application/strange" )]
+        [TestCase( "application/strange; q=z" )]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptRtspHeader.TryParse( input , out var header ) )
@@ -52,10 +55,10 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
 
-            header.AddMime( StringRtspHeader.NewString( "application/text" ) );
+            header.AddMime( new StringWithQuality( "application/text" ) );
             Assert.AreEqual( "application/text" , header.ToString() );
 
-            header.AddMime( StringRtspHeader.NewString( "application/text" , 1.2 ) );
+            header.AddMime( new StringWithQuality( "application/text" , 1.2 ) );
             Assert.AreEqual( "application/text, application/text; q=1.2" , header.ToString() );
         }
 
@@ -66,10 +69,16 @@ namespace RabbitOM.Streaming.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Mimes );
 
-            header.AddMime( StringRtspHeader.NewString( "application/text" ) );
+            Assert.IsTrue( header.AddMime( new StringWithQuality( "application/text" ) ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            header.AddMime( StringRtspHeader.NewString( "application/text" ) );
+            Assert.IsFalse( header.AddMime( new StringWithQuality( "application/text" ) ) );
+            Assert.AreEqual( 1 , header.Mimes.Count );
+
+            Assert.IsFalse( header.AddMime( new StringWithQuality( "application/bizar" ) ) );
+            Assert.AreEqual( 1 , header.Mimes.Count );
+
+            Assert.IsTrue( header.AddMime( new StringWithQuality( "application/json" ) ) );
             Assert.AreEqual( 2 , header.Mimes.Count );
 
             header.RemoveMimes();

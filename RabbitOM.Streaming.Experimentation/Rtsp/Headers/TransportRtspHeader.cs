@@ -1,14 +1,58 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class TransportRtspHeader
     {
         public static readonly string TypeName = "Transport";
+
+        public static readonly IReadOnlyCollection<string> SupportedTransports = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "RTP",
+            "RTP/AVP",
+            "RTP/AVP/TCP",
+            "RTP/AVP/UDP",
+            "RTP/AVPF",
+            "RTP/AVPF/TCP",
+            "RTP/AVPF/UDP",
+            "RTP/SAVP",
+            "RTP/SAVP/TCP",
+            "RTP/SAVP/UDP",
+            "RTP/SAVPF",
+            "RTP/SAVPF/TCP",
+            "RTP/SAVPF/UDP",
+            "SRTP",
+            "SRTP/AVP",
+            "SRTP/AVP/TCP",
+            "SRTP/AVP/UDP",
+            "SRTP/AVPF",
+            "SRTP/AVPF/TCP",
+            "SRTP/AVPF/UDP",
+            "SRTP/SAVP",
+            "SRTP/SAVP/TCP",
+            "SRTP/SAVP/UDP",
+            "SRTP/SAVPF",
+            "SRTP/SAVPF/TCP",
+            "SRTP/SAVPF/UDP",
+        };
+
+        public static readonly IReadOnlyCollection<string> SupportedTransmissions = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "unicast",
+            "multicast",
+        };
+
+        
+
+
+
+        
+        private readonly HashSet<string> _extensions = new HashSet<string>();
 
 
 
@@ -31,103 +75,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int? Layers { get; set; }
         
-        public int? ClientPortStart { get; set; }
+        public PortRange? Port { get; set; }
         
-        public int? ClientPortEnd { get; set; }
+        public PortRange? ClientPort { get; set; }
         
-        public int? ServerPortStart { get; set; }
+        public PortRange? ServerPort { get; set; }
         
-        public int? ServerPortEnd { get; set; }
-
-        public int? PortStart { get; set; }
+        public InterleavedRange? Interleaved { get; set; }
         
-        public int? PortEnd { get; set; }
-
-        public byte? InterleavedStart { get; set; }
+        public IReadOnlyCollection<string> Extensions { get => _extensions; }
         
-        public byte? InterleavedEnd { get; set; }
-
-        
-
-
-
-
-
-        public static bool TryParse( string input , out TransportRtspHeader result )
-        {
-            result = null;
-
-            if ( StringRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( input ) , ';' , out var tokens ) )
-            {
-                var header = new TransportRtspHeader();
-
-                header.SetTransport( tokens.Where( token => ! token.Contains( "=" ) ).FirstOrDefault() );
-                
-                if ( string.IsNullOrWhiteSpace( header.Transport ) )
-                {
-                    return false;
-                }
-
-                header.SetTransmission( tokens.Where( token => ! token.Contains( "=" ) ).Skip(1).FirstOrDefault() );
-
-                if ( string.IsNullOrWhiteSpace( header.Transmission ) )
-                {
-                    return false;
-                }
-
-                foreach ( var token in tokens )
-                {
-                    if ( StringParameterRtspHeaderParser.TryParse( token , '=' , out var parameter ) )
-                    {
-                        if ( string.Equals( "destination" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetDestination( parameter.Value );
-                        }
-                        else if ( string.Equals( "source" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetSource( parameter.Value );
-                        }
-                        else if ( string.Equals( "ssrc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetSSRC( parameter.Value );
-                        }
-                        else if ( string.Equals( "mode" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetMode( parameter.Value );
-                        }
-                        else if ( string.Equals( "layers" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetLayers( parameter.Value );
-                        }
-                        else if ( string.Equals( "ttl" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetTTL( parameter.Value );
-                        }
-                        else if ( string.Equals( "port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetPortRange( parameter.Value );
-                        }
-                        else if ( string.Equals( "client_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetClientPortRange( parameter.Value );
-                        }
-                        else if ( string.Equals( "server_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetServerPortRange( parameter.Value );
-                        }
-                        else if ( string.Equals( "interleaved" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetInterleavedRange( parameter.Value );
-                        }
-                    }
-                }
-                
-                result = header;
-            }
-
-            return result != null;
-        }
-
 
 
 
@@ -136,130 +93,104 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetTransport( string value )
         {
-            Transport = RtspValueNormalizer.Normalize( value );
+            Transport = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetTransmission( string value )
         {
-            Transmission = RtspValueNormalizer.Normalize( value );
+            Transmission = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetSource( string value )
         {
-            Source = RtspValueNormalizer.Normalize( value );
+            Source = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetDestination( string value )
         {
-            Destination = RtspValueNormalizer.Normalize( value );
+            Destination = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetSSRC( string value )
         {
-            SSRC = RtspValueNormalizer.Normalize( value );
+            SSRC = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetMode( string value )
         {
-            Mode = RtspValueNormalizer.Normalize( value );
+            Mode = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetTTL( string value )
         {
-            TTL = null;
-
-            if ( byte.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) )
-            {
-                TTL = result;
-            }
+            TTL = byte.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var result )
+                ? new byte?( result )
+                : null
+                ;
         }
 
         public void SetLayers( string value )
         {
-            Layers = null;
-
-            if ( int.TryParse( RtspValueNormalizer.Normalize( value ) , out var result ) )
-            {
-                Layers = result;
-            }
-        }
-        
-        public void SetClientPortRange( string value )
-        {
-            ClientPortStart = null;
-            ClientPortEnd = null;
-
-            if ( StringParameterRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( value ) , '-' , out var range ) )
-            {
-                if ( int.TryParse( range.Name , out var port ) )
-                {
-                    ClientPortStart = port;
-                }
-
-                if ( int.TryParse( range.Value , out port ) )
-                {
-                    ClientPortEnd = port;
-                }
-            }
-        }
-        
-        public void SetServerPortRange( string value )
-        {
-            ServerPortStart = null;
-            ServerPortEnd = null;
-
-            if ( StringParameterRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( value ) , '-' , out var range ) )
-            {
-                if ( int.TryParse( range.Name , out var port ) )
-                {
-                    ServerPortStart = port;
-                }
-
-                if ( int.TryParse( range.Value , out port ) )
-                {
-                    ServerPortEnd = port;
-                }
-            }
+            Layers = byte.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var result )
+                ? new byte?( result )
+                : null
+                ;
         }
 
         public void SetPortRange( string value )
         {
-            PortStart = null;
-            PortEnd = null;
-
-            if ( StringParameterRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( value ) , '-' , out var range ) )
-            {
-                if ( int.TryParse( range.Name , out var port ) )
-                {
-                    PortStart = port;
-                }
-
-                if ( int.TryParse( range.Value , out port ) )
-                {
-                    PortEnd = port;
-                }
-            }
+            Port = PortRange.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var range )
+                ? new PortRange?( range )
+                : null
+                ;
+        }
+        
+        public void SetClientPortRange( string value )
+        {
+            ClientPort = PortRange.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var range )
+                ? new PortRange?( range )
+                : null
+                ;
+        }
+        
+        public void SetServerPortRange( string value )
+        {
+            ServerPort = PortRange.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var range )
+                ? new PortRange?( range )
+                : null
+                ;
         }
 
         public void SetInterleavedRange( string value )
         {
-            InterleavedStart = null;
-            InterleavedEnd = null;
-
-            if ( StringParameterRtspHeaderParser.TryParse( RtspValueNormalizer.Normalize( value ) , '-' , out var range ) )
-            {
-                if ( byte.TryParse( range.Name , out var port ) )
-                {
-                    InterleavedStart = port;
-                }
-
-                if ( byte.TryParse( range.Value , out port ) )
-                {
-                    InterleavedEnd = port;
-                }
-            }
+            Interleaved = InterleavedRange.TryParse( RtspHeaderValueNormalizer.Normalize( value ) , out var range )
+                ? new InterleavedRange?( range )
+                : null
+                ;
         }
 
+        public bool AddExtension( string value )
+        {
+            var text = RtspHeaderValueNormalizer.Normalize( value );
+
+            if ( string.IsNullOrWhiteSpace( text ) )
+            {
+                return false;
+            }
+
+            return _extensions.Add( text );
+        }
+
+        public bool RemoveExtension( string value )
+        {
+            return _extensions.Remove( RtspHeaderValueNormalizer.Normalize( value ) );
+        }
+
+        public void RemoveExtensions()
+        {
+            _extensions.Clear();
+        }
+        
         public override string ToString()
         {
             var builder = new StringBuilder();
@@ -304,27 +235,131 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.AppendFormat( "layers={0};" , Layers );
             }
 
-            if ( ClientPortStart.HasValue && ClientPortEnd.HasValue )
+            if ( Port.HasValue )
             {
-                builder.AppendFormat( "client_port={0}-{1};" , ClientPortStart , ClientPortEnd );
+                builder.AppendFormat( "port={0};" , Port );
             }
 
-            if ( ServerPortStart.HasValue && ServerPortEnd.HasValue )
+            if ( ClientPort.HasValue )
             {
-                builder.AppendFormat( "server_port={0}-{1};" , ServerPortStart , ServerPortEnd );
+                builder.AppendFormat( "client_port={0};" , ClientPort );
             }
 
-            if ( PortStart.HasValue && PortEnd.HasValue )
+            if ( ServerPort.HasValue )
             {
-                builder.AppendFormat( "port={0}-{1};" , PortStart , PortEnd );
+                builder.AppendFormat( "server_port={0};" , ServerPort );
             }
 
-            if ( InterleavedStart.HasValue && InterleavedEnd.HasValue )
+            if ( Interleaved.HasValue )
             {
-                builder.AppendFormat( "interleaved={0}-{1};" , InterleavedStart , InterleavedEnd );
+                builder.AppendFormat( "interleaved={0};" , Interleaved );
+            }
+
+            foreach ( var extension in _extensions )
+            {
+                builder.AppendFormat( "{0};" , extension );
             }
 
             return builder.ToString().Trim( ' ' , ';' );
+        }
+
+
+
+
+
+
+
+        public static bool TryParse( string input , out TransportRtspHeader result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            {
+                var header = new TransportRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                    {
+                        if ( string.Equals( "destination" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetDestination( parameter.Value );
+                        }
+                        else if ( string.Equals( "source" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetSource( parameter.Value );
+                        }
+                        else if ( string.Equals( "ssrc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetSSRC( parameter.Value );
+                        }
+                        else if ( string.Equals( "mode" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetMode( parameter.Value );
+                        }
+                        else if ( string.Equals( "layers" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetLayers( parameter.Value );
+                        }
+                        else if ( string.Equals( "ttl" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetTTL( parameter.Value );
+                        }
+                        else if ( string.Equals( "port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetPortRange( parameter.Value );
+                        }
+                        else if ( string.Equals( "client_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetClientPortRange( parameter.Value );
+                        }
+                        else if ( string.Equals( "server_port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetServerPortRange( parameter.Value );
+                        }
+                        else if ( string.Equals( "interleaved" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetInterleavedRange( parameter.Value );
+                        }
+                        else if ( SupportedTransports.Contains( parameter.Name ) )
+                        {
+                            header.SetTransport( token );
+                        }
+                        else if ( SupportedTransmissions.Contains( parameter.Name ) )
+                        {
+                            header.SetTransmission( token );
+                        }
+                        else
+                        {
+                            header.AddExtension( token );
+                        }
+                    }
+                    else
+                    {
+                        if ( SupportedTransports.Contains( token ) )
+                        {
+                            header.SetTransport( token );
+                        }
+                        else if ( SupportedTransmissions.Contains( token ) )
+                        {
+                            header.SetTransmission( token );
+                        }
+                        else    
+                        {
+                            header.AddExtension( token );
+                        }
+                    }
+                }
+                
+                if ( string.IsNullOrWhiteSpace( header.Transport ) ||  string.IsNullOrWhiteSpace( header.Transmission ) )
+                {
+                    return false;
+                }
+                
+                result = header;
+            }
+
+            return result != null;
         }
     }
 }

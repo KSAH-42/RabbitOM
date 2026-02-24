@@ -3,27 +3,35 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Formatting;
-
     public sealed class MediaDurationRtspHeader
     {
         public static readonly string TypeName = "Media-Duration";
+
+
+
         
         public double Value { get; set; }
 
+
+
+
+        public override string ToString()
+        {
+            return string.Format( CultureInfo.InvariantCulture , "{0:F3}" , Value );
+        }
+
+
+
+
+
         public static bool TryParse( string input , out MediaDurationRtspHeader result )
         {
-            result = double.TryParse( RtspValueNormalizer.Normalize( input?.Replace( "," , "." ) ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
+            result = double.TryParse( RtspHeaderValueNormalizer.Normalize( input?.Replace( "," , "." ) ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
                 ? new MediaDurationRtspHeader() { Value = value }
                 : null
                 ;
 
             return result != null;
-        }
-
-        public override string ToString()
-        {
-            return string.Format( CultureInfo.InvariantCulture , "{0:F3}" , Value );
         }
     }
 }

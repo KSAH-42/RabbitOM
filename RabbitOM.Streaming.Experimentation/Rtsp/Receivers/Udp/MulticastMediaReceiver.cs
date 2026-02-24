@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
 {
-    public class MulticastMediaReceiver : RtspMediaReceiver, IReceiverConfigurer<MulticastMediaReceiverConfiguration>
+    public class MulticastMediaReceiver : RtspMediaReceiver, IMediaReceiverConfigurer<MulticastMediaReceiverConfiguration>
     {
         public override bool IsCommunicationStarted
         {

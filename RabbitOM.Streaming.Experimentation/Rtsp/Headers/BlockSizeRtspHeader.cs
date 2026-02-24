@@ -2,18 +2,21 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class MaxForwardsRtspHeader
+    public sealed class BlockSizeRtspHeader
     {
-        public static readonly string TypeName = "Max-Forwards";
-
-
-
+        public static readonly string TypeName = "Blocksize";
+        
+        
+        
+        
         
         public long Value { get; set; }
 
 
-
-
+        
+        
+        
+        
         public override string ToString()
         {
             return Value.ToString();
@@ -21,11 +24,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-        public static bool TryParse( string input , out MaxForwardsRtspHeader result )
+        
+        public static bool TryParse( string input , out BlockSizeRtspHeader result )
         {
             result = long.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , out var value )
-                ? new MaxForwardsRtspHeader() { Value = value }
+                ? new BlockSizeRtspHeader() { Value = value }
                 : null
                 ;
 
