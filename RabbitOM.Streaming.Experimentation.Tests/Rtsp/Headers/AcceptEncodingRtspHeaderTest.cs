@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "gzip,\r\ndeflate" , 2 ) ]
         [TestCase( "gzip\v,\fdeflate,\r\nidentity" , 3 ) ]
 
-        public void CheckTryParseSuccess( string input , int count )
+        public void CheckTryParseSucceed( string input , int count )
         {
             if ( ! AcceptEncodingRtspHeader.TryParse( input , out var header ) )
             {

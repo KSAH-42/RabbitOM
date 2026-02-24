@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "application/text;q=1, application/json;q=2" , 2 ) ]
 
 
-        public void CheckTryParseSuccess( string input , int count )
+        public void CheckTryParseSucceed( string input , int count )
         {
             if ( ! AcceptRtspHeader.TryParse( input , out var header ) )
             {

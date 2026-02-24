@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "fr\v,\ffr-FR,\r\nen-GB" , 3 ) ]
 
         [TestCase( "fr-FR, en-GB, en-US" , 3 ) ]
-        public void CheckTryParseSuccess( string input , int count )
+        public void CheckTryParseSucceed( string input , int count )
         {
             if ( ! AcceptLanguageRtspHeader.TryParse( input , out var header ) )
             {

@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsNotNull( header );
             Assert.AreEqual( expectedId , header.Value );
         }
-
+        
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]

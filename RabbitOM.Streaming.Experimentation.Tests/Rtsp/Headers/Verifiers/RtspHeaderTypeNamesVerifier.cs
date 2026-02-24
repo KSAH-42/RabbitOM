@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         };
 
         [Test]
-        public void CheckTryParseSuccess()
+        public void CheckTryParseSucceed()
         {
             var assembly = Assembly.GetAssembly( typeof( RtspClient ) );
 
