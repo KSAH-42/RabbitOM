@@ -7,14 +7,15 @@ using System.Reflection;
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     [TestFixture]
     public class RtspHeaderTypeNamesVerifier
     {
         private readonly HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
-            "BlockSize",
-            "RtpInfo"
+            nameof( BlockSizeRtspHeader ),
+            nameof( RtpInfoRtspHeader ),
         };
 
         [Test]
@@ -29,26 +30,24 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
                     continue;
                 }
 
-                var headerName = type.Name.Replace( "RtspHeader" , "" );
-
-                var field = type.GetFields(BindingFlags.Public | BindingFlags.Static )
+                var typeNameField = type.GetFields(BindingFlags.Public | BindingFlags.Static )
                     .Where( x => x.Name == "TypeName" )
                     .First()
                     ;
 
-                var value = (field.GetValue( null ) as string).Replace( "-" , "" );
+                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeader";
 
-                if ( headerName == value )
+                if ( type.Name == typeNameValue )
                 {
                     continue;
                 }
 
-                if ( ExceptedCases.Contains( headerName ) && ExceptedCases.Contains( value ) )
+                if ( ExceptedCases.Contains( type.Name ) && ExceptedCases.Contains( typeNameValue ) )
                 {
                     continue;
                 }
                 
-                Assert.Fail( "TypeName static member has bad name" , headerName , field.GetValue( null ) );
+                Assert.Fail( "TypeName static member has bad name" , type.Name , typeNameField.GetValue( null ) );
             }
         }
     }
