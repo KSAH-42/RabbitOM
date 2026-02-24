@@ -135,7 +135,7 @@
     <Compile Include="Rtsp\Headers\Types\RtpInfoTest.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\Types\StringWithQualityTest.cs" />
-    <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\SessionRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\LastModifiedRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\DateRtspHeaderTest.cs" />
@@ -144,7 +144,7 @@
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\BandwithRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\AcceptRangesRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\AcceptRangesRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueNormalizerTest.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
