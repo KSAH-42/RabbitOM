@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class ProxyInfo 
     { 
+        private static readonly Regex RegularExpression = new Regex( @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+
+
         private readonly string[] CommentsSeparators = { "(" , ")" };
 
 
@@ -102,44 +105,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
+            input = RtspHeaderValueNormalizer.Normalize( input );
+
+            if ( string.IsNullOrWhiteSpace( input ) )
             {
-                if ( RtspHeaderParser.TryParse( tokens.FirstOrDefault() , "/" , out var protocolTokens ) )
-                {
-                    var protocol = protocolTokens.ElementAtOrDefault( 0 );
-            
-                    if ( string.IsNullOrWhiteSpace( protocol ) )
-                    {
-                        return false;
-                    }
-            
-                    var version = protocolTokens.ElementAtOrDefault( 1 );
-
-                    if ( ! System.Version.TryParse( version , out var _ ) )
-                    {
-                        return false;
-                    }
-
-                    var receivedBy = tokens
-                        .Skip( 1 )
-                        .FirstOrDefault( token => ! token.StartsWith( "(" ) && ! token.EndsWith( ")" ) )
-                        ;
-
-                    if ( string.IsNullOrWhiteSpace( receivedBy ) )
-                    {
-                        return false;
-                    }
-
-                    var comments = tokens
-                        .Skip( 1 )
-                        .FirstOrDefault( token => token.StartsWith( "(" ) && token.EndsWith( ")" ) )
-                        ;
-
-                    result = new ProxyInfo( protocol , version , receivedBy , comments );
-                }
+                return false;
             }
 
-            return result != null;
+            var matchResult = RegularExpression.Match( input );
+
+            if ( ! matchResult.Success )
+            {
+                return false;
+            }
+
+            if ( ! System.Version.TryParse( matchResult.Groups[ "version" ].Value , out _ ) )
+            {
+                return false;
+            }
+
+            var proxyInfo = new ProxyInfo( matchResult.Groups[ "protocol" ].Value , matchResult.Groups[ "version" ].Value , matchResult.Groups[ "receivedBy" ].Value , matchResult.Groups[ "comments" ].Value );
+            
+            if ( string.IsNullOrWhiteSpace( proxyInfo.Protocol ) || string.IsNullOrWhiteSpace( proxyInfo.Version ) || string.IsNullOrWhiteSpace( proxyInfo.ReceivedBy ) )
+            {
+                return false;
+            }
+
+            result = proxyInfo;
+
+            return true;
         }
     }
 }
