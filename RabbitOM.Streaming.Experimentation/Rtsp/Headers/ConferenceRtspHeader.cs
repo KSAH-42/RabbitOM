@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using Microsoft.Win32.SafeHandles;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class ConferenceRtspHeader
@@ -104,7 +105,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetConferenceId( string value )
         {
-            ConferenceId = RtspHeaderValueNormalizer.Normalize( value );
+            ConferenceId = RtspHeaderValueNormalizer.Normalize( value ).ToToken();
         }
 
         public void SetTransport( string value )

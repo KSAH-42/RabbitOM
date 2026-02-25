@@ -51,6 +51,7 @@
     <Compile Include="Rtsp\Headers\BandwithRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\BlockSizeRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\CacheControlRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\StringRtspHeaderValueExtensions.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />

@@ -167,6 +167,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " " )]
         [TestCase( ";;;;;;" )]
         [TestCase( "\n\r;" )]
+        [TestCase( " ,,,,,,," )]
+        [TestCase( " :::::::: " )]
+        [TestCase( " !:;? " )]
         public void CheckTryParseFailed( string input )
         {
             Assert.IsFalse( ConferenceRtspHeader.TryParse( input , out var header ) );
