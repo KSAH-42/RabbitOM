@@ -19,8 +19,6 @@ namespace RabbitOM.Streaming.Net.Rtp
             Buffer = buffer;
         }
 
-        public DateTime TimeStamp { get; } = DateTime.Now;
-
         public byte[] Buffer { get; }
     }
 }
