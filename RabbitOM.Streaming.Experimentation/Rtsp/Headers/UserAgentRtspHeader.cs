@@ -6,8 +6,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class UserAgentRtspHeader
     {
-        private readonly string[] CommentsSeparators = { "(" , ")" };
+        private static readonly string[] CommentsSeparators = { "(" , ")" };
 
+        private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comments>[^()]*)\)";
 
 
 
@@ -79,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-                public static bool TryParse( string input , out UserAgentRtspHeader result )
+        public static bool TryParse( string input , out UserAgentRtspHeader result )
         {
             result = null;
 
@@ -90,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            var matches = new Regex( @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comments>[^()]*)\)" , RegexOptions.Compiled | RegexOptions.CultureInvariant ).Matches( input );
+            var matches = new Regex( RegularExpression , RegexOptions.Compiled | RegexOptions.CultureInvariant ).Matches( input );
 
             if ( matches.Count <= 0 )
             {
