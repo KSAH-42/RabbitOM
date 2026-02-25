@@ -115,6 +115,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtsp\Headers\ConferenceRtspHeaderTest.cs" />
     <Compile Include="Rtsp\RtspMethodTest.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfoTest.cs" />
     <Compile Include="Rtsp\Headers\Types\StringParameterTest.cs" />

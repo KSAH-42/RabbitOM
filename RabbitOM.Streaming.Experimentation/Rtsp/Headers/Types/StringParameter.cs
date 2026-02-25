@@ -63,6 +63,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = default;
 
+            if ( string.IsNullOrWhiteSpace( separator ) )
+            {
+                return false;
+            }
+
+            if ( ! input.Contains( separator ) )
+            {
+                return false;
+            }
+
             if ( ! RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , separator , out string[] tokens ) )
             {
                 return false;
