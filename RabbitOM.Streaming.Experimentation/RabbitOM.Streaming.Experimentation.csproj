@@ -70,6 +70,7 @@
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SplitOptions.cs" />
+    <Compile Include="Rtsp\Headers\ConferenceRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Types\InterleavedRange.cs" />
     <Compile Include="Rtsp\Headers\Types\PortRange.cs" />
