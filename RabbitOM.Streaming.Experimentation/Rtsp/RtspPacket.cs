@@ -4,12 +4,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public struct RtspPacket
     {
-        private readonly byte[] _buffer;
-        
-        private readonly int _channel;
-
-
-
         public RtspPacket( byte[] buffer , int channel )
         {
             if ( buffer == null )
@@ -27,15 +21,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 throw new ArgumentOutOfRangeException( nameof( channel ) );
             }
 
-            _buffer = buffer;
-            _channel = channel;
+            Buffer = buffer;
+            Channel = channel;
         }
 
 
 
 
-        public byte[] Buffer { get => _buffer; }
+        public byte[] Buffer { get; }
 
-        public int Channel { get => _channel; }
+        public int Channel { get; }
     }
 }
