@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
         public void Connect( string baseAddress )
-        {RabbitOM.Streaming.Experimentation.Rtsp.RtspClient d;d.Options()
+        {
             throw new NotImplementedException();
         }
         
