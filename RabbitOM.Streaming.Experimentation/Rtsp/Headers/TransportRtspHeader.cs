@@ -231,12 +231,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( Address ) )
             {
-                builder.AppendFormat( "address={0};" , Destination );
+                builder.AppendFormat( "address={0};" , Address );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Host ) )
             {
-                builder.AppendFormat( "host={0};" , Destination );
+                builder.AppendFormat( "host={0};" , Host );
             }
 
             if ( ! string.IsNullOrWhiteSpace( SSRC ) )
