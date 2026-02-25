@@ -3,6 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
     public class TransportRtspHeaderTest
@@ -80,11 +81,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "RTP/AVP/UDP;unicast;ssrc='my ssrc'" )]
         [TestCase( "RTP/AVP/UDP;unicast;ssrc=my ssrc" )]
-        [TestCase( "RTP/AVP/UDP;unicast;SSRC=my ssrc" )]
+        [TestCase( "RTP/AVP/UDP;unicast;ssrc=my ssrc" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; ssrc=my ssrc ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; ssrc=my ssrc " )]
         [TestCase( " ssrc=my ssrc ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckTryParseSsrcSucceed( string input )
+        public void CheckTryParseSSRCSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -114,7 +115,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " RTP/AVP/UDP ; unicast ; ttl=12 ;" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; ttl= 12 " )]
         [TestCase( " ttl=12 ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
-        public void CheckTryParseTtlSucceed( string input )
+        public void CheckTryParseTTLSucceed( string input )
         {
             Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -209,6 +210,234 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             Assert.IsFalse( TransportRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
+        }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithSource()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.SetSource( "abc");
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;source=abc" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithDestination()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.SetDestination( "abc");
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;destination=abc" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithAddress()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.SetAddress( "abc");
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;address=abc" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithHost()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.SetHost( "abc");
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;host=abc" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithSSRC()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.SetSSRC( "abc");
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;ssrc=abc" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithMode()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.SetMode( "abc");
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;mode=\"abc\"" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithTTL()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.TTL = 123;
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;ttl=123" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithLayers()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.Layers = 123;
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;layers=123" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithPort()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.Port = new PortRange( 1 , 2 );
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;port=1-2" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithClientPort()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.ClientPort = new PortRange( 1 , 2 );
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;client_port=1-2" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithServerPort()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.ServerPort = new PortRange( 1 , 2 );
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;server_port=1-2" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithInterleaved()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            header.Interleaved = new InterleavedRange( 1 , 2 );
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;interleaved=1-2" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithExtensions()
+        {
+            var header = new TransportRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetTransport( "RTP/AVP/UDP" );
+            header.SetTransmission( "unicast" );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
+
+            Assert.IsTrue( header.AddExtension( "a") );
+            Assert.IsTrue( header.AddExtension( "b") );
+            Assert.IsTrue( header.AddExtension( "c") );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;a;b;c" , header.ToString() );
+
+            Assert.IsTrue( header.RemoveExtension( "c") );
+
+            Assert.AreEqual( "RTP/AVP/UDP;unicast;a;b" , header.ToString() );
         }
     }
 }
