@@ -67,6 +67,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string Destination { get; private set; } = string.Empty;
 
+        public string Address { get; private set; } = string.Empty;
+
+        public string Host { get; private set; } = string.Empty;
+
         public string SSRC { get; private set; } = string.Empty;
 
         public string Mode { get; private set; } = string.Empty;
@@ -109,6 +113,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public void SetDestination( string value )
         {
             Destination = RtspHeaderValueNormalizer.Normalize( value );
+        }
+
+        public void SetAddress( string value )
+        {
+            Address = RtspHeaderValueNormalizer.Normalize( value );
+        }
+
+        public void SetHost( string value )
+        {
+            Host = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetSSRC( string value )
@@ -215,6 +229,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.AppendFormat( "destination={0};" , Destination );
             }
 
+            if ( ! string.IsNullOrWhiteSpace( Address ) )
+            {
+                builder.AppendFormat( "address={0};" , Destination );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Host ) )
+            {
+                builder.AppendFormat( "host={0};" , Destination );
+            }
+
             if ( ! string.IsNullOrWhiteSpace( SSRC ) )
             {
                 builder.AppendFormat( "ssrc={0};" , SSRC );
@@ -288,6 +312,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         else if ( string.Equals( "source" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
                             header.SetSource( parameter.Value );
+                        }
+                        else if ( string.Equals( "address" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetAddress( parameter.Value );
+                        }
+                        else if ( string.Equals( "host" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        {
+                            header.SetHost( parameter.Value );
                         }
                         else if ( string.Equals( "ssrc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {

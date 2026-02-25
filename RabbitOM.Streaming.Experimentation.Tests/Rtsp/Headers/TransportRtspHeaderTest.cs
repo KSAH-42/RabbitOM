@@ -48,6 +48,36 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "my destination" , header.Destination );
         }
 
+        [TestCase( "RTP/AVP/UDP;unicast;address='my address'" )]
+        [TestCase( "RTP/AVP/UDP;unicast;address=my address" )]
+        [TestCase( "RTP/AVP/UDP;unicast;Address=my address" )]
+        [TestCase( " RTP/AVP/UDP ; unicast ; address=my address ;" )]
+        [TestCase( " RTP/AVP/UDP ; unicast ; address=my address " )]
+        [TestCase( " address=my address;  ; ;   RTP/AVP/UDP ; unicast ; " )]
+        public void CheckTryParseAddressSucceed( string input )
+        {
+            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsNotNull( header );
+            Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
+            Assert.AreEqual( "unicast" , header.Transmission );
+            Assert.AreEqual( "my address" , header.Address );
+        }
+
+        [TestCase( "RTP/AVP/UDP;unicast;host='my host'" )]
+        [TestCase( "RTP/AVP/UDP;unicast;host=my host" )]
+        [TestCase( "RTP/AVP/UDP;unicast;Host=my host" )]
+        [TestCase( " RTP/AVP/UDP ; unicast ; host=my host ;" )]
+        [TestCase( " RTP/AVP/UDP ; unicast ; host=my host " )]
+        [TestCase( " host=my host;  ; ;   RTP/AVP/UDP ; unicast ; " )]
+        public void CheckTryParseHostSucceed( string input )
+        {
+            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsNotNull( header );
+            Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
+            Assert.AreEqual( "unicast" , header.Transmission );
+            Assert.AreEqual( "my host" , header.Host );
+        }
+
         [TestCase( "RTP/AVP/UDP;unicast;ssrc='my ssrc'" )]
         [TestCase( "RTP/AVP/UDP;unicast;ssrc=my ssrc" )]
         [TestCase( "RTP/AVP/UDP;unicast;SSRC=my ssrc" )]
