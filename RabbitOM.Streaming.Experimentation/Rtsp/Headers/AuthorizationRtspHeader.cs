@@ -204,9 +204,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = RtspHeaderValueNormalizer.Normalize( input );
-
-            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
             {
                 var scheme = tokens.FirstOrDefault();
                 
