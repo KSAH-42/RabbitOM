@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
         public void Connect( string baseAddress )
-        {
+        {RabbitOM.Streaming.Experimentation.Rtsp.RtspClient d;d.Options()
             throw new NotImplementedException();
         }
         
@@ -306,36 +306,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         }
         
         public RtspResponseMessage SetParameter( RtspContent content )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public RtspResponseMessage KeepAlive()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public RtspResponseMessage KeepAlive( string uri )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public RtspResponseMessage KeepAlive( string uri , RtspContent content )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public RtspResponseMessage KeepAlive( Uri uri )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public RtspResponseMessage KeepAlive( Uri uri , RtspContent content )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public RtspResponseMessage KeepAlive( RtspContent content )
         {
             throw new NotImplementedException();
         }
