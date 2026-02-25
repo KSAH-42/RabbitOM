@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class ProxyInfo 
     { 
-        private static readonly Regex RegularExpression = new Regex( @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";
 
 
         private readonly string[] CommentsSeparators = { "(" , ")" };
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 return false;
             }
 
-            var matchResult = RegularExpression.Match( input );
+            var matchResult = new Regex( RegularExpression, RegexOptions.Compiled | RegexOptions.CultureInvariant).Match( input );
 
             if ( ! matchResult.Success )
             {
