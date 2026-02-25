@@ -47,6 +47,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             "multicast",
         };
 
+        private static readonly IReadOnlyCollection<string> SupportedConferenceIdsNames = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "id",
+            "identifier",
+            "conference-id",
+            "conference_id",
+            "conf-id",
+            "conf_id"
+        };
+
         
 
 
@@ -280,11 +290,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     if ( StringParameter.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( string.Equals( "id" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
-                        {
-                            header.SetConferenceId( parameter.Value );
-                        }
-                        else if ( string.Equals( "destination" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( string.Equals( "destination" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
                         {
                             header.SetDestination( parameter.Value );
                         }
@@ -331,6 +337,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         else if ( SupportedTransmissions.Contains( parameter.Name ) )
                         {
                             header.SetTransmission( token );
+                        }
+                        else if ( SupportedConferenceIdsNames.Contains( parameter.Name ) )
+                        {
+                            header.SetConferenceId( token );
                         }
                         else
                         {
