@@ -5,7 +5,6 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using Microsoft.Win32.SafeHandles;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class ConferenceRtspHeader
@@ -105,7 +104,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetConferenceId( string value )
         {
-            ConferenceId = RtspHeaderValueNormalizer.Normalize( value ).ToToken();
+            ConferenceId = RtspHeaderValueNormalizer.Normalize( value );
         }
 
         public void SetTransport( string value )
@@ -242,17 +241,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( Mode ) )
             {
-                builder.AppendFormat( "mode=\"{0}\";" , Mode );
+                builder.AppendFormat( "mode={0};" , Mode );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Tag ) )
             {
-                builder.AppendFormat( "tag=\"{0}\";" , Tag );
+                builder.AppendFormat( "tag={0};" , Tag );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Session ) )
             {
-                builder.AppendFormat( "session=\"{0}\";" , Session);
+                builder.AppendFormat( "session={0};" , Session);
             }
 
             if ( TTL.HasValue )
@@ -277,7 +276,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static bool IsWellFormedConferenceId( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
 
+            return value.Any( character => char.IsLetterOrDigit( character ) );
+        }
 
         public static bool TryParse( string input , out ConferenceRtspHeader result )
         {
@@ -360,7 +367,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else    
                         {
-                            if ( string.IsNullOrWhiteSpace( header.ConferenceId ) )
+                            if ( string.IsNullOrWhiteSpace( header.ConferenceId ) && IsWellFormedConferenceId( token ) )
                             {
                                 header.SetConferenceId( token );
                             }
