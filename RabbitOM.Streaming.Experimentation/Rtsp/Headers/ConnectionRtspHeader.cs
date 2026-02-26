@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -42,14 +44,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// <returns>returns true for a success, otherwise false</returns>
         public bool AddDirective( string value )
         {
-            var text = RtspHeaderValueNormalizer.Normalize( value );
+            var directive = RtspHeaderValueNormalizer.Normalize( value );
 
-            if ( ! string.IsNullOrWhiteSpace( text ) )
+            if ( ! char.IsLetter( directive.FirstOrDefault() ) || ! char.IsLetterOrDigit( directive.LastOrDefault() ) )
             {
-                return _directives.Add( text );
+                return false;
             }
 
-            return false;
+            if ( directive.Any( c => char.IsSeparator( c ) ) )
+            {
+                return false;
+            }
+
+            if ( directive.Any( c => char.IsPunctuation( c ) && c != '-' && c != '_' ) )
+            {
+                return false;
+            }
+
+            return _directives.Add( directive );
         }
 
         /// <summary>

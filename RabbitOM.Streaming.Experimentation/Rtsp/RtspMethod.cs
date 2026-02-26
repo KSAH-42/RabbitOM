@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
             var methodName = value.Trim();
 
-            foreach ( PropertyInfo property in typeof( RtspMethod ).GetProperties( BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty ) )
+            foreach ( var property in typeof( RtspMethod ).GetProperties( BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty ) )
             {
                 var method = property.GetValue( null ) as RtspMethod ;
 

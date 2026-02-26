@@ -27,16 +27,39 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsNull( header );
         }
 
-        [Test]
-        public void CheckAddDirectives()
+        [TestCase("connected")]
+        [TestCase(" connected ")]
+        [TestCase("keep-alive")]
+        [TestCase("keep_alive")]
+        [TestCase(" keep-alive" )]
+        [TestCase(" keep_alive" )]
+        public void CheckAddDirectivesSucceed(string input)
         {
             var header = new ConnectionRtspHeader();
 
             Assert.IsEmpty( header.Directives );
-            Assert.IsTrue( header.AddDirective( "connected" ) );
-            Assert.IsTrue( header.AddDirective( "closed" ) );
-            Assert.AreEqual( 2 , header.Directives.Count );
-            Assert.IsFalse( header.AddDirective( "closed" ) );
+            Assert.IsTrue( header.AddDirective( input ) );
+            Assert.AreEqual( 1 , header.Directives.Count );
+        }
+
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("?")]
+        [TestCase(",")]
+        [TestCase(",,")]
+        [TestCase(";")]
+        [TestCase(";;")]
+        [TestCase("-connected")]
+        [TestCase("connected-" )]
+        [TestCase("keep?alive" )]
+        [TestCase("keep/alive" )]
+        public void CheckAddDirectivesFailed( string input )
+        {
+            var header = new ConnectionRtspHeader();
+
+            Assert.IsEmpty( header.Directives );
+            Assert.IsFalse( header.AddDirective( input ) );
+            Assert.AreEqual( 0 , header.Directives.Count );
         }
 
         [Test]
