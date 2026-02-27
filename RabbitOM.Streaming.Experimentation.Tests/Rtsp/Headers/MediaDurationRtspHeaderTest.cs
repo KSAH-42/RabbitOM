@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         public void CheckTryParseSucceed( string input , double expectedId )
         {
-            Assert.IsTrue( MediaDurationRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( MediaDurationRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( expectedId , header.Value );
         }
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " \" \" " ) ]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( MediaDurationRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( MediaDurationRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
@@ -61,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new MediaDurationRtspHeader();
+            var header = new MediaDurationRtspHeaderValue();
 
             Assert.AreEqual( 0 , header.Value );
             Assert.AreEqual( "0.000" , header.ToString() );

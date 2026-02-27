@@ -14,8 +14,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
     {
         private readonly HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
-            nameof( BlockSizeRtspHeader ),
-            nameof( RtpInfoRtspHeader ),
+            nameof( BlockSizeRtspHeaderValue ),
+            nameof( RtpInfoRtspHeaderValue ),
         };
 
         [Test]
@@ -23,19 +23,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         {
             var assembly = Assembly.GetAssembly( typeof( RtspClient ) );
 
-            foreach ( var type in assembly.ExportedTypes )
+            foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeaderValue ) ) ) )
             {
-                if ( ! type.Name.EndsWith( "RtspHeader" ) )
-                {
-                    continue;
-                }
-
                 var typeNameField = type.GetFields(BindingFlags.Public | BindingFlags.Static )
                     .Where( x => x.Name == "TypeName" )
                     .First()
                     ;
-
-                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeader";
+                
+                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + nameof( RtspHeaderValue );
 
                 if ( type.Name == typeNameValue )
                 {

@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         public void CheckTryParseSucceed( string input , int count )
         {
-            if ( ! AcceptRtspHeader.TryParse( input , out var header ) )
+            if ( ! AcceptRtspHeaderValue.TryParse( input , out var header ) )
             {
                 Assert.Fail( "parse has failed" );
             }
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "application/strange; q=z" )]
         public void CheckTryParseFailed( string input )
         {
-            if ( AcceptRtspHeader.TryParse( input , out var header ) )
+            if ( AcceptRtspHeaderValue.TryParse( input , out var header ) )
             {
                 Assert.Fail( "parse must failed" );
             }
@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new AcceptRtspHeader();
+            var header = new AcceptRtspHeaderValue();
 
             Assert.IsEmpty( header.ToString() );
 
@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckAddMime()
         {
-            var header = new AcceptRtspHeader();
+            var header = new AcceptRtspHeaderValue();
 
             Assert.IsEmpty( header.Mimes );
 

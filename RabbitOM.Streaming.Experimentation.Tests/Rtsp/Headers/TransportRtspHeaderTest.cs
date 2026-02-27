@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " source=my source ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseSourceSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " destination=my destination ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseDestinationSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " address=my address;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseAddressSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " host=my host;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseHostSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " ssrc=my ssrc ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseSSRCSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " mode=my mode ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseModeSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -116,7 +116,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " ttl=12 ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseTTLSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -131,7 +131,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " layers=12 ;  ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseLayersSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -145,7 +145,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  client_port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseClientPortSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -160,7 +160,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  server_port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseServerPortSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -175,7 +175,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParsePortSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -190,7 +190,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  interleaved = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseInterleavedSucceed( string input )
         {
-            Assert.IsTrue( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
             Assert.AreEqual( "unicast" , header.Transmission );
@@ -207,14 +207,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "RTP/AVP/UDP;partialcast;interLeaved=1-2" )]
         public void CheckTryParseFailed( string input )
         {
-            Assert.IsFalse( TransportRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( TransportRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
         [Test]
         public void CheckToString()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -227,7 +227,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithSource()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -243,7 +243,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithDestination()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -259,7 +259,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithAddress()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -275,7 +275,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithHost()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -291,7 +291,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithSSRC()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -307,7 +307,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithMode()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -323,7 +323,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithTTL()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -339,7 +339,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithLayers()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -355,7 +355,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithPort()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -371,7 +371,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithClientPort()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -387,7 +387,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithServerPort()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -403,7 +403,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithInterleaved()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 
@@ -419,7 +419,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringWithExtensions()
         {
-            var header = new TransportRtspHeader();
+            var header = new TransportRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 

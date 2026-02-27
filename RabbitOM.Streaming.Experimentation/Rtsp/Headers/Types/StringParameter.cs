@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public struct StringParameter
+    public sealed class StringParameter
     {
         public StringParameter( string name , string value )
         {
@@ -12,14 +12,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( name ) );
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( name ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( name ) )
             {
                 throw new ArgumentNullException( nameof( name ) , "the argument called name contains bad things" );
             }
 
             Name = name ?? string.Empty;
 
-            Value = RtspHeaderValueNormalizer.Normalize( value );
+            Value = StringRtspHeaderNormalizer.Normalize( value );
         }
 
 
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( ! StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , separator , out string[] tokens ) )
+            if ( ! StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , separator , out string[] tokens ) )
             {
                 return false;
             }

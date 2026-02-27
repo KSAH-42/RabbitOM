@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "abc=d; \" AF12BBF   \" ;" , "AF12BBF")]
         public void CheckTryParseSucceedWithNoTimeout(string input , string session )
         {
-            Assert.IsTrue( SessionRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( SessionRtspHeaderValue.TryParse( input , out var header ) );
             Assert.AreEqual( session , header.Identifier );
             Assert.IsNull( header.Timeout );
         }
@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " abc = d ; timeout='d'; 'AF12BBF' ; timeout = \"123\" " , "AF12BBF" , 123 )]
         public void CheckTryParseSucceedWithTimeout(string input , string session , long timeout)
         {
-            Assert.IsTrue( SessionRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( SessionRtspHeaderValue.TryParse( input , out var header ) );
             Assert.AreEqual( session , header.Identifier );
             Assert.AreEqual( timeout , header.Timeout );
         }
@@ -46,14 +46,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "timeout=123; , " )]
         public void CheckTryParseFailed( string input)
         {
-            Assert.IsFalse( SessionRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( SessionRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
         [Test]
         public void CheckToString()
         {
-            var header = new SessionRtspHeader();
+            var header = new SessionRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
             

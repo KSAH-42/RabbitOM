@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         public void CheckTryParseSucceed( string input , int count )
         {
-            if ( ! AcceptEncodingRtspHeader.TryParse( input , out var header ) )
+            if ( ! AcceptEncodingRtspHeaderValue.TryParse( input , out var header ) )
             {
                 Assert.Fail( "parse has failed" );
             }
@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "dzip, text" )]
         public void CheckTryParseFailed( string input )
         {
-            if ( AcceptEncodingRtspHeader.TryParse( input , out var header ) )
+            if ( AcceptEncodingRtspHeaderValue.TryParse( input , out var header ) )
             {
                 Assert.Fail( "parse must failed" );
             }
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new AcceptEncodingRtspHeader();
+            var header = new AcceptEncodingRtspHeaderValue();
 
             Assert.IsEmpty( header.ToString() );
 
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckAddEncoding()
         {
-            var header = new AcceptEncodingRtspHeader();
+            var header = new AcceptEncodingRtspHeaderValue();
 
             Assert.IsEmpty( header.Encodings );
 

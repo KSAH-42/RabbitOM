@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
        [TestCase( " \" Mon ,  19  Feb   2024   14:32:10   GMT  \" " )] 
        public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( ExpiresRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ExpiresRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( DayOfWeek.Monday , header.Value.DayOfWeek );
             Assert.AreEqual( 19 , header.Value.Day );
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " -1 Feb 2024 14:32:10 GMT" )]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( ExpiresRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( ExpiresRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new ExpiresRtspHeader();
+            var header = new ExpiresRtspHeaderValue();
 
             header.Value = new DateTime(2024,2,19,14,32,10);
 

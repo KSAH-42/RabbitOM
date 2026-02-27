@@ -16,14 +16,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( url ) );
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( url ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( url ) )
             {
-                if ( ! RtspHeaderValueNormalizer.CheckValue( ssrc) )
+                if ( ! StringRtspHeaderNormalizer.CheckValue( ssrc) )
                 {
                     throw new ArgumentException( nameof( ssrc ) );
                 }
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , ";" , out var tokens ) )
             {
                 var header = new RtpInfo();
 

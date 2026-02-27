@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( name ) );
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( name ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
             }
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( name ) );
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( name ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
             }
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , ";" , out var tokens ) )
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 

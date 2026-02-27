@@ -37,17 +37,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( receivedBy );
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( protocol ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( version ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( version ) )
             {
                 throw new ArgumentException( version , "the argument called version contains bad things");
             }
 
-            if ( ! RtspHeaderValueNormalizer.CheckValue( receivedBy ) )
+            if ( ! StringRtspHeaderNormalizer.CheckValue( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy contains bad things");
             }
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Protocol = protocol.Trim();
             Version = version.Trim();
             ReceivedBy = receivedBy;
-            Comments = RtspHeaderValueNormalizer.Normalize( comments , CommentsSeparators );
+            Comments = StringRtspHeaderNormalizer.Normalize( comments , CommentsSeparators );
         }
 
         
@@ -105,7 +105,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = RtspHeaderValueNormalizer.Normalize( input );
+            input = StringRtspHeaderNormalizer.Normalize( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {

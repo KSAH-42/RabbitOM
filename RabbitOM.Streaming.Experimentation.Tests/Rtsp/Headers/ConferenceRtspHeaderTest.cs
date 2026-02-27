@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( ";  unicast ; ; RTP/AVP/UDP ; 1234567879 ; unicast ; " )]
         public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; source=mysource;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseSourceSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; destination=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseDestinationSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; address=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseAddressSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; host=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseHostSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -84,7 +84,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; role=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseRoleSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; mode=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseModeSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; tag=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseTagSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -126,7 +126,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; session=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseSessionSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -140,7 +140,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; ttl=123;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseTTLSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -154,7 +154,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879; port=1-23;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParsePortSucceed( string input )
         {
-            Assert.IsTrue( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "1234567879" , header.ConferenceId );
             Assert.AreEqual( "RTP/AVP/UDP" , header.Transport );
@@ -173,7 +173,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " !:;? " )]
         public void CheckTryParseFailed( string input )
         {
-            Assert.IsFalse( ConferenceRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( ConferenceRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
     }

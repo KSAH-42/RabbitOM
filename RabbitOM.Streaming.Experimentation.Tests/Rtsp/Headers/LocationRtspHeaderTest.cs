@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " rtsp://admin:camera123@127.0.0.1:554/screenlive " )]
         public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( LocationRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( LocationRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.IsNotNull( header.Uri);
         }
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " ::::::::: " ) ]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( LocationRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( LocationRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
     }

@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "bytes */3" , "bytes" , null , null , 3 )]
         public void CheckTryParseSucceed( string input , string unit , long? start , long? end , long? size )
         {
-            Assert.IsTrue( ContentRangeRtspHeader.TryParse( input , out var header ) );
+            Assert.IsTrue( ContentRangeRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( unit , header.Unit );
             Assert.AreEqual( start , header.Start );
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " " ) ]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( ContentRangeRtspHeader.TryParse( input , out var header ) );
+            Assert.IsFalse( ContentRangeRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new ContentRangeRtspHeader();
+            var header = new ContentRangeRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 

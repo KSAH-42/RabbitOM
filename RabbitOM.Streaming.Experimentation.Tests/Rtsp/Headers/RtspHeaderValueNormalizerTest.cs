@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "²" )]
         public void CheckReturnsValueAsEmpty( string input )
         {
-            Assert.AreEqual( "" , RtspHeaderValueNormalizer.Normalize( input ) );
+            Assert.AreEqual( "" , StringRtspHeaderNormalizer.Normalize( input ) );
         }
 
         [TestCase( " abcdecf " , "abcdecf" )]
@@ -46,14 +46,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "\r \" 1 Abc\rd§Ecf 1 \" \r" , "1 AbcdEcf 1" )]
         public void CheckNormalization( string input , string output )
         {
-            Assert.AreEqual( output , RtspHeaderValueNormalizer.Normalize( input ) );
+            Assert.AreEqual( output , StringRtspHeaderNormalizer.Normalize( input ) );
         }
 
         [TestCase( "\r \" Abc\rd§Ecf \" \r" , "bcdEcf" )]
         [TestCase( "\r \" 1 Abc\rd§Ecf 1 \" \r" , "1 bcdEcf 1" )]
         public void CheckNormalizationWithFilter( string input , string output )
         {
-            Assert.AreEqual( output , RtspHeaderValueNormalizer.Normalize( input , "A" ) );
+            Assert.AreEqual( output , StringRtspHeaderNormalizer.Normalize( input , "A" ) );
         }
     }
 }

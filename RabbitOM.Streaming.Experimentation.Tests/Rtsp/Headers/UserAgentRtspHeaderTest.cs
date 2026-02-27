@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  (my comments) my data test productA/1.1 " , "productA" , "1.1" , "my comments" ) ]
         public void CheckTryParseSuccee( string input , string product , string version , string comment)
         {
-            Assert.IsTrue( UserAgentRtspHeader.TryParse( input, out var header ) );
+            Assert.IsTrue( UserAgentRtspHeaderValue.TryParse( input, out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( product , header.Product );
             Assert.AreEqual( version , header.Version );

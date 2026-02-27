@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "fr-FR, en-GB, en-US" , 3 ) ]
         public void CheckTryParseSucceed( string input , int count )
         {
-            if ( ! AcceptLanguageRtspHeader.TryParse( input , out var header ) )
+            if ( ! AcceptLanguageRtspHeaderValue.TryParse( input , out var header ) )
             {
                 Assert.Fail( "parse has failed" );
             }
@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "\fr" ) ]
         public void CheckTryParseFailed( string input )
         {
-            if ( AcceptLanguageRtspHeader.TryParse( input , out var header ) )
+            if ( AcceptLanguageRtspHeaderValue.TryParse( input , out var header ) )
             {
                 Assert.Fail( "parse must failed" );
             }
@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new AcceptLanguageRtspHeader();
+            var header = new AcceptLanguageRtspHeaderValue();
 
             Assert.IsEmpty( header.ToString() );
 
@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckAddLanguage()
         {
-            var header = new AcceptLanguageRtspHeader();
+            var header = new AcceptLanguageRtspHeaderValue();
 
             Assert.IsEmpty( header.Languages );
 
