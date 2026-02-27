@@ -55,5 +55,15 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             Assert.AreEqual( output , StringRtspHeaderNormalizer.Normalize( input , "A" ) );
         }
+
+        [TestCase( null , "\"\"" )]
+        [TestCase( "" , "\"\"" )]
+        [TestCase( " " , "\"\"" )]
+        [TestCase( "abc" , "\"abc\"" )]
+        [TestCase( " abc " , "\"abc\"" )]
+        public void CheckQuoteValue( string input , string output )
+        {
+            Assert.AreEqual( output , StringRtspHeaderNormalizer.QuoteValue( input ) );
+        }
     }
 }
