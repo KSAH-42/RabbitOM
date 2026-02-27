@@ -28,9 +28,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public string Domain { get; private set; } = string.Empty;
         
-        public string Opaque { get; private set; } = string.Empty;
-        
         public string Uri { get; private set; } = string.Empty;
+        
+        public string Opaque { get; private set; } = string.Empty;
         
         public string Response { get; private set; } = string.Empty;
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string NonceCount { get; private set; } = string.Empty;
 
         public string ClientNonce { get; private set; } = string.Empty;
-
+                
         public IReadOnlyCollection<string> Extensions { get => _extensions; }
 
 

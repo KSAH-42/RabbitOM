@@ -10,24 +10,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
         
-        public Uri Uri { get; private set; }
+        public string Uri { get; private set; } = string.Empty;
 
         
         
         
 
-
-        public void SetUri( Uri value )
-        {
-            Uri = value;
-        }
 
         public void SetUri( string value )
         {
-            Uri = UriRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
-                ? result
-                : null
-                ;
+            Uri = StringRtspHeaderNormalizer.Normalize( value );
         }
 
 
@@ -37,26 +29,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public override string ToString()
         {
-            return Uri?.ToString() ?? string.Empty;
+            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
         }
 
         public static bool TryParse( string input , out LocationRtspHeaderValue result )
         {
             result = null;
 
-            if ( UriRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , out Uri uri ) )
+            var value = StringRtspHeaderNormalizer.Normalize( input );
+
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
-                var header = new LocationRtspHeaderValue();
-
-                header.SetUri( StringRtspHeaderNormalizer.Normalize( input ) );
-
-                if ( header.Uri != null )
-                {
-                    result = header;
-                }
+                return false;
             }
 
-            return result != null;
+            result = new LocationRtspHeaderValue();
+
+            result.SetUri( value );
+
+            return true;
         }
     }
 }

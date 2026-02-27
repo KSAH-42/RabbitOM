@@ -67,7 +67,6 @@
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Parsers\DateTimeRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Parsers\StringRtspHeaderParser.cs" />
-    <Compile Include="Rtsp\Headers\Parsers\UriRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RefererRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderValue.cs" />
