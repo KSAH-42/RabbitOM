@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public static class RtspAuthenticationTypes
     {

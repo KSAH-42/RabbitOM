@@ -116,7 +116,7 @@
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiver.cs" />
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverConfiguration.cs" />
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverSession.cs" />
-    <Compile Include="Rtsp\RtspAuthenticationTypes.cs" />
+    <Compile Include="Rtsp\Headers\RtspAuthenticationTypes.cs" />
     <Compile Include="Rtsp\RtspClient.cs" />
     <Compile Include="Rtsp\RtspContent.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />
