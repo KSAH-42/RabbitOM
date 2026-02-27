@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public struct PortRange : IEquatable<PortRange>
     {
@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = default;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
             {
                 if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var minimum ) )
                 {

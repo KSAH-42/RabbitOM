@@ -3,7 +3,7 @@ using System;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     [TestFixture]
     public class PortRangeTest

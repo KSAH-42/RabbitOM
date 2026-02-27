@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class StringWithQuality : IEquatable<StringWithQuality>
     {
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , ";" , out var tokens ) )
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 

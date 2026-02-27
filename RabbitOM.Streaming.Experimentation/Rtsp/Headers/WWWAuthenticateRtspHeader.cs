@@ -5,8 +5,6 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-
     public sealed class WWWAuthenticateRtspHeader
     {
         public static readonly string TypeName = "WWW-Authenticate";
@@ -163,11 +161,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             input = RtspHeaderValueNormalizer.Normalize( input );
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
             {
                 var scheme = tokens.First();
                 
-                if ( RtspHeaderParser.TryParse( input.Replace( scheme , "" ) , "," , out tokens ) )
+                if ( StringRtspHeaderParser.TryParse( input.Replace( scheme , "" ) , "," , out tokens ) )
                 {
                     result = new WWWAuthenticateRtspHeader(); 
                     

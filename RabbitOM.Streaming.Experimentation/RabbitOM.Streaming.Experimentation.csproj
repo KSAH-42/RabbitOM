@@ -62,14 +62,15 @@
     <Compile Include="Rtsp\Headers\LocationRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\Parsers\UriRtspHeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\Parsers\DateTimeRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\Parsers\StringRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueNormalizer.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\SplitOptions.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Types\InterleavedRange.cs" />

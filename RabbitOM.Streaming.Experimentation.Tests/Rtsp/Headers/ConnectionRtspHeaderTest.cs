@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         public void CheckRemoveDirectives()
         {
             var header = new ConnectionRtspHeader();
-
+            
             Assert.IsEmpty( header.Directives );
             
             Assert.IsFalse( header.RemoveDirective( "abc" ) );

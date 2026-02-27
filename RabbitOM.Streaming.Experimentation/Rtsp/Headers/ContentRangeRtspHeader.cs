@@ -4,8 +4,6 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-
     public sealed class ContentRangeRtspHeader 
     {
         public static readonly string TypeName = "Content-Range";
@@ -105,9 +103,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
             
-            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , " " , out var tokens ) )
             {
-                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
+                if ( StringRtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
                 {
                     var header = new ContentRangeRtspHeader();
 

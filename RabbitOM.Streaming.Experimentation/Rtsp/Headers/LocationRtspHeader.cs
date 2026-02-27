@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , out Uri uri ) )
+            if ( UriRtspHeaderParser.TryParse( RtspHeaderValueNormalizer.Normalize( input ) , out Uri uri ) )
             {
                 var header = new LocationRtspHeader();
 

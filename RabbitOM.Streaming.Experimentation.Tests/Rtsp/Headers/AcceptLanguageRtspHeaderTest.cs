@@ -3,8 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-
+    
     [TestFixture]
     public class AcceptLanguageRtspHeaderTest
     {
@@ -45,8 +44,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( ",,,," )]
         [TestCase( " , , , , " )]
         [TestCase( "fr-EN" ) ]
+        [TestCase( "en-EN" ) ]
         [TestCase( "\fr" ) ]
-        [TestCase( "branleur-BRANLEUR" ) ]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptLanguageRtspHeader.TryParse( input , out var header ) )
