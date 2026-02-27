@@ -8,6 +8,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
+            if ( string.IsNullOrWhiteSpace( input ) )
+            {
+                return false;
+            }
+
             if ( ! Uri.IsWellFormedUriString( input , UriKind.RelativeOrAbsolute ) )
             {
                 return false;
