@@ -202,11 +202,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
             {
                 var scheme = tokens.FirstOrDefault();
                 
-                if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
+                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
                     result = new AuthorizationRtspHeaderValue(); 
                     

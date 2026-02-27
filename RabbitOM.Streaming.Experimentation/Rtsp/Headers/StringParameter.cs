@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( ! StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , separator , out string[] tokens ) )
+            if ( ! RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , separator , out string[] tokens ) )
             {
                 return false;
             }

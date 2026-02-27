@@ -65,8 +65,7 @@
     <Compile Include="Rtsp\Headers\LocationRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\Parsers\DateTimeRtspHeaderParser.cs" />
-    <Compile Include="Rtsp\Headers\Parsers\StringRtspHeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RefererRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderValue.cs" />
@@ -77,12 +76,12 @@
     <Compile Include="Rtsp\Headers\SpeedRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHeaderNormalizer.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\Types\InterleavedRange.cs" />
-    <Compile Include="Rtsp\Headers\Types\PortRange.cs" />
-    <Compile Include="Rtsp\Headers\Types\ProxyInfo.cs" />
-    <Compile Include="Rtsp\Headers\Types\RtpInfo.cs" />
-    <Compile Include="Rtsp\Headers\Types\StringParameter.cs" />
-    <Compile Include="Rtsp\Headers\Types\StringWithQuality.cs" />
+    <Compile Include="Rtsp\Headers\InterleavedRange.cs" />
+    <Compile Include="Rtsp\Headers\PortRange.cs" />
+    <Compile Include="Rtsp\Headers\ProxyInfo.cs" />
+    <Compile Include="Rtsp\Headers\RtpInfo.cs" />
+    <Compile Include="Rtsp\Headers\StringParameter.cs" />
+    <Compile Include="Rtsp\Headers\StringWithQuality.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ViaRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
@@ -133,5 +132,6 @@
       <Name>RabbitOM.Streaming</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

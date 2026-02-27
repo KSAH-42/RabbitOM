@@ -103,9 +103,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
             
-            if ( StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
             {
-                if ( StringRtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
+                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
                 {
                     var header = new ContentRangeRtspHeaderValue();
 

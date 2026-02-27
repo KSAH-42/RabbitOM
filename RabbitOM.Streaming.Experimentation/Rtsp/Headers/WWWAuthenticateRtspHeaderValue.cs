@@ -161,11 +161,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             input = StringRtspHeaderNormalizer.Normalize( input );
 
-            if ( StringRtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
             {
                 var scheme = tokens.First();
                 
-                if ( StringRtspHeaderParser.TryParse( input.Replace( scheme , "" ) , "," , out tokens ) )
+                if ( RtspHeaderParser.TryParse( input.Replace( scheme , "" ) , "," , out tokens ) )
                 {
                     result = new WWWAuthenticateRtspHeaderValue(); 
                     

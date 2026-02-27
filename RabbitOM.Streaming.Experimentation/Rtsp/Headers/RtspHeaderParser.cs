@@ -1,10 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    internal static class StringRtspHeaderParser
+    internal static class RtspHeaderParser
     {
+        public static string Format( DateTime value )
+        {
+            value = value.Kind == DateTimeKind.Local ? value.ToUniversalTime() : value;
+
+            return value.ToString( "r" , CultureInfo.InvariantCulture );
+        }
+
+        public static bool TryParse( string input , out DateTime result )
+        {
+            return DateTime.TryParse( input , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out result );
+        }
+
         public static bool TryParse( string input , string separator , out string[] result )
         {
             result = null;
