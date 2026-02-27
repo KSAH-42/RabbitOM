@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " ,  , \"OPtIONS\" " )]
         public void CheckTryParseSucceed1(string input )
         {
-            Assert.IsTrue( PublicRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( PublicRtspHeader.TryParse( input , out var header ) );
             Assert.AreEqual( 1 , header.Methods.Count);
             Assert.IsTrue( header.Methods.Contains( RtspMethod.OPTIONS ) );
         }
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         
         public void CheckTryParseSucceed2(string input )
         {
-            Assert.IsTrue( PublicRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( PublicRtspHeader.TryParse( input , out var header ) );
             Assert.Greater( header.Methods.Count , 0 );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.OPTIONS ) );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.DESCRIBE ) );
@@ -56,14 +56,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "OPTION" )]
         public void CheckTryParseFailed( string input)
         {
-            Assert.IsFalse( PublicRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsFalse( PublicRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
         [Test]
         public void CheckAddingMethods()
         {
-            var header = new PublicRtspHeaderValue();
+            var header = new PublicRtspHeader();
 
             Assert.AreEqual( 0 , header.Methods.Count );
 
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckRemovingMethods()
         {
-            var header = new PublicRtspHeaderValue();
+            var header = new PublicRtspHeader();
 
             Assert.AreEqual( 0 , header.Methods.Count );
 

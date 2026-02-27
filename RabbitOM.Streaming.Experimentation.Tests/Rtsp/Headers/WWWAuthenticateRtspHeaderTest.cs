@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "digest realm='my realm',nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
         public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "digest" , header.Scheme );
             Assert.AreEqual( "my realm" , header.Realm );
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "digest nonce='my nonce',realm='my realm',opaque='my opaque',stale='my stale',qop='my qop',algorithm='my algorithm'" )]
         public void CheckTryParseSucceedDifferentOrder( string input )
         {
-            Assert.IsTrue( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "digest" , header.Scheme );
             Assert.AreEqual( "my realm" , header.Realm );
@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " " ) ]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsFalse( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
     }

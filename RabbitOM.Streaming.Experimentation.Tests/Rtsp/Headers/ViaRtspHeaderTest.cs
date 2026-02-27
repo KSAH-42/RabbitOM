@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "RTSP/1.0 proxy1.example.com:8554 (Proxy/3.1)" ) ]
         public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( ViaRtspHeaderValue.TryParse( input, out var header ) );
+            Assert.IsTrue( ViaRtspHeader.TryParse( input, out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( 1 , header.Proxies.Count );
             Assert.AreEqual( "RTSP" , header.Proxies.First().Protocol );
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "RTSP/1.0 proxy1.example.com:8554 (Proxy/3.1), HTTP/1.1 proxy2.example.com:8554 (Proxy/4.1)" ) ]
         public void CheckTryParseSucceedMultiples( string input )
         {
-            Assert.IsTrue( ViaRtspHeaderValue.TryParse( input, out var header ) );
+            Assert.IsTrue( ViaRtspHeader.TryParse( input, out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( 2 , header.Proxies.Count );
             Assert.AreEqual( "RTSP" , header.Proxies.First().Protocol );
@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckAddProxies()
         {
-            var header = new ViaRtspHeaderValue();
+            var header = new ViaRtspHeader();
 
             Assert.IsEmpty( header.Proxies );
 
@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckRemoveProxies()
         {
-            var header = new ViaRtspHeaderValue();
+            var header = new ViaRtspHeader();
 
             Assert.IsEmpty( header.Proxies );
 

@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( "url=rtsp://127.0.0.1;seq=123;rtptime=321;ssrc=abcdef, url=rtsp://127.0.0.1;seq=123;rtptime=321;ssrc=abcdef , url=rtsp://127.0.0.1;seq=123;rtptime=321;ssrc=abcdef " , 3 )]
         public void CheckTryParseSucceed(string input , int count )
         {
-            Assert.IsTrue( RtpInfoRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( RtpInfoRtspHeader.TryParse( input , out var header ) );
             Assert.AreEqual( count , header.Infos.Count );
         }
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( "rul=rtsp://127.0.0.1;seq=a" ) ]
         public void CheckTryParseFailed(string input )
         {
-            Assert.IsFalse( RtpInfoRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsFalse( RtpInfoRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 

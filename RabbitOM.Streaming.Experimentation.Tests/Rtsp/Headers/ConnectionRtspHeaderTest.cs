@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
        
         public void CheckTryParseSucceed( string input , long count )
         {
-            Assert.IsTrue( ConnectionRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( ConnectionRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( count , header.Directives.Count );
         }
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " " ) ]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( ConnectionRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsFalse( ConnectionRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase(" keep_alive" )]
         public void CheckAddDirectivesSucceed(string input)
         {
-            var header = new ConnectionRtspHeaderValue();
+            var header = new ConnectionRtspHeader();
 
             Assert.IsEmpty( header.Directives );
             Assert.IsTrue( header.AddDirective( input ) );
@@ -55,7 +55,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase("keep/alive" )]
         public void CheckAddDirectivesFailed( string input )
         {
-            var header = new ConnectionRtspHeaderValue();
+            var header = new ConnectionRtspHeader();
 
             Assert.IsEmpty( header.Directives );
             Assert.IsFalse( header.AddDirective( input ) );
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckRemoveDirectives()
         {
-            var header = new ConnectionRtspHeaderValue();
+            var header = new ConnectionRtspHeader();
             
             Assert.IsEmpty( header.Directives );
             
@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new ContentLengthRtspHeaderValue();
+            var header = new ContentLengthRtspHeader();
 
             Assert.AreEqual( 0 , header.Value );
             Assert.AreEqual( "0" , header.ToString() );

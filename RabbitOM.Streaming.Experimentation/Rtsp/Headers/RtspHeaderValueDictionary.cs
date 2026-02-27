@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class RtspHeaderValueDictionary : IDictionary<string , RtspHeaderValue>
+    public sealed class RtspHeaderValueDictionary : IDictionary<string , RtspHeader>
     {
-        private readonly Dictionary<string,RtspHeaderValue> _collection = new Dictionary<string, RtspHeaderValue>( StringComparer.OrdinalIgnoreCase );
+        private readonly Dictionary<string,RtspHeader> _collection = new Dictionary<string, RtspHeader>( StringComparer.OrdinalIgnoreCase );
 
-        public RtspHeaderValue this[string key]
+        public RtspHeader this[string key]
         {
             get => _collection[ key ];
             set => _collection[ string.IsNullOrWhiteSpace( key ) ? throw new ArgumentException( key ) : key ] = value ?? throw new ArgumentNullException( nameof( value ) );
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _collection.Keys;
         }
 
-        public ICollection<RtspHeaderValue> Values
+        public ICollection<RtspHeader> Values
         {
             get => _collection.Values;
         }
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => false;
         }
 
-        public bool TryAdd( string key , RtspHeaderValue value )
+        public bool TryAdd( string key , RtspHeader value )
         {
             if ( string.IsNullOrWhiteSpace( key ) || value == null )
             {
@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public void Add( string key , RtspHeaderValue value )
+        public void Add( string key , RtspHeader value )
         {
             if ( string.IsNullOrWhiteSpace( key ) )
             {
@@ -62,7 +62,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _collection.Add( key , value ?? throw new ArgumentNullException( nameof( key ) ) );
         }
 
-        public void Add( KeyValuePair<string , RtspHeaderValue> item )
+        public void Add( KeyValuePair<string , RtspHeader> item )
         {
             Add( item.Key , item.Value );
         }
@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _collection.Clear();
         }
 
-        public bool Contains( KeyValuePair<string , RtspHeaderValue> item )
+        public bool Contains( KeyValuePair<string , RtspHeader> item )
         {
             return _collection.Contains( item );
         }
@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _collection.ContainsKey( key );
         }
 
-        public void CopyTo( KeyValuePair<string , RtspHeaderValue>[] array , int arrayIndex )
+        public void CopyTo( KeyValuePair<string , RtspHeader>[] array , int arrayIndex )
         {
             _collection.ToList().CopyTo( array , arrayIndex );
         }
@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _collection.Remove( key );
         }
 
-        public bool Remove( KeyValuePair<string , RtspHeaderValue> item )
+        public bool Remove( KeyValuePair<string , RtspHeader> item )
         {
             if ( ! _collection.TryGetValue( item.Key , out var header ) )
             {
@@ -107,12 +107,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public bool TryGetValue( string key , out RtspHeaderValue value )
+        public bool TryGetValue( string key , out RtspHeader value )
         {
             return _collection.TryGetValue( key , out value );
         }
 
-        public IEnumerator<KeyValuePair<string , RtspHeaderValue>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string , RtspHeader>> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
