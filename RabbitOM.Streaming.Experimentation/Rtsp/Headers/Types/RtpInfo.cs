@@ -86,11 +86,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = null;
 
-            var comparer = StringComparer.OrdinalIgnoreCase;
-
             if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
             {
                 var header = new RtpInfo();
+
+                var comparer = StringComparer.OrdinalIgnoreCase;
 
                 foreach ( var token in tokens )
                 {

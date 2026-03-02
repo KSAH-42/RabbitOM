@@ -177,11 +177,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            var comparer = StringComparer.OrdinalIgnoreCase;
-
             if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new CacheControlRtspHeader();
+
+                var comparer = StringComparer.OrdinalIgnoreCase;
 
                 foreach ( var token in tokens.Where( element => ! element.Contains( "=" ) ) )
                 {
