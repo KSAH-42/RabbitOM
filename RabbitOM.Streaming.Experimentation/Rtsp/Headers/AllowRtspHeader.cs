@@ -38,11 +38,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _methods.Remove( method );
         }
 
-        public bool RemoveMethodByName( string name )
-        {
-            return _methods.Remove( _methods.FirstOrDefault( method => RtspMethod.Equals( method , name ) ) );
-        }
-
         public void ClearMethods()
         {
             _methods.Clear();
