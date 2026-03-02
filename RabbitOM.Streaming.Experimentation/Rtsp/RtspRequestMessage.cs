@@ -7,10 +7,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
     public sealed class RtspRequestMessage
     {
-        public RtspMethod Method { get; set; }
-        public Version Version { get; set; }
-        public string Uri { get; set; }
-        public IReadOnlyDictionary<string,string> Headers { get; set; }
-        public Stream Body { get; set; }
+        public RtspMethod Method { get; }
+        public Version Version { get; }
+        public string Uri { get; }
+        public IReadOnlyDictionary<string,string> Headers { get; }
+        public Stream Body { get; }
     }
 }

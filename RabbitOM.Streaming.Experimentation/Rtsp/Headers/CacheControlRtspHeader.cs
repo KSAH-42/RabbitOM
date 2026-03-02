@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public bool RemoveExtensionByName( string name )
+        public bool RemoveExtension( string name )
         {
             return _extensions.Remove( RtspHeaderParser.Formatter.Filter( name ) );
         }

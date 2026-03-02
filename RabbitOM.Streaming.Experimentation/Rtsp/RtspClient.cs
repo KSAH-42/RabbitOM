@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Uri BaseAddress { get; }
 
-        public IReadOnlyDictionary<string,string> ExtensionsHeaders
+        public IReadOnlyDictionary<string,string> DefaultHeaders
         {
             get => throw new NotImplementedException();
         }
@@ -57,17 +57,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
 
-        public bool AddExtensionHeader( string name , string value )
+        public bool AddDefaultHeader( string name , string value )
         {
             throw new NotImplementedException();
         }
 
-        public bool RemoveExtensionHeader( string name )
+        public bool RemoveDefaultHeader( string name )
         {
             throw new NotImplementedException();
         }
 
-        public void ClearExtensionsHeaders()
+        public void ClearDefaultHeaders()
         {
             throw new NotImplementedException();
         }

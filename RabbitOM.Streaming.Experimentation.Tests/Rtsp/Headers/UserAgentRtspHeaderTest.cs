@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsNotNull( header );
             Assert.AreEqual( product , header.Product );
             Assert.AreEqual( version , header.Version );
-            Assert.AreEqual( comment , header.Comments );
+            Assert.AreEqual( comment , header.Comment );
         }
     }
 }

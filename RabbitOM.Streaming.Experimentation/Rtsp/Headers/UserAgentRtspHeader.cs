@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly string[] CommentsSeparators = { "(" , ")" };
 
-        private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comments>[^()]*)\)";
+        private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
 
 
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string Version { get; private set; } = string.Empty;
         
-        public string Comments { get; private set; } = string.Empty;
+        public string Comment { get; private set; } = string.Empty;
         
 
 
@@ -39,9 +39,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Version = RtspHeaderParser.Formatter.Filter( value );
         }
 
-        public void SetComments( string value )
+        public void SetComment( string value )
         {
-            Comments = RtspHeaderParser.Formatter.Filter( value , CommentsSeparators );
+            Comment = RtspHeaderParser.Formatter.Filter( value , CommentsSeparators );
         }
 
         public override string ToString()
@@ -63,14 +63,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.Append( Version );
             }
 
-            if ( ! string.IsNullOrWhiteSpace( Comments ) )
+            if ( ! string.IsNullOrWhiteSpace( Comment ) )
             {
                 if ( builder.Length > 0 )
                 {
                     builder.Append( ' ' );
                 }
 
-                builder.AppendFormat( "({0})" , Comments );
+                builder.AppendFormat( "({0})" , Comment );
             }
 
             return builder.ToString();
@@ -107,9 +107,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     result.SetProduct( match.Groups["product"].Value );
                     result.SetVersion( match.Groups["version"].Value );
                 }
-                else if ( match.Groups["comments"].Success )
+                else if ( match.Groups["comment"].Success )
                 {
-                    result.SetComments( match.Groups["comments"].Value );
+                    result.SetComment( match.Groups["comment"].Value );
                 }
             }
 

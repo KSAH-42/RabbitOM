@@ -1,13 +1,13 @@
 ﻿using System;
-using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public sealed class RtspResponseBody : IDisposable
+    public abstract class RtspResponseBody
     {
-        public byte[] Read() => throw new NotImplementedException();
-        public string ReadAsString() => throw new NotImplementedException();
-        public Stream ReadAsStream() => throw new NotImplementedException();
-        public void Dispose() => throw new NotImplementedException();
+        public abstract int Length { get; }
+
+        public abstract byte[] ReadBytes();
+
+        public abstract byte[] ReadBytes( int count );
     }
 }

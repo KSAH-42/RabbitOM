@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: refactor 
 
@@ -10,22 +10,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
     {
         public WeightedString( string value )
         {
-            if ( ! RtspHeaderValidator.TryValidate( value ) )
-            {
-                throw new ArgumentException();
-            }
-
-            Value = value;
+            Value = RtspHeaderValidator.TryValidate( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
-            if ( ! RtspHeaderValidator.TryValidate( value ) )
-            {
-                throw new ArgumentException();
-            }
-
-            Value = value;
+            Value = RtspHeaderValidator.TryValidate( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -119,17 +109,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( Value ) )
+            if ( ! string.IsNullOrWhiteSpace( Value ) )
             {
-                return string.Empty;
+                return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
             }
 
-            if ( Quality.HasValue )
-            {
-                return $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}";
-            }
-
-            return Value;
+            return string.Empty;
         }
     }
 }

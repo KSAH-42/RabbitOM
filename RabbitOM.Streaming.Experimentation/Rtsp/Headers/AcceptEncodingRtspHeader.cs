@@ -1,13 +1,9 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-
     public sealed class AcceptEncodingRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Accept-Encoding";
@@ -47,7 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( Constants.EncodingTypes.Contains( encoding.Value ) )
+            if ( SupportedEncodings.Values.Contains( encoding.Value ) )
             {
                 return _encodings.Add( encoding );
             }

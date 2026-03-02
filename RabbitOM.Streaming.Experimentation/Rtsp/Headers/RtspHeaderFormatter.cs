@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            return new string( value.Where( character => RtspHeaderValidator.TryValidate( character ) ).ToArray() )
+            return new string( value.Where( character => RtspHeaderValidator.TryValidateCharacter( character ) ).ToArray() )
                 .Replace( "'" , "" )
                 .Replace( "\"" , "" )
                 .Trim( TrimCharacters )
@@ -105,7 +105,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            var text = new string( value.Where( character => RtspHeaderValidator.TryValidate( character ) ).ToArray() )
+            var text = new string( value.Where( character => RtspHeaderValidator.TryValidateCharacter( character ) ).ToArray() )
                 .Replace( "'" , "" )
                 .Replace( "\"" , "" )
                 ;
