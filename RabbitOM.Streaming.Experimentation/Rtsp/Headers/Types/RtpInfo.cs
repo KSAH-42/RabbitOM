@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class RtpInfo 
     { 

@@ -4,6 +4,8 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     public sealed class ContentRangeRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Content-Range";

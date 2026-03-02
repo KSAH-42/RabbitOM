@@ -8,6 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static RtspHeaderFormatter Formatter { get; } = new RtspHeaderFormatter();
 
+        /// use long.tryparse instead of int.tryparse for fallback
         public static bool TryParse( string input , out int result )
         {
             return int.TryParse( Formatter.Filter( input ) , out result );

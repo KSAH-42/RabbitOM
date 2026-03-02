@@ -5,6 +5,8 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     public sealed class AuthorizationRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Authorization";

@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class ProxyInfo 
     { 

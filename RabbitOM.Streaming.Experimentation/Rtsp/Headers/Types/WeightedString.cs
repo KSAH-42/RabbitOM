@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class WeightedString : IEquatable<WeightedString>
     {

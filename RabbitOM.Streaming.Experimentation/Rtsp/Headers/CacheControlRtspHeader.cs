@@ -6,6 +6,8 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     public sealed class CacheControlRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Cache-Control";

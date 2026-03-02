@@ -4,6 +4,7 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     [TestFixture]
     public class ViaRtspHeaderTest

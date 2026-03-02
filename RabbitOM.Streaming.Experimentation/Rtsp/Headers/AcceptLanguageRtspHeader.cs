@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     public sealed class AcceptLanguageRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Accept-Language";
