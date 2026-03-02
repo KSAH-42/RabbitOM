@@ -6,7 +6,6 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using System.Text;
 
     public sealed class AcceptLanguageRtspHeader : RtspHeader
     {
@@ -15,10 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static readonly Lazy<IReadOnlyCollection<string>> SupportedLanguages = new Lazy<IReadOnlyCollection<string>>( () =>
-        {
-            return new HashSet<string>( CultureInfo.GetCultures( CultureTypes.AllCultures ).Select( culture => culture.Name ) , StringComparer.OrdinalIgnoreCase );
-        });
+        
 
 
 
@@ -46,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( SupportedLanguages.Value.Contains( language.Value ) )
+            if ( Constants.CurrentLanguages.Contains( language.Value ) )
             {
                 return _languages.Add( language );
             }

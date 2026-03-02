@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     internal struct RtspHeaderProperty
     {
@@ -23,6 +23,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             {
                 return false;
             }
+
+            // don't use filter here because the input is already already sanitized
 
             if ( ! RtspHeaderParser.TryParse( input , separator , out string[] tokens ) )
             {

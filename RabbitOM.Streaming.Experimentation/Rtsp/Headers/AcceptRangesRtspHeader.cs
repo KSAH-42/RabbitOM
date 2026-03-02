@@ -11,15 +11,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-       public bool Bytes { get; set; }
+        public bool Bytes { get; set; }
        
-       public bool Ntp { get; set; }
+        public bool Ntp { get; set; }
 
-       public bool Smpte { get; set; }
+        public bool Smpte { get; set; }
 
-       public bool Clock { get; set; }
+        public bool Clock { get; set; }
 
-       public bool Utc { get; set; }
+        public bool Utc { get; set; }
 
 
 
