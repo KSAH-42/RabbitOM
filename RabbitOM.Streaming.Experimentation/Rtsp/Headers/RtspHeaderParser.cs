@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderParser
+    internal static class RtspHeaderParser
     {
         public static RtspHeaderFormatter Formatter { get; } = new RtspHeaderFormatter();
-
+        
         /// use long.tryparse instead of int.tryparse for fallback
         public static bool TryParse( string input , out int result )
         {
