@@ -365,7 +365,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.Port = new PortRange( 1 , 2 );
+            header.Port = new ValueRange( 1 , 2 );
             Assert.AreEqual( "RTP/AVP/UDP;unicast;port=1-2" , header.ToString() );
         }
 
@@ -381,7 +381,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.ClientPort = new PortRange( 1 , 2 );
+            header.ClientPort = new ValueRange( 1 , 2 );
             Assert.AreEqual( "RTP/AVP/UDP;unicast;client_port=1-2" , header.ToString() );
         }
 
@@ -397,7 +397,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.ServerPort = new PortRange( 1 , 2 );
+            header.ServerPort = new ValueRange( 1 , 2 );
             Assert.AreEqual( "RTP/AVP/UDP;unicast;server_port=1-2" , header.ToString() );
         }
 
@@ -413,7 +413,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.Interleaved = new InterleavedRange( 1 , 2 );
+            header.Interleaved = new ValueRange( 1 , 2 );
             Assert.AreEqual( "RTP/AVP/UDP;unicast;interleaved=1-2" , header.ToString() );
         }
 

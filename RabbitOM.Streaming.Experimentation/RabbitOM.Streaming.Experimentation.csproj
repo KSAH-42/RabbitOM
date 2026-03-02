@@ -77,8 +77,7 @@
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\Types\InterleavedRange.cs" />
-    <Compile Include="Rtsp\Headers\Types\PortRange.cs" />
+    <Compile Include="Rtsp\Headers\Types\ValueRange.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfo.cs" />
     <Compile Include="Rtsp\Headers\Types\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeader.cs" />

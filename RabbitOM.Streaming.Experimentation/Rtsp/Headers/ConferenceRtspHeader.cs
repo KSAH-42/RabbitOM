@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public byte? TTL { get; set; }
 
-        public PortRange? Port { get; set; }
+        public ValueRange? Port { get; set; }
         
         public IReadOnlyCollection<string> Extensions { get => _extensions; }
         
@@ -167,8 +167,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         private void SetPortRange( string value )
         {
-            Port = PortRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new PortRange?( range )
+            Port = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
+                ? new ValueRange?( range )
                 : null
                 ;
         }

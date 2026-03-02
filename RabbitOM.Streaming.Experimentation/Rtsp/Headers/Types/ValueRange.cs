@@ -3,17 +3,17 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public struct PortRange : IEquatable<PortRange>
+    public struct ValueRange : IEquatable<ValueRange>
     {
 
-        public static readonly PortRange Zero = new PortRange( 0 , 0 );
+        public static readonly ValueRange Zero = new ValueRange( 0 , 0 );
 
 
 
 
 
 
-        public PortRange( int minimum , int maximum )
+        public ValueRange( int minimum , int maximum )
         {
             if ( minimum < 0 || maximum < 0 || minimum > maximum )
             {
@@ -38,12 +38,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public static bool operator == ( PortRange a , PortRange b )
+        public static bool operator == ( ValueRange a , ValueRange b )
         {
             return Equals( a , b );
         }
 
-        public static bool operator != ( PortRange a , PortRange b )
+        public static bool operator != ( ValueRange a , ValueRange b )
         {
             return ! Equals( a , b );
         }
@@ -54,12 +54,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public static bool Equals( in PortRange a , in PortRange b )
+        public static bool Equals( in ValueRange a , in ValueRange b )
         {
             return a.Minimum == b.Minimum && a.Maximum == b.Maximum;
         }
 
-        public static bool TryParse( string input , out PortRange result )
+        public static bool TryParse( string input , out ValueRange result )
         {
             result = default;
 
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     return false;
                 }
 
-                result = new PortRange( minimum , maximum );
+                result = new ValueRange( minimum , maximum );
                 
                 return true;
             }
@@ -92,14 +92,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public bool Equals( PortRange obj )
+        public bool Equals( ValueRange obj )
         {
             return Equals( obj , this );
         }
 
         public override bool Equals( object obj )
         {
-            return obj is PortRange && Equals( (PortRange) obj );
+            return obj is ValueRange && Equals( (ValueRange) obj );
         }
 
         public override int GetHashCode()

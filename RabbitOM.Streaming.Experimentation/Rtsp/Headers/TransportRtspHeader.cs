@@ -79,13 +79,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int? Layers { get; set; }
         
-        public PortRange? Port { get; set; }
+        public ValueRange? Port { get; set; }
         
-        public PortRange? ClientPort { get; set; }
+        public ValueRange? ClientPort { get; set; }
         
-        public PortRange? ServerPort { get; set; }
+        public ValueRange? ServerPort { get; set; }
         
-        public InterleavedRange? Interleaved { get; set; }
+        public ValueRange? Interleaved { get; set; }
         
         public IReadOnlyCollection<string> Extensions { get => _extensions; }
         
@@ -153,32 +153,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetPortRange( string value )
         {
-            Port = PortRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new PortRange?( range )
+            Port = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
+                ? new ValueRange?( range )
                 : null
                 ;
         }
         
         public void SetClientPortRange( string value )
         {
-            ClientPort = PortRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new PortRange?( range )
+            ClientPort = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
+                ? new ValueRange?( range )
                 : null
                 ;
         }
         
         public void SetServerPortRange( string value )
         {
-            ServerPort = PortRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new PortRange?( range )
+            ServerPort = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
+                ? new ValueRange?( range )
                 : null
                 ;
         }
 
         public void SetInterleavedRange( string value )
         {
-            Interleaved = InterleavedRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new InterleavedRange?( range )
+            Interleaved = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
+                ? new ValueRange?( range )
                 : null
                 ;
         }
