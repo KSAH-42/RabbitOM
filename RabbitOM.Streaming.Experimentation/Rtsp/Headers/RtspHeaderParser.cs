@@ -8,25 +8,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static RtspHeaderFormatter Formatter { get; } = new RtspHeaderFormatter();
         
-        /// use long.tryparse instead of int.tryparse for fallback
-        public static bool TryParse( string input , out int result )
-        {
-            return int.TryParse( Formatter.Filter( input ) , out result );
-        }
-
-        public static bool TryParse( string input , out long result )
-        {
-            return long.TryParse( Formatter.Filter( input ) , out result );
-        }
-
         public static bool TryParse( string input , out float result )
         {
-            return float.TryParse( Formatter.Filter( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
+            return float.TryParse( input?.Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
         }
 
         public static bool TryParse( string input , out double result )
         {
-            return double.TryParse( Formatter.Filter( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
+            return double.TryParse( input?.Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
         }
 
         public static bool TryParse( string input , out DateTime result )

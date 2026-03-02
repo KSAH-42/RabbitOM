@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public static bool TryParse( string input , out BlockSizeRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
+            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out var value )
                 ? new BlockSizeRtspHeader() { Value = value }
                 : null
                 ;

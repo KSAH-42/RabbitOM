@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out CSeqRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
+            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out var value )
                 ? new CSeqRtspHeader() { Value = value }
                 : null
                 ;

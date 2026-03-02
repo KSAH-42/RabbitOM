@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string Format( double value )
         {
-            return string.Format( CultureInfo.InvariantCulture , "{0:F3}" , value );
+            return value.ToString( "F3" , CultureInfo.InvariantCulture );
         }
 
         public string Format( float value )
