@@ -19,6 +19,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        
+
+        public static bool TryValidate( in char value )
+        {
+            return value > 31 && value < 127 && ! ForbiddenCharacters.Contains( value );
+        }
 
         public static bool TryValidate( string value )
         {
@@ -27,12 +33,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return value.All( character => TryValidateCharacter( character ) );
-        }
-
-        public static bool TryValidateCharacter( in char value )
-        {
-            return value > 31 && value < 127 && ! ForbiddenCharacters.Contains( value );
+            return value.All( character => TryValidate( character ) );
         }
     }
 }
