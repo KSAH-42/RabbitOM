@@ -56,38 +56,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private void SetMaximumAge( string value )
-        {
-            MaximumAge = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? new int?( result )
-                : null
-                ;
-        }
-
-        private void SetShareMaximumAge( string value )
-        {
-            ShareMaximumAge = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? new int?( result )
-                : null
-                ;
-        }
-
-        private void SetStaleWhileRevalidate( string value )
-        {
-            StaleWhileRevalidate = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? new int?( result )
-                : null
-                ;
-        }
-
-        private void SetStaleIfError( string value )
-        {
-            StaleIfError = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? new int?( result )
-                : null
-                ;
-        }
-
         public bool AddExtension( string name , long value )
         {
             return AddExtension( name , value.ToString() );
@@ -257,19 +225,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( comparer.Equals( "max-age" , parameter.Name ) )
                         {
-                            header.SetMaximumAge( parameter.Value );
+                            if ( int.TryParse( parameter.Value , out var number ) )
+                            {
+                                header.MaximumAge = number;
+                            }
                         }
                         else if ( comparer.Equals( "s-maxage" , parameter.Name ) )
                         {
-                            header.SetShareMaximumAge( parameter.Value );
+                            if ( int.TryParse( parameter.Value , out var number ) )
+                            {
+                                header.ShareMaximumAge = number;
+                            }
                         }
                         else if ( comparer.Equals( "stale-while-revalidate" , parameter.Name ) )
                         {
-                            header.SetStaleWhileRevalidate( parameter.Value );
+                            if ( int.TryParse( parameter.Value , out var number ) )
+                            {
+                                header.StaleWhileRevalidate = number;
+                            }
                         }
                         else if ( comparer.Equals( "stale-if-error" , parameter.Name ) )
                         {
-                            header.SetStaleIfError( parameter.Value );
+                            if ( int.TryParse( parameter.Value , out var number ) )
+                            {
+                                header.StaleIfError = number;
+                            }
                         }
                         else
                         {

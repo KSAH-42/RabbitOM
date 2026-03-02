@@ -211,15 +211,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
                     result = new AuthorizationRtspHeader(); 
-                    
                     result.SetScheme( scheme );
+
+                    var comparer = StringComparer.OrdinalIgnoreCase;
 
                     foreach ( var token in tokens )
                     {
                         if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                         {
-                            var comparer = StringComparer.OrdinalIgnoreCase;
-
                             if ( comparer.Equals( "username" , parameter.Name ) )
                             {
                                 result.SetUserName( parameter.Value );
