@@ -7,6 +7,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     {
         private RtspMethod( string name ) => Name = name;
         
+
+
+
         public string Name { get; }
        
         public override string ToString() => Name;
@@ -48,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 return false;
             }
 
-            return string.Equals( method.Name , name?.Trim() , StringComparison.OrdinalIgnoreCase );
+            return StringComparer.OrdinalIgnoreCase.Equals( method.Name , name?.Trim() );
         }
 
 
@@ -69,18 +72,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             {
                 var method = property.GetValue( null ) as RtspMethod ;
 
-                if ( method == null )
+                if ( method != null && StringComparer.OrdinalIgnoreCase.Equals( method.Name , methodName ) )
                 {
-                    continue;
+                    result = method;
+                    break;
                 }
-
-                if ( ! string.Equals( method.Name , methodName , StringComparison.OrdinalIgnoreCase ) )
-                {
-                    continue;
-                }
-                
-                result = method;
-                break;
             }
 
             return result != null;

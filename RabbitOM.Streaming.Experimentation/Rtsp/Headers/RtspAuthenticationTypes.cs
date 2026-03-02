@@ -56,22 +56,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool IsBasicAuthentication( string value )
         {
-            return string.Equals( value , BasicAuthentication , StringComparison.OrdinalIgnoreCase );
+            return StringComparer.OrdinalIgnoreCase.Equals( value , BasicAuthentication );
         }
 
         public static bool IsDigestAuthentication( string value )
         {
-            return string.Equals( value , DigestAuthentication , StringComparison.OrdinalIgnoreCase );
+            return StringComparer.OrdinalIgnoreCase.Equals( value , DigestAuthentication );
         }
 
         public static bool IsNtlmAuthentication( string value )
         {
-            return string.Equals( value , NtlmAuthentication , StringComparison.OrdinalIgnoreCase );
+            return StringComparer.OrdinalIgnoreCase.Equals( value , NtlmAuthentication );
         }
 
         public static bool IsNegotiateAuthentication( string value )
         {
-            return string.Equals( value , NegotiateAuthentication , StringComparison.OrdinalIgnoreCase );
+            return StringComparer.OrdinalIgnoreCase.Equals( value , NegotiateAuthentication );
         }
 
         

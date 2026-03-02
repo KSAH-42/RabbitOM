@@ -71,25 +71,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new AcceptRangesRtspHeader();
 
+                var comparer = StringComparer.OrdinalIgnoreCase;
+
                 foreach ( var token in tokens )
                 {
-                    if ( string.Equals( "bytes" , token , StringComparison.OrdinalIgnoreCase ) )
+                    if ( comparer.Equals( "bytes" , token ) )
                     {
                         header.Bytes = true;
                     }
-                    else if ( string.Equals( "ntp" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "ntp" , token ) )
                     {
                         header.Ntp = true;
                     }
-                    else if ( string.Equals( "smpte" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "smpte" , token ) )
                     {
                         header.Smpte = true;
                     }
-                    else if ( string.Equals( "utc" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "utc" , token ) )
                     {
                         header.Utc = true;
                     }
-                    else if ( string.Equals( "clock" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "clock" , token ) )
                     {
                         header.Clock = true;
                     }

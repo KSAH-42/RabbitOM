@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return string.Equals( a.Value , b.Value , StringComparison.OrdinalIgnoreCase ) && a.Quality == b.Quality;
+            return StringComparer.OrdinalIgnoreCase.Equals( a.Value , b.Value ) && a.Quality == b.Quality;
         }
 
 
@@ -141,9 +141,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( string.Equals( "q" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Name ) )
                         {
-                            if ( double.TryParse( parameter.Value.Trim( ' ' , '\'' , '\"' ) , NumberStyles.Any , CultureInfo.InvariantCulture , out var quality ) )
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out double quality ) )
                             {
                                 result = new WeightedString( name , quality );
                                 break;

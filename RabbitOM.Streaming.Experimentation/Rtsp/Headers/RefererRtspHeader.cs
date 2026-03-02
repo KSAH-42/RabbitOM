@@ -38,16 +38,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var value = RtspHeaderParser.Formatter.Filter( input );
 
-            if ( string.IsNullOrWhiteSpace( value ) )
+            if ( ! string.IsNullOrWhiteSpace( value ) )
             {
-                return false;
+                result = new RefererRtspHeader();
+                result.SetUri( value );
             }
 
-            result = new RefererRtspHeader();
-
-            result.SetUri( value );
-
-            return true;
+            return result != null;
         }
     }
 }
