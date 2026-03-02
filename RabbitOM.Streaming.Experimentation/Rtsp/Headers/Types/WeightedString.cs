@@ -4,6 +4,8 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
+    // TODO: refactor 
+
     public sealed class WeightedString : IEquatable<WeightedString>
     {
         public WeightedString( string value )
@@ -100,21 +102,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public override string ToString()
-        {
-            if ( string.IsNullOrWhiteSpace( Value ) )
-            {
-                return string.Empty;
-            }
-
-            if ( Quality.HasValue )
-            {
-                return $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}";
-            }
-
-            return Value;
-        }
-        
         public override int GetHashCode()
         {
             return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
@@ -128,6 +115,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public bool Equals( WeightedString obj )
         {
             return Equals( this , obj );
+        }
+
+        public override string ToString()
+        {
+            if ( string.IsNullOrWhiteSpace( Value ) )
+            {
+                return string.Empty;
+            }
+
+            if ( Quality.HasValue )
+            {
+                return $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}";
+            }
+
+            return Value;
         }
     }
 }
