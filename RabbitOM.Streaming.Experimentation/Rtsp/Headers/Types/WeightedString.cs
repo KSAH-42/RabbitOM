@@ -8,14 +8,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
     {
         public WeightedString( string value )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
+            if ( ! RtspHeaderValidator.TryValidate( value ) )
             {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            if ( ! RtspHeaderParser.Formatter.CheckValue( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
+                throw new ArgumentException();
             }
 
             Value = value;
@@ -23,14 +18,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public WeightedString( string value , double quality )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
+            if ( ! RtspHeaderValidator.TryValidate( value ) )
             {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            if ( ! RtspHeaderParser.Formatter.CheckValue( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
+                throw new ArgumentException();
             }
 
             Value = value;
@@ -41,25 +31,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public string Value
-        {
-            get;
-        }
+        public string Value { get; }
 
-        public double? Quality
-        {
-            get;
-        }
-
-
-
-
-
-        public static bool IsNullOrEmpty( WeightedString value )
-        {
-            return value == null || string.IsNullOrWhiteSpace( value.Value );
-        }
+        public double? Quality { get; }
         
+
+
+
+
+        public static bool IsNullOrEmpty( WeightedString obj )
+        {
+            return object.ReferenceEquals( obj , null ) || string.IsNullOrWhiteSpace( obj.Value );
+        }
+
         public static bool Equals( WeightedString a , WeightedString b )
         {
             if ( object.ReferenceEquals( a , b ) )
@@ -74,55 +58,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             return StringComparer.OrdinalIgnoreCase.Equals( a.Value , b.Value ) && a.Quality == b.Quality;
         }
-
-
-
-
-
-
-
-        public override int GetHashCode()
-        {
-            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
-        }
-
-        public override bool Equals( object obj )
-        {
-            return base.Equals( obj );
-        }
-        
-        public bool Equals( WeightedString obj )
-        {
-            return Equals( this , obj );
-        }
-
-        public override string ToString()
-        {
-            if ( string.IsNullOrWhiteSpace( Value ) )
-            {
-                return string.Empty;
-            }
-
-            if ( Quality.HasValue )
-            {
-                return $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}";
-            }
-
-            return Value;
-        }
-
-
-
-
-        
-
-
-
-
-
-
-
-
 
         public static bool TryParse( string input , out WeightedString result )
         {
@@ -159,6 +94,40 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
 
             return result != null;
+        }
+        
+
+
+
+
+        public override string ToString()
+        {
+            if ( string.IsNullOrWhiteSpace( Value ) )
+            {
+                return string.Empty;
+            }
+
+            if ( Quality.HasValue )
+            {
+                return $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}";
+            }
+
+            return Value;
+        }
+        
+        public override int GetHashCode()
+        {
+            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
+        }
+
+        public override bool Equals( object obj )
+        {
+            return Equals( obj as WeightedString );
+        }
+        
+        public bool Equals( WeightedString obj )
+        {
+            return Equals( this , obj );
         }
     }
 }

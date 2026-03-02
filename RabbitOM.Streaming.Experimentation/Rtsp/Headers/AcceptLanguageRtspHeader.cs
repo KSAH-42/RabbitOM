@@ -6,6 +6,7 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+    using System.Text;
 
     public sealed class AcceptLanguageRtspHeader : RtspHeader
     {

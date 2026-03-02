@@ -71,6 +71,7 @@
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderValidator.cs" />
     <Compile Include="Rtsp\Headers\Types\RtspHeaderProperty.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />

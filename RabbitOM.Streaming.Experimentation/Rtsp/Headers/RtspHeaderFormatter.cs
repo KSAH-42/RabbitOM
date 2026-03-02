@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
@@ -7,36 +6,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     internal sealed class RtspHeaderFormatter
     {
-        private static readonly IReadOnlyCollection<char> ForbiddenCharacters = new HashSet<char>
-        { 
-            '$' , '£' , '€' ,
-            'é' , 'è' , 'à' , 'ù' , 'ç' , 'µ' , 'ù' , '²' ,
-            '¨' , '^' , '§' , '¤' , 
-        };
-
         private static readonly char[] TrimCharacters =
         {
             ' ',
             ',',
             ';',
         };
-
-
-
-
-
-
-
-
-        public bool CheckValue( char value )
-        {
-            return value > 31 && value < 127 && ! ForbiddenCharacters.Contains( value );
-        }
-
-        public bool CheckValue( string value )
-        {
-            return value?.All( CheckValue ) ?? false;
-        }
 
 
 
@@ -106,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            return new string( value.Where( character => CheckValue( character ) ).ToArray() )
+            return new string( value.Where( character => RtspHeaderValidator.TryValidate( character ) ).ToArray() )
                 .Replace( "'" , "" )
                 .Replace( "\"" , "" )
                 .Trim( TrimCharacters )
@@ -130,7 +105,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            var text = new string( value.Where( character => CheckValue( character ) ).ToArray() )
+            var text = new string( value.Where( character => RtspHeaderValidator.TryValidate( character ) ).ToArray() )
                 .Replace( "'" , "" )
                 .Replace( "\"" , "" )
                 ;

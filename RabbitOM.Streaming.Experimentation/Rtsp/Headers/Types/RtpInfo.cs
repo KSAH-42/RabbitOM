@@ -11,19 +11,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public RtpInfo( string url , long? rtpTime , long? sequence , string ssrc )
         {
-            if ( string.IsNullOrWhiteSpace( url ) )
-            {
-                throw new ArgumentNullException( nameof( url ) );
-            }
-
-            if ( ! RtspHeaderParser.Formatter.CheckValue( url ) )
+            if ( ! RtspHeaderValidator.TryValidate( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( url ) )
             {
-                if ( ! RtspHeaderParser.Formatter.CheckValue( ssrc) )
+                if ( ! RtspHeaderValidator.TryValidate( ssrc) )
                 {
                     throw new ArgumentException( nameof( ssrc ) );
                 }

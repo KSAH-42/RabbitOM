@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";
 
 
-        private readonly string[] CommentsSeparators = { "(" , ")" };
+        private readonly char[] CommentsSeparators = { '(' , ')' };
 
 
 
@@ -22,32 +22,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comments )
         {
-            if ( string.IsNullOrWhiteSpace( protocol ) )
-            {
-                throw new ArgumentException( protocol );
-            }
-
-            if ( string.IsNullOrWhiteSpace( version ) )
-            {
-                throw new ArgumentException( version );
-            }
-
-            if ( string.IsNullOrWhiteSpace( receivedBy ) )
-            {
-                throw new ArgumentException( receivedBy );
-            }
-
-            if ( ! RtspHeaderParser.Formatter.CheckValue( protocol ) )
+            if ( ! RtspHeaderValidator.TryValidate( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! RtspHeaderParser.Formatter.CheckValue( version ) )
+            if ( ! RtspHeaderValidator.TryValidate( version ) )
             {
                 throw new ArgumentException( version , "the argument called version contains bad things");
             }
 
-            if ( ! RtspHeaderParser.Formatter.CheckValue( receivedBy ) )
+            if ( ! RtspHeaderValidator.TryValidate( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy contains bad things");
             }
@@ -57,10 +42,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 throw new ArgumentException( nameof( version ) );
             }
 
+            if ( ! string.IsNullOrWhiteSpace( comments ) )
+            {
+                if ( ! RtspHeaderValidator.TryValidate( comments ) || comments.IndexOfAny( CommentsSeparators ) >= 0 )
+                {
+                    throw new ArgumentException( comments , "the argument called receivedBy contains bad things");
+                }
+            }
+
             Protocol = protocol.Trim();
             Version = version.Trim();
             ReceivedBy = receivedBy;
-            Comments = RtspHeaderParser.Formatter.Filter( comments , CommentsSeparators );
+            Comments = comments.Trim();
         }
 
         

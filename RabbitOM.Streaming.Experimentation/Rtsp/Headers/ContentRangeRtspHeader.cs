@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Unit = RtspHeaderParser.Formatter.Filter( value );
         }
 
-        public void SetRange( string value )
+        private void SetRange( string value )
         {
             Start = null;
             End = null;
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
         }
 
-        public void SetSize( string value )
+        private void SetSize( string value )
         {
             Size = null;
 
@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-                public static bool TryParse( string input , out ContentRangeRtspHeader result )
+        public static bool TryParse( string input , out ContentRangeRtspHeader result )
         {
             result = null;
             

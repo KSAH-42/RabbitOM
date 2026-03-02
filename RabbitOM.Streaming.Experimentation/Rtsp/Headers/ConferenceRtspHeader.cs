@@ -157,7 +157,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Session = RtspHeaderParser.Formatter.Filter( value );
         }
 
-        public void SetTTL( string value )
+        private void SetTTL( string value )
         {
             TTL = byte.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new byte?( result )
@@ -165,7 +165,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 ;
         }
 
-        public void SetPortRange( string value )
+        private void SetPortRange( string value )
         {
             Port = PortRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
                 ? new PortRange?( range )
