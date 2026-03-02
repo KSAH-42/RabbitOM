@@ -11,17 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Accept-Encoding";
 
-        public static readonly IReadOnlyCollection<string> SupportedEncodings = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
-        {
-            "zip",
-            "tar",
-            "gzip",
-            "identity" ,
-            "deflate" ,
-            "br",
-            "*",
-        };
-
+        
 
 
 
@@ -56,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( SupportedEncodings.Contains( encoding.Value ) )
+            if ( Constants.EncodingTypes.Contains( encoding.Value ) )
             {
                 return _encodings.Add( encoding );
             }

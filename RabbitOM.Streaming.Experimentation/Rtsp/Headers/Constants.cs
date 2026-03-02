@@ -51,6 +51,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             "multicast",
         });
 
+        private static Lazy<IReadOnlyCollection<string>> s_encodingTypes = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        {
+            "zip",
+            "tar",
+            "gzip",
+            "identity" ,
+            "deflate" ,
+            "br",
+            "*",
+        });
+
         
 
 
@@ -64,5 +75,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static IReadOnlyCollection<string> TransportsTypes { get => s_transportsTypes.Value; }
     
         public static IReadOnlyCollection<string> TransmissionsTypes { get => s_transmissionsTypes.Value; }
+
+        public static IReadOnlyCollection<string> EncodingTypes { get => s_encodingTypes.Value; }
     }
 }
