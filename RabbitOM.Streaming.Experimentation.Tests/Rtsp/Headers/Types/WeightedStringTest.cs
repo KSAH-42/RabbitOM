@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     [TestFixture]
-    public class StringWithQualityTest
+    public class WeightedStringTest
     {
         [TestCase( "*" , "*" , null )]
         [TestCase( "application" , "application" , null )]
@@ -15,10 +15,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( "application/text;q=1" , "application/text" , 1 )]
         [TestCase( "application/text;q=1;" , "application/text" , 1 )]
         [TestCase( "q=1;application/text" , "application/text" , 1 )]
-        public void CheckTryParseSucceed(string input , string name , double? quality )
+        public void CheckTryParseSucceed(string input , string value , double? quality )
         {
-            Assert.IsTrue( StringWithQuality.TryParse( input , out var element ) );
-            Assert.AreEqual( name , element.Name );
+            Assert.IsTrue( WeightedString.TryParse( input , out var element ) );
+            Assert.AreEqual( value , element.Value );
             Assert.AreEqual( quality , element.Quality );
         }
 
@@ -29,10 +29,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " application/text ; q = 1" , "application/text" , 1 )]
         [TestCase( " application/text ; q = 1;" , "application/text" , 1 )]
         [TestCase( " q=1 ; application/text " , "application/text" , 1 )]
-        public void CheckTryParseSucceedWithSpaces(string input , string name , double? quality )
+        public void CheckTryParseSucceedWithSpaces(string input , string value , double? quality )
         {
-            Assert.IsTrue( StringWithQuality.TryParse( input , out var element ) );
-            Assert.AreEqual( name , element.Name );
+            Assert.IsTrue( WeightedString.TryParse( input , out var element ) );
+            Assert.AreEqual( value , element.Value );
             Assert.AreEqual( quality , element.Quality );
         }
 
@@ -44,10 +44,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( "'application/text';q='1'" , "application/text" , 1 )]
         [TestCase( "'application/text';q='1';" , "application/text" , 1 )]
         [TestCase( ";q='1';;'application/text'" , "application/text" , 1 )]
-        public void CheckTryParseSucceedWithQuotes(string input , string name , double? quality )
+        public void CheckTryParseSucceedWithQuotes(string input , string value , double? quality )
         {
-            Assert.IsTrue( StringWithQuality.TryParse( input , out var element ) );
-            Assert.AreEqual( name , element.Name );
+            Assert.IsTrue( WeightedString.TryParse( input , out var element ) );
+            Assert.AreEqual( value , element.Value );
             Assert.AreEqual( quality , element.Quality );
         }
 
@@ -59,10 +59,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( "\"application/text\";q=\"1\"" , "application/text" , 1 )]
         [TestCase( "\"application/text\";q=\"1\";" , "application/text" , 1 )]
         [TestCase( ";q=\"1\";;\"application/text\"" , "application/text" , 1 )]
-        public void CheckTryParseSucceedWithDoubleQuotes(string input , string name , double? quality )
+        public void CheckTryParseSucceedWithDoubleQuotes(string input , string value , double? quality )
         {
-            Assert.IsTrue( StringWithQuality.TryParse( input , out var element ) );
-            Assert.AreEqual( name , element.Name );
+            Assert.IsTrue( WeightedString.TryParse( input , out var element ) );
+            Assert.AreEqual( value , element.Value );
             Assert.AreEqual( quality , element.Quality );
         }
 
@@ -73,10 +73,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " \" application/text \"; q= \"   \" " , "application/text" , null )]
         [TestCase( " \" application/text \"; q= \" 1 \"" , "application/text" , 1 )]
         [TestCase( " \" application/text \"; q= \" 1 \";" , "application/text" , 1 )]
-        public void CheckTryParseSucceedWithDoubleQuotesAndSpaces(string input , string name , double? quality )
+        public void CheckTryParseSucceedWithDoubleQuotesAndSpaces(string input , string value , double? quality )
         {
-            Assert.IsTrue( StringWithQuality.TryParse( input , out var element ) );
-            Assert.AreEqual( name , element.Name );
+            Assert.IsTrue( WeightedString.TryParse( input , out var element ) );
+            Assert.AreEqual( value , element.Value );
             Assert.AreEqual( quality , element.Quality );
         }
 
@@ -88,7 +88,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         [TestCase( " ;q=1" )]
         public void CheckTryParseFailure(string input)
         {
-            Assert.IsFalse( StringWithQuality.TryParse( input , out var element ) );
+            Assert.IsFalse( WeightedString.TryParse( input , out var element ) );
             Assert.IsNull( element );
         }
     }

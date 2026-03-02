@@ -11,42 +11,42 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<RtpInfo> _infos = new HashSet<RtpInfo>();
+        private readonly HashSet<RtpInfo> _rtpInfos = new HashSet<RtpInfo>();
 
 
 
 
 
 
-        public IReadOnlyCollection<RtpInfo> Infos
+        public IReadOnlyCollection<RtpInfo> RtpInfos
         {
-            get => _infos;
+            get => _rtpInfos;
         }
 
 
-        public bool AddInfo( RtpInfo info )
+        public bool AddRtpInfo( RtpInfo info )
         {
             if ( info == null )
             {
                 return false;
             }
 
-            return _infos.Add( info );
+            return _rtpInfos.Add( info );
         }
 
-        public bool RemoveInfo( RtpInfo info )
+        public bool RemoveRtpInfo( RtpInfo info )
         {
-            return _infos.Remove( info );
+            return _rtpInfos.Remove( info );
         }
 
-        public void RemoveInfos()
+        public void ClearRtpInfos()
         {
-            _infos.Clear();
+            _rtpInfos.Clear();
         }
 
         public override string ToString()
         {
-            return string.Join( ", " , _infos );
+            return string.Join( ", " , _rtpInfos );
         }
 
 
@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new RtpInfoRtspHeader();
 
@@ -65,11 +65,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     if ( RtpInfo.TryParse( token , out var info ) )
                     {
-                        header.AddInfo( info );
+                        header.AddRtpInfo( info );
                     }
                 }
 
-                if ( header.Infos.Count > 0 )
+                if ( header.RtpInfos.Count > 0 )
                 {
                     result = header;
                 }

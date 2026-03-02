@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _proxies.Remove( proxy );
         }
 
-        public void RemoveProxies()
+        public void ClearProxies()
         {
             _proxies.Clear();
         }
@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new ViaRtspHeader();
 

@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<StringWithQuality> _encodings = new HashSet<StringWithQuality>();
+        private readonly HashSet<WeightedString> _encodings = new HashSet<WeightedString>();
 
 
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public IReadOnlyCollection<StringWithQuality> Encodings
+        public IReadOnlyCollection<WeightedString> Encodings
         {
             get => _encodings;
         }
@@ -47,14 +47,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddEncoding( StringWithQuality encoding )
+        public bool AddEncoding( WeightedString encoding )
         {
-            if ( StringWithQuality.IsNullOrEmpty( encoding ) )
+            if ( WeightedString.IsNullOrEmpty( encoding ) )
             {
                 return false;
             }
 
-            if ( SupportedEncodings.Contains( encoding.Name ) )
+            if ( SupportedEncodings.Contains( encoding.Value ) )
             {
                 return _encodings.Add( encoding );
             }
@@ -62,12 +62,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public bool RemoveEncoding( StringWithQuality encoding )
+        public bool RemoveEncoding( WeightedString encoding )
         {
             return _encodings.Remove( encoding );
         }
 
-        public void RemoveEncodings()
+        public void ClearEncodings()
         {
             _encodings.Clear();
         }
@@ -87,14 +87,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static bool TryParse( string input , out AcceptEncodingRtspHeader result )
         {
             result = null;
-
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new AcceptEncodingRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( token , out var encoding ) )
+                    if ( WeightedString.TryParse( token , out var encoding ) )
                     {
                         header.AddEncoding( encoding );
                     }

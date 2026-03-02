@@ -63,13 +63,13 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
 
-            header.AddLanguage( new StringWithQuality( "fr-FR" ) );
+            header.AddLanguage( new WeightedString( "fr-FR" ) );
             Assert.AreEqual( "fr-FR" , header.ToString() );
 
-            header.AddLanguage( new StringWithQuality( "en-GB" ) );
+            header.AddLanguage( new WeightedString( "en-GB" ) );
             Assert.AreEqual( "fr-FR, en-GB" , header.ToString() );
 
-            header.AddLanguage( new StringWithQuality( "en-US" , 1 ) );
+            header.AddLanguage( new WeightedString( "en-US" , 1 ) );
             Assert.AreEqual( "fr-FR, en-GB, en-US; q=1.0" , header.ToString() );
         }
 
@@ -80,16 +80,16 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Languages );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQuality( "fr-FR" ) ) );
+            Assert.IsTrue( header.AddLanguage( new WeightedString( "fr-FR" ) ) );
             Assert.AreEqual( 1 , header.Languages.Count );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQuality( "en-GB" ) ) );
+            Assert.IsTrue( header.AddLanguage( new WeightedString( "en-GB" ) ) );
             Assert.AreEqual( 2 , header.Languages.Count );
 
-            Assert.IsFalse( header.AddLanguage( new StringWithQuality( "en-EN" ) ) );
+            Assert.IsFalse( header.AddLanguage( new WeightedString( "en-EN" ) ) );
             Assert.AreEqual( 2 , header.Languages.Count );
 
-            header.RemoveLanguages();
+            header.ClearLanguages();
             Assert.IsEmpty( header.Languages );
         }
     }

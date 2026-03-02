@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return RtspHeaderParser.Format( Value );
+            return RtspHeaderParser.Formatter.Format( Value );
         }
 
 
@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out ExpiresRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , out DateTime value )
+            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out DateTime value )
                 ? new ExpiresRtspHeader() { Value = value }
                 : null
                 ;

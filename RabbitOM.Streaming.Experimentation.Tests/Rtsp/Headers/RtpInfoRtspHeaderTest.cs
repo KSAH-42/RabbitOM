@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Types
         public void CheckTryParseSucceed(string input , int count )
         {
             Assert.IsTrue( RtpInfoRtspHeader.TryParse( input , out var header ) );
-            Assert.AreEqual( count , header.Infos.Count );
+            Assert.AreEqual( count , header.RtpInfos.Count );
         }
 
         [TestCase( null ) ]

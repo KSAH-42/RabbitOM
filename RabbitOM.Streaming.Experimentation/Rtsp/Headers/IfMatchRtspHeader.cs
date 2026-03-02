@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<StringWithQuality> _entitiesTags = new HashSet<StringWithQuality>();
+        private readonly HashSet<WeightedString> _entitiesTags = new HashSet<WeightedString>();
 
 
 
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public IReadOnlyCollection<StringWithQuality> EntitiesTags
+        public IReadOnlyCollection<WeightedString> EntitiesTags
         {
             get => _entitiesTags;
         }
@@ -33,9 +33,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddEntityTag( StringWithQuality etag )
+        public bool AddEntityTag( WeightedString etag )
         {
-            if ( StringWithQuality.IsNullOrEmpty( etag ) )
+            if ( WeightedString.IsNullOrEmpty( etag ) )
             {
                 return false;
             }
@@ -43,12 +43,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _entitiesTags.Add( etag );
         }
 
-        public bool RemoveEntityTag( StringWithQuality etag )
+        public bool RemoveEntityTag( WeightedString etag )
         {
             return _entitiesTags.Remove( etag );
         }
 
-        public void RemoveEntitiesTags()
+        public void ClearEntitiesTags()
         {
             _entitiesTags.Clear();
         }
@@ -69,13 +69,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new IfMatchRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( token , out var etag ) )
+                    if ( WeightedString.TryParse( token , out var etag ) )
                     {
                         header.AddEntityTag( etag );
                     }

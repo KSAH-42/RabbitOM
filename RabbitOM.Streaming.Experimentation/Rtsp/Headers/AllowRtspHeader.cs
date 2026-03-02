@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _methods.Remove( _methods.FirstOrDefault( method => RtspMethod.Equals( method , name ) ) );
         }
 
-        public void RemoveMethods()
+        public void ClearMethods()
         {
             _methods.Clear();
         }
@@ -61,13 +61,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new AllowRtspHeader();
 
                 foreach( var token in tokens )
                 {
-                    if ( RtspMethod.TryParse( StringRtspHeaderNormalizer.Normalize( token ) , out var method ) )
+                    if ( RtspMethod.TryParse( RtspHeaderParser.Formatter.Filter( token ) , out var method ) )
                     {
                         header.AddMethod( method );
                     }

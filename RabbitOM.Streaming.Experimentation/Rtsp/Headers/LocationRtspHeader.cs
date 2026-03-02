@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetUri( string value )
         {
-            Uri = StringRtspHeaderNormalizer.Normalize( value );
+            Uri = RtspHeaderParser.Formatter.Filter( value );
         }
 
 
@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            var value = StringRtspHeaderNormalizer.Normalize( input );
+            var value = RtspHeaderParser.Formatter.Filter( input );
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {

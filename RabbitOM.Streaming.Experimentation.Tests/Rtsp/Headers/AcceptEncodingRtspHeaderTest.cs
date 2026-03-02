@@ -64,13 +64,13 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
 
-            header.AddEncoding( new StringWithQuality( "br" ) );
+            header.AddEncoding( new WeightedString( "br" ) );
             Assert.AreEqual( "br" , header.ToString() );
 
-            header.AddEncoding( new StringWithQuality( "gzip" ) );
+            header.AddEncoding( new WeightedString( "gzip" ) );
             Assert.AreEqual( "br, gzip" , header.ToString() );
 
-            header.AddEncoding( new StringWithQuality( "identity" , 1 ) );
+            header.AddEncoding( new WeightedString( "identity" , 1 ) );
             Assert.AreEqual( "br, gzip, identity; q=1.0" , header.ToString() );
         }
 
@@ -81,17 +81,17 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Encodings );
 
-            Assert.IsTrue( header.AddEncoding( new StringWithQuality( "br" ) ) );
+            Assert.IsTrue( header.AddEncoding( new WeightedString( "br" ) ) );
             Assert.AreEqual( 1 , header.Encodings.Count );
 
-            Assert.IsTrue( header.AddEncoding( new StringWithQuality( "gzip" ) ) );
+            Assert.IsTrue( header.AddEncoding( new WeightedString( "gzip" ) ) );
             Assert.AreEqual( 2 , header.Encodings.Count );
 
-            Assert.IsFalse( header.AddEncoding( new StringWithQuality( "gzip" ) ) );
-            Assert.IsFalse( header.AddEncoding( new StringWithQuality( "notsupported" ) ) );
+            Assert.IsFalse( header.AddEncoding( new WeightedString( "gzip" ) ) );
+            Assert.IsFalse( header.AddEncoding( new WeightedString( "notsupported" ) ) );
             Assert.AreEqual( 2 , header.Encodings.Count );
 
-            header.RemoveEncodings();
+            header.ClearEncodings();
             Assert.IsEmpty( header.Encodings );
         }
     }

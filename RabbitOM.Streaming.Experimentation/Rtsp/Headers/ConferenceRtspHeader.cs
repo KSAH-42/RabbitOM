@@ -102,62 +102,62 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetConferenceId( string value )
         {
-            ConferenceId = StringRtspHeaderNormalizer.Normalize( value );
+            ConferenceId = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetTransport( string value )
         {
-            Transport = StringRtspHeaderNormalizer.Normalize( value );
+            Transport = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetTransmission( string value )
         {
-            Transmission = StringRtspHeaderNormalizer.Normalize( value );
+            Transmission = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetSource( string value )
         {
-            Source = StringRtspHeaderNormalizer.Normalize( value );
+            Source = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetDestination( string value )
         {
-            Destination = StringRtspHeaderNormalizer.Normalize( value );
+            Destination = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetAddress( string value )
         {
-            Address = StringRtspHeaderNormalizer.Normalize( value );
+            Address = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetHost( string value )
         {
-            Host = StringRtspHeaderNormalizer.Normalize( value );
+            Host = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetRole( string value )
         {
-            Role = StringRtspHeaderNormalizer.Normalize( value );
+            Role = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetMode( string value )
         {
-            Mode = StringRtspHeaderNormalizer.Normalize( value );
+            Mode = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetTag( string value )
         {
-            Tag = StringRtspHeaderNormalizer.Normalize( value );
+            Tag = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetSession( string value )
         {
-            Session = StringRtspHeaderNormalizer.Normalize( value );
+            Session = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetTTL( string value )
         {
-            TTL = byte.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            TTL = byte.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new byte?( result )
                 : null
                 ;
@@ -165,7 +165,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetPortRange( string value )
         {
-            Port = PortRange.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var range )
+            Port = PortRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
                 ? new PortRange?( range )
                 : null
                 ;
@@ -173,7 +173,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public bool AddExtension( string value )
         {
-            var text = StringRtspHeaderNormalizer.Normalize( value );
+            var text = RtspHeaderParser.Formatter.Filter( value );
 
             if ( string.IsNullOrWhiteSpace( text ) )
             {
@@ -185,10 +185,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( StringRtspHeaderNormalizer.Normalize( value ) );
+            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
         }
 
-        public void RemoveExtensions()
+        public void ClearExtensions()
         {
             _extensions.Clear();
         }
@@ -288,51 +288,53 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            var comparer = StringComparer.OrdinalIgnoreCase;
+
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
             {
                 var header = new ConferenceRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( string.Equals( "destination" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( comparer.Equals( "destination" , parameter.Name ) )
                         {
                             header.SetDestination( parameter.Value );
                         }
-                        else if ( string.Equals( "source" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "source" , parameter.Name ) )
                         {
                             header.SetSource( parameter.Value );
                         }
-                        else if ( string.Equals( "address" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "address" , parameter.Name ) )
                         {
                             header.SetAddress( parameter.Value );
                         }
-                        else if ( string.Equals( "host" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "host" , parameter.Name ) )
                         {
                             header.SetHost( parameter.Value );
                         }
-                        else if ( string.Equals( "role" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "role" , parameter.Name ) )
                         {
                             header.SetRole( parameter.Value );
                         }
-                        else if ( string.Equals( "mode" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "mode" , parameter.Name ) )
                         {
                             header.SetMode( parameter.Value );
                         }
-                        else if ( string.Equals( "tag" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "tag" , parameter.Name ) )
                         {
                             header.SetTag( parameter.Value );
                         }
-                        else if ( string.Equals( "session" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "session" , parameter.Name ) )
                         {
                             header.SetSession( parameter.Value );
                         }
-                        else if ( string.Equals( "ttl" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "ttl" , parameter.Name ) )
                         {
                             header.SetTTL( parameter.Value );
                         }
-                        else if ( string.Equals( "port" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "port" , parameter.Name ) )
                         {
                             header.SetPortRange( parameter.Value );
                         }

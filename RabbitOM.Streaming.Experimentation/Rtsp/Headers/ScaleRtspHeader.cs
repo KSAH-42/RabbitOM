@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return Value.ToString( "G2" , CultureInfo.InvariantCulture );
+            return RtspHeaderParser.Formatter.Format( Value );
         }
 
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out ScaleRtspHeader result )
         {
-            result = float.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , NumberStyles.Any , CultureInfo.InvariantCulture , out var value )
+            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out float value )
                 ? new ScaleRtspHeader() { Value = value }
                 : null
                 ;

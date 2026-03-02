@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsFalse( header.RemoveDirective( "connected" ) );
 
-            header.RemoveDirectives();
+            header.ClearDirectives();
 
             Assert.IsEmpty( header.Directives );
         }

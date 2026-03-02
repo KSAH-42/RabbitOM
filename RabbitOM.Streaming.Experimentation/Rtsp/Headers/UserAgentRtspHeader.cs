@@ -31,17 +31,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetProduct( string value )
         {
-            Product = StringRtspHeaderNormalizer.Normalize( value );
+            Product = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetVersion( string value )
         {
-            Version = StringRtspHeaderNormalizer.Normalize( value );
+            Version = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetComments( string value )
         {
-            Comments = StringRtspHeaderNormalizer.Normalize( value , CommentsSeparators );
+            Comments = RtspHeaderParser.Formatter.Filter( value , CommentsSeparators );
         }
 
         public override string ToString()
@@ -84,7 +84,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = StringRtspHeaderNormalizer.Normalize( input );
+            input = RtspHeaderParser.Formatter.Filter( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {

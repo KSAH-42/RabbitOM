@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsTrue( header.RemoveProxy( header.Proxies.First() ) );
             Assert.IsFalse( header.RemoveProxy( null ) );
             Assert.AreEqual( 1 , header.Proxies.Count );
-            header.RemoveProxies();
+            header.ClearProxies();
             Assert.IsEmpty( header.Proxies );
         }
     }

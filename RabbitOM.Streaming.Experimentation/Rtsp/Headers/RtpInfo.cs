@@ -16,14 +16,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( url ) );
             }
 
-            if ( ! StringRtspHeaderNormalizer.CheckValue( url ) )
+            if ( ! RtspHeaderParser.Formatter.CheckValue( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( url ) )
             {
-                if ( ! StringRtspHeaderNormalizer.CheckValue( ssrc) )
+                if ( ! RtspHeaderParser.Formatter.CheckValue( ssrc) )
                 {
                     throw new ArgumentException( nameof( ssrc ) );
                 }
@@ -91,30 +91,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            var comparer = StringComparer.OrdinalIgnoreCase;
+
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
             {
                 var header = new RtpInfo();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( string.Equals( "url" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( comparer.Equals( "url" , parameter.Name ) )
                         {
                             header.Url = parameter.Value;
                         }
-                        else if ( string.Equals( "ssrc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "ssrc" , parameter.Name ) )
                         {
                             header.SSRC = parameter.Value;
                         }
-                        else if ( string.Equals( "seq" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "seq" , parameter.Name ) )
                         {
                             if ( long.TryParse( parameter.Value , out var value ) )
                             {
                                 header.Sequence = value;
                             }
                         }
-                        else if ( string.Equals( "rtptime" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "rtptime" , parameter.Name ) )
                         {
                             if ( long.TryParse( parameter.Value , out var value ) )
                             {

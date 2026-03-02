@@ -166,7 +166,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsTrue( header.RemoveExtensionByName( "paramter1" ) );
             Assert.IsTrue( header.RemoveExtensionByName( "paramter2" ) );
             
-            header.RemoveExtensions();
+            header.ClearExtensions();
 
             Assert.IsEmpty( header.Extensions );
             Assert.IsFalse( header.RemoveExtensionByName( "paramter1" ) );

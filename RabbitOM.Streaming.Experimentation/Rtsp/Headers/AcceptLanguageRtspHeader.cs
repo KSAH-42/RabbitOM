@@ -21,14 +21,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         
-        private readonly HashSet<StringWithQuality> _languages = new HashSet<StringWithQuality>();
+        private readonly HashSet<WeightedString> _languages = new HashSet<WeightedString>();
 
 
 
 
 
 
-        public IReadOnlyCollection<StringWithQuality> Languages
+        public IReadOnlyCollection<WeightedString> Languages
         {
             get => _languages;
         }
@@ -36,14 +36,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddLanguage( StringWithQuality language )
+        public bool AddLanguage( WeightedString language )
         {
-            if ( StringWithQuality.IsNullOrEmpty( language ) )
+            if ( WeightedString.IsNullOrEmpty( language ) )
             {
                 return false;
             }
 
-            if ( SupportedLanguages.Value.Contains( language.Name ) )
+            if ( SupportedLanguages.Value.Contains( language.Value ) )
             {
                 return _languages.Add( language );
             }
@@ -51,12 +51,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public bool RemoveLanguage( StringWithQuality language )
+        public bool RemoveLanguage( WeightedString language )
         {
             return _languages.Remove( language );
         }
 
-        public void RemoveLanguages()
+        public void ClearLanguages()
         {
             _languages.Clear();
         }
@@ -76,13 +76,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new AcceptLanguageRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( token , out var language ) )
+                    if ( WeightedString.TryParse( token , out var language ) )
                     {
                         header.AddLanguage( language );
                     }

@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddDirective( string value )
         {
-            var directive = StringRtspHeaderNormalizer.Normalize( value );
+            var directive = RtspHeaderParser.Formatter.Filter( value );
 
             if ( ! char.IsLetter( directive.FirstOrDefault() ) || ! char.IsLetterOrDigit( directive.LastOrDefault() ) )
             {
@@ -51,10 +51,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveDirective( string value )
         {
-            return _directives.Remove( StringRtspHeaderNormalizer.Normalize( value ) );
+            return _directives.Remove( RtspHeaderParser.Formatter.Filter( value ) );
         }
 
-        public void RemoveDirectives()
+        public void ClearDirectives()
         {
             _directives.Clear();
         }
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new ConnectionRtspHeader();
 

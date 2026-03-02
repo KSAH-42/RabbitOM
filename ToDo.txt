@@ -1,0 +1,54 @@
+Concernant le logging... 
+
+RabbitOM.Streaming.Diagnostics.Logging
+{
+   public abstract class Logger : ILogger
+   {
+      public static Logger Default = new DefaultLogger();
+
+      pubic abstract void Trace( string message , ... );
+   }
+}
+
+puis ailleurs:
+
+RabbitOM.Streaming.Net.Rtp
+{
+    public static class RtpLogger
+    {
+        public static void BuilderConfigured( ... )
+        {
+            Logger.Default.Trace( .... );
+        }
+
+        public static void SequenceSorted( ... )
+        {
+            Logger.Default.Trace( .... );
+        }
+
+        public static void FrameBuilded( ... )
+        {
+            Logger.Default.Trace( .... );
+        }
+    }
+}
+
+et plus générique:
+
+RabbitOM.Streaming.Net.XYZ
+{
+    public static class XYZLogger
+    {
+        public static void Foo( ... )
+        {
+            Logger.Default.Trace( .... );
+        }
+
+        public static void Bar( ... )
+        {
+            Logger.Default.Trace( .... );
+        }
+    }
+}
+
+faut que j'explorer mon approche... un loggeur de base et décliners via des wrapper static orientés métiers. 

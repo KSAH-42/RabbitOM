@@ -66,7 +66,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = default;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "-" , out string[] tokens ) )
             {
                 if ( ! byte.TryParse( tokens.ElementAtOrDefault( 0 ) , out var minimum ) )
                 {

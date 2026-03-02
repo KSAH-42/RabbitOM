@@ -32,12 +32,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetIdentifier( string value )
         {
-            Identifier = StringRtspHeaderNormalizer.Normalize( value );
+            Identifier = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetTimeout( string value )
         {
-            Timeout = long.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            Timeout = long.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new long?( result )
                 : null
                 ;
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            var text = StringRtspHeaderNormalizer.Normalize( value );
+            var text = RtspHeaderParser.Formatter.Filter( value );
 
             if ( string.IsNullOrWhiteSpace( text ) )
             {
@@ -57,10 +57,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( StringRtspHeaderNormalizer.Normalize( value ) );
+            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
         }
 
-        public void RemoveExtensions()
+        public void ClearExtensions()
         {
             _extensions.Clear();
         }
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
             {
                 var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
 
@@ -111,9 +111,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach( var token in tokens )
                 {
-                    if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( string.Equals( "timeout" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( StringComparer.OrdinalIgnoreCase.Equals( "timeout" , parameter.Name ) )
                         {
                             if ( ! header.Timeout.HasValue )
                             {

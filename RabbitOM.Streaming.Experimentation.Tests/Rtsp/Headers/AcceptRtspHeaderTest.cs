@@ -53,10 +53,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
 
-            header.AddMime( new StringWithQuality( "application/text" ) );
+            header.AddMime( new WeightedString( "application/text" ) );
             Assert.AreEqual( "application/text" , header.ToString() );
 
-            header.AddMime( new StringWithQuality( "application/text" , 1.2 ) );
+            header.AddMime( new WeightedString( "application/text" , 1.2 ) );
             Assert.AreEqual( "application/text, application/text; q=1.2" , header.ToString() );
         }
 
@@ -67,19 +67,19 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Mimes );
 
-            Assert.IsTrue( header.AddMime( new StringWithQuality( "application/text" ) ) );
+            Assert.IsTrue( header.AddMime( new WeightedString( "application/text" ) ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            Assert.IsFalse( header.AddMime( new StringWithQuality( "application/text" ) ) );
+            Assert.IsFalse( header.AddMime( new WeightedString( "application/text" ) ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            Assert.IsFalse( header.AddMime( new StringWithQuality( "application/bizar" ) ) );
+            Assert.IsFalse( header.AddMime( new WeightedString( "application/bizar" ) ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            Assert.IsTrue( header.AddMime( new StringWithQuality( "application/json" ) ) );
+            Assert.IsTrue( header.AddMime( new WeightedString( "application/json" ) ) );
             Assert.AreEqual( 2 , header.Mimes.Count );
 
-            header.RemoveMimes();
+            header.ClearMimes();
             Assert.IsEmpty( header.Mimes );
         }
     }

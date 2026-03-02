@@ -17,16 +17,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Format( CultureInfo.InvariantCulture , "{0:F3}" , Value );
+            return RtspHeaderParser.Formatter.Format( Value );
         }
-
-
 
 
 
         public static bool TryParse( string input , out MediaDurationRtspHeader result )
         {
-            result = double.TryParse( StringRtspHeaderNormalizer.Normalize( input?.Replace( "," , "." ) ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
+            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out double value )
                 ? new MediaDurationRtspHeader() { Value = value }
                 : null
                 ;

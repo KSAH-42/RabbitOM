@@ -33,13 +33,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<StringWithQuality> _mimes = new HashSet<StringWithQuality>();
+        private readonly HashSet<WeightedString> _mimes = new HashSet<WeightedString>();
         
 
 
 
 
-        public IReadOnlyCollection<StringWithQuality> Mimes
+        public IReadOnlyCollection<WeightedString> Mimes
         {
             get => _mimes;
         }
@@ -48,14 +48,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddMime( StringWithQuality mime )
+        public bool AddMime( WeightedString mime )
         {
-            if ( StringWithQuality.IsNullOrEmpty( mime ) )
+            if ( WeightedString.IsNullOrEmpty( mime ) )
             {
                 return false;
             }
 
-            if ( SupportedFormats.Contains( mime.Name ) )
+            if ( SupportedFormats.Contains( mime.Value ) )
             {
                 return _mimes.Add( mime );
             }
@@ -63,12 +63,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
 
-        public void RemoveMime( StringWithQuality mime )
+        public void RemoveMime( WeightedString mime )
         {
             _mimes.Remove( mime );
         }
 
-        public void RemoveMimes()
+        public void ClearMimes()
         {
             _mimes.Clear();
         }
@@ -87,13 +87,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new AcceptRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( token , out var mime ) )
+                    if ( WeightedString.TryParse( token , out var mime ) )
                     {
                         header.AddMime( mime );
                     }

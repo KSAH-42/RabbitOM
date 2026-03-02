@@ -1,16 +1,31 @@
 ﻿using System;
-using System.Linq;
 using System.Globalization;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    internal static class RtspHeaderParser
+    public static class RtspHeaderParser
     {
-        public static string Format( DateTime value )
-        {
-            value = value.Kind == DateTimeKind.Local ? value.ToUniversalTime() : value;
+        public static RtspHeaderFormatter Formatter { get; } = new RtspHeaderFormatter();
 
-            return value.ToString( "r" , CultureInfo.InvariantCulture );
+        public static bool TryParse( string input , out int result )
+        {
+            return int.TryParse( Formatter.Filter( input ) , out result );
+        }
+
+        public static bool TryParse( string input , out long result )
+        {
+            return long.TryParse( Formatter.Filter( input ) , out result );
+        }
+
+        public static bool TryParse( string input , out float result )
+        {
+            return float.TryParse( Formatter.Filter( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
+        }
+
+        public static bool TryParse( string input , out double result )
+        {
+            return double.TryParse( Formatter.Filter( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
         }
 
         public static bool TryParse( string input , out DateTime result )
@@ -18,6 +33,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return DateTime.TryParse( input , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out result );
         }
 
+        // don't unquote before returning result the quote could be the seperator
         public static bool TryParse( string input , string separator , out string[] result )
         {
             result = null;

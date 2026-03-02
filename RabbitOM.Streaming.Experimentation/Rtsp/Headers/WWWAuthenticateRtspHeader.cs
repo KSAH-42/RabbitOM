@@ -47,42 +47,42 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetScheme( string value )
         {
-            Scheme = StringRtspHeaderNormalizer.Normalize( value );
+            Scheme = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetRealm( string value )
         {
-            Realm = StringRtspHeaderNormalizer.Normalize( value );
+            Realm = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetNonce( string value )
         {
-            Nonce = StringRtspHeaderNormalizer.Normalize( value );
+            Nonce = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetOpaque( string value )
         {
-            Opaque = StringRtspHeaderNormalizer.Normalize( value );
+            Opaque = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetAlgorithm( string value )
         {
-            Algorithm = StringRtspHeaderNormalizer.Normalize( value );
+            Algorithm = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetStale( string value )
         {
-            Stale = StringRtspHeaderNormalizer.Normalize( value );
+            Stale = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetQualityOfProtection( string value )
         {
-            QualityOfProtection = StringRtspHeaderNormalizer.Normalize( value );
+            QualityOfProtection = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public bool AddExtension( string extension )
         {
-            var value = StringRtspHeaderNormalizer.Normalize( extension );
+            var value = RtspHeaderParser.Formatter.Filter( extension );
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -94,10 +94,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string extension )
         {
-            return _extensions.Remove( StringRtspHeaderNormalizer.Normalize( extension ) );
+            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( extension ) );
         }
 
-        public void RemoveExtensions()
+        public void ClearExtensions()
         {
             _extensions.Clear();
         }
@@ -159,43 +159,44 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = StringRtspHeaderNormalizer.Normalize( input );
+            input = RtspHeaderParser.Formatter.Filter( input );
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , " " , out var tokens ) )
             {
                 var scheme = tokens.First();
                 
                 if ( RtspHeaderParser.TryParse( input.Replace( scheme , "" ) , "," , out tokens ) )
                 {
                     result = new WWWAuthenticateRtspHeader(); 
-                    
                     result.SetScheme( scheme );
+
+                    var comparer = StringComparer.OrdinalIgnoreCase;
 
                     foreach ( var token in tokens )
                     {
-                        if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                        if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                         {
-                            if ( string.Equals( "realm" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            if ( comparer.Equals( "realm" , parameter.Name ) )
                             {
                                 result.SetRealm( parameter.Value );
                             }
-                            else if ( string.Equals( "nonce" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "nonce" , parameter.Name ) )
                             {
                                 result.SetNonce( parameter.Value );
                             }
-                            else if ( string.Equals( "opaque" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "opaque" , parameter.Name ) )
                             {
                                 result.SetOpaque( parameter.Value );
                             }
-                            else if ( string.Equals( "algorithm" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "algorithm" , parameter.Name ) )
                             {
                                 result.SetAlgorithm( parameter.Value );
                             }
-                            else if ( string.Equals( "stale" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "stale" , parameter.Name ) )
                             {
                                 result.SetStale( parameter.Value );
                             }
-                            else if ( string.Equals( "qop" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "qop" , parameter.Name ) )
                             {
                                 result.SetQualityOfProtection( parameter.Value );
                             }

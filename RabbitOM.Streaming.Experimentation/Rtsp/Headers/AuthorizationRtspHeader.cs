@@ -49,67 +49,67 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetScheme( string value )
         {
-            Scheme = StringRtspHeaderNormalizer.Normalize( value );
+            Scheme = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetUserName( string value )
         {
-            UserName = StringRtspHeaderNormalizer.Normalize( value );
+            UserName = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetRealm( string value )
         {
-            Realm = StringRtspHeaderNormalizer.Normalize( value );
+            Realm = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetNonce( string value )
         {
-            Nonce = StringRtspHeaderNormalizer.Normalize( value );
+            Nonce = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetOpaque( string value )
         {
-            Opaque = StringRtspHeaderNormalizer.Normalize( value );
+            Opaque = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetDomain( string value )
         {
-            Domain = StringRtspHeaderNormalizer.Normalize( value );
+            Domain = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetUri( string value )
         {
-            Uri = StringRtspHeaderNormalizer.Normalize( value );
+            Uri = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetResponse( string value )
         {
-            Response = StringRtspHeaderNormalizer.Normalize( value );
+            Response = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetAlgorithm( string value )
         {
-            Algorithm = StringRtspHeaderNormalizer.Normalize( value );
+            Algorithm = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetClientNonce( string value )
         {
-            ClientNonce = StringRtspHeaderNormalizer.Normalize( value );
+            ClientNonce = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetNonceCount( string value )
         {
-            NonceCount = StringRtspHeaderNormalizer.Normalize( value );
+            NonceCount = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetQualityOfProtection( string value )
         {
-            QualityOfProtection = StringRtspHeaderNormalizer.Normalize( value );
+            QualityOfProtection = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public bool AddExtension( string value )
         {
-            var extension = StringRtspHeaderNormalizer.Normalize( value );
+            var extension = RtspHeaderParser.Formatter.Filter( value );
 
             if ( string.IsNullOrWhiteSpace( extension ) )
             {
@@ -121,10 +121,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( StringRtspHeaderNormalizer.Normalize( value ) );
+            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
         }
 
-        public void RemoveExtensions()
+        public void ClearExtensions()
         {
             _extensions.Clear();
         }
@@ -179,7 +179,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             foreach ( var extension in _extensions )
             {
-                if ( StringParameter.TryParse( extension , "=" , out var parameter ) )
+                if ( RtspHeaderProperty.TryParse( extension , "=" , out var parameter ) )
                 {
                     builder.AppendFormat( "{0}=\"{1}\", " , parameter.Name , parameter.Value );
                 }
@@ -202,7 +202,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , " " , out var tokens ) )
             {
                 var scheme = tokens.FirstOrDefault();
                 
@@ -214,49 +214,51 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     foreach ( var token in tokens )
                     {
-                        if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                        if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                         {
-                            if ( string.Equals( "username" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            var comparer = StringComparer.OrdinalIgnoreCase;
+
+                            if ( comparer.Equals( "username" , parameter.Name ) )
                             {
                                 result.SetUserName( parameter.Value );
                             }
-                            else if ( string.Equals( "realm" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "realm" , parameter.Name ) )
                             {
                                 result.SetRealm( parameter.Value );
                             }
-                            else if ( string.Equals( "nonce" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "nonce" , parameter.Name ) )
                             {
                                 result.SetNonce( parameter.Value );
                             }
-                            else if ( string.Equals( "opaque" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "opaque" , parameter.Name ) )
                             {
                                 result.SetOpaque( parameter.Value );
                             }
-                            else if ( string.Equals( "domain" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "domain" , parameter.Name ) )
                             {
                                 result.SetDomain( parameter.Value );
                             }
-                            else if ( string.Equals( "uri" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "uri" , parameter.Name ) )
                             {
                                 result.SetUri( parameter.Value );
                             }
-                            else if ( string.Equals( "response" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "response" , parameter.Name ) )
                             {
                                 result.SetResponse( parameter.Value );
                             }                            
-                            else if ( string.Equals( "algorithm" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "algorithm" , parameter.Name ) )
                             {
                                 result.SetAlgorithm( parameter.Value );
                             }
-                            else if ( string.Equals( "cnonce" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "cnonce" , parameter.Name ) )
                             {
                                 result.SetClientNonce( parameter.Value );
                             }
-                            else if ( string.Equals( "nc" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "nc" , parameter.Name ) )
                             {
                                 result.SetNonceCount( parameter.Value );
                             }
-                            else if ( string.Equals( "qop" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                            else if ( comparer.Equals( "qop" , parameter.Name ) )
                             {
                                 result.SetQualityOfProtection( parameter.Value );
                             }

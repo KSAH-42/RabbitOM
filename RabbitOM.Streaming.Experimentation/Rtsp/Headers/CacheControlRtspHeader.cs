@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetNoCache( string value )
         {
-            NoCache = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            NoCache = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetNoStore( string value )
         {
-            NoStore = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            NoStore = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetNoTransform( string value )
         {
-            NoTransform = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            NoTransform = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public void SetMustRevalidate( string value )
         {
-            MustRevalidate = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            MustRevalidate = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -88,7 +88,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public void SetProxyRevalidate( string value )
         {
-            ProxyRevalidate = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            ProxyRevalidate = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetPublic( string value )
         {
-            Public = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            Public = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -104,7 +104,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetPrivate( string value )
         {
-            Private = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            Private = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -112,7 +112,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetImmutable( string value )
         {
-            Immutable = bool.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            Immutable = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? result 
                 : false
                 ;
@@ -120,7 +120,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetMaximumAge( string value )
         {
-            MaximumAge = int.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            MaximumAge = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
                 : null
                 ;
@@ -128,7 +128,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetShareMaximumAge( string value )
         {
-            ShareMaximumAge = int.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            ShareMaximumAge = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
                 : null
                 ;
@@ -136,7 +136,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetStaleWhileRevalidate( string value )
         {
-            StaleWhileRevalidate = int.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            StaleWhileRevalidate = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
                 : null
                 ;
@@ -144,7 +144,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetStaleIfError( string value )
         {
-            StaleIfError = int.TryParse( StringRtspHeaderNormalizer.Normalize( value ) , out var result )
+            StaleIfError = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
                 : null
                 ;
@@ -157,24 +157,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
-            var extensionName = StringRtspHeaderNormalizer.Normalize( name );
+            var extensionName = RtspHeaderParser.Formatter.Filter( name );
 
             if ( string.IsNullOrWhiteSpace( extensionName ) )
             {
                 return false;
             }
 
-            _extensions[ extensionName ] = StringRtspHeaderNormalizer.Normalize( value );
+            _extensions[ extensionName ] = RtspHeaderParser.Formatter.Filter( value );
 
             return true;
         }
 
         public bool RemoveExtensionByName( string name )
         {
-            return _extensions.Remove( StringRtspHeaderNormalizer.Normalize( name ) );
+            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( name ) );
         }
 
-        public void RemoveExtensions()
+        public void ClearExtensions()
         {
             _extensions.Clear();
         }
@@ -271,41 +271,43 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( StringRtspHeaderNormalizer.Normalize( input ) , "," , out var tokens ) )
+            var comparer = StringComparer.OrdinalIgnoreCase;
+
+            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
             {
                 var header = new CacheControlRtspHeader();
 
                 foreach ( var token in tokens.Where( element => ! element.Contains( "=" ) ) )
                 {
-                    if ( string.Equals( "no-cache" , token , StringComparison.OrdinalIgnoreCase ) )
+                    if ( comparer.Equals( "no-cache" , token ) )
                     {
                         header.NoCache = true;
                     }
-                    else if ( string.Equals( "no-store" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "no-store" , token ) )
                     {
                         header.NoStore = true;
                     }
-                    else if ( string.Equals( "no-transform" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "no-transform" , token ) )
                     {
                         header.NoTransform = true;
                     }
-                    else if ( string.Equals( "must-revalidate" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "must-revalidate" , token ) )
                     {
                         header.MustRevalidate = true;
                     }
-                    else if ( string.Equals( "proxy-revalidate" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "proxy-revalidate" , token ) )
                     {
                         header.ProxyRevalidate = true;
                     }
-                    else if ( string.Equals( "public" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "public" , token ) )
                     {
                         header.Public = true;
                     }
-                    else if ( string.Equals( "private" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "private" , token ) )
                     {
                         header.Private = true;
                     }
-                    else if ( string.Equals( "immutable" , token , StringComparison.OrdinalIgnoreCase ) )
+                    else if ( comparer.Equals( "immutable" , token ) )
                     {
                         header.Immutable = true;
                     }
@@ -313,21 +315,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens.Where( element => element.Contains( "=" ) ) )
                 {
-                    if ( StringParameter.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( string.Equals( "max-age" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        if ( comparer.Equals( "max-age" , parameter.Name ) )
                         {
                             header.SetMaximumAge( parameter.Value );
                         }
-                        else if ( string.Equals( "s-maxage" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "s-maxage" , parameter.Name ) )
                         {
                             header.SetShareMaximumAge( parameter.Value );
                         }
-                        else if ( string.Equals( "stale-while-revalidate" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "stale-while-revalidate" , parameter.Name ) )
                         {
                             header.SetStaleWhileRevalidate( parameter.Value );
                         }
-                        else if ( string.Equals( "stale-if-error" , parameter.Name , StringComparison.OrdinalIgnoreCase ) )
+                        else if ( comparer.Equals( "stale-if-error" , parameter.Name ) )
                         {
                             header.SetStaleIfError( parameter.Value );
                         }

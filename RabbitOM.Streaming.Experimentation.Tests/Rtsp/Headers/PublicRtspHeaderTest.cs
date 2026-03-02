@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsTrue( header.RemoveMethod( RtspMethod.DESCRIBE ) );
             Assert.IsFalse( header.Methods.Contains( RtspMethod.DESCRIBE ) );
             Assert.AreEqual( 1 , header.Methods.Count );
-            header.RemoveMethods();
+            header.ClearMethods();
             Assert.AreEqual( 0 , header.Methods.Count );
             Assert.IsFalse( header.Methods.Contains( RtspMethod.DESCRIBE ) );
             
