@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderValidator
+    internal static class RtspHeaderValidator
     {
         private static readonly IReadOnlyCollection<char> ForbiddenCharacters = new HashSet<char>
         { 
