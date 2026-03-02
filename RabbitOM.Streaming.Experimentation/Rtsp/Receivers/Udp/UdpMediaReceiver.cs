@@ -29,6 +29,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
             get => throw new NotImplementedException();
         }
 
+        public UdpMediaReceiverConfiguration Configuration
+        {
+            get => throw new NotImplementedException();
+        }
 
 
 

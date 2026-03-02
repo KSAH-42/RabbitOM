@@ -29,6 +29,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
             get => throw new NotImplementedException();
         }
 
+        public TcpMediaReceiverConfiguration Configuration
+        {
+            get => throw new NotImplementedException();
+        }
 
 
 

@@ -4,7 +4,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
 {
     public class UdpMediaReceiverConfiguration : RtspMediaReceiverConfiguration
     {
-        public int RtpPort { get; }
-        public TimeSpan ReceiveTranportTimeout { get; }
+        public int TransportPort { get; }
+
+        public TimeSpan TransportReceiveTimeout { get; }
     }
 }

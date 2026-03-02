@@ -56,71 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public void SetNoCache( string value )
-        {
-            NoCache = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-
-        public void SetNoStore( string value )
-        {
-            NoStore = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-
-        public void SetNoTransform( string value )
-        {
-            NoTransform = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-        
-        public void SetMustRevalidate( string value )
-        {
-            MustRevalidate = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-        
-        public void SetProxyRevalidate( string value )
-        {
-            ProxyRevalidate = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-
-        public void SetPublic( string value )
-        {
-            Public = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-
-        public void SetPrivate( string value )
-        {
-            Private = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-
-        public void SetImmutable( string value )
-        {
-            Immutable = bool.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? result 
-                : false
-                ;
-        }
-
-        public void SetMaximumAge( string value )
+        private void SetMaximumAge( string value )
         {
             MaximumAge = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
@@ -128,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 ;
         }
 
-        public void SetShareMaximumAge( string value )
+        private void SetShareMaximumAge( string value )
         {
             ShareMaximumAge = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
@@ -136,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 ;
         }
 
-        public void SetStaleWhileRevalidate( string value )
+        private void SetStaleWhileRevalidate( string value )
         {
             StaleWhileRevalidate = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
@@ -144,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 ;
         }
 
-        public void SetStaleIfError( string value )
+        private void SetStaleIfError( string value )
         {
             StaleIfError = int.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new int?( result )
