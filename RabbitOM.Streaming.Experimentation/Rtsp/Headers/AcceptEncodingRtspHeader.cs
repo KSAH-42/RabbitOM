@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
+        // TODO: replace a dictionary
         private readonly HashSet<WeightedString> _encodings = new HashSet<WeightedString>();
 
 
