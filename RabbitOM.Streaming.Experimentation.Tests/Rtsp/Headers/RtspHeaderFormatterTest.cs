@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
     
     [TestFixture]
-    public class RtspHeaderValueNormalizerTest
+    public class RtspHeaderFormatterTest
     {
         [TestCase( null )]
         [TestCase( "" )]

@@ -116,11 +116,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\Verifiers\RtspHeaderMethodSignatureVerifier.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderMethodSignatureVerifier.cs" />
     <Compile Include="Rtsp\RtspMethodTest.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfoTest.cs" />
-    <Compile Include="Rtsp\Headers\Types\StringParameterTest.cs" />
-    <Compile Include="Rtsp\Headers\Verifiers\RtspHeaderTypeNamesVerifier.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderTypeNamesVerifier.cs" />
     <Compile Include="Rtsp\Headers\AcceptRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
@@ -139,7 +138,7 @@
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\Types\RtpInfoTest.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\Types\WeightedStringTest.cs" />
+    <Compile Include="Rtsp\Headers\WeightedStringTest.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\LastModifiedRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeaderTest.cs" />
@@ -150,7 +149,7 @@
     <Compile Include="Rtsp\Headers\BandwithRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptRangesRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderValueNormalizerTest.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderFormatterTest.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
