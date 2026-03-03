@@ -56,9 +56,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             header.AddMime( new WeightedString( "application/text" ) );
             Assert.AreEqual( "application/text" , header.ToString() );
+            
+            header.ClearMimes();
 
             header.AddMime( new WeightedString( "application/text" , 1.2 ) );
-            Assert.AreEqual( "application/text, application/text; q=1.2" , header.ToString() );
+            Assert.AreEqual( "application/text; q=1.2" , header.ToString() );
+
+            header.AddMime( new WeightedString( "application/xml" ) );
+            Assert.AreEqual( "application/text; q=1.2, application/xml" , header.ToString() );
         }
 
         [Test]

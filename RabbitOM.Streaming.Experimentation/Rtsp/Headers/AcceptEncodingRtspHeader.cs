@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var encoding = _encodings.Values.Where( predicate ).FirstOrDefault();
+            var encoding = _encodings.Values.FirstOrDefault( predicate );
 
             if ( encoding == null )
             {

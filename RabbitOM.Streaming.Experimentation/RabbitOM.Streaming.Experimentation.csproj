@@ -53,7 +53,7 @@
     <Compile Include="Rtsp\Headers\CacheControlRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\Constants - Copier %282%29.cs" />
+    <Compile Include="Rtsp\Headers\SupportedEncodings.cs" />
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />

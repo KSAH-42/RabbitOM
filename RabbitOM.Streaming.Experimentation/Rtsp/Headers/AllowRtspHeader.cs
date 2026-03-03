@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class AllowRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Allow";
+        
 
 
 
-
+        
+        
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
         
 
 
+
+        
         
         public IReadOnlyCollection<RtspMethod> Methods
         {
             get => _methods;
         }
         
+
+
+
         
         
         public bool AddMethod( RtspMethod method )
@@ -37,6 +45,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _methods.Remove( method );
         }
 
+        public bool RemoveMethodBy( Func<RtspMethod,bool> predicate )
+        {
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+            }
+
+            var method = _methods.FirstOrDefault( predicate );
+
+            if ( method == null )
+            {
+                return false;
+            }
+
+            return _methods.Remove( method );
+        }
+
         public void ClearMethods()
         {
             _methods.Clear();
@@ -46,11 +71,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return string.Join( ", " , _methods );
         }
+        
 
 
 
-
-
+        
+        
         public static bool TryParse( string input , out AllowRtspHeader result )
         {
             result = null;

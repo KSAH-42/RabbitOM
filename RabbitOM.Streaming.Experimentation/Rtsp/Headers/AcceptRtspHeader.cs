@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var language = _mimes.Values.Where( predicate ).FirstOrDefault();
+            var language = _mimes.Values.FirstOrDefault( predicate );
 
             if ( language == null )
             {

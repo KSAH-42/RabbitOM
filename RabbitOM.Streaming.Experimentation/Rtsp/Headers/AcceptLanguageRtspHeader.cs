@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var language = _languages.Values.Where( predicate ).FirstOrDefault();
+            var language = _languages.Values.FirstOrDefault( predicate );
 
             if ( language == null )
             {
