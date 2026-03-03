@@ -9,16 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ConferenceRtspHeader : RtspHeader
     {
-        private static string[] UnAuthorizedOccurences =
-        {
-            "," , "." , ";" , ":" , "(" , ")" , "[" , "]" , "<" , ">" , "°" , "{" , "}" , "?"
-        };
-
-        
-
-
-
-
         public static readonly string TypeName = "Conference";
 
 
@@ -26,7 +16,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
         private readonly HashSet<string> _extensions = new HashSet<string>();
-
 
 
 
