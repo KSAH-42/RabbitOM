@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class RtspHeaderMethodSignatureVerifier
     {
         [Test]
-        public void CheckHeaderTypeNames()
+        public void CheckTryParseSignature()
         {
             var assembly = Assembly.GetAssembly( typeof( RtspClient ) );
 
