@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [Test]
-        public void CheckAddingMethods()
+        public void CheckAddMethods()
         {
             var header = new AllowRtspHeader();
 
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [Test]
-        public void CheckRemovingMethods()
+        public void CheckRemoveMethods()
         {
             var header = new AllowRtspHeader();
 
@@ -97,10 +97,28 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( 1 , header.Methods.Count );
             Assert.IsTrue( header.Methods.Contains( RtspMethod.DESCRIBE ) );
             
+            Assert.IsTrue( header.AddMethod( RtspMethod.RECORD ) );
+            Assert.IsTrue( header.RemoveMethodBy( x => x.Name == RtspMethod.RECORD.Name ) );
+            Assert.IsFalse( header.RemoveMethodBy( x => x.Name == RtspMethod.RECORD.Name ) );
+
             header.ClearMethods();
             Assert.AreEqual( 0 , header.Methods.Count );
             Assert.IsFalse( header.Methods.Contains( RtspMethod.DESCRIBE ) );
-            
+        }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new AllowRtspHeader();
+
+            header.AddMethod( RtspMethod.OPTIONS );
+            Assert.AreEqual( "OPTIONS" , header.ToString() );
+
+            header.AddMethod( RtspMethod.SETUP );
+            Assert.AreEqual( "OPTIONS, SETUP" , header.ToString() );
+
+            header.AddMethod( RtspMethod.RECORD );
+            Assert.AreEqual( "OPTIONS, SETUP, RECORD" , header.ToString() );
         }
     }
 }
