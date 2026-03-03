@@ -33,7 +33,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
         
-        public static bool TryParse( string input , out LocationRtspHeader result )
+        public static bool TryParse( string input , out ContentBaseRtspHeader result )
         {
             result = null;
 
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( value ) )
             {
-                result = new LocationRtspHeader();        
+                result = new ContentBaseRtspHeader();        
                 result.SetUri( value );
             }
 
