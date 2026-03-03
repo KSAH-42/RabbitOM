@@ -8,16 +8,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class AuthorizationRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Authorization";
+        
 
 
 
-
-
+        
+        
         private readonly HashSet<string> _extensions = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+        
 
 
 
-
+        
+        
         public string Scheme { get; private set; } = string.Empty;
         
         public string UserName { get; private set; } = string.Empty;
@@ -43,10 +46,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string ClientNonce { get; private set; } = string.Empty;
                 
         public IReadOnlyCollection<string> Extensions { get => _extensions; }
+        
 
 
 
-
+        
+        
         public void SetScheme( string value )
         {
             Scheme = RtspHeaderParser.Formatter.Filter( value );
@@ -131,57 +136,51 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( Scheme ) )
-            {
-                return string.Empty;
-            }
-
             var builder = new StringBuilder();
 
             builder.AppendFormat( "{0} " , Scheme );
-
-            builder.AppendFormat( "username=\"{0}\", " , UserName );
-            builder.AppendFormat( "realm=\"{0}\", " , Realm );
-            builder.AppendFormat( "nonce=\"{0}\", " , Nonce );
+            builder.AppendFormat( "username={0}, " , RtspHeaderParser.Formatter.Quote( UserName ) );
+            builder.AppendFormat( "realm={0}, " , RtspHeaderParser.Formatter.Quote( Realm ) );
+            builder.AppendFormat( "nonce={0}, " , RtspHeaderParser.Formatter.Quote( Nonce ) );
 
             if ( ! string.IsNullOrWhiteSpace( Domain ) )
             {
-                builder.AppendFormat( "domain=\"{0}\", " , Domain );
+                builder.AppendFormat( "domain={0}, " , RtspHeaderParser.Formatter.Quote( Domain ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Opaque ) )
             {
-                builder.AppendFormat( "opaque=\"{0}\", " , Opaque );
+                builder.AppendFormat( "opaque={0}, " , RtspHeaderParser.Formatter.Quote( Opaque ) );
             }
 
-            builder.AppendFormat( "uri=\"{0}\", " , Uri );
-            builder.AppendFormat( "response=\"{0}\", " , Response );
+            builder.AppendFormat( "uri={0}, " , RtspHeaderParser.Formatter.Quote( Uri ) );
+            builder.AppendFormat( "response={0}, " , RtspHeaderParser.Formatter.Quote( Response ) );
 
             if ( ! string.IsNullOrWhiteSpace( Algorithm ) )
             {
-                builder.AppendFormat( "algorithm=\"{0}\", " , Algorithm );
+                builder.AppendFormat( "algorithm={0}, " , RtspHeaderParser.Formatter.Quote( Algorithm ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( ClientNonce ) )
             {
-                builder.AppendFormat( "cnonce=\"{0}\", " , ClientNonce );
+                builder.AppendFormat( "cnonce={0}, " , RtspHeaderParser.Formatter.Quote( ClientNonce ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( NonceCount ) )
             {
-                builder.AppendFormat( "nc=\"{0}\", " , NonceCount );
+                builder.AppendFormat( "nc={0}, " , RtspHeaderParser.Formatter.Quote( NonceCount ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( QualityOfProtection ) )
             {
-                builder.AppendFormat( "qop=\"{0}\", " , QualityOfProtection );
+                builder.AppendFormat( "qop={0}, " , RtspHeaderParser.Formatter.Quote( QualityOfProtection ) );
             }
 
             foreach ( var extension in _extensions )
             {
                 if ( RtspHeaderProperty.TryParse( extension , "=" , out var parameter ) )
                 {
-                    builder.AppendFormat( "{0}=\"{1}\", " , parameter.Name , parameter.Value );
+                    builder.AppendFormat( "{0}={1}, " , parameter.Name , RtspHeaderParser.Formatter.Quote( parameter.Value ) );
                 }
                 else
                 {
@@ -191,13 +190,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return builder.ToString().Trim( ' ' , ',' );
         }
+        
 
 
 
-
-
-
-
+        
+        
         public static bool TryParse( string input , out AuthorizationRtspHeader result )
         {
             result = null;

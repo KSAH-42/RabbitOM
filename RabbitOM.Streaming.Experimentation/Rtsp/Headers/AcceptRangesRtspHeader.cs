@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.Append( "utc, ");
             }
 
-            return builder.ToString().Trim( ',' , ' ' );
+            return builder.ToString().Trim( ' ' , ',' );
         }
         
 
