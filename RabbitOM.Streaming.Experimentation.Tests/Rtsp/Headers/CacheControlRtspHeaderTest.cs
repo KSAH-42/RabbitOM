@@ -8,6 +8,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class CacheControlRtspHeaderTest
     {
         [TestCase( "stale-while-revalidate=12,no-transform,parameter1=a,parameter2=b" )]
+        [TestCase( "parameter2=b,no-transform,parameter1=a,stale-while-revalidate=12" )]
+        [TestCase( "no-transform,parameter2 =b,,,,,parameter1= a, stale-while-revalidate = 12" )]
         public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( CacheControlRtspHeader.TryParse( input , out var header ) );
