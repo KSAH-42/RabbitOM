@@ -9,9 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ConferenceRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Conference";
-
-
         private static IReadOnlyCollection<string> ConferenceIdsPropertiesNames = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
             "id",
@@ -22,10 +19,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             "conf_id"
         };
 
+        private static string[] UnAuthorizedOccurences =
+        {
+            "," , "." , ";" , ":" , "(" , ")" , "[" , "]" , "<" , ">" , "°" , "{" , "}" , "?"
+        };
+
+        
+
+
+
+
+        public static readonly string TypeName = "Conference";
+
+
 
 
         
         private readonly HashSet<string> _extensions = new HashSet<string>();
+
 
 
 
@@ -53,9 +64,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string Session { get; private set; } = string.Empty;
 
-        public byte? TTL { get; set; }
+        public string Access { get; private set; } = string.Empty;
 
-        public ValueRange? Port { get; set; }
+        public byte? TTL { get; private set; }
+
+        public ValueRange? Port { get; private set; }
         
         public IReadOnlyCollection<string> Extensions { get => _extensions; }
         
@@ -65,9 +78,43 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static bool IsWellFormedConferenceId( string value )
+        {
+            return ! string.IsNullOrWhiteSpace( value ) && value.Any( character => char.IsLetterOrDigit( character ) );
+        }
+
+        
+
+
+        
+        
+        public bool AddExtension( string value )
+        {
+            var text = RtspHeaderParser.Formatter.Filter( value );
+
+            if ( string.IsNullOrWhiteSpace( text ) )
+            {
+                return false;
+            }
+
+            return _extensions.Add( text );
+        }
+
+        public bool RemoveExtension( string value )
+        {
+            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
+        }
+
+        public void ClearExtensions()
+        {
+            _extensions.Clear();
+        }
+        
         public void SetConferenceId( string value )
         {
-            ConferenceId = RtspHeaderParser.Formatter.Filter( value );
+            var id = RtspHeaderParser.Formatter.Filter( value , UnAuthorizedOccurences );
+
+            ConferenceId = IsWellFormedConferenceId( id ) ? id : string.Empty;
         }
 
         public void SetTransport( string value )
@@ -120,7 +167,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Session = RtspHeaderParser.Formatter.Filter( value );
         }
 
-        private void SetTTL( string value )
+        public void SetAccess( string value )
+        {
+            Access = RtspHeaderParser.Formatter.Filter( value );
+        }
+
+        public void SetTTL( byte? value )
+        {
+            TTL = value;
+        }
+
+        public void SetTTL( string value )
         {
             TTL = byte.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
                 ? new byte?( result )
@@ -128,34 +185,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 ;
         }
 
-        private void SetPortRange( string value )
+        public void SetPort( in ValueRange value )
+        {
+            Port = value;
+        }
+
+        public void SetPort( string value )
         {
             Port = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
                 ? new ValueRange?( range )
                 : null
                 ;
-        }
-        
-        public bool AddExtension( string value )
-        {
-            var text = RtspHeaderParser.Formatter.Filter( value );
-
-            if ( string.IsNullOrWhiteSpace( text ) )
-            {
-                return false;
-            }
-
-            return _extensions.Add( text );
-        }
-
-        public bool RemoveExtension( string value )
-        {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
-        }
-
-        public void ClearExtensions()
-        {
-            _extensions.Clear();
         }
         
         public override string ToString()
@@ -164,42 +204,42 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( ConferenceId ) )
             {
-                builder.AppendFormat( "{0};" , ConferenceId );
+                builder.AppendFormat( "{0}; " , ConferenceId );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Transport ) )
             {
-                builder.AppendFormat( "{0};" , Transport );
+                builder.AppendFormat( "{0}; " , Transport );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Transmission ) )
             {
-                builder.AppendFormat( "{0};" , Transmission );
+                builder.AppendFormat( "{0}; " , Transmission );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Source ) )
             {
-                builder.AppendFormat( "source={0};" , Source );
+                builder.AppendFormat( "source={0}; " , Source );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Destination ) )
             {
-                builder.AppendFormat( "destination={0};" , Destination );
+                builder.AppendFormat( "destination={0}; " , Destination );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Address ) )
             {
-                builder.AppendFormat( "address={0};" , Address );
+                builder.AppendFormat( "address={0}; " , Address );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Host ) )
             {
-                builder.AppendFormat( "host={0};" , Host );
+                builder.AppendFormat( "host={0}; " , Host );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Role ) )
             {
-                builder.AppendFormat( "role={0};" , Role );
+                builder.AppendFormat( "role={0}; " , Role );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Mode ) )
@@ -209,27 +249,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( Tag ) )
             {
-                builder.AppendFormat( "tag={0};" , Tag );
+                builder.AppendFormat( "tag={0}; " , Tag );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Session ) )
             {
-                builder.AppendFormat( "session={0};" , Session);
+                builder.AppendFormat( "session={0}; " , Session);
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Access ) )
+            {
+                builder.AppendFormat( "access={0}; " , Session);
             }
 
             if ( TTL.HasValue )
             {
-                builder.AppendFormat( "ttl={0};" , TTL );
+                builder.AppendFormat( "ttl={0}; " , TTL );
             }
 
             if ( Port.HasValue )
             {
-                builder.AppendFormat( "port={0};" , Port );
+                builder.AppendFormat( "port={0}; " , Port );
             }
 
             foreach ( var extension in _extensions )
             {
-                builder.AppendFormat( "{0};" , extension );
+                builder.AppendFormat( "{0}; " , extension );
             }
 
             return builder.ToString().Trim( ' ' , ';' );
@@ -239,15 +284,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool IsWellFormedConferenceId( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            return value.Any( character => char.IsLetterOrDigit( character ) );
-        }
 
         public static bool TryParse( string input , out ConferenceRtspHeader result )
         {
@@ -295,13 +331,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             header.SetSession( parameter.Value );
                         }
+                        else if ( comparer.Equals( "access" , parameter.Name ) )
+                        {
+                            header.SetAccess( parameter.Value );
+                        }
                         else if ( comparer.Equals( "ttl" , parameter.Name ) )
                         {
                             header.SetTTL( parameter.Value );
                         }
                         else if ( comparer.Equals( "port" , parameter.Name ) )
                         {
-                            header.SetPortRange( parameter.Value );
+                            header.SetPort( parameter.Value );
                         }
                         else if ( SupportedTransports.Values.Contains( parameter.Name ) )
                         {
@@ -332,7 +372,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else    
                         {
-                            if ( string.IsNullOrWhiteSpace( header.ConferenceId ) && IsWellFormedConferenceId( token ) )
+                            if ( string.IsNullOrWhiteSpace( header.ConferenceId ) )
                             {
                                 header.SetConferenceId( token );
                             }

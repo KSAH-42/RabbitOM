@@ -3,6 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using System.Linq.Expressions;
 
     [TestFixture]
     public class ConferenceRtspHeaderTest
@@ -175,6 +176,53 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             Assert.IsFalse( ConferenceRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
+        }
+
+        [Test]
+        public void CheckAddExtensions()
+        {
+            var header = new ConferenceRtspHeader();
+
+            Assert.IsTrue( header.AddExtension( "a" ) );
+            Assert.AreEqual( 1 , header.Extensions.Count );
+
+            Assert.IsFalse( header.AddExtension( "a" ) );
+            Assert.AreEqual( 1 , header.Extensions.Count );
+            
+            Assert.IsTrue( header.AddExtension( "b" ) );
+            Assert.AreEqual( 2 , header.Extensions.Count );
+        }
+
+        [Test]
+        public void CheckRemoveExtensionsExtensions()
+        {
+            var header = new ConferenceRtspHeader();
+
+            Assert.IsTrue( header.AddExtension( "a" ) );
+            Assert.IsTrue( header.AddExtension( "b" ) );
+            Assert.IsTrue( header.AddExtension( "c" ) );
+            Assert.AreEqual( 3 , header.Extensions.Count );
+
+            Assert.IsTrue( header.RemoveExtension( "a" ) );
+            Assert.AreEqual( 2 , header.Extensions.Count );
+            
+            Assert.IsFalse( header.RemoveExtension( "a" ) );
+            Assert.AreEqual( 2 , header.Extensions.Count );
+
+            Assert.IsTrue( header.RemoveExtension( " b " ) );
+            Assert.AreEqual( 1 , header.Extensions.Count );
+
+            header.ClearExtensions();
+            
+            Assert.IsEmpty( header.Extensions );
+        }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new ConferenceRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
         }
     }
 }
