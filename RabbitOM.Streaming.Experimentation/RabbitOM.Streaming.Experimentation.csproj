@@ -80,6 +80,7 @@
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SupportedLanguages.cs" />
     <Compile Include="Rtsp\Headers\SupportedTransmissions.cs" />
+    <Compile Include="Rtsp\Headers\SupportedFormats.cs" />
     <Compile Include="Rtsp\Headers\SupportedTransports.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfo.cs" />

@@ -8,34 +8,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Accept-Encoding";
 
+
+
+
+        
+        
+        private readonly Dictionary<string,WeightedString> _encodings = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
 
 
-
-
-        // TODO: replace a dictionary
-        private readonly HashSet<WeightedString> _encodings = new HashSet<WeightedString>();
-
-
-
-
-
-
-
+        
+        
         public IReadOnlyCollection<WeightedString> Encodings
         {
-            get => _encodings;
+            get => _encodings.Values;
         }
+        
 
 
 
-
-
-
-
-
-
+        
+        
         public bool AddEncoding( WeightedString encoding )
         {
             if ( WeightedString.IsNullOrEmpty( encoding ) )
@@ -43,17 +37,51 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( SupportedEncodings.Values.Contains( encoding.Value ) )
+            if ( ! SupportedEncodings.Values.Contains( encoding.Value ) )
             {
-                return _encodings.Add( encoding );
+                return false;
             }
 
-            return false;
+            if ( _encodings.ContainsKey( encoding.Value ) )
+            {
+                return false;
+            }
+
+            _encodings[ encoding.Value ] = encoding;
+
+            return true;
         }
 
         public bool RemoveEncoding( WeightedString encoding )
         {
-            return _encodings.Remove( encoding );
+            if ( WeightedString.IsNullOrEmpty( encoding ) )
+            {
+                return false;
+            }
+
+            if ( ! _encodings.ContainsValue( encoding ) )
+            {
+                return false;
+            }
+
+            return _encodings.Remove( encoding.Value );
+        }
+
+        public bool RemoveEncodingBy( Func<WeightedString,bool> predicate )
+        {
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+            }
+
+            var encoding = _encodings.Values.Where( predicate ).FirstOrDefault();
+
+            if ( encoding == null )
+            {
+                return false;
+            }
+
+            return _encodings.Remove( encoding.Value );
         }
 
         public void ClearEncodings()
@@ -63,16 +91,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , _encodings );
+            return string.Join( ", " , _encodings.Values );
         }
+        
 
 
 
-
-
-
-
-
+        
+        
         public static bool TryParse( string input , out AcceptEncodingRtspHeader result )
         {
             result = null;

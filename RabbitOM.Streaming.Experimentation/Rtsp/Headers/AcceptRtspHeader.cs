@@ -8,46 +8,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Accept";
         
-        public static readonly IReadOnlyCollection<string> SupportedFormats = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
-        {
-            "application/sdp",
-            "application/text" ,
-            "application/xml" ,
-            "application/json" ,
-            "application/parameters" ,
-            "application/binary" ,
-            "text" ,
-            "text/sdp" ,
-            "text/xml" ,
-            "text/json" ,
-            "text/plain" ,
-            "text/parameters" ,
-            "sdp" ,
-            "xml" ,
-            "json" ,
-            "binary" ,
-        };
 
 
 
-
-
-
-        private readonly HashSet<WeightedString> _mimes = new HashSet<WeightedString>();
+        
+        
+        private readonly Dictionary<string,WeightedString> _mimes = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
 
 
-
+        
+        
         public IReadOnlyCollection<WeightedString> Mimes
         {
-            get => _mimes;
+            get => _mimes.Values;
         }
         
 
 
 
-
+        
+        
         public bool AddMime( WeightedString mime )
         {
             if ( WeightedString.IsNullOrEmpty( mime ) )
@@ -55,17 +37,51 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( SupportedFormats.Contains( mime.Value ) )
+            if ( ! SupportedFormats.Values.Contains( mime.Value ) )
             {
-                return _mimes.Add( mime );
+                return false;
             }
-            
-            return false;
+
+            if ( _mimes.ContainsKey( mime.Value ) )
+            {
+                return false;
+            }
+
+            _mimes[ mime.Value ] = mime;
+
+            return true;
         }
 
-        public void RemoveMime( WeightedString mime )
+        public bool RemoveMime( WeightedString mime )
         {
-            _mimes.Remove( mime );
+            if ( WeightedString.IsNullOrEmpty( mime ) )
+            {
+                return false;
+            }
+
+            if ( ! _mimes.ContainsValue( mime ) )
+            {
+                return false;
+            }
+
+            return _mimes.Remove( mime.Value );
+        }
+
+        public bool RemoveMimeBy( Func<WeightedString,bool> predicate )
+        {
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+            }
+
+            var language = _mimes.Values.Where( predicate ).FirstOrDefault();
+
+            if ( language == null )
+            {
+                return false;
+            }
+
+            return _mimes.Remove( language.Value );
         }
 
         public void ClearMimes()
@@ -75,12 +91,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , _mimes );
+            return string.Join( ", " , _mimes.Values );
         }
-
-
-
         
+
+
+
         
         
         public static bool TryParse( string input , out AcceptRtspHeader result )

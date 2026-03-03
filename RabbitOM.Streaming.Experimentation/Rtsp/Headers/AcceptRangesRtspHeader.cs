@@ -10,7 +10,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
+        
+        
         public bool Bytes { get; set; }
        
         public bool Ntp { get; set; }
@@ -20,11 +21,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public bool Clock { get; set; }
 
         public bool Utc { get; set; }
+        
 
 
 
-
-
+        
+        
         public override string ToString()
         {
             var builder = new StringBuilder();
@@ -56,13 +58,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return builder.ToString().Trim( ',' , ' ' );
         }
+        
 
 
 
-
-
-
-
+        
+        
         public static bool TryParse( string input , out AcceptRangesRtspHeader result )
         {
             result = null;

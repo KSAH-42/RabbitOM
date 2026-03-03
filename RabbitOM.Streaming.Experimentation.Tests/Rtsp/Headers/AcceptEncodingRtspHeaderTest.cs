@@ -3,7 +3,6 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
     
     [TestFixture]
     public class RtspMethodTest
@@ -89,7 +88,32 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( 2 , header.Encodings.Count );
 
             Assert.IsFalse( header.AddEncoding( new WeightedString( "gzip" ) ) );
+            Assert.IsFalse( header.AddEncoding( new WeightedString( "gzip" , 1 ) ) );
             Assert.IsFalse( header.AddEncoding( new WeightedString( "notsupported" ) ) );
+            Assert.AreEqual( 2 , header.Encodings.Count );
+        }
+
+        [Test]
+        public void CheckRemoveEncoding()
+        {
+            var header = new AcceptEncodingRtspHeader();
+
+            Assert.IsEmpty( header.Encodings );
+
+            Assert.IsTrue( header.AddEncoding( new WeightedString( "br" ) ) );
+            Assert.IsTrue( header.AddEncoding( new WeightedString( "gzip" ) ) );
+            Assert.IsTrue( header.AddEncoding( new WeightedString( "zip" ) ) );
+            Assert.IsTrue( header.AddEncoding( new WeightedString( "tar" ) ) );
+            Assert.AreEqual( 4 , header.Encodings.Count );
+
+            Assert.IsFalse( header.RemoveEncoding( new WeightedString( "br" , 1 ) ) );
+            Assert.IsTrue( header.RemoveEncoding( new WeightedString( "br" ) ) );
+            Assert.AreEqual( 3 , header.Encodings.Count );
+            
+            Assert.IsTrue( header.RemoveEncodingBy(  x => x.Value == "tar" ) );
+            Assert.AreEqual( 2 , header.Encodings.Count );
+            
+            Assert.IsFalse( header.RemoveEncodingBy(  x => x.Value == "tar" ) );
             Assert.AreEqual( 2 , header.Encodings.Count );
 
             header.ClearEncodings();

@@ -89,6 +89,32 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsFalse( header.AddLanguage( new WeightedString( "en-EN" ) ) );
             Assert.AreEqual( 2 , header.Languages.Count );
+        }
+
+        [Test]
+        public void CheckRemoveLanguage()
+        {
+            var header = new AcceptLanguageRtspHeader();
+
+            Assert.IsEmpty( header.Languages );
+
+            Assert.IsTrue( header.AddLanguage( new WeightedString( "fr-FR" ) ) );
+            Assert.AreEqual( 1 , header.Languages.Count );
+
+            Assert.IsTrue( header.AddLanguage( new WeightedString( "en-GB" ) ) );
+            Assert.AreEqual( 2 , header.Languages.Count );
+
+            Assert.IsTrue( header.AddLanguage( new WeightedString( "en-US" ) ) );
+            Assert.AreEqual( 3 , header.Languages.Count );
+
+            Assert.IsFalse( header.RemoveLanguage( new WeightedString( "fr-FR" , 1 ) ) );
+            Assert.IsTrue( header.RemoveLanguage( new WeightedString( "fr-FR" ) ) );
+            Assert.IsFalse( header.RemoveLanguage( new WeightedString( "fr-FR" ) ) );
+            Assert.AreEqual( 2 , header.Languages.Count );
+
+            Assert.IsTrue( header.RemoveLanguageBy( x => x.Value == "en-GB" ) );
+            Assert.IsFalse( header.RemoveLanguageBy( x => x.Value == "en-GB" ) );
+            Assert.AreEqual( 1 , header.Languages.Count );
 
             header.ClearLanguages();
             Assert.IsEmpty( header.Languages );

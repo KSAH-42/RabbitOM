@@ -79,6 +79,32 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsTrue( header.AddMime( new WeightedString( "application/json" ) ) );
             Assert.AreEqual( 2 , header.Mimes.Count );
+        }
+
+        [Test]
+        public void CheckRemoveMime()
+        {
+            var header = new AcceptRtspHeader();
+
+            Assert.IsEmpty( header.Mimes );
+
+            Assert.IsTrue( header.AddMime( new WeightedString( "text/xml" ) ) );
+            Assert.AreEqual( 1 , header.Mimes.Count );
+            
+            Assert.IsTrue( header.AddMime( new WeightedString( "text/json" ) ) );
+            Assert.AreEqual( 2 , header.Mimes.Count );
+
+            Assert.IsTrue( header.AddMime( new WeightedString( "text/sdp" ) ) );
+            Assert.AreEqual( 3 , header.Mimes.Count );
+
+            Assert.IsFalse( header.RemoveMime( new WeightedString( "text/sdp" , 1 ) ) );
+            Assert.IsTrue( header.RemoveMime( new WeightedString( "text/sdp" ) ) );
+            Assert.IsFalse( header.RemoveMime( new WeightedString( "text/sdp" ) ) );
+            Assert.AreEqual( 2 , header.Mimes.Count );
+
+            Assert.IsTrue( header.RemoveMimeBy( x => x.Value == "text/json" ) );
+            Assert.IsFalse( header.RemoveMimeBy( x => x.Value == "text/json" ) );
+            Assert.AreEqual( 1 , header.Mimes.Count );
 
             header.ClearMimes();
             Assert.IsEmpty( header.Mimes );

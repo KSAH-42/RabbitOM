@@ -7,31 +7,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class AcceptLanguageRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Accept-Language";
-
-
-
-
         
 
 
 
-        // TODO: replace by a dictionary
         
-        private readonly HashSet<WeightedString> _languages = new HashSet<WeightedString>();
+        
+        private readonly Dictionary<string,WeightedString> _languages = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
+        
 
 
 
-
-
-
+        
+        
         public IReadOnlyCollection<WeightedString> Languages
         {
-            get => _languages;
+            get => _languages.Values;
         }
+        
 
 
 
-
+        
+        
         public bool AddLanguage( WeightedString language )
         {
             if ( WeightedString.IsNullOrEmpty( language ) )
@@ -39,17 +37,51 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( SupportedLanguages.Values.Contains( language.Value ) )
+            if ( ! SupportedLanguages.Values.Contains( language.Value ) )
             {
-                return _languages.Add( language );
+                return false;
             }
 
-            return false;
+            if ( _languages.ContainsKey( language.Value ) )
+            {
+                return false;
+            }
+
+            _languages[ language.Value ] = language;
+
+            return true;
         }
 
         public bool RemoveLanguage( WeightedString language )
         {
-            return _languages.Remove( language );
+            if ( WeightedString.IsNullOrEmpty( language ) )
+            {
+                return false;
+            }
+
+            if ( ! _languages.ContainsValue( language ) )
+            {
+                return false;
+            }
+
+            return _languages.Remove( language.Value );
+        }
+
+        public bool RemoveLanguageBy( Func<WeightedString,bool> predicate )
+        {
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+            }
+
+            var language = _languages.Values.Where( predicate ).FirstOrDefault();
+
+            if ( language == null )
+            {
+                return false;
+            }
+
+            return _languages.Remove( language.Value );
         }
 
         public void ClearLanguages()
@@ -59,13 +91,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , _languages );
+            return string.Join( ", " , _languages.Values );
         }
+        
 
-        
-        
-        
-        
+
+
         
         
         public static bool TryParse( string input , out AcceptLanguageRtspHeader result )
