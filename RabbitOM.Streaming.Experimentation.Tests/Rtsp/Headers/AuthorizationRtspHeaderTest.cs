@@ -45,5 +45,89 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsFalse( AuthorizationRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new AuthorizationRtspHeader();
+
+            header.SetScheme( "digest" );
+            header.SetUserName( "admin" );
+
+            Assert.AreEqual( "digest username=\"admin\", realm=\"\", nonce=\"\", uri=\"\", response=\"\"" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToString1()
+        {
+            var header = new AuthorizationRtspHeader();
+
+            header.SetScheme( "digest" );
+            header.SetUserName( "admin" );
+            header.SetRealm("my realm");
+
+            Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"\", uri=\"\", response=\"\"" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToString2()
+        {
+            var header = new AuthorizationRtspHeader();
+
+            header.SetScheme( "digest" );
+            header.SetUserName( "admin" );
+            header.SetRealm("my realm");
+            header.SetNonce( "1234");
+
+            Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"\", response=\"\"" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToString3()
+        {
+            var header = new AuthorizationRtspHeader();
+
+            header.SetScheme( "digest" );
+            header.SetUserName( "admin" );
+            header.SetRealm("my realm");
+            header.SetNonce( "1234");
+            header.SetUri( "rtsp://127.0.0.1" );
+
+            Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"rtsp://127.0.0.1\", response=\"\"" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToString4()
+        {
+            var header = new AuthorizationRtspHeader();
+
+            header.SetScheme( "digest" );
+            header.SetUserName( "admin" );
+            header.SetRealm("my realm");
+            header.SetNonce( "1234");
+            header.SetUri( "rtsp://127.0.0.1" );
+            header.SetResponse( "my response" );
+
+            Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"rtsp://127.0.0.1\", response=\"my response\"" , header.ToString() );
+        }
+
+        [Test]
+        public void CheckToString5()
+        {
+            var header = new AuthorizationRtspHeader();
+
+            header.SetScheme( "digest" );
+            header.SetUserName( "admin" );
+            header.SetRealm("my realm");
+            header.SetNonce( "1234");
+            header.SetUri( "rtsp://127.0.0.1" );
+            header.SetResponse( "my response" );
+
+            header.AddExtension( "a" );
+            header.AddExtension( "b" );
+            header.AddExtension( "c=d" );
+
+            Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"rtsp://127.0.0.1\", response=\"my response\", a, b, c=\"d\"" , header.ToString() );
+        }
     }
 }
