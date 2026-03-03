@@ -148,7 +148,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsTrue( header.AddExtension( "paramter2" , "a" ) );
             Assert.AreEqual( 2 , header.Extensions.Count );
 
-            Assert.IsTrue( header.AddExtension( "paramter1" , "a" ) );
+            Assert.IsFalse( header.AddExtension( "paramter1" , "a" ) );
             Assert.AreEqual( 2 , header.Extensions.Count );
         }
 
@@ -161,15 +161,47 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsTrue( header.AddExtension( "paramter1" , "a" ) );
             Assert.IsTrue( header.AddExtension( "paramter2" , "a" ) );
             Assert.IsTrue( header.AddExtension( "paramter3" , "a" ) );
+            Assert.IsTrue( header.AddExtension( "paramter4" , "a" ) );
             
             Assert.IsFalse( header.RemoveExtension( "paramter" ) );
             Assert.IsTrue( header.RemoveExtension( "paramter1" ) );
             Assert.IsTrue( header.RemoveExtension( "paramter2" ) );
+            Assert.IsTrue( header.RemoveExtension( "paramTer3" ) );
             
             header.ClearExtensions();
 
             Assert.IsEmpty( header.Extensions );
             Assert.IsFalse( header.RemoveExtension( "paramter1" ) );
+        }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new CacheControlRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.NoCache = true;
+            Assert.AreEqual( "no-cache" , header.ToString() );
+
+            header.NoStore = true;
+            Assert.AreEqual( "no-cache, no-store" , header.ToString() );
+
+            header.NoCache = false;
+            header.NoStore = true;
+            header.NoTransform = true;
+            Assert.AreEqual( "no-store, no-transform" , header.ToString() );
+
+            header.MustRevalidate = true;
+            Assert.AreEqual( "no-store, no-transform, must-revalidate" , header.ToString() );
+
+            header.StaleWhileRevalidate = 1;
+            Assert.AreEqual( "no-store, no-transform, must-revalidate, stale-while-revalidate=1" , header.ToString() );
+
+            header.AddExtension( "a" , 1 );
+            header.AddExtension( "b" , 2 );
+
+            Assert.AreEqual( "no-store, no-transform, must-revalidate, stale-while-revalidate=1, a=1, b=2" , header.ToString() );
         }
     }
 }

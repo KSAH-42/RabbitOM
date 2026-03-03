@@ -6,8 +6,6 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-
     public sealed class CacheControlRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Cache-Control";
@@ -15,12 +13,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-        private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>();
-
-
-
+        private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
+        
 
 
 
@@ -49,10 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public int? StaleIfError { get; set; }
 
         public IReadOnlyDictionary<string,string> Extensions { get => _extensions; }
-
-
-
-
+        
 
 
 
@@ -63,14 +54,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
-            var extensionName = RtspHeaderParser.Formatter.Filter( name );
+            var key = RtspHeaderParser.Formatter.Filter( name );
 
-            if ( string.IsNullOrWhiteSpace( extensionName ) )
+            if ( string.IsNullOrWhiteSpace( key ) )
             {
                 return false;
             }
 
-            _extensions[ extensionName ] = RtspHeaderParser.Formatter.Filter( value );
+            if ( _extensions.ContainsKey( key ) )
+            {
+                return false;
+            }
+
+            _extensions[ key ] = RtspHeaderParser.Formatter.Filter( value );
 
             return true;
         }
@@ -91,85 +87,83 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( NoCache )
             {
-                builder.Append( "no-cache," );
+                builder.Append( "no-cache, " );
             }
 
             if ( NoStore )
             {
-                builder.Append( "no-store," );
+                builder.Append( "no-store, " );
             }
 
             if ( NoTransform )
             {
-                builder.Append( "no-transform," );
+                builder.Append( "no-transform, " );
             }
 
             if ( MustRevalidate )
             {
-                builder.Append( "must-revalidate," );
+                builder.Append( "must-revalidate, " );
             }
 
             if ( ProxyRevalidate )
             {
-                builder.Append( "proxy-revalidate," );
+                builder.Append( "proxy-revalidate, " );
             }
 
             if ( Public )
             {
-                builder.Append( "public," );
+                builder.Append( "public, " );
             }
 
             if ( Private )
             {
-                builder.Append( "private," );
+                builder.Append( "private, " );
             }
 
             if ( Immutable )
             {
-                builder.Append( "immutable," );
+                builder.Append( "immutable, " );
             }
 
             if ( MaximumAge.HasValue )
             {
-                builder.AppendFormat( "max-age={0}," , MaximumAge );
+                builder.AppendFormat( "max-age={0}, " , MaximumAge );
             }
 
             if ( ShareMaximumAge.HasValue )
             {
-                builder.AppendFormat( "s-maxage={0}," , ShareMaximumAge );
+                builder.AppendFormat( "s-maxage={0}, " , ShareMaximumAge );
             }
 
             if ( StaleWhileRevalidate.HasValue )
             {
-                builder.AppendFormat( "stale-while-revalidate={0}," , StaleWhileRevalidate );
+                builder.AppendFormat( "stale-while-revalidate={0}, " , StaleWhileRevalidate );
             }
 
             if ( StaleIfError.HasValue )
             {
-                builder.AppendFormat( "stale-if-error={0}," , StaleIfError );
+                builder.AppendFormat( "stale-if-error={0}, " , StaleIfError );
             }
 
             foreach ( var extension in _extensions )
             { 
                 if ( long.TryParse( extension.Value , out var _ ) )
                 {
-                    builder.AppendFormat( "{0}={1}," , extension.Key , extension.Value );
+                    builder.AppendFormat( "{0}={1}, " , extension.Key , extension.Value );
                 }
                 else if ( double.TryParse( extension.Value , NumberStyles.Float, CultureInfo.InvariantCulture , out var _ ) )
                 {
-                    builder.AppendFormat( "{0}={1}," , extension.Key , extension.Value );
+                    builder.AppendFormat( "{0}={1} ," , extension.Key , extension.Value );
                 }
                 else
                 {
-                    builder.AppendFormat( "{0}=\"{1}\"," , extension.Key , extension.Value );
+                    builder.AppendFormat( "{0}=\"{1}\" ," , extension.Key , extension.Value );
                 }
             }
 
             return builder.ToString().Trim( ' ' , ',' );
         }
-
-
-
+        
 
 
 
