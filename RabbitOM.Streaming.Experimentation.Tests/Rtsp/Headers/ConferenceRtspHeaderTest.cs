@@ -224,7 +224,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "" , header.ToString() );
 
             header.SetConferenceId( "abc-012" );
-            Assert.AreEqual( "" , header.ToString() );
+            Assert.AreEqual( "abc-012" , header.ToString() );
         }
     }
 }
