@@ -7,12 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Expires";
 
 
-
-
-        
         public DateTime Value { get; set; }
-
-
 
 
 
@@ -20,9 +15,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return RtspHeaderParser.Formatter.Format( Value );
         }
-
-
-
 
 
         public static bool TryParse( string input , out ExpiresRtspHeader result )

@@ -5,13 +5,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class CSeqRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "CSeq";
-
-
-
         
+
         public long Value { get; set; }
-
-
 
 
         public override string ToString()
@@ -20,12 +16,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-
-
         public static bool TryParse( string input , out CSeqRtspHeader result )
         {
-            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out var value )
-                ? new CSeqRtspHeader() { Value = value }
+            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out var value ) 
+                ? new CSeqRtspHeader() { Value = value } 
                 : null
                 ;
 

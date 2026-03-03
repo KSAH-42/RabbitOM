@@ -7,10 +7,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Date";
 
 
-
         
         public DateTime Value { get; set; }
-
 
 
 
@@ -18,7 +16,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return RtspHeaderParser.Formatter.Format( Value );
         }
-
 
 
 
