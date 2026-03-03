@@ -53,6 +53,7 @@
     <Compile Include="Rtsp\Headers\CacheControlRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderTokenValidator.cs" />
     <Compile Include="Rtsp\Headers\SupportedEncodings.cs" />
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />

@@ -9,16 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ConferenceRtspHeader : RtspHeader
     {
-        private static IReadOnlyCollection<string> ConferenceIdsPropertiesNames = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
-        {
-            "id",
-            "identifier",
-            "conference-id",
-            "conference_id",
-            "conf-id",
-            "conf_id"
-        };
-
         private static string[] UnAuthorizedOccurences =
         {
             "," , "." , ";" , ":" , "(" , ")" , "[" , "]" , "<" , ">" , "°" , "{" , "}" , "?"
@@ -78,16 +68,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool IsWellFormedConferenceId( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && value.Any( character => char.IsLetterOrDigit( character ) );
-        }
-
-        
-
-
-        
-        
         public bool AddExtension( string value )
         {
             var text = RtspHeaderParser.Formatter.Filter( value );
@@ -112,9 +92,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public void SetConferenceId( string value )
         {
-            var id = RtspHeaderParser.Formatter.Filter( value , UnAuthorizedOccurences );
-
-            ConferenceId = IsWellFormedConferenceId( id ) ? id : string.Empty;
+            ConferenceId = RtspHeaderParser.Formatter.Filter( value );
         }
 
         public void SetTransport( string value )
@@ -295,8 +273,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 var comparer = StringComparer.OrdinalIgnoreCase;
 
-                foreach ( var token in tokens )
-                {
+                foreach ( var token in tokens.Where( RtspHeaderParser.TokenValidator.ContainsLetterOrDigit ) )
+                {                    
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
                         if ( comparer.Equals( "destination" , parameter.Name ) )
@@ -351,10 +329,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             header.SetTransmission( token );
                         }
-                        else if ( ConferenceIdsPropertiesNames.Contains( parameter.Name ) )
-                        {
-                            header.SetConferenceId( token );
-                        }
                         else
                         {
                             header.AddExtension( token );
@@ -372,24 +346,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else    
                         {
-                            if ( string.IsNullOrWhiteSpace( header.ConferenceId ) )
+                            if ( ! string.IsNullOrWhiteSpace( header.ConferenceId ) )
                             {
-                                header.SetConferenceId( token );
+                                header.AddExtension( token );
                             }
                             else
                             {
-                                header.AddExtension( token );
+                                header.SetConferenceId( token );
                             }
                         }
                     }
                 }
                 
-                if ( string.IsNullOrWhiteSpace( header.ConferenceId ) )
+                if ( ! string.IsNullOrWhiteSpace( header.ConferenceId ) )
                 {
-                    return false;
+                    result = header;
                 }
-                
-                result = header;
             }
 
             return result != null;

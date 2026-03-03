@@ -3,7 +3,6 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using System.Linq.Expressions;
 
     [TestFixture]
     public class ConferenceRtspHeaderTest
@@ -222,6 +221,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new ConferenceRtspHeader();
 
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.SetConferenceId( "abc-012" );
             Assert.AreEqual( "" , header.ToString() );
         }
     }

@@ -7,7 +7,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     internal static class RtspHeaderParser
     {
         public static RtspHeaderFormatter Formatter { get; } = new RtspHeaderFormatter();
-        
+
+        public static RtspHeaderTokenValidator TokenValidator { get; } = new RtspHeaderTokenValidator();
+
+
+
+
         public static bool TryParse( string input , out float result )
         {
             return float.TryParse( input?.Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
