@@ -6,22 +6,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Blocksize";
         
-        
-        
-        
-        
+
+
         public long Value { get; set; }
 
 
-        
-        
-        
         
         public override string ToString()
         {
             return Value.ToString();
         }
-
 
 
         
