@@ -9,8 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     internal static class RtspHeaderParser
     {
         private static readonly char[] QuotesChars = { '\'' , '\"' };
-       
-        private static readonly char[] TrimedChars = QuotesChars.Append( ' ' ).ToArray();
 
 
 
@@ -58,7 +56,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( seperator.IndexOfAny( QuotesChars ) >= 0 )
             {
-                System.Diagnostics.Debug.Assert( false , "quotes are absolutely forbidden used as seperator: fix your code" );
                 return false;
             }
 
@@ -72,8 +69,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     quoteFound = ! quoteFound;
                 }
-            
-                builder.Append( element );
+                else
+                {
+                    builder.Append( element );
+                }
 
                 if ( ! quoteFound && builder.ToString().EndsWith( seperator ) )
                 {
@@ -88,7 +87,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             var tokens = segments
-                .Select( element => element.Trim( TrimedChars ) )
+                .Select( element => element.Trim(  ) )
                 .Where( element => ! string.IsNullOrWhiteSpace( element ) )
                 .ToArray()
                 ;

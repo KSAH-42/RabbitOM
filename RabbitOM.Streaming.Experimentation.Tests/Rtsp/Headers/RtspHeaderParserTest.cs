@@ -96,7 +96,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null , " " )]
         [TestCase( "" , "" )]
         [TestCase( "" , " " )]
-        [TestCase( "  " , " " )]
+        [TestCase( "apple 'banana with chocolat' pear" , "'" )]
+        [TestCase( "apple 'banana with chocolat' pear" , "\"" )]
         public void CheckTryParseFailed( string input , string seperator )
         {
             Assert.False( RtspHeaderParser.TryParse( input , seperator , out string[] tokens ) );
