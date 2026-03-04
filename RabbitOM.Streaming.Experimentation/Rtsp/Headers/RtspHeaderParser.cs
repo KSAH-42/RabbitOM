@@ -39,6 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return DateTime.TryParse( input , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out result );
         }
 
+        // ignored separator inside quotes
         public static bool TryParse( string input , string seperator , out string[] result )
         {
             result = null;
