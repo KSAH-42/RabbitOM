@@ -8,21 +8,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class WWWAuthenticateRtspHeaderTest
     {
         [TestCase( "digest realm='my realm',nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
-        public void CheckTryParseSucceed( string input )
-        {
-            Assert.IsTrue( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
-            Assert.IsNotNull( header );
-            Assert.AreEqual( "digest" , header.Scheme );
-            Assert.AreEqual( "my realm" , header.Realm );
-            Assert.AreEqual( "my nonce" , header.Nonce );
-            Assert.AreEqual( "my opaque" , header.Opaque );
-            Assert.AreEqual( "my algorithm" , header.Algorithm );
-            Assert.AreEqual( "my stale" , header.Stale );
-            Assert.AreEqual( "my qop" , header.QualityOfProtection );
-        }
-
         [TestCase( "digest nonce='my nonce',realm='my realm',opaque='my opaque',stale='my stale',qop='my qop',algorithm='my algorithm'" )]
-        public void CheckTryParseSucceedDifferentOrder( string input )
+        [TestCase( "digest realm=my realm,nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
+        [TestCase( "digest realm=\"my realm\",nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
+        [TestCase( "digest opaque='my opaque' , realm = \"my realm \" , nonce = 'my nonce' ,algorithm='my algorithm',stale='my stale',qop='my qop'" )]
+        [TestCase( "digest realm='my realm',,, ,,,nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
+        public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
