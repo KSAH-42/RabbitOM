@@ -45,30 +45,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrEmpty( seperator ) )
+            if ( string.IsNullOrWhiteSpace( input ) )
             {
                 return false;
             }
 
+            if ( string.IsNullOrEmpty( seperator ) )
+            {
+                result = new string[] { input };
+                return true;
+            }
+
             if ( seperator.IndexOfAny( QuotesChars ) >= 0 )
             {
-                throw new InvalidOperationException( "quotes are absolutely forbidden used as seperator: fix your code" );
+                System.Diagnostics.Debug.Assert( false , "quotes are absolutely forbidden used as seperator: fix your code" );
+                return false;
             }
 
             var segments = new List<string>();
             var builder = new StringBuilder();
-            var window = new StringBuilder();
             var quoteFound = false;
 
             foreach ( var element in input )
             {
-                window.Append( element );
-
-                if ( window.Length >= seperator.Length )
-                {
-                    window.Remove( 0 , 1 );
-                }
-
                 if ( QuotesChars.Contains( element ) )
                 {
                     quoteFound = ! quoteFound;
@@ -78,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 if ( ! quoteFound && builder.ToString().EndsWith( seperator ) )
                 {
-                    segments.Add( builder.Remove( builder.Length - 1 - window.Length , window.Length + 1 ).ToString() );
+                    segments.Add( builder.Remove( builder.Length - seperator.Length , seperator.Length ).ToString() );
                     builder.Clear();
                 }
             }
