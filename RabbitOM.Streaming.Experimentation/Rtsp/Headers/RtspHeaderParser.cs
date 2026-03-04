@@ -24,19 +24,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static bool TryParse( string input , out long result )
+        {
+            return long.TryParse( Formatter.UnQuote( input ) , out result );
+        }
+
         public static bool TryParse( string input , out float result )
         {
-            return float.TryParse( input?.Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
+            return float.TryParse( Formatter.UnQuote( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
         }
 
         public static bool TryParse( string input , out double result )
         {
-            return double.TryParse( input?.Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
+            return double.TryParse( Formatter.UnQuote( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out result );
         }
 
         public static bool TryParse( string input , out DateTime result )
         {
-            return DateTime.TryParse( input , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out result );
+            return DateTime.TryParse( Formatter.UnQuote( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out result );
         }
 
         // ignoring separators inside quotes

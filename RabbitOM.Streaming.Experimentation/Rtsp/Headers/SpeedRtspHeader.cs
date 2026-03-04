@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out SpeedRtspHeader result )
         {
-            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
+            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
                 ? new SpeedRtspHeader() { Value = value }
                 : null
                 ;

@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out MaxForwardsRtspHeader result )
         {
-            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
+            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
                 ? new MaxForwardsRtspHeader() { Value = value }
                 : null
                 ;

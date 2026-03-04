@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 
         public static bool TryParse( string input , out BandwithRtspHeader result )
         {
-            result = long.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out var value )
+            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
                 ? new BandwithRtspHeader() { Value = value }
                 : null
                 ;

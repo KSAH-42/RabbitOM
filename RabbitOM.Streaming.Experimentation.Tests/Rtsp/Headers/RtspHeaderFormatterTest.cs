@@ -38,22 +38,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "\r  abcdecf  \r" , "abcdecf" )]
         [TestCase( "\r  abcdecf  \r" , "abcdecf" )]
         [TestCase( "\r  abc\rdecf  \r" , "abcdecf" )]
-        [TestCase( "\r ' abc\rdecf ' \r" , "abcdecf" )]
-        [TestCase( "\r \' abc\rdecf \' \r" , "abcdecf" )]
-        [TestCase( "\r \" abc\rdecf \" \r" , "abcdecf" )]
-        [TestCase( "\r \" abc\rd¤ecf \" \r" , "abcdecf" )]
-        [TestCase( "\r \" Abc\rd§Ecf \" \r" , "AbcdEcf" )]
-        [TestCase( "\r \" 1 Abc\rd§Ecf 1 \" \r" , "1 AbcdEcf 1" )]
         public void CheckNormalization( string input , string output )
         {
             Assert.AreEqual( output , RtspHeaderParser.Formatter.Filter( input ) );
-        }
-
-        [TestCase( "\r \" Abc\rd§Ecf \" \r" , "bcdEcf" )]
-        [TestCase( "\r \" 1 Abc\rd§Ecf 1 \" \r" , "1 bcdEcf 1" )]
-        public void CheckNormalizationWithFilter( string input , string output )
-        {
-            Assert.AreEqual( output , RtspHeaderParser.Formatter.Filter( input , "A" ) );
         }
 
         [TestCase( null , "\"\"" )]
