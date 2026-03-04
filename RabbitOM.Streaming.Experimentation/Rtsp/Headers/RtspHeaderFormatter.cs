@@ -13,6 +13,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             ';',
         };
 
+        private static readonly char[] TrimQuotesChars = 
+        { 
+            ' ' , 
+            '\'' , 
+            '\"' 
+        };
 
 
 
@@ -62,7 +68,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
             
-            return $"{value.Trim( TrimCharacters )}";
+            return $"{value.Trim( TrimQuotesChars )}";
         }
 
 

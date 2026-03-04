@@ -9,13 +9,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     internal static class RtspHeaderParser
     {
         private static readonly char[] QuotesChars = { '\'' , '\"' };
+       
         private static readonly char[] TrimedChars = QuotesChars.Append( ' ' ).ToArray();
+
+
+
 
 
 
         public static RtspHeaderFormatter Formatter { get; } = new RtspHeaderFormatter();
 
         public static RtspHeaderTokenValidator TokenValidator { get; } = new RtspHeaderTokenValidator();
+
+
 
 
 
@@ -39,14 +45,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( string.IsNullOrWhiteSpace( input ) )
+            if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrEmpty( seperator ) )
             {
                 return false;
             }
 
-            if ( string.IsNullOrEmpty( seperator ) || seperator.IndexOfAny( QuotesChars ) >= 0 )
+            if ( seperator.IndexOfAny( QuotesChars ) >= 0 )
             {
-                return false;
+                throw new InvalidOperationException( "quotes are absolutely forbidden used as seperator: fix your code" );
             }
 
             var segments = new List<string>();
