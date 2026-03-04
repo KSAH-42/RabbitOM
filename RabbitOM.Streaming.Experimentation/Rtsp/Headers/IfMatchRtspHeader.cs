@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -12,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly HashSet<WeightedString> _entitiesTags = new HashSet<WeightedString>();
+        private readonly HashSet<string> _entitiesTags = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 
 
 
@@ -20,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public IReadOnlyCollection<WeightedString> EntitiesTags
+        public IReadOnlyCollection<string> EntitiesTags
         {
             get => _entitiesTags;
         }
@@ -33,19 +34,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool AddEntityTag( WeightedString etag )
+        public bool AddEntityTag( string etag )
         {
-            if ( WeightedString.IsNullOrEmpty( etag ) )
+            var value = RtspHeaderParser.Formatter.Filter( etag );
+
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            return _entitiesTags.Add( etag );
+            return _entitiesTags.Add( value );
         }
 
-        public bool RemoveEntityTag( WeightedString etag )
+        public bool RemoveEntityTag( string etag )
         {
-            return _entitiesTags.Remove( etag );
+            return _entitiesTags.Remove( RtspHeaderParser.Formatter.Filter( etag ) );
         }
 
         public void ClearEntitiesTags()
@@ -55,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , _entitiesTags );
+            return string.Join( ", " , _entitiesTags.Select( element => $"\"{element}\"" ) );
         }
 
 
@@ -75,10 +78,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( WeightedString.TryParse( token , out var etag ) )
-                    {
-                        header.AddEntityTag( etag );
-                    }
+                    header.AddEntityTag( token );
                 }
             
                 if ( header.EntitiesTags.Count > 0 )
