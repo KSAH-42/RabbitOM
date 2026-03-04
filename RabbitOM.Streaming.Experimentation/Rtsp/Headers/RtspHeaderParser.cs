@@ -61,23 +61,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var segments = new List<string>();
             var builder = new StringBuilder();
-            var quoteFound = false;
+            var insideQuotes = false;
 
             foreach ( var element in input )
             {
                 if ( QuotesChars.Contains( element ) )
                 {
-                    quoteFound = ! quoteFound;
+                    insideQuotes = ! insideQuotes;
                 }
                 else
                 {
                     builder.Append( element );
                 }
 
-                if ( ! quoteFound && builder.ToString().EndsWith( seperator ) )
+                if ( ! insideQuotes )
                 {
-                    segments.Add( builder.Remove( builder.Length - seperator.Length , seperator.Length ).ToString() );
-                    builder.Clear();
+                    var segment = builder.ToString();
+
+                    if ( segment.EndsWith( seperator ) )
+                    {
+                        segments.Add( segment.Substring( 0 , segment.Length - seperator.Length ) );
+                        builder.Clear();
+                    }
                 }
             }
 
