@@ -24,6 +24,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static bool TryParse( string input , out byte result )
+        {
+            return byte.TryParse( Formatter.UnQuote( input ) , out result );
+        }
+
         public static bool TryParse( string input , out long result )
         {
             return long.TryParse( Formatter.UnQuote( input ) , out result );

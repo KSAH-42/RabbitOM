@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetTTL( string value )
         {
-            TTL = byte.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
+            TTL = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out byte result )
                 ? new byte?( result )
                 : null
                 ;
@@ -109,7 +109,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetLayers( string value )
         {
-            Layers = byte.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
+            Layers = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out byte result )
                 ? new byte?( result )
                 : null
                 ;

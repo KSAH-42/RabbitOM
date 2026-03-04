@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class BandwithRtspHeader : RtspHeader
+    public sealed class BandwidthRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Bandwith";
+        public static readonly string TypeName = "Bandwidth";
        
         
         public long Value { get; set; }
@@ -16,10 +16,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
                 
-        public static bool TryParse( string input , out BandwithRtspHeader result )
+        public static bool TryParse( string input , out BandwidthRtspHeader result )
         {
             result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
-                ? new BandwithRtspHeader() { Value = value }
+                ? new BandwidthRtspHeader() { Value = value }
                 : null
                 ;
 
