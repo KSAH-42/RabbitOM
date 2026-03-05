@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -24,10 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out MaxForwardsRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
-                ? new MaxForwardsRtspHeader() { Value = value }
-                : null
-                ;
+            result = LongRtspHeaderParser.TryParse( input , out long value ) ? new MaxForwardsRtspHeader() { Value = value } : null;
 
             return result != null;
         }

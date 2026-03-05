@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -19,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetUri( string value )
         {
-            Uri = RtspHeaderParser.Formatter.Filter( value );
+            Uri = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
         
         public override string ToString()
@@ -37,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            var value = RtspHeaderParser.Formatter.Filter( input );
+            var value = StringRtspHeaderParser.TrimValue( input );
 
             if ( ! string.IsNullOrWhiteSpace( value ) )
             {

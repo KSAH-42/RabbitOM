@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,67 +55,67 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public void SetScheme( string value )
         {
-            Scheme = RtspHeaderParser.Formatter.Filter( value );
+            Scheme = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetUserName( string value )
         {
-            UserName = RtspHeaderParser.Formatter.Filter( value );
+            UserName = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetRealm( string value )
         {
-            Realm = RtspHeaderParser.Formatter.Filter( value );
+            Realm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetNonce( string value )
         {
-            Nonce = RtspHeaderParser.Formatter.Filter( value );
+            Nonce = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetOpaque( string value )
         {
-            Opaque = RtspHeaderParser.Formatter.Filter( value );
+            Opaque = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetDomain( string value )
         {
-            Domain = RtspHeaderParser.Formatter.Filter( value );
+            Domain = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetUri( string value )
         {
-            Uri = RtspHeaderParser.Formatter.Filter( value );
+            Uri = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetResponse( string value )
         {
-            Response = RtspHeaderParser.Formatter.Filter( value );
+            Response = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetAlgorithm( string value )
         {
-            Algorithm = RtspHeaderParser.Formatter.Filter( value );
+            Algorithm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetClientNonce( string value )
         {
-            ClientNonce = RtspHeaderParser.Formatter.Filter( value );
+            ClientNonce = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetNonceCount( string value )
         {
-            NonceCount = RtspHeaderParser.Formatter.Filter( value );
+            NonceCount = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetQualityOfProtection( string value )
         {
-            QualityOfProtection = RtspHeaderParser.Formatter.Filter( value );
+            QualityOfProtection = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public bool AddExtension( string value )
         {
-            var extension = RtspHeaderParser.Formatter.Filter( value );
+            var extension = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( extension ) )
             {
@@ -126,7 +127,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
+            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearExtensions()
@@ -139,48 +140,48 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             var builder = new StringBuilder();
 
             builder.AppendFormat( "{0} " , Scheme );
-            builder.AppendFormat( "username={0}, " , RtspHeaderParser.Formatter.Quote( UserName ) );
-            builder.AppendFormat( "realm={0}, " , RtspHeaderParser.Formatter.Quote( Realm ) );
-            builder.AppendFormat( "nonce={0}, " , RtspHeaderParser.Formatter.Quote( Nonce ) );
+            builder.AppendFormat( "username={0}, " , StringRtspHeaderParser.Quote( UserName ) );
+            builder.AppendFormat( "realm={0}, " , StringRtspHeaderParser.Quote( Realm ) );
+            builder.AppendFormat( "nonce={0}, " , StringRtspHeaderParser.Quote( Nonce ) );
 
             if ( ! string.IsNullOrWhiteSpace( Domain ) )
             {
-                builder.AppendFormat( "domain={0}, " , RtspHeaderParser.Formatter.Quote( Domain ) );
+                builder.AppendFormat( "domain={0}, " , StringRtspHeaderParser.Quote( Domain ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Opaque ) )
             {
-                builder.AppendFormat( "opaque={0}, " , RtspHeaderParser.Formatter.Quote( Opaque ) );
+                builder.AppendFormat( "opaque={0}, " , StringRtspHeaderParser.Quote( Opaque ) );
             }
 
-            builder.AppendFormat( "uri={0}, " , RtspHeaderParser.Formatter.Quote( Uri ) );
-            builder.AppendFormat( "response={0}, " , RtspHeaderParser.Formatter.Quote( Response ) );
+            builder.AppendFormat( "uri={0}, " , StringRtspHeaderParser.Quote( Uri ) );
+            builder.AppendFormat( "response={0}, " , StringRtspHeaderParser.Quote( Response ) );
 
             if ( ! string.IsNullOrWhiteSpace( Algorithm ) )
             {
-                builder.AppendFormat( "algorithm={0}, " , RtspHeaderParser.Formatter.Quote( Algorithm ) );
+                builder.AppendFormat( "algorithm={0}, " , StringRtspHeaderParser.Quote( Algorithm ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( ClientNonce ) )
             {
-                builder.AppendFormat( "cnonce={0}, " , RtspHeaderParser.Formatter.Quote( ClientNonce ) );
+                builder.AppendFormat( "cnonce={0}, " , StringRtspHeaderParser.Quote( ClientNonce ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( NonceCount ) )
             {
-                builder.AppendFormat( "nc={0}, " , RtspHeaderParser.Formatter.Quote( NonceCount ) );
+                builder.AppendFormat( "nc={0}, " , StringRtspHeaderParser.Quote( NonceCount ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( QualityOfProtection ) )
             {
-                builder.AppendFormat( "qop={0}, " , RtspHeaderParser.Formatter.Quote( QualityOfProtection ) );
+                builder.AppendFormat( "qop={0}, " , StringRtspHeaderParser.Quote( QualityOfProtection ) );
             }
 
             foreach ( var extension in _extensions )
             {
                 if ( RtspHeaderProperty.TryParse( extension , "=" , out var parameter ) )
                 {
-                    builder.AppendFormat( "{0}={1}, " , parameter.Name , RtspHeaderParser.Formatter.Quote( parameter.Value ) );
+                    builder.AppendFormat( "{0}={1}, " , parameter.Name , StringRtspHeaderParser.Quote( parameter.Value ) );
                 }
                 else
                 {
@@ -200,11 +201,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , " " , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , " " , out var tokens ) )
             {
                 var scheme = tokens.FirstOrDefault();
                 
-                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
+                if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
                     result = new AuthorizationRtspHeader(); 
                     result.SetScheme( scheme );

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -68,7 +69,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new AcceptRangesRtspHeader();
 

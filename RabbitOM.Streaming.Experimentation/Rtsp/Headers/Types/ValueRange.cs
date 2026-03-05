@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
@@ -63,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = default;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "-" , out string[] tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , "-" , out string[] tokens ) )
             {
                 if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var minimum ) )
                 {

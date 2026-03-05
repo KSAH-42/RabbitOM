@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class SessionRtspHeader : RtspHeader
@@ -34,20 +35,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetIdentifier( string value )
         {
-            Identifier = RtspHeaderParser.Formatter.Filter( value );
+            Identifier = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTimeout( string value )
         {
-            Timeout = long.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
-                ? new long?( result )
-                : null
-                ;
+            Timeout = LongRtspHeaderParser.TryParse( value , out var result ) ? new long?( result ) : null;
         }
 
         public bool AddExtension( string value )
         {
-            var text = RtspHeaderParser.Formatter.Filter( value );
+            var text = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( text ) )
             {
@@ -59,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
+            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearExtensions()
@@ -98,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
 

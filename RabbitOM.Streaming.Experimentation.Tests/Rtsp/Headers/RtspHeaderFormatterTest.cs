@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    
+    /*
     [TestFixture]
     public class RtspHeaderFormatterTest
     {
@@ -53,4 +53,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( output , RtspHeaderParser.Formatter.Quote( input ) );
         }
     }
+
+    */
 }

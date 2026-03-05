@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
@@ -11,19 +12,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public RtpInfo( string url , long? rtpTime , long? sequence , string ssrc )
         {
-            if ( ! RtspHeaderValidator.TryValidate( url ) )
+            if ( string.IsNullOrWhiteSpace( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
-
-            if ( ! string.IsNullOrWhiteSpace( url ) )
-            {
-                if ( ! RtspHeaderValidator.TryValidate( ssrc) )
-                {
-                    throw new ArgumentException( nameof( ssrc ) );
-                }
-            }
-            
+           
             Url = url.Trim();
             SSRC = ssrc?.Trim() ?? string.Empty;
             Sequence = sequence;
@@ -86,7 +79,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var header = new RtpInfo();
 

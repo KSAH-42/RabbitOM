@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,42 +48,42 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetScheme( string value )
         {
-            Scheme = RtspHeaderParser.Formatter.Filter( value );
+            Scheme = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetRealm( string value )
         {
-            Realm = RtspHeaderParser.Formatter.Filter( value );
+            Realm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetNonce( string value )
         {
-            Nonce = RtspHeaderParser.Formatter.Filter( value );
+            Nonce = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetOpaque( string value )
         {
-            Opaque = RtspHeaderParser.Formatter.Filter( value );
+            Opaque = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetAlgorithm( string value )
         {
-            Algorithm = RtspHeaderParser.Formatter.Filter( value );
+            Algorithm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetStale( string value )
         {
-            Stale = RtspHeaderParser.Formatter.Filter( value );
+            Stale = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetQualityOfProtection( string value )
         {
-            QualityOfProtection = RtspHeaderParser.Formatter.Filter( value );
+            QualityOfProtection = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public bool AddExtension( string extension )
         {
-            var value = RtspHeaderParser.Formatter.Filter( extension );
+            var value = StringRtspHeaderParser.TrimValue( extension , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -94,7 +95,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string extension )
         {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( extension ) );
+            return _extensions.Remove( StringRtspHeaderParser.TrimValue( extension , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearExtensions()
@@ -159,11 +160,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , " " , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , " " , out var tokens ) )
             {
                 var scheme = tokens.First();
                 
-                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
+                if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
                 {
                     result = new WWWAuthenticateRtspHeader(); 
                     result.SetScheme( scheme );

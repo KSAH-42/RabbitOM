@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -17,14 +18,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return RtspHeaderParser.Formatter.Format( Value );
+            return DoubleRtspHeaderParser.Format( Value );
         }
 
 
 
         public static bool TryParse( string input , out MediaDurationRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out double value )
+            result = DoubleRtspHeaderParser.TryParse( input , out double value )
                 ? new MediaDurationRtspHeader() { Value = value }
                 : null
                 ;

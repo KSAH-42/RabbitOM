@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class TransportRtspHeader : RtspHeader
@@ -61,95 +62,77 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetTransport( string value )
         {
-            Transport = RtspHeaderParser.Formatter.Filter( value );
+            Transport = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTransmission( string value )
         {
-            Transmission = RtspHeaderParser.Formatter.Filter( value );
+            Transmission = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetSource( string value )
         {
-            Source = RtspHeaderParser.Formatter.Filter( value );
+            Source = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetDestination( string value )
         {
-            Destination = RtspHeaderParser.Formatter.Filter( value );
+            Destination = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetAddress( string value )
         {
-            Address = RtspHeaderParser.Formatter.Filter( value );
+            Address = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetHost( string value )
         {
-            Host = RtspHeaderParser.Formatter.Filter( value );
+            Host = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetSSRC( string value )
         {
-            SSRC = RtspHeaderParser.Formatter.Filter( value );
+            SSRC = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetMode( string value )
         {
-            Mode = RtspHeaderParser.Formatter.Filter( value );
+            Mode = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTTL( string value )
         {
-            TTL = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out byte result )
-                ? new byte?( result )
-                : null
-                ;
+            TTL = ByteRtspHeaderParser.TryParse( value , out byte result ) ? new byte?( result ) : null;
         }
 
         public void SetLayers( string value )
         {
-            Layers = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out byte result )
-                ? new byte?( result )
-                : null
-                ;
+            Layers = ByteRtspHeaderParser.TryParse( value , out byte result ) ? new byte?( result ) : null;
         }
 
         public void SetPortRange( string value )
         {
-            Port = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new ValueRange?( range )
-                : null
-                ;
+            Port = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
         }
         
         public void SetClientPortRange( string value )
         {
-            ClientPort = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new ValueRange?( range )
-                : null
-                ;
+            ClientPort = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
         }
         
         public void SetServerPortRange( string value )
         {
-            ServerPort = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new ValueRange?( range )
-                : null
-                ;
+            ServerPort = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
         }
 
         public void SetInterleavedRange( string value )
         {
-            Interleaved = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
-                ? new ValueRange?( range )
-                : null
-                ;
+            Interleaved = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
         }
 
         public bool AddExtension( string value )
         {
-            var text = RtspHeaderParser.Formatter.Filter( value );
+            var text = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( text ) )
             {
@@ -161,7 +144,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
+            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearExtensions()
@@ -261,7 +244,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var header = new TransportRtspHeader();
 

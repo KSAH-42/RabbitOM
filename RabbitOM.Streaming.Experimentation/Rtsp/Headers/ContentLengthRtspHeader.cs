@@ -1,35 +1,22 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class ContentLengthRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Content-Length";
-
-
-
-        
+        public static readonly string TypeName = "Content-Length";        
         
         public long Value { get; set; }
-
-
-
-
 
         public override string ToString()
         {
             return Value.ToString();
         }
 
-
-
-
         public static bool TryParse( string input , out ContentLengthRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
-                ? new ContentLengthRtspHeader() { Value = value }
-                : null
-                ;
+            result = LongRtspHeaderParser.TryParse( input , out long value ) ? new ContentLengthRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -9,8 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";
 
 
-        private readonly char[] CommentsSeparators = { '(' , ')' };
-
+        
 
 
 
@@ -22,17 +22,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comments )
         {
-            if ( ! RtspHeaderValidator.TryValidate( protocol ) )
+            if ( ! CheckValue( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! RtspHeaderValidator.TryValidate( version ) )
+            if ( ! CheckValue( version ) )
             {
                 throw new ArgumentException( version , "the argument called version contains bad things");
             }
 
-            if ( ! RtspHeaderValidator.TryValidate( receivedBy ) )
+            if ( ! CheckValue( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy contains bad things");
             }
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( ! string.IsNullOrWhiteSpace( comments ) )
             {
-                if ( ! RtspHeaderValidator.TryValidate( comments ) || comments.IndexOfAny( CommentsSeparators ) >= 0 )
+                if ( ! CheckValue( comments ) || comments.IndexOfAny( StringRtspHeaderParser.ParenthesisChars ) >= 0 )
                 {
                     throw new ArgumentException( comments , "the argument called receivedBy contains bad things");
                 }
@@ -92,13 +92,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         
         
 
+
+        public static bool CheckValue( string value )
+        {
+            return ! string.IsNullOrWhiteSpace( value ) && ! StringRtspHeaderParser.IsInvalid( value );
+        }
         
         
         public static bool TryParse( string input , out ProxyInfo result )
         {
             result = null;
 
-            input = RtspHeaderParser.Formatter.Filter( input );
+            input = StringRtspHeaderParser.TrimValue( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {

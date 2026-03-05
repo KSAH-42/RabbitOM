@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
     
     [TestFixture]
-    public class RtspMethodTest
+    public class AcceptEncodingRtspHeaderTest
     {
         [TestCase( "*" , 1 ) ]
         [TestCase( "identity" , 1 ) ]
@@ -21,10 +21,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "gzip" , 1 ) ]
         [TestCase( "gzip,deflate" , 2 ) ]
         [TestCase( "gzip,deflate,identity" , 3 ) ]
-
-        [TestCase( "\rgzip" , 1 ) ]
-        [TestCase( "gzip,\r\ndeflate" , 2 ) ]
-        [TestCase( "gzip\v,\fdeflate,\r\nidentity" , 3 ) ]
 
         public void CheckTryParseSucceed( string input , int count )
         {
@@ -47,6 +43,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " , , , , " )]
         [TestCase( "dzip" )]
         [TestCase( "dzip, text" )]
+        [TestCase( "\rgzip" ) ]
+        [TestCase( "gzip,\r\ndeflate" ) ]
+        [TestCase( "gzip\v,\fdeflate,\r\nidentity" ) ]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptEncodingRtspHeader.TryParse( input , out var header ) )

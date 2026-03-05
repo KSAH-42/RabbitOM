@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -26,15 +27,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             // don't use filter here because the input is already already sanitized
 
-            if ( ! RtspHeaderParser.TryParse( input , separator , out string[] tokens ) )
+            if ( ! StringRtspHeaderParser.TryParse( input , separator , out string[] tokens ) )
             {
                 return false;
             }
 
             result = new RtspHeaderProperty()
             {
-                Name  = RtspHeaderParser.Formatter.UnQuote( tokens.ElementAtOrDefault( 0 ) ) ,
-                Value = RtspHeaderParser.Formatter.UnQuote( tokens.ElementAtOrDefault( 1 ) ) ,
+                Name  = StringRtspHeaderParser.UnQuote( tokens.ElementAtOrDefault( 0 ) ) ,
+                Value = StringRtspHeaderParser.UnQuote( tokens.ElementAtOrDefault( 1 ) ) ,
             };
 
             return true;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -6,8 +7,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class UserAgentRtspHeader : RtspHeader
     {
-        private static readonly string[] CommentsSeparators = { "(" , ")" };
-
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
 
@@ -31,17 +30,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetProduct( string value )
         {
-            Product = RtspHeaderParser.Formatter.Filter( value );
+            Product = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetVersion( string value )
         {
-            Version = RtspHeaderParser.Formatter.Filter( value );
+            Version = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetComment( string value )
         {
-            Comment = RtspHeaderParser.Formatter.Filter( value , CommentsSeparators );
+            Comment = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.ParenthesisChars );
         }
 
         public override string ToString()
@@ -84,7 +83,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = RtspHeaderParser.Formatter.Filter( input );
+            input = StringRtspHeaderParser.TrimValue( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {

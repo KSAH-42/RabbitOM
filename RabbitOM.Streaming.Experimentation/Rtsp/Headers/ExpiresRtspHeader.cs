@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -6,23 +7,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Expires";
 
-
         public DateTime Value { get; set; }
-
-
 
         public override string ToString()
         {
-            return RtspHeaderParser.Formatter.Format( Value );
+            return DateTimeRtspHeaderParser.Format( Value );
         }
-
 
         public static bool TryParse( string input , out ExpiresRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out DateTime value )
-                ? new ExpiresRtspHeader() { Value = value }
-                : null
-                ;
+            result = DateTimeRtspHeaderParser.TryParse( input , out DateTime value ) ? new ExpiresRtspHeader() { Value = value } : null;
 
             return result != null;
         }

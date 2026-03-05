@@ -1,6 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Globalization;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -10,12 +11,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public WeightedString( string value )
         {
-            Value = RtspHeaderValidator.TryValidate( value ) ? value : throw new ArgumentException();
+            Value = ! IsInvalidValue( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
-            Value = RtspHeaderValidator.TryValidate( value ) ? value : throw new ArgumentException();
+            Value = ! IsInvalidValue( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -30,6 +31,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+        public static bool IsInvalidValue( string value )
+        {
+            return string.IsNullOrWhiteSpace( value ) || StringRtspHeaderParser.IsInvalid( value );
+        }
 
         public static bool IsNullOrEmpty( WeightedString obj )
         {
@@ -55,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
@@ -70,7 +76,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out double quality ) )
+                            if ( DoubleRtspHeaderParser.TryParse( parameter.Value , out double quality ) )
                             {
                                 result = new WeightedString( name , quality );
                                 break;

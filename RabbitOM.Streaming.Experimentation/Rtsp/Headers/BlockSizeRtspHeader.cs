@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -7,9 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Blocksize";
         
 
-
         public long Value { get; set; }
-
 
         
         public override string ToString()
@@ -17,14 +16,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Value.ToString();
         }
 
-
         
         public static bool TryParse( string input , out BlockSizeRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , out long value )
-                ? new BlockSizeRtspHeader() { Value = value }
-                : null
-                ;
+            result = LongRtspHeaderParser.TryParse( input , out long value ) ? new BlockSizeRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class ContentRangeRtspHeader : RtspHeader
@@ -31,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetUnit( string value )
         {
-            Unit = RtspHeaderParser.Formatter.Filter( value );
+            Unit = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         private void SetRange( string value )
@@ -39,7 +40,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             Start = null;
             End = null;
 
-            if ( RtspHeaderProperty.TryParse( RtspHeaderParser.Formatter.Filter( value ) , "-" , out var range ) )
+            if ( RtspHeaderProperty.TryParse( value , "-" , out var range ) )
             {
                 if ( long.TryParse( range.Name , out var number ) )
                 {
@@ -57,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             Size = null;
 
-            if ( long.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result ) )
+            if ( LongRtspHeaderParser.TryParse( value , out var result ) )
             {
                 Size = result;
             }
@@ -105,9 +106,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
             
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , " " , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , " " , out var tokens ) )
             {
-                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
+                if ( StringRtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
                 {
                     var header = new ContentRangeRtspHeader();
 

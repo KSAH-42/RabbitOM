@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -81,13 +82,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new AllowRtspHeader();
 
                 foreach( var token in tokens )
                 {
-                    if ( RtspMethod.TryParse( RtspHeaderParser.Formatter.Filter( token ) , out var method ) )
+                    if ( RtspMethod.TryParse( token , out var method ) )
                     {
                         header.AddMethod( method );
                     }

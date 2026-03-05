@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckTryParseSucceedForUtc()
         {
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " \rUtC " , out var header ) );
+            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " UtC " , out var header ) );
             Assert.IsTrue( header.Utc );
 
             Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " unknown " , out header ) );

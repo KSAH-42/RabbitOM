@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -54,7 +55,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
-            var key = RtspHeaderParser.Formatter.Filter( name );
+            var key = StringRtspHeaderParser.TrimValue( name , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( key ) )
             {
@@ -66,14 +67,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            _extensions[ key ] = RtspHeaderParser.Formatter.Filter( value );
+            _extensions[ key ] = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             return true;
         }
 
         public bool RemoveExtension( string name )
         {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( name ) );
+            return _extensions.Remove( StringRtspHeaderParser.TrimValue( name , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearExtensions()
@@ -171,7 +172,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new CacheControlRtspHeader();
 

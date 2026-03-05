@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddEntityTag( string etag )
         {
-            var value = RtspHeaderParser.Formatter.Filter( etag );
+            var value = StringRtspHeaderParser.TrimValue( etag , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -48,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveEntityTag( string etag )
         {
-            return _entitiesTags.Remove( RtspHeaderParser.Formatter.Filter( etag ) );
+            return _entitiesTags.Remove( StringRtspHeaderParser.TrimValue( etag , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearEntitiesTags()
@@ -72,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , "," , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new IfMatchRtspHeader();
 

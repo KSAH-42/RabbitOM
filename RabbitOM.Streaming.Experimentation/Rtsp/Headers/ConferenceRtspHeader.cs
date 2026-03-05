@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
 
     public sealed class ConferenceRtspHeader : RtspHeader
@@ -59,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            var text = RtspHeaderParser.Formatter.Filter( value );
+            var text = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
 
             if ( string.IsNullOrWhiteSpace( text ) )
             {
@@ -71,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( RtspHeaderParser.Formatter.Filter( value ) );
+            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
         }
 
         public void ClearExtensions()
@@ -81,62 +82,62 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public void SetConferenceId( string value )
         {
-            ConferenceId = RtspHeaderParser.Formatter.Filter( value );
+            ConferenceId = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTransport( string value )
         {
-            Transport = RtspHeaderParser.Formatter.Filter( value );
+            Transport = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTransmission( string value )
         {
-            Transmission = RtspHeaderParser.Formatter.Filter( value );
+            Transmission = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetSource( string value )
         {
-            Source = RtspHeaderParser.Formatter.Filter( value );
+            Source = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetDestination( string value )
         {
-            Destination = RtspHeaderParser.Formatter.Filter( value );
+            Destination = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetAddress( string value )
         {
-            Address = RtspHeaderParser.Formatter.Filter( value );
+            Address = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetHost( string value )
         {
-            Host = RtspHeaderParser.Formatter.Filter( value );
+            Host = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetRole( string value )
         {
-            Role = RtspHeaderParser.Formatter.Filter( value );
+            Role = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetMode( string value )
         {
-            Mode = RtspHeaderParser.Formatter.Filter( value );
+            Mode = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTag( string value )
         {
-            Tag = RtspHeaderParser.Formatter.Filter( value );
+            Tag = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetSession( string value )
         {
-            Session = RtspHeaderParser.Formatter.Filter( value );
+            Session = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetAccess( string value )
         {
-            Access = RtspHeaderParser.Formatter.Filter( value );
+            Access = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
         }
 
         public void SetTTL( byte? value )
@@ -146,7 +147,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetTTL( string value )
         {
-            TTL = byte.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var result )
+            TTL = byte.TryParse( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) , out var result )
                 ? new byte?( result )
                 : null
                 ;
@@ -159,7 +160,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetPort( string value )
         {
-            Port = ValueRange.TryParse( RtspHeaderParser.Formatter.Filter( value ) , out var range )
+            Port = ValueRange.TryParse( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) , out var range )
                 ? new ValueRange?( range )
                 : null
                 ;
@@ -251,18 +252,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static bool CheckValue( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) || StringRtspHeaderParser.IsInvalid( value ) )
+            {
+                return false;
+            }
+
+            return StringRtspHeaderParser.ContainsAnyLettersOrDigits( value );
+        }
 
         public static bool TryParse( string input , out ConferenceRtspHeader result )
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( RtspHeaderParser.Formatter.Filter( input ) , ";" , out var tokens ) )
+            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var header = new ConferenceRtspHeader();
 
                 var comparer = StringComparer.OrdinalIgnoreCase;
 
-                foreach ( var token in tokens.Where( RtspHeaderParser.TokenValidator.ContainsLetterOrDigit ) )
+                foreach ( var token in tokens.Where( CheckValue ) )
                 {                    
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
