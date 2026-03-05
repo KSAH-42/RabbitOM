@@ -11,18 +11,19 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     [TestFixture]
     public class RtspHeaderVerifier
     {
-        private readonly HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        private readonly static HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
             nameof( BlockSizeRtspHeader ),
             nameof( RtpInfoRtspHeader ),
         };
 
+        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( RtspHeader ) );
+
+
         [Test]
         public void CheckHeaderTypeNames()
         {
-            var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
-
-            foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var typeNameField = type.GetFields(BindingFlags.Public | BindingFlags.Static )
                     .Where( x => x.Name == "TypeName" )
@@ -48,9 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckTryParseSignature()
         {
-            var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
-
-            foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var method = type.GetMethods(BindingFlags.Public | BindingFlags.Static )
                     .Where( x => x.Name == "TryParse" )
@@ -68,9 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToStringIsImplemented()
         { 
-            var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
-
-            foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var method = type.GetMethod( "ToString" );
                 
