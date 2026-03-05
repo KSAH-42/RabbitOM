@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckHeaderTypeNames()
         {
-            var assembly = Assembly.GetAssembly( typeof( RtspClient ) );
+            var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
 
             foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckTryParseSignature()
         {
-            var assembly = Assembly.GetAssembly( typeof( RtspClient ) );
+            var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
 
             foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         { 
-            var assembly = Assembly.GetAssembly( typeof( RtspClient ) );
+            var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
 
             foreach ( var type in assembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
