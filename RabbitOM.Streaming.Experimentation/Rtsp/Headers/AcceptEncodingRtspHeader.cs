@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptEncodingRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Accept-Encodings";
+        public static readonly string TypeName = "Accept-Encoding";
 
 
 

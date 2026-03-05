@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
                     continue;
                 }
                 
-                Assert.Fail( "TypeName static member has bad name" , type.Name , typeNameField.GetValue( null ) );
+                Assert.Fail( $"TypeName static member has bad name: {type.Name}" , type.Name , typeNameField.GetValue( null ) );
             }
         }
 
