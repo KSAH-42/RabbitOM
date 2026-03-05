@@ -71,10 +71,13 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             {
                 var method = type.GetMethod( "ToString" );
                 
+                Assert.IsTrue( method.DeclaringType != typeof(object) );
+
                 var instance = Activator.CreateInstance( type );
 
                 // TODO: find a setter a set an abritary value and check the returns value after calling the tostring method
 
+                
                 var output = method.Invoke( instance , null ) as string;
 
                 Assert.IsNotNull( output );
