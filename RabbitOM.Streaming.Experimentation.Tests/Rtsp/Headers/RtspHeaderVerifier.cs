@@ -67,7 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [Test]
-        public void CheckToString()
+        public void CheckToStringIsImplemented()
         { 
             var assembly = Assembly.GetAssembly( typeof( RtspHeader ) );
 
