@@ -1,10 +1,11 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
-using System;
+﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+
     public sealed class UserAgentRtspHeader : RtspHeader
     {
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";

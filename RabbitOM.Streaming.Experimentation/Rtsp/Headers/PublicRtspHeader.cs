@@ -1,9 +1,10 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+
     public sealed class PublicRtspHeader : RtspHeader 
     {
         public static readonly string TypeName = "Public";

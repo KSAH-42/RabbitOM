@@ -1,10 +1,11 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
-using System;
+﻿using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+
     public sealed class ProxyInfo 
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";

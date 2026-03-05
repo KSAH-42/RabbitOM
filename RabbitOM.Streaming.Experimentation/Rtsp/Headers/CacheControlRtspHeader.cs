@@ -3,10 +3,11 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+
     public sealed class CacheControlRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Cache-Control";

@@ -1,11 +1,10 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: refactor 
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
