@@ -48,10 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
-                var method = type.GetMethods(BindingFlags.Public | BindingFlags.Static )
-                    .Where( x => x.Name == "TryParse" )
-                    .First()
-                    ;
+                var method = type.GetMethod( "TryParse" , BindingFlags.Public | BindingFlags.Static );
                 
                 // to avoid mistakes when a new header is created by a copy and paste from existing one
 
