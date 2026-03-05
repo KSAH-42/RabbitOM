@@ -22,8 +22,8 @@ namespace RabbitOM.Sample.Client.Mjpeg
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly Renderer _renderer = new JpegRenderer();
-        private ResolutionInfo _resolutionInfo = ResolutionInfo.Resolution_2040x2040;
-        private bool _replaceResolution;
+        private ResolutionInfo? _resolutionInfo;
+
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -115,9 +115,12 @@ namespace RabbitOM.Sample.Client.Mjpeg
                 _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
                 
                 // resolution fallback are used in case where rtsp server can not deliver the width and height due of the jpeg rtp rfc limitation, it's happen when the resolution become to big and can not be placed in the rtp jpeg packet.
-                var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
+                if ( _resolutionInfo.HasValue )
+                {
+                    var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
                     
-                configurer?.Configure( new JpegFrameBuilderConfiguration( _resolutionInfo , _replaceResolution ) );
+                    configurer?.Configure( new JpegFrameBuilderConfiguration( _resolutionInfo.Value ) );
+                }
                 
                 _renderer.TargetControl = _image;
             } ) );
@@ -189,12 +192,14 @@ namespace RabbitOM.Sample.Client.Mjpeg
 
         private void OnExecuteConfigureResolution( object sender , RoutedEventArgs e )
         {
+            var resolutionInfo = _resolutionInfo.HasValue ? _resolutionInfo : ResolutionInfo.Resolution_1280x960;
+
             var dialog = new Dialogs.ResolutionFallBackSettingsDialog() 
             { 
                 Owner = Window.GetWindow( this ) ,
-                HeightResolution = _resolutionInfo.Height ,
-                WidthResolution = _resolutionInfo.Width ,
-                ReplaceResolution = _replaceResolution,
+                HeightResolution = resolutionInfo.Value.Height ,
+                WidthResolution = resolutionInfo.Value.Width ,
+                ReplaceResolution = _resolutionInfo.HasValue,
             };
 
             var result = dialog.ShowDialog();
@@ -202,7 +207,6 @@ namespace RabbitOM.Sample.Client.Mjpeg
             if ( result.HasValue && result.Value )
             {
                 _resolutionInfo = new ResolutionInfo( dialog.WidthResolution , dialog.HeightResolution );
-                _replaceResolution = dialog.ReplaceResolution;
             }
         }
     }

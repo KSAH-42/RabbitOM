@@ -28,7 +28,6 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
             }
 
             _imageBuilder.ResolutionFallback      = configuration.ResolutionFallBack;
-            _imageBuilder.ForceResolutionFallBack = configuration.ForceResolutionFallBack;
         }
 
         /// <summary>

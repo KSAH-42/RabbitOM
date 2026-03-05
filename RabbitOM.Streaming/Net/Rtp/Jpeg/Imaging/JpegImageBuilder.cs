@@ -24,21 +24,11 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         /// <summary>
         /// Gets / Sets the resolution fallback
         /// </summary>
-        public ResolutionInfo ResolutionFallback
+        public ResolutionInfo? ResolutionFallback
         {
             get => _writer.Settings.ResolutionFallback;
             set => _writer.Settings.ResolutionFallback = value;
         }
-
-        /// <summary>
-        /// Gets / Sets the replacement flag status
-        /// </summary>
-        public bool ForceResolutionFallBack
-        {
-            get => _writer.Settings.ForceResolutionFallBack;
-            set => _writer.Settings.ForceResolutionFallBack = value;
-        }
-        
 
 
 
