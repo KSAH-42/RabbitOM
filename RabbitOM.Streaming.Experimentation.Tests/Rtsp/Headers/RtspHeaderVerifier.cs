@@ -6,7 +6,6 @@ using System.Reflection;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     [TestFixture]
