@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         /// Initialize an instance of the fallback settings
         /// </summary>
         /// <param name="resolutionFallBack">the resolution</param>
-        public JpegFrameBuilderConfiguration( ResolutionInfo resolutionFallBack )
+        public JpegFrameBuilderConfiguration( ResolutionInfo? resolutionFallBack )
         {
             ResolutionFallBack = resolutionFallBack;
         }
