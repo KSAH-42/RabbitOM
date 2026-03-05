@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ExpiresRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Expires";
+        public static string TypeName { get; } = "Expires";
 
         public DateTime Value { get; set; }
 

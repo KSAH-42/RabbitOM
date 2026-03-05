@@ -13,10 +13,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static readonly string TypeName = "User-Agent";
+        public static string TypeName { get; } = "User-Agent";
         
-
-
 
 
         public string Product { get; private set; } = string.Empty;

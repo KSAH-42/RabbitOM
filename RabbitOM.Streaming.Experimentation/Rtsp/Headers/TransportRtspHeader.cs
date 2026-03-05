@@ -9,18 +9,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class TransportRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Transport";
-
-        
-
-
-
-        
         private readonly HashSet<string> _extensions = new HashSet<string>();
 
 
 
 
+        public static string TypeName { get; } = "Transport";
 
 
         public string Transport { get; private set; } = string.Empty;

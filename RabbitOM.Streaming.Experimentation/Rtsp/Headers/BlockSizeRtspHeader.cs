@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class BlockSizeRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Blocksize";
+        public static string TypeName { get; } = "Blocksize";
         
 
         public long Value { get; set; }

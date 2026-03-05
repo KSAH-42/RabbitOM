@@ -6,11 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ContentBaseRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Content-Base";
-        
-        
-
-        
+        public static string TypeName { get; } = "Content-Base";
         
         public string Uri { get; private set; } = string.Empty;
 

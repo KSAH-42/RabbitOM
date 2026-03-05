@@ -9,16 +9,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ConferenceRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Conference";
-
-
-
-
-        
         private readonly HashSet<string> _extensions = new HashSet<string>();
 
 
 
+        public static string TypeName { get; } = "Conference";
 
 
         public string ConferenceId { get; private set; } = string.Empty;

@@ -8,17 +8,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ConnectionRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Connection";
-
-
-
-
-
         private readonly HashSet<string> _directives = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
         
 
 
 
+        public static string TypeName { get; } = "Connection";
 
         public IReadOnlyCollection<string> Directives
         {

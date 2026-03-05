@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class LastModifiedRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Last-Modified";
+        public static string TypeName { get; } = "Last-Modified";
         
         public DateTime Value { get; set; }
 

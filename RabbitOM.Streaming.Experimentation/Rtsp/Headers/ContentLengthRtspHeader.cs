@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ContentLengthRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Content-Length";        
+        public static string TypeName { get; } = "Content-Length";        
         
         public long Value { get; set; }
 

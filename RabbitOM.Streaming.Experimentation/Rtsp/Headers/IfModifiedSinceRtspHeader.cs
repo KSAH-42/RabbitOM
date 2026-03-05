@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class IfModifiedSinceRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "If-Modified-Since";
+        public static string TypeName { get; } = "If-Modified-Since";
         
         public DateTime Value { get; set; }
 

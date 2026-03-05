@@ -25,10 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
-                var typeNameField = type.GetFields(BindingFlags.Public | BindingFlags.Static )
-                    .Where( x => x.Name == "TypeName" )
-                    .First()
-                    ;
+                var typeNameField = type.GetProperty( "TypeName" , BindingFlags.Public | BindingFlags.Static );
                 
                 var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + nameof( RtspHeader );
 

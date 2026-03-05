@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class LocationRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Location";
+        public static string TypeName { get; } = "Location";
         
         
 

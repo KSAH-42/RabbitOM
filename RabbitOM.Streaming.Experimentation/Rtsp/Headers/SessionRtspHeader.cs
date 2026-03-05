@@ -9,19 +9,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class SessionRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Session";
-        
-
-
-
-
-
         private readonly HashSet<string> _extensions = new HashSet<string>();
 
 
 
 
-
+        public static string TypeName { get; } = "Session";
+        
         public string Identifier { get; private set; } = string.Empty;
 
         public long? Timeout { get; set; }

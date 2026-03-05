@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class CSeqRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "CSeq";
+        public static string TypeName { get; } = "CSeq";
 
         public long Value { get; set; }
 

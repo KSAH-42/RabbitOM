@@ -8,24 +8,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptEncodingRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Accept-Encoding";
-
-
-
-
-        
-        
         private readonly Dictionary<string,WeightedString> _encodings = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
 
 
-        
-        
-        public IReadOnlyCollection<WeightedString> Encodings
-        {
-            get => _encodings.Values;
-        }
+        public static string TypeName { get; } = "Accept-Encoding";
+
+        public IReadOnlyCollection<WeightedString> Encodings { get => _encodings.Values; }
         
 
 

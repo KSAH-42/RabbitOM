@@ -7,18 +7,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class PublicRtspHeader : RtspHeader 
     {
-        public static readonly string TypeName = "Public";
-
-
-
-
-
+        
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
         
 
 
 
-        
+        public static string TypeName { get; } = "Public";
+
         public IReadOnlyCollection<RtspMethod> Methods
         {
             get => _methods;

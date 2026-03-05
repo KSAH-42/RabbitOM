@@ -7,21 +7,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ViaRtspHeader : RtspHeader
     { 
-        public static readonly string TypeName = "Via";
-        
-
-
-
-
-
-
         private readonly HashSet<ProxyInfo> _proxies = new HashSet<ProxyInfo>();
 
 
 
 
 
-
+        public static string TypeName { get; } = "Via";
+        
 
         public IReadOnlyCollection<ProxyInfo> Proxies
         {

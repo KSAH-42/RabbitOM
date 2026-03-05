@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class MaxForwardsRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Max-Forwards";
+        public static string TypeName { get; } = "Max-Forwards";
 
 
 

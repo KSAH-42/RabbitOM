@@ -8,24 +8,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Accept";
-        
-
-
-
-        
-        
         private readonly Dictionary<string,WeightedString> _mimes = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
 
 
         
-        
-        public IReadOnlyCollection<WeightedString> Mimes
-        {
-            get => _mimes.Values;
-        }
+        public static string TypeName { get; } = "Accept";
+
+        public IReadOnlyCollection<WeightedString> Mimes { get => _mimes.Values; }
         
 
 

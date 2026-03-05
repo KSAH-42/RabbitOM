@@ -7,12 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptRangesRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Accept-Ranges";
-        
-
-
-
-        
+        public static string TypeName { get; } = "Accept-Ranges";
         
         public bool Bytes { get; set; }
        

@@ -10,14 +10,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class CacheControlRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Cache-Control";
-
-
-
-
         private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
         
 
+        public static string TypeName { get; } = "Cache-Control";
 
 
         public bool NoCache { get; set; }

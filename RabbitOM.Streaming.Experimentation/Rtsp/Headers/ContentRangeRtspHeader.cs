@@ -8,12 +8,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ContentRangeRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Content-Range";
+        public static string TypeName { get; } = "Content-Range";
         
-
-
-
-
 
         public string Unit { get; private set; } = string.Empty;
 

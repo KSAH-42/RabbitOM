@@ -8,13 +8,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class IfMatchRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "If-Match";
-
-
-
-
-
-
         private readonly HashSet<string> _entitiesTags = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 
 
@@ -22,6 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static string TypeName { get; } = "If-Match";
 
         public IReadOnlyCollection<string> EntitiesTags
         {

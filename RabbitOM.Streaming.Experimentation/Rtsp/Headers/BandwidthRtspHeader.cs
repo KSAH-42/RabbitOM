@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class BandwidthRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Bandwidth";
+        public static string TypeName { get; } = "Bandwidth";
        
         
         public long Value { get; set; }

@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class DateRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Date";
+        public static string TypeName { get; } = "Date";
         
         public DateTime Value { get; set; }
 

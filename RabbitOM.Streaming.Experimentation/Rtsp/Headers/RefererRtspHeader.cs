@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class RefererRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Referer";
+        public static string TypeName { get; } = "Referer";
         
         
 

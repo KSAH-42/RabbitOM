@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class MediaDurationRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Media-Duration";
+        public static string TypeName { get; } = "Media-Duration";
 
 
 

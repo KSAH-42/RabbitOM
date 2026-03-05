@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ScaleRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Scale";
+        public static string TypeName { get; } = "Scale";
         
         public float Value { get; set; }
 

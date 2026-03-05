@@ -9,20 +9,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class WWWAuthenticateRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "WWW-Authenticate";
-
-
-
-
-
-
-
-
         private readonly HashSet<string> _extensions = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 
 
 
 
+        public static string TypeName { get; } = "WWW-Authenticate";
 
 
 

@@ -7,17 +7,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class RtpInfoRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "RTP-Info";
-
-
-
-
-
         private readonly HashSet<RtpInfo> _rtpInfos = new HashSet<RtpInfo>();
 
 
 
 
+        public static string TypeName { get; } = "RTP-Info";
 
 
         public IReadOnlyCollection<RtpInfo> RtpInfos
