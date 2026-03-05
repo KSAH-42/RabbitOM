@@ -117,11 +117,10 @@
   <ItemGroup>
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderMethodSignatureVerifier.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParserTest.cs" />
     <Compile Include="Rtsp\RtspMethodTest.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfoTest.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderTypeNamesVerifier.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderVerifier.cs" />
     <Compile Include="Rtsp\Headers\AcceptRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderTest.cs" />
