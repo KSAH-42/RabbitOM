@@ -319,11 +319,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             header.SetPort( parameter.Value );
                         }
-                        else if ( SupportedTransports.Values.Contains( parameter.Name ) )
+                        else if ( SupportedTypes.Transports.Contains( parameter.Name ) )
                         {
                             header.SetTransport( token );
                         }
-                        else if ( SupportedTransmissions.Values.Contains( parameter.Name ) )
+                        else if ( SupportedTypes.Transmissions.Contains( parameter.Name ) )
                         {
                             header.SetTransmission( token );
                         }
@@ -334,11 +334,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                     else
                     {
-                        if ( SupportedTransports.Values.Contains( token ) )
+                        if ( SupportedTypes.Transports.Contains( token ) )
                         {
                             header.SetTransport( token );
                         }
-                        else if ( SupportedTransmissions.Values.Contains( token ) )
+                        else if ( SupportedTypes.Transmissions.Contains( token ) )
                         {
                             header.SetTransmission( token );
                         }

@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( ! SupportedFormats.Values.Contains( mime.Value ) )
+            if ( ! SupportedTypes.Formats.Contains( mime.Value ) )
             {
                 return false;
             }

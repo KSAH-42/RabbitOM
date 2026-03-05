@@ -59,7 +59,7 @@
     <Compile Include="Rtsp\Headers\Parsers\DoubleRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Parsers\DateTimeRtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Parsers\StringRtspHeaderParser.cs" />
-    <Compile Include="Rtsp\Headers\SupportedEncodings.cs" />
+    <Compile Include="Rtsp\Headers\SupportedTypes.cs" />
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
@@ -81,14 +81,10 @@
     <Compile Include="Rtsp\Headers\ScaleRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\SupportedLanguages.cs" />
-    <Compile Include="Rtsp\Headers\SupportedTransmissions.cs" />
-    <Compile Include="Rtsp\Headers\SupportedFormats.cs" />
-    <Compile Include="Rtsp\Headers\SupportedTransports.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\Types\ProxyInfo.cs" />
-    <Compile Include="Rtsp\Headers\Types\RtpInfo.cs" />
-    <Compile Include="Rtsp\Headers\Types\ValueRange.cs" />
+    <Compile Include="Rtsp\Headers\ProxyInfo.cs" />
+    <Compile Include="Rtsp\Headers\RtpInfo.cs" />
+    <Compile Include="Rtsp\Headers\ValueRange.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ViaRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\WeightedString.cs" />

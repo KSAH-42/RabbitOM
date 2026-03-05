@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptEncodingRtspHeader : RtspHeader
     {
-        public static readonly string TypeName = "Accept-Encoding";
+        public static readonly string TypeName = "Accept-Encodings";
 
 
 
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( ! SupportedEncodings.Values.Contains( encoding.Value ) )
+            if ( ! SupportedTypes.Encodings.Contains( encoding.Value ) )
             {
                 return false;
             }

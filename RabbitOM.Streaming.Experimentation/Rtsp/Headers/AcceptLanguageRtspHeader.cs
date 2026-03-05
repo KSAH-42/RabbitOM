@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( ! SupportedLanguages.Values.Contains( language.Value ) )
+            if ( ! SupportedTypes.Languages.Contains( language.Value ) )
             {
                 return false;
             }
