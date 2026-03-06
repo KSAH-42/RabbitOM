@@ -78,5 +78,20 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
                 Assert.IsFalse( output.Contains( type.Name ) );
             }
         }
+
+        [Test]
+        public void CheckHeaderPrivateMembersMemers()
+        {
+            foreach ( var type in CurrentAssembly.ExportedTypes )
+            {
+                foreach ( var field in type.GetFields() )
+                {
+                    if ( field.IsPublic && field.Name.StartsWith( "_" ) )
+                    {
+                        Assert.Fail( $"the public member {type.Name}:{field.Name} must be marked as private member" );
+                    }
+                }
+            }
+        }
     }
 }
