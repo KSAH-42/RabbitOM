@@ -5,8 +5,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
 {
     public abstract class StringRtspHeaderValidator
     {
-        public static StringRtspHeaderValidator DefaultValidator = new ProtocolStringRtspHeaderValidator();
-        public static StringRtspHeaderValidator TokenValidator = new TokenStringRtspHeaderValidator();
+        public static StringRtspHeaderValidator DefaultValidator { get; } = new ProtocolStringRtspHeaderValidator();
+        public static StringRtspHeaderValidator TokenValidator { get; } = new TokenStringRtspHeaderValidator();
 
         
         public abstract bool TryValidate( string value );
