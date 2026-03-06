@@ -57,7 +57,7 @@ the new implementation is located temporaly in a different assembly (streaming.e
 
 As mentioned below, most of classes are thread safe except sdp classes and rtp classes. 
 For instance Rtp frame builder are not thread safe, some class are immutable but not rtp builder and rtsp headers.
-For Rtp Frame Builder, theses classe are design to be incorporated as a single member on a media pipeline that run a seperate thread. 
+For Rtp Frame Builder, theses classe are design to be incorporated as a single member on a media pipeline that run a seperate thread or you must garanties that any called comes from the same thread that the cases for event handler exposed by the RtspClient class. 
 In others words theses rtp classes are design to be used only inside a thread. Any interactions with that, must used marshalling calls instead. Synchronized class will be introduce by using something similar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption handlers hook on the receive object passed into the ctor. Tests are successfull, but it may be possible that these class will not be added for the future. So at this moment, and for inheritance refactoring reasons theses classes are not present. So at this times, nothing of that will be added but it will be added if it it becomes a necessity.
 
 
