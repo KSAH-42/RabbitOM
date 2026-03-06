@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class AcceptLanguageRtspHeader : RtspHeader
     {
@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         
-        public static string TypeName { get; } = "Accept-Language";
+        public static readonly string TypeName = "Accept-Language";
 
         public IReadOnlyCollection<WeightedString> Languages { get => _languages.Values; }
         
@@ -95,7 +95,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new AcceptLanguageRtspHeader();
 

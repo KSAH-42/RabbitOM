@@ -3,27 +3,21 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class ViaRtspHeader : RtspHeader
     { 
+        public static readonly string TypeName = "Via";
+
+
         private readonly HashSet<ProxyInfo> _proxies = new HashSet<ProxyInfo>();
-
-
-
-
-
-        public static string TypeName { get; } = "Via";
-        
+                
 
         public IReadOnlyCollection<ProxyInfo> Proxies
         {
             get => _proxies;
         }
         
-
-
-
         
         public bool AddProxy( ProxyInfo proxy )
         {
@@ -51,14 +45,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-
-
-
         public static bool TryParse( string input , out ViaRtspHeader result )
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new ViaRtspHeader();
 

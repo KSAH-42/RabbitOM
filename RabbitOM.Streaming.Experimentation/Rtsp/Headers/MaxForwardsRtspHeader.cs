@@ -2,18 +2,14 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class MaxForwardsRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Max-Forwards";
-
-
+        public static readonly string TypeName = "Max-Forwards";
 
         
-       public long Value { get; set; }
-
-
+        public long Value { get; set; }
 
 
         public override string ToString()
@@ -22,11 +18,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-
-
         public static bool TryParse( string input , out MaxForwardsRtspHeader result )
         {
-            result = LongRtspHeaderParser.TryParse( input , out long value ) ? new MaxForwardsRtspHeader() { Value = value } : null;
+            result = RtspHeaderParser.TryParse( input , out long value ) ? new MaxForwardsRtspHeader() { Value = value } : null;
 
             return result != null;
         }

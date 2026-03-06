@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetUnit( "bytes" );
+            header.Unit = "bytes" ;
             header.Start = 1;
             header.End = 2;
             Assert.AreEqual( "bytes 1-2/*" , header.ToString() );

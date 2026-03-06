@@ -5,124 +5,123 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class AuthorizationRtspHeader : RtspHeader
     {
-        private readonly HashSet<string> _extensions = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+        public static readonly string TypeName = "Authorization";
+
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+
+
+        private string _scheme = string.Empty;        
+        private string _userName = string.Empty;
+        private string _realm = string.Empty;        
+        private string _nonce = string.Empty;        
+        private string _domain = string.Empty;        
+        private string _uri = string.Empty;        
+        private string _opaque = string.Empty;        
+        private string _response = string.Empty;
+        private string _algorithm = string.Empty;
+        private string _qualityOfProtection = string.Empty;
+        private string _nonceCount = string.Empty;
+        private string _clientNonce = string.Empty;                
+        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
+
         
 
-
-
-        public static string TypeName { get; } = "Authorization";
+        public string Scheme
+        {
+            get => _scheme;
+            set => _scheme = ValueFilter.Filter( value );
+        }
         
+        public string UserName
+        {
+            get => _userName;
+            set => _userName = ValueFilter.Filter( value );
+        }
 
-        public string Scheme { get; private set; } = string.Empty;
+        public string Realm
+        {
+            get => _realm;
+            set => _realm = ValueFilter.Filter( value );
+        }
         
-        public string UserName { get; private set; } = string.Empty;
+        
+        public string Nonce
+        {
+            get => _nonce;
+            set => _nonce = ValueFilter.Filter( value );
+        }
+        
+        public string Domain
+        {
+            get => _domain;
+            set => _domain = ValueFilter.Filter( value );
+        }
+        
+        public string Uri
+        {
+            get => _uri;
+            set => _uri = ValueFilter.Filter( value );
+        }
+        
+        public string Opaque
+        {
+            get => _opaque;
+            set => _opaque = ValueFilter.Filter( value );
+        }
+        
+        public string Response
+        {
+            get => _response;
+            set => _response = ValueFilter.Filter( value );
+        }
 
-        public string Realm { get; private set; } = string.Empty;
-        
-        public string Nonce { get; private set; } = string.Empty;
-        
-        public string Domain { get; private set; } = string.Empty;
-        
-        public string Uri { get; private set; } = string.Empty;
-        
-        public string Opaque { get; private set; } = string.Empty;
-        
-        public string Response { get; private set; } = string.Empty;
+        public string Algorithm
+        {
+            get => _algorithm;
+            set => _algorithm = ValueFilter.Filter( value );
+        }
 
-        public string Algorithm { get; private set; } = string.Empty;
+        public string QualityOfProtection
+        {
+            get => _qualityOfProtection;
+            set => _qualityOfProtection = ValueFilter.Filter( value );
+        }
 
-        public string QualityOfProtection { get; private set; } = string.Empty;
+        public string NonceCount
+        {
+            get => _nonceCount;
+            set => _nonceCount = ValueFilter.Filter( value );
+        }
 
-        public string NonceCount { get; private set; } = string.Empty;
-
-        public string ClientNonce { get; private set; } = string.Empty;
+        public string ClientNonce
+        {
+            get => _clientNonce;
+            set => _clientNonce = ValueFilter.Filter( value );
+        }
                 
-        public IReadOnlyCollection<string> Extensions { get => _extensions; }
+        public IReadOnlyCollection<string> Extensions
+        { 
+            get => _extensions; 
+        }
         
 
 
 
         
         
-        public void SetScheme( string value )
-        {
-            Scheme = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetUserName( string value )
-        {
-            UserName = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetRealm( string value )
-        {
-            Realm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetNonce( string value )
-        {
-            Nonce = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetOpaque( string value )
-        {
-            Opaque = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetDomain( string value )
-        {
-            Domain = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetUri( string value )
-        {
-            Uri = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetResponse( string value )
-        {
-            Response = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetAlgorithm( string value )
-        {
-            Algorithm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetClientNonce( string value )
-        {
-            ClientNonce = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetNonceCount( string value )
-        {
-            NonceCount = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
-        public void SetQualityOfProtection( string value )
-        {
-            QualityOfProtection = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
-
         public bool AddExtension( string value )
         {
-            var extension = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-
-            if ( string.IsNullOrWhiteSpace( extension ) )
-            {
-                return false;
-            }
-
-            return _extensions.Add( extension );
+            return _extensions.Add( ValueFilter.Filter( value ) );
         }
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
+            return _extensions.Remove( ValueFilter.Filter( value ) );
         }
 
         public void ClearExtensions()
@@ -135,48 +134,48 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             var builder = new StringBuilder();
 
             builder.AppendFormat( "{0} " , Scheme );
-            builder.AppendFormat( "username={0}, " , StringRtspHeaderParser.Quote( UserName ) );
-            builder.AppendFormat( "realm={0}, " , StringRtspHeaderParser.Quote( Realm ) );
-            builder.AppendFormat( "nonce={0}, " , StringRtspHeaderParser.Quote( Nonce ) );
+            builder.AppendFormat( "username=\"{0}\", " , UserName );
+            builder.AppendFormat( "realm=\"{0}\", " , Realm );
+            builder.AppendFormat( "nonce=\"{0}\", " , Nonce );
 
             if ( ! string.IsNullOrWhiteSpace( Domain ) )
             {
-                builder.AppendFormat( "domain={0}, " , StringRtspHeaderParser.Quote( Domain ) );
+                builder.AppendFormat( "domain=\"{0}\", " , Domain );
             }
 
             if ( ! string.IsNullOrWhiteSpace( Opaque ) )
             {
-                builder.AppendFormat( "opaque={0}, " , StringRtspHeaderParser.Quote( Opaque ) );
+                builder.AppendFormat( "opaque=\"{0}\", " , Opaque );
             }
 
-            builder.AppendFormat( "uri={0}, " , StringRtspHeaderParser.Quote( Uri ) );
-            builder.AppendFormat( "response={0}, " , StringRtspHeaderParser.Quote( Response ) );
+            builder.AppendFormat( "uri=\"{0}\", " , Uri );
+            builder.AppendFormat( "response=\"{0}\", " , Response );
 
             if ( ! string.IsNullOrWhiteSpace( Algorithm ) )
             {
-                builder.AppendFormat( "algorithm={0}, " , StringRtspHeaderParser.Quote( Algorithm ) );
+                builder.AppendFormat( "algorithm=\"{0}\", " , Algorithm );
             }
 
             if ( ! string.IsNullOrWhiteSpace( ClientNonce ) )
             {
-                builder.AppendFormat( "cnonce={0}, " , StringRtspHeaderParser.Quote( ClientNonce ) );
+                builder.AppendFormat( "cnonce=\"{0}\", " , ClientNonce );
             }
 
             if ( ! string.IsNullOrWhiteSpace( NonceCount ) )
             {
-                builder.AppendFormat( "nc={0}, " , StringRtspHeaderParser.Quote( NonceCount ) );
+                builder.AppendFormat( "nc=\"{0}\", " , NonceCount );
             }
 
             if ( ! string.IsNullOrWhiteSpace( QualityOfProtection ) )
             {
-                builder.AppendFormat( "qop={0}, " , StringRtspHeaderParser.Quote( QualityOfProtection ) );
+                builder.AppendFormat( "qop=\"{0}\", " , QualityOfProtection );
             }
 
             foreach ( var extension in _extensions )
             {
                 if ( RtspHeaderProperty.TryParse( extension , "=" , out var parameter ) )
                 {
-                    builder.AppendFormat( "{0}={1}, " , parameter.Name , StringRtspHeaderParser.Quote( parameter.Value ) );
+                    builder.AppendFormat( "{0}=\"{1}\", " , parameter.Name , parameter.Value );
                 }
                 else
                 {
@@ -196,64 +195,61 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
             {
                 var scheme = tokens.FirstOrDefault();
                 
-                if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
+                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
-                    result = new AuthorizationRtspHeader(); 
-                    result.SetScheme( scheme );
-
-                    var comparer = StringComparer.OrdinalIgnoreCase;
+                    result = new AuthorizationRtspHeader() { Scheme = scheme };
 
                     foreach ( var token in tokens )
                     {
                         if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                         {
-                            if ( comparer.Equals( "username" , parameter.Name ) )
+                            if ( ValueComparer.Equals( "username" , parameter.Name ) )
                             {
-                                result.SetUserName( parameter.Value );
+                                result.UserName = parameter.Value;
                             }
-                            else if ( comparer.Equals( "realm" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "realm" , parameter.Name ) )
                             {
-                                result.SetRealm( parameter.Value );
+                                result.Realm = parameter.Value;
                             }
-                            else if ( comparer.Equals( "nonce" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "nonce" , parameter.Name ) )
                             {
-                                result.SetNonce( parameter.Value );
+                                result.Nonce = parameter.Value;
                             }
-                            else if ( comparer.Equals( "opaque" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "opaque" , parameter.Name ) )
                             {
-                                result.SetOpaque( parameter.Value );
+                                result.Opaque = parameter.Value;
                             }
-                            else if ( comparer.Equals( "domain" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "domain" , parameter.Name ) )
                             {
-                                result.SetDomain( parameter.Value );
+                                result.Domain = parameter.Value;
                             }
-                            else if ( comparer.Equals( "uri" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "uri" , parameter.Name ) )
                             {
-                                result.SetUri( parameter.Value );
+                                result.Uri = parameter.Value;
                             }
-                            else if ( comparer.Equals( "response" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "response" , parameter.Name ) )
                             {
-                                result.SetResponse( parameter.Value );
+                                result.Response = parameter.Value;
                             }                            
-                            else if ( comparer.Equals( "algorithm" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "algorithm" , parameter.Name ) )
                             {
-                                result.SetAlgorithm( parameter.Value );
+                                result.Algorithm = parameter.Value;
                             }
-                            else if ( comparer.Equals( "cnonce" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "cnonce" , parameter.Name ) )
                             {
-                                result.SetClientNonce( parameter.Value );
+                                result.ClientNonce = parameter.Value;
                             }
-                            else if ( comparer.Equals( "nc" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "nc" , parameter.Name ) )
                             {
-                                result.SetNonceCount( parameter.Value );
+                                result.NonceCount = parameter.Value;
                             }
-                            else if ( comparer.Equals( "qop" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "qop" , parameter.Name ) )
                             {
-                                result.SetQualityOfProtection( parameter.Value );
+                                result.QualityOfProtection = parameter.Value;
                             }
                             else
                             {

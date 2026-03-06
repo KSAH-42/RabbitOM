@@ -3,27 +3,24 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class PublicRtspHeader : RtspHeader 
     {
-        
+        public static readonly string TypeName = "Public";
+
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+
+
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
         
-
-
-
-        public static string TypeName { get; } = "Public";
 
         public IReadOnlyCollection<RtspMethod> Methods
         {
             get => _methods;
         }
         
-        
-        
-        
-        
+
         public bool AddMethod( RtspMethod method )
         {
             if ( method != null )
@@ -50,21 +47,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-
-
-
-
         public static bool TryParse( string input , out PublicRtspHeader result )
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new PublicRtspHeader();
 
                 foreach( var token in tokens )
                 {
-                    if ( RtspMethod.TryParse( StringRtspHeaderParser.UnQuote( token ) , out var method ) )
+                    if ( RtspMethod.TryParse( ValueFilter.Filter( token ) , out var method ) )
                     {
                         header.AddMethod( method );
                     }

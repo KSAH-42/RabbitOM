@@ -218,8 +218,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
         }
@@ -231,12 +231,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.SetSource( "abc");
+            header.Source = "abc";
             Assert.AreEqual( "RTP/AVP/UDP;unicast;source=abc" , header.ToString() );
         }
 
@@ -247,12 +247,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.SetDestination( "abc");
+            header.Destination = "abc";
             Assert.AreEqual( "RTP/AVP/UDP;unicast;destination=abc" , header.ToString() );
         }
 
@@ -263,12 +263,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.SetAddress( "abc");
+            header.Address = "abc";
             Assert.AreEqual( "RTP/AVP/UDP;unicast;address=abc" , header.ToString() );
         }
 
@@ -279,12 +279,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.SetHost( "abc");
+            header.Host = "abc";
             Assert.AreEqual( "RTP/AVP/UDP;unicast;host=abc" , header.ToString() );
         }
 
@@ -295,12 +295,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.SetSSRC( "abc");
+            header.SSRC = "abc";
             Assert.AreEqual( "RTP/AVP/UDP;unicast;ssrc=abc" , header.ToString() );
         }
 
@@ -311,12 +311,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
-            header.SetMode( "abc");
+            header.Mode = "abc";
             Assert.AreEqual( "RTP/AVP/UDP;unicast;mode=\"abc\"" , header.ToString() );
         }
 
@@ -327,8 +327,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
@@ -343,8 +343,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
@@ -359,8 +359,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
@@ -375,8 +375,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
@@ -391,8 +391,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
@@ -407,8 +407,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 
@@ -423,8 +423,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetTransport( "RTP/AVP/UDP" );
-            header.SetTransmission( "unicast" );
+            header.Transport = "RTP/AVP/UDP";
+            header.Transmission = "unicast" ;
 
             Assert.AreEqual( "RTP/AVP/UDP;unicast" , header.ToString() );
 

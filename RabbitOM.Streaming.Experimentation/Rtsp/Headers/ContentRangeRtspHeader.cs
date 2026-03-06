@@ -4,60 +4,51 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class ContentRangeRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Content-Range";
+        public static readonly string TypeName = "Content-Range";
+        
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
         
 
-        public string Unit { get; private set; } = string.Empty;
 
-        public long? Start { get; set; }
-
-        public long? End { get; set; }
-
-        public long? Size { get; set; }
+        private string _unit = string.Empty;
+        private long? _start;
+        private long? _end;
+        private long? _size;
 
 
 
 
-
-
-
-        public void SetUnit( string value )
+        public string Unit
         {
-            Unit = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _unit;
+            set => _unit = ValueFilter.Filter( value );
         }
 
-        private void SetRange( string value )
+        public long? Start
         {
-            Start = null;
-            End = null;
-
-            if ( RtspHeaderProperty.TryParse( value , "-" , out var range ) )
-            {
-                if ( long.TryParse( range.Name , out var number ) )
-                {
-                    Start = number;
-                }
-
-                if ( long.TryParse( range.Value , out number ) )
-                {
-                    End = number;
-                }
-            }
+            get => _start;
+            set => _start = value;
         }
 
-        private void SetSize( string value )
+        public long? End
         {
-            Size = null;
-
-            if ( LongRtspHeaderParser.TryParse( value , out var result ) )
-            {
-                Size = result;
-            }
+            get => _end;
+            set => _end = value;
         }
+
+        public long? Size
+        {
+            get => _size;
+            set => _size = value;
+        }
+
+
+
+        
 
         public override string ToString()
         {
@@ -101,15 +92,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
             
-            if ( StringRtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
             {
-                if ( StringRtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
+                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
                 {
                     var header = new ContentRangeRtspHeader();
 
-                    header.SetUnit( tokens.ElementAtOrDefault( 0 ) );
-                    header.SetRange( tokensRange.ElementAtOrDefault( 0 ) );
-                    header.SetSize( tokensRange.ElementAtOrDefault( 1 ) );
+                    header.Unit = tokens.ElementAtOrDefault( 0 );
+
+                    if ( RtspHeaderProperty.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out var range ) )
+                    {
+                        if ( RtspHeaderParser.TryParse( range.Name , out long number ) )
+                        {
+                            header.Start = number;
+                        }
+
+                        if ( RtspHeaderParser.TryParse( range.Value , out number ) )
+                        {
+                            header.End = number;
+                        }
+                    }
+
+                    if ( RtspHeaderParser.TryParse( tokensRange.ElementAtOrDefault(1) , out long size ) )
+                    {
+                        header.Size = size;
+                    }                    
 
                     if ( header.Start.HasValue && header.End.HasValue )
                     {

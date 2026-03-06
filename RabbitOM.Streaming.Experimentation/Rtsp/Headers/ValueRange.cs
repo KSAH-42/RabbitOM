@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public struct ValueRange : IEquatable<ValueRange>
     {
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = default;
 
-            if ( StringRtspHeaderParser.TryParse( input , "-" , out string[] tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "-" , out string[] tokens ) )
             {
                 if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var minimum ) )
                 {

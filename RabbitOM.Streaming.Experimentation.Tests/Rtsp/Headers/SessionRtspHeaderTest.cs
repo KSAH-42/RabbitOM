@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
             
-            header.SetIdentifier( "  ABCDEF1234  " );
+            header.Identifier = "  ABCDEF1234  " ;
             Assert.AreEqual( "ABCDEF1234" , header.ToString() );
 
             header.Timeout = 123;

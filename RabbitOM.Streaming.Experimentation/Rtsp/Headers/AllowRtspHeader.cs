@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class AllowRtspHeader : RtspHeader
     {
@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         
-        public static string TypeName { get; } = "Allow";
+        public static readonly string TypeName = "Allow";
 
         public IReadOnlyCollection<RtspMethod> Methods
         {
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new AllowRtspHeader();
 

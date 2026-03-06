@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class BlockSizeRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Blocksize";
+        public static readonly string TypeName = "Blocksize";
         
 
         public long Value { get; set; }
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public static bool TryParse( string input , out BlockSizeRtspHeader result )
         {
-            result = LongRtspHeaderParser.TryParse( input , out long value ) ? new BlockSizeRtspHeader() { Value = value } : null ;
+            result = RtspHeaderParser.TryParse( input , out long value ) ? new BlockSizeRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

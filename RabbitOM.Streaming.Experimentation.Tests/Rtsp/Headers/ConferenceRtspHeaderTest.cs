@@ -223,7 +223,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.AreEqual( "" , header.ToString() );
 
-            header.SetConferenceId( "abc-012" );
+            header.ConferenceId = "abc-012" ;
             Assert.AreEqual( "abc-012" , header.ToString() );
         }
     }

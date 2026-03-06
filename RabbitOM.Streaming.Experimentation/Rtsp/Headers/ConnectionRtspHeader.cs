@@ -4,16 +4,17 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class ConnectionRtspHeader : RtspHeader
     {
-        private readonly HashSet<string> _directives = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+        public static readonly string TypeName = "Connection";
+
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
         
 
-
-
-        public static string TypeName { get; } = "Connection";
+        private readonly RtspHeaderHashSet _directives = new RtspHeaderHashSet();
+        
 
         public IReadOnlyCollection<string> Directives
         {
@@ -26,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddDirective( string value )
         {
-            var directive = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            var directive = ValueFilter.Filter( value );
 
             if ( ! char.IsLetter( directive.FirstOrDefault() ) || ! char.IsLetterOrDigit( directive.LastOrDefault() ) )
             {
@@ -48,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveDirective( string value )
         {
-            return _directives.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
+            return _directives.Remove( ValueFilter.Filter( value ) );
         }
 
         public void ClearDirectives()
@@ -70,7 +71,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new ConnectionRtspHeader();
 

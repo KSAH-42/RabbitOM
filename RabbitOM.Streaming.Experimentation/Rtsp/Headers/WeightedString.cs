@@ -4,22 +4,23 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.DefaultValidator;
+
+
         public WeightedString( string value )
         {
-            Value = ! IsInvalidValue( value ) ? value : throw new ArgumentException();
+            Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
-            Value = ! IsInvalidValue( value ) ? value : throw new ArgumentException();
+            Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
-
-
 
 
 
@@ -28,13 +29,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public double? Quality { get; }
         
 
-
-
-
-        public static bool IsInvalidValue( string value )
-        {
-            return string.IsNullOrWhiteSpace( value ) || StringRtspHeaderParser.IsInvalid( value );
-        }
 
         public static bool IsNullOrEmpty( WeightedString obj )
         {
@@ -60,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
@@ -75,7 +69,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Name ) )
                         {
-                            if ( DoubleRtspHeaderParser.TryParse( parameter.Value , out double quality ) )
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out double quality ) )
                             {
                                 result = new WeightedString( name , quality );
                                 break;

@@ -5,90 +5,93 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class WWWAuthenticateRtspHeader : RtspHeader
     {
-        private readonly HashSet<string> _extensions = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+        public static readonly string TypeName = "WWW-Authenticate";
+
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
 
 
 
+        private string _scheme = string.Empty;        
+        private string _userName = string.Empty;
+        private string _realm = string.Empty;        
+        private string _nonce = string.Empty;        
+        private string _opaque = string.Empty;        
+        private string _response = string.Empty;
+        private string _algorithm = string.Empty;
+        private string _stale = string.Empty;
+        private string _qualityOfProtection = string.Empty;
+        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
 
-        public static string TypeName { get; } = "WWW-Authenticate";
-
-
-
-        public string Scheme { get; private set; } = string.Empty;
         
-        public string Realm { get; private set; } = string.Empty;
+
+
+
+        public string Scheme
+        {
+            get => _scheme;
+            set => _scheme = ValueFilter.Filter( value );
+        }
         
-        public string Nonce { get; private set; } = string.Empty;
+        public string Realm
+        {
+            get => _realm;
+            set => _realm = ValueFilter.Filter( value );
+        }
         
-        public string Opaque { get; private set; } = string.Empty;
+        public string Nonce
+        {
+            get => _nonce;
+            set => _nonce = ValueFilter.Filter( value );
+        }
         
-        public string Algorithm { get; private set; } = string.Empty;
+        public string Opaque
+        {
+            get => _opaque;
+            set => _opaque = ValueFilter.Filter( value );
+        }
         
-        public string Stale { get; private set; } = string.Empty;
-
-        public string QualityOfProtection { get; private set; } = string.Empty;
-
-        public IReadOnlyCollection<string> Extensions { get => _extensions; }
-
-
-
-
-
-
-        public void SetScheme( string value )
+        public string Algorithm
         {
-            Scheme = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _algorithm;
+            set => _algorithm = ValueFilter.Filter( value );
+        }
+        
+        public string Stale
+        {
+            get => _stale;
+            set => _stale = ValueFilter.Filter( value );
         }
 
-        public void SetRealm( string value )
+        public string QualityOfProtection
         {
-            Realm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _qualityOfProtection;
+            set => _qualityOfProtection = ValueFilter.Filter( value );
         }
 
-        public void SetNonce( string value )
+        public IReadOnlyCollection<string> Extensions
         {
-            Nonce = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _extensions;
         }
 
-        public void SetOpaque( string value )
-        {
-            Opaque = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
 
-        public void SetAlgorithm( string value )
-        {
-            Algorithm = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
 
-        public void SetStale( string value )
-        {
-            Stale = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
 
-        public void SetQualityOfProtection( string value )
-        {
-            QualityOfProtection = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-        }
+
 
         public bool AddExtension( string extension )
         {
-            var value = StringRtspHeaderParser.TrimValue( extension , StringRtspHeaderParser.SpaceWithQuotesChars );
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            return _extensions.Add( value );
+            return _extensions.Add( ValueFilter.Filter( extension ) );
         }
 
         public bool RemoveExtension( string extension )
         {
-            return _extensions.Remove( StringRtspHeaderParser.TrimValue( extension , StringRtspHeaderParser.SpaceWithQuotesChars ) );
+            return _extensions.Remove( ValueFilter.Filter( extension ) );
         }
 
         public void ClearExtensions()
@@ -146,57 +149,54 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-
         public static bool TryParse( string input , out WWWAuthenticateRtspHeader result )
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
             {
-                var scheme = tokens.First();
+                var header = new WWWAuthenticateRtspHeader() { Scheme = tokens.First() };
                 
-                if ( StringRtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
+                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
                 {
-                    result = new WWWAuthenticateRtspHeader(); 
-                    result.SetScheme( scheme );
-
-                    var comparer = StringComparer.OrdinalIgnoreCase;
-
                     foreach ( var token in tokens )
                     {
                         if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                         {
-                            if ( comparer.Equals( "realm" , parameter.Name ) )
+                            if ( ValueComparer.Equals( "realm" , parameter.Name ) )
                             {
-                                result.SetRealm( parameter.Value );
+                                header.Realm = parameter.Value;
                             }
-                            else if ( comparer.Equals( "nonce" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "nonce" , parameter.Name ) )
                             {
-                                result.SetNonce( parameter.Value );
+                                header.Nonce = parameter.Value;
                             }
-                            else if ( comparer.Equals( "opaque" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "opaque" , parameter.Name ) )
                             {
-                                result.SetOpaque( parameter.Value );
+                                header.Opaque = parameter.Value;
                             }
-                            else if ( comparer.Equals( "algorithm" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "algorithm" , parameter.Name ) )
                             {
-                                result.SetAlgorithm( parameter.Value );
+                                header.Algorithm = parameter.Value;
                             }
-                            else if ( comparer.Equals( "stale" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "stale" , parameter.Name ) )
                             {
-                                result.SetStale( parameter.Value );
+                                header.Stale = parameter.Value ;
                             }
-                            else if ( comparer.Equals( "qop" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "qop" , parameter.Name ) )
                             {
-                                result.SetQualityOfProtection( parameter.Value );
+                                header.QualityOfProtection = parameter.Value;
                             }
                             else
                             {
-                                result.AddExtension( token );
+                                header.AddExtension( token );
                             }
                         }
+                    }
+
+                    if ( ValueValidator.TryValidate( header.Scheme ) )
+                    {
+                        result = header;
                     }
                 }
             }

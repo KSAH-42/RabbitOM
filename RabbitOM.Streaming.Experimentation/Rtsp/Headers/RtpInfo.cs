@@ -3,13 +3,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class RtpInfo 
     { 
-        private RtpInfo()
-        {
-        }
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        
+
+        private RtpInfo() { }
 
         public RtpInfo( string url , long? rtpTime , long? sequence , string ssrc )
         {
@@ -26,20 +27,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-
-
         public string Url { get; private set; } = string.Empty;
-        
+
         public string SSRC { get; private set; } = string.Empty;
-        
-        public long? RtpTime { get; private set; }
         
         public long? Sequence { get; private set; }
         
-
-        
+        public long? RtpTime { get; private set; }
 
 
 
@@ -73,41 +67,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         
         
-
-        
-        
         public static bool TryParse( string input , out RtpInfo result )
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var header = new RtpInfo();
-
-                var comparer = StringComparer.OrdinalIgnoreCase;
 
                 foreach ( var token in tokens )
                 {
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( comparer.Equals( "url" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "url" , parameter.Name ) )
                         {
                             header.Url = parameter.Value;
                         }
-                        else if ( comparer.Equals( "ssrc" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "ssrc" , parameter.Name ) )
                         {
                             header.SSRC = parameter.Value;
                         }
-                        else if ( comparer.Equals( "seq" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "seq" , parameter.Name ) )
                         {
-                            if ( long.TryParse( parameter.Value , out var value ) )
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out long value ) )
                             {
                                 header.Sequence = value;
                             }
                         }
-                        else if ( comparer.Equals( "rtptime" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "rtptime" , parameter.Name ) )
                         {
-                            if ( long.TryParse( parameter.Value , out var value ) )
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out long value ) )
                             {
                                 header.RtpTime = value;
                             }
@@ -115,7 +104,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ! string.IsNullOrWhiteSpace( header.Url )  || header.Sequence.HasValue || header.RtpTime.HasValue || ! string.IsNullOrWhiteSpace( header.SSRC ) )
+                if ( ! string.IsNullOrWhiteSpace( header.Url ) )
                 {
                     result = header;
                 }

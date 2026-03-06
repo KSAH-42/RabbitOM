@@ -2,45 +2,37 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class ContentBaseRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Content-Base";
+        public static readonly string TypeName = "Content-Base";
         
-        public string Uri { get; private set; } = string.Empty;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
 
-        
-        
-        
+        private string _uri = string.Empty;
 
-
-        public void SetUri( string value )
+        public string Uri
         {
-            Uri = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _uri;
+            set => _uri = ValueFilter.Filter( value );
         }
+
         
         public override string ToString()
         {
             return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
         }
-
-        
-
-
-
-        
         
         public static bool TryParse( string input , out ContentBaseRtspHeader result )
         {
             result = null;
 
-            var value = StringRtspHeaderParser.TrimValue( input );
+            var value = ValueFilter.Filter( input );
 
             if ( ! string.IsNullOrWhiteSpace( value ) )
             {
-                result = new ContentBaseRtspHeader();        
-                result.SetUri( value );
+                result = new ContentBaseRtspHeader() { Uri = value };
             }
 
             return result != null;

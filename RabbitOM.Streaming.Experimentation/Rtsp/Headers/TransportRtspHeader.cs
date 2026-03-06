@@ -5,139 +5,140 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class TransportRtspHeader : RtspHeader
     {
-        private readonly HashSet<string> _extensions = new HashSet<string>();
+        public static readonly string TypeName = "Transport";
+
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
+
+
+        private string _transport = string.Empty;
+        private string _transmission = string.Empty;
+        private string _source = string.Empty;
+        private string _destination = string.Empty;
+        private string _address = string.Empty;
+        private string _host = string.Empty;
+        private string _ssrc = string.Empty;
+        private string _mode = string.Empty;
+        private byte? _ttl;
+        private int? _layers;
+        private ValueRange? _port;
+        private ValueRange? _clientPort;
+        private ValueRange? _serverPort;
+        private ValueRange? _interleaved;
+        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
 
 
 
-
-        public static string TypeName { get; } = "Transport";
-
-
-        public string Transport { get; private set; } = string.Empty;
-
-        public string Transmission { get; private set; } = string.Empty;
-
-        public string Source { get; private set; } = string.Empty;
-
-        public string Destination { get; private set; } = string.Empty;
-
-        public string Address { get; private set; } = string.Empty;
-
-        public string Host { get; private set; } = string.Empty;
-
-        public string SSRC { get; private set; } = string.Empty;
-
-        public string Mode { get; private set; } = string.Empty;
-
-        public byte? TTL { get; set; }
-
-        public int? Layers { get; set; }
-        
-        public ValueRange? Port { get; set; }
-        
-        public ValueRange? ClientPort { get; set; }
-        
-        public ValueRange? ServerPort { get; set; }
-        
-        public ValueRange? Interleaved { get; set; }
-        
-        public IReadOnlyCollection<string> Extensions { get => _extensions; }
-        
-
-
-
-
-
-
-        public void SetTransport( string value )
-        {
-            Transport = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Transport 
+        { 
+            get => _transport; 
+            set => _transport = ValueFilter.Filter( value ); 
         }
 
-        public void SetTransmission( string value )
-        {
-            Transmission = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Transmission
+        { 
+            get => _transmission; 
+            set => _transmission = ValueFilter.Filter( value ); 
         }
 
-        public void SetSource( string value )
-        {
-            Source = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Source
+        { 
+            get => _source; 
+            set => _source = ValueFilter.Filter( value ); 
         }
 
-        public void SetDestination( string value )
-        {
-            Destination = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Destination
+        { 
+            get => _destination; 
+            set => _destination = ValueFilter.Filter( value ); 
         }
 
-        public void SetAddress( string value )
-        {
-            Address = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Address
+        { 
+            get => _address; 
+            set => _address = ValueFilter.Filter( value ); 
         }
 
-        public void SetHost( string value )
-        {
-            Host = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Host
+        { 
+            get => _host; 
+            set => _host = ValueFilter.Filter( value ); 
         }
 
-        public void SetSSRC( string value )
-        {
-            SSRC = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string SSRC
+        { 
+            get => _ssrc; 
+            set => _ssrc = ValueFilter.Filter( value ); 
         }
 
-        public void SetMode( string value )
-        {
-            Mode = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+        public string Mode
+        { 
+            get => _mode; 
+            set => _mode = ValueFilter.Filter( value ); 
         }
 
-        public void SetTTL( string value )
+        public byte? TTL
         {
-            TTL = ByteRtspHeaderParser.TryParse( value , out byte result ) ? new byte?( result ) : null;
+            get => _ttl;
+            set => _ttl = value;
         }
 
-        public void SetLayers( string value )
+        public int? Layers
         {
-            Layers = ByteRtspHeaderParser.TryParse( value , out byte result ) ? new byte?( result ) : null;
-        }
-
-        public void SetPortRange( string value )
-        {
-            Port = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
+            get => _layers;
+            set => _layers = value;
         }
         
-        public void SetClientPortRange( string value )
+        public ValueRange? Port
         {
-            ClientPort = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
+            get => _port;
+            set => _port = value;
         }
         
-        public void SetServerPortRange( string value )
+        public ValueRange? ClientPort
         {
-            ServerPort = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
+            get => _clientPort;
+            set => _clientPort = value;
         }
-
-        public void SetInterleavedRange( string value )
+        
+        public ValueRange? ServerPort
         {
-            Interleaved = ValueRange.TryParse( value , out var range ) ? new ValueRange?( range ) : null;
+            get => _serverPort;
+            set => _serverPort = value;
         }
+        
+        public ValueRange? Interleaved
+        {
+            get => _interleaved;
+            set => _interleaved = value;
+        }
+        
+        public IReadOnlyCollection<string> Extensions
+        {
+            get => _extensions;
+        }
+        
 
+
+        
         public bool AddExtension( string value )
         {
-            var text = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-
-            if ( string.IsNullOrWhiteSpace( text ) )
+            if ( ValueValidator.TryValidate( value ) )
             {
-                return false;
+                return _extensions.Add( ValueFilter.Filter( value ) );
             }
 
-            return _extensions.Add( text );
+            return false;
         }
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
+            return _extensions.Remove( ValueFilter.Filter( value ) );
         }
 
         public void ClearExtensions()
@@ -237,71 +238,87 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var header = new TransportRtspHeader();
 
-                var comparer = StringComparer.OrdinalIgnoreCase;
-                
                 foreach ( var token in tokens )
                 {
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( comparer.Equals( "destination" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "destination" , parameter.Name ) )
                         {
-                            header.SetDestination( parameter.Value );
+                            header.Destination = parameter.Value;
                         }
-                        else if ( comparer.Equals( "source" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "source" , parameter.Name ) )
                         {
-                            header.SetSource( parameter.Value );
+                            header.Source = parameter.Value;
                         }
-                        else if ( comparer.Equals( "address" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "address" , parameter.Name ) )
                         {
-                            header.SetAddress( parameter.Value );
+                            header.Address = parameter.Value ;
                         }
-                        else if ( comparer.Equals( "host" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "host" , parameter.Name ) )
                         {
-                            header.SetHost( parameter.Value );
+                            header.Host = parameter.Value;
                         }
-                        else if ( comparer.Equals( "ssrc" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "ssrc" , parameter.Name ) )
                         {
-                            header.SetSSRC( parameter.Value );
+                            header.SSRC = parameter.Value;
                         }
-                        else if ( comparer.Equals( "mode" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "mode" , parameter.Name ) )
                         {
-                            header.SetMode( parameter.Value );
+                            header.Mode = parameter.Value;
                         }
-                        else if ( comparer.Equals( "layers" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "layers" , parameter.Name ) )
                         {
-                            header.SetLayers( parameter.Value );
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out int value ) )
+                            {
+                                header.Layers = value;
+                            }
                         }
-                        else if ( comparer.Equals( "ttl" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "ttl" , parameter.Name ) )
                         {
-                            header.SetTTL( parameter.Value );
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out byte value ) )
+                            {
+                                header.TTL = value;
+                            }
                         }
-                        else if ( comparer.Equals( "port" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "port" , parameter.Name ) )
                         {
-                            header.SetPortRange( parameter.Value );
+                            if ( ValueRange.TryParse( parameter.Value , out var value ) )
+                            {
+                                header.Port = value;
+                            }
                         }
-                        else if ( comparer.Equals( "client_port" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "client_port" , parameter.Name ) )
                         {
-                            header.SetClientPortRange( parameter.Value );
+                            if ( ValueRange.TryParse( parameter.Value , out var value ) )
+                            {
+                                header.ClientPort = value;
+                            }
                         }
-                        else if ( comparer.Equals( "server_port" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "server_port" , parameter.Name ) )
                         {
-                            header.SetServerPortRange( parameter.Value );
+                            if ( ValueRange.TryParse( parameter.Value , out var value ) )
+                            {
+                                header.ServerPort = value;
+                            }
                         }
-                        else if ( comparer.Equals( "interleaved" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "interleaved" , parameter.Name ) )
                         {
-                            header.SetInterleavedRange( parameter.Value );
+                            if ( ValueRange.TryParse( parameter.Value , out var value ) )
+                            {
+                                header.Interleaved = value;
+                            }
                         }
                         else if ( SupportedTypes.Transports.Contains( parameter.Name ) )
                         {
-                            header.SetTransport( token );
+                            header.Transport = token;
                         }
                         else if ( SupportedTypes.Transmissions.Contains( parameter.Name ) )
                         {
-                            header.SetTransmission( token );
+                            header.Transmission = token;
                         }
                         else
                         {
@@ -312,11 +329,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( SupportedTypes.Transports.Contains( token ) )
                         {
-                            header.SetTransport( token );
+                            header.Transport = token;
                         }
                         else if ( SupportedTypes.Transmissions.Contains( token ) )
                         {
-                            header.SetTransmission( token );
+                            header.Transmission = token;
                         }
                         else    
                         {
@@ -325,12 +342,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( string.IsNullOrWhiteSpace( header.Transport ) ||  string.IsNullOrWhiteSpace( header.Transmission ) )
+                if ( ValueValidator.TryValidate( header.Transport ) && ValueValidator.TryValidate( header.Transmission ) )
                 {
-                    return false;
+                    result = header;
                 }
-                
-                result = header;
             }
 
             return result != null;

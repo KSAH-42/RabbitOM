@@ -5,52 +5,52 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class SessionRtspHeader : RtspHeader
     {
-        private readonly HashSet<string> _extensions = new HashSet<string>();
+        public static readonly string TypeName = "Session";
 
-
-
-
-        public static string TypeName { get; } = "Session";
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
         
-        public string Identifier { get; private set; } = string.Empty;
 
-        public long? Timeout { get; set; }
+        private string _identifier = string.Empty;
+        private long? _timeout;
+        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
 
-        public IReadOnlyCollection<string> Extensions { get => _extensions; }
+        
 
-
-
-
-
-        public void SetIdentifier( string value )
+        public string Identifier
         {
-            Identifier = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _identifier;
+            set => _identifier = ValueFilter.Filter( value );
         }
 
-        public void SetTimeout( string value )
+        public long? Timeout
         {
-            Timeout = LongRtspHeaderParser.TryParse( value , out var result ) ? new long?( result ) : null;
+            get => _timeout;
+            set => _timeout = value;
         }
+
+        public IReadOnlyCollection<string> Extensions
+        {
+            get => _extensions;
+        }
+
+
+
+
 
         public bool AddExtension( string value )
         {
-            var text = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-
-            if ( string.IsNullOrWhiteSpace( text ) )
-            {
-                return false;
-            }
-
-            return _extensions.Add( text );
+            return _extensions.Add( ValueFilter.Filter( value ) );
         }
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars ) );
+            return _extensions.Remove( ValueFilter.Filter( value ) );
         }
 
         public void ClearExtensions()
@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
             {
                 var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
 
@@ -100,17 +100,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 
                 var header = new SessionRtspHeader();
 
-                header.SetIdentifier( identifer );
-
+                header.Identifier = identifer;
+                
                 foreach( var token in tokens )
                 {
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( StringComparer.OrdinalIgnoreCase.Equals( "timeout" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "timeout" , parameter.Name ) )
                         {
-                            if ( ! header.Timeout.HasValue )
+                            if ( RtspHeaderParser.TryParse( parameter.Value , out long value ) )
                             {
-                                header.SetTimeout( parameter.Value ); 
+                                header.Timeout = value;
                             }
                         }
                     }
@@ -127,12 +127,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( string.IsNullOrWhiteSpace( header.Identifier ) )
+                if ( ValueValidator.TryValidate( header.Identifier ) )
                 {
-                    return false;
+                    result = header;
                 }
-
-                result = header;
             }
 
             return result != null;

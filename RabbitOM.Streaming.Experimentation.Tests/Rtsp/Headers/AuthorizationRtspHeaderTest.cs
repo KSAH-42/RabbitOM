@@ -51,8 +51,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new AuthorizationRtspHeader();
 
-            header.SetScheme( "digest" );
-            header.SetUserName( "admin" );
+            header.Scheme = "digest";
+            header.UserName = "admin";
 
             Assert.AreEqual( "digest username=\"admin\", realm=\"\", nonce=\"\", uri=\"\", response=\"\"" , header.ToString() );
         }
@@ -62,9 +62,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new AuthorizationRtspHeader();
 
-            header.SetScheme( "digest" );
-            header.SetUserName( "admin" );
-            header.SetRealm("my realm");
+            header.Scheme = "digest";
+            header.UserName = "admin";
+            header.Realm = "my realm";
 
             Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"\", uri=\"\", response=\"\"" , header.ToString() );
         }
@@ -74,10 +74,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new AuthorizationRtspHeader();
 
-            header.SetScheme( "digest" );
-            header.SetUserName( "admin" );
-            header.SetRealm("my realm");
-            header.SetNonce( "1234");
+            header.Scheme = "digest";
+            header.UserName = "admin";
+            header.Realm = "my realm";
+            header.Nonce = "1234";
 
             Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"\", response=\"\"" , header.ToString() );
         }
@@ -87,11 +87,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new AuthorizationRtspHeader();
 
-            header.SetScheme( "digest" );
-            header.SetUserName( "admin" );
-            header.SetRealm("my realm");
-            header.SetNonce( "1234");
-            header.SetUri( "rtsp://127.0.0.1" );
+            header.Scheme = "digest";
+            header.UserName = "admin";
+            header.Realm = "my realm";
+            header.Nonce = "1234";
+            header.Uri = "rtsp://127.0.0.1" ;
 
             Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"rtsp://127.0.0.1\", response=\"\"" , header.ToString() );
         }
@@ -101,12 +101,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new AuthorizationRtspHeader();
 
-            header.SetScheme( "digest" );
-            header.SetUserName( "admin" );
-            header.SetRealm("my realm");
-            header.SetNonce( "1234");
-            header.SetUri( "rtsp://127.0.0.1" );
-            header.SetResponse( "my response" );
+            header.Scheme = "digest";
+            header.UserName = "admin";
+            header.Realm = "my realm";
+            header.Nonce = "1234";
+            header.Uri = "rtsp://127.0.0.1" ;
+            header.Response = "my response";
 
             Assert.AreEqual( "digest username=\"admin\", realm=\"my realm\", nonce=\"1234\", uri=\"rtsp://127.0.0.1\", response=\"my response\"" , header.ToString() );
         }
@@ -116,12 +116,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             var header = new AuthorizationRtspHeader();
 
-            header.SetScheme( "digest" );
-            header.SetUserName( "admin" );
-            header.SetRealm("my realm");
-            header.SetNonce( "1234");
-            header.SetUri( "rtsp://127.0.0.1" );
-            header.SetResponse( "my response" );
+            header.Scheme = "digest";
+            header.UserName = "admin";
+            header.Realm = "my realm";
+            header.Nonce = "1234";
+            header.Uri = "rtsp://127.0.0.1" ;
+            header.Response = "my response";
 
             header.AddExtension( "a" );
             header.AddExtension( "b" );

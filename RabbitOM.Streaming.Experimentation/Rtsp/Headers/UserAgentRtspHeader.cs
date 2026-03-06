@@ -4,43 +4,41 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class UserAgentRtspHeader : RtspHeader
     {
-        private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
+        public static readonly string TypeName = "User-Agent";
+
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
 
 
+        private string _product = string.Empty;
+        private string _version = string.Empty;
+        private string _comment = string.Empty;
+                
 
-
-        public static string TypeName { get; } = "User-Agent";
-        
-
-
-        public string Product { get; private set; } = string.Empty;
-
-        public string Version { get; private set; } = string.Empty;
-        
-        public string Comment { get; private set; } = string.Empty;
-        
-
-
-
-
-        public void SetProduct( string value )
+        public string Product
         {
-            Product = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _product;
+            set => _product = ValueFilter.Filter( value );
         }
 
-        public void SetVersion( string value )
+        public string Version
         {
-            Version = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _version;
+            set => _version = ValueFilter.Filter( value );
         }
+        
+        public string Comment
+        {
+            get => _comment;
+            set => _comment = ValueFilter.Filter( value );
+        }
+        
 
-        public void SetComment( string value )
-        {
-            Comment = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.ParenthesisChars );
-        }
 
         public override string ToString()
         {
@@ -76,20 +74,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
         public static bool TryParse( string input , out UserAgentRtspHeader result )
         {
             result = null;
 
-            input = StringRtspHeaderParser.TrimValue( input );
+            input = ValueFilter.Filter( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {
                 return false;
             }
 
-            var matches = new Regex( RegularExpression , RegexOptions.Compiled | RegexOptions.CultureInvariant ).Matches( input );
+            var pattern = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
+
+            var matches = new Regex( pattern , RegexOptions.Compiled | RegexOptions.CultureInvariant ).Matches( input.Trim() );
 
             if ( matches.Count <= 0 )
             {
@@ -102,12 +100,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 if ( match.Groups["product"].Success )
                 {
-                    result.SetProduct( match.Groups["product"].Value );
-                    result.SetVersion( match.Groups["version"].Value );
+                    result.Product = match.Groups["product"].Value;
+                    result.Version = match.Groups["version"].Value;
                 }
                 else if ( match.Groups["comment"].Success )
                 {
-                    result.SetComment( match.Groups["comment"].Value );
+                    result.Comment = match.Groups["comment"].Value;
                 }
             }
 

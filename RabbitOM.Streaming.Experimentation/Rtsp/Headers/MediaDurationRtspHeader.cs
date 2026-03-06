@@ -2,33 +2,22 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class MediaDurationRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Media-Duration";
+        public static readonly string TypeName = "Media-Duration";
 
-
-
-        
         public double Value { get; set; }
-
-
-
 
         public override string ToString()
         {
-            return DoubleRtspHeaderParser.Format( Value );
+            return RtspHeaderParser.Format( Value );
         }
-
-
 
         public static bool TryParse( string input , out MediaDurationRtspHeader result )
         {
-            result = DoubleRtspHeaderParser.TryParse( input , out double value )
-                ? new MediaDurationRtspHeader() { Value = value }
-                : null
-                ;
+            result = RtspHeaderParser.TryParse( input , out double value ) ? new MediaDurationRtspHeader() { Value = value } : null;
 
             return result != null;
         }

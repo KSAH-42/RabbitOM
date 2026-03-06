@@ -3,16 +3,13 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class RtpInfoRtspHeader : RtspHeader
     {
+        public static readonly string TypeName = "RTP-Info";
+
         private readonly HashSet<RtpInfo> _rtpInfos = new HashSet<RtpInfo>();
-
-
-
-
-        public static string TypeName { get; } = "RTP-Info";
 
 
         public IReadOnlyCollection<RtpInfo> RtpInfos
@@ -54,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new RtpInfoRtspHeader();
 

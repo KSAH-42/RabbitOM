@@ -4,13 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class ProxyInfo 
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";
 
-
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.DefaultValidator;
         
 
 
@@ -23,17 +23,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comments )
         {
-            if ( ! CheckValue( protocol ) )
+            if ( string.IsNullOrWhiteSpace( protocol ) || ! ValueValidator.TryValidate( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! CheckValue( version ) )
+            if ( string.IsNullOrWhiteSpace( version ) || ! ValueValidator.TryValidate( protocol ) )
             {
                 throw new ArgumentException( version , "the argument called version contains bad things");
             }
 
-            if ( ! CheckValue( receivedBy ) )
+            if ( string.IsNullOrWhiteSpace( receivedBy ) || ! ValueValidator.TryValidate( protocol ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy contains bad things");
             }
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( comments ) )
             {
-                if ( ! CheckValue( comments ) || comments.IndexOfAny( StringRtspHeaderParser.ParenthesisChars ) >= 0 )
+                if ( ! ValueValidator.TryValidate( comments ) || comments.IndexOfAny( new char[] { '(' , ')' } ) >= 0 )
                 {
                     throw new ArgumentException( comments , "the argument called receivedBy contains bad things");
                 }
@@ -94,24 +94,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
 
 
-        public static bool CheckValue( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && ! StringRtspHeaderParser.IsInvalid( value );
-        }
-        
-        
         public static bool TryParse( string input , out ProxyInfo result )
         {
             result = null;
 
-            input = StringRtspHeaderParser.TrimValue( input );
-
-            if ( string.IsNullOrWhiteSpace( input ) )
+            if ( ! ValueValidator.TryValidate( input ) )
             {
                 return false;
             }
 
-            var matchResult = new Regex( RegularExpression, RegexOptions.Compiled | RegexOptions.CultureInvariant).Match( input );
+            var matchResult = new Regex( RegularExpression, RegexOptions.Compiled | RegexOptions.CultureInvariant).Match( input.Trim() );
 
             if ( ! matchResult.Success )
             {

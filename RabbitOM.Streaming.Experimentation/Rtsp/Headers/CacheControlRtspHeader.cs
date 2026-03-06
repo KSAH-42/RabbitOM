@@ -6,14 +6,19 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class CacheControlRtspHeader : RtspHeader
     {
-        private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
-        
+        public static readonly string TypeName = "Cache-Control";
 
-        public static string TypeName { get; } = "Cache-Control";
+        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+
+
+
+        private readonly RtspHeaderDictionary _extensions = new RtspHeaderDictionary();
+        
 
 
         public bool NoCache { get; set; }
@@ -44,6 +49,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
 
 
+        
+
 
         public bool AddExtension( string name , long value )
         {
@@ -52,26 +59,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
-            var key = StringRtspHeaderParser.TrimValue( name , StringRtspHeaderParser.SpaceWithQuotesChars );
-
-            if ( string.IsNullOrWhiteSpace( key ) )
-            {
-                return false;
-            }
-
-            if ( _extensions.ContainsKey( key ) )
-            {
-                return false;
-            }
-
-            _extensions[ key ] = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
-
-            return true;
+            return _extensions.TryAdd( ValueFilter.Filter( name ) , ValueFilter.Filter( value ) );
         }
 
         public bool RemoveExtension( string name )
         {
-            return _extensions.Remove( StringRtspHeaderParser.TrimValue( name , StringRtspHeaderParser.SpaceWithQuotesChars ) );
+            return _extensions.Remove( ValueFilter.Filter( name ) );
         }
 
         public void ClearExtensions()
@@ -169,43 +162,41 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new CacheControlRtspHeader();
 
-                var comparer = StringComparer.OrdinalIgnoreCase;
-
                 foreach ( var token in tokens.Where( element => ! element.Contains( "=" ) ) )
                 {
-                    if ( comparer.Equals( "no-cache" , token ) )
+                    if ( ValueComparer.Equals( "no-cache" , token ) )
                     {
                         header.NoCache = true;
                     }
-                    else if ( comparer.Equals( "no-store" , token ) )
+                    else if ( ValueComparer.Equals( "no-store" , token ) )
                     {
                         header.NoStore = true;
                     }
-                    else if ( comparer.Equals( "no-transform" , token ) )
+                    else if ( ValueComparer.Equals( "no-transform" , token ) )
                     {
                         header.NoTransform = true;
                     }
-                    else if ( comparer.Equals( "must-revalidate" , token ) )
+                    else if ( ValueComparer.Equals( "must-revalidate" , token ) )
                     {
                         header.MustRevalidate = true;
                     }
-                    else if ( comparer.Equals( "proxy-revalidate" , token ) )
+                    else if ( ValueComparer.Equals( "proxy-revalidate" , token ) )
                     {
                         header.ProxyRevalidate = true;
                     }
-                    else if ( comparer.Equals( "public" , token ) )
+                    else if ( ValueComparer.Equals( "public" , token ) )
                     {
                         header.Public = true;
                     }
-                    else if ( comparer.Equals( "private" , token ) )
+                    else if ( ValueComparer.Equals( "private" , token ) )
                     {
                         header.Private = true;
                     }
-                    else if ( comparer.Equals( "immutable" , token ) )
+                    else if ( ValueComparer.Equals( "immutable" , token ) )
                     {
                         header.Immutable = true;
                     }
@@ -215,28 +206,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
                     {
-                        if ( comparer.Equals( "max-age" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "max-age" , parameter.Name ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.MaximumAge = number;
                             }
                         }
-                        else if ( comparer.Equals( "s-maxage" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "s-maxage" , parameter.Name ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.ShareMaximumAge = number;
                             }
                         }
-                        else if ( comparer.Equals( "stale-while-revalidate" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "stale-while-revalidate" , parameter.Name ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.StaleWhileRevalidate = number;
                             }
                         }
-                        else if ( comparer.Equals( "stale-if-error" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "stale-if-error" , parameter.Name ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {

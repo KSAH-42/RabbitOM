@@ -2,33 +2,22 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class RefererRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Referer";
+        public static readonly string TypeName = "Referer";
         
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
         
-
+        private string _uri = string.Empty;
         
-        
-        public string Uri { get; private set; } = string.Empty;
-
-        
-        
-        
-
-
-        public void SetUri( string value )
+        public string Uri
         {
-            Uri = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _uri;
+            set => _uri = ValueFilter.Filter( value );
         }
 
-
-
-
-
-        
         public override string ToString()
         {
             return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri ;
@@ -38,15 +27,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            var value = StringRtspHeaderParser.TrimValue( input );
+            var value = ValueFilter.Filter( input );
 
-            if ( ! string.IsNullOrWhiteSpace( value ) )
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
-                result = new RefererRtspHeader();
-                result.SetUri( value );
+                return false;
             }
 
-            return result != null;
+            result = new RefererRtspHeader() { Uri = value };
+
+            return true;
         }
     }
 }

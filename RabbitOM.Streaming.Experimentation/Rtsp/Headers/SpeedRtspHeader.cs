@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class SpeedRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Speed";
+        public static readonly string TypeName = "Speed";
         
         public long Value { get; set; }
 
@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out SpeedRtspHeader result )
         {
-            result = LongRtspHeaderParser.TryParse( input , out long value ) ? new SpeedRtspHeader() { Value = value } : null ;
+            result = RtspHeaderParser.TryParse( input , out long value ) ? new SpeedRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

@@ -3,11 +3,11 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class AcceptRangesRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Accept-Ranges";
+        public static readonly string TypeName = "Accept-Ranges";
         
         public bool Bytes { get; set; }
        
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( StringRtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
             {
                 var header = new AcceptRangesRtspHeader();
 

@@ -2,33 +2,23 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Parsers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     public sealed class LocationRtspHeader : RtspHeader
     {
-        public static string TypeName { get; } = "Location";
+        public static readonly string TypeName = "Location";
         
-        
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
 
         
+        private string _uri = string.Empty;
         
-        public string Uri { get; private set; } = string.Empty;
-
-        
-        
-        
-
-
-        public void SetUri( string value )
+        public string Uri
         {
-            Uri = StringRtspHeaderParser.TrimValue( value , StringRtspHeaderParser.SpaceWithQuotesChars );
+            get => _uri;
+            set => _uri = ValueFilter.Filter( value );
         }
 
-
-
-
-
-        
         public override string ToString()
         {
             return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
@@ -38,16 +28,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            var value = StringRtspHeaderParser.TrimValue( input );
+            var value = ValueFilter.Filter( input );
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
 
-            result = new LocationRtspHeader();
-
-            result.SetUri( value );
+            result = new LocationRtspHeader() { Uri = value };
 
             return true;
         }
