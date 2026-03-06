@@ -70,13 +70,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
 
 
 
-
-
         public static bool TryParse( string input , string separator , out string[] result )
+        {
+            return TryParse( input , separator , ValueValidator , out result );
+        }
+
+        public static bool TryParse( string input , string separator , StringRtspHeaderValidator validator , out string[] result )
         {
             result = null;
 
-            if ( ! ValueValidator.TryValidate( input ) )
+            if ( string.IsNullOrWhiteSpace( input ) )
+            {
+                return false;
+            }
+
+            if ( validator != null && ! validator.TryValidate( input ) )
             {
                 return false;
             }
@@ -87,12 +95,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
                 return true;
             }
 
-            if ( separator.Any( element => QuotesChars.Contains( element ) ) )
+            if ( separator.Any( element => QuotesChars.Contains( element ) || char.IsControl( element ) ) )
             {
                 return false;
             }
-            
-
+                        
             var segments = new List<string>();
             var builder = new StringBuilder();
             var insideQuotes = false;
