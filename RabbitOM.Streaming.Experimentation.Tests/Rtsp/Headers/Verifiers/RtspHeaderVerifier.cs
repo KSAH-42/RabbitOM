@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [Test]
-        public void CheckHeaderPrivateMembersMemers()
+        public void CheckHeaderPrivateMembers()
         {
             foreach ( var type in CurrentAssembly.ExportedTypes )
             {
