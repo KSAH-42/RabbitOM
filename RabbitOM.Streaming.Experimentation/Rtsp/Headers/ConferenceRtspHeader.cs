@@ -30,8 +30,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _tag = string.Empty;
         private string _session = string.Empty;
         private string _access = string.Empty;
-        public byte? _ttl;
-        public ValueRange? _port;
+        private byte? _ttl;
+        private ValueRange? _port;
         private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
 
 

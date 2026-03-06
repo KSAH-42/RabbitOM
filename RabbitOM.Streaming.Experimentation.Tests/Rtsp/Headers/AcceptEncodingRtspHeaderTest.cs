@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         public void CheckRemoveEncoding()
         {
             var header = new AcceptEncodingRtspHeader();
-
+            
             Assert.IsEmpty( header.Encodings );
 
             Assert.IsTrue( header.AddEncoding( new WeightedString( "br" ) ) );
