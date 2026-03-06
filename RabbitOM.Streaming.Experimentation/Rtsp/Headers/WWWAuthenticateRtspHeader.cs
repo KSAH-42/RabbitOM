@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _algorithm = string.Empty;
         private string _stale = string.Empty;
         private string _qualityOfProtection = string.Empty;
-        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
+        private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
 
         
 

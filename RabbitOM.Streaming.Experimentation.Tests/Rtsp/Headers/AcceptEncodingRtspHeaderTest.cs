@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             {
                 Assert.Fail( "parse has failed" );
             }
-
+            
             Assert.IsNotNull( header , "the header can not by null" );
             Assert.Greater( header.Encodings.Count , 0 );
             Assert.AreEqual( count , header.Encodings.Count );

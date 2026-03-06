@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private ValueRange? _clientPort;
         private ValueRange? _serverPort;
         private ValueRange? _interleaved;
-        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
+        private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
 
 
 

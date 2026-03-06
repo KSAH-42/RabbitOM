@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
     public struct RtspHeaderProperty
     {
         public string Name { get; private set; }

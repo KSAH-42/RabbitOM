@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private readonly RtspHeaderDictionary _extensions = new RtspHeaderDictionary();
+        private readonly StringRtspDictionary _extensions = new StringRtspDictionary();
         
 
 

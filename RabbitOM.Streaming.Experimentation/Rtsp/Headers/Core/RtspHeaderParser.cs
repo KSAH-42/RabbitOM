@@ -6,7 +6,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
 {
-    internal static class RtspHeaderParser
+    public static class RtspHeaderParser
     {
         private static readonly IReadOnlyCollection<char> QuotesChars = new HashSet<char>() { '\'' , '\"' , '`' };
 

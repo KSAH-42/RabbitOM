@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
         
 
-        private readonly RtspHeaderHashSet _directives = new RtspHeaderHashSet();
+        private readonly StringRtspHashSet _directives = new StringRtspHashSet();
         
 
         public IReadOnlyCollection<string> Directives

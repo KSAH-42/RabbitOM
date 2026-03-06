@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
 {
-    public sealed class RtspHeaderDictionary : IReadOnlyDictionary<string,string> , IDictionary<string , string>
+    public sealed class StringRtspDictionary : IReadOnlyDictionary<string,string> , IDictionary<string , string>
     {
         private readonly Dictionary<string,string> _collection = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
 

@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _qualityOfProtection = string.Empty;
         private string _nonceCount = string.Empty;
         private string _clientNonce = string.Empty;                
-        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
+        private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
 
         
 

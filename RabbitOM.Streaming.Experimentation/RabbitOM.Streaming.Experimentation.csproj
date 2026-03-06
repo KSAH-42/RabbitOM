@@ -82,9 +82,9 @@
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspAuthenticationTypes.cs" />
     <Compile Include="Rtsp\Headers\RtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderDictionary.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderHashSet.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderProperty.cs" />
+    <Compile Include="Rtsp\Headers\Core\StringRtspDictionary.cs" />
+    <Compile Include="Rtsp\Headers\Core\StringRtspHashSet.cs" />
+    <Compile Include="Rtsp\Headers\Core\RtspHeaderProperty.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />

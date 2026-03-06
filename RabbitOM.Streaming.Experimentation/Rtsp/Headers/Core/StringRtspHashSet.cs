@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
 {
-    public sealed class RtspHeaderHashSet : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string> , ISet<string>
+    public sealed class StringRtspHashSet : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string> , ISet<string>
     {
         private readonly HashSet<string> _collection = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 

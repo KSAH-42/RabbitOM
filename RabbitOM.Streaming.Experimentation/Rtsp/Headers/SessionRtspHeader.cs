@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         private string _identifier = string.Empty;
         private long? _timeout;
-        private readonly RtspHeaderHashSet _extensions = new RtspHeaderHashSet();
+        private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
 
         
 
