@@ -55,7 +55,9 @@ the new implementation is located temporaly in a different assembly (streaming.e
 
 ➡️ About thread safety:
 
-As mentioned below, most of classes are thread safe except sdp classes and rtp classes. Rtp sample and frame builder are not thread safe, there are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to be used only inside a thread. Any interactions with that, must used marshalling calls instead. Synchronized class will be introduce by using something similar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption handlers hook on the receive object passed into the ctor. Tests are successfull, but it may be possible that these class will not be added for the future. So at this moment, and for inheritance refactoring reasons theses classes are not present. So at this times, nothing of that will be added but it will be added if it it becomes a necessity.
+As mentioned below, most of classes are thread safe except sdp classes and rtp classes. 
+For instance Rtp frame builder are not thread safe, some class are immutable but not build which senstive classes. 
+Rtp Frame Builder are design to be incorporated as a single member on a media pipeline that run a seperate thread. In others words theses rtp classes are design to be used only inside a thread. Any interactions with that, must used marshalling calls instead. Synchronized class will be introduce by using something similar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption handlers hook on the receive object passed into the ctor. Tests are successfull, but it may be possible that these class will not be added for the future. So at this moment, and for inheritance refactoring reasons theses classes are not present. So at this times, nothing of that will be added but it will be added if it it becomes a necessity.
 
 
 # How to receive raw rtp packets using the rtsp client ?
