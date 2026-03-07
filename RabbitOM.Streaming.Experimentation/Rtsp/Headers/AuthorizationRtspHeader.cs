@@ -111,9 +111,83 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         { 
             get => _extensions; 
         }
+
         
 
+        public static bool TryParse( string input , out AuthorizationRtspHeader result )
+        {
+            result = null;
 
+            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
+            {
+                var header = new AuthorizationRtspHeader() { Scheme = tokens.FirstOrDefault() };
+                
+                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
+                {
+                    foreach ( var token in tokens )
+                    {
+                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                        {
+                            if ( ValueComparer.Equals( "username" , parameter.Key ) )
+                            {
+                                header.UserName = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "realm" , parameter.Key ) )
+                            {
+                                header.Realm = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
+                            {
+                                header.Nonce = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
+                            {
+                                header.Opaque = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "domain" , parameter.Key ) )
+                            {
+                                header.Domain = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "uri" , parameter.Key ) )
+                            {
+                                header.Uri = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "response" , parameter.Key ) )
+                            {
+                                header.Response = parameter.Value;
+                            }                            
+                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
+                            {
+                                header.Algorithm = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "cnonce" , parameter.Key ) )
+                            {
+                                header.ClientNonce = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "nc" , parameter.Key ) )
+                            {
+                                header.NonceCount = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
+                            {
+                                header.QualityOfProtection = parameter.Value;
+                            }
+                            else
+                            {
+                                header.AddExtension( token );
+                            }
+                        }
+                    }
+
+                    if ( ValueValidator.TryValidate( header.Scheme ) && ValueValidator.TryValidate( header.UserName ) )
+                    {
+                        result = header;
+                    }
+                }
+            }
+
+            return result != null;
+        }
 
         
         
@@ -187,88 +261,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return builder.ToString().Trim( ' ' , ',' );
-        }
-        
-
-
-
-        
-        
-        public static bool TryParse( string input , out AuthorizationRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
-            {
-                var scheme = tokens.FirstOrDefault();
-                
-                if ( ! ValueValidator.TryValidate( scheme ) )
-                {
-                    return false;
-                }
-
-                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
-                {
-                    result = new AuthorizationRtspHeader() { Scheme = scheme };
-
-                    foreach ( var token in tokens )
-                    {
-                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
-                        {
-                            if ( ValueComparer.Equals( "username" , parameter.Key ) )
-                            {
-                                result.UserName = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "realm" , parameter.Key ) )
-                            {
-                                result.Realm = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
-                            {
-                                result.Nonce = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
-                            {
-                                result.Opaque = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "domain" , parameter.Key ) )
-                            {
-                                result.Domain = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "uri" , parameter.Key ) )
-                            {
-                                result.Uri = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "response" , parameter.Key ) )
-                            {
-                                result.Response = parameter.Value;
-                            }                            
-                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
-                            {
-                                result.Algorithm = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "cnonce" , parameter.Key ) )
-                            {
-                                result.ClientNonce = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "nc" , parameter.Key ) )
-                            {
-                                result.NonceCount = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
-                            {
-                                result.QualityOfProtection = parameter.Value;
-                            }
-                            else
-                            {
-                                result.AddExtension( token );
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result != null;
         }
     }
 }
