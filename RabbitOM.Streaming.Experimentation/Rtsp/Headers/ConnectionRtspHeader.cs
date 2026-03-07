@@ -13,8 +13,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         
 
-
-
         private readonly StringRtspHashSet _directives = new StringRtspHashSet();
         
 
@@ -23,6 +21,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _directives;
         }
         
+        public static bool TryParse( string input , out ConnectionRtspHeader result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new ConnectionRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    header.AddDirective( token );
+                }
+
+                if ( header.Directives.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
+
 
         public bool AddDirective( string value )
         {
@@ -59,29 +79,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _directives );
-        }
-
-
-        public static bool TryParse( string input , out ConnectionRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
-            {
-                var header = new ConnectionRtspHeader();
-
-                foreach ( var token in tokens )
-                {
-                    header.AddDirective( token );
-                }
-
-                if ( header.Directives.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }
