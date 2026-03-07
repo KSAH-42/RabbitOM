@@ -93,5 +93,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
                 }
             }
         }
+
+        [Test]
+        public void CheckHeaderAreSealed()
+        {
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
+            {
+                Assert.IsTrue( type.IsSealed , $"{type.Name}" );
+            }
+        }
     }
 }
