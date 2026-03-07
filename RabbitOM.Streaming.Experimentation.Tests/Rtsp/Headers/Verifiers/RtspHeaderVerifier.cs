@@ -11,14 +11,72 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
     [TestFixture]
     public class RtspHeaderVerifier
     {
+        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( WWWAuthenticateRtspHeader ) );
+
         private readonly static HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
             nameof( BlockSizeRtspHeader ),
             nameof( RtpInfoRtspHeader ),
         };
 
-        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( WWWAuthenticateRtspHeader ) );
+        private static readonly HashSet<string> OfficialHeaderNames = new HashSet<string>()
+        {
+            "CSeq",
+            "Session",
+            "Transport",
+            "Range",
+            "Scale",
+            "RTP-Info",
+            "Require",
+            "Proxy-Require",
+            "Public",
+            "Allow",
+            "Retry-After",
 
+            "Authorization",
+            "Proxy-Authorization",
+            "WWW-Authenticate",
+            "Proxy-Authenticate",
+
+            "Content-Type",
+            "Content-Length",
+            "Content-Base",
+            "Content-Location",
+            "Content-Encoding",
+            "Content-Language",
+
+            "Cache-Control",
+            "Expires",
+            "Pragma",
+
+            "User-Agent",
+            "Server",
+
+            "Via",
+            "Connection",
+            "Location",
+            "Referer",
+            "From",
+            "To",
+            "Date",
+
+            "Accept",
+            "Accept-Encoding",
+            "Accept-Language",
+
+            "Bandwidth",
+            "Blocksize",
+            "Speed",
+
+            "Warning",
+
+            "Unsupported",
+            "Conference",
+            "If-Modified-Since",
+            "Last-Modified",
+            "Content-Range",
+            "Content-Disposition"
+        };
 
         [Test]
         public void CheckHeaderTypeNames()
@@ -38,6 +96,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
                 {
                     continue;
                 }
+
+                Assert.IsTrue( OfficialHeaderNames.Contains( typeNameField.GetValue( null ) as string ) );
                 
                 Assert.Fail( $"TypeName static member has bad name: {type.Name}" , type.Name , typeNameField.GetValue( null ) );
             }
