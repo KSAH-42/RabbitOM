@@ -8,33 +8,45 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Accept-Encoding";
 
-        
-
-
-
 
         private readonly Dictionary<string,WeightedString> _encodings = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
-
-
-
 
 
         public IReadOnlyCollection<WeightedString> Encodings
         {
             get => _encodings.Values;
         }
-        
 
+
+        public static bool TryParse( string input , out AcceptEncodingRtspHeader result )
+        {
+            result = null;
+            
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new AcceptEncodingRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    if ( WeightedString.TryParse( token , out var encoding ) )
+                    {
+                        header.AddEncoding( encoding );
+                    }
+                }
+            
+                if ( header.Encodings.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
         
         
         public bool AddEncoding( WeightedString encoding )
         {
-            if ( WeightedString.IsNullOrEmpty( encoding ) )
-            {
-                return false;
-            }
-
-            if ( ! SupportedTypes.Encodings.Contains( encoding.Value ) )
+            if ( WeightedString.IsNullOrEmpty( encoding ) || ! SupportedTypes.Encodings.Contains( encoding.Value ) )
             {
                 return false;
             }
@@ -45,7 +57,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             _encodings[ encoding.Value ] = encoding;
-
             return true;
         }
 
@@ -89,36 +100,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _encodings.Values );
-        }
-        
-
-
-
-        
-        
-        public static bool TryParse( string input , out AcceptEncodingRtspHeader result )
-        {
-            result = null;
-            
-            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
-            {
-                var header = new AcceptEncodingRtspHeader();
-
-                foreach ( var token in tokens )
-                {
-                    if ( WeightedString.TryParse( token , out var encoding ) )
-                    {
-                        header.AddEncoding( encoding );
-                    }
-                }
-            
-                if ( header.Encodings.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }

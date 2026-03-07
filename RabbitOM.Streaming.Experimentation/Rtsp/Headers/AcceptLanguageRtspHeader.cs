@@ -9,30 +9,44 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Accept-Language";
 
 
-
-
-
         private readonly Dictionary<string,WeightedString> _languages = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
-
-
+        public IReadOnlyCollection<WeightedString> Languages 
+        { 
+            get => _languages.Values; 
+        }
         
 
-        public IReadOnlyCollection<WeightedString> Languages { get => _languages.Values; }
-        
+        public static bool TryParse( string input , out AcceptLanguageRtspHeader result )
+        {
+            result = null;
 
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new AcceptLanguageRtspHeader();
 
+                foreach ( var token in tokens )
+                {
+                    if ( WeightedString.TryParse( token , out var language ) )
+                    {
+                        header.AddLanguage( language );
+                    }
+                }
+            
+                if ( header.Languages.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
         
         
         public bool AddLanguage( WeightedString language )
         {
-            if ( WeightedString.IsNullOrEmpty( language ) )
-            {
-                return false;
-            }
-
-            if ( ! SupportedTypes.Languages.Contains( language.Value ) )
+            if ( WeightedString.IsNullOrEmpty( language ) || ! SupportedTypes.Languages.Contains( language.Value ) )
             {
                 return false;
             }
@@ -87,36 +101,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _languages.Values );
-        }
-        
-
-
-
-        
-        
-        public static bool TryParse( string input , out AcceptLanguageRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
-            {
-                var header = new AcceptLanguageRtspHeader();
-
-                foreach ( var token in tokens )
-                {
-                    if ( WeightedString.TryParse( token , out var language ) )
-                    {
-                        header.AddLanguage( language );
-                    }
-                }
-            
-                if ( header.Languages.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }

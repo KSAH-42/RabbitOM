@@ -9,27 +9,43 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Accept";
 
 
-
-
-
         private readonly Dictionary<string,WeightedString> _mimes = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
-
         
-        public IReadOnlyCollection<WeightedString> Mimes { get => _mimes.Values; }
+        public IReadOnlyCollection<WeightedString> Mimes
+        { 
+            get => _mimes.Values; 
+        }
 
-        
 
-        
+        public static bool TryParse( string input , out AcceptRtspHeader result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new AcceptRtspHeader();
+
+                foreach ( var token in tokens )
+                {
+                    if ( WeightedString.TryParse( token , out var mime ) )
+                    {
+                        header.AddMime( mime );
+                    }
+                }
+            
+                if ( header.Mimes.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
         
         public bool AddMime( WeightedString mime )
         {
-            if ( WeightedString.IsNullOrEmpty( mime ) )
-            {
-                return false;
-            }
-
-            if ( ! SupportedTypes.Formats.Contains( mime.Value ) )
+            if ( WeightedString.IsNullOrEmpty( mime ) || ! SupportedTypes.Formats.Contains( mime.Value ) )
             {
                 return false;
             }
@@ -84,36 +100,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _mimes.Values );
-        }
-        
-
-
-
-        
-        
-        public static bool TryParse( string input , out AcceptRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
-            {
-                var header = new AcceptRtspHeader();
-
-                foreach ( var token in tokens )
-                {
-                    if ( WeightedString.TryParse( token , out var mime ) )
-                    {
-                        header.AddMime( mime );
-                    }
-                }
-            
-                if ( header.Mimes.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }

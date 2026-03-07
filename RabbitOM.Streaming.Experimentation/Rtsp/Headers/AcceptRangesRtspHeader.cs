@@ -10,8 +10,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         
 
-
-
         public bool Bytes { get; set; }
        
         public bool Ntp { get; set; }
@@ -23,47 +21,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public bool Utc { get; set; }
         
 
-
-
-        
-        
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            if ( Bytes )
-            {
-                builder.Append( "bytes, ");
-            }
-
-            if ( Clock )
-            {
-                builder.Append( "clock, ");
-            }
-
-            if ( Ntp )
-            {
-                builder.Append( "ntp, ");
-            }
-
-            if ( Smpte )
-            {
-                builder.Append( "smpte, ");
-            }
-
-            if ( Utc )
-            {
-                builder.Append( "utc, ");
-            }
-
-            return builder.ToString().Trim( ' ' , ',' );
-        }
-        
-
-
-
-        
-        
         public static bool TryParse( string input , out AcceptRangesRtspHeader result )
         {
             result = null;
@@ -96,10 +53,47 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                result = header;
+                if ( header.Bytes || header.Clock || header.Ntp || header.Smpte || header.Utc )
+                {
+                    result = header;
+                }
             }
 
             return result != null;
+        }
+
+        
+        
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            if ( Bytes )
+            {
+                builder.Append( "bytes, ");
+            }
+
+            if ( Clock )
+            {
+                builder.Append( "clock, ");
+            }
+
+            if ( Ntp )
+            {
+                builder.Append( "ntp, ");
+            }
+
+            if ( Smpte )
+            {
+                builder.Append( "smpte, ");
+            }
+
+            if ( Utc )
+            {
+                builder.Append( "utc");
+            }
+
+            return builder.ToString().Trim( ' ' , ',' );
         }
     }
 }

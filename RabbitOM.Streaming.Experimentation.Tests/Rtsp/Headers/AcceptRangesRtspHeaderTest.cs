@@ -31,19 +31,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " bytes " , out var header ) );
             Assert.IsTrue( header.Bytes );
-
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " unknown " , out header ) );
-            Assert.IsFalse( header.Bytes );
-        }
-
-        [Test]
-        public void CheckTryParseSucceedForNtp()
-        {
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " ntp " , out var header ) );
-            Assert.IsTrue( header.Ntp );
-
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " unknown " , out header ) );
-            Assert.IsFalse( header.Ntp );
         }
 
         [Test]
@@ -51,9 +38,20 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " CloCK " , out var header ) );
             Assert.IsTrue( header.Clock );
+        }
 
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " unknown " , out header ) );
-            Assert.IsFalse( header.Clock );
+        [Test]
+        public void CheckTryParseSucceedForNtp()
+        {
+            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " ntp " , out var header ) );
+            Assert.IsTrue( header.Ntp );
+        }
+
+        [Test]
+        public void CheckTryParseSucceedForSmpte()
+        {
+            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " Smpte " , out var header ) );
+            Assert.IsTrue( header.Smpte );
         }
 
         [Test]
@@ -61,20 +59,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         {
             Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " UtC " , out var header ) );
             Assert.IsTrue( header.Utc );
-
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " unknown " , out header ) );
-            Assert.IsFalse( header.Utc );
-        }
-
-        [Test]
-        public void CheckTryParseSucceedForNone()
-        {
-            Assert.IsTrue( AcceptRangesRtspHeader.TryParse( " unknown " , out var header ) );
-            Assert.IsFalse( header.Bytes );
-            Assert.IsFalse( header.Ntp );
-            Assert.IsFalse( header.Smpte );
-            Assert.IsFalse( header.Clock );
-            Assert.IsFalse( header.Utc );
         }
 
         [TestCase( null )]
@@ -83,6 +67,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "," )]
         [TestCase( ",," )]
         [TestCase( " , , " )]
+        [TestCase( "???" )]
+        [TestCase( "byte , yutc , klock , mtp , snpte ")]
+        [TestCase( "cloc k")]
         public void CheckTryParseFailed( string input)
         {
             Assert.IsFalse( AcceptRangesRtspHeader.TryParse( input , out var header ) );
