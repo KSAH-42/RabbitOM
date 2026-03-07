@@ -124,107 +124,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
         
 
-
-
-        public bool AddExtension( string value )
-        {
-            return _extensions.Add( ValueAdapter.Adapt( value ) );
-        }
-
-        public bool RemoveExtension( string value )
-        {
-            return _extensions.Remove( ValueAdapter.Adapt( value ) );
-        }
-
-        public void ClearExtensions()
-        {
-            _extensions.Clear();
-        }
-        
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            if ( ! string.IsNullOrWhiteSpace( ConferenceId ) )
-            {
-                builder.AppendFormat( "{0}; " , ConferenceId );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Transport ) )
-            {
-                builder.AppendFormat( "{0}; " , Transport );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Transmission ) )
-            {
-                builder.AppendFormat( "{0}; " , Transmission );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Source ) )
-            {
-                builder.AppendFormat( "source={0}; " , Source );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Destination ) )
-            {
-                builder.AppendFormat( "destination={0}; " , Destination );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Address ) )
-            {
-                builder.AppendFormat( "address={0}; " , Address );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Host ) )
-            {
-                builder.AppendFormat( "host={0}; " , Host );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Role ) )
-            {
-                builder.AppendFormat( "role={0}; " , Role );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Mode ) )
-            {
-                builder.AppendFormat( "mode={0};" , Mode );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Tag ) )
-            {
-                builder.AppendFormat( "tag={0}; " , Tag );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Session ) )
-            {
-                builder.AppendFormat( "session={0}; " , Session);
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Access ) )
-            {
-                builder.AppendFormat( "access={0}; " , Session);
-            }
-
-            if ( TTL.HasValue )
-            {
-                builder.AppendFormat( "ttl={0}; " , TTL );
-            }
-
-            if ( Port.HasValue )
-            {
-                builder.AppendFormat( "port={0}; " , Port );
-            }
-
-            foreach ( var extension in _extensions )
-            {
-                builder.AppendFormat( "{0}; " , extension );
-            }
-
-            return builder.ToString().Trim( ' ' , ';' );
-        }
-
-
-
         public static bool TryParse( string input , out ConferenceRtspHeader result )
         {
             result = null;
@@ -331,6 +230,105 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+
+
+        public bool AddExtension( string value )
+        {
+            return _extensions.Add( ValueAdapter.Adapt( value ) );
+        }
+
+        public bool RemoveExtension( string value )
+        {
+            return _extensions.Remove( ValueAdapter.Adapt( value ) );
+        }
+
+        public void ClearExtensions()
+        {
+            _extensions.Clear();
+        }
+        
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            if ( ! string.IsNullOrWhiteSpace( ConferenceId ) )
+            {
+                builder.AppendFormat( "{0}; " , ConferenceId );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Transport ) )
+            {
+                builder.AppendFormat( "{0}; " , Transport );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Transmission ) )
+            {
+                builder.AppendFormat( "{0}; " , Transmission );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Source ) )
+            {
+                builder.AppendFormat( "source={0}; " , Source );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Destination ) )
+            {
+                builder.AppendFormat( "destination={0}; " , Destination );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Address ) )
+            {
+                builder.AppendFormat( "address={0}; " , Address );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Host ) )
+            {
+                builder.AppendFormat( "host={0}; " , Host );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Role ) )
+            {
+                builder.AppendFormat( "role={0}; " , Role );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Mode ) )
+            {
+                builder.AppendFormat( "mode={0};" , Mode );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Tag ) )
+            {
+                builder.AppendFormat( "tag={0}; " , Tag );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Session ) )
+            {
+                builder.AppendFormat( "session={0}; " , Session);
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Access ) )
+            {
+                builder.AppendFormat( "access={0}; " , Session);
+            }
+
+            if ( TTL.HasValue )
+            {
+                builder.AppendFormat( "ttl={0}; " , TTL );
+            }
+
+            if ( Port.HasValue )
+            {
+                builder.AppendFormat( "port={0}; " , Port );
+            }
+
+            foreach ( var extension in _extensions )
+            {
+                builder.AppendFormat( "{0}; " , extension );
+            }
+
+            return builder.ToString().Trim( ' ' , ';' );
         }
     }
 }
