@@ -10,16 +10,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public long Value { get; set; }
 
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
-
         public static bool TryParse( string input , out ContentLengthRtspHeader result )
         {
             result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new ContentLengthRtspHeader() { Value = value } : null ;
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
         }
     }
 }
