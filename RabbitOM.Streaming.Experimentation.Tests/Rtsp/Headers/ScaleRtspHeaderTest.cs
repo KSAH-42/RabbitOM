@@ -31,6 +31,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " \"-9223372036854775808" , -9223372036854775808 )]
         [TestCase( " '-9223372036854775808" , -9223372036854775808 )]
 
+        [TestCase( " '   0 ' " , 0 )]
+        [TestCase( " '  1  ' " , 1 )]
+        [TestCase( " ' 2   ' " , 2 )]
+        [TestCase( " '   9223372036854775807' " , 9223372036854775807 )]
+
         public void CheckTryParseSucceed( string input , long expectedId )
         {
             Assert.IsTrue( ScaleRtspHeader.TryParse( input , out var header ) );
