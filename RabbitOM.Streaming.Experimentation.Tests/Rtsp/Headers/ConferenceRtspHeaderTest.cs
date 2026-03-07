@@ -139,7 +139,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;ttl=123" )]
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;TTL=123" )]
         [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;ttl=123" )]
-        [TestCase( "1234567879; RTP/AVP/UDP ; ttl = '123' unicast ;" )]
+        [TestCase( "1234567879; RTP/AVP/UDP ; ttl = '123' ;unicast ;" )]
         [TestCase( "1234567879; ttl=123;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseTTLSucceed( string input )
         {
