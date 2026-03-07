@@ -52,7 +52,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _realm = ValueAdapter.Adapt( value );
         }
         
-        
         public string Nonce
         {
             get => _nonce;

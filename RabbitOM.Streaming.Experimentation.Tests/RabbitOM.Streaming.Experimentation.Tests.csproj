@@ -115,7 +115,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rtsp\Headers\Validation\UriValueValidatorHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParserTest.cs" />
