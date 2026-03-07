@@ -27,6 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         }
 
         [TestCase( "digest realm='my realm', username='my user name',domain='my domain'," )]
+        [TestCase( "digest realm = 'my realm' , username='my user name' , domain='my domain'," )]
         public void CheckTryParseSucceedSimple( string input )
         {
             Assert.IsTrue( AuthorizationRtspHeader.TryParse( input , out var header ) );
@@ -41,8 +42,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "" ) ]
         [TestCase( " " ) ]
         [TestCase( "_" ) ]
-        [TestCase( "???? realm='my realm', username='my user name',domain='my domain'," )]
-        [TestCase( "digest realm='my realm', username='',domain='my domain'," )]
+        [TestCase( "???? username='my user name', realm='my realm',domain='my domain'," )]
+        [TestCase( "digest username='', realm='my realm',domain='my domain'," )]
         public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( AuthorizationRtspHeader.TryParse( input , out var header ) );
