@@ -154,7 +154,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
             {
                 var header = new WWWAuthenticateRtspHeader() { Scheme = tokens.First() };
                 
@@ -162,29 +162,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     foreach ( var token in tokens )
                     {
-                        if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                         {
-                            if ( ValueComparer.Equals( "realm" , parameter.Name ) )
+                            if ( ValueComparer.Equals( "realm" , parameter.Key ) )
                             {
                                 header.Realm = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "nonce" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
                             {
                                 header.Nonce = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "opaque" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
                             {
                                 header.Opaque = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "algorithm" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
                             {
                                 header.Algorithm = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "stale" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "stale" , parameter.Key ) )
                             {
                                 header.Stale = parameter.Value ;
                             }
-                            else if ( ValueComparer.Equals( "qop" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
                             {
                                 header.QualityOfProtection = parameter.Value;
                             }

@@ -4,6 +4,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using System.Collections.Generic;
 
     public sealed class RtpInfo 
     { 
@@ -73,30 +74,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
             {
                 var header = new RtpInfo();
 
                 foreach ( var token in tokens )
                 {
-                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( ValueComparer.Equals( "url" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "url" , parameter.Key ) )
                         {
                             header.Url = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "ssrc" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
                             header.SSRC = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "seq" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
                         {
                             if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
                             {
                                 header.Sequence = value;
                             }
                         }
-                        else if ( ValueComparer.Equals( "rtptime" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
                         {
                             if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
                             {

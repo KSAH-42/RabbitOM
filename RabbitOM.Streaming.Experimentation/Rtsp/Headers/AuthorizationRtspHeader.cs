@@ -173,9 +173,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             foreach ( var extension in _extensions )
             {
-                if ( RtspHeaderProperty.TryParse( extension , "=" , out var parameter ) )
+                if ( RtspHeaderParser.TryParse( extension , "=" , out KeyValuePair<string,string> parameter ) )
                 {
-                    builder.AppendFormat( "{0}=\"{1}\", " , parameter.Name , parameter.Value );
+                    builder.AppendFormat( "{0}=\"{1}\", " , parameter.Key , parameter.Value );
                 }
                 else
                 {
@@ -195,7 +195,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
             {
                 var scheme = tokens.FirstOrDefault();
                 
@@ -205,49 +205,49 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     foreach ( var token in tokens )
                     {
-                        if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                         {
-                            if ( ValueComparer.Equals( "username" , parameter.Name ) )
+                            if ( ValueComparer.Equals( "username" , parameter.Key ) )
                             {
                                 result.UserName = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "realm" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "realm" , parameter.Key ) )
                             {
                                 result.Realm = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "nonce" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
                             {
                                 result.Nonce = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "opaque" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
                             {
                                 result.Opaque = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "domain" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "domain" , parameter.Key ) )
                             {
                                 result.Domain = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "uri" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "uri" , parameter.Key ) )
                             {
                                 result.Uri = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "response" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "response" , parameter.Key ) )
                             {
                                 result.Response = parameter.Value;
                             }                            
-                            else if ( ValueComparer.Equals( "algorithm" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
                             {
                                 result.Algorithm = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "cnonce" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "cnonce" , parameter.Key ) )
                             {
                                 result.ClientNonce = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "nc" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "nc" , parameter.Key ) )
                             {
                                 result.NonceCount = parameter.Value;
                             }
-                            else if ( ValueComparer.Equals( "qop" , parameter.Name ) )
+                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
                             {
                                 result.QualityOfProtection = parameter.Value;
                             }

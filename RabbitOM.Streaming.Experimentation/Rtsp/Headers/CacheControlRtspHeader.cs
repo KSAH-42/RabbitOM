@@ -162,7 +162,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
             {
                 var header = new CacheControlRtspHeader();
 
@@ -204,30 +204,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens.Where( element => element.Contains( "=" ) ) )
                 {
-                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( ValueComparer.Equals( "max-age" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "max-age" , parameter.Key ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.MaximumAge = number;
                             }
                         }
-                        else if ( ValueComparer.Equals( "s-maxage" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "s-maxage" , parameter.Key ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.ShareMaximumAge = number;
                             }
                         }
-                        else if ( ValueComparer.Equals( "stale-while-revalidate" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "stale-while-revalidate" , parameter.Key ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.StaleWhileRevalidate = number;
                             }
                         }
-                        else if ( ValueComparer.Equals( "stale-if-error" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "stale-if-error" , parameter.Key ) )
                         {
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
@@ -236,7 +236,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else
                         {
-                            header.AddExtension( parameter.Name , parameter.Value );
+                            header.AddExtension( parameter.Key , parameter.Value );
                         }
                     }
                 }

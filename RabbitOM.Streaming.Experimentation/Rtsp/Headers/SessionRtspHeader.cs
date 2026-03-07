@@ -90,7 +90,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
             {
                 var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
 
@@ -105,9 +105,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 
                 foreach( var token in tokens )
                 {
-                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( ValueComparer.Equals( "timeout" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "timeout" , parameter.Key ) )
                         {
                             if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
                             {

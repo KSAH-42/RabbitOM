@@ -239,85 +239,85 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
             {
                 var header = new TransportRtspHeader();
 
                 foreach ( var token in tokens )
                 {
-                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( ValueComparer.Equals( "destination" , parameter.Name ) )
+                        if ( ValueComparer.Equals( "destination" , parameter.Key ) )
                         {
                             header.Destination = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "source" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "source" , parameter.Key ) )
                         {
                             header.Source = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "address" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "address" , parameter.Key ) )
                         {
                             header.Address = parameter.Value ;
                         }
-                        else if ( ValueComparer.Equals( "host" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "host" , parameter.Key ) )
                         {
                             header.Host = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "ssrc" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
                             header.SSRC = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "mode" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "mode" , parameter.Key ) )
                         {
                             header.Mode = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "layers" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "layers" , parameter.Key ) )
                         {
                             if ( int.TryParse( ValueAdapter.Adapt( parameter.Value ) , out int value ) )
                             {
                                 header.Layers = value;
                             }
                         }
-                        else if ( ValueComparer.Equals( "ttl" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "ttl" , parameter.Key ) )
                         {
                             if ( byte.TryParse( ValueAdapter.Adapt( parameter.Value ) , out byte value ) )
                             {
                                 header.TTL = value;
                             }
                         }
-                        else if ( ValueComparer.Equals( "port" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
                                 header.Port = value;
                             }
                         }
-                        else if ( ValueComparer.Equals( "client_port" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "client_port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
                                 header.ClientPort = value;
                             }
                         }
-                        else if ( ValueComparer.Equals( "server_port" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "server_port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
                                 header.ServerPort = value;
                             }
                         }
-                        else if ( ValueComparer.Equals( "interleaved" , parameter.Name ) )
+                        else if ( ValueComparer.Equals( "interleaved" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
                                 header.Interleaved = value;
                             }
                         }
-                        else if ( SupportedTypes.Transports.Contains( parameter.Name ) )
+                        else if ( SupportedTypes.Transports.Contains( parameter.Key ) )
                         {
                             header.Transport = token;
                         }
-                        else if ( SupportedTypes.Transmissions.Contains( parameter.Name ) )
+                        else if ( SupportedTypes.Transmissions.Contains( parameter.Key ) )
                         {
                             header.Transmission = token;
                         }

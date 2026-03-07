@@ -5,6 +5,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using System.Collections.Generic;
 
     public sealed class ContentRangeRtspHeader
     {
@@ -92,17 +93,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
             
-            if ( RtspHeaderParser.TryParse( input , " " , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
             {
-                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out var tokensRange ) )
+                if ( RtspHeaderParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out string[] tokensRange ) )
                 {
                     var header = new ContentRangeRtspHeader();
 
                     header.Unit = tokens.ElementAtOrDefault( 0 );
 
-                    if ( RtspHeaderProperty.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out var range ) )
+                    if ( RtspHeaderParser.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out KeyValuePair<string,string> range ) )
                     {
-                        if ( long.TryParse( ValueAdapter.Adapt( range.Name ) , out long number ) )
+                        if ( long.TryParse( ValueAdapter.Adapt( range.Key ) , out long number ) )
                         {
                             header.Start = number;
                         }

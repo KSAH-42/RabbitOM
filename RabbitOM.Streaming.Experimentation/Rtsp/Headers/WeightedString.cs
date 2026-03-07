@@ -6,6 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
+    using System.Collections.Generic;
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
@@ -58,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , ";" , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
@@ -69,9 +70,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                 {
-                    if ( RtspHeaderProperty.TryParse( token , "=" , out var parameter ) )
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Name ) )
+                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) )
                         {
                             if ( double.TryParse( ValueAdapter.Adapt( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                             {

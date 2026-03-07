@@ -68,7 +68,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( RtspHeaderParser.TryParse( input , "," , out var tokens ) )
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
             {
                 var header = new AcceptRangesRtspHeader();
 

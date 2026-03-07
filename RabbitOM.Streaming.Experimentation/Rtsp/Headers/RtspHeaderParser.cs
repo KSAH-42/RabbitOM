@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
         
+        public static bool TryParse( string input , string separator , out KeyValuePair<string,string> result )
+        {
+            result = default;
+
+            if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrWhiteSpace( separator ) || ! input.Contains( separator ) )
+            {
+                return false;
+            }
+
+            if ( RtspHeaderParser.TryParse( input , separator , out string[] tokens ) )
+            {
+                result = new KeyValuePair<string, string>( StringValueAdapter.UnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) , StringValueAdapter.UnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) );
+                return true;
+            }
+
+            return false;
+        }
         
         public static bool TryParse( string input , string separator , out string[] result )
         {

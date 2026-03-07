@@ -57,12 +57,12 @@
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Validation\TokenRtspHeaderValidator.cs" />
-    <Compile Include="Rtsp\Headers\Filters\QuoteStringRtspHeaderFilter.cs" />
+    <Compile Include="Rtsp\Headers\Filters\QuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
-    <Compile Include="Rtsp\Headers\Filters\StringRtspHeaderFilter.cs" />
+    <Compile Include="Rtsp\Headers\Filters\StringValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Validation\StringRtspHeaderValidator.cs" />
-    <Compile Include="Rtsp\Headers\Filters\TrimStringRtspHeaderFilter.cs" />
-    <Compile Include="Rtsp\Headers\Filters\UnQuoteStringRtspHeaderFilter.cs" />
+    <Compile Include="Rtsp\Headers\Filters\TrimValueAdapter.cs" />
+    <Compile Include="Rtsp\Headers\Filters\UnQuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\DateRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeader.cs" />
@@ -80,7 +80,6 @@
     <Compile Include="Rtsp\Headers\RtspAuthenticationTypes.cs" />
     <Compile Include="Rtsp\Headers\StringRtspDictionary.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHashSet.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderProperty.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeader.cs" />
