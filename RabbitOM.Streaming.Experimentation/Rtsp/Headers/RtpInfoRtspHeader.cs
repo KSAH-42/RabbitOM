@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class RtpInfoRtspHeader : RtspHeader
+    public sealed class RtpInfoRtspHeader
     {
         public static readonly string TypeName = "RTP-Info";
 

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class StringRtspHashSet : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string> , ISet<string>
     {

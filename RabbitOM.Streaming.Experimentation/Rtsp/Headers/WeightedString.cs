@@ -4,20 +4,24 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.DefaultValidator;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
 
 
         public WeightedString( string value )
         {
+            value = ValueFilter.Filter( value );
             Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
+            value = ValueFilter.Filter( value );
             Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
@@ -69,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out double quality ) )
+                            if ( double.TryParse( ValueFilter.Filter( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                             {
                                 result = new WeightedString( name , quality );
                                 break;

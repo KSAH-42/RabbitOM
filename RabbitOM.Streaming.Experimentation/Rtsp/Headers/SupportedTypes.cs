@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public static class SupportedTypes
     {
-        private static Lazy<IReadOnlyCollection<string>> s_encodings = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<IReadOnlyCollection<string>> s_encodings = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "zip",
             "tar",
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             "*",
         });
         
-        private static Lazy<IReadOnlyCollection<string>> s_formats = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<IReadOnlyCollection<string>> s_formats = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "application/sdp",
             "application/text" ,
@@ -38,20 +38,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             "binary" ,
         });
         
-        private static Lazy<IReadOnlyCollection<string>> s_languages = new Lazy<IReadOnlyCollection<string>>( () =>
+        private static readonly Lazy<IReadOnlyCollection<string>> s_languages = new Lazy<IReadOnlyCollection<string>>( () =>
         {
             var languages = CultureInfo.GetCultures( CultureTypes.AllCultures ).Select( culture => culture.Name );
 
             return new HashSet<string>( languages , StringComparer.OrdinalIgnoreCase );
         });
 
-        private static Lazy<IReadOnlyCollection<string>> s_transmissions = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<IReadOnlyCollection<string>> s_transmissions = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "unicast",
             "multicast",
         });
 
-        private static Lazy<IReadOnlyCollection<string>> s_transports = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<IReadOnlyCollection<string>> s_transports = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "RTP",
             "RTP/AVP",
@@ -86,7 +86,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        
         public static IReadOnlyCollection<string> Encodings { get => s_encodings.Value; }
 
         public static IReadOnlyCollection<string> Formats { get => s_formats.Value; }

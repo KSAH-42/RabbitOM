@@ -1,10 +1,10 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class MediaDurationRtspHeader : RtspHeader
+    public sealed class MediaDurationRtspHeader
     {
         public static readonly string TypeName = "Media-Duration";
 
@@ -12,12 +12,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return RtspHeaderParser.Format( Value );
+            return Value.ToString( "F3" , CultureInfo.InvariantCulture );
         }
 
         public static bool TryParse( string input , out MediaDurationRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( input , out double value ) ? new MediaDurationRtspHeader() { Value = value } : null;
+            result = double.TryParse( StringRtspHeaderFilter.UnQuoteFilter.Filter( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
+                    ? new MediaDurationRtspHeader() { Value = value } 
+                    : null
+                    ;
 
             return result != null;
         }

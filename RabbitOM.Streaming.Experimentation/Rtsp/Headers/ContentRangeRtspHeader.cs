@@ -4,9 +4,9 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class ContentRangeRtspHeader : RtspHeader
+    public sealed class ContentRangeRtspHeader
     {
         public static readonly string TypeName = "Content-Range";
         
@@ -102,18 +102,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     if ( RtspHeaderProperty.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out var range ) )
                     {
-                        if ( RtspHeaderParser.TryParse( range.Name , out long number ) )
+                        if ( long.TryParse( ValueFilter.Filter( range.Name ) , out long number ) )
                         {
                             header.Start = number;
                         }
 
-                        if ( RtspHeaderParser.TryParse( range.Value , out number ) )
+                        if ( long.TryParse( ValueFilter.Filter( range.Value ) , out number ) )
                         {
                             header.End = number;
                         }
                     }
 
-                    if ( RtspHeaderParser.TryParse( tokensRange.ElementAtOrDefault(1) , out long size ) )
+                    if ( long.TryParse( ValueFilter.Filter( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
                     {
                         header.Size = size;
                     }                    

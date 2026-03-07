@@ -17,17 +17,17 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
             nameof( RtpInfoRtspHeader ),
         };
 
-        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( RtspHeader ) );
+        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( WWWAuthenticateRtspHeader ) );
 
 
         [Test]
         public void CheckHeaderTypeNames()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
             {
                 var typeNameField = type.GetField( "TypeName" , BindingFlags.Public | BindingFlags.Static );
                 
-                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + nameof( RtspHeader );
+                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeader";
 
                 if ( type.Name == typeNameValue )
                 {
@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckTryParseSignature()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
             {
                 var method = type.GetMethod( "TryParse" , BindingFlags.Public | BindingFlags.Static );
                 
@@ -61,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckToStringIsImplemented()
         { 
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
             {
                 var method = type.GetMethod( "ToString" );
                 

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class ViaRtspHeader : RtspHeader
+    public sealed class ViaRtspHeader
     { 
         public static readonly string TypeName = "Via";
 

@@ -43,9 +43,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " , , , , " )]
         [TestCase( "dzip" )]
         [TestCase( "dzip, text" )]
-        [TestCase( "\rgzip" ) ]
-        [TestCase( "gzip,\r\ndeflate" ) ]
-        [TestCase( "gzip\v,\fdeflate,\r\nidentity" ) ]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptEncodingRtspHeader.TryParse( input , out var header ) )

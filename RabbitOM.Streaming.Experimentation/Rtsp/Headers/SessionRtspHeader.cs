@@ -5,13 +5,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
-    public sealed class SessionRtspHeader : RtspHeader
+    public sealed class SessionRtspHeader
     {
         public static readonly string TypeName = "Session";
 
-        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
         
@@ -108,7 +109,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( ValueComparer.Equals( "timeout" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out long value ) )
+                            if ( long.TryParse( ValueFilter.Filter( parameter.Value ) , out long value ) )
                             {
                                 header.Timeout = value;
                             }

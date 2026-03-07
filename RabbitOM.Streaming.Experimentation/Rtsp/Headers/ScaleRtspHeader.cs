@@ -1,10 +1,10 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+using System;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class ScaleRtspHeader : RtspHeader
+    public sealed class ScaleRtspHeader
     {
         public static readonly string TypeName = "Scale";
         
@@ -12,12 +12,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return RtspHeaderParser.Format( Value );
+            return Value.ToString( "G2" , CultureInfo.InvariantCulture );
         }
 
         public static bool TryParse( string input , out ScaleRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( input , out float value ) ? new ScaleRtspHeader() { Value = value } : null ;
+            result = float.TryParse( StringRtspHeaderFilter.UnQuoteFilter.Filter( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
+                    ? new ScaleRtspHeader() { Value = value } 
+                    : null
+                    ;
 
             return result != null;
         }

@@ -4,17 +4,20 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class AcceptLanguageRtspHeader : RtspHeader
+    public sealed class AcceptLanguageRtspHeader
     {
+        public static readonly string TypeName = "Accept-Language";
+
+
+
+
+
         private readonly Dictionary<string,WeightedString> _languages = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
 
 
         
-        public static readonly string TypeName = "Accept-Language";
 
         public IReadOnlyCollection<WeightedString> Languages { get => _languages.Values; }
         

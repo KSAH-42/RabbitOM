@@ -4,17 +4,20 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class AllowRtspHeader : RtspHeader
+    public sealed class AllowRtspHeader
     {
-        private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
-        
-
-
-
-        
         public static readonly string TypeName = "Allow";
+        
+
+
+
+
+        private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
+
+        
+
+
+
 
         public IReadOnlyCollection<RtspMethod> Methods
         {

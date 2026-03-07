@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class RefererRtspHeader : RtspHeader
+    public sealed class RefererRtspHeader
     {
         public static readonly string TypeName = "Referer";
         

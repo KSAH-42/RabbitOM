@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class LastModifiedRtspHeader : RtspHeader
+    public sealed class LastModifiedRtspHeader
     {
         public static readonly string TypeName = "Last-Modified";
         
@@ -12,12 +13,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return RtspHeaderParser.Format( Value );
+            var value = Value.Kind == DateTimeKind.Local ? Value.ToUniversalTime() : Value;
+
+            return value.ToString( "r" , CultureInfo.InvariantCulture );
         }
 
         public static bool TryParse( string input , out LastModifiedRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( input , out DateTime value ) ? new LastModifiedRtspHeader() { Value = value } : null;
+            result = DateTime.TryParse( StringRtspHeaderFilter.UnQuoteFilter.Filter( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
+                ? new LastModifiedRtspHeader() { Value = value } 
+                : null
+                ;
 
             return result != null;
         }

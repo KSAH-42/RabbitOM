@@ -4,7 +4,6 @@ using System;
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
 
     [TestFixture]
     public class RtspHeaderParserTest
@@ -83,18 +82,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "[*]" , tokens[0] );
         }
 
-        [TestCase("this is a test" , null )]
-        [TestCase("this is a test" , "" )]
-        public void CheckTryParse6( string input , string seperator )
-        {
-            Assert.True( RtspHeaderParser.TryParse( input , seperator , out string[] tokens ) );
-            Assert.AreEqual( 1 , tokens.Length );
-            Assert.AreEqual( "this is a test" , tokens[0] );
-        }
-
         [TestCase( null , null )]
         [TestCase( null , "" )]
         [TestCase( null , " " )]
+        [TestCase("this is a test" , null )]
+        [TestCase("this is a test" , "" )]
         [TestCase( "" , "" )]
         [TestCase( "" , " " )]
         [TestCase( "apple 'banana with chocolat' pear" , "'" )]

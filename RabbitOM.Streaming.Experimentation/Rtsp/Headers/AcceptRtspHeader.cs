@@ -4,22 +4,21 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class AcceptRtspHeader : RtspHeader
+    public sealed class AcceptRtspHeader
     {
+        public static readonly string TypeName = "Accept";
+
+
+
+
+
         private readonly Dictionary<string,WeightedString> _mimes = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
         
 
-
-
         
-        public static readonly string TypeName = "Accept";
-
         public IReadOnlyCollection<WeightedString> Mimes { get => _mimes.Values; }
+
         
-
-
 
         
         

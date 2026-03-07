@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 {
     public abstract class StringRtspHeaderValidator
     {

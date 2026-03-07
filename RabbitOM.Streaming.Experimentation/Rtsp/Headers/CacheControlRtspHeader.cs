@@ -6,13 +6,13 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class CacheControlRtspHeader : RtspHeader
+    public sealed class CacheControlRtspHeader
     {
         public static readonly string TypeName = "Cache-Control";
 
-        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
 
 

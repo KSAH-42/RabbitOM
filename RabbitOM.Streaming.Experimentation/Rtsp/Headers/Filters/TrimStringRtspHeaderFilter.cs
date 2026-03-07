@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters
 {
     public sealed class TrimStringRtspHeaderFilter : StringRtspHeaderFilter
     {

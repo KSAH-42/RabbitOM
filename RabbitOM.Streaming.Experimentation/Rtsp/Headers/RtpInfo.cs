@@ -3,12 +3,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
     public sealed class RtpInfo 
     { 
-        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
-        
+        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+
+
 
         private RtpInfo() { }
 
@@ -19,8 +21,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( url ) );
             }
            
-            Url = url.Trim();
-            SSRC = ssrc?.Trim() ?? string.Empty;
+            Url = ValueFilter.Filter( url );
+            SSRC = ValueFilter.Filter( ssrc );
             Sequence = sequence;
             RtpTime = rtpTime;
         }
@@ -89,14 +91,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else if ( ValueComparer.Equals( "seq" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out long value ) )
+                            if ( long.TryParse( ValueFilter.Filter( parameter.Value ) , out long value ) )
                             {
                                 header.Sequence = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "rtptime" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out long value ) )
+                            if ( long.TryParse( ValueFilter.Filter( parameter.Value ) , out long value ) )
                             {
                                 header.RtpTime = value;
                             }

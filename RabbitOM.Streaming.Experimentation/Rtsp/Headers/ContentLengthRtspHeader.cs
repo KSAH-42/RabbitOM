@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class ContentLengthRtspHeader : RtspHeader
+    public sealed class ContentLengthRtspHeader
     {
         public static readonly string TypeName = "Content-Length";        
         
@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out ContentLengthRtspHeader result )
         {
-            result = RtspHeaderParser.TryParse( input , out long value ) ? new ContentLengthRtspHeader() { Value = value } : null ;
+            result = long.TryParse( StringRtspHeaderFilter.UnQuoteFilter.Filter( input ) , out long value ) ? new ContentLengthRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

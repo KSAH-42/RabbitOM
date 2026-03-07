@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class PublicRtspHeader : RtspHeader 
+    public sealed class PublicRtspHeader 
     {
         public static readonly string TypeName = "Public";
 

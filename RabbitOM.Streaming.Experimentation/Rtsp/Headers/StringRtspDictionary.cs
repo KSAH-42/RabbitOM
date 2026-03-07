@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class StringRtspDictionary : IReadOnlyDictionary<string,string> , IDictionary<string , string>
     {

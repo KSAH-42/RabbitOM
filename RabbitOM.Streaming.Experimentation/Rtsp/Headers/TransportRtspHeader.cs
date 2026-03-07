@@ -5,13 +5,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
-    public sealed class TransportRtspHeader : RtspHeader
+    public sealed class TransportRtspHeader
     {
         public static readonly string TypeName = "Transport";
 
-        public static readonly StringRtspHeaderComparer ValueComparer = StringRtspHeaderComparer.IgnoreCaseComparer;
+        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
 
@@ -272,14 +273,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else if ( ValueComparer.Equals( "layers" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out int value ) )
+                            if ( int.TryParse( ValueFilter.Filter( parameter.Value ) , out int value ) )
                             {
                                 header.Layers = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "ttl" , parameter.Name ) )
                         {
-                            if ( RtspHeaderParser.TryParse( parameter.Value , out byte value ) )
+                            if ( byte.TryParse( ValueFilter.Filter( parameter.Value ) , out byte value ) )
                             {
                                 header.TTL = value;
                             }

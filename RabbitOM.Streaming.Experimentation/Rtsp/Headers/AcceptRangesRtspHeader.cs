@@ -3,12 +3,15 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
-
-    public sealed class AcceptRangesRtspHeader : RtspHeader
+    public sealed class AcceptRangesRtspHeader
     {
         public static readonly string TypeName = "Accept-Ranges";
+
+        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         
+
+
+
         public bool Bytes { get; set; }
        
         public bool Ntp { get; set; }
@@ -69,27 +72,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new AcceptRangesRtspHeader();
 
-                var comparer = StringComparer.OrdinalIgnoreCase;
-
                 foreach ( var token in tokens )
                 {
-                    if ( comparer.Equals( "bytes" , token ) )
+                    if ( ValueComparer.Equals( "bytes" , token ) )
                     {
                         header.Bytes = true;
                     }
-                    else if ( comparer.Equals( "ntp" , token ) )
+                    else if ( ValueComparer.Equals( "ntp" , token ) )
                     {
                         header.Ntp = true;
                     }
-                    else if ( comparer.Equals( "smpte" , token ) )
+                    else if ( ValueComparer.Equals( "smpte" , token ) )
                     {
                         header.Smpte = true;
                     }
-                    else if ( comparer.Equals( "utc" , token ) )
+                    else if ( ValueComparer.Equals( "utc" , token ) )
                     {
                         header.Utc = true;
                     }
-                    else if ( comparer.Equals( "clock" , token ) )
+                    else if ( ValueComparer.Equals( "clock" , token ) )
                     {
                         header.Clock = true;
                     }

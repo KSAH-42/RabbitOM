@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class ContentBaseRtspHeader : RtspHeader
+    public sealed class ContentBaseRtspHeader
     {
         public static readonly string TypeName = "Content-Base";
         

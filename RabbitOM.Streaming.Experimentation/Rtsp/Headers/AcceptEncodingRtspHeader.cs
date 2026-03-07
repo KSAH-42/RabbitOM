@@ -4,23 +4,29 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
-    public sealed class AcceptEncodingRtspHeader : RtspHeader
+    public sealed class AcceptEncodingRtspHeader
     {
-        public static readonly StringRtspHeaderValidator InputValidator = StringRtspHeaderValidator.DefaultValidator;
-
-        private readonly Dictionary<string,WeightedString> _encodings = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
-        
-
-
-
         public static readonly string TypeName = "Accept-Encoding";
 
-        public IReadOnlyCollection<WeightedString> Encodings { get => _encodings.Values; }
+        public static readonly StringRtspHeaderValidator InputValidator = StringRtspHeaderValidator.DefaultValidator;
+
+
+
+
+
+        private readonly Dictionary<string,WeightedString> _encodings = new Dictionary<string,WeightedString>( StringComparer.OrdinalIgnoreCase );
+
+
+
+
+
+        public IReadOnlyCollection<WeightedString> Encodings
+        {
+            get => _encodings.Values;
+        }
         
-
-
 
         
         

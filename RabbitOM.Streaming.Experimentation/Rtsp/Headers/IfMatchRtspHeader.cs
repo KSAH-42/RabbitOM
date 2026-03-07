@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Core;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
 
-    public sealed class IfMatchRtspHeader : RtspHeader
+    public sealed class IfMatchRtspHeader
     {
         public static readonly string TypeName = "If-Match";
 
