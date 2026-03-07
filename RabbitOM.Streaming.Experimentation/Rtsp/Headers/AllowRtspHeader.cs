@@ -7,26 +7,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class AllowRtspHeader
     {
         public static readonly string TypeName = "Allow";
-        
-
-
-
 
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
 
-        
+        public static bool TryParse( string input , out AllowRtspHeader result )
+        {
+            result = null;
 
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new AllowRtspHeader();
 
+                foreach( var token in tokens )
+                {
+                    if ( RtspMethod.TryParse( token , out var method ) )
+                    {
+                        header.AddMethod( method );
+                    }
+                }
+
+                if ( header.Methods.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
 
 
         public IReadOnlyCollection<RtspMethod> Methods
         {
             get => _methods;
         }
-        
-
-
-
         
         
         public bool AddMethod( RtspMethod method )
@@ -69,36 +82,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public override string ToString()
         {
             return string.Join( ", " , _methods );
-        }
-        
-
-
-
-        
-        
-        public static bool TryParse( string input , out AllowRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
-            {
-                var header = new AllowRtspHeader();
-
-                foreach( var token in tokens )
-                {
-                    if ( RtspMethod.TryParse( token , out var method ) )
-                    {
-                        header.AddMethod( method );
-                    }
-                }
-
-                if ( header.Methods.Count > 0 )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }
