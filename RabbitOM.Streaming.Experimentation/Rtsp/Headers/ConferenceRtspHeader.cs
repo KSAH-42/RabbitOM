@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class ConferenceRtspHeader
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Conference";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
 
 
@@ -41,73 +41,73 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string ConferenceId
         {
             get => _conferenceId;
-            set => _conferenceId = ValueFilter.Filter( value );
+            set => _conferenceId = ValueAdapter.Adapt( value );
         }
 
         public string Transport
         {
             get => _transport;
-            set => _transport = ValueFilter.Filter( value );
+            set => _transport = ValueAdapter.Adapt( value );
         }
 
         public string Transmission
         {
             get => _transmission;
-            set => _transmission = ValueFilter.Filter( value );
+            set => _transmission = ValueAdapter.Adapt( value );
         }
 
         public string Source
         {
             get => _source;
-            set => _source = ValueFilter.Filter( value );
+            set => _source = ValueAdapter.Adapt( value );
         }
 
         public string Destination
         {
             get => _destination;
-            set => _destination = ValueFilter.Filter( value );
+            set => _destination = ValueAdapter.Adapt( value );
         }
 
         public string Address
         {
             get => _address;
-            set => _address = ValueFilter.Filter( value );
+            set => _address = ValueAdapter.Adapt( value );
         }
 
         public string Host
         {
             get => _host;
-            set => _host = ValueFilter.Filter( value );
+            set => _host = ValueAdapter.Adapt( value );
         }
 
         public string Role
         {
             get => _role;
-            set => _role = ValueFilter.Filter( value );
+            set => _role = ValueAdapter.Adapt( value );
         }
 
         public string Mode
         {
             get => _mode;
-            set => _mode = ValueFilter.Filter( value );
+            set => _mode = ValueAdapter.Adapt( value );
         }
 
         public string Tag
         {
             get => _tag;
-            set => _tag = ValueFilter.Filter( value );
+            set => _tag = ValueAdapter.Adapt( value );
         }
 
         public string Session
         {
             get => _session;
-            set => _session = ValueFilter.Filter( value );
+            set => _session = ValueAdapter.Adapt( value );
         }
 
         public string Access
         {
             get => _access;
-            set => _access = ValueFilter.Filter( value );
+            set => _access = ValueAdapter.Adapt( value );
         }
 
         public byte? TTL
@@ -137,12 +137,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            return _extensions.Add( ValueFilter.Filter( value ) );
+            return _extensions.Add( ValueAdapter.Adapt( value ) );
         }
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( ValueFilter.Filter( value ) );
+            return _extensions.Remove( ValueAdapter.Adapt( value ) );
         }
 
         public void ClearExtensions()
@@ -290,7 +290,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else if ( ValueComparer.Equals( "ttl" , parameter.Name ) )
                         {
-                            if ( byte.TryParse( ValueFilter.Filter( parameter.Value ) , out byte value ) )
+                            if ( byte.TryParse( ValueAdapter.Adapt( parameter.Value ) , out byte value ) )
                             {
                                 header.TTL = value;
                             }

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class UserAgentRtspHeader
@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "User-Agent";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
 
 
@@ -24,19 +24,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Product
         {
             get => _product;
-            set => _product = ValueFilter.Filter( value );
+            set => _product = ValueAdapter.Adapt( value );
         }
 
         public string Version
         {
             get => _version;
-            set => _version = ValueFilter.Filter( value );
+            set => _version = ValueAdapter.Adapt( value );
         }
         
         public string Comment
         {
             get => _comment;
-            set => _comment = ValueFilter.Filter( value );
+            set => _comment = ValueAdapter.Adapt( value );
         }
         
 
@@ -79,7 +79,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = ValueFilter.Filter( input );
+            input = ValueAdapter.Adapt( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {

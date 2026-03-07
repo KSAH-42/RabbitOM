@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class ConnectionRtspHeader
     {
         public static readonly string TypeName = "Connection";
 
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         
 
         private readonly StringRtspHashSet _directives = new StringRtspHashSet();
@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddDirective( string value )
         {
-            var directive = ValueFilter.Filter( value );
+            var directive = ValueAdapter.Adapt( value );
 
             if ( ! char.IsLetter( directive.FirstOrDefault() ) || ! char.IsLetterOrDigit( directive.LastOrDefault() ) )
             {
@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveDirective( string value )
         {
-            return _directives.Remove( ValueFilter.Filter( value ) );
+            return _directives.Remove( ValueAdapter.Adapt( value ) );
         }
 
         public void ClearDirectives()

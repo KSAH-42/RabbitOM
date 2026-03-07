@@ -6,14 +6,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class CacheControlRtspHeader
     {
         public static readonly string TypeName = "Cache-Control";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
 
 
 
@@ -59,12 +59,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
-            return _extensions.TryAdd( ValueFilter.Filter( name ) , ValueFilter.Filter( value ) );
+            return _extensions.TryAdd( ValueAdapter.Adapt( name ) , ValueAdapter.Adapt( value ) );
         }
 
         public bool RemoveExtension( string name )
         {
-            return _extensions.Remove( ValueFilter.Filter( name ) );
+            return _extensions.Remove( ValueAdapter.Adapt( name ) );
         }
 
         public void ClearExtensions()

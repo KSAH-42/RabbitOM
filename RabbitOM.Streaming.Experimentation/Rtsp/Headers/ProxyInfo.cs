@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";
 
-        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.DefaultValidator;
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
         
 
 

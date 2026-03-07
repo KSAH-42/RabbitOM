@@ -2,20 +2,20 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class RefererRtspHeader
     {
         public static readonly string TypeName = "Referer";
         
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         
         private string _uri = string.Empty;
         
         public string Uri
         {
             get => _uri;
-            set => _uri = ValueFilter.Filter( value );
+            set => _uri = ValueAdapter.Adapt( value );
         }
 
         public override string ToString()
@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            var value = ValueFilter.Filter( input );
+            var value = ValueAdapter.Adapt( input );
 
             if ( string.IsNullOrWhiteSpace( value ) )
             {

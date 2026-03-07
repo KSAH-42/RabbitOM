@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class IfMatchRtspHeader
     {
         public static readonly string TypeName = "If-Match";
 
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
 
 
         private readonly StringRtspHashSet _entitiesTags = new StringRtspHashSet();
@@ -24,12 +24,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddEntityTag( string etag )
         {
-            return _entitiesTags.Add( ValueFilter.Filter( etag ) );
+            return _entitiesTags.Add( ValueAdapter.Adapt( etag ) );
         }
 
         public bool RemoveEntityTag( string etag )
         {
-            return _entitiesTags.Remove( ValueFilter.Filter( etag ) );
+            return _entitiesTags.Remove( ValueAdapter.Adapt( etag ) );
         }
 
         public void ClearEntitiesTags()

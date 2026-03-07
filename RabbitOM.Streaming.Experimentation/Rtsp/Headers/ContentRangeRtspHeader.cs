@@ -4,13 +4,13 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class ContentRangeRtspHeader
     {
         public static readonly string TypeName = "Content-Range";
         
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         
 
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Unit
         {
             get => _unit;
-            set => _unit = ValueFilter.Filter( value );
+            set => _unit = ValueAdapter.Adapt( value );
         }
 
         public long? Start
@@ -102,18 +102,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     if ( RtspHeaderProperty.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out var range ) )
                     {
-                        if ( long.TryParse( ValueFilter.Filter( range.Name ) , out long number ) )
+                        if ( long.TryParse( ValueAdapter.Adapt( range.Name ) , out long number ) )
                         {
                             header.Start = number;
                         }
 
-                        if ( long.TryParse( ValueFilter.Filter( range.Value ) , out number ) )
+                        if ( long.TryParse( ValueAdapter.Adapt( range.Value ) , out number ) )
                         {
                             header.End = number;
                         }
                     }
 
-                    if ( long.TryParse( ValueFilter.Filter( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
+                    if ( long.TryParse( ValueAdapter.Adapt( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
                     {
                         header.Size = size;
                     }                    

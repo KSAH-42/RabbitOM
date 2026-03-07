@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 {
-    public class ProtocolStringRtspHeaderValidator : StringRtspHeaderValidator
+    public class TokenRtspHeaderValidator : StringRtspHeaderValidator
     {
         private static readonly IReadOnlyCollection<char> InvalidChars = new HashSet<char>() { '²' , 'é' , '~' , 'ç' , 'è' , '$' , '£' , '€' , '¤' , '¨' , 'µ' , 'ù' , '^' , '§' , '\r' , '\n' , '\t' , '\f' , '\v'  };
         
@@ -14,6 +14,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
             {
                 return false;
             }
+
+            var succeed = false;
 
             foreach ( var element in value )
             {
@@ -26,9 +28,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
                 {
                     return false;
                 }
+
+                succeed |= char.IsLetterOrDigit( element ) || element == '*' ;
             }
 
-            return true;
+            return succeed;
         }
     }
 }

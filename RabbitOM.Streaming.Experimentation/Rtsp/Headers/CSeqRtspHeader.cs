@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class CSeqRtspHeader
     {
@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out CSeqRtspHeader result )
         {
-            result = long.TryParse( StringRtspHeaderFilter.UnQuoteFilter.Filter( input ) , out long value ) ? new CSeqRtspHeader() { Value = value } : null;
+            result = long.TryParse( StringValueAdapter.UnQuoteAdapter.Adapt( input ) , out long value ) ? new CSeqRtspHeader() { Value = value } : null;
 
             return result != null;
         }

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class PublicRtspHeader 
     {
         public static readonly string TypeName = "Public";
 
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
 
 
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach( var token in tokens )
                 {
-                    if ( RtspMethod.TryParse( ValueFilter.Filter( token ) , out var method ) )
+                    if ( RtspMethod.TryParse( ValueAdapter.Adapt( token ) , out var method ) )
                     {
                         header.AddMethod( method );
                     }

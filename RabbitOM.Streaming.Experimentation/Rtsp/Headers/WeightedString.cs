@@ -4,24 +4,24 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
-        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.DefaultValidator;
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
 
 
         public WeightedString( string value )
         {
-            value = ValueFilter.Filter( value );
+            value = ValueAdapter.Adapt( value );
             Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
-            value = ValueFilter.Filter( value );
+            value = ValueAdapter.Adapt( value );
             Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Name ) )
                         {
-                            if ( double.TryParse( ValueFilter.Filter( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
+                            if ( double.TryParse( ValueAdapter.Adapt( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                             {
                                 result = new WeightedString( name , quality );
                                 break;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class SessionRtspHeader
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Session";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
         
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Identifier
         {
             get => _identifier;
-            set => _identifier = ValueFilter.Filter( value );
+            set => _identifier = ValueAdapter.Adapt( value );
         }
 
         public long? Timeout
@@ -46,12 +46,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            return _extensions.Add( ValueFilter.Filter( value ) );
+            return _extensions.Add( ValueAdapter.Adapt( value ) );
         }
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( ValueFilter.Filter( value ) );
+            return _extensions.Remove( ValueAdapter.Adapt( value ) );
         }
 
         public void ClearExtensions()
@@ -109,7 +109,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( ValueComparer.Equals( "timeout" , parameter.Name ) )
                         {
-                            if ( long.TryParse( ValueFilter.Filter( parameter.Value ) , out long value ) )
+                            if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
                             {
                                 header.Timeout = value;
                             }

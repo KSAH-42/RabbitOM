@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     internal struct RtspHeaderProperty
     {
@@ -24,8 +24,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 result = new RtspHeaderProperty()
                 {
-                    Name  = StringRtspHeaderFilter.UnQuoteFilter.Filter( tokens.ElementAtOrDefault( 0 ) ) ,
-                    Value = StringRtspHeaderFilter.UnQuoteFilter.Filter( tokens.ElementAtOrDefault( 1 ) ) ,
+                    Name  = StringValueAdapter.UnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) ,
+                    Value = StringValueAdapter.UnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) ,
                 };
 
                 return true;

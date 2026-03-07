@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class WWWAuthenticateRtspHeader
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "WWW-Authenticate";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringRtspHeaderFilter ValueFilter = StringRtspHeaderFilter.UnQuoteFilter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
         public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
 
 
@@ -36,43 +36,43 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Scheme
         {
             get => _scheme;
-            set => _scheme = ValueFilter.Filter( value );
+            set => _scheme = ValueAdapter.Adapt( value );
         }
         
         public string Realm
         {
             get => _realm;
-            set => _realm = ValueFilter.Filter( value );
+            set => _realm = ValueAdapter.Adapt( value );
         }
         
         public string Nonce
         {
             get => _nonce;
-            set => _nonce = ValueFilter.Filter( value );
+            set => _nonce = ValueAdapter.Adapt( value );
         }
         
         public string Opaque
         {
             get => _opaque;
-            set => _opaque = ValueFilter.Filter( value );
+            set => _opaque = ValueAdapter.Adapt( value );
         }
         
         public string Algorithm
         {
             get => _algorithm;
-            set => _algorithm = ValueFilter.Filter( value );
+            set => _algorithm = ValueAdapter.Adapt( value );
         }
         
         public string Stale
         {
             get => _stale;
-            set => _stale = ValueFilter.Filter( value );
+            set => _stale = ValueAdapter.Adapt( value );
         }
 
         public string QualityOfProtection
         {
             get => _qualityOfProtection;
-            set => _qualityOfProtection = ValueFilter.Filter( value );
+            set => _qualityOfProtection = ValueAdapter.Adapt( value );
         }
 
         public IReadOnlyCollection<string> Extensions
@@ -87,12 +87,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string extension )
         {
-            return _extensions.Add( ValueFilter.Filter( extension ) );
+            return _extensions.Add( ValueAdapter.Adapt( extension ) );
         }
 
         public bool RemoveExtension( string extension )
         {
-            return _extensions.Remove( ValueFilter.Filter( extension ) );
+            return _extensions.Remove( ValueAdapter.Adapt( extension ) );
         }
 
         public void ClearExtensions()

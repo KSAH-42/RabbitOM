@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Filters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
     public sealed class IfModifiedSinceRtspHeader
     {
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out IfModifiedSinceRtspHeader result )
         {
-            result = DateTime.TryParse( StringRtspHeaderFilter.UnQuoteFilter.Filter( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
+            result = DateTime.TryParse( StringValueAdapter.UnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
                 ? new IfModifiedSinceRtspHeader() { Value = value } 
                 : null
                 ;

@@ -56,12 +56,11 @@
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\Validation\ParserStringRtspHeaderValidator.cs" />
+    <Compile Include="Rtsp\Headers\Validation\TokenRtspHeaderValidator.cs" />
     <Compile Include="Rtsp\Headers\Filters\QuoteStringRtspHeaderFilter.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Filters\StringRtspHeaderFilter.cs" />
     <Compile Include="Rtsp\Headers\Validation\StringRtspHeaderValidator.cs" />
-    <Compile Include="Rtsp\Headers\Validation\TokenStringRtspHeaderValidator.cs" />
     <Compile Include="Rtsp\Headers\Filters\TrimStringRtspHeaderFilter.cs" />
     <Compile Include="Rtsp\Headers\Filters\UnQuoteStringRtspHeaderFilter.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeader.cs" />
