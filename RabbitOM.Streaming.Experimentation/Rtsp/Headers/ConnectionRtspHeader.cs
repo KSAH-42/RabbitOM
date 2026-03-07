@@ -13,6 +13,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         
 
+
+
         private readonly StringRtspHashSet _directives = new StringRtspHashSet();
         
 
@@ -21,9 +23,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _directives;
         }
         
-
-
-
 
         public bool AddDirective( string value )
         {
@@ -61,10 +60,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return string.Join( ", " , _directives );
         }
-
-
-
-
 
 
         public static bool TryParse( string input , out ConnectionRtspHeader result )
