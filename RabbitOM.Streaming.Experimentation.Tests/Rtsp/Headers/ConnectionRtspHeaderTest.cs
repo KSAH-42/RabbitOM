@@ -89,19 +89,18 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [Test]
         public void CheckToString()
         {
-            var header = new ContentLengthRtspHeader();
+            var header = new ConnectionRtspHeader();
 
-            Assert.AreEqual( 0 , header.Value );
-            Assert.AreEqual( "0" , header.ToString() );
+            Assert.AreEqual( "" , header.ToString() );
 
-            header.Value = 0;
-            Assert.AreEqual( "0" , header.ToString() );
+            header.AddDirective( "closed" );
+            Assert.AreEqual( "closed" , header.ToString() );
 
-            header.Value = 1;
-            Assert.AreEqual( "1" , header.ToString() );
+            header.AddDirective( "error" );
+            Assert.AreEqual( "closed, error" , header.ToString() );
 
-            header.Value = long.MaxValue;
-            Assert.AreEqual( long.MaxValue.ToString() , header.ToString() );
+            header.AddDirective( "keep-alive" );
+            Assert.AreEqual( "closed, error, keep-alive" , header.ToString() );
         }
     }
 }
