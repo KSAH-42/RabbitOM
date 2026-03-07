@@ -29,6 +29,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
+        [TestCase( "?" ) ]
+        [TestCase( "???? realm='my realm',nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='my stale',qop='my qop'" )]
         public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );

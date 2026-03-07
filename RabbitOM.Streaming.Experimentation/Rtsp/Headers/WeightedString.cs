@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-    using System.Collections.Generic;
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
+        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
@@ -29,10 +30,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
         public string Value { get; }
 
         public double? Quality { get; }
         
+
 
 
         public static bool IsNullOrEmpty( WeightedString obj )
@@ -52,54 +55,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return StringComparer.OrdinalIgnoreCase.Equals( a.Value , b.Value ) && a.Quality == b.Quality;
+            return ValueComparer.Equals( a.Value , b.Value ) && a.Quality == b.Quality;
         }
 
-        public static bool TryParse( string input , out WeightedString result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
-            {
-                var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
-
-                if ( string.IsNullOrWhiteSpace( name ) )
-                {
-                    return false;
-                }
-
-                foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
-                {
-                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
-                    {
-                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) )
-                        {
-                            if ( double.TryParse( ValueAdapter.Adapt( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
-                            {
-                                result = new WeightedString( name , quality );
-                                break;
-                            }
-                        }
-                    }
-                }
-
-                if ( result == null )
-                {
-                    result = new WeightedString( name );
-                }
-            }
-
-            return result != null;
-        }
-        
 
 
-
-
-        public override int GetHashCode()
-        {
-            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
-        }
 
         public override bool Equals( object obj )
         {
@@ -111,14 +71,60 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Equals( this , obj );
         }
 
+        public override int GetHashCode()
+        {
+            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
+        }
+
         public override string ToString()
         {
-            if ( ! string.IsNullOrWhiteSpace( Value ) )
+            if ( string.IsNullOrWhiteSpace( Value ) )
             {
-                return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
+                return string.Empty;
             }
 
-            return string.Empty;
+            return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
+        }
+
+
+
+
+
+        
+
+        public static bool TryParse( string input , out WeightedString result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
+            {
+                var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
+
+                if ( ValueValidator.TryValidate( name ) )
+                {
+                    foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
+                    {
+                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                        {
+                            if ( ValueComparer.Equals( "q" , parameter.Key ) )
+                            {
+                                if ( double.TryParse( ValueAdapter.Adapt( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
+                                {
+                                    result = new WeightedString( name , quality );
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if ( result == null )
+                    {
+                        result = new WeightedString( name );
+                    }
+                }
+            }
+
+            return result != null;
         }
     }
 }

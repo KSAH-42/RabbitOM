@@ -14,6 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
         public static readonly StringValueValidator UriValidator = StringValueValidator.UriValidator;
 
 
@@ -201,6 +202,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var scheme = tokens.FirstOrDefault();
                 
+                if ( ! ValueValidator.TryValidate( scheme ) )
+                {
+                    return false;
+                }
+
                 if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
                     result = new AuthorizationRtspHeader() { Scheme = scheme };

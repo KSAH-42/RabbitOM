@@ -40,6 +40,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
+        [TestCase( "_" ) ]
+        [TestCase( "???? realm='my realm', username='my user name',domain='my domain'," )]
         public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( AuthorizationRtspHeader.TryParse( input , out var header ) );

@@ -156,7 +156,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
             {
-                var header = new WWWAuthenticateRtspHeader() { Scheme = tokens.First() };
+                var scheme = tokens.FirstOrDefault();
+                
+                if ( ! ValueValidator.TryValidate( scheme ) )
+                {
+                    return false;
+                }
+                
+                var header = new WWWAuthenticateRtspHeader() { Scheme = scheme };
                 
                 if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
                 {
