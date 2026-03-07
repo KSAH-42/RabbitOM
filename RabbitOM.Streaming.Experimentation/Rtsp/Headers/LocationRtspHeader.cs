@@ -3,12 +3,14 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class LocationRtspHeader
     {
         public static readonly string TypeName = "Location";
         
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        public static readonly StringValueValidator UriValidator = StringValueValidator.UriValidator;
 
         
         private string _uri = string.Empty;
@@ -30,14 +32,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var value = ValueAdapter.Adapt( input );
 
-            if ( string.IsNullOrWhiteSpace( value ) )
+            if ( UriValidator.TryValidate( value ) )
             {
-                return false;
+                result = new LocationRtspHeader() { Uri = value };
             }
 
-            result = new LocationRtspHeader() { Uri = value };
-
-            return true;
+            return result != null;
         }
     }
 }

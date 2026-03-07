@@ -6,6 +6,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class AuthorizationRtspHeader
     {
@@ -13,6 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        public static readonly StringValueValidator UriValidator = StringValueValidator.UriValidator;
 
 
         private string _scheme = string.Empty;        
