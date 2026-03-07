@@ -11,21 +11,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public DateTime Value { get; set; }
 
-        public override string ToString()
-        {
-            var value = Value.Kind == DateTimeKind.Local ? Value.ToUniversalTime() : Value;
-
-            return value.ToString( "r" , CultureInfo.InvariantCulture );
-        }
-
         public static bool TryParse( string input , out LastModifiedRtspHeader result )
         {
             result = DateTime.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
                 ? new LastModifiedRtspHeader() { Value = value } 
-                : null
-                ;
+                : null;
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return ( Value.Kind == DateTimeKind.Local ? Value.ToUniversalTime() : Value ).ToString( "r" , CultureInfo.InvariantCulture);
         }
     }
 }
