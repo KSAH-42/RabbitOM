@@ -147,7 +147,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 builder.AppendFormat( "opaque=\"{0}\", " , Opaque );
             }
-
+            
             builder.AppendFormat( "uri=\"{0}\", " , Uri );
             builder.AppendFormat( "response=\"{0}\", " , Response );
 
