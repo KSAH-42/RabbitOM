@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 {
@@ -13,7 +11,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
                 return false;
             }
 
-            // TODO: use regex instead
             return Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute );
         }
     }
