@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using System.Collections.Generic;
 
     public sealed class RtpInfo 
     { 
@@ -12,8 +12,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
-
-        private RtpInfo() { }
+        private RtpInfo() 
+        { 
+        }
 
         public RtpInfo( string url , long? rtpTime , long? sequence , string ssrc )
         {
@@ -29,7 +30,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-
         public string Url { get; private set; } = string.Empty;
 
         public string SSRC { get; private set; } = string.Empty;
@@ -37,8 +37,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public long? Sequence { get; private set; }
         
         public long? RtpTime { get; private set; }
-
-
 
 
         public override string ToString()
@@ -68,7 +66,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return builder.ToString().Trim( ' ' , ';' );
         }
         
-        
+
         
         public static bool TryParse( string input , out RtpInfo result )
         {
