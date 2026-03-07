@@ -23,6 +23,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( null ) ]
         [TestCase( "" ) ]
         [TestCase( " " ) ]
+        [TestCase( "1-2/3" )]
+        [TestCase( "1-2" )]
+        [TestCase( "bytes" )]
         public void CheckTryParseFailed( string input  )
         {
             Assert.IsFalse( ContentRangeRtspHeader.TryParse( input , out var header ) );
