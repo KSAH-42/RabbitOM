@@ -95,6 +95,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;mode=abc" )]
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;Mode=abc" )]
         [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;mode=abc" )]
+        [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;mode='abc'" )]
         [TestCase( "1234567879; mode=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseModeSucceed( string input )
         {
@@ -108,7 +109,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;tag=abc" )]
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;Tag=abc" )]
-        [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;tag=abc" )]
+        [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;tag='abc'" )]
         [TestCase( "1234567879; tag=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseTagSucceed( string input )
         {
@@ -122,6 +123,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;session=abc" )]
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;Session=abc" )]
+        [TestCase( "1234567879;RTP/AVP/UDP;unicast;Session= 'abc' " )]
         [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;session=abc" )]
         [TestCase( "1234567879; session=abc;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseSessionSucceed( string input )
@@ -137,6 +139,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;ttl=123" )]
         [TestCase( "1234567879;RTP/AVP/UDP;unicast;TTL=123" )]
         [TestCase( "1234567879; RTP/AVP/UDP ; unicast ;ttl=123" )]
+        [TestCase( "1234567879; RTP/AVP/UDP ; ttl = '123' unicast ;" )]
         [TestCase( "1234567879; ttl=123;  unicast ; ; RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseTTLSucceed( string input )
         {
@@ -171,6 +174,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( " ,,,,,,," )]
         [TestCase( " :::::::: " )]
         [TestCase( " !:;? " )]
+        [TestCase( "$;RTP/AVP/UDP;unicast;port=1-23" )]
+        [TestCase( ";RTP/AVP/UDP;unicast;port=1-23" )]
+        [TestCase( "RTP/AVP/UDP;unicast;port=1-23" )]
         public void CheckTryParseFailed( string input )
         {
             Assert.IsFalse( ConferenceRtspHeader.TryParse( input , out var header ) );
