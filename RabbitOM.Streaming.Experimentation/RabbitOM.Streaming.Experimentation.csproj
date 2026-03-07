@@ -62,7 +62,7 @@
     <Compile Include="Rtsp\Headers\Adapters\StringValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Validation\StringValueValidator.cs" />
     <Compile Include="Rtsp\Headers\Adapters\TrimValueAdapter.cs" />
-    <Compile Include="Rtsp\Headers\Adapters\UnQuoteValueAdapter.cs" />
+    <Compile Include="Rtsp\Headers\Adapters\TrimWithUnQuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\DateRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeader.cs" />
