@@ -4,14 +4,11 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
     public sealed class AcceptEncodingRtspHeader
     {
         public static readonly string TypeName = "Accept-Encoding";
 
-        public static readonly StringRtspHeaderValidator InputValidator = StringRtspHeaderValidator.DefaultValidator;
-
+        
 
 
 
