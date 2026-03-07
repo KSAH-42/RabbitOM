@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "If-Match";
 
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
         private readonly StringRtspHashSet _entitiesTags = new StringRtspHashSet();

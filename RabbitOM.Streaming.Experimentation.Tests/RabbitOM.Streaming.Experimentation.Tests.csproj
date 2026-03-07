@@ -119,7 +119,7 @@
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParserTest.cs" />
     <Compile Include="Rtsp\RtspMethodTest.cs" />
-    <Compile Include="Rtsp\Headers\Types\ProxyInfoTest.cs" />
+    <Compile Include="Rtsp\Headers\ProxyInfoTest.cs" />
     <Compile Include="Rtsp\Headers\Verifiers\RtspHeaderVerifier.cs" />
     <Compile Include="Rtsp\Headers\AcceptRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderTest.cs" />
@@ -128,7 +128,7 @@
     <Compile Include="Rtsp\Headers\BlockSizeRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\Types\ValueRangeTest.cs" />
+    <Compile Include="Rtsp\Headers\ValueRangeTest.cs" />
     <Compile Include="Rtsp\Headers\ViaRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AuthorizationRtspHeaderTest.cs" />
@@ -137,7 +137,7 @@
     <Compile Include="Rtsp\Headers\CacheControlRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\Types\RtpInfoTest.cs" />
+    <Compile Include="Rtsp\Headers\RtpInfoTest.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\WeightedStringTest.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeaderTest.cs" />

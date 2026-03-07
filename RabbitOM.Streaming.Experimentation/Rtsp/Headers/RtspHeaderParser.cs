@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( RtspHeaderParser.TryParse( input , separator , out string[] tokens ) )
             {
-                result = new KeyValuePair<string, string>( StringValueAdapter.UnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) , StringValueAdapter.UnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) );
+                result = new KeyValuePair<string, string>( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) , StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) );
                 return true;
             }
 

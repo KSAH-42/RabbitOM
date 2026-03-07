@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Cache-Control";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
 

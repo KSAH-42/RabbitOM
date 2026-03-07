@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out ScaleRtspHeader result )
         {
-            result = float.TryParse( StringValueAdapter.UnQuoteAdapter.Adapt( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
+            result = float.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
                     ? new ScaleRtspHeader() { Value = value } 
                     : null
                     ;

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters
 {
-    public sealed class UnQuoteValueAdapter : StringValueAdapter
+    public sealed class TrimWithUnQuoteValueAdapter : StringValueAdapter
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\'' , '\"' , '`' };
 

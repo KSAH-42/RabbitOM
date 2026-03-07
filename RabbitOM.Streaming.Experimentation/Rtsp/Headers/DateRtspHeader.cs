@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out DateRtspHeader result )
         {
-            result = DateTime.TryParse( StringValueAdapter.UnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
+            result = DateTime.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
                 ? new DateRtspHeader() { Value = value } 
                 : null
                 ;

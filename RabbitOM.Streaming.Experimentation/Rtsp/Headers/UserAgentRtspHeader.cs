@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "User-Agent";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
 
 

@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out SpeedRtspHeader result )
         {
-            result = long.TryParse( StringValueAdapter.UnQuoteAdapter.Adapt( input ) , out long value ) ? new SpeedRtspHeader() { Value = value } : null ;
+            result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new SpeedRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

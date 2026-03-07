@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out MediaDurationRtspHeader result )
         {
-            result = double.TryParse( StringValueAdapter.UnQuoteAdapter.Adapt( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
+            result = double.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value )
                     ? new MediaDurationRtspHeader() { Value = value } 
                     : null
                     ;
