@@ -14,9 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
-        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
-
-
+        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
 
 
         private string _conferenceId = string.Empty;
@@ -34,8 +32,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private byte? _ttl;
         private ValueRange? _port;
         private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
-
-
 
 
         public string ConferenceId
@@ -127,11 +123,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _extensions;
         }
         
-
-
-
-
-
 
 
 
@@ -231,12 +222,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return builder.ToString().Trim( ' ' , ';' );
         }
-
-
-
-
-
-
 
 
 

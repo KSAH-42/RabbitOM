@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class WeightedString : IEquatable<WeightedString>
     {
-        public static readonly StringRtspHeaderValidator ValueValidator = StringRtspHeaderValidator.TokenValidator;
+        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.UnQuoteAdapter;
 
 

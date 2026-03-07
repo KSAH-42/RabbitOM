@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 {
-    public class TokenRtspHeaderValidator : StringRtspHeaderValidator
+    public sealed class TokenValueValidator : StringValueValidator
     {
         private static readonly IReadOnlyCollection<char> InvalidChars = new HashSet<char>() { '²' , 'é' , '~' , 'ç' , 'è' , '$' , '£' , '€' , '¤' , '¨' , 'µ' , 'ù' , '^' , '§'  };
         

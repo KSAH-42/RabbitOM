@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters
     {
         public override string Adapt( string value )
         {
-            return value?.Trim()?? string.Empty;
+            return value?.Trim() ?? string.Empty;
         }
     }
 }
