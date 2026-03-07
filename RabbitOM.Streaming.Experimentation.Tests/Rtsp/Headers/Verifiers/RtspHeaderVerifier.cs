@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
                 {
                     continue;
                 }
-
+                
                 Assert.IsTrue( OfficialHeaderNames.Contains( typeNameField.GetValue( null ) as string ) );
                 
                 Assert.Fail( $"TypeName static member has bad name: {type.Name}" , type.Name , typeNameField.GetValue( null ) );
