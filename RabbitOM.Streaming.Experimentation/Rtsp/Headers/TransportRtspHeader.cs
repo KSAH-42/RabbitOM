@@ -17,6 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
 
 
+
         private string _transport = string.Empty;
         private string _transmission = string.Empty;
         private string _source = string.Empty;
@@ -124,114 +125,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _extensions;
         }
         
-
-
-        
-        public bool AddExtension( string value )
-        {
-            if ( ValueValidator.TryValidate( value ) )
-            {
-                return _extensions.Add( ValueAdapter.Adapt( value ) );
-            }
-
-            return false;
-        }
-
-        public bool RemoveExtension( string value )
-        {
-            return _extensions.Remove( ValueAdapter.Adapt( value ) );
-        }
-
-        public void ClearExtensions()
-        {
-            _extensions.Clear();
-        }
-        
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            if ( ! string.IsNullOrWhiteSpace( Transport ) )
-            {
-                builder.AppendFormat( "{0};" , Transport );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Transmission ) )
-            {
-                builder.AppendFormat( "{0};" , Transmission );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Source ) )
-            {
-                builder.AppendFormat( "source={0};" , Source );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Destination ) )
-            {
-                builder.AppendFormat( "destination={0};" , Destination );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Address ) )
-            {
-                builder.AppendFormat( "address={0};" , Address );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Host ) )
-            {
-                builder.AppendFormat( "host={0};" , Host );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( SSRC ) )
-            {
-                builder.AppendFormat( "ssrc={0};" , SSRC );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Mode ) )
-            {
-                builder.AppendFormat( "mode=\"{0}\";" , Mode );
-            }
-
-            if ( TTL.HasValue )
-            {
-                builder.AppendFormat( "ttl={0};" , TTL );
-            }
-
-            if ( Layers.HasValue )
-            {
-                builder.AppendFormat( "layers={0};" , Layers );
-            }
-
-            if ( Port.HasValue )
-            {
-                builder.AppendFormat( "port={0};" , Port );
-            }
-
-            if ( ClientPort.HasValue )
-            {
-                builder.AppendFormat( "client_port={0};" , ClientPort );
-            }
-
-            if ( ServerPort.HasValue )
-            {
-                builder.AppendFormat( "server_port={0};" , ServerPort );
-            }
-
-            if ( Interleaved.HasValue )
-            {
-                builder.AppendFormat( "interleaved={0};" , Interleaved );
-            }
-
-            foreach ( var extension in _extensions )
-            {
-                builder.AppendFormat( "{0};" , extension );
-            }
-
-            return builder.ToString().Trim( ' ' , ';' );
-        }
-
-
-
-
 
 
 
@@ -350,6 +243,111 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+        
+
+
+        public bool AddExtension( string value )
+        {
+            if ( ValueValidator.TryValidate( value ) )
+            {
+                return _extensions.Add( ValueAdapter.Adapt( value ) );
+            }
+
+            return false;
+        }
+
+        public bool RemoveExtension( string value )
+        {
+            return _extensions.Remove( ValueAdapter.Adapt( value ) );
+        }
+
+        public void ClearExtensions()
+        {
+            _extensions.Clear();
+        }
+        
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            if ( ! string.IsNullOrWhiteSpace( Transport ) )
+            {
+                builder.AppendFormat( "{0};" , Transport );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Transmission ) )
+            {
+                builder.AppendFormat( "{0};" , Transmission );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Source ) )
+            {
+                builder.AppendFormat( "source={0};" , Source );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Destination ) )
+            {
+                builder.AppendFormat( "destination={0};" , Destination );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Address ) )
+            {
+                builder.AppendFormat( "address={0};" , Address );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Host ) )
+            {
+                builder.AppendFormat( "host={0};" , Host );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( SSRC ) )
+            {
+                builder.AppendFormat( "ssrc={0};" , SSRC );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Mode ) )
+            {
+                builder.AppendFormat( "mode=\"{0}\";" , Mode );
+            }
+
+            if ( TTL.HasValue )
+            {
+                builder.AppendFormat( "ttl={0};" , TTL );
+            }
+
+            if ( Layers.HasValue )
+            {
+                builder.AppendFormat( "layers={0};" , Layers );
+            }
+
+            if ( Port.HasValue )
+            {
+                builder.AppendFormat( "port={0};" , Port );
+            }
+
+            if ( ClientPort.HasValue )
+            {
+                builder.AppendFormat( "client_port={0};" , ClientPort );
+            }
+
+            if ( ServerPort.HasValue )
+            {
+                builder.AppendFormat( "server_port={0};" , ServerPort );
+            }
+
+            if ( Interleaved.HasValue )
+            {
+                builder.AppendFormat( "interleaved={0};" , Interleaved );
+            }
+
+            foreach ( var extension in _extensions )
+            {
+                builder.AppendFormat( "{0};" , extension );
+            }
+
+            return builder.ToString().Trim( ' ' , ';' );
         }
     }
 }
