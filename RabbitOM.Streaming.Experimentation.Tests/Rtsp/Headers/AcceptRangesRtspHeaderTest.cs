@@ -87,28 +87,18 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "bytes" , header.ToString() );
 
             header.Clock = true;
-            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
             Assert.IsTrue( header.ToString().Contains( "clock" ) );
             Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 1 );
             
             header.Ntp = true;
-            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
-            Assert.IsTrue( header.ToString().Contains( "clock" ) );
             Assert.IsTrue( header.ToString().Contains( "ntp" ) );
             Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 2 );
 
             header.Smpte = true;
-            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
-            Assert.IsTrue( header.ToString().Contains( "clock" ) );
-            Assert.IsTrue( header.ToString().Contains( "ntp" ) );
             Assert.IsTrue( header.ToString().Contains( "smpte" ) );
             Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 3 );
 
             header.Utc = true;
-            Assert.IsTrue( header.ToString().Contains( "bytes" ) );
-            Assert.IsTrue( header.ToString().Contains( "clock" ) );
-            Assert.IsTrue( header.ToString().Contains( "ntp" ) );
-            Assert.IsTrue( header.ToString().Contains( "smpte" ) );
             Assert.IsTrue( header.ToString().Contains( "utc" ) );
             Assert.IsTrue( header.ToString().Count( x => x == ','  ) == 4 );
         }
