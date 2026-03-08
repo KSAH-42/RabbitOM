@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
         public H266FrameBuilder() => throw new NotSupportedException("the implementation is not tested with multiple products and server, and it can not be used until this code will be tested with compliant server");
 
-        public void Configure( H266FrameBuilderConfiguration configuration )
+        public virtual void Configure( H266FrameBuilderConfiguration configuration )
         {
             _frameFactory.Configure( configuration );
         }

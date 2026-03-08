@@ -2,12 +2,10 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266
 {
-    public sealed class H266FrameBuilderConfiguration
+    public class H266FrameBuilderConfiguration
     {
         public H266FrameBuilderConfiguration( byte[] pps , byte[] sps , byte[] vps , bool donl = false )
         {
-            // TODO: refactor futur duplicated code ?
-
             PPS = pps;
             SPS = sps;
             VPS = vps;

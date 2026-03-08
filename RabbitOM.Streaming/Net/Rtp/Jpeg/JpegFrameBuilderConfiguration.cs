@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <summary>
     /// Represent the jpeg configuration
     /// </summary>
-    public sealed class JpegFrameBuilderConfiguration
+    public class JpegFrameBuilderConfiguration
     {
         /// <summary>
         /// Initialize an instance of the fallback settings

@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent a H265 settings class
     /// </summary>
-    public sealed class H265FrameBuilderConfiguration
+    public class H265FrameBuilderConfiguration
     {
         /// <summary>
         /// Initialize a new instance of settings class

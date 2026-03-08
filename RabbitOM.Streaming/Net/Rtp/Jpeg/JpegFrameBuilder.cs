@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     {
         private readonly JpegFrameFactory _factory = new JpegFrameFactory();
 
-        public void Configure( JpegFrameBuilderConfiguration configuration )
+        public virtual void Configure( JpegFrameBuilderConfiguration configuration )
         {
             _factory.Configure( configuration );
         }
