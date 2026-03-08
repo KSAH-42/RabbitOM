@@ -51,6 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp
         [TestCase( "" )]
         [TestCase( " " )]
         [TestCase( " myMethod " )]
+        [TestCase( "OPTION" )]
         public void CheckTryParseFailed( string input )
         {
             Assert.IsFalse( RtspMethod.TryParse( input , out var result ) );
