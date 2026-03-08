@@ -61,7 +61,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return result != null;
         }
-
         
         
         public override string ToString()
