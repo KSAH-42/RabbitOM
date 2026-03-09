@@ -82,6 +82,67 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static bool TryParse( string input , out WWWAuthenticateRtspHeader result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
+            {
+                var scheme = tokens.FirstOrDefault();
+                
+                if ( ! ValueValidator.TryValidate( scheme ) )
+                {
+                    return false;
+                }
+                
+                var header = new WWWAuthenticateRtspHeader() { Scheme = scheme };
+                
+                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
+                {
+                    foreach ( var token in tokens )
+                    {
+                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                        {
+                            if ( ValueComparer.Equals( "realm" , parameter.Key ) )
+                            {
+                                header.Realm = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
+                            {
+                                header.Nonce = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
+                            {
+                                header.Opaque = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
+                            {
+                                header.Algorithm = parameter.Value;
+                            }
+                            else if ( ValueComparer.Equals( "stale" , parameter.Key ) )
+                            {
+                                header.Stale = parameter.Value ;
+                            }
+                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
+                            {
+                                header.QualityOfProtection = parameter.Value;
+                            }
+                            else
+                            {
+                                header.AddExtension( token );
+                            }
+                        }
+                    }
+
+                    if ( ValueValidator.TryValidate( header.Scheme ) )
+                    {
+                        result = header;
+                    }
+                }
+            }
+
+            return result != null;
+        }
 
 
 
@@ -144,72 +205,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return builder.ToString().Trim( ' ' , ',' );
-        }
-
-
-
-
-
-        public static bool TryParse( string input , out WWWAuthenticateRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , " " , out string[] tokens ) )
-            {
-                var scheme = tokens.FirstOrDefault();
-                
-                if ( ! ValueValidator.TryValidate( scheme ) )
-                {
-                    return false;
-                }
-                
-                var header = new WWWAuthenticateRtspHeader() { Scheme = scheme };
-                
-                if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
-                {
-                    foreach ( var token in tokens )
-                    {
-                        if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
-                        {
-                            if ( ValueComparer.Equals( "realm" , parameter.Key ) )
-                            {
-                                header.Realm = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
-                            {
-                                header.Nonce = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
-                            {
-                                header.Opaque = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
-                            {
-                                header.Algorithm = parameter.Value;
-                            }
-                            else if ( ValueComparer.Equals( "stale" , parameter.Key ) )
-                            {
-                                header.Stale = parameter.Value ;
-                            }
-                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
-                            {
-                                header.QualityOfProtection = parameter.Value;
-                            }
-                            else
-                            {
-                                header.AddExtension( token );
-                            }
-                        }
-                    }
-
-                    if ( ValueValidator.TryValidate( header.Scheme ) )
-                    {
-                        result = header;
-                    }
-                }
-            }
-
-            return result != null;
         }
     }
 }
