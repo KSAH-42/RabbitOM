@@ -16,33 +16,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _proxies;
         }
         
-        
-        public bool AddProxy( ProxyInfo proxy )
-        {
-            if ( proxy != null )
-            {
-                return _proxies.Add( proxy );
-            }
-
-            return false;
-        }
-
-        public bool RemoveProxy( ProxyInfo proxy )
-        {
-            return _proxies.Remove( proxy );
-        }
-
-        public void ClearProxies()
-        {
-            _proxies.Clear();
-        }
-
-        public override string ToString()
-        {
-            return string.Join( ", " , _proxies );
-        }
-
-
         public static bool TryParse( string input , out ViaRtspHeader result )
         {
             result = null;
@@ -66,6 +39,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+        public bool AddProxy( ProxyInfo proxy )
+        {
+            if ( proxy != null )
+            {
+                return _proxies.Add( proxy );
+            }
+
+            return false;
+        }
+
+        public bool RemoveProxy( ProxyInfo proxy )
+        {
+            return _proxies.Remove( proxy );
+        }
+
+        public void ClearProxies()
+        {
+            _proxies.Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , _proxies );
         }
     }
 }

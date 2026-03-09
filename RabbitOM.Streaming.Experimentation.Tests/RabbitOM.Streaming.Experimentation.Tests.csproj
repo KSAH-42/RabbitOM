@@ -151,7 +151,6 @@
     <Compile Include="Rtsp\Headers\BandwithRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptRangesRtspHeaderTest.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderFormatterTest.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
