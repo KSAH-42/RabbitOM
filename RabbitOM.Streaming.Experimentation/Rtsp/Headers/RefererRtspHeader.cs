@@ -20,11 +20,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _uri = ValueAdapter.Adapt( value );
         }
 
-        public override string ToString()
-        {
-            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri ;
-        }
-
         public static bool TryParse( string input , out RefererRtspHeader result )
         {
             result = null;
@@ -37,6 +32,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri ;
         }
     }
 }
