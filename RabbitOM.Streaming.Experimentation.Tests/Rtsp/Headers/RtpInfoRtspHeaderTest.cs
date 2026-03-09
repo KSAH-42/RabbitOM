@@ -29,5 +29,21 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsNull( header );
         }
 
+        [Test]
+        public void CheckToString()
+        {
+            var header = new RtpInfoRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            Assert.True( header.AddRtpInfo( new RtpInfo("rtsp://127.0.0.1") ) );
+            Assert.AreEqual( "url=rtsp://127.0.0.1" , header.ToString() );
+
+            Assert.True( header.AddRtpInfo( new RtpInfo("rtsp://192.168.1.1" , 1 ) )  );
+            Assert.AreEqual( "url=rtsp://127.0.0.1, url=rtsp://192.168.1.1;seq=1" , header.ToString() );
+
+            Assert.True( header.AddRtpInfo( new RtpInfo("rtsp://192.168.1.2" , 1 , 2 ) )  );
+            Assert.AreEqual( "url=rtsp://127.0.0.1, url=rtsp://192.168.1.1;seq=1, url=rtsp://192.168.1.2;seq=1;rtptime=2" , header.ToString() );
+        }
     }
 }

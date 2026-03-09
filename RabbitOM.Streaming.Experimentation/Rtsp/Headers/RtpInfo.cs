@@ -12,8 +12,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
+        public RtpInfo( string url ) : this( url , null , null , null ) { }
 
-        public RtpInfo( string url , ushort? rtpTime , ushort? sequence , string ssrc )
+        public RtpInfo( string url , ushort sequence ) : this( url , sequence , null , null ) { }
+        
+        public RtpInfo( string url , ushort sequence , ushort rtpTime ) : this( url , sequence , rtpTime , null ) { }
+
+        public RtpInfo( string url , ushort? sequence , ushort? rtpTime , string ssrc )
         {
             if ( ! StringValueValidator.UriValidator.TryValidate( url ) )
             {
@@ -27,18 +32,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             Url = ValueAdapter.Adapt( url );
             SSRC = ValueAdapter.Adapt( ssrc );
-            RtpTime = rtpTime;
             Sequence = sequence;
+            RtpTime = rtpTime;
         }
 
 
-        public string Url { get; private set; } = string.Empty;
+        public string Url { get; }
 
-        public string SSRC { get; private set; } = string.Empty;
+        public string SSRC { get; }
         
-        public ushort? RtpTime { get; private set; }
+        public ushort? Sequence { get; }
         
-        public ushort? Sequence { get; private set; }
+        public ushort? RtpTime { get; }
 
 
         public static bool TryParse( string input , out RtpInfo result )
@@ -64,18 +69,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             ssrc = parameter.Value;
                         }
-                        else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
-                        {
-                            if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
-                            {
-                                rtpTime = value;
-                            }
-                        }
                         else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
                         {
                             if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
                             {
                                 seq = value;
+                            }
+                        }
+                        else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
+                        {
+                            if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
+                            {
+                                rtpTime = value;
                             }
                         }
                     }
@@ -91,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     return false;
                 }
 
-                result = new RtpInfo( url , rtpTime , seq , ssrc );
+                result = new RtpInfo( url , seq , rtpTime , ssrc );
             }
 
             return result != null;

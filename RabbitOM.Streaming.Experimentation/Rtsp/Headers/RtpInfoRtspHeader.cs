@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -16,35 +18,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-        public bool AddRtpInfo( RtpInfo info )
-        {
-            if ( info == null )
-            {
-                return false;
-            }
-
-            return _rtpInfos.Add( info );
-        }
-
-        public bool RemoveRtpInfo( RtpInfo info )
-        {
-            return _rtpInfos.Remove( info );
-        }
-
-        public void ClearRtpInfos()
-        {
-            _rtpInfos.Clear();
-        }
-
-        public override string ToString()
-        {
-            return string.Join( ", " , _rtpInfos );
-        }
-
-
-                
-        
-        
         public static bool TryParse( string input , out RtpInfoRtspHeader result )
         {
             result = null;
@@ -68,6 +41,42 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+
+        public bool AddRtpInfo( RtpInfo info )
+        {
+            if ( info == null )
+            {
+                return false;
+            }
+
+            return _rtpInfos.Add( info );
+        }
+
+        public bool RemoveRtpInfo( RtpInfo info )
+        {
+            return _rtpInfos.Remove( info );
+        }
+
+        public bool RemoveRtpInfoBy( Func<RtpInfo,bool> predicate )
+        {
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+
+            }
+            return _rtpInfos.Remove( _rtpInfos.FirstOrDefault( predicate ) );
+        }
+
+        public void ClearRtpInfos()
+        {
+            _rtpInfos.Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , _rtpInfos );
         }
     }
 }
