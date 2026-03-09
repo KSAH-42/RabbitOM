@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class StringRtspHashSet : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string> , ISet<string>
+    internal sealed class StringRtspHashSet : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string> , ISet<string>
     {
         private readonly HashSet<string> _collection = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 

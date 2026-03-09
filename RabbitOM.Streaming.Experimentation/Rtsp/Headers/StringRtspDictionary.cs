@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class StringRtspDictionary : IReadOnlyDictionary<string,string> , IDictionary<string , string>
+    internal sealed class StringRtspDictionary : IReadOnlyDictionary<string,string> , IDictionary<string , string>
     {
         private readonly Dictionary<string,string> _collection = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
 
