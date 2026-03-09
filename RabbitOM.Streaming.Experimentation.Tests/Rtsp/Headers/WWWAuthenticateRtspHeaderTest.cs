@@ -36,5 +36,33 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsFalse( WWWAuthenticateRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
+
+        [Test]
+        public void CheckToString()
+        {
+            var header = new WWWAuthenticateRtspHeader();
+
+            Assert.AreEqual( "" , header.ToString() );
+
+            header.Scheme = "Digest";
+            header.Realm = "a";
+
+            Assert.AreEqual( "Digest realm=\"a\"" , header.ToString() );
+
+            header.Nonce = "b";
+            Assert.AreEqual( "Digest realm=\"a\", nonce=\"b\"" , header.ToString() );
+
+            header.Opaque = "c";
+            Assert.AreEqual( "Digest realm=\"a\", nonce=\"b\", opaque=\"c\"" , header.ToString() );
+
+            header.Algorithm = "d";
+            Assert.AreEqual( "Digest realm=\"a\", nonce=\"b\", opaque=\"c\", algorithm=\"d\"" , header.ToString() );
+
+            header.Stale = "e";
+            Assert.AreEqual( "Digest realm=\"a\", nonce=\"b\", opaque=\"c\", algorithm=\"d\", stale=\"e\"" , header.ToString() );
+
+            header.QualityOfProtection = "f";
+            Assert.AreEqual( "Digest realm=\"a\", nonce=\"b\", opaque=\"c\", algorithm=\"d\", stale=\"e\", qop=\"f\"" , header.ToString() );
+        }
     }
 }
