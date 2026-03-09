@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ValueValidator.TryValidate( result.Product ) && ValueValidator.TryValidate( result.Version ) )
+                if ( ValueValidator.TryValidate( header.Product ) && ValueValidator.TryValidate( header.Version ) )
                 {
                     result = header;
                 }
