@@ -5,6 +5,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
 
     public sealed class RtpInfo 
     { 
@@ -12,21 +13,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
-        private RtpInfo() 
-        { 
-        }
-
-        public RtpInfo( string url , long? rtpTime , long? sequence , string ssrc )
+        public RtpInfo( string url , ushort? rtpTime , ushort? sequence , string ssrc )
         {
-            if ( string.IsNullOrWhiteSpace( url ) )
+            if ( ! StringValueValidator.UriValidator.TryValidate( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
-           
+
+            if ( ! string.IsNullOrEmpty( ssrc ) && ! StringValueValidator.TokenValidator.TryValidate( ssrc ) )
+            {
+                throw new ArgumentException( nameof( url ) );
+            }
+
             Url = ValueAdapter.Adapt( url );
             SSRC = ValueAdapter.Adapt( ssrc );
-            Sequence = sequence;
             RtpTime = rtpTime;
+            Sequence = sequence;
         }
 
 
@@ -34,9 +36,66 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string SSRC { get; private set; } = string.Empty;
         
-        public long? Sequence { get; private set; }
+        public ushort? RtpTime { get; private set; }
         
-        public long? RtpTime { get; private set; }
+        public ushort? Sequence { get; private set; }
+
+
+        public static bool TryParse( string input , out RtpInfo result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
+            {
+                string url = "";
+                string ssrc = "";
+                ushort? rtpTime = null;
+                ushort? seq = null;
+
+                foreach ( var token in tokens )
+                {
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                    {
+                        if ( ValueComparer.Equals( "url" , parameter.Key ) )
+                        {
+                            url = parameter.Value;
+                        }
+                        else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
+                        {
+                            ssrc = parameter.Value;
+                        }
+                        else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
+                        {
+                            if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
+                            {
+                                rtpTime = value;
+                            }
+                        }
+                        else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
+                        {
+                            if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
+                            {
+                                seq = value;
+                            }
+                        }
+                    }
+                }
+
+                if ( ! StringValueValidator.UriValidator.TryValidate( url ) )
+                {
+                    return false;
+                }
+
+                if ( ! string.IsNullOrEmpty( ssrc ) && ! StringValueValidator.TokenValidator.TryValidate( ssrc ) )
+                {
+                    return false;
+                }
+
+                result = new RtpInfo( url , rtpTime , seq , ssrc );
+            }
+
+            return result != null;
+        }
 
 
         public override string ToString()
@@ -64,54 +123,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return builder.ToString().Trim( ' ' , ';' );
-        }
-        
-
-        
-        public static bool TryParse( string input , out RtpInfo result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
-            {
-                var header = new RtpInfo();
-
-                foreach ( var token in tokens )
-                {
-                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
-                    {
-                        if ( ValueComparer.Equals( "url" , parameter.Key ) )
-                        {
-                            header.Url = parameter.Value;
-                        }
-                        else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
-                        {
-                            header.SSRC = parameter.Value;
-                        }
-                        else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
-                        {
-                            if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
-                            {
-                                header.Sequence = value;
-                            }
-                        }
-                        else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
-                        {
-                            if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
-                            {
-                                header.RtpTime = value;
-                            }
-                        }
-                    }
-                }
-
-                if ( ! string.IsNullOrWhiteSpace( header.Url ) )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }
