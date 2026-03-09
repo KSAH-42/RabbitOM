@@ -11,7 +11,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         public static readonly StringValueValidator UriValidator = StringValueValidator.UriValidator;
-
         
         private string _uri = string.Empty;
         
@@ -19,11 +18,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _uri;
             set => _uri = ValueAdapter.Adapt( value );
-        }
-
-        public override string ToString()
-        {
-            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
         }
 
         public static bool TryParse( string input , out LocationRtspHeader result )
@@ -38,6 +32,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
         }
     }
 }

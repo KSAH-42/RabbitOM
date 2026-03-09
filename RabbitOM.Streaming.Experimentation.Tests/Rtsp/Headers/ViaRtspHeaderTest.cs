@@ -9,6 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class ViaRtspHeaderTest
     {
         [TestCase( "RTSP/1.0 proxy1.example.com:8554 (Proxy/3.1)" ) ]
+        [TestCase( "  RTSP  /  1.0     proxy1.example.com:8554   (Proxy/3.1)" ) ]
         public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( ViaRtspHeader.TryParse( input, out var header ) );
@@ -17,10 +18,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "RTSP" , header.Proxies.First().Protocol );
             Assert.AreEqual( "1.0" , header.Proxies.First().Version );
             Assert.AreEqual( "proxy1.example.com:8554" , header.Proxies.First().ReceivedBy );
-            Assert.AreEqual( "Proxy/3.1" , header.Proxies.First().Comments );
+            Assert.AreEqual( "Proxy/3.1" , header.Proxies.First().Comment );
         }
 
         [TestCase( "RTSP/1.0 proxy1.example.com:8554 (Proxy/3.1), HTTP/1.1 proxy2.example.com:8554 (Proxy/4.1)" ) ]
+        [TestCase( "   RTSP  /1.0 proxy1.example.com:8554 (Proxy/3.1), HTTP/  1.1   proxy2.example.com:8554 (Proxy/4.1)" ) ]
         public void CheckTryParseSucceedMultiples( string input )
         {
             Assert.IsTrue( ViaRtspHeader.TryParse( input, out var header ) );
@@ -29,12 +31,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "RTSP" , header.Proxies.First().Protocol );
             Assert.AreEqual( "1.0" , header.Proxies.First().Version );
             Assert.AreEqual( "proxy1.example.com:8554" , header.Proxies.First().ReceivedBy );
-            Assert.AreEqual( "Proxy/3.1" , header.Proxies.First().Comments );
+            Assert.AreEqual( "Proxy/3.1" , header.Proxies.First().Comment );
 
             Assert.AreEqual( "HTTP" , header.Proxies.Skip(1).First().Protocol );
             Assert.AreEqual( "1.1" , header.Proxies.Skip(1).First().Version );
             Assert.AreEqual( "proxy2.example.com:8554" , header.Proxies.Skip(1).First().ReceivedBy );
-            Assert.AreEqual( "Proxy/4.1" , header.Proxies.Skip(1).First().Comments );
+            Assert.AreEqual( "Proxy/4.1" , header.Proxies.Skip(1).First().Comment );
         }
 
         [Test]

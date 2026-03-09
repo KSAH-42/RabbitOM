@@ -117,6 +117,7 @@
   <ItemGroup>
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderTest.cs" />
+    <Compile Include="Rtsp\Headers\LocationRtspHeaderTest.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParserTest.cs" />
     <Compile Include="Rtsp\RtspMethodTest.cs" />
     <Compile Include="Rtsp\Headers\ProxyInfoTest.cs" />

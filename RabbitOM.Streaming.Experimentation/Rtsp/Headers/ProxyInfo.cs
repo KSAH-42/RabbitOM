@@ -5,15 +5,16 @@ using System.Text.RegularExpressions;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
+    using System.Xml.Linq;
 
     public sealed class ProxyInfo 
     { 
-        private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comments>.*)\))?\s*$";
+        private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comment>.*)\))?\s*$";
+
+        private static readonly char[] ParenthesisChars = { '(' , ')' };
 
         public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
         
-
-
 
 
         public ProxyInfo( string protocol , string version , string receivedBy )
@@ -21,43 +22,41 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
         }
 
-        public ProxyInfo( string protocol , string version , string receivedBy , string comments )
+        public ProxyInfo( string protocol , string version , string receivedBy , string comment )
         {
-            if ( string.IsNullOrWhiteSpace( protocol ) || ! ValueValidator.TryValidate( protocol ) )
+            if ( ! ValueValidator.TryValidate( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( string.IsNullOrWhiteSpace( version ) || ! ValueValidator.TryValidate( protocol ) )
+            if ( ! ValueValidator.TryValidate( version ) )
             {
-                throw new ArgumentException( version , "the argument called version contains bad things");
+                throw new ArgumentException( version , "the argument called version is not valid or may contains invalid chars");
             }
 
-            if ( string.IsNullOrWhiteSpace( receivedBy ) || ! ValueValidator.TryValidate( protocol ) )
+            if ( ! ValueValidator.TryValidate( receivedBy ) )
             {
-                throw new ArgumentException( receivedBy , "the argument called receivedBy contains bad things");
+                throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
             }
 
             if ( ! System.Version.TryParse( version , out _ ) )
             {
-                throw new ArgumentException( nameof( version ) );
+                throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
             }
 
-            if ( ! string.IsNullOrWhiteSpace( comments ) )
+            if ( ! string.IsNullOrWhiteSpace( comment ) )
             {
-                if ( ! ValueValidator.TryValidate( comments ) || comments.IndexOfAny( new char[] { '(' , ')' } ) >= 0 )
+                if ( ! ValueValidator.TryValidate( comment ) || comment.IndexOfAny( ParenthesisChars ) >= 0 )
                 {
-                    throw new ArgumentException( comments , "the argument called receivedBy contains bad things");
+                    throw new ArgumentException( comment , "the argument called comment is not valid or may contains invalid chars");
                 }
             }
 
             Protocol = protocol.Trim();
             Version = version.Trim();
-            ReceivedBy = receivedBy;
-            Comments = comments.Trim();
+            ReceivedBy = receivedBy.Trim();
+            Comment = comment?.Trim();
         }
-
-        
 
 
 
@@ -67,30 +66,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string ReceivedBy { get; }
 
-        public string Comments { get; }
-        
-
-        
-
-
-
-
-
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            builder.AppendFormat( "{0}/{1} {2} " , Protocol , Version , ReceivedBy );
-
-            if ( ! string.IsNullOrWhiteSpace( Comments ) )
-            {
-                builder.AppendFormat( "({0})" , Comments );
-            }
-
-            return builder.ToString().Trim();
-        }
-        
-        
+        public string Comment { get; }
         
 
 
@@ -105,26 +81,45 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var matchResult = new Regex( RegularExpression, RegexOptions.Compiled | RegexOptions.CultureInvariant).Match( input.Trim() );
 
-            if ( ! matchResult.Success )
+            if ( matchResult.Success )
             {
-                return false;
+                if ( ! System.Version.TryParse( matchResult.Groups[ "version" ].Value , out _ ) )
+                {
+                    return false;
+                }
+
+                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "protocol" ].Value ) || 
+                     ! ValueValidator.TryValidate( matchResult.Groups[ "version" ].Value ) || 
+                     ! ValueValidator.TryValidate( matchResult.Groups[ "receivedBy" ].Value ) )
+                {
+                    return false;
+                }
+
+                if ( matchResult.Groups[ "comment" ].Value?.IndexOfAny( ParenthesisChars ) >=0 )
+                {
+                    return false;
+                }
+
+                result = new ProxyInfo( matchResult.Groups[ "protocol" ].Value , matchResult.Groups[ "version" ].Value , matchResult.Groups[ "receivedBy" ].Value , matchResult.Groups[ "comment" ].Value );
             }
 
-            if ( ! System.Version.TryParse( matchResult.Groups[ "version" ].Value , out _ ) )
+            return result != null;
+        }
+
+
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            builder.AppendFormat( "{0}/{1} {2} " , Protocol , Version , ReceivedBy );
+
+            if ( ! string.IsNullOrWhiteSpace( Comment ) )
             {
-                return false;
+                builder.AppendFormat( "({0})" , Comment );
             }
 
-            var proxyInfo = new ProxyInfo( matchResult.Groups[ "protocol" ].Value , matchResult.Groups[ "version" ].Value , matchResult.Groups[ "receivedBy" ].Value , matchResult.Groups[ "comments" ].Value );
-            
-            if ( string.IsNullOrWhiteSpace( proxyInfo.Protocol ) || string.IsNullOrWhiteSpace( proxyInfo.Version ) || string.IsNullOrWhiteSpace( proxyInfo.ReceivedBy ) )
-            {
-                return false;
-            }
-
-            result = proxyInfo;
-
-            return true;
+            return builder.ToString().Trim();
         }
     }
 }

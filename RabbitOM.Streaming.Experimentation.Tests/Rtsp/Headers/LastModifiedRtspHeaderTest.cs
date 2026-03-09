@@ -8,12 +8,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     [TestFixture]
     public class LastModifiedRtspHeaderTest
     {
-       [TestCase( "Mon, 19 Feb 2024 14:32:10 GMT" )]
-       [TestCase( "19 Feb 2024 14:32:10 GMT" )]
-       [TestCase( "  Mon ,  19  Feb   2024   14:32:10   GMT  " )] 
-       [TestCase( " ' Mon, 19 Feb 2024 14:32:10 GMT ' " )]
-       [TestCase( " \" Mon ,  19  Feb   2024   14:32:10   GMT  \" " )] 
-       public void CheckTryParseSucceed( string input )
+        [TestCase( "Mon, 19 Feb 2024 14:32:10 GMT" )]
+        [TestCase( "19 Feb 2024 14:32:10 GMT" )]
+        [TestCase( "  Mon ,  19  Feb   2024   14:32:10   GMT  " )] 
+        [TestCase( " ' Mon, 19 Feb 2024 14:32:10 GMT ' " )]
+        [TestCase( " \" Mon ,  19  Feb   2024   14:32:10   GMT  \" " )] 
+        public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( LastModifiedRtspHeader.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
@@ -35,7 +35,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsFalse( LastModifiedRtspHeader.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
-
 
         [Test]
         public void CheckToString()

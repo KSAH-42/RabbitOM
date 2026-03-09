@@ -10,6 +10,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
         
         public override bool TryValidate( string value )
         {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
             var succeed = false;
 
             foreach ( var element in value ?? string.Empty )
