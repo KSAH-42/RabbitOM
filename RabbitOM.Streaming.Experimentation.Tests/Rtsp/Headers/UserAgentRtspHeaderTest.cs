@@ -16,6 +16,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "  (my comments)  productA/1.1 " , "productA" , "1.1" , "my comments" ) ]
         [TestCase( "  (my comments)  productA / 1.1 " , "productA" , "1.1" , "my comments" ) ]
         [TestCase( "  (my comments) my data test productA/1.1 " , "productA" , "1.1" , "my comments" ) ]
+        [TestCase( "LibVLC/3.0.12" , "LibVLC" , "3.0.12" , "" )]
         public void CheckTryParseSucceed( string input , string product , string version , string comment)
         {
             Assert.IsTrue( UserAgentRtspHeader.TryParse( input, out var header ) );
@@ -23,6 +24,19 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( product , header.Product );
             Assert.AreEqual( version , header.Version );
             Assert.AreEqual( comment , header.Comment );
+        }
+
+        [TestCase( null )]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("LibVLC")]
+        [TestCase("3.0.12")]
+        [TestCase("/3.0.12")]
+        [TestCase("/")]
+        public void CheckTryParseFailed( string input )
+        {
+            Assert.IsFalse( UserAgentRtspHeader.TryParse( input , out var header ) );
+            Assert.IsNull( header );
         }
     }
 }
