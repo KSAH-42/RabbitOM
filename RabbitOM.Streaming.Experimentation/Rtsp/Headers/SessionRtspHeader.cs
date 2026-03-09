@@ -41,7 +41,54 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
+        public static bool TryParse( string input , out SessionRtspHeader result )
+        {
+            result = null;
 
+            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
+            {
+                var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
+
+                if ( string.IsNullOrWhiteSpace( identifer ) )
+                {
+                    return false;
+                }
+                
+                var header = new SessionRtspHeader() { Identifier = identifer };
+                
+                foreach( var token in tokens )
+                {
+                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                    {
+                        if ( ValueComparer.Equals( "timeout" , parameter.Key ) )
+                        {
+                            if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
+                            {
+                                header.Timeout = value;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if ( string.IsNullOrWhiteSpace( header.Identifier ) )
+                        {
+                            header.Identifier = token ;
+                        }
+                        else
+                        {
+                            header.AddExtension( token );
+                        }
+                    }
+                }
+
+                if ( ValueValidator.TryValidate( header.Identifier ) )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
 
 
         public bool AddExtension( string value )
@@ -79,62 +126,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return builder.ToString().Trim( ' ' , ';' );
-        }
-
-
-
-
-
-
-        public static bool TryParse( string input , out SessionRtspHeader result )
-        {
-            result = null;
-
-            if ( RtspHeaderParser.TryParse( input , ";" , out string[] tokens ) )
-            {
-                var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
-
-                if ( string.IsNullOrWhiteSpace( identifer ) )
-                {
-                    return false;
-                }
-                
-                var header = new SessionRtspHeader();
-
-                header.Identifier = identifer;
-                
-                foreach( var token in tokens )
-                {
-                    if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
-                    {
-                        if ( ValueComparer.Equals( "timeout" , parameter.Key ) )
-                        {
-                            if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
-                            {
-                                header.Timeout = value;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if ( string.IsNullOrWhiteSpace( header.Identifier ) )
-                        {
-                            header.Identifier = token ;
-                        }
-                        else
-                        {
-                            header.AddExtension( token );
-                        }
-                    }
-                }
-
-                if ( ValueValidator.TryValidate( header.Identifier ) )
-                {
-                    result = header;
-                }
-            }
-
-            return result != null;
         }
     }
 }
