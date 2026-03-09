@@ -91,5 +91,21 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.IsFalse( WeightedString.TryParse( input , out var element ) );
             Assert.IsNull( element );
         }
+
+        [Test]
+        public void CheckToString()
+        {
+            var mime = new WeightedString( "application/text" );
+
+            Assert.AreEqual( "application/text" , mime.ToString() );
+        }
+
+        [Test]
+        public void CheckToStringWithQuality()
+        {
+            var mime = new WeightedString( "application/text" , 1 );
+
+            Assert.AreEqual( "application/text; q=1.0" , mime.ToString() );
+        }
     }
 }
