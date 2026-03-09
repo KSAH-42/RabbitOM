@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation
 
             var succeed = false;
 
-            foreach ( var element in value ?? string.Empty )
+            foreach ( var element in value )
             {
                 if ( element <= 31 || element >= 127 || char.IsControl( element ) )
                 {
