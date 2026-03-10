@@ -146,7 +146,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string extension )
         {
-            if ( RtspHeaderValueValidator.TryValidateToken( extension ) )
+            if ( RtspHeaderValueValidator.TryValidate( extension ) )
             {
                 return _extensions.Add( ValueAdapter.Adapt( extension ) );
             }
