@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 return false;
             }
-
+            
             foreach ( var element in value )
             {
                 if ( element <= 31 || element >= 127 || char.IsControl( element ) )
