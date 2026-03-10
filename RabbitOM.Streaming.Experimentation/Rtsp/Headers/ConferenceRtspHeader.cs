@@ -6,16 +6,14 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+   
     public sealed class ConferenceRtspHeader
     {
         public static readonly string TypeName = "Conference";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
-
+        
 
         private string _conferenceId = string.Empty;
         private string _transport = string.Empty;
@@ -132,7 +130,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeader();
 
-                foreach ( var token in tokens.Where( ValueValidator.TryValidate ) )
+                foreach ( var token in tokens.Where( RtspHeaderValueValidator.TryValidateToken ) )
                 {                    
                     if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -223,7 +221,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( ValueValidator.TryValidate( header.ConferenceId ) )
+                if ( RtspHeaderValueValidator.TryValidateToken( header.ConferenceId ) )
                 {
                     result = header;
                 }

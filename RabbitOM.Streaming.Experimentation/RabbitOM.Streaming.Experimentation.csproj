@@ -56,12 +56,9 @@
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\Validation\UriValueValidator.cs" />
-    <Compile Include="Rtsp\Headers\Validation\TokenValueValidator.cs" />
     <Compile Include="Rtsp\Headers\Adapters\QuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Adapters\StringValueAdapter.cs" />
-    <Compile Include="Rtsp\Headers\Validation\StringValueValidator.cs" />
     <Compile Include="Rtsp\Headers\Adapters\TrimValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Adapters\TrimWithUnQuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\CSeqRtspHeader.cs" />
@@ -79,6 +76,7 @@
     <Compile Include="Rtsp\Headers\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspAuthenticationTypes.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
     <Compile Include="Rtsp\Headers\StringRtspDictionary.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHashSet.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeader.cs" />

@@ -6,16 +6,14 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+   
     public sealed class WWWAuthenticateRtspHeader
     {
         public static readonly string TypeName = "WWW-Authenticate";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
-
+       
 
 
         private string _scheme = string.Empty;        
@@ -90,7 +88,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var scheme = tokens.FirstOrDefault();
                 
-                if ( ! ValueValidator.TryValidate( scheme ) )
+                if ( ! RtspHeaderValueValidator.TryValidateToken( scheme ) )
                 {
                     return false;
                 }
@@ -134,7 +132,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( ValueValidator.TryValidate( header.Scheme ) )
+                    if ( RtspHeaderValueValidator.TryValidateToken( header.Scheme ) )
                     {
                         result = header;
                     }
@@ -148,7 +146,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string extension )
         {
-            return _extensions.Add( ValueAdapter.Adapt( extension ) );
+            var value = ValueAdapter.Adapt( extension );
+
+            if ( RtspHeaderValueValidator.TryValidateToken( value ) )
+            {
+                return _extensions.Add( value );
+            }
+            
+            return false;
         }
 
         public bool RemoveExtension( string extension )

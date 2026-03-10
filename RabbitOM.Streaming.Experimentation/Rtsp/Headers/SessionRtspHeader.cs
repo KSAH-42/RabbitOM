@@ -6,15 +6,13 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+   
     public sealed class SessionRtspHeader
     {
         public static readonly string TypeName = "Session";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
         
 
         private string _identifier = string.Empty;
@@ -81,7 +79,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ValueValidator.TryValidate( header.Identifier ) )
+                if ( RtspHeaderValueValidator.TryValidateToken( header.Identifier ) )
                 {
                     result = header;
                 }

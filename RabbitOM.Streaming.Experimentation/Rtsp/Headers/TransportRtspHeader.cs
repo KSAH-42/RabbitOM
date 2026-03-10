@@ -6,17 +6,14 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+    
     public sealed class TransportRtspHeader
     {
         public static readonly string TypeName = "Transport";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
-
-
+       
 
         private string _transport = string.Empty;
         private string _transmission = string.Empty;
@@ -236,7 +233,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( ValueValidator.TryValidate( header.Transport ) && ValueValidator.TryValidate( header.Transmission ) )
+                if ( RtspHeaderValueValidator.TryValidateToken( header.Transport ) && RtspHeaderValueValidator.TryValidateToken( header.Transmission ) )
                 {
                     result = header;
                 }
@@ -250,7 +247,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            if ( ValueValidator.TryValidate( value ) )
+            if ( RtspHeaderValueValidator.TryValidateToken( value ) )
             {
                 return _extensions.Add( ValueAdapter.Adapt( value ) );
             }

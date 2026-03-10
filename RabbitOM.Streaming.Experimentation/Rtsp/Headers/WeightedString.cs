@@ -6,25 +6,25 @@ using System.Globalization;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+    
     public sealed class WeightedString : IEquatable<WeightedString>
     {
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
         public WeightedString( string value )
         {
             value = ValueAdapter.Adapt( value );
-            Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
+
+            Value = RtspHeaderValueValidator.TryValidateToken( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
             value = ValueAdapter.Adapt( value );
-            Value = ValueValidator.TryValidate( value ) ? value : throw new ArgumentException();
+
+            Value = RtspHeaderValueValidator.TryValidateToken( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( ValueValidator.TryValidate( name ) )
+                if ( RtspHeaderValueValidator.TryValidateToken( name ) )
                 {
                     foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                     {

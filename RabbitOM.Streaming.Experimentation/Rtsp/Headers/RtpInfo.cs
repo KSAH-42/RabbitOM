@@ -5,8 +5,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+    
     public sealed class RtpInfo 
     { 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
@@ -20,12 +19,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public RtpInfo( string url , ushort? sequence , ushort? rtpTime , string ssrc )
         {
-            if ( ! StringValueValidator.UriValidator.TryValidate( url ) )
+            if ( ! RtspHeaderValueValidator.TryValidateUri( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
 
-            if ( ! string.IsNullOrEmpty( ssrc ) && ! StringValueValidator.TokenValidator.TryValidate( ssrc ) )
+            if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.TryValidateToken( ssrc ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
@@ -86,12 +85,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ! StringValueValidator.UriValidator.TryValidate( url ) )
+                if ( ! RtspHeaderValueValidator.TryValidateUri( url ) )
                 {
                     return false;
                 }
 
-                if ( ! string.IsNullOrEmpty( ssrc ) && ! StringValueValidator.TokenValidator.TryValidate( ssrc ) )
+                if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.TryValidateToken( ssrc ) )
                 {
                     return false;
                 }

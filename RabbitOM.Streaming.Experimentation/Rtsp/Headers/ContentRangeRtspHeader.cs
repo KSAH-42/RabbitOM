@@ -6,15 +6,13 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+    
     public sealed class ContentRangeRtspHeader
     {
         public static readonly string TypeName = "Content-Range";
         
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
-
+        
 
         private string _unit = string.Empty;
         private long? _start;
@@ -82,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         header.Size = size;
                     }                    
 
-                    if ( ValueValidator.TryValidate( header.Unit ) )
+                    if ( RtspHeaderValueValidator.TryValidateToken( header.Unit ) )
                     {
                         if ( header.Start.HasValue && header.End.HasValue )
                         {

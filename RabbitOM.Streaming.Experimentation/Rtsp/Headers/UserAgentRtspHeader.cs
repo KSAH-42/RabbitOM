@@ -5,16 +5,14 @@ using System.Text.RegularExpressions;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-
+   
     public sealed class UserAgentRtspHeader
     {
         public static readonly string TypeName = "User-Agent";
 
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
-
+        
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
             
@@ -74,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ValueValidator.TryValidate( header.Product ) && ValueValidator.TryValidate( header.Version ) )
+                if ( RtspHeaderValueValidator.TryValidateToken( header.Product ) && RtspHeaderValueValidator.TryValidateToken( header.Version ) )
                 {
                     result = header;
                 }

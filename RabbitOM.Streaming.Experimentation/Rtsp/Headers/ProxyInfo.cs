@@ -4,17 +4,10 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Validation;
-    using System.Xml.Linq;
-
     public sealed class ProxyInfo 
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comment>.*)\))?\s*$";
 
-        private static readonly char[] ParenthesisChars = { '(' , ')' };
-
-        public static readonly StringValueValidator ValueValidator = StringValueValidator.TokenValidator;
-        
 
 
         public ProxyInfo( string protocol , string version , string receivedBy )
@@ -24,32 +17,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comment )
         {
-            if ( ! ValueValidator.TryValidate( protocol ) )
+            if ( ! RtspHeaderValueValidator.TryValidateToken( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! ValueValidator.TryValidate( version ) )
+            if ( ! RtspHeaderValueValidator.TryValidateToken( version ) )
             {
                 throw new ArgumentException( version , "the argument called version is not valid or may contains invalid chars");
             }
 
-            if ( ! ValueValidator.TryValidate( receivedBy ) )
+            if ( ! RtspHeaderValueValidator.TryValidateToken( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
             }
 
-            if ( ! System.Version.TryParse( version , out _ ) )
+            if ( ! RtspHeaderValueValidator.TryValidateVersion( version ) )
             {
                 throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
             }
 
-            if ( ! string.IsNullOrWhiteSpace( comment ) )
+            if ( ! RtspHeaderValueValidator.TryValidateComment( comment ) )
             {
-                if ( ! ValueValidator.TryValidate( comment ) || comment.IndexOfAny( ParenthesisChars ) >= 0 )
-                {
-                    throw new ArgumentException( comment , "the argument called comment is not valid or may contains invalid chars");
-                }
+                throw new ArgumentException( comment , "the argument called comment is not valid or may contains invalid chars");
             }
 
             Protocol = protocol.Trim();
@@ -74,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( ! ValueValidator.TryValidate( input ) )
+            if ( ! RtspHeaderValueValidator.TryValidate( input ) )
             {
                 return false;
             }
@@ -83,19 +73,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( matchResult.Success )
             {
-                if ( ! System.Version.TryParse( matchResult.Groups[ "version" ].Value , out _ ) )
+                if ( ! RtspHeaderValueValidator.TryValidateToken( matchResult.Groups[ "protocol" ].Value ) || 
+                     ! RtspHeaderValueValidator.TryValidateToken( matchResult.Groups[ "version" ].Value ) || 
+                     ! RtspHeaderValueValidator.TryValidateToken( matchResult.Groups[ "receivedBy" ].Value ) ||
+                     ! RtspHeaderValueValidator.TryValidateVersion( matchResult.Groups[ "version" ].Value ) )
                 {
                     return false;
                 }
 
-                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "protocol" ].Value ) || 
-                     ! ValueValidator.TryValidate( matchResult.Groups[ "version" ].Value ) || 
-                     ! ValueValidator.TryValidate( matchResult.Groups[ "receivedBy" ].Value ) )
-                {
-                    return false;
-                }
-
-                if ( matchResult.Groups[ "comment" ].Value?.IndexOfAny( ParenthesisChars ) >=0 )
+                if ( ! RtspHeaderValueValidator.TryValidateComment( matchResult.Groups[ "comment" ].Value ) )
                 {
                     return false;
                 }
