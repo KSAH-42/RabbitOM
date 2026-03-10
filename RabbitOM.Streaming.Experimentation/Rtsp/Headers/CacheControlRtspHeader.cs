@@ -59,6 +59,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
+            if ( ! RtspHeaderValueValidator.TryValidate( name ) || ! RtspHeaderValueValidator.TryValidate( value ) )
+            {
+                return false;
+            }
+
             return _extensions.TryAdd( ValueAdapter.Adapt( name ) , ValueAdapter.Adapt( value ) );
         }
 
