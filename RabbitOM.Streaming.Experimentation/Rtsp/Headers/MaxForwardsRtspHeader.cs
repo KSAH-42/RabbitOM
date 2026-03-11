@@ -3,8 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-
-    public sealed class MaxForwardsRtspHeader
+    public sealed class MaxForwardsRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Max-Forwards";
         

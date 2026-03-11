@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class SpeedRtspHeader
+    public sealed class SpeedRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Speed";
         

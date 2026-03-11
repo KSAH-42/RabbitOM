@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
-    public sealed class TransportRtspHeader
+    public sealed class TransportRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Transport";
 

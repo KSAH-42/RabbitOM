@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
    
-    public sealed class WWWAuthenticateRtspHeader
+    public sealed class WWWAuthenticateRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "WWW-Authenticate";
 

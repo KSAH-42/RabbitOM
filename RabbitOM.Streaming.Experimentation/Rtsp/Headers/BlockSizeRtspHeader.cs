@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class BlockSizeRtspHeader
+    public sealed class BlockSizeRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Blocksize";        
 

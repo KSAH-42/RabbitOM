@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class AllowRtspHeader
+    public sealed class AllowRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Allow";
 

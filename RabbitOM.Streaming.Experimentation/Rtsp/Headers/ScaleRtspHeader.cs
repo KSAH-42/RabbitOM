@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class ScaleRtspHeader
+    public sealed class ScaleRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Scale";
         

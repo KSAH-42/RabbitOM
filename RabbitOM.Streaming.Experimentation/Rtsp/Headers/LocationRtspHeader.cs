@@ -3,8 +3,8 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-   
-    public sealed class LocationRtspHeader
+  
+    public sealed class LocationRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Location";
         

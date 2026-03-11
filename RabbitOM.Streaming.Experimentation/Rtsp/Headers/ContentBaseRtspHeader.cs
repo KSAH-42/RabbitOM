@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
-    public sealed class ContentBaseRtspHeader
+    public sealed class ContentBaseRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Content-Base";
         

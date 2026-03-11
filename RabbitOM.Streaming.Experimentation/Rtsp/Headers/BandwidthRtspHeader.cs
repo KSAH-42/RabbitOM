@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class BandwidthRtspHeader
+    public sealed class BandwidthRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Bandwidth";
         

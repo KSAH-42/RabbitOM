@@ -3,7 +3,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class AcceptRangesRtspHeader
+    public sealed class AcceptRangesRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Accept-Ranges";
 

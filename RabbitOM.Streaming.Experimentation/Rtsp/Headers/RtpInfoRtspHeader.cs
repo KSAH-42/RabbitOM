@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class RtpInfoRtspHeader
+    public sealed class RtpInfoRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "RTP-Info";
 

@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class MediaDurationRtspHeader
+    public sealed class MediaDurationRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Media-Duration";
 

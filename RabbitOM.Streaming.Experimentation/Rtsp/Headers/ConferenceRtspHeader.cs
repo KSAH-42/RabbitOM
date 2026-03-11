@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
    
-    public sealed class ConferenceRtspHeader
+    public sealed class ConferenceRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Conference";
 

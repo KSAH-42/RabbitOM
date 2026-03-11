@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class IfModifiedSinceRtspHeader
+    public sealed class IfModifiedSinceRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "If-Modified-Since";
         

@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class ContentLengthRtspHeader
+    public sealed class ContentLengthRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Content-Length";        
         

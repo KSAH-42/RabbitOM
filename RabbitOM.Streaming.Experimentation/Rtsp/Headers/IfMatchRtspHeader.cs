@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class IfMatchRtspHeader
+    public sealed class IfMatchRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "If-Match";
 

@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class ExpiresRtspHeader
+    public sealed class ExpiresRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Expires";
 

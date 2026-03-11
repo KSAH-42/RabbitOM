@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class PublicRtspHeader 
+    public sealed class PublicRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Public";
 

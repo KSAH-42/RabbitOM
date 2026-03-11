@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class CacheControlRtspHeader
+    public sealed class CacheControlRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Cache-Control";
 

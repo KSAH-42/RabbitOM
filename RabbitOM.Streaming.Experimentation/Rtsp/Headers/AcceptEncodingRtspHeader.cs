@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class AcceptEncodingRtspHeader
+    public sealed class AcceptEncodingRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Accept-Encoding";
 

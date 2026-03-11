@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
-    public sealed class ContentRangeRtspHeader
+    public sealed class ContentRangeRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Content-Range";
         

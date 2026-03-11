@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class LastModifiedRtspHeader
+    public sealed class LastModifiedRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "Last-Modified";
         

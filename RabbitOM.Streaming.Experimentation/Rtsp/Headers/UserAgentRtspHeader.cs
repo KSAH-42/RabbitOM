@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
    
-    public sealed class UserAgentRtspHeader
+    public sealed class UserAgentRtspHeader : RtspHeader
     {
         public static readonly string TypeName = "User-Agent";
 

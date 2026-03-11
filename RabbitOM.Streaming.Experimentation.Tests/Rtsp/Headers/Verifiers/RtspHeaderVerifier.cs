@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckHeaderTypeNames()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var typeNameField = type.GetField( "TypeName" , BindingFlags.Public | BindingFlags.Static );
                 
@@ -106,7 +106,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckTryParseSignature()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var method = type.GetMethod( "TryParse" , BindingFlags.Public | BindingFlags.Static );
                 
@@ -121,7 +121,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckToStringIsImplemented()
         { 
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var method = type.GetMethod( "ToString" );
                 
@@ -157,7 +157,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckHeaderAreSealed()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.Name.EndsWith( "RtspHeader" ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 Assert.IsTrue( type.IsSealed , $"{type.Name}" );
             }
