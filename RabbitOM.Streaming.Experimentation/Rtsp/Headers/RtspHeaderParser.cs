@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             var insideQuotes = false;
 
             // we don't used string.split here
-            // because we need to ignored separators inside quotes
+            // because we need to ignored separators between quotes
 
             foreach ( var element in input )
             {
