@@ -17,13 +17,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         private string _scheme = string.Empty;        
-        private string _userName = string.Empty;
         private string _realm = string.Empty;        
         private string _nonce = string.Empty;        
         private string _opaque = string.Empty;        
-        private string _response = string.Empty;
         private string _algorithm = string.Empty;
-        private string _stale = string.Empty;
+        private bool? _stale;
         private string _qualityOfProtection = string.Empty;
         private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
 
@@ -61,10 +59,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _algorithm = ValueAdapter.Adapt( value );
         }
         
-        public string Stale
+        public bool? Stale
         {
             get => _stale;
-            set => _stale = ValueAdapter.Adapt( value );
+            set => _stale = value;
         }
 
         public string QualityOfProtection
@@ -92,7 +90,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     return false;
                 }
-                
+
                 var header = new WWWAuthenticateRtspHeader() { Scheme = scheme };
                 
                 if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
@@ -119,7 +117,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                             }
                             else if ( ValueComparer.Equals( "stale" , parameter.Key ) )
                             {
-                                header.Stale = parameter.Value ;
+                                if ( bool.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
+                                {
+                                    header.Stale = value;
+                                }
                             }
                             else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
                             {
@@ -132,10 +133,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( RtspHeaderValueValidator.TryValidateToken( header.Scheme ) )
+                    if ( ! RtspHeaderValueValidator.TryValidateToken( header.Scheme ) || ! RtspHeaderValueValidator.TryValidateToken( header.Realm ) )
                     {
-                        result = header;
+                        return false;
                     }
+                    
+                    if ( RtspAuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
+                    {
+                        if ( ! RtspHeaderValueValidator.TryValidateToken( header.Nonce ) )
+                        {
+                            return false;
+                        }
+                    }
+
+                    result = header;
                 }
             }
 
@@ -192,9 +203,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.AppendFormat( "algorithm=\"{0}\", " , Algorithm );
             }
 
-            if ( ! string.IsNullOrWhiteSpace( Stale ) )
+            if ( Stale.HasValue )
             {
-                builder.AppendFormat( "stale=\"{0}\", " , Stale );
+                builder.AppendFormat( "stale=\"{0}\", " , Stale.Value.ToString().ToLower() );
             }
 
             if ( ! string.IsNullOrWhiteSpace( QualityOfProtection ) )

@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 return false;
             }
-
+            
             var segments = new List<string>();
             var builder = new StringBuilder();
             var insideQuotes = false;
