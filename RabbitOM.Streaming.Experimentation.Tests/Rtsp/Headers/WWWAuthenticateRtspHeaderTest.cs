@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( stale , header.Stale );
         }
 
-        [TestCase( "digEst nonce='my nonce', realm='my realm'", "digest")]
+        [TestCase( "digest nonce='my nonce', realm='my realm'", "digest")]
         [TestCase( "DIGEST noNce=my nonce, realm='my realm'", "DIGEST")]
         public void CheckTryParseSucceedForDigest( string input , string scheme )
         {
