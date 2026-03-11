@@ -52,6 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase("apple 'banana with chocolat\" pear" , " " )]
         [TestCase("apple \"banana with chocolat' pear" , " " )]
         [TestCase("apple     \"banana with chocolat'        pear" , " " )]
+        [TestCase(" apple     \"banana with chocolat'        pear" , " " )]
         public void CheckTryParse3( string input , string seperator )
         {
             Assert.True( RtspHeaderParser.TryParse( input , seperator , out string[] tokens ) );
