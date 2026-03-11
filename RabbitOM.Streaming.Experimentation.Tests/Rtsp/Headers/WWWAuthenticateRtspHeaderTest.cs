@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "digest nonce='my nonce',realm='my realm',opaque='my opaque',stale='true',qop='my qop',algorithm='my algorithm'" )]
         [TestCase( "digest realm=my realm,nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='true',qop='my qop'" )]
         [TestCase( "digest realm=\"my realm\",nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale='TrUe',qop='my qop'" )]
-        [TestCase( "digest opaque='my opaque' , realm = \"my realm \" , nonce = 'my nonce' ,algorithm='my algorithm',stale= 'true' ,qop='my qop'" )]
+        [TestCase( "   digest      opaque='my opaque' , realm = \"my realm \" , nonce = 'my nonce' ,algorithm='my algorithm',stale= 'true' ,qop='my qop'" )]
         [TestCase( "digest realm='my realm',,, ,,,nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale= 'TRUE' ,qop='my qop'" )]
         public void CheckTryParseSucceed( string input )
         {
