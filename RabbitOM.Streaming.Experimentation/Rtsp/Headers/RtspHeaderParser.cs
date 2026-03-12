@@ -15,12 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = default;
 
-            if ( string.IsNullOrWhiteSpace( input ) )
-            {
-                return false;
-            }
-
-            if ( string.IsNullOrWhiteSpace( separator ) || ! input.Contains( separator ) )
+            if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrWhiteSpace( separator ) || ! input.Contains( separator ) )
             {
                 return false;
             }
