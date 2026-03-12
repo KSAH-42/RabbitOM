@@ -34,6 +34,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Security
                     return string.Empty;
                 }
 
+                if ( RtspAuthenticationTypes.IsMd5Algorithm( Algorithm ) )
+                {
+                    var hashA1 = RtspAuthorizationAlgorithm.ComputeAsMD5( UserName + ":" + Realm + ":" + Password );
+                    var hashA2 = RtspAuthorizationAlgorithm.ComputeAsMD5( Method.Name + ":" + Uri  );
+
+                    return RtspAuthorizationAlgorithm.ComputeAsMD5( hashA1 + ":" + Nonce + ":" + hashA2 );
+                }
+
                 if ( RtspAuthenticationTypes.IsSha1Algorithm( Algorithm ) )
                 {
                     var hashA1 = RtspAuthorizationAlgorithm.ComputeAsSHA1( UserName + ":" + Realm + ":" + Password );
