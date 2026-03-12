@@ -1,6 +1,6 @@
-﻿this assembly is used for experimentation for finding different a approach of some existing implementation.
-If the implementation will be enough, it will be moved on the main assembly.
+﻿this assembly is used for experimentation for finding different approachs of some existing implementation.
+If the implementation will be enougth, it will be moved on the main assembly.
 
-some modifications on headers will comes and can potentially changed entirely.
+some modifications on headers will comes and can potentially changed entirely the existing code.
 
-it should not be considered as the final or some closer to the final implementation. it could be changed.
+it should not be considered as the final implementation but a closer to the final implementation.
