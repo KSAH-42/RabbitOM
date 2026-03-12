@@ -5,10 +5,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Security
     public sealed class RtspAuthorizationBuilder
     {
         public RtspMethod Method { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
         public string Scheme { get; set; }
         public string Algorithm { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
         public string Uri { get; set; }
         public string Realm { get; set; }
         public string Nonce { get; set; }
