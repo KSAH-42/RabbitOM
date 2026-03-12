@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( " '0' " , 0 )]
         [TestCase( " '1' " , 1 )]
-        [TestCase( " '2' " , 2 )]
+        [TestCase( " ' 2 ' " , 2 )]
         [TestCase( " '9223372036854775807' " , 9223372036854775807 )]
 
         [TestCase( " \"0\" " , 0 )]
