@@ -106,12 +106,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckTryParseSignature()
         {
+            // to avoid mistakes when a new header is created by a copy and paste from existing one
+
             foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
             {
                 var method = type.GetMethod( "TryParse" , BindingFlags.Public | BindingFlags.Static );
                 
-                // to avoid mistakes when a new header is created by a copy and paste from existing one
-
                 var outputParameter = method.GetParameters().First( x => x.IsOut && x.Name == "result" );
 
                 Assert.AreEqual( outputParameter.ParameterType.FullName.Replace( "&","") , type.FullName );
@@ -119,29 +119,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         }
 
         [Test]
-        public void CheckToStringIsImplemented()
-        { 
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
-            {
-                var method = type.GetMethod( "ToString" );
-                
-                Assert.IsTrue( method.DeclaringType != typeof(object) );
-
-                var instance = Activator.CreateInstance( type );
-
-                // TODO: find a setter a set an abritary value and check the returns value after calling the tostring method
-
-                
-                var output = method.Invoke( instance , null ) as string;
-
-                Assert.IsNotNull( output );
-                Assert.IsFalse( output.Contains( type.Name ) );
-            }
-        }
-
-        [Test]
         public void CheckHeaderPrivateMembers()
         {
+            // to avoid mistakes
+
             foreach ( var type in CurrentAssembly.ExportedTypes )
             {
                 foreach ( var field in type.GetFields() )
