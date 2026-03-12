@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
 
             using ( algorithm )
             {
-                var plainBytes = System.Text.Encoding.ASCII.GetBytes( input );
+                var plainBytes = System.Text.Encoding.UTF8.GetBytes( input );
 
                 if ( plainBytes == null || plainBytes.Length <= 0 )
                 {
