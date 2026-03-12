@@ -129,6 +129,9 @@
     <Compile Include="Rtsp\RtspResponseBody.cs" />
     <Compile Include="Rtsp\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
+    <Compile Include="Rtsp\Transports\Security\BasicRtspAuthorizationBuilder.cs" />
+    <Compile Include="Rtsp\Transports\Security\DigestRtspAuthorizationBuilder.cs" />
+    <Compile Include="Rtsp\Transports\Security\RtspAuthorizationBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">
