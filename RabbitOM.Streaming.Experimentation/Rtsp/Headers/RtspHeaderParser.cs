@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            if ( ! RtspHeaderParser.TryParse( input , separator , out string[] tokens ) )
+            if ( ! TryParse( input , separator , out string[] tokens ) )
             {
                 return false;
             }
