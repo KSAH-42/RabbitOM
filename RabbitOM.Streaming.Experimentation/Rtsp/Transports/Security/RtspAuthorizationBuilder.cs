@@ -2,13 +2,64 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Security
 {
-    public abstract class RtspAuthorizationBuilder
+    public sealed class RtspAuthorizationBuilder
     {
+        public RtspMethod Method { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string Scheme { get; set; }
+        public string Algorithm { get; set; }
+        public string Uri { get; set; }
+        public string Realm { get; set; }
+        public string Nonce { get; set; }
 
 
-        public abstract bool CanBuild();
-        public abstract string Build();
+
+        public override string ToString()
+        {
+            if ( string.IsNullOrWhiteSpace( UserName ) || string.IsNullOrWhiteSpace( Password ) )
+            {
+                return string.Empty;
+            }
+
+            if ( RtspAuthenticationTypes.IsBasicAuthentication( Scheme ) )
+            {
+                return RtspAlgorithm.ComputeAsBasic( $"{UserName}:{Password}" );
+            }
+
+            if ( RtspAuthenticationTypes.IsDigestAuthentication( Scheme ) )
+            {
+                if ( Method == null || string.IsNullOrWhiteSpace( Uri ) || string.IsNullOrWhiteSpace( Realm ) || string.IsNullOrWhiteSpace( Nonce ) )
+                {
+                    return string.Empty;
+                }
+
+                if ( RtspAuthenticationTypes.IsSha1Algorithm( Algorithm ) )
+                {
+                    var hashA1 = RtspAlgorithm.ComputeAsSHA1( UserName + ":" + Realm + ":" + Password );
+                    var hashA2 = RtspAlgorithm.ComputeAsSHA1( Method.Name + ":" + Uri  );
+
+                    return RtspAlgorithm.ComputeAsSHA1( hashA1 + ":" + Nonce + ":" + hashA2 );
+                }
+
+                if ( RtspAuthenticationTypes.IsSha256Algorithm( Algorithm ) )
+                {
+                    var hashA1 = RtspAlgorithm.ComputeAsSHA256( UserName + ":" + Realm + ":" + Password );
+                    var hashA2 = RtspAlgorithm.ComputeAsSHA256( Method.Name + ":" + Uri  );
+
+                    return RtspAlgorithm.ComputeAsSHA256( hashA1 + ":" + Nonce + ":" + hashA2 );
+                }
+
+                if ( RtspAuthenticationTypes.IsSha512Algorithm( Algorithm ) )
+                {
+                    var hashA1 = RtspAlgorithm.ComputeAsSHA512( UserName + ":" + Realm + ":" + Password );
+                    var hashA2 = RtspAlgorithm.ComputeAsSHA512( Method.Name + ":" + Uri  );
+
+                    return RtspAlgorithm.ComputeAsSHA512( hashA1 + ":" + Nonce + ":" + hashA2 );
+                }
+            }
+
+            return string.Empty;
+        }  
     }
 }

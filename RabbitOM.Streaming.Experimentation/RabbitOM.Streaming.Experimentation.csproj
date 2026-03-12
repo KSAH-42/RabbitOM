@@ -76,7 +76,7 @@
     <Compile Include="Rtsp\Headers\RefererRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\RtspAuthenticationTypes.cs" />
+    <Compile Include="Rtsp\RtspAuthenticationTypes.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
     <Compile Include="Rtsp\Headers\StringRtspDictionary.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHashSet.cs" />
@@ -129,9 +129,8 @@
     <Compile Include="Rtsp\RtspResponseBody.cs" />
     <Compile Include="Rtsp\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
-    <Compile Include="Rtsp\Transports\Security\BasicRtspAuthorizationBuilder.cs" />
-    <Compile Include="Rtsp\Transports\Security\DigestRtspAuthorizationBuilder.cs" />
     <Compile Include="Rtsp\Transports\Security\RtspAuthorizationBuilder.cs" />
+    <Compile Include="Rtsp\Transports\Security\RtspHashAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">
