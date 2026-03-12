@@ -60,14 +60,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Security
                     return string.Empty;
                 }
 
-                var output = new StringBuilder();
+                var builder = new StringBuilder();
 
                 for ( int i = 0 ; i < digestBytes.Length ; i++ )
                 {
-                    output.Append( digestBytes[i].ToString( "x2" ) );
+                    builder.Append( digestBytes[i].ToString( "x2" ) );
                 }
 
-                return output.ToString();
+                return builder.ToString();
             }
         }
     }
