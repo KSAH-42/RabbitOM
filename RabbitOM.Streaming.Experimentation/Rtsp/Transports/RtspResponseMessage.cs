@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
 
-    public sealed class RtspRequestMessage
+    public sealed class RtspResponseMessage
     {        
     }
 }
