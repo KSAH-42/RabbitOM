@@ -3,9 +3,9 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
 
-    public interface IRtspClientChannel : IDisposable
+    public interface IClientChannel : IDisposable
     {        
-        string EndPoint { get; set; }
+        string Address { get; set; }
         
         TimeSpan ReceiveTimeout { get; set; }
         
