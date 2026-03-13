@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public struct RtspPacket
+    public struct InterleavedPacket
     {
-        public RtspPacket( byte[] buffer , int channel )
+        public InterleavedPacket( byte[] buffer , int channel )
         {
             if ( buffer == null )
             {

@@ -5,14 +5,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public sealed class RtspClient : IDisposable
     {
-        private readonly Action<RtspPacket> _interleaveHandler;
+        private readonly Action<InterleavedPacket> _interleaveHandler;
         
         
 
 
         public RtspClient() { }
 
-        public RtspClient( Action<RtspPacket> interleavedHandler ) => _interleaveHandler = interleavedHandler;
+        public RtspClient( Action<InterleavedPacket> interleavedHandler ) => _interleaveHandler = interleavedHandler;
 
   
         
