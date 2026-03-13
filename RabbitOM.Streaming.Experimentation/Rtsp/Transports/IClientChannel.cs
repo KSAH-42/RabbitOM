@@ -19,6 +19,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         
         void Close();
 
+        void Abort();
+
         RtspResponseMessage SendMessage( RtspRequestMessage request );
     }
 }
