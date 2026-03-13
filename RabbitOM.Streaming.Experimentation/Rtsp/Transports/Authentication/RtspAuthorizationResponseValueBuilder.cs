@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 {
-    public sealed class RtspAuthorizationResponseBuilder
+    public sealed class RtspAuthorizationResponseValueBuilder
     {
         public RtspMethod Method { get; set; }
 
