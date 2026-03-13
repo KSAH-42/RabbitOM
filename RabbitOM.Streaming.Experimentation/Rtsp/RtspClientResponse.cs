@@ -6,11 +6,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     public sealed class RtspClientResponse : IDisposable
     {
         public RtspMethod Method { get; }
+        
         public Version Version { get; }
+        
         public RtspStatusCode Status { get; }
+        
         public string ReasonPhrase { get; }
+        
         public IReadOnlyDictionary<string,string> Headers { get; }
         
+
+
 
 
 
