@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute );
         }
 
-        public static bool TryValidateVersion( string value )
+        public static bool IsValidVersion( string value )
         {
             return Version.TryParse( value , out _ );
         }

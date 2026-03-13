@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
             }
 
-            if ( ! RtspHeaderValueValidator.TryValidateVersion( version ) )
+            if ( ! RtspHeaderValueValidator.IsValidVersion( version ) )
             {
                 throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
             }
@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 if ( ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "protocol" ].Value ) || 
                      ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "version" ].Value ) || 
                      ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) ||
-                     ! RtspHeaderValueValidator.TryValidateVersion( matchResult.Groups[ "version" ].Value ) )
+                     ! RtspHeaderValueValidator.IsValidVersion( matchResult.Groups[ "version" ].Value ) )
                 {
                     return false;
                 }
