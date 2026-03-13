@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
     public sealed class RtspRequestMessage
     {        
         public string Method { get; set; }
@@ -11,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public string Uri { get; set; }
 
-        public IDictionary<string,string> Headers { get; } = new Dictionary<string,string>( StringComparer.OrdinalIgnoreCase );
+        public NameValueRtspCollection Headers { get; } = new NameValueRtspCollection();
 
         public byte[] Body { get; set; }
 

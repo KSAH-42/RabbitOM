@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class NameValueRtspCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>, ICollection, IReadOnlyCollection<KeyValuePair<string,IEnumerable<string>>>
     {
-        private readonly Dictionary<string,IEnumerable<string>> _collection = new Dictionary<string, IEnumerable<string>>();
+        private readonly Dictionary<string,IEnumerable<string>> _collection = new Dictionary<string, IEnumerable<string>>( StringComparer.OrdinalIgnoreCase );
 
 
 
