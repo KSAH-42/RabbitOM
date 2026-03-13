@@ -62,12 +62,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveMime( WeightedString mime )
         {
-            if ( WeightedString.IsNullOrEmpty( mime ) )
-            {
-                return false;
-            }
-
-            if ( ! _mimes.ContainsValue( mime ) )
+            if ( WeightedString.IsNullOrEmpty( mime ) || ! _mimes.ContainsValue( mime ) )
             {
                 return false;
             }
@@ -82,14 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var language = _mimes.Values.FirstOrDefault( predicate );
-
-            if ( language == null )
-            {
-                return false;
-            }
-
-            return _mimes.Remove( language.Value );
+            return _mimes.Remove( _mimes.Values.FirstOrDefault( predicate )?.Value ?? string.Empty );
         }
 
         public void ClearMimes()

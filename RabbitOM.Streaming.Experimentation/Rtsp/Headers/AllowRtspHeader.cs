@@ -64,14 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var method = _methods.FirstOrDefault( predicate );
-
-            if ( method == null )
-            {
-                return false;
-            }
-
-            return _methods.Remove( method );
+            return _methods.Remove( _methods.FirstOrDefault( predicate ) );
         }
 
         public void ClearMethods()

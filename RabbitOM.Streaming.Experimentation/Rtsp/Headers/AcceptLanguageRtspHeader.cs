@@ -63,12 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveLanguage( WeightedString language )
         {
-            if ( WeightedString.IsNullOrEmpty( language ) )
-            {
-                return false;
-            }
-
-            if ( ! _languages.ContainsValue( language ) )
+            if ( WeightedString.IsNullOrEmpty( language ) || ! _languages.ContainsValue( language ) )
             {
                 return false;
             }
@@ -83,14 +78,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var language = _languages.Values.FirstOrDefault( predicate );
-
-            if ( language == null )
-            {
-                return false;
-            }
-
-            return _languages.Remove( language.Value );
+            return _languages.Remove( _languages.Values.FirstOrDefault( predicate )?.Value ?? string.Empty );
         }
 
         public void ClearLanguages()

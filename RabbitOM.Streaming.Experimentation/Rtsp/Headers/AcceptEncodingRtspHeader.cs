@@ -62,12 +62,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveEncoding( WeightedString encoding )
         {
-            if ( WeightedString.IsNullOrEmpty( encoding ) )
-            {
-                return false;
-            }
-
-            if ( ! _encodings.ContainsValue( encoding ) )
+            if ( WeightedString.IsNullOrEmpty( encoding ) || ! _encodings.ContainsValue( encoding ) )
             {
                 return false;
             }
@@ -82,14 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            var encoding = _encodings.Values.FirstOrDefault( predicate );
-
-            if ( encoding == null )
-            {
-                return false;
-            }
-
-            return _encodings.Remove( encoding.Value );
+            return _encodings.Remove( _encodings.Values.FirstOrDefault( predicate )?.Value ?? string.Empty );
         }
 
         public void ClearEncodings()
