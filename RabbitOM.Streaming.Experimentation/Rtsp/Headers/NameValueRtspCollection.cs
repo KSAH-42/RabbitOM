@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class NameValueRtspCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>, ICollection, ICollection<KeyValuePair<string , IEnumerable<string>>> , IReadOnlyCollection<KeyValuePair<string,IEnumerable<string>>>
+    // TODO: add unit tests
+
+    public sealed class NameValueRtspCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>, ICollection, IReadOnlyCollection<KeyValuePair<string,IEnumerable<string>>>
     {
         private readonly Dictionary<string,IEnumerable<string>> _collection = new Dictionary<string, IEnumerable<string>>();
 
@@ -12,15 +15,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
         public IEnumerable<string> this[ string key ]
         {
-            get => throw new NotImplementedException();
+            get => _collection[ key ];
         }
 
-        public IEnumerable<string> this[ string key , int index ]
+        public string this[ string key , int index ]
         {
-            get => throw new NotImplementedException();
+            get => _collection[ key ].ElementAt( index );
         }
+
 
 
 
@@ -54,6 +59,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         
+
+
         IEnumerator<KeyValuePair<string , IEnumerable<string>>> IEnumerable<KeyValuePair<string , IEnumerable<string>>>.GetEnumerator()
         {
             return _collection.GetEnumerator();
@@ -71,12 +78,48 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string key , string value )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrWhiteSpace( key ) )
+            {
+                throw new ArgumentException( nameof( key ) );
+            }
+
+            if ( ! _collection.TryGetValue( key , out var elements ) || elements == null )
+            {
+                elements = new HashSet<string>();
+            }
+
+            var items = elements as HashSet<string>;
+
+            if ( items == null )
+            {
+                throw new InvalidOperationException();
+            }
+
+            items.Add( value ?? string.Empty );
         }
 
         public bool TryAdd( string key , string value )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrWhiteSpace( key ) )
+            {
+                return false;
+            }
+
+            if ( ! _collection.TryGetValue( key , out var elements ) || elements == null )
+            {
+                elements = new HashSet<string>();
+            }
+
+            var items = elements as HashSet<string>;
+
+            System.Diagnostics.Debug.Assert( items != null );
+
+            if ( items != null )
+            {
+                return items.Add( value ?? string.Empty );
+            }
+
+            return false;
         }
 
         public void CopyTo( Array array , int index )
@@ -86,22 +129,58 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void CopyTo( KeyValuePair<string , IEnumerable<string>>[] array , int arrayIndex )
         {
-            throw new NotImplementedException();
+            _collection.ToList().CopyTo( array , arrayIndex );
         }
 
         public bool TryGetValue( string key , out string result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( ! _collection.TryGetValue( key ?? string.Empty , out var elements ) )
+            {
+                return false;
+            }
+
+            var items = elements as HashSet<string>;
+
+            System.Diagnostics.Debug.Assert( items != null );
+
+            if ( items == null || items.Count <= 0 )
+            {
+                return false;
+            }
+
+            result = items.First() ?? string.Empty;
+
+            return true;
         }
 
         public bool TryGetValueAt( string key , int index , out string result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( ! _collection.TryGetValue( key ?? string.Empty , out var elements ) )
+            {
+                return false;
+            }
+
+            var items = elements as HashSet<string>;
+
+            System.Diagnostics.Debug.Assert( items != null );
+
+            if ( items == null || index < 0 || index >= items.Count )
+            {
+                return false;
+            }
+
+            result = items.ElementAt( index );
+
+            return true;
         }
 
         public bool TryGetValues( string key , out IEnumerable<string> result )
         {
-            throw new NotImplementedException();
+            return _collection.TryGetValue( key ?? string.Empty , out result ) ? result != null : false;
         }
 
         public bool Remove( string key )
@@ -111,7 +190,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveAt( string key , int index )
         {
-            throw new NotImplementedException();
+            if ( ! _collection.TryGetValue( key ?? string.Empty , out var elements ) )
+            {
+                return false;
+            }
+
+            var items = elements as HashSet<string>;
+
+            System.Diagnostics.Debug.Assert( items != null );
+
+            if ( items == null )
+            {
+                return false;
+            }
+
+            return items.Remove( items.ElementAtOrDefault( index ) );
         }
 
         public void Clear()

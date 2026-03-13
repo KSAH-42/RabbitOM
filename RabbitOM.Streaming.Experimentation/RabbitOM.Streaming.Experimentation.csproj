@@ -76,6 +76,7 @@
     <Compile Include="Rtsp\Headers\RefererRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
+    <Compile Include="Rtsp\Headers\NameValueRtspCollection.cs" />
     <Compile Include="Rtsp\RtspAuthenticationTypes.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
     <Compile Include="Rtsp\Headers\StringRtspDictionary.cs" />
