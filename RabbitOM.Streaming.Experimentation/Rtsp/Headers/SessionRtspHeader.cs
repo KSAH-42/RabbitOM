@@ -79,7 +79,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( RtspHeaderValueValidator.TryValidateToken( header.Identifier ) )
+                if ( RtspHeaderValueValidator.IsValidToken( header.Identifier ) )
                 {
                     result = header;
                 }
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderValueValidator.TryValidate( value ) )
+            if ( RtspHeaderValueValidator.IsValid( value ) )
             {
                 return _extensions.Add( ValueAdapter.Adapt( value ) );
             }

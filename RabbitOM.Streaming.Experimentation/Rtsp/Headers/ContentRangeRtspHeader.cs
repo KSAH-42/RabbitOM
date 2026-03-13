@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         header.Size = size;
                     }                    
 
-                    if ( RtspHeaderValueValidator.TryValidateToken( header.Unit ) )
+                    if ( RtspHeaderValueValidator.IsValidToken( header.Unit ) )
                     {
                         if ( header.Start.HasValue && header.End.HasValue )
                         {

@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var value = ValueAdapter.Adapt( input );
 
-            if ( RtspHeaderValueValidator.TryValidateUri( value ) )
+            if ( RtspHeaderValueValidator.IsValidUri( value ) )
             {
                 result = new ContentBaseRtspHeader() { Uri = value };
             }

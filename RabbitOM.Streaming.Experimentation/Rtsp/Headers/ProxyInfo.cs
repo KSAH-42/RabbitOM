@@ -17,17 +17,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comment )
         {
-            if ( ! RtspHeaderValueValidator.TryValidateToken( protocol ) )
+            if ( ! RtspHeaderValueValidator.IsValidToken( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! RtspHeaderValueValidator.TryValidateToken( version ) )
+            if ( ! RtspHeaderValueValidator.IsValidToken( version ) )
             {
                 throw new ArgumentException( version , "the argument called version is not valid or may contains invalid chars");
             }
 
-            if ( ! RtspHeaderValueValidator.TryValidateToken( receivedBy ) )
+            if ( ! RtspHeaderValueValidator.IsValidToken( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
             }
@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
             }
 
-            if ( ! RtspHeaderValueValidator.TryValidateComment( comment ) )
+            if ( ! RtspHeaderValueValidator.IsValidComment( comment ) )
             {
                 throw new ArgumentException( comment , "the argument called comment is not valid or may contains invalid chars");
             }
@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            if ( ! RtspHeaderValueValidator.TryValidate( input ) )
+            if ( ! RtspHeaderValueValidator.IsValid( input ) )
             {
                 return false;
             }
@@ -73,15 +73,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( matchResult.Success )
             {
-                if ( ! RtspHeaderValueValidator.TryValidateToken( matchResult.Groups[ "protocol" ].Value ) || 
-                     ! RtspHeaderValueValidator.TryValidateToken( matchResult.Groups[ "version" ].Value ) || 
-                     ! RtspHeaderValueValidator.TryValidateToken( matchResult.Groups[ "receivedBy" ].Value ) ||
+                if ( ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "protocol" ].Value ) || 
+                     ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "version" ].Value ) || 
+                     ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) ||
                      ! RtspHeaderValueValidator.TryValidateVersion( matchResult.Groups[ "version" ].Value ) )
                 {
                     return false;
                 }
 
-                if ( ! RtspHeaderValueValidator.TryValidateComment( matchResult.Groups[ "comment" ].Value ) )
+                if ( ! RtspHeaderValueValidator.IsValidComment( matchResult.Groups[ "comment" ].Value ) )
                 {
                     return false;
                 }
