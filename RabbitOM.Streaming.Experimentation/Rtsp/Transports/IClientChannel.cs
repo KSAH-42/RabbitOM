@@ -2,7 +2,6 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-
     public interface IClientChannel : IDisposable
     {        
         string Address { get; set; }
