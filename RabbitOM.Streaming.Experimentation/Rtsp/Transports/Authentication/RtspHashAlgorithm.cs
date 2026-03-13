@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                 return string.Empty;
             }
 
-            using ( var algorithm = factory.Invoke() )
+            using ( var algorithm = factory() )
             {
                 var bytes = algorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) ) ?? Array.Empty<byte>();
 
