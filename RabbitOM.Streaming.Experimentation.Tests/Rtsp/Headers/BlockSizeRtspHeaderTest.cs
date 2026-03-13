@@ -10,31 +10,27 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "0" , 0 )]
         [TestCase( "1" , 1 )]
         [TestCase( "2" , 2 )]
-        [TestCase( "9223372036854775807" , 9223372036854775807 )]
+        [TestCase( "65535" , 65535 )]
          
         [TestCase( " 0 " , 0 )]
         [TestCase( " 1 " , 1 )]
         [TestCase( " 2 " , 2 )]
-        [TestCase( " 9223372036854775807 " , 9223372036854775807 )]
+        [TestCase( " 65535 " , 65535 )]
 
         [TestCase( " '0' " , 0 )]
         [TestCase( " '1' " , 1 )]
         [TestCase( " '2' " , 2 )]
-        [TestCase( " '9223372036854775807' " , 9223372036854775807 )]
+        [TestCase( " '65535' " , 65535 )]
 
         [TestCase( " \"0\" " , 0 )]
         [TestCase( " \"1\" " , 1 )]
         [TestCase( " \"2\" " , 2 )]
-        [TestCase( " \"9223372036854775807\" " , 9223372036854775807 )]
-
-        [TestCase( " \"-9223372036854775808\"" , -9223372036854775808 )]
-        [TestCase( " \"-9223372036854775808" , -9223372036854775808 )]
-        [TestCase( " '-9223372036854775808" , -9223372036854775808 )]
+        [TestCase( " \"65535\" " , 65535 )]
 
         [TestCase( " '   0 ' " , 0 )]
         [TestCase( " '  1  ' " , 1 )]
         [TestCase( " ' 2   ' " , 2 )]
-        [TestCase( " '   9223372036854775807' " , 9223372036854775807 )]
+        [TestCase( " '   65535' " , 65535 )]
 
         public void CheckTryParseSucceed( string input , long expectedId )
         {
@@ -77,8 +73,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             header.Value = 1;
             Assert.AreEqual( "1" , header.ToString() );
 
-            header.Value = long.MaxValue;
-            Assert.AreEqual( long.MaxValue.ToString() , header.ToString() );
+            header.Value = ushort.MaxValue;
+            Assert.AreEqual( ushort.MaxValue.ToString() , header.ToString() );
         }
     }
 }

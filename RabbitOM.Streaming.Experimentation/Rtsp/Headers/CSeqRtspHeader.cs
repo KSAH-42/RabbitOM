@@ -8,12 +8,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "CSeq";
 
-        public long Value { get; set; }
+        public uint Value { get; set; }
 
         public static bool TryParse( string input , out CSeqRtspHeader result )
         {
-            result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new CSeqRtspHeader() { Value = value } : null;
-
+            result = uint.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out var value ) ? new CSeqRtspHeader() { Value = value } : null;
+            
             return result != null;
         }
 

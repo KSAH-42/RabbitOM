@@ -8,11 +8,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Bandwidth";
         
-        public long Value { get; set; }
+        public uint Value { get; set; }
                 
         public static bool TryParse( string input , out BandwidthRtspHeader result )
         {
-            result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new BandwidthRtspHeader() { Value = value } : null ;
+            result = uint.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out var value ) ? new BandwidthRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

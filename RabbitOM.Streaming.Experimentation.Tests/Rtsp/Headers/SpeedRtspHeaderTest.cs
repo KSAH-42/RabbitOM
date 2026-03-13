@@ -3,7 +3,8 @@
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    
+    using System.Globalization;
+
     [TestFixture]
     public class SpeedRtspHeaderTest
     {
@@ -64,16 +65,13 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             var header = new SpeedRtspHeader();
 
             Assert.AreEqual( 0 , header.Value );
-            Assert.AreEqual( "0" , header.ToString() );
-
-            header.Value = 0;
-            Assert.AreEqual( "0" , header.ToString() );
+            Assert.AreEqual( "0.0" , header.ToString() );
 
             header.Value = 1;
-            Assert.AreEqual( "1" , header.ToString() );
+            Assert.AreEqual( "1.0" , header.ToString() );
 
-            header.Value = long.MaxValue;
-            Assert.AreEqual( long.MaxValue.ToString() , header.ToString() );
+            header.Value = double.MaxValue;
+            Assert.AreEqual( double.MaxValue.ToString("0.0" , CultureInfo.InvariantCulture) , header.ToString() );
         }
     }
 }

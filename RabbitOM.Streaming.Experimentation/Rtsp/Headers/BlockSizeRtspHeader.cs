@@ -8,11 +8,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Blocksize";        
 
-        public long Value { get; set; }
+        public ushort Value { get; set; }
 
         public static bool TryParse( string input , out BlockSizeRtspHeader result )
         {
-            result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new BlockSizeRtspHeader() { Value = value } : null ;
+            result = ushort.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out var value ) ? new BlockSizeRtspHeader() { Value = value } : null ;
 
             return result != null;
         }

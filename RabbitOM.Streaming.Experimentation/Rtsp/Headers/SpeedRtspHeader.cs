@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -8,16 +9,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Speed";
         
-        public long Value { get; set; }
+        public double Value { get; set; }
 
         public override string ToString()
         {
-            return Value.ToString();
+            return Value.ToString( "F1" , CultureInfo.InvariantCulture );
         }
 
         public static bool TryParse( string input , out SpeedRtspHeader result )
         {
-            result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new SpeedRtspHeader() { Value = value } : null ;
+            result = double.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture  , out double value ) ? new SpeedRtspHeader() { Value = value } : null ;
 
             return result != null;
         }
