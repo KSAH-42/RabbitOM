@@ -10,11 +10,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
 
 
+
         public RtspClient() { }
 
         public RtspClient( Action<InterleavedPacket> interleavedHandler ) => _interleaveHandler = interleavedHandler;
 
   
+
         
 
         public bool IsConnected { get; }
@@ -33,6 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         {
             get => throw new NotImplementedException();
         }
+
 
 
 

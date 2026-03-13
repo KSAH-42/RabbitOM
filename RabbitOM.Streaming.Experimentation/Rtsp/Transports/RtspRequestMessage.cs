@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public string Uri { get; set; }
 
-        public NameValueRtspCollection Headers { get; } = new NameValueRtspCollection();
+        public NameValueRtspCollection Headers { get; set; }
 
         public byte[] Body { get; set; }
 

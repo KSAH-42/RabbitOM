@@ -125,7 +125,7 @@
     <Compile Include="Rtsp\RtspClient.cs" />
     <Compile Include="Rtsp\RtspClientRequest.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />
-    <Compile Include="Rtsp\RtspPacket.cs" />
+    <Compile Include="Rtsp\InterleavedPacket.cs" />
     <Compile Include="Rtsp\Transports\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\RtspRequestMessage.cs" />
