@@ -20,6 +20,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         
 
 
+        public static bool IsNullOrInvalid( RtspResponseMessage message )
+        {
+            throw new NotImplementedException();
+        }
 
 
         public static bool TryParse( in ArraySegment<byte> input , out RtspResponseMessage result )
