@@ -19,8 +19,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public bool IsConnected { get; }
 
-        public string DefaultVersion { get; set; }
-
         public int Retries { get; set; }
 
         public TimeSpan ReceiveTimeout { get; set; }
@@ -28,6 +26,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public TimeSpan SendTimeout { get; set; }
 
         public Uri BaseAddress { get; }
+
+        public Version DefaultVersion { get; }
 
         public IReadOnlyDictionary<string,string> DefaultHeaders
         {
@@ -72,337 +72,332 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Options()
+        public RtspClientResponse Options()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Options( RtspContent content )
+        public RtspClientResponse Options( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Options( string uri )
+        public RtspClientResponse Options( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Options( string uri , RtspContent content )
+        public RtspClientResponse Options( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Options( Uri uri )
+        public RtspClientResponse Options( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Options( Uri uri , RtspContent content )
+        public RtspClientResponse Options( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Describe()
+        public RtspClientResponse Describe()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Describe( string uri )
+        public RtspClientResponse Describe( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Describe( string uri , RtspContent content )
+        public RtspClientResponse Describe( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Describe( Uri uri )
+        public RtspClientResponse Describe( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Describe( Uri uri , RtspContent content )
+        public RtspClientResponse Describe( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Describe( RtspContent content )
+        public RtspClientResponse Describe( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Setup()
+        public RtspClientResponse Setup()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Setup( string uri )
+        public RtspClientResponse Setup( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Setup( string uri , RtspContent content )
+        public RtspClientResponse Setup( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Setup( Uri uri )
+        public RtspClientResponse Setup( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Setup( Uri uri , RtspContent content )
+        public RtspClientResponse Setup( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Setup( RtspContent content )
+        public RtspClientResponse Setup( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Play()
+        public RtspClientResponse Play()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Play( string uri )
+        public RtspClientResponse Play( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Play( string uri , RtspContent content )
+        public RtspClientResponse Play( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Play( Uri uri )
+        public RtspClientResponse Play( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Play( Uri uri , RtspContent content )
+        public RtspClientResponse Play( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Play( RtspContent content )
+        public RtspClientResponse Play( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Pause()
+        public RtspClientResponse Pause()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Pause( string uri )
+        public RtspClientResponse Pause( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Pause( string uri , RtspContent content )
+        public RtspClientResponse Pause( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Pause( Uri uri )
+        public RtspClientResponse Pause( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Pause( Uri uri , RtspContent content )
+        public RtspClientResponse Pause( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Pause( RtspContent content )
+        public RtspClientResponse Pause( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage TearDown()
+        public RtspClientResponse TearDown()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage TearDown( string uri )
+        public RtspClientResponse TearDown( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage TearDown( string uri , RtspContent content )
+        public RtspClientResponse TearDown( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage TearDown( Uri uri )
+        public RtspClientResponse TearDown( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage TearDown( Uri uri , RtspContent content )
+        public RtspClientResponse TearDown( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage TearDown( RtspContent content )
+        public RtspClientResponse TearDown( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage GetParameter()
+        public RtspClientResponse GetParameter()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage GetParameter( string uri )
+        public RtspClientResponse GetParameter( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage GetParameter( string uri , RtspContent content )
+        public RtspClientResponse GetParameter( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage GetParameter( Uri uri )
+        public RtspClientResponse GetParameter( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage GetParameter( Uri uri , RtspContent content )
+        public RtspClientResponse GetParameter( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage GetParameter( RtspContent content )
+        public RtspClientResponse GetParameter( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage SetParameter()
+        public RtspClientResponse SetParameter()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage SetParameter( string uri )
+        public RtspClientResponse SetParameter( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage SetParameter( string uri , RtspContent content )
+        public RtspClientResponse SetParameter( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage SetParameter( Uri uri )
+        public RtspClientResponse SetParameter( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage SetParameter( Uri uri , RtspContent content )
+        public RtspClientResponse SetParameter( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage SetParameter( RtspContent content )
+        public RtspClientResponse SetParameter( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Announce()
+        public RtspClientResponse Announce()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Announce( string uri )
+        public RtspClientResponse Announce( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Announce( string uri , RtspContent content )
+        public RtspClientResponse Announce( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Announce( Uri uri )
+        public RtspClientResponse Announce( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Announce( Uri uri , RtspContent content )
+        public RtspClientResponse Announce( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Announce( RtspContent content )
+        public RtspClientResponse Announce( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Redirect()
+        public RtspClientResponse Redirect()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Redirect( string uri )
+        public RtspClientResponse Redirect( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Redirect( string uri , RtspContent content )
+        public RtspClientResponse Redirect( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Redirect( Uri uri )
+        public RtspClientResponse Redirect( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Redirect( Uri uri , RtspContent content )
+        public RtspClientResponse Redirect( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Redirect( RtspContent content )
+        public RtspClientResponse Redirect( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Record()
+        public RtspClientResponse Record()
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Record( string uri )
+        public RtspClientResponse Record( string uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Record( string uri , RtspContent content )
+        public RtspClientResponse Record( string uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Record( Uri uri )
+        public RtspClientResponse Record( Uri uri )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Record( Uri uri , RtspContent content )
+        public RtspClientResponse Record( Uri uri , RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
         
-        public RtspResponseMessage Record( RtspContent content )
-        {
-            throw new NotImplementedException();
-        }
-
-        public RtspResponseMessage Send( RtspRequestMessage request )
+        public RtspClientResponse Record( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
