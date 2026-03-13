@@ -13,73 +13,44 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                 return string.Empty;
             }
 
-            var plainBytes = System.Text.Encoding.UTF8.GetBytes( input );
-
-            if ( plainBytes == null || plainBytes.Length <= 0 )
-            {
-                return string.Empty;
-            }
-
-            return Convert.ToBase64String( plainBytes );
+            return Convert.ToBase64String( Encoding.UTF8.GetBytes( input ) );
         }
 
         public static string ComputeAsMD5( string input )
         {
-            if ( string.IsNullOrWhiteSpace( input ) )
-            {
-                return string.Empty;
-            }
-
-            return ComputeHash( MD5.Create() , input );
+            return ComputeHash( input , MD5.Create );
         }
 
         public static string ComputeAsSHA1( string input )
         {
-            if ( string.IsNullOrWhiteSpace( input ) )
-            {
-                return string.Empty;
-            }
-
-            return ComputeHash( SHA1.Create() , input );
+            return ComputeHash( input , SHA1.Create );
         }
 
         public static string ComputeAsSHA256( string input )
         {
-            if ( string.IsNullOrWhiteSpace( input ) )
-            {
-                return string.Empty;
-            }
+            return ComputeHash( input , SHA256.Create );
+        }
 
-            return ComputeHash( SHA256.Create() , input );
+        public static string ComputeAsSHA384( string input )
+        {
+            return ComputeHash( input , SHA384.Create );
         }
 
         public static string ComputeAsSHA512( string input )
         {
+            return ComputeHash( input , SHA512.Create );
+        }
+
+        private static string ComputeHash( string input , Func<HashAlgorithm> factory )
+        {
             if ( string.IsNullOrWhiteSpace( input ) )
             {
                 return string.Empty;
             }
 
-            return ComputeHash( SHA512.Create() , input );
-        }
-
-        private static string ComputeHash( HashAlgorithm algorithm , string input )
-        {
-            using ( algorithm )
+            using ( var algorithm = factory.Invoke() )
             {
-                var plainBytes = System.Text.Encoding.UTF8.GetBytes( input );
-
-                if ( plainBytes == null || plainBytes.Length <= 0 )
-                {
-                    return string.Empty;
-                }
-
-                var bytes = algorithm.ComputeHash( plainBytes );
-
-                if ( bytes == null || bytes.Length <= 0 )
-                {
-                    return string.Empty;
-                }
+                var bytes = algorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) ) ?? Array.Empty<byte>();
 
                 var builder = new StringBuilder();
 

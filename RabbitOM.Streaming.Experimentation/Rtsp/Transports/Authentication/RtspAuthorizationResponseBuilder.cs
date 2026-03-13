@@ -57,6 +57,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                     return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA256 );
                 }
 
+                if ( RtspAuthenticationTypes.IsSha384Algorithm( Algorithm ) )
+                {
+                    return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA384 );
+                }
+
                 if ( RtspAuthenticationTypes.IsSha512Algorithm( Algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA512 );

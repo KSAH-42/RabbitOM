@@ -129,8 +129,8 @@
     <Compile Include="Rtsp\RtspResponseBody.cs" />
     <Compile Include="Rtsp\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
-    <Compile Include="Rtsp\Transports\Security\RtspAuthorizationBuilder.cs" />
-    <Compile Include="Rtsp\Transports\Security\RtspHashAlgorithm.cs" />
+    <Compile Include="Rtsp\Transports\Authentication\RtspAuthorizationResponseBuilder.cs" />
+    <Compile Include="Rtsp\Transports\Authentication\RtspHashAlgorithm.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">

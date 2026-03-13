@@ -18,6 +18,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             = new [] { "SHA256" , "SHA-256" , "SHA256-sess" , "SHA-256-sess" , "SHA_256" , "SHA_256-sess" , "SHA256" , "SHA256-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
         
+        private readonly static HashSet<string> Sha384Algorithms 
+            = new [] { "SHA384" , "SHA-384" , "SHA384-sess" , "SHA-384-sess" , "SHA_384" , "SHA_384-sess" , "SHA384" , "SHA384-sess" }
+                .ToHashSet( StringComparer.OrdinalIgnoreCase );
+        
         private readonly static HashSet<string> Sha512Algorithms 
             = new [] { "SHA512" , "SHA-512" , "SHA512-sess" , "SHA-512-sess" , "SHA_512" , "SHA_512-sess" , "SHA512" , "SHA256-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
@@ -43,6 +47,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public const string Sha1Algorithm = "SHA-1";
 
         public const string Sha256Algorithm = "SHA-256";
+
+        public const string Sha384Algorithm = "SHA-384";
 
         public const string Sha512Algorithm = "SHA-512";
         
@@ -96,6 +102,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public static bool IsSha256Algorithm( string value )
         {
             return Sha256Algorithms.Contains( value );
+        }
+
+        public static bool IsSha384Algorithm( string value )
+        {
+            return Sha384Algorithms.Contains( value );
         }
 
         public static bool IsSha512Algorithm( string value )
