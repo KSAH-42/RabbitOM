@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.IsValid( name ) || ! RtspHeaderValueValidator.IsValid( value ) )
+            if ( ! RtspHeaderValueValidator.TryValidate( name ) || ! RtspHeaderValueValidator.TryValidate( value ) )
             {
                 return false;
             }

@@ -130,7 +130,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeader();
 
-                foreach ( var token in tokens.Where( RtspHeaderValueValidator.IsValidToken ) )
+                foreach ( var token in tokens.Where( RtspHeaderValueValidator.TryValidateToken ) )
                 {                    
                     if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -221,7 +221,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.IsValidToken( header.ConferenceId ) )
+                if ( RtspHeaderValueValidator.TryValidateToken( header.ConferenceId ) )
                 {
                     result = header;
                 }
@@ -234,7 +234,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderValueValidator.IsValid( value ) )
+            if ( RtspHeaderValueValidator.TryValidate( value ) )
             {
                 return _extensions.Add( ValueAdapter.Adapt( value ) );
             }

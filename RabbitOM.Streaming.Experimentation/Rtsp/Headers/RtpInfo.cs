@@ -19,12 +19,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public RtpInfo( string url , ushort? sequence , ushort? rtpTime , string ssrc )
         {
-            if ( ! RtspHeaderValueValidator.IsValidUri( url ) )
+            if ( ! RtspHeaderValueValidator.TryValidateUri( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
 
-            if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.IsValidToken( ssrc ) )
+            if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.TryValidateToken( ssrc ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
@@ -85,12 +85,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ! RtspHeaderValueValidator.IsValidUri( url ) )
+                if ( ! RtspHeaderValueValidator.TryValidateUri( url ) )
                 {
                     return false;
                 }
 
-                if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.IsValidToken( ssrc ) )
+                if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.TryValidateToken( ssrc ) )
                 {
                     return false;
                 }

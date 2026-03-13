@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         
-        public static bool IsValid( string value )
+        public static bool TryValidate( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public static bool IsValidToken( string value )
+        public static bool TryValidateToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return succeed;
         }
 
-        public static bool IsValidComment( string value )
+        public static bool TryValidateComment( string value )
         {
             foreach ( var element in value ?? string.Empty )
             {
@@ -83,7 +83,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public static bool IsValidUri( string value )
+        public static bool TryValidateUri( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute );
         }
 
-        public static bool IsValidVersion( string value )
+        public static bool TryValidateVersion( string value )
         {
             return Version.TryParse( value , out _ );
         }
