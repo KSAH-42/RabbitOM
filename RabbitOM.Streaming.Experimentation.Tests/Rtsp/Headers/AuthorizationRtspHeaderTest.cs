@@ -8,6 +8,9 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
     public class AuthorizationRtspHeaderTest
     {
         [TestCase( "digest username='my user name',realm='my realm',nonce='my nonce',domain='my domain',opaque='my opaque',uri='rtsp://0.0.0.0',response='my response',algorithm='my algorithm',cnonce='my cnonce',nc='my nc',qop='my qop'" )]
+        [TestCase( "digest realm='my realm',username='my user name',nonce='my nonce',domain='my domain',opaque='my opaque',uri='rtsp://0.0.0.0',response='my response',algorithm='my algorithm',cnonce='my cnonce',nc='my nc',qop='my qop'" )]
+        [TestCase( "digest realm='my realm',,,,,,username='my user name',nonce='my nonce',domain='my domain',opaque='my opaque',uri='rtsp://0.0.0.0',response='my response',algorithm='my algorithm',cnonce='my cnonce',nc='my nc',qop='my qop'" )]
+        [TestCase( " digest   username =   'my user name' ,  realm=  'my realm' , nonce= 'my nonce',domain='my domain',opaque='my opaque',uri='rtsp://0.0.0.0' , response = 'my response' , algorithm = 'my algorithm' ,    cnonce = 'my cnonce', nc ='my nc' , qop ='my qop'" )]
         public void CheckTryParseSucceed( string input )
         {
             Assert.IsTrue( AuthorizationRtspHeader.TryParse( input , out var header ) );
