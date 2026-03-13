@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Security
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 {
-    public sealed class RtspAuthorizationBuilder
+    public sealed class RtspAuthorizationResponseBuilder
     {
         public RtspMethod Method { get; set; }
         public string Scheme { get; set; }
