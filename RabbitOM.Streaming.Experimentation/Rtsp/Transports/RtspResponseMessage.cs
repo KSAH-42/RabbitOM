@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        public static bool TryParse( string input , out RtspResponseMessage result )
+        public static bool TryParse( in ArraySegment<byte> input , out RtspResponseMessage result )
         {
             throw new NotImplementedException();
         }
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        public override string ToString()
+        public byte[] ToArray()
         {
             throw new NotImplementedException();
         }

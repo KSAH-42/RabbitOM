@@ -18,15 +18,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         
 
-        public static bool TryParse( string input , out RtspRequestMessage result )
+        public static bool TryParse( in ArraySegment<byte> input , out RtspRequestMessage result )
         {
             throw new NotImplementedException();
         }
 
 
 
-
-        public override string ToString()
+        public byte[] ToArray()
         {
             throw new NotImplementedException();
         }
