@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int Count
         {
-            get => _collection.Count;
+            get => _collection.Sum( element => element.Value.Count() );
         }
 
         public IReadOnlyCollection<string> Keys
@@ -86,6 +86,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( ! _collection.TryGetValue( key , out var elements ) || elements == null )
             {
                 elements = new HashSet<string>();
+
+                _collection.Add( key , elements );
             }
 
             var items = elements as HashSet<string>;
@@ -95,7 +97,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new InvalidOperationException();
             }
 
-            items.Add( value ?? string.Empty );
+            if ( ! items.Add( value ?? string.Empty ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
         }
 
         public bool TryAdd( string key , string value )
@@ -108,6 +113,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( ! _collection.TryGetValue( key , out var elements ) || elements == null )
             {
                 elements = new HashSet<string>();
+
+                _collection.Add( key , elements );
             }
 
             var items = elements as HashSet<string>;
@@ -204,7 +211,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return items.Remove( items.ElementAtOrDefault( index ) );
+            var result = items.Remove( items.ElementAtOrDefault( index ) );
+
+            if ( items.Count <= 0 )
+            {
+                _collection.Remove( key );
+            }
+
+            return result;
         }
 
         public void Clear()
