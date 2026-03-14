@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                 var bytes = algorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) ) ?? Array.Empty<byte>();
 
                 var builder = new StringBuilder();
-
+                
                 for ( var i = 0 ; i < bytes.Length ; i++ )
                 {
                     builder.Append( bytes[i].ToString( "x2" ) );
