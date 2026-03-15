@@ -57,6 +57,7 @@
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Adapters\QuoteValueAdapter.cs" />
+    <Compile Include="Rtsp\Headers\NameValuesRtspCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Adapters\StringValueAdapter.cs" />
@@ -76,7 +77,6 @@
     <Compile Include="Rtsp\Headers\RefererRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeader.cs" />
-    <Compile Include="Rtsp\Headers\NameValueRtspCollection.cs" />
     <Compile Include="Rtsp\RtspAuthenticationTypes.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
     <Compile Include="Rtsp\Headers\StringRtspDictionary.cs" />

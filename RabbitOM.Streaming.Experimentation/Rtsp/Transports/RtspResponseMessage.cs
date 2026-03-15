@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public int StatusCode { get; set; }
 
-        public NameValueRtspCollection Headers { get; set; }
+        public NameValuesRtspCollection Headers { get; set; }
 
         public byte[] Body { get; set; }
 
