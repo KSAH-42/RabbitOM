@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: adding unit tests
 
-    public sealed class NameHeaderValuesCollection : IEnumerable , IEnumerable<KeyValuePair<string , string[]>> , IReadOnlyNameValueCollection
+    public sealed class NameHeaderValuesCollection : IEnumerable , IEnumerable<KeyValuePair<string , string[]>> , IReadOnlyNameValuesCollection
     {
         private readonly Dictionary<string,List<string>> _items = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
