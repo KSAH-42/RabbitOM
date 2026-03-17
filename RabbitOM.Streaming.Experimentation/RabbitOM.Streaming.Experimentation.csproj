@@ -56,7 +56,7 @@
     <Compile Include="Rtsp\Headers\FloatRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IReadOnlyNameValueCollection.cs" />
     <Compile Include="Rtsp\Headers\LongRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\NameValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\NameHeaderValuesCollection.cs" />
     <Compile Include="Rtsp\Headers\ProxyInfo.cs" />
     <Compile Include="Rtsp\Headers\ProxyInfoRtspHeaderValueHashSet.cs" />
     <Compile Include="Rtsp\Headers\RtpInfo.cs" />

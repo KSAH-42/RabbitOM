@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public class RtspHeadersCollection : IEnumerable , IEnumerable<KeyValuePair<string , string[]>> , IReadOnlyNameValueCollection
     {
-        private readonly NameValueCollection _collection = new NameValueCollection();
+        private readonly NameHeaderValuesCollection _collection = new NameHeaderValuesCollection();
 
 
         
