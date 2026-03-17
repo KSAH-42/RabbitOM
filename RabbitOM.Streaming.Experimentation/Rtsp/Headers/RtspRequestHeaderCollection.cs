@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: move field on the RtspResponseHeaders
     // TODO: fuse collections in order to remove internal collection class by introducing static method , including lambda expression and so on
+    // TODO: review if theses headers is only present for requesting
 
     public class RtspRequestHeaderCollection : RtspHeaderCollection
     {
@@ -12,8 +12,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public RtspHeaderValueCollection<StringWithQuality> AcceptEncoding { get; } = RtspHeaderValueFactory.CreateAcceptEncodingHeaderValue();
         
         public RtspHeaderValueCollection<StringWithQuality> AcceptLanguage { get; } = RtspHeaderValueFactory.CreateAcceptLanguageHeaderValue();
-        
-        public RtspHeaderValueCollection<RtspMethod> Allow { get; } = RtspHeaderValueFactory.CreateAllowHeaderValue();
         
         public AuthorizationRtspHeaderValue Authorization { get; set; }
         
@@ -27,33 +25,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public RtspHeaderValueCollection<string> Connection { get; } = RtspHeaderValueFactory.CreateConnectionHeaderValue();
         
-        public ContentBaseRtspHeaderValue ContentBase { get; set; }
-        
-        public ContentRangeRtspHeaderValue ContentRange { get; set; }
-        
         public UIntRtspHeaderValue CSeq { get; } = RtspHeaderValueFactory.CreateCSeqHeaderValue();
         
         public DateTimeRtspHeaderValue Date { get; set; }
         
         public DateTimeRtspHeaderValue Expires { get; set; }
+
+        public UriRtspHeaderValue From { get; set; }
         
         public RtspHeaderValueCollection<string> IfMatch { get; } = RtspHeaderValueFactory.CreateIfMatchHeaderValue();
         
         public DateTimeRtspHeaderValue IfModifiedSince { get; set; }
         
-        public DateTimeRtspHeaderValue LastModified { get; set; }
-        
-        public UriRtspHeaderValue Location { get; set; }
-        
         public UIntRtspHeaderValue MaxForwards { get; set; }
-        
-        public DoubleRtspHeaderValue MediaDuration { get; set; }
         
         public RtspHeaderValueCollection<RtspMethod> Public { get; } = RtspHeaderValueFactory.CreatePublicHeaderValue();
         
         public UriRtspHeaderValue Referer { get; set; }
-        
-        public RtspHeaderValueCollection<RtpInfo> RtpInfo { get; } = RtspHeaderValueFactory.CreateRtpInfoHeaderValue();
         
         public FloatRtspHeaderValue Scale { get; set; }
         

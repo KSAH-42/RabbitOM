@@ -116,6 +116,7 @@
     <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
     <Compile Include="Rtsp\Headers\RtspMethodHeaderValueHashSet.cs" />
     <Compile Include="Rtsp\Headers\RtspRequestHeaderCollection.cs" />
+    <Compile Include="Rtsp\Headers\RtspResponseHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\StringRtspDictionary.cs" />
     <Compile Include="Rtsp\Headers\StringRtspHashSet.cs" />
