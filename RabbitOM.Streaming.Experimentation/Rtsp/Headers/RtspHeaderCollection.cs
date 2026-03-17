@@ -94,7 +94,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _collection.TryAdd( key , values );
         }
 
-
         public bool TryGetValue( string key , out string result )
         {
             return _collection.TryGetValue( key , out result );

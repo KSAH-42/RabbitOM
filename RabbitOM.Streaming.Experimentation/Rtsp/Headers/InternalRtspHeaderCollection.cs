@@ -233,7 +233,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return elementAdded > 0;
         }
 
-
         public bool TryGetValue( string key , out string result )
         {
             result = null;
