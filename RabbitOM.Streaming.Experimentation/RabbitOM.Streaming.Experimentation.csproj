@@ -112,7 +112,7 @@
     <Compile Include="Rtsp\Headers\RtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueCollection.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderValueCollectionFactory.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderValueFactory.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
     <Compile Include="Rtsp\Headers\RtspMethodHeaderValueHashSet.cs" />
     <Compile Include="Rtsp\Headers\RtspRequestHeaderCollection.cs" />
