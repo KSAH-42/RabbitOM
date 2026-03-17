@@ -4,18 +4,17 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: move field on the RtspResponseHeaders
-    // TODO: add factory methods for collection on the base class see RtspHeaderValueCollection
     // TODO: fuse collections in order to remove internal collection class by introducing static method , including lambda expression and so on
 
     public class RtspRequestHeaderCollection : RtspHeaderCollection
     {
-        public RtspHeaderValueCollection<StringWithQuality> Accept { get; } = new StringWithQualityRtspHeaderValueDictionary( element => SupportedTypes.Formats.Contains( element.Value ) );
+        public RtspHeaderValueCollection<StringWithQuality> Accept { get; } = RtspHeaderValueCollectionFactory.AcceptRtspHeaderValueCollection();
         
-        public RtspHeaderValueCollection<StringWithQuality> AcceptEncoding { get; } = new StringWithQualityRtspHeaderValueDictionary( element => SupportedTypes.Encodings.Contains( element.Value ) );
+        public RtspHeaderValueCollection<StringWithQuality> AcceptEncoding { get; } = RtspHeaderValueCollectionFactory.AcceptEncodingRtspHeaderValueCollection();
         
-        public RtspHeaderValueCollection<StringWithQuality> AcceptLanguage { get; } = new StringWithQualityRtspHeaderValueDictionary( element => SupportedTypes.Languages.Contains( element.Value ) );
+        public RtspHeaderValueCollection<StringWithQuality> AcceptLanguage { get; } = RtspHeaderValueCollectionFactory.AcceptLanguageRtspHeaderValueCollection();
         
-        public RtspHeaderValueCollection<RtspMethod> Allow { get; } = new RtspMethodHeaderValueHashSet();
+        public RtspHeaderValueCollection<RtspMethod> Allow { get; } = RtspHeaderValueCollectionFactory.AllowRtspHeaderValueCollection();
         
         public AuthorizationRtspHeaderValue Authorization { get; set; }
         
@@ -27,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public ConferenceRtspHeaderValue Conference { get; set; }
         
-        public RtspHeaderValueCollection<string> Connection { get; } = StringRtspHeaderValueHashSet.NewStringDirectiveCollection();
+        public RtspHeaderValueCollection<string> Connection { get; } = RtspHeaderValueCollectionFactory.ConnectionRtspHeaderValueCollection();
         
         public ContentBaseRtspHeaderValue ContentBase { get; set; }
         
@@ -39,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public DateTimeRtspHeaderValue Expires { get; set; }
         
-        public RtspHeaderValueCollection<string> IfMatch { get; } = new StringRtspHeaderValueHashSet();
+        public RtspHeaderValueCollection<string> IfMatch { get; } = RtspHeaderValueCollectionFactory.IfMatchRtspHeaderValueCollection();
         
         public DateTimeRtspHeaderValue IfModifiedSince { get; set; }
         
@@ -51,11 +50,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public DoubleRtspHeaderValue MediaDuration { get; set; }
         
-        public RtspHeaderValueCollection<RtspMethod> Public { get; } = new RtspMethodHeaderValueHashSet();
+        public RtspHeaderValueCollection<RtspMethod> Public { get; } = RtspHeaderValueCollectionFactory.PublicRtspHeaderValueCollection();
         
         public UriRtspHeaderValue Referer { get; set; }
         
-        public RtspHeaderValueCollection<RtpInfo> RtpInfo { get; } = new RtpInfoHeaderValueHashSet();
+        public RtspHeaderValueCollection<RtpInfo> RtpInfo { get; } = RtspHeaderValueCollectionFactory.NewRtpInfoRtspHeaderValueCollection();
         
         public FloatRtspHeaderValue Scale { get; set; }
         
@@ -67,7 +66,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public UserAgentRtspHeaderValue UserAgent { get; set; }
         
-        public RtspHeaderValueCollection<ProxyInfo> Via { get; set; } = new ProxyInfoRtspHeaderValueHashSet();
+        public RtspHeaderValueCollection<ProxyInfo> Via { get; } = RtspHeaderValueCollectionFactory.ViaRtspHeaderValueCollection();
         
         public WWWAuthenticateRtspHeaderValue WWWAuthenticate { get; set; }
     }

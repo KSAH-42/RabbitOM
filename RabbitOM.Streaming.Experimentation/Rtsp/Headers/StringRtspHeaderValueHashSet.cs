@@ -36,14 +36,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static StringRtspHeaderValueHashSet NewStringDirectiveCollection()
-        {
-            return new StringRtspHeaderValueHashSet( RtspHeaderValueValidator.TryValidateDirective );
-        }
-
-
-
-
 
 
         public override object SyncRoot { get => _collection; }
