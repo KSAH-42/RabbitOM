@@ -57,6 +57,8 @@
     <Compile Include="Rtsp\Headers\ContentLengthRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeader.cs" />
     <Compile Include="Rtsp\Headers\Adapters\QuoteValueAdapter.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderCollection.cs" />
+    <Compile Include="Rtsp\Headers\IReadOnlyHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspHeader.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Adapters\StringValueAdapter.cs" />
