@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderValueCollectionFactory
+    public static class RtspHeaderValueFactory
     {
         public static RtspHeaderValueCollection<StringWithQuality> AcceptRtspHeaderValueCollection()
         {

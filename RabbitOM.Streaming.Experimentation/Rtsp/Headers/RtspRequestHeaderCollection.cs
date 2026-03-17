@@ -7,13 +7,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public class RtspRequestHeaderCollection : RtspHeaderCollection
     {
-        public RtspHeaderValueCollection<StringWithQuality> Accept { get; } = RtspHeaderValueCollectionFactory.AcceptRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<StringWithQuality> Accept { get; } = RtspHeaderValueFactory.AcceptRtspHeaderValueCollection();
         
-        public RtspHeaderValueCollection<StringWithQuality> AcceptEncoding { get; } = RtspHeaderValueCollectionFactory.AcceptEncodingRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<StringWithQuality> AcceptEncoding { get; } = RtspHeaderValueFactory.AcceptEncodingRtspHeaderValueCollection();
         
-        public RtspHeaderValueCollection<StringWithQuality> AcceptLanguage { get; } = RtspHeaderValueCollectionFactory.AcceptLanguageRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<StringWithQuality> AcceptLanguage { get; } = RtspHeaderValueFactory.AcceptLanguageRtspHeaderValueCollection();
         
-        public RtspHeaderValueCollection<RtspMethod> Allow { get; } = RtspHeaderValueCollectionFactory.AllowRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<RtspMethod> Allow { get; } = RtspHeaderValueFactory.AllowRtspHeaderValueCollection();
         
         public AuthorizationRtspHeaderValue Authorization { get; set; }
         
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public ConferenceRtspHeaderValue Conference { get; set; }
         
-        public RtspHeaderValueCollection<string> Connection { get; } = RtspHeaderValueCollectionFactory.ConnectionRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<string> Connection { get; } = RtspHeaderValueFactory.ConnectionRtspHeaderValueCollection();
         
         public ContentBaseRtspHeaderValue ContentBase { get; set; }
         
@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public DateTimeRtspHeaderValue Expires { get; set; }
         
-        public RtspHeaderValueCollection<string> IfMatch { get; } = RtspHeaderValueCollectionFactory.IfMatchRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<string> IfMatch { get; } = RtspHeaderValueFactory.IfMatchRtspHeaderValueCollection();
         
         public DateTimeRtspHeaderValue IfModifiedSince { get; set; }
         
@@ -49,11 +49,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public DoubleRtspHeaderValue MediaDuration { get; set; }
         
-        public RtspHeaderValueCollection<RtspMethod> Public { get; } = RtspHeaderValueCollectionFactory.PublicRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<RtspMethod> Public { get; } = RtspHeaderValueFactory.PublicRtspHeaderValueCollection();
         
         public UriRtspHeaderValue Referer { get; set; }
         
-        public RtspHeaderValueCollection<RtpInfo> RtpInfo { get; } = RtspHeaderValueCollectionFactory.NewRtpInfoRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<RtpInfo> RtpInfo { get; } = RtspHeaderValueFactory.NewRtpInfoRtspHeaderValueCollection();
         
         public FloatRtspHeaderValue Scale { get; set; }
         
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public UserAgentRtspHeaderValue UserAgent { get; set; }
         
-        public RtspHeaderValueCollection<ProxyInfo> Via { get; } = RtspHeaderValueCollectionFactory.ViaRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<ProxyInfo> Via { get; } = RtspHeaderValueFactory.ViaRtspHeaderValueCollection();
         
         public WWWAuthenticateRtspHeaderValue WWWAuthenticate { get; set; }
     }
