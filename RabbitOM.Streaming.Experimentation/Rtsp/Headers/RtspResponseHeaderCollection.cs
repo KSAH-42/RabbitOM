@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: fuse collections in order to remove internal collection class by introducing static method , including lambda expression and so on
-    // TODO: review if theses headers is only present for response
+    // TODO: review if theses headers are really present on the response send by the server
 
     public class RtspResponseHeaderCollection : RtspHeaderCollection
     {
