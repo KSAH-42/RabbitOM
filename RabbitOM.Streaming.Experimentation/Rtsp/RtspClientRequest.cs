@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
     public sealed class RtspClientRequest
     {
-        private readonly Dictionary<string,string> _headers = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
+        private readonly RtspHeaderCollection _headers = new RtspHeaderCollection();
 
         private readonly MemoryStream _content = new MemoryStream();
 
 
 
 
-        public IReadOnlyDictionary<string,string> Headers
+        public IReadOnlyHeaderCollection Headers
         {
             get => _headers;
         }
@@ -28,72 +29,54 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public void AddHeader( string name , string value )
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddHeader( string name , long value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddHeader( string name , DateTime value )
-        {
-            throw new NotImplementedException();
+            _headers.Add( name , value );
         }
 
         public bool TryAddHeader( string name , string value )
         {
-            throw new NotImplementedException();
-        }
-
-        public bool TryAddHeader( string name , long value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TryAddHeader( string name , DateTime value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TryAddOrUpdateHeader( string name , string value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TryAddOrUpdateHeader( string name , long value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TryAddOrUpdateHeader( string name , DateTime value )
-        {
-            throw new NotImplementedException();
+            return _headers.TryAdd( name , value );
         }
 
         public void RemoveHeader( string name )
         {
-            throw new NotImplementedException();
+            _headers.Remove( name );
+        }
+
+        public void RemoveHeader( string name , int index )
+        {
+            _headers.RemoveAt( name , index );
         }
 
         public void ClearHeaders()
         {
-            throw new NotImplementedException();
+            _headers.Clear();
         }
 
         public void WriteContent( string value )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return;
+            }
+
+            var buffer = System.Text.Encoding.UTF8.GetBytes( value );
+
+            _content.Write( buffer , 0 , buffer.Length );
         }
 
         public void WriteContent( byte[] value )
         {
-            throw new NotImplementedException();
+            if ( value == null || value.Length <= 0 )
+            {
+                return;
+            }
+
+            _content.Write( value , 0 , value.Length );
         }
 
         public void ClearContent()
         {
-            throw new NotImplementedException();
+            _content.SetLength(0);
         }
     }
 }

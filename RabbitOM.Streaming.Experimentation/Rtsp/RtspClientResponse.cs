@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
     public sealed class RtspClientResponse : IDisposable
     {
         public RtspMethod Method { get; }
@@ -13,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public string ReasonPhrase { get; }
         
-        public IReadOnlyDictionary<string,string> Headers { get; }
+        public IReadOnlyHeaderCollection Headers { get; }
         
 
 
