@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IReadOnlyNameValuesCollection : IReadOnlyCollection<KeyValuePair<string ,string[]>>
+    public interface IReadOnlyHeaderCollection : IReadOnlyCollection<KeyValuePair<string ,string[]>>
     {
         string[] this[string key] { get; }
         string this[string key, int index ] { get; }

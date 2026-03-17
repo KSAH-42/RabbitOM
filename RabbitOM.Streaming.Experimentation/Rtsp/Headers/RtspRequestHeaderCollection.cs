@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     // TODO: add factory methods for collection on the base class see RtspHeaderValueCollection
     // TODO: fuse collections in order to remove internal collection class by introducing static method , including lambda expression and so on
 
-    public class RtspRequestHeaders : RtspHeadersCollection
+    public class RtspRequestHeaderCollection : RtspHeaderCollection
     {
         public RtspHeaderValueCollection<StringWithQuality> Accept { get; } = new StringWithQualityRtspHeaderValueDictionary( element => SupportedTypes.Formats.Contains( element.Value ) );
         

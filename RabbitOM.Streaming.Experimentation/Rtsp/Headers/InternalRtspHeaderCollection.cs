@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: adding unit tests
 
-    public sealed class NameHeaderValuesCollection : IEnumerable , IEnumerable<KeyValuePair<string , string[]>> , IReadOnlyNameValuesCollection
+    public sealed class InternalRtspHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string , string[]>> , IReadOnlyHeaderCollection
     {
         private readonly Dictionary<string,List<string>> _items = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             private KeyValuePair<string,string[]> _current;
             
 
-            internal Enumerator( NameHeaderValuesCollection collection )
+            internal Enumerator( InternalRtspHeaderCollection collection )
             {
                 _enumerator = collection._items.GetEnumerator();
                 _current = default;

@@ -3,8 +3,8 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved;
-
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    
     public sealed class RtspClientRequest
     {
         private readonly RtspHeaderCollection _headers = new RtspHeaderCollection();
