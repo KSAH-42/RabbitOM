@@ -3,7 +3,7 @@ using System;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved;
 
     [TestFixture]
     public class RtspHeaderParserTest

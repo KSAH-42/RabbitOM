@@ -97,5 +97,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return Version.TryParse( value , out _ );
         }
+
+        public static bool TryValidateDirective( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            if ( ! char.IsLetter( value.FirstOrDefault() ) || ! char.IsLetterOrDigit( value.LastOrDefault() ) )
+            {
+                return false;
+            }
+
+            if ( value.Any( c => char.IsSeparator( c ) ) )
+            {
+                return false;
+            }
+
+            if ( value.Any( c => char.IsPunctuation( c ) && c != '-' && c != '_' ) )
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

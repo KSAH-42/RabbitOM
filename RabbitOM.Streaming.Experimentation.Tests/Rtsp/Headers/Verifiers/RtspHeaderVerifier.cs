@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved;
 
     [TestFixture]
     public class RtspHeaderVerifier

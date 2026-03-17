@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved;
     using System.Globalization;
 
     [TestFixture]
