@@ -54,7 +54,7 @@
     <Compile Include="Rtsp\Headers\DateTimeRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DoubleRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\FloatRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\IReadOnlyNameValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\IReadOnlyNameValuesCollection.cs" />
     <Compile Include="Rtsp\Headers\LongRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\NameHeaderValuesCollection.cs" />
     <Compile Include="Rtsp\Headers\ProxyInfo.cs" />
