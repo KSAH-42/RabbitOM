@@ -46,6 +46,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static implicit operator StringWithQuality( string value )
+        {
+            return new StringWithQuality( value );
+        }
+
+
+
 
 
         public static bool IsNullOrEmpty( StringWithQuality obj )

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Globalization;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
 {
@@ -35,6 +35,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
 
         public double? Quality { get; }
         
+
+
+
+        public static implicit operator WeightedString( string value )
+        {
+            return new WeightedString( value );
+        }
 
 
 
