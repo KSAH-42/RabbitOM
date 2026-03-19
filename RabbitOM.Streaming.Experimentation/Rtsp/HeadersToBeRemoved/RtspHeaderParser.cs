@@ -63,17 +63,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
                 {
                     var segment = builder.ToString();
 
-                    if ( ! segment.EndsWith( separator ) )
+                    if ( segment.EndsWith( separator ) )
                     {
-                        continue;
-                    }
+                        maxTokens = maxTokens.HasValue && maxTokens > 0 ? -- maxTokens : maxTokens;
 
-                    maxTokens = maxTokens.HasValue && maxTokens > 0 ? -- maxTokens : maxTokens;
-
-                    if ( ! maxTokens.HasValue || maxTokens > 0 ) // do not use -- maxTokens > 0 to avoid recycle when it reach int.MinValue
-                    {
-                        segments.Add( segment.Substring( 0 , segment.Length - separator.Length ) );
-                        builder.Clear();
+                        if ( ! maxTokens.HasValue || maxTokens > 0 ) // do not use -- maxTokens > 0 to avoid recycle when it reach int.MinValue
+                        {
+                            segments.Add( segment.Substring( 0 , segment.Length - separator.Length ) );
+                            builder.Clear();
+                        }
                     }
                 }
             }
