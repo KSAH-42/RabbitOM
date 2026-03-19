@@ -15,24 +15,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = default;
 
-            if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrWhiteSpace( separator ) || ! input.Contains( separator ) )
-            {
-                return false;
-            }
-
-            if ( ! TryParse( input , separator , out string[] tokens ) )
+            if ( ! TryParse( input , input?.Contains( separator ) == true ? separator : null , 2 , out string[] tokens ) )
             {
                 return false;
             }
 
             result = new KeyValuePair<string, string>( 
-                StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) ,
+                StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) , 
                 StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) );
 
             return true;
         }
         
         public static bool TryParse( string input , string separator , out string[] result )
+        {
+            return TryParse( input , separator , null , out result );
+        }
+
+        public static bool TryParse( string input , string separator , int? maxTokens , out string[] result )
         {
             result = null;
 
@@ -63,7 +63,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     var segment = builder.ToString();
 
-                    if ( segment.EndsWith( separator ) )
+                    if ( ! segment.EndsWith( separator ) )
+                    {
+                        continue;
+                    }
+                    
+                    maxTokens = maxTokens.HasValue && maxTokens > 0 ? -- maxTokens : maxTokens;
+
+                    if ( ! maxTokens.HasValue || maxTokens > 0 ) // do not use -- maxTokens > 0 to avoid recycle when it reach int.MinValue
                     {
                         segments.Add( segment.Substring( 0 , segment.Length - separator.Length ) );
                         builder.Clear();
