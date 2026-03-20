@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 {
-    public static class RtspAuthorizationAlgorithm
+    public static class RtspAuthorizationAlgorithms
     {
         public static string ComputeAsBasic( string input )
         {

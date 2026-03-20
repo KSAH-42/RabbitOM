@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 
             if ( RtspAuthenticationTypes.IsBasicAuthentication( Scheme ) )
             {
-                return RtspAuthorizationAlgorithm.ComputeAsBasic( $"{UserName}:{Password}" );
+                return RtspAuthorizationAlgorithms.ComputeAsBasic( $"{UserName}:{Password}" );
             }
 
             if ( RtspAuthenticationTypes.IsDigestAuthentication( Scheme ) )
@@ -54,27 +54,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 
                 if ( RtspAuthenticationTypes.IsMd5Algorithm( Algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsMD5 );
+                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsMD5 );
                 }
 
                 if ( RtspAuthenticationTypes.IsSha1Algorithm( Algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA1 );
+                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA1 );
                 }
 
                 if ( RtspAuthenticationTypes.IsSha256Algorithm( Algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA256 );
+                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA256 );
                 }
 
                 if ( RtspAuthenticationTypes.IsSha384Algorithm( Algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA384 );
+                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA384 );
                 }
 
                 if ( RtspAuthenticationTypes.IsSha512Algorithm( Algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithm.ComputeAsSHA512 );
+                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA512 );
                 }
             }
 
