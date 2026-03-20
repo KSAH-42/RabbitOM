@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public bool AddLanguage( StringWithQualityRtspHeaderValue language )
         {
-            return AddLanguage( language , RtspHeaderValueValidator.IsValidLanguage );
+            return AddLanguage( language , RtspHeaderProtocolValidator.IsValidLanguage );
         }
 
         public bool AddLanguage( StringWithQualityRtspHeaderValue language , Func<string,bool> validator )

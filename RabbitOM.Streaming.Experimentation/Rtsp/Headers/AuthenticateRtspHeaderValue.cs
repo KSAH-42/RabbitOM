@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var scheme = tokens.FirstOrDefault();
                 
-                if ( ! RtspHeaderValueValidator.IsValidToken( scheme ) )
+                if ( ! RtspHeaderProtocolValidator.IsValidToken( scheme ) )
                 {
                     return false;
                 }
@@ -133,14 +133,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( ! RtspHeaderValueValidator.IsValidToken( header.Scheme ) || ! RtspHeaderValueValidator.IsValidToken( header.Realm ) )
+                    if ( ! RtspHeaderProtocolValidator.IsValidToken( header.Scheme ) || ! RtspHeaderProtocolValidator.IsValidToken( header.Realm ) )
                     {
                         return false;
                     }
                     
                     if ( RtspAuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
                     {
-                        if ( ! RtspHeaderValueValidator.IsValidToken( header.Nonce ) )
+                        if ( ! RtspHeaderProtocolValidator.IsValidToken( header.Nonce ) )
                         {
                             return false;
                         }
@@ -157,7 +157,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string extension )
         {
-            if ( RtspHeaderValueValidator.IsValid( extension = ValueAdapter.Adapt( extension ) ) )
+            if ( RtspHeaderProtocolValidator.IsValid( extension = ValueAdapter.Adapt( extension ) ) )
             {
                 return _extensions.Add( extension );
             }

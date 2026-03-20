@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public bool AddMime( StringWithQualityRtspHeaderValue mime )
         {
-            return AddMime( mime , RtspHeaderValueValidator.IsValidMime );
+            return AddMime( mime , RtspHeaderProtocolValidator.IsValidMime );
         }
 
         public bool AddMime( StringWithQualityRtspHeaderValue mime , Func<string,bool> validator )

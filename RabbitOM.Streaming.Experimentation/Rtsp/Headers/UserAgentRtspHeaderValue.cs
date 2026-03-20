@@ -72,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( RtspHeaderValueValidator.IsValidToken( header.Product ) && RtspHeaderValueValidator.IsValidToken( header.Version ) )
+                if ( RtspHeaderProtocolValidator.IsValidToken( header.Product ) && RtspHeaderProtocolValidator.IsValidToken( header.Version ) )
                 {
                     result = header;
                 }

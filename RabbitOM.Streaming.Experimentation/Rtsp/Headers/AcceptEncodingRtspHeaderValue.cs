@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddEncoding( StringWithQualityRtspHeaderValue encoding )
         {
-            return AddEncoding( encoding , RtspHeaderValueValidator.IsValidEncoding );
+            return AddEncoding( encoding , RtspHeaderProtocolValidator.IsValidEncoding );
         }
         
         public bool AddEncoding( StringWithQualityRtspHeaderValue encoding , Func<string,bool> validator )

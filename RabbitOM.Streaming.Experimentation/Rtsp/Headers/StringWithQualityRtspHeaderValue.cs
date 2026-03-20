@@ -15,12 +15,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public StringWithQualityRtspHeaderValue( string value )
         {
-            Value = RtspHeaderValueValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
+            Value = RtspHeaderProtocolValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
         }
 
         public StringWithQualityRtspHeaderValue( string value , double quality )
         {
-            Value = RtspHeaderValueValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
+            Value = RtspHeaderProtocolValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( RtspHeaderValueValidator.IsValidToken( name ) )
+                if ( RtspHeaderProtocolValidator.IsValidToken( name ) )
                 {
                     foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                     {

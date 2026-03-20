@@ -76,7 +76,7 @@
     <Compile Include="Rtsp\HeadersToBeRemoved\RefererRtspHeader.cs" />
     <Compile Include="Rtsp\HeadersToBeRemoved\RtpInfo.cs" />
     <Compile Include="Rtsp\HeadersToBeRemoved\RtpInfoRtspHeader.cs" />
-    <Compile Include="Rtsp\HeadersToBeRemoved\RtspHeaderValueValidator.cs" />
+    <Compile Include="Rtsp\HeadersToBeRemoved\RtspHeaderProtocolValidator.cs" />
     <Compile Include="Rtsp\HeadersToBeRemoved\StringRtspDictionary.cs" />
     <Compile Include="Rtsp\HeadersToBeRemoved\StringRtspHashSet.cs" />
     <Compile Include="Rtsp\HeadersToBeRemoved\ScaleRtspHeader.cs" />
@@ -125,7 +125,7 @@
     <Compile Include="Rtsp\Headers\RtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderValueValidator.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderProtocolValidator.cs" />
     <Compile Include="Rtsp\Headers\RtspRequestHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspResponseHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeaderValue.cs" />

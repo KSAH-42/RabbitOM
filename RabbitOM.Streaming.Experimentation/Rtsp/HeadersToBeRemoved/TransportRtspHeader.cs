@@ -233,7 +233,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.TryValidateToken( header.Transport ) && RtspHeaderValueValidator.TryValidateToken( header.Transmission ) )
+                if ( RtspHeaderProtocolValidator.TryValidateToken( header.Transport ) && RtspHeaderProtocolValidator.TryValidateToken( header.Transmission ) )
                 {
                     result = header;
                 }
@@ -247,7 +247,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderValueValidator.TryValidate( value ) )
+            if ( RtspHeaderProtocolValidator.TryValidate( value ) )
             {
                 return _extensions.Add( ValueAdapter.Adapt( value ) );
             }

@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var value = ValueAdapter.Adapt( input );
 
-            if ( RtspHeaderValueValidator.IsValidUri( value ) )
+            if ( RtspHeaderProtocolValidator.IsValidUri( value ) )
             {
                 result = new LocationRtspHeaderValue() { Uri = value };
             }

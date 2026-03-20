@@ -130,7 +130,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
             {
                 var header = new ConferenceRtspHeader();
 
-                foreach ( var token in tokens.Where( RtspHeaderValueValidator.TryValidateToken ) )
+                foreach ( var token in tokens.Where( RtspHeaderProtocolValidator.TryValidateToken ) )
                 {                    
                     if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -221,7 +221,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.TryValidateToken( header.ConferenceId ) )
+                if ( RtspHeaderProtocolValidator.TryValidateToken( header.ConferenceId ) )
                 {
                     result = header;
                 }
@@ -234,7 +234,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderValueValidator.TryValidate( value ) )
+            if ( RtspHeaderProtocolValidator.TryValidate( value ) )
             {
                 return _extensions.Add( ValueAdapter.Adapt( value ) );
             }

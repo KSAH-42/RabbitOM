@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddEntityTag( string etag )
         {
-            return AddEntityTag( etag , RtspHeaderValueValidator.IsValidToken );
+            return AddEntityTag( etag , RtspHeaderProtocolValidator.IsValidToken );
         }
 
         public bool AddEntityTag( string etag , Func<string,bool> validator )

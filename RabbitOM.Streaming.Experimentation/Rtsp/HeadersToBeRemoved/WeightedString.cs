@@ -17,14 +17,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
         {
             value = ValueAdapter.Adapt( value );
 
-            Value = RtspHeaderValueValidator.TryValidateToken( value ) ? value : throw new ArgumentException();
+            Value = RtspHeaderProtocolValidator.TryValidateToken( value ) ? value : throw new ArgumentException();
         }
 
         public WeightedString( string value , double quality )
         {
             value = ValueAdapter.Adapt( value );
 
-            Value = RtspHeaderValueValidator.TryValidateToken( value ) ? value : throw new ArgumentException();
+            Value = RtspHeaderProtocolValidator.TryValidateToken( value ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -107,7 +107,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( RtspHeaderValueValidator.TryValidateToken( name ) )
+                if ( RtspHeaderProtocolValidator.TryValidateToken( name ) )
                 {
                     foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                     {

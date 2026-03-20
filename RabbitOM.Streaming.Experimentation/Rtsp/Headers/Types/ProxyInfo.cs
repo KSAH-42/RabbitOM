@@ -17,27 +17,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comment )
         {
-            if ( ! RtspHeaderValueValidator.IsValidToken( protocol ) )
+            if ( ! RtspHeaderProtocolValidator.IsValidToken( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! RtspHeaderValueValidator.IsValidToken( version ) )
+            if ( ! RtspHeaderProtocolValidator.IsValidToken( version ) )
             {
                 throw new ArgumentException( version , "the argument called version is not valid or may contains invalid chars");
             }
 
-            if ( ! RtspHeaderValueValidator.IsValidToken( receivedBy ) )
+            if ( ! RtspHeaderProtocolValidator.IsValidToken( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
             }
 
-            if ( ! RtspHeaderValueValidator.IsValidVersion( version ) )
+            if ( ! RtspHeaderProtocolValidator.IsValidVersion( version ) )
             {
                 throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
             }
 
-            if ( ! RtspHeaderValueValidator.IsWellFormedComment( comment ) )
+            if ( ! RtspHeaderProtocolValidator.IsWellFormedComment( comment ) )
             {
                 throw new ArgumentException( comment , "the argument called comment is not valid or may contains invalid chars");
             }
@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = null;
 
-            if ( ! RtspHeaderValueValidator.IsValid( input ) )
+            if ( ! RtspHeaderProtocolValidator.IsValid( input ) )
             {
                 return false;
             }
@@ -73,15 +73,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( matchResult.Success )
             {
-                if ( ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "protocol" ].Value ) || 
-                     ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "version" ].Value ) || 
-                     ! RtspHeaderValueValidator.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) ||
-                     ! RtspHeaderValueValidator.IsValidVersion( matchResult.Groups[ "version" ].Value ) )
+                if ( ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "protocol" ].Value ) || 
+                     ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "version" ].Value ) || 
+                     ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) ||
+                     ! RtspHeaderProtocolValidator.IsValidVersion( matchResult.Groups[ "version" ].Value ) )
                 {
                     return false;
                 }
 
-                if ( ! RtspHeaderValueValidator.IsWellFormedComment( matchResult.Groups[ "comment" ].Value ) )
+                if ( ! RtspHeaderProtocolValidator.IsWellFormedComment( matchResult.Groups[ "comment" ].Value ) )
                 {
                     return false;
                 }
