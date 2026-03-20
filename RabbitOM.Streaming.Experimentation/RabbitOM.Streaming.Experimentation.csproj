@@ -136,6 +136,8 @@
     <Compile Include="Rtsp\Transports\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\RtspMessageHeader.cs" />
+    <Compile Include="Rtsp\Transports\Serialization\IResponseDeserializer.cs" />
+    <Compile Include="Rtsp\Transports\Serialization\IRequestSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">

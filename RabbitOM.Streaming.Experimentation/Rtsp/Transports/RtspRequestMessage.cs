@@ -13,28 +13,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         public RtspMessageHeader[] Headers { get; set; }
 
         public byte[] Body { get; set; }
-
-
-
-
-
-        public static bool IsNullOrInvalid( RtspRequestMessage message )
-        {
-            throw new NotImplementedException();
-        }
-
-        public static bool TryParse( in ArraySegment<byte> input , out RtspRequestMessage result )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public byte[] ToArray()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
