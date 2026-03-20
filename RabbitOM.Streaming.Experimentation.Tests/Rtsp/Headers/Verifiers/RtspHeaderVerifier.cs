@@ -6,17 +6,17 @@ using System.Reflection;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.HeadersToBeRemoved;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     [TestFixture]
     public class RtspHeaderVerifier
     {
-        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( WWWAuthenticateRtspHeader ) );
+        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( WWWAuthenticateRtspHeaderValue ) );
 
         private readonly static HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
-            nameof( BlockSizeRtspHeader ),
-            nameof( RtpInfoRtspHeader ),
+            nameof( BlockSizeRtspHeaderValue ),
+            nameof( RtpInfoRtspHeaderValue ),
         };
 
         private static readonly HashSet<string> OfficialHeaderNames = new HashSet<string>()
@@ -81,11 +81,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckHeaderTypeNames()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element != typeof( StringWithQualityRtspHeaderValue) && element.IsSubclassOf( typeof( RtspHeaderValue ) ) ) )
             {
                 var typeNameField = type.GetField( "TypeName" , BindingFlags.Public | BindingFlags.Static );
                 
-                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeader";
+                var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeaderValue";
 
                 if ( type.Name == typeNameValue )
                 {
@@ -108,7 +108,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         {
             // to avoid mistakes when a new header is created by a copy and paste from existing one
 
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeaderValue ) ) ) )
             {
                 var method = type.GetMethod( "TryParse" , BindingFlags.Public | BindingFlags.Static );
                 
@@ -138,7 +138,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
         [Test]
         public void CheckHeaderAreSealed()
         {
-            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeader ) ) ) )
+            foreach ( var type in CurrentAssembly.ExportedTypes.Where( element => element.IsSubclassOf( typeof( RtspHeaderValue ) ) ) )
             {
                 Assert.IsTrue( type.IsSealed , $"{type.Name}" );
             }

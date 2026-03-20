@@ -90,14 +90,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _mimes.Remove( _mimes.Values.FirstOrDefault( predicate )?.Value ?? string.Empty );
         }
 
-        public void ClearMimes()
+        public void RemoveMimes()
         {
             _mimes.Clear();
         }
 
         public override string ToString()
         {
-            return string.Join( ", " , _mimes.Values );
+            return string.Join( ", " , _mimes.Select( element => element.Value.ToString() ) );
         }
     }
 }

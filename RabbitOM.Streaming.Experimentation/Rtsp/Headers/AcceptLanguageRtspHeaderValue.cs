@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , _languages.Values );
+            return string.Join( ", " , _languages.Select( element => element.Value.ToString() ) );
         }
     }
 }
