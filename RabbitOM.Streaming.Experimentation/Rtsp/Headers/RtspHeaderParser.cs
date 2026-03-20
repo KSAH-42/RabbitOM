@@ -65,6 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     if ( segment.EndsWith( separator ) )
                     {
+                        // TODO: adding units tests to test maxTokens parameter
                         maxTokens = maxTokens.HasValue && maxTokens > 0 ? -- maxTokens : maxTokens;
 
                         if ( ! maxTokens.HasValue || maxTokens > 0 ) // do not use -- maxTokens > 0 to avoid recycle when it reach int.MinValue
