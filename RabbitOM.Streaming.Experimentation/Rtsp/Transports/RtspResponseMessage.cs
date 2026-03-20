@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     public sealed class RtspResponseMessage
     {        
@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public int StatusCode { get; set; }
 
-        public RtspResponseHeaderCollection Headers { get; set; }
+        public IList<KeyValuePair<string,string[]>> Headers { get; set; }
 
         public byte[] Body { get; set; }
 

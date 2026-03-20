@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     
     public sealed class RtspClientResponse 
     {
-        public RtspStatusCode Status { get; set; }
+        public RtspStatusCode Status { get; }
         
         public RtspResponseHeaderCollection Headers { get; } = new RtspResponseHeaderCollection();
         
