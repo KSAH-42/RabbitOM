@@ -71,16 +71,16 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Mimes );
 
-            Assert.IsTrue( header.AddMime( new StringWithQualityRtspHeaderValue( "application/text" ) ) );
+            Assert.IsTrue( header.AddMime( "application/text" ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            Assert.IsFalse( header.AddMime( new StringWithQualityRtspHeaderValue( "application/text" ) ) );
+            Assert.IsFalse( header.AddMime( "application/text" ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            Assert.IsFalse( header.AddMime( new StringWithQualityRtspHeaderValue( "application/bizar" ) ) );
+            Assert.IsFalse( header.AddMime( "application/bizar" ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
-            Assert.IsTrue( header.AddMime( new StringWithQualityRtspHeaderValue( "application/json" ) ) );
+            Assert.IsTrue( header.AddMime( "application/json" ) );
             Assert.AreEqual( 2 , header.Mimes.Count );
         }
 
@@ -91,18 +91,18 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Mimes );
 
-            Assert.IsTrue( header.AddMime( new StringWithQualityRtspHeaderValue( "text/xml" ) ) );
+            Assert.IsTrue( header.AddMime( "text/xml" ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
             
-            Assert.IsTrue( header.AddMime( new StringWithQualityRtspHeaderValue( "text/json" ) ) );
+            Assert.IsTrue( header.AddMime( "text/json" ) );
             Assert.AreEqual( 2 , header.Mimes.Count );
 
-            Assert.IsTrue( header.AddMime( new StringWithQualityRtspHeaderValue( "text/sdp" ) ) );
+            Assert.IsTrue( header.AddMime( "text/sdp" ) );
             Assert.AreEqual( 3 , header.Mimes.Count );
 
             Assert.IsFalse( header.RemoveMime( new StringWithQualityRtspHeaderValue( "text/sdp" , 1 ) ) );
-            Assert.IsTrue( header.RemoveMime( new StringWithQualityRtspHeaderValue( "text/sdp" ) ) );
-            Assert.IsFalse( header.RemoveMime( new StringWithQualityRtspHeaderValue( "text/sdp" ) ) );
+            Assert.IsTrue( header.RemoveMime( "text/sdp" ) );
+            Assert.IsFalse( header.RemoveMime( "text/sdp" ) );
             Assert.AreEqual( 2 , header.Mimes.Count );
 
             Assert.IsTrue( header.RemoveMimeBy( x => x.Value == "text/json" ) );

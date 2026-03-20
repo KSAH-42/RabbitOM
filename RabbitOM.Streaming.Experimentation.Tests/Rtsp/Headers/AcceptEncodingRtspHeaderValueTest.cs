@@ -60,10 +60,10 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.ToString() );
             
-            header.AddEncoding( new StringWithQualityRtspHeaderValue( "br" ) );
+            header.AddEncoding( "br");
             Assert.AreEqual( "br" , header.ToString() );
 
-            header.AddEncoding( new StringWithQualityRtspHeaderValue( "gzip" ) );
+            header.AddEncoding( "gzip" );
             Assert.AreEqual( "br, gzip" , header.ToString() );
 
             header.AddEncoding( new StringWithQualityRtspHeaderValue( "identity" , 1 ) );

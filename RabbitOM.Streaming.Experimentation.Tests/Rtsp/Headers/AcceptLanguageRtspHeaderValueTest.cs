@@ -76,13 +76,13 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Languages );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQualityRtspHeaderValue( "fr-FR" ) ) );
+            Assert.IsTrue( header.AddLanguage( "fr-FR" ) );
             Assert.AreEqual( 1 , header.Languages.Count );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQualityRtspHeaderValue( "en-GB" ) ) );
+            Assert.IsTrue( header.AddLanguage( "en-GB" ) );
             Assert.AreEqual( 2 , header.Languages.Count );
 
-            Assert.IsFalse( header.AddLanguage( new StringWithQualityRtspHeaderValue( "en-EN" ) ) );
+            Assert.IsFalse( header.AddLanguage( "en-EN" ) );
             Assert.AreEqual( 2 , header.Languages.Count );
         }
 
@@ -93,18 +93,18 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Languages );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQualityRtspHeaderValue( "fr-FR" ) ) );
+            Assert.IsTrue( header.AddLanguage( "fr-FR" ) );
             Assert.AreEqual( 1 , header.Languages.Count );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQualityRtspHeaderValue( "en-GB" ) ) );
+            Assert.IsTrue( header.AddLanguage( "en-GB" ) );
             Assert.AreEqual( 2 , header.Languages.Count );
 
-            Assert.IsTrue( header.AddLanguage( new StringWithQualityRtspHeaderValue( "en-US" ) ) );
+            Assert.IsTrue( header.AddLanguage( "en-US" ) );
             Assert.AreEqual( 3 , header.Languages.Count );
 
             Assert.IsFalse( header.RemoveLanguage( new StringWithQualityRtspHeaderValue( "fr-FR" , 1 ) ) );
-            Assert.IsTrue( header.RemoveLanguage( new StringWithQualityRtspHeaderValue( "fr-FR" ) ) );
-            Assert.IsFalse( header.RemoveLanguage( new StringWithQualityRtspHeaderValue( "fr-FR" ) ) );
+            Assert.IsTrue( header.RemoveLanguage( "fr-FR" ) );
+            Assert.IsFalse( header.RemoveLanguage("fr-FR" ) );
             Assert.AreEqual( 2 , header.Languages.Count );
 
             Assert.IsTrue( header.RemoveLanguageBy( x => x.Value == "en-GB" ) );
