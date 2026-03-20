@@ -7,11 +7,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
-    public sealed class ContentRangeRtspHeaderValue
+    public sealed class ContentRangeRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "Content-Range";
+        
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         
-
 
         private string _unit = string.Empty;
         private long? _start;
@@ -79,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         header.Size = size;
                     }                    
 
-                    if ( RtspHeaderValueValidator.TryValidateToken( header.Unit ) )
+                    if ( RtspHeaderValueValidator.IsValidToken( header.Unit ) )
                     {
                         if ( header.Start.HasValue && header.End.HasValue )
                         {

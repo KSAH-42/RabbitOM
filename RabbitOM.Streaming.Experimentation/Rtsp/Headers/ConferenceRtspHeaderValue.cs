@@ -5,10 +5,13 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
    
-    public sealed class ConferenceRtspHeaderValue
+    public sealed class ConferenceRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "Conference";
+
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         
@@ -27,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _access = string.Empty;
         private byte? _ttl;
         private ValueRange? _port;
-        private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
+        private readonly HashSet<string> _extensions = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 
 
         public string ConferenceId
@@ -128,7 +131,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeaderValue();
 
-                foreach ( var token in tokens.Where( RtspHeaderValueValidator.TryValidateToken ) )
+                foreach ( var token in tokens.Where( RtspHeaderValueValidator.IsValidToken ) )
                 {                    
                     if ( RtspHeaderParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -219,7 +222,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.TryValidateToken( header.ConferenceId ) )
+                if ( RtspHeaderValueValidator.IsValidToken( header.ConferenceId ) )
                 {
                     result = header;
                 }
@@ -232,9 +235,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderValueValidator.TryValidate( value ) )
+            if ( RtspHeaderValueValidator.IsValid( value = ValueAdapter.Adapt( value ) ) )
             {
-                return _extensions.Add( ValueAdapter.Adapt( value ) );
+                return _extensions.Add( value );
             }
 
             return false;
@@ -245,7 +248,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _extensions.Remove( ValueAdapter.Adapt( value ) );
         }
 
-        public void ClearExtensions()
+        public void RemoveExtensions()
         {
             _extensions.Clear();
         }

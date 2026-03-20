@@ -8,14 +8,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class CacheControlRtspHeaderValue
+    public sealed class CacheControlRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "Cache-Control";
+
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
 
-        private readonly StringRtspDictionary _extensions = new StringRtspDictionary();
+        private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
         
 
 
@@ -47,117 +49,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
 
 
-        
-
-
-        public bool AddExtension( string name , long value )
-        {
-            return AddExtension( name , value.ToString() );
-        }
-
-        public bool AddExtension( string name , string value )
-        {
-            if ( ! RtspHeaderValueValidator.TryValidate( name ) || ! RtspHeaderValueValidator.TryValidate( value ) )
-            {
-                return false;
-            }
-
-            return _extensions.TryAdd( ValueAdapter.Adapt( name ) , ValueAdapter.Adapt( value ) );
-        }
-
-        public bool RemoveExtension( string name )
-        {
-            return _extensions.Remove( ValueAdapter.Adapt( name ) );
-        }
-
-        public void ClearExtensions()
-        {
-            _extensions.Clear();
-        }
-
-        public override string ToString()
-        {
-            var builder = new StringBuilder();
-
-            if ( NoCache )
-            {
-                builder.Append( "no-cache, " );
-            }
-
-            if ( NoStore )
-            {
-                builder.Append( "no-store, " );
-            }
-
-            if ( NoTransform )
-            {
-                builder.Append( "no-transform, " );
-            }
-
-            if ( MustRevalidate )
-            {
-                builder.Append( "must-revalidate, " );
-            }
-
-            if ( ProxyRevalidate )
-            {
-                builder.Append( "proxy-revalidate, " );
-            }
-
-            if ( Public )
-            {
-                builder.Append( "public, " );
-            }
-
-            if ( Private )
-            {
-                builder.Append( "private, " );
-            }
-
-            if ( Immutable )
-            {
-                builder.Append( "immutable, " );
-            }
-
-            if ( MaximumAge.HasValue )
-            {
-                builder.AppendFormat( "max-age={0}, " , MaximumAge );
-            }
-
-            if ( ShareMaximumAge.HasValue )
-            {
-                builder.AppendFormat( "s-maxage={0}, " , ShareMaximumAge );
-            }
-
-            if ( StaleWhileRevalidate.HasValue )
-            {
-                builder.AppendFormat( "stale-while-revalidate={0}, " , StaleWhileRevalidate );
-            }
-
-            if ( StaleIfError.HasValue )
-            {
-                builder.AppendFormat( "stale-if-error={0}, " , StaleIfError );
-            }
-
-            foreach ( var extension in _extensions )
-            { 
-                if ( long.TryParse( extension.Value , out var _ ) )
-                {
-                    builder.AppendFormat( "{0}={1}, " , extension.Key , extension.Value );
-                }
-                else if ( double.TryParse( extension.Value , NumberStyles.Float, CultureInfo.InvariantCulture , out var _ ) )
-                {
-                    builder.AppendFormat( "{0}={1} ," , extension.Key , extension.Value );
-                }
-                else
-                {
-                    builder.AppendFormat( "{0}=\"{1}\" ," , extension.Key , extension.Value );
-                }
-            }
-
-            return builder.ToString().Trim( ' ' , ',' );
-        }
-        
 
 
 
@@ -248,6 +139,129 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+
+
+
+        
+
+
+        public bool AddExtension( string name , long value )
+        {
+            return AddExtension( name , value.ToString() );
+        }
+
+        public bool AddExtension( string name , string value )
+        {
+            if ( ! RtspHeaderValueValidator.IsValid( name ) || ! RtspHeaderValueValidator.IsValid( value ) )
+            {
+                return false;
+            }
+            
+            name = ValueAdapter.Adapt( name );
+
+            if ( string.IsNullOrWhiteSpace( name ) || _extensions.ContainsKey( name ) )
+            {
+                return false;
+            }
+
+            _extensions[ name ] = ValueAdapter.Adapt( value );
+
+            return true;
+        }
+
+        public bool RemoveExtension( string name )
+        {
+            return _extensions.Remove( ValueAdapter.Adapt( name ) );
+        }
+
+        public void RemoveExtensions()
+        {
+            _extensions.Clear();
+        }
+
+        public override string ToString()
+        {
+            var builder = new StringBuilder();
+
+            if ( NoCache )
+            {
+                builder.Append( "no-cache, " );
+            }
+
+            if ( NoStore )
+            {
+                builder.Append( "no-store, " );
+            }
+
+            if ( NoTransform )
+            {
+                builder.Append( "no-transform, " );
+            }
+
+            if ( MustRevalidate )
+            {
+                builder.Append( "must-revalidate, " );
+            }
+
+            if ( ProxyRevalidate )
+            {
+                builder.Append( "proxy-revalidate, " );
+            }
+
+            if ( Public )
+            {
+                builder.Append( "public, " );
+            }
+
+            if ( Private )
+            {
+                builder.Append( "private, " );
+            }
+
+            if ( Immutable )
+            {
+                builder.Append( "immutable, " );
+            }
+
+            if ( MaximumAge.HasValue )
+            {
+                builder.AppendFormat( "max-age={0}, " , MaximumAge );
+            }
+
+            if ( ShareMaximumAge.HasValue )
+            {
+                builder.AppendFormat( "s-maxage={0}, " , ShareMaximumAge );
+            }
+
+            if ( StaleWhileRevalidate.HasValue )
+            {
+                builder.AppendFormat( "stale-while-revalidate={0}, " , StaleWhileRevalidate );
+            }
+
+            if ( StaleIfError.HasValue )
+            {
+                builder.AppendFormat( "stale-if-error={0}, " , StaleIfError );
+            }
+
+            foreach ( var extension in _extensions )
+            { 
+                if ( long.TryParse( extension.Value , out var _ ) )
+                {
+                    builder.AppendFormat( "{0}={1}, " , extension.Key , extension.Value );
+                }
+                else if ( double.TryParse( extension.Value , NumberStyles.Float, CultureInfo.InvariantCulture , out var _ ) )
+                {
+                    builder.AppendFormat( "{0}={1} ," , extension.Key , extension.Value );
+                }
+                else
+                {
+                    builder.AppendFormat( "{0}=\"{1}\" ," , extension.Key , extension.Value );
+                }
+            }
+
+            return builder.ToString().Trim( ' ' , ',' );
         }
     }
 }

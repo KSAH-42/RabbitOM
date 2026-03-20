@@ -4,27 +4,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
   
-    public sealed class UriRtspHeaderValue
+    public sealed class LocationRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "Location";
+        
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         
-        private Uri _uri;
+        private string _uri = string.Empty;
         
-        public Uri Uri
+        public string Uri
         {
             get => _uri;
-            set => _uri = value;
+            set => _uri = ValueAdapter.Adapt( value );
         }
 
-        public static bool TryParse( string input , out UriRtspHeaderValue result )
+        public static bool TryParse( string input , out LocationRtspHeaderValue result )
         {
             result = null;
 
             var value = ValueAdapter.Adapt( input );
 
-            if ( RtspHeaderValueValidator.TryValidateUri( value ) && Uri.TryCreate( value , UriKind.RelativeOrAbsolute , out var uri ) )
+            if ( RtspHeaderValueValidator.IsValidUri( value ) )
             {
-                result = new UriRtspHeaderValue() { Uri = uri };
+                result = new LocationRtspHeaderValue() { Uri = value };
             }
 
             return result != null;
@@ -32,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return _uri?.ToString() ?? string.Empty;
+            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
         }
     }
 }

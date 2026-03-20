@@ -2,45 +2,44 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: fuse collections in order to remove internal collection class by introducing static method , including lambda expression and so on
-    // TODO: review if theses headers are really present on the response send by the server
-
+    // TODO: on getter, implement and use the method ElementOrDefaultAt( string name ) and the method ElementOrDefaultAt( string name , int index )
+    // TODO: on setter do not throw exception on null, prefer removing from the internal collection
     public class RtspResponseHeaderCollection : RtspHeaderCollection
     {
-        public RtspHeaderValueCollection<RtspMethod> Allow { get; } = RtspHeaderValueFactory.CreateAllowHeaderValue();
+        public AllowRtspHeaderValue Allow { get; set; }
+
+        public AuthenticateRtspHeaderValue WWWAuthenticate { get; set; }
         
         public CacheControlRtspHeaderValue CacheControl { get; set; }
         
         public ConferenceRtspHeaderValue Conference { get; set; }
         
-        public RtspHeaderValueCollection<string> Connection { get; } = RtspHeaderValueFactory.CreateConnectionHeaderValue();
+        public ConnectionRtspHeaderValue Connection { get; set; }
         
         public ContentBaseRtspHeaderValue ContentBase { get; set; }
         
         public ContentRangeRtspHeaderValue ContentRange { get; set; }
         
-        public UIntRtspHeaderValue CSeq { get; } = RtspHeaderValueFactory.CreateCSeqHeaderValue();
+        public CSeqRtspHeaderValue CSeq { get; } = new CSeqRtspHeaderValue();
         
-        public DateTimeRtspHeaderValue Date { get; set; }
+        public DateRtspHeaderValue Date { get; set; }
         
-        public DateTimeRtspHeaderValue Expires { get; set; }
+        public ExpiresRtspHeaderValue Expires { get; set; }
 
-        public DateTimeRtspHeaderValue LastModified { get; set; }
+        public LastModifiedRtspHeaderValue LastModified { get; set; }
         
-        public UriRtspHeaderValue Location { get; set; }
+        public LocationRtspHeaderValue Location { get; set; }
         
-        public DoubleRtspHeaderValue MediaDuration { get; set; }
+        public MediaDurationRtspHeaderValue MediaDuration { get; set; }
         
-        public RtspHeaderValueCollection<RtspMethod> Public { get; } = RtspHeaderValueFactory.CreatePublicHeaderValue();
+        public PublicRtspHeaderValue Public { get; set; }
         
-        public RtspHeaderValueCollection<RtpInfo> RtpInfo { get; } = RtspHeaderValueFactory.CreateRtpInfoHeaderValue();
+        public RtpInfoRtspHeaderValue RtpInfo { get; set; }
         
         public SessionRtspHeaderValue Session { get; set; }
         
         public TransportRtspHeaderValue Transport { get; set; }
         
-        public RtspHeaderValueCollection<ProxyInfo> Via { get; } = RtspHeaderValueFactory.CreateViaHeaderValue();
-        
-        public WWWAuthenticateRtspHeaderValue WWWAuthenticate { get; set; }
+        public ViaRtspHeaderValue Via { get; set; }
     }
 }

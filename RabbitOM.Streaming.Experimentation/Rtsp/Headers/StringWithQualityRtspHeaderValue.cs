@@ -1,66 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Globalization;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
-    public sealed class StringWithQuality : IEquatable<StringWithQuality>
+    public sealed class StringWithQualityRtspHeaderValue : RtspHeaderValue , IEquatable<StringWithQualityRtspHeaderValue>
     {
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
-
-
-        private readonly string _value;
-
-        private readonly double? _quality;
-
-
-
-
-        public StringWithQuality( string value )
+        public StringWithQualityRtspHeaderValue( string value )
         {
-            _value = RtspHeaderValueValidator.TryValidateToken( (value = ValueAdapter.Adapt( value )) ) ? value : throw new ArgumentException();
+            Value = RtspHeaderValueValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
         }
 
-        public StringWithQuality( string value , double quality )
+        public StringWithQualityRtspHeaderValue( string value , double quality )
         {
-            _value = RtspHeaderValueValidator.TryValidateToken( (value = ValueAdapter.Adapt( value )) ) ? value : throw new ArgumentException();
-            _quality = quality;
+            Value = RtspHeaderValueValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
+            Quality = quality;
         }
 
 
 
 
+        public string Value { get; }
 
-
-        public string Value { get => _value; }
-
-        public double? Quality { get => _quality; }
+        public double? Quality { get; }
         
 
 
 
-
-        public static implicit operator StringWithQuality( string value )
+        public static implicit operator StringWithQualityRtspHeaderValue( string value )
         {
-            return new StringWithQuality( value );
+            return new StringWithQualityRtspHeaderValue( value );
         }
 
-
-
-
-
-        public static bool IsNullOrEmpty( StringWithQuality obj )
+        public static bool IsNullOrEmpty( StringWithQualityRtspHeaderValue obj )
         {
             return object.ReferenceEquals( obj , null ) || string.IsNullOrWhiteSpace( obj.Value );
         }
 
-        public static bool Equals( StringWithQuality a , StringWithQuality b )
+        public static bool Equals( StringWithQualityRtspHeaderValue a , StringWithQualityRtspHeaderValue b )
         {
             if ( object.ReferenceEquals( a , b ) )
             {
@@ -78,34 +62,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-
-
-
         public override bool Equals( object obj )
         {
-            return Equals( obj as StringWithQuality );
+            return Equals( obj as StringWithQualityRtspHeaderValue );
         }
         
-        public bool Equals( StringWithQuality obj )
+        public bool Equals( StringWithQualityRtspHeaderValue obj )
         {
             return Equals( this , obj );
         }
 
         public override int GetHashCode()
         {
-            return _value.ToLower().GetHashCode() ^ _quality.GetHashCode();
+            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
         }
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( _value ) )
+            if ( string.IsNullOrWhiteSpace( Value ) )
             {
                 return string.Empty;
             }
 
-            return _quality.HasValue ? $"{_value}; q={_quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : _value;
+            return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
         }
 
 
@@ -114,7 +93,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
 
-        public static bool TryParse( string input , out StringWithQuality result )
+        public static bool TryParse( string input , out StringWithQualityRtspHeaderValue result )
         {
             result = null;
 
@@ -122,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( RtspHeaderValueValidator.TryValidateToken( name ) )
+                if ( RtspHeaderValueValidator.IsValidToken( name ) )
                 {
                     foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                     {
@@ -132,7 +111,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                             {
                                 if ( double.TryParse( ValueAdapter.Adapt( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                                 {
-                                    result = new StringWithQuality( name , quality );
+                                    result = new StringWithQualityRtspHeaderValue( name , quality );
                                     break;
                                 }
                             }
@@ -141,7 +120,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     if ( result == null )
                     {
-                        result = new StringWithQuality( name );
+                        result = new StringWithQualityRtspHeaderValue( name );
                     }
                 }
             }

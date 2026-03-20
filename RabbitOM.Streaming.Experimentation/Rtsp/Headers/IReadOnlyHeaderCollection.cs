@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IReadOnlyHeaderCollection : IReadOnlyCollection<KeyValuePair<string ,string[]>>
+    public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,RtspHeaderValue[]>>
     {
-        string[] this[string key] { get; }
-        string this[string key, int index ] { get; }
+        RtspHeaderValue[] this[ string name ] { get; }
+        RtspHeaderValue this[ string name , int index ] { get; }
 
 
         string[] AllKeys { get; }
 
 
-        bool ContainsKey( string key );
-        bool TryGetValue( string key , out string result );
-        bool TryGetValueAt( string key , int index , out string result );
-        bool TryGetValues( string key , out string[] result );
+        RtspHeaderValue[] GetValues( string name );
+        bool ContainsKey( string name );
+        bool TryGetValue( string name , out RtspHeaderValue value );
+        bool TryGetValueAt( string name , int index , out RtspHeaderValue value );
+        bool TryGetValues( string name , out RtspHeaderValue[] values );
     }
 }

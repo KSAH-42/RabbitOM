@@ -5,10 +5,13 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
-    public sealed class TransportRtspHeaderValue 
+    public sealed class TransportRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "Transport";
+
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
        
@@ -27,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private ValueRange? _clientPort;
         private ValueRange? _serverPort;
         private ValueRange? _interleaved;
-        private readonly StringRtspHashSet _extensions = new StringRtspHashSet();
+        private readonly HashSet<string> _extensions = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
 
 
 
@@ -231,7 +234,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.TryValidateToken( header.Transport ) && RtspHeaderValueValidator.TryValidateToken( header.Transmission ) )
+                if ( RtspHeaderValueValidator.IsValidToken( header.Transport ) && RtspHeaderValueValidator.IsValidToken( header.Transmission ) )
                 {
                     result = header;
                 }
@@ -245,9 +248,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderValueValidator.TryValidate( value ) )
+            if ( RtspHeaderValueValidator.IsValid( value = ValueAdapter.Adapt( value ) ) )
             {
-                return _extensions.Add( ValueAdapter.Adapt( value ) );
+                return _extensions.Add( value );
             }
 
             return false;
@@ -258,7 +261,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _extensions.Remove( ValueAdapter.Adapt( value ) );
         }
 
-        public void ClearExtensions()
+        public void RemoveExtensions()
         {
             _extensions.Clear();
         }

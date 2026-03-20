@@ -5,14 +5,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
 
-    public sealed class DateTimeRtspHeaderValue
+    public sealed class ExpiresRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "Expires";
+
         public DateTime Value { get; set; }
 
-        public static bool TryParse( string input , out DateTimeRtspHeaderValue result )
+        public static bool TryParse( string input , out ExpiresRtspHeaderValue result )
         {
             result = DateTime.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 
-                ? new DateTimeRtspHeaderValue() { Value = value } 
+                ? new ExpiresRtspHeaderValue() { Value = value } 
                 : null;
 
             return result != null;

@@ -1,0 +1,89 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+{
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+
+    public sealed class IfMatchRtspHeaderValue : RtspHeaderValue
+    {
+        public static readonly string TypeName = "If-Match";
+
+        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+
+
+        private readonly HashSet<string> _entitiesTags = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
+
+
+
+
+        public IReadOnlyCollection<string> EntitiesTags
+        {
+            get => _entitiesTags;
+        }
+
+
+
+
+
+
+        public static bool TryParse( string input , out IfMatchRtspHeaderValue result )
+        {
+            result = null;
+
+            if ( RtspHeaderParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new IfMatchRtspHeaderValue();
+
+                foreach ( var token in tokens )
+                {
+                    header.AddEntityTag( token );
+                }
+            
+                if ( header.EntitiesTags.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
+
+
+
+
+
+
+
+        public bool AddEntityTag( string etag )
+        {
+            return AddEntityTag( etag , RtspHeaderValueValidator.IsValidToken );
+        }
+
+        public bool AddEntityTag( string etag , Func<string,bool> validator )
+        {
+            if ( validator?.Invoke( etag = ValueAdapter.Adapt( etag ) ) == true )
+            {
+                return _entitiesTags.Add( etag );
+            }
+            
+            return false;
+        }
+
+        public bool RemoveEntityTag( string etag )
+        {
+            return _entitiesTags.Remove( ValueAdapter.Adapt( etag ) );
+        }
+
+        public void RemoveEntitiesTags()
+        {
+            _entitiesTags.Clear();
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , _entitiesTags.Select( element => $"\"{element}\"" ) );
+        }
+    }
+}

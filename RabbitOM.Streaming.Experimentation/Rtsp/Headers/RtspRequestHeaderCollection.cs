@@ -2,59 +2,54 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: fuse collections in order to remove internal collection class by introducing static method , including lambda expression and so on
-    // TODO: review if theses headers are really present for requesting something to the server
-
+    // TODO: on getter, implement and use the method ElementOrDefaultAt( string name ) and the method ElementOrDefaultAt( string name , int index )
+    // TODO: on setter do not throw exception on null, prefer removing from the internal collection
     public class RtspRequestHeaderCollection : RtspHeaderCollection
     {
-        public RtspHeaderValueCollection<StringWithQuality> Accept { get; } = RtspHeaderValueFactory.CreateAcceptHeaderValue();
+        public AcceptRtspHeaderValue Accept { get; set; }
         
-        public RtspHeaderValueCollection<StringWithQuality> AcceptEncoding { get; } = RtspHeaderValueFactory.CreateAcceptEncodingHeaderValue();
+        public AcceptEncodingRtspHeaderValue AcceptEncoding { get; set; }
         
-        public RtspHeaderValueCollection<StringWithQuality> AcceptLanguage { get; } = RtspHeaderValueFactory.CreateAcceptLanguageHeaderValue();
+        public AcceptLanguageRtspHeaderValue AcceptLanguage { get; set; }
         
         public AuthorizationRtspHeaderValue Authorization { get; set; }
         
-        public UIntRtspHeaderValue Bandwidth { get; set; }
+        public BandwidthRtspHeaderValue Bandwidth { get; set; }
         
-        public UShortRtspHeaderValue BlockSize { get; set; }
+        public BlockSizeRtspHeaderValue BlockSize { get; set; }
         
         public CacheControlRtspHeaderValue CacheControl { get; set; }
         
         public ConferenceRtspHeaderValue Conference { get; set; }
         
-        public RtspHeaderValueCollection<string> Connection { get; } = RtspHeaderValueFactory.CreateConnectionHeaderValue();
+        public ConnectionRtspHeaderValue Connection { get; set; }
         
-        public UIntRtspHeaderValue CSeq { get; } = RtspHeaderValueFactory.CreateCSeqHeaderValue();
+        public CSeqRtspHeaderValue CSeq { get; } = new CSeqRtspHeaderValue();
         
-        public DateTimeRtspHeaderValue Date { get; set; }
+        public DateRtspHeaderValue Date { get; set; }
         
-        public DateTimeRtspHeaderValue Expires { get; set; }
-
-        public UriRtspHeaderValue From { get; set; }
+        public ExpiresRtspHeaderValue Expires { get; set; }
         
-        public RtspHeaderValueCollection<string> IfMatch { get; } = RtspHeaderValueFactory.CreateIfMatchHeaderValue();
+        public IfMatchRtspHeaderValue IfMatch { get; set; }
         
-        public DateTimeRtspHeaderValue IfModifiedSince { get; set; }
+        public IfModifiedSinceRtspHeaderValue IfModifiedSince { get; set; }
         
-        public UIntRtspHeaderValue MaxForwards { get; set; }
+        public MaxForwardsRtspHeaderValue MaxForwards { get; set; }
         
-        public RtspHeaderValueCollection<RtspMethod> Public { get; } = RtspHeaderValueFactory.CreatePublicHeaderValue();
+        public PublicRtspHeaderValue Public { get; set; }
         
-        public UriRtspHeaderValue Referer { get; set; }
+        public RefererRtspHeaderValue Referer { get; set; }
         
-        public FloatRtspHeaderValue Scale { get; set; }
+        public ScaleRtspHeaderValue Scale { get; set; }
         
         public SessionRtspHeaderValue Session { get; set; }
         
-        public DoubleRtspHeaderValue Speed { get; set; }
+        public SpeedRtspHeaderValue Speed { get; set; }
         
         public TransportRtspHeaderValue Transport { get; set; }
         
         public UserAgentRtspHeaderValue UserAgent { get; set; }
         
-        public RtspHeaderValueCollection<ProxyInfo> Via { get; } = RtspHeaderValueFactory.CreateViaHeaderValue();
-        
-        public WWWAuthenticateRtspHeaderValue WWWAuthenticate { get; set; }
+        public ViaRtspHeaderValue Via { get; set; }
     }
 }

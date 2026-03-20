@@ -27,12 +27,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-        public void AddHeader( string name , string value )
+        public void AddHeader( string name , RtspHeaderValue value )
         {
             _headers.Add( name , value );
         }
 
-        public bool TryAddHeader( string name , string value )
+        public bool TryAddHeader( string name , RtspHeaderValue value )
         {
             return _headers.TryAdd( name , value );
         }

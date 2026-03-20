@@ -6,8 +6,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
    
-    public sealed class UserAgentRtspHeaderValue
+    public sealed class UserAgentRtspHeaderValue : RtspHeaderValue
     {
+        public static readonly string TypeName = "User-Agent";
+
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
         
@@ -70,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( RtspHeaderValueValidator.TryValidateToken( header.Product ) && RtspHeaderValueValidator.TryValidateToken( header.Version ) )
+                if ( RtspHeaderValueValidator.IsValidToken( header.Product ) && RtspHeaderValueValidator.IsValidToken( header.Version ) )
                 {
                     result = header;
                 }

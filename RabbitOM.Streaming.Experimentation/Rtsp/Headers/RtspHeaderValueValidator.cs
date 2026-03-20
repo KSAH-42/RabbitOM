@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     public static class RtspHeaderValueValidator
     {
         private static readonly IReadOnlyCollection<char> InvalidChars = new HashSet<char>() { '²' , 'é' , '~' , 'ç' , 'è' , '$' , '£' , '€' , '¤' , '¨' , 'µ' , 'ù' , '^' , '§'  , '[' , ']' , '{' , '}' , '<' , '>' };
@@ -14,8 +16,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public static Func<string,bool> NullStringValiator { get; } = ( _ => true );
+
+
+
         
-        public static bool TryValidate( string value )
+        public static bool IsValid( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -38,7 +44,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public static bool TryValidateToken( string value )
+        public static bool IsValidToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -65,7 +71,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return succeed;
         }
 
-        public static bool TryValidateComment( string value )
+        public static bool IsWellFormedComment( string value )
         {
             foreach ( var element in value ?? string.Empty )
             {
@@ -83,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public static bool TryValidateUri( string value )
+        public static bool IsValidUri( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -93,34 +99,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute );
         }
 
-        public static bool TryValidateVersion( string value )
+        public static bool IsValidVersion( string value )
         {
             return Version.TryParse( value , out _ );
         }
 
-        public static bool TryValidateDirective( string value )
+        public static bool IsValidMime( string value )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
+            return SupportedTypes.Mimes.Contains( value );
+        }
 
-            if ( ! char.IsLetter( value.FirstOrDefault() ) || ! char.IsLetterOrDigit( value.LastOrDefault() ) )
-            {
-                return false;
-            }
+        public static bool IsValidLanguage( string value )
+        {
+            return SupportedTypes.Languages.Contains( value );
+        }
 
-            if ( value.Any( c => char.IsSeparator( c ) ) )
-            {
-                return false;
-            }
-
-            if ( value.Any( c => char.IsPunctuation( c ) && c != '-' && c != '_' ) )
-            {
-                return false;
-            }
-
-            return true;
+        public static bool IsValidEncoding( string value )
+        {
+            return SupportedTypes.Encodings.Contains( value );
         }
     }
 }

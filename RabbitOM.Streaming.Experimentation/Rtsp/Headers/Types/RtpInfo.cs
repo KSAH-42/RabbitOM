@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
@@ -19,12 +19,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public RtpInfo( string url , ushort? sequence , ushort? rtpTime , string ssrc )
         {
-            if ( ! RtspHeaderValueValidator.TryValidateUri( url ) )
+            if ( ! RtspHeaderValueValidator.IsValidUri( url ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
 
-            if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.TryValidateToken( ssrc ) )
+            if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.IsValidToken( ssrc ) )
             {
                 throw new ArgumentException( nameof( url ) );
             }
@@ -85,12 +85,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ! RtspHeaderValueValidator.TryValidateUri( url ) )
+                if ( ! RtspHeaderValueValidator.IsValidUri( url ) )
                 {
                     return false;
                 }
 
-                if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.TryValidateToken( ssrc ) )
+                if ( ! string.IsNullOrEmpty( ssrc ) && ! RtspHeaderValueValidator.IsValidToken( ssrc ) )
                 {
                     return false;
                 }

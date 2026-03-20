@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public static class SupportedTypes
     {
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             "*",
         });
         
-        private static readonly Lazy<IReadOnlyCollection<string>> s_formats = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<IReadOnlyCollection<string>> s_mimes = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "application/sdp",
             "application/text" ,
@@ -88,7 +88,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static IReadOnlyCollection<string> Encodings { get => s_encodings.Value; }
 
-        public static IReadOnlyCollection<string> Formats { get => s_formats.Value; }
+        public static IReadOnlyCollection<string> Mimes { get => s_mimes.Value; }
 
         public static IReadOnlyCollection<string> Languages { get => s_languages.Value; }
 
