@@ -132,6 +132,7 @@
     <Compile Include="Rtsp\RtspStatusCode.cs" />
     <Compile Include="Rtsp\Transports\Authentication\RtspAuthorizationAlgorithms.cs" />
     <Compile Include="Rtsp\Transports\Authentication\RtspAuthorizationResponseBuilder.cs" />
+    <Compile Include="Rtsp\Transports\RtspClientChannel.cs" />
     <Compile Include="Rtsp\Transports\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\RtspResponseMessage.cs" />
