@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 {
     public sealed class RtspAuthorizationResponseBuilder
     {
-        public RtspMethod Method { get; set; }
+        public string Method { get; set; }
 
         public string Scheme { get; set; }
         
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 
             if ( RtspAuthenticationTypes.IsDigestAuthentication( Scheme ) )
             {
-                if ( Method == null || string.IsNullOrWhiteSpace( Uri ) || string.IsNullOrWhiteSpace( Realm ) || string.IsNullOrWhiteSpace( Nonce ) )
+                if ( string.IsNullOrWhiteSpace( Method ) || string.IsNullOrWhiteSpace( Uri ) || string.IsNullOrWhiteSpace( Realm ) || string.IsNullOrWhiteSpace( Nonce ) )
                 {
                     return string.Empty;
                 }
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                 string ComputeHash( Func<string,string> algorithm )
                 {
                     var hashA1 = algorithm( UserName + ":" + Realm + ":" + Password );
-                    var hashA2 = algorithm( Method.Name + ":" + Uri  );
+                    var hashA2 = algorithm( Method + ":" + Uri  );
 
                     return algorithm( hashA1 + ":" + Nonce + ":" + hashA2 );
                 }
