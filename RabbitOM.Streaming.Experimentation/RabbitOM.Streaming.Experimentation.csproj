@@ -135,6 +135,7 @@
     <Compile Include="Rtsp\Transports\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\RtspResponseMessage.cs" />
+    <Compile Include="Rtsp\Transports\RtspMessageHeader.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">

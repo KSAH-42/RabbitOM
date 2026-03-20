@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-
     public sealed class RtspResponseMessage
     {        
         public string Method { get; set; }
@@ -14,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public int StatusCode { get; set; }
 
-        public IList<KeyValuePair<string,string[]>> Headers { get; set; }
+        public RtspMessageHeader[] Headers { get; set; }
 
         public byte[] Body { get; set; }
 
