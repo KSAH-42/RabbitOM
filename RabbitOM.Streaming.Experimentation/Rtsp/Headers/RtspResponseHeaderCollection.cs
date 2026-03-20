@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public AllowRtspHeaderValue Allow { get; set; }
 
-        public AuthenticateRtspHeaderValue WWWAuthenticate { get; set; }
+        public AuthenticateRtspHeaderValue Authenticate { get; set; }
         
         public CacheControlRtspHeaderValue CacheControl { get; set; }
         
