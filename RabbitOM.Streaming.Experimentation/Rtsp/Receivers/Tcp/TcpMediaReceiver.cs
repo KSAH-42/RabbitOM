@@ -53,11 +53,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
             throw new NotImplementedException();
         }
 
-        public override void StopCommunication(TimeSpan timeout)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void BeginStopCommunication()
         {
             throw new NotImplementedException();

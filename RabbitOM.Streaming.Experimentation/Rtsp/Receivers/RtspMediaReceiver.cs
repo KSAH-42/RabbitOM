@@ -62,8 +62,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
         public abstract void StopCommunication();
 
-        public abstract void StopCommunication(TimeSpan timeout);
-
         public abstract void BeginStopCommunication();
 
         public abstract bool EndStopCommunication(TimeSpan timeout);
