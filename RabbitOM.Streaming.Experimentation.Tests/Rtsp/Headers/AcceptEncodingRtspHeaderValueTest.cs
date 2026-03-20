@@ -77,15 +77,15 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
             Assert.IsEmpty( header.Encodings );
 
-            Assert.IsTrue( header.AddEncoding( new StringWithQualityRtspHeaderValue( "br" ) ) );
+            Assert.IsTrue( header.AddEncoding( "br" ) );
             Assert.AreEqual( 1 , header.Encodings.Count );
 
-            Assert.IsTrue( header.AddEncoding( new StringWithQualityRtspHeaderValue( "gzip" ) ) );
+            Assert.IsTrue( header.AddEncoding( "gzip" ) );
             Assert.AreEqual( 2 , header.Encodings.Count );
 
-            Assert.IsFalse( header.AddEncoding( new StringWithQualityRtspHeaderValue( "gzip" ) ) );
+            Assert.IsFalse( header.AddEncoding( "gzip" ) );
             Assert.IsFalse( header.AddEncoding( new StringWithQualityRtspHeaderValue( "gzip" , 1 ) ) );
-            Assert.IsFalse( header.AddEncoding( new StringWithQualityRtspHeaderValue( "notsupported" ) ) );
+            Assert.IsFalse( header.AddEncoding( "notsupported" ) );
             Assert.AreEqual( 2 , header.Encodings.Count );
         }
 
