@@ -26,7 +26,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
+        public object SyncRoot
+        {
+            get => _items;
+        }
 
         public int Count
         {
@@ -37,7 +40,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _items.Keys.ToArray();
         }
+        
         public bool IsReadOnly
+        {
+            get => false;
+        }
+
+        public bool IsSynchronized
         {
             get => false;
         }
@@ -97,21 +106,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new Enumerator( this );
-        }
-
-        public IEnumerator<KeyValuePair<string , RtspHeaderValue[]>> GetEnumerator()
-        {
-            return new Enumerator( this );
-        }
-
-        public RtspHeaderValue[] GetValues( string name )
-        {
-            return TryGetValues( name , out var result ) ? result : Array.Empty<RtspHeaderValue>();
-        }
-                        
         public void Add( string key , RtspHeaderValue value )
         {
             if ( key == null )
@@ -142,6 +136,26 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _items.ContainsKey( key ?? string.Empty );
         }
 
+        public void CopyTo( Array array , int index )
+        {
+            Array.Copy( _items.ToArray() , 0 , array , 0 , _items.Count );
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new Enumerator( this );
+        }
+
+        public IEnumerator<KeyValuePair<string , RtspHeaderValue[]>> GetEnumerator()
+        {
+            return new Enumerator( this );
+        }
+
+        public RtspHeaderValue[] GetValues( string name )
+        {
+            return TryGetValues( name , out var result ) ? result : Array.Empty<RtspHeaderValue>();
+        }
+                        
         public bool Remove( string key )
         {
             return _items.Remove( key ?? string.Empty );
