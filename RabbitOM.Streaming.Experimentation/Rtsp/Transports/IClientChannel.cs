@@ -4,6 +4,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public interface IClientChannel : IDisposable
     {        
+        event EventHandler Opened;
+
+        event EventHandler Closed;
+
+        event EventHandler Aborted;
+
+
+
         string Address { get; set; }
         
         TimeSpan ReceiveTimeout { get; set; }
