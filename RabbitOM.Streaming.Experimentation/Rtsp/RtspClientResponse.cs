@@ -1,54 +1,16 @@
 ﻿using System;
+using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-
-    public sealed class RtspClientResponse : IDisposable
+    
+    public sealed class RtspClientResponse 
     {
-        public RtspMethod Method { get; }
+        public RtspStatusCode Status { get; set; }
         
-        public Version Version { get; }
+        public RtspResponseHeaderCollection Headers { get; } = new RtspResponseHeaderCollection();
         
-        public RtspStatusCode Status { get; }
-        
-        public string ReasonPhrase { get; }
-        
-        public IReadOnlyHeaderCollection Headers { get; }
-        
-
-
-
-
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void IsSuccess()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EnsureSuccess()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetContentLength()
-        {
-            throw new NotImplementedException();
-        }
-
-        public byte[] GetContent()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetContentAsString()
-        {
-            throw new NotImplementedException();
-        }
+        public MemoryStream Body { get; } = new MemoryStream();
     }
 }
