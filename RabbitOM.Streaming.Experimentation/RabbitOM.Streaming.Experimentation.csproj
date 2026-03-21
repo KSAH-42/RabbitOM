@@ -90,8 +90,10 @@
     <Compile Include="Rtsp\Headers\Types\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\Types\SupportedTypes.cs" />
     <Compile Include="Rtsp\Headers\Types\ValueRange.cs" />
+    <Compile Include="Rtsp\Headers\Types\WarningInfo.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ViaRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="Rtsp\InterleavedPacket.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />

@@ -102,6 +102,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return true;
-        }        
+        }
+
+        public static bool IsValidAgent( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+            
+            foreach ( var element in value )
+            {
+                if ( ! IsValidChar( element ) || element == ' ' )
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

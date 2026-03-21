@@ -115,10 +115,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rtsp\Headers\WarningRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\LocationRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParserValueTest.cs" />
+    <Compile Include="Rtsp\Headers\Types\WarningInfoTest.cs" />
     <Compile Include="Rtsp\RtspMethodTest.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfoTest.cs" />
     <Compile Include="Rtsp\Headers\Verifiers\RtspHeaderVerifier.cs" />
@@ -140,7 +142,7 @@
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\Types\RtpInfoTest.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderValueTest.cs" />
-    <Compile Include="Rtsp\Headers\WeightedStringValueTest.cs" />
+    <Compile Include="Rtsp\Headers\StringWithQualityRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\LastModifiedRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeaderValueTest.cs" />

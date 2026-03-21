@@ -51,5 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public UserAgentRtspHeaderValue UserAgent { get; set; }
         
         public ViaRtspHeaderValue Via { get; set; }
+
+        public WarningRtspHeaderValue Warning { get; set; }
     }
 }
