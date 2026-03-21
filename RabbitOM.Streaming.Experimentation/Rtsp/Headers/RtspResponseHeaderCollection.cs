@@ -8,6 +8,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public AllowRtspHeaderValue Allow { get; set; }
 
+        public AuthenticateRtspHeaderValue Authenticate { get; set; }
+
         public CacheControlRtspHeaderValue CacheControl { get; set; }
         
         public ConferenceRtspHeaderValue Conference { get; set; }
@@ -39,7 +41,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public TransportRtspHeaderValue Transport { get; set; }
         
         public ViaRtspHeaderValue Via { get; set; }
-
-        public AuthenticateRtspHeaderValue Authenticate { get; set; }
     }
 }
