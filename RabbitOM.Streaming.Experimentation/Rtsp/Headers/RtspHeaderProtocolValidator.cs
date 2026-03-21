@@ -13,12 +13,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private static readonly IReadOnlyCollection<char> ParenthesisChars = new HashSet<char>() { '(' , ')' };
 
 
-
-
         public static Func<string,bool> NullStringValiator { get; } = _ => true;
 
 
-
+        public static bool IsValidChar( in char value )
+        {
+            return value <= 31 || value >= 127 || char.IsControl( value ) || InvalidChars.Contains( value ) ? false : true;
+        }
         
         public static bool IsValidVersion( string value )
         {
@@ -59,12 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             
             foreach ( var element in value )
             {
-                if ( element <= 31 || element >= 127 || char.IsControl( element ) )
-                {
-                    return false;
-                }
-
-                if ( InvalidChars.Contains( element ) )
+                if ( ! IsValidChar( element ) )
                 {
                     return false;
                 }
@@ -84,12 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             foreach ( var element in value )
             {
-                if ( element <= 31 || element >= 127 || char.IsControl( element ) )
-                {
-                    return false;
-                }
-
-                if ( InvalidChars.Contains( element ) || QuotesChars.Contains( element ) )
+                if ( ! IsValidChar( element ) || QuotesChars.Contains( element ) )
                 {
                     return false;
                 }
@@ -104,12 +95,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             foreach ( var element in value ?? string.Empty )
             {
-                if ( element <= 31 || element >= 127 || char.IsControl( element ) )
-                {
-                    return false;
-                }
-
-                if ( InvalidChars.Contains( element ) || QuotesChars.Contains( element ) || ParenthesisChars.Contains( element ) )
+                if ( ! IsValidChar( element ) || QuotesChars.Contains( element ) || ParenthesisChars.Contains( element ) )
                 {
                     return false;
                 }
