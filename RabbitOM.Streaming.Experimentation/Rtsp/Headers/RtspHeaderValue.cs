@@ -9,6 +9,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     // next, the second reason,like the previous implementation the tostring and the tryparse method, should skip the parse of the first fragment of the header, in otherswords, it should escape the hearname with it's ':' characters in order to keep it simple. and to delegate it in different class
     public abstract class RtspHeaderValue
     {
-        public new abstract string ToString();
     }
 }

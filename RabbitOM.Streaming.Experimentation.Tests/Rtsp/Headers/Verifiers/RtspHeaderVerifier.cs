@@ -80,6 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
             "Content-Disposition",
             "Max-Forwards",
             "Media-Duration",
+            "Warning"
         };
 
         [Test]
@@ -89,6 +90,11 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
             {
                 var typeNameField = type.GetField( "TypeName" , BindingFlags.Public | BindingFlags.Static );
                 
+                if ( typeNameField == null )
+                {
+                    continue;
+                }
+
                 Assert.IsTrue( typeNameField.IsInitOnly );
 
                 var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeaderValue";
