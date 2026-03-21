@@ -104,7 +104,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
-        public static bool IsValidAgent( string value )
+        public static bool IsValidWarningAgent( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -120,6 +120,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return true;
+        }
+
+        public static bool IsValidWarningCode( int code )
+        {
+            return code >= 0;
         }
     }
 }

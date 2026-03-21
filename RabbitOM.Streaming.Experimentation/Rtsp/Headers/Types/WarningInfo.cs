@@ -1,41 +1,45 @@
 ﻿using System;
-using System.Text;
 using System.Linq;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
-    
-    // TODO: remove setter, make it as immutable type
-    public sealed class WarningInfo
+
+    public sealed class WarningInfo : RtspHeaderValue
     {
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
                     
 
-        private int _code = 0;
-        private string _agent = string.Empty;
-        private string _comment = string.Empty;
-                
-
-        public int Code
-        {
-            get => _code;
-            set => _code = value;
-        }
-
-        public string Agent
-        {
-            get => _agent;
-            set => _agent = ValueAdapter.Adapt( value );
-        }
         
-        public string Comment
+        public WarningInfo( int code , string agent , string comment )
         {
-            get => _comment;
-            set => _comment = ValueAdapter.Adapt( value );
+            if ( ! RtspHeaderProtocolValidator.IsValidWarningCode( code ) )
+            {
+                throw new ArgumentException( $"invalid code value:{code}" , nameof( code ) );
+            }
+
+            if ( ! RtspHeaderProtocolValidator.IsValidWarningAgent( agent ) )
+            {
+                throw new ArgumentException( "invalid agent name" , nameof( agent ) );
+            }
+
+            Code = code;
+            Agent = ValueAdapter.Adapt( agent );
+            Comment = ValueAdapter.Adapt( comment );
         }
+
+
+
+        public int Code { get; }
+
+        public string Agent { get; }
         
+        public string Comment { get; }
+        
+
+
 
         public static bool TryParse( string input , out WarningInfo result )
         {
@@ -48,26 +52,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     return false;
                 }
 
-                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var code ) )
+                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var code ) || code < 0 )
                 {
                     return false;
                 }
 
-                var header = new WarningInfo()
+                if ( ! RtspHeaderProtocolValidator.IsValidWarningAgent( tokens.ElementAtOrDefault( 1 ) ) )
                 {
-                    Code = code,
-                    Agent = tokens.ElementAtOrDefault( 1 ),
-                    Comment = tokens.ElementAtOrDefault( 2 ),
-                };
-
-                if ( header.Code >= 0 && RtspHeaderProtocolValidator.IsValidAgent( header.Agent ) )
-                {
-                    result = header;
+                    return false;
                 }
+
+                result = new WarningInfo( code , tokens.ElementAtOrDefault(1) , tokens.ElementAtOrDefault(2) );
             }
             
             return result != null;
         }
+
+
 
 
         public override string ToString()
