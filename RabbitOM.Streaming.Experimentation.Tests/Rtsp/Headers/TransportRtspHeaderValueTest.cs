@@ -141,6 +141,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 
         [TestCase( "RTP/AVP/UDP;unicast;client_port=1-2" )]
         [TestCase( "RTP/AVP/UDP;unicast;client_poRt=1-2" )]
+        [TestCase( "RTP/AVP/UDP;unicast;client_port='1-2'" )]
+        [TestCase( "RTP/AVP/UDP;unicast;client_port=''1'-'2''" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; client_port = 1-2 " )]
         [TestCase( " RTP/AVP/UDP ; unicast ; client_port = '1-2' " )]
         [TestCase( "  client_port = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
@@ -187,6 +189,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "RTP/AVP/UDP;unicast;interleaved=1-2" )]
         [TestCase( "RTP/AVP/UDP;unicast;interLeaved=1-2" )]
         [TestCase( " RTP/AVP/UDP ; unicast ; interleaved  = 1-2 " )]
+        [TestCase( " RTP/AVP/UDP ; unicast ; interleaved  = 1 - 2 " )]
         [TestCase( " RTP/AVP/UDP ; unicast ; interleaved  = '1-2' " )]
         [TestCase( "  interleaved = 1-2 ; ;   RTP/AVP/UDP ; unicast ; " )]
         public void CheckTryParseInterleavedSucceed( string input )
