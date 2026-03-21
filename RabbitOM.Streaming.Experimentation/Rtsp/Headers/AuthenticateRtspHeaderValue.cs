@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
    
-    public sealed class WWWAuthenticateRtspHeaderValue : RtspHeaderValue
+    public sealed class AuthenticateRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "WWW-Authenticate";
 
@@ -78,7 +78,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryParse( string input , out WWWAuthenticateRtspHeaderValue result )
+        public static bool TryParse( string input , out AuthenticateRtspHeaderValue result )
         {
             result = null;
 
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     return false;
                 }
 
-                var header = new WWWAuthenticateRtspHeaderValue() { Scheme = scheme };
+                var header = new AuthenticateRtspHeaderValue() { Scheme = scheme };
                 
                 if ( RtspHeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
                 {

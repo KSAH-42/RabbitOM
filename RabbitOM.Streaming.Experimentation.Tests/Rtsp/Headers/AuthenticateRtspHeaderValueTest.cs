@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "digest realm='my realm',,, ,,,nonce='my nonce',opaque='my opaque',algorithm='my algorithm',stale= 'TRUE' ,qop='my qop'" )]
         public void CheckTryParseSucceed( string input )
         {
-            Assert.IsTrue( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( AuthenticateRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "digest" , header.Scheme );
             Assert.AreEqual( "my realm" , header.Realm );
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "digest realm='my realm',nonce='my nonce'" , null )]
         public void CheckTryParseSucceedForStale( string input , object stale)
         {
-            Assert.IsTrue( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( AuthenticateRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( "digest" , header.Scheme );
             Assert.AreEqual( "my realm" , header.Realm );
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "DIGEST noNce=my nonce, realm='my realm'", "DIGEST")]
         public void CheckTryParseSucceedForDigest( string input , string scheme )
         {
-            Assert.IsTrue( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsTrue( AuthenticateRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNotNull( header );
             Assert.AreEqual( scheme , header.Scheme );
             Assert.AreEqual( "my realm" , header.Realm );
@@ -67,14 +67,14 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "digest " )]
         public void CheckTryParseFailed( string input  )
         {
-            Assert.IsFalse( WWWAuthenticateRtspHeaderValue.TryParse( input , out var header ) );
+            Assert.IsFalse( AuthenticateRtspHeaderValue.TryParse( input , out var header ) );
             Assert.IsNull( header );
         }
 
         [Test]
         public void CheckToString()
         {
-            var header = new WWWAuthenticateRtspHeaderValue();
+            var header = new AuthenticateRtspHeaderValue();
 
             Assert.AreEqual( "" , header.ToString() );
 

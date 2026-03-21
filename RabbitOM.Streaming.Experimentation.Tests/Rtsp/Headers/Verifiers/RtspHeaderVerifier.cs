@@ -7,11 +7,12 @@ using System.Reflection;
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using System.CodeDom;
 
     [TestFixture]
     public class RtspHeaderVerifier
     {
-        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( WWWAuthenticateRtspHeaderValue ) );
+        private readonly static Assembly CurrentAssembly = Assembly.GetAssembly( typeof( AuthenticateRtspHeaderValue ) );
 
         private readonly static HashSet<string> ExceptedCases = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
@@ -63,6 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
             "Accept",
             "Accept-Encoding",
             "Accept-Language",
+            "Accept-Ranges",
 
             "Bandwidth",
             "Blocksize",
@@ -72,10 +74,13 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 
             "Unsupported",
             "Conference",
+            "If-Match",
             "If-Modified-Since",
             "Last-Modified",
             "Content-Range",
-            "Content-Disposition"
+            "Content-Disposition",
+            "Max-Forwards",
+            "Media-Duration",
         };
 
         [Test]
@@ -87,18 +92,23 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
                 
                 var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeaderValue";
 
-                if ( type.Name == typeNameValue )
+                Assert.IsTrue( OfficialHeaderNames.Contains( typeNameField.GetValue( null ) as string ) );
+
+                if ( typeNameValue == type.Name )
                 {
                     continue;
                 }
 
-                if ( ExceptedCases.Contains( type.Name ) && ExceptedCases.Contains( typeNameValue ) )
+                if ( ExceptedCases.Contains( typeNameValue ) && ExceptedCases.Contains( type.Name ) )
                 {
                     continue;
                 }
-                
-                Assert.IsTrue( OfficialHeaderNames.Contains( typeNameField.GetValue( null ) as string ) );
-                
+
+                if ( typeNameValue.StartsWith( "WWW") && typeNameValue.Replace("WWW" , "" ) == type.Name )
+                {
+                    continue;
+                }
+                                
                 Assert.Fail( $"TypeName static member has bad name: {type.Name}" , type.Name , typeNameField.GetValue( null ) );
             }
         }

@@ -51,7 +51,7 @@
     <Compile Include="Rtsp\Headers\Adapters\TrimValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Adapters\TrimWithUnQuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\AllowRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\AuthenticateRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AuthorizationRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\BandwidthRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\BlockSizeRtspHeaderValue.cs" />

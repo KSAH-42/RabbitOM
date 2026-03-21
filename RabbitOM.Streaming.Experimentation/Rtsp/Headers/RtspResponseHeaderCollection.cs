@@ -40,6 +40,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public ViaRtspHeaderValue Via { get; set; }
 
-        public WWWAuthenticateRtspHeaderValue Authenticate { get; set; }
+        public AuthenticateRtspHeaderValue Authenticate { get; set; }
     }
 }
