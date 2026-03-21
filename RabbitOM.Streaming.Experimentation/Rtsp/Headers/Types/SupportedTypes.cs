@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
@@ -27,6 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             "application/parameters" ,
             "application/binary" ,
             "application/octet-stream",
+            "application/x-rtsp-tunnelled",
             "text" ,
             "text/sdp" ,
             "text/xml" ,
