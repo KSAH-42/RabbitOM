@@ -6,6 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
     
+    // TODO: remove setter, make it as immutable type
     public sealed class WarningInfo
     {
         public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
