@@ -7,7 +7,6 @@ using System.Reflection;
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using System.CodeDom;
 
     [TestFixture]
     public class RtspHeaderVerifier
@@ -90,6 +89,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
             {
                 var typeNameField = type.GetField( "TypeName" , BindingFlags.Public | BindingFlags.Static );
                 
+                Assert.IsTrue( typeNameField.IsInitOnly );
+
                 var typeNameValue = (typeNameField.GetValue( null ) as string).Replace( "-" , "" ) + "RtspHeaderValue";
 
                 Assert.IsTrue( OfficialHeaderNames.Contains( typeNameField.GetValue( null ) as string ) );
