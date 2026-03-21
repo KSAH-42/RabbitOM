@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: and extension method for methods to accept string instead of RtspHeaderValue when adding value on the collection
-    public interface IHeaderCollection : ICollection , IReadOnlyHeaderCollection
+    public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IReadOnlyHeaderCollection
     {
         void Add( string name , RtspHeaderValue value ); // should be a virtual method
         
