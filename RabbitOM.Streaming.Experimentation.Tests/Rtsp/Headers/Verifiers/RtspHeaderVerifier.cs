@@ -80,7 +80,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
             "Content-Disposition",
             "Max-Forwards",
             "Media-Duration",
-            "Warning"
         };
 
         [Test]
