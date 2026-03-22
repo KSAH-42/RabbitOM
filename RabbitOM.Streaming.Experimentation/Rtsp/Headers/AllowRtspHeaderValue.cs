@@ -4,9 +4,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+
     public sealed class AllowRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "Allow";
+
+        public readonly static StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
         private readonly HashSet<RtspMethod> _methods = new HashSet<RtspMethod>();
 
@@ -20,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach( var token in tokens )
                 {
-                    if ( RtspMethod.TryParse( token , out var method ) )
+                    if ( RtspMethod.TryParse( ValueAdapter.Adapt( token ) , out var method ) )
                     {
                         header.AddMethod( method );
                     }

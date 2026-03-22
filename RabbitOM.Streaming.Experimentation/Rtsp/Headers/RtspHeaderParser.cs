@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     insideQuotes = ! insideQuotes;
                 }
-                else
+                //else
                 {
                     builder.Append( element );
                 }

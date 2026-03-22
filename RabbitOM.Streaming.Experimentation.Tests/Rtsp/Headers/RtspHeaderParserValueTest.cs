@@ -24,15 +24,15 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "pear" , tokens[2] );
         }
 
-        [TestCase("apple 'banana     with     chocolat' pear" , " " )]
-        [TestCase("apple \"banana     with     chocolat\" pear" , " " )]
-        [TestCase("apple 'banana     with     chocolat\" pear" , " " )]
-        public void CheckTryParse1( string input , string seperator )
+        [TestCase("apple 'banana     with     chocolat' pear" , " " , '\'' , '\'' )]
+        [TestCase("apple \"banana     with     chocolat\" pear" , " " , '\"' , '\"' )]
+        [TestCase("apple 'banana     with     chocolat\" pear" , " " , '\'' , '\"' )]
+        public void CheckTryParse1( string input , string seperator , char startQuote , char endQuote )
         {
             Assert.True( RtspHeaderParser.TryParse( input , seperator , out string[] tokens ) );
             Assert.AreEqual( 3 , tokens.Length );
             Assert.AreEqual( "apple" , tokens[0] );
-            Assert.AreEqual( "banana     with     chocolat" , tokens[1] );
+            Assert.AreEqual( $"{startQuote}banana     with     chocolat{endQuote}" , tokens[1] );
             Assert.AreEqual( "pear" , tokens[2] );
         }
 
@@ -46,19 +46,19 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( "pear" , tokens[2] );
         }
 
-        [TestCase("apple 'banana with chocolat' pear" , " " )]
-        [TestCase("apple ' banana with chocolat ' pear" , " " )]
-        [TestCase("apple \"banana with chocolat\" pear" , " " )]
-        [TestCase("apple 'banana with chocolat\" pear" , " " )]
-        [TestCase("apple \"banana with chocolat' pear" , " " )]
-        [TestCase("apple     \"banana with chocolat'        pear" , " " )]
-        [TestCase(" apple     \"banana with chocolat'        pear" , " " )]
-        public void CheckTryParse3( string input , string seperator )
+        [TestCase("apple 'banana with chocolat' pear" , " " , "\'" , "\'" )]
+        [TestCase("apple ' banana with chocolat ' pear" , " " , "\' " , " \'" )]
+        [TestCase("apple \"banana with chocolat\" pear" , " " , "\"" , "\"" )]
+        [TestCase("apple 'banana with chocolat\" pear" , " " , "\'" , "\"" )]
+        [TestCase("apple \"banana with chocolat' pear" , " " , "\"" , "\'" )]
+        [TestCase("apple     \"banana with chocolat'        pear" , " " , "\"" , "\'" )]
+        [TestCase(" apple     \"banana with chocolat'        pear" , " " , "\"" , "\'" )]
+        public void CheckTryParse3( string input , string seperator , string startQuote , string endQuote )
         {
             Assert.True( RtspHeaderParser.TryParse( input , seperator , out string[] tokens ) );
             Assert.AreEqual( 3 , tokens.Length );
             Assert.AreEqual( "apple" , tokens[0] );
-            Assert.AreEqual( "banana with chocolat" , tokens[1] );
+            Assert.AreEqual( $"{startQuote}banana with chocolat{endQuote}" , tokens[1] );
             Assert.AreEqual( "pear" , tokens[2] );
         }
 
@@ -68,7 +68,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.True( RtspHeaderParser.TryParse( input , seperator , out string[] tokens ) );
             Assert.AreEqual( 3 , tokens.Length );
             Assert.AreEqual( "apple" , tokens[0] );
-            Assert.AreEqual( "bananamy seperatorwith chocolat" , tokens[1] );
+            Assert.AreEqual( "'bananamy seperatorwith chocolat'" , tokens[1] );
             Assert.AreEqual( "pear" , tokens[2] );
         }
         

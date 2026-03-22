@@ -80,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             foreach ( var element in value )
             {
-                if ( ! IsValidChar( element ) || QuotesChars.Contains( element ) )
+                if ( ! IsValidChar( element ) /*|| QuotesChars.Contains( element )*/ )
                 {
                     return false;
                 }

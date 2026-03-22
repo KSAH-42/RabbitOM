@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( "1 my-agent1" , 1 ) ]
         [TestCase( "1 my-agent1 , 2 my-agent2" , 2 ) ]
         [TestCase( "1 my-agent1 , 2 my-agent2, 3 my-agent3" , 3 ) ]
-        // TODO: to fix: [TestCase( "1 my-agent1 , 2 my-agent2 'my comment', 3 my-agent3" , 3 ) ]
+        [TestCase( "1 my-agent1 , 2 my-agent2 'my comment', 3 my-agent3" , 3 ) ]
         
         public void CheckTryParseSucceed( string input , int count )
         {

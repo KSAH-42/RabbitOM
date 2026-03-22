@@ -3,10 +3,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+
     public struct ValueRange : IEquatable<ValueRange>
     {
-
         public static readonly ValueRange Zero = new ValueRange( 0 , 0 );
+
+        public readonly static StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
 
 
 
@@ -63,14 +66,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = default;
 
+            // TODO: add a new adapter that replace all quotes, not trim quotes, but before to check if it is possible to remove adapter when using the parser to retrive a key value pair, perhaps a new type called property and some static methods for filter or even make any comparisions between name and value
+
             if ( RtspHeaderParser.TryParse( input , "-" , out string[] tokens ) )
             {
-                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var minimum ) )
+                if ( ! int.TryParse( ValueAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) , out var minimum ) )
                 {
                     return false;
                 }
 
-                if ( ! int.TryParse( tokens.ElementAtOrDefault( 1 ) , out var maximum ) )
+                if ( ! int.TryParse( ValueAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) , out var maximum ) )
                 {
                     return false;
                 }
