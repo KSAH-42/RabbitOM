@@ -8,11 +8,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
     public sealed class WarningInfo : RtspHeaderValue
     {
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
                     
 
         
+        public WarningInfo( int code , string agent )
+            : this( code , agent , null )
+        {
+        }
+
         public WarningInfo( int code , string agent , string comment )
         {
             if ( ! RtspHeaderProtocolValidator.IsValidWarningCode( code ) )
