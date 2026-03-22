@@ -230,9 +230,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryGetValues( string key , out RtspHeaderValue[] result )
         {
-            result = _items.TryGetValue( key ?? string.Empty , out var values )
-                ? values.ToArray()
-                : null;
+            result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.ToArray() : null;
 
             return result != null;
         }
