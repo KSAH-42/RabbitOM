@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -11,12 +10,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "Warning";
 
 
-        private readonly HashSet<WarningInfo> _warnings = new HashSet<WarningInfo>();
+        private readonly HashSet<WarningInfo> _infos = new HashSet<WarningInfo>();
                 
 
-        public IReadOnlyCollection<WarningInfo> Warnings
+        public IReadOnlyCollection<WarningInfo> Infos
         {
-            get => _warnings;
+            get => _infos;
         }
         
         public static bool TryParse( string input , out WarningRtspHeaderValue result )
@@ -31,11 +30,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     if ( WarningInfo.TryParse( token , out var warning ) )
                     {
-                        header.AddWarning( warning );
+                        header.AddInfo( warning );
                     }
                 }
 
-                if ( header.Warnings.Count > 0 )
+                if ( header.Infos.Count > 0 )
                 {
                     result = header;
                 }
@@ -44,29 +43,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return result != null;
         }
 
-        public bool AddWarning( WarningInfo warning )
+        public bool AddInfo( WarningInfo warning )
         {
             if ( warning != null )
             {
-                return _warnings.Add( warning );
+                return _infos.Add( warning );
             }
 
             return false;
         }
 
-        public bool RemoveWarning( WarningInfo warning )
+        public bool RemoveInfo( WarningInfo warning )
         {
-            return _warnings.Remove( warning );
+            return _infos.Remove( warning );
         }
 
-        public void RemoveWarnings()
+        public void RemoveInfos()
         {
-            _warnings.Clear();
+            _infos.Clear();
         }
 
         public override string ToString()
         {
-            return string.Join( ", " , _warnings );
+            return string.Join( ", " , _infos );
         }
     }
 }

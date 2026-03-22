@@ -21,12 +21,12 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             }
             
             Assert.IsNotNull( header , "the header can not by null" );
-            Assert.Greater( header.Warnings.Count , 0 );
-            Assert.AreEqual( count , header.Warnings.Count );
+            Assert.Greater( header.Infos.Count , 0 );
+            Assert.AreEqual( count , header.Infos.Count );
 
-            for ( int i = 1 ; i <= header.Warnings.Count; ++ i )
+            for ( int i = 1 ; i <= header.Infos.Count; ++ i )
             {
-                var warning = header.Warnings.ElementAt( i - 1 );
+                var warning = header.Infos.ElementAt( i - 1 );
 
                 Assert.AreEqual( i , warning.Code );
                 Assert.AreEqual( $"my-agent{i}" , warning.Agent );
