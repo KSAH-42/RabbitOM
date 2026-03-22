@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtcp.Serialization
 {
-    public static class RtcpSerializer
+    public static class RtcpDeserializer
     {
         public static RtcpPacket Deserialize( in ArraySegment<byte> buffer )
         {
