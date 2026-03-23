@@ -115,7 +115,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public static void AddEncoding( string value )
         {
-            ThrowIfBadString( value );
+            ThrowIfInvalid( value );
 
             lock ( s_lock )
             {
@@ -125,7 +125,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public static void AddTransmission( string value )
         {
-            ThrowIfBadString( value );
+            ThrowIfInvalid( value );
 
             lock ( s_lock )
             {
@@ -135,7 +135,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public static void AddTransport( string value )
         {
-            ThrowIfBadString( value );
+            ThrowIfInvalid( value );
 
             lock ( s_lock )
             {
@@ -145,7 +145,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public static void AddLanguage( string value )
         {
-            ThrowIfBadString( value );
+            ThrowIfInvalid( value );
 
             lock ( s_lock )
             {
@@ -153,7 +153,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
         }
 
-        private static void ThrowIfBadString( string value )
+        private static void ThrowIfInvalid( string value )
         {
             if ( value == null )
             {
