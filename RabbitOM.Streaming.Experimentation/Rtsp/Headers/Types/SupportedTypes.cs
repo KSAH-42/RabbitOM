@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public static class SupportedTypes
     {
-        private static readonly Lazy<IReadOnlyCollection<string>> s_encodings = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly object s_lock = new object();
+
+        private static readonly Lazy<HashSet<string>> s_encodings = new Lazy<HashSet<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "zip",
             "tar",
@@ -19,22 +20,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             "*",
         });
         
-        private static readonly Lazy<IReadOnlyCollection<string>> s_mimes = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<HashSet<string>> s_mimes = new Lazy<HashSet<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "application/sdp",
-            "application/text" ,
+            "application/value" ,
             "application/xml" ,
             "application/json" ,
             "application/parameters" ,
             "application/binary" ,
             "application/octet-stream",
             "application/x-rtsp-tunnelled",
-            "text" ,
-            "text/sdp" ,
-            "text/xml" ,
-            "text/json" ,
-            "text/plain" ,
-            "text/parameters" ,
+            "value" ,
+            "value/sdp" ,
+            "value/xml" ,
+            "value/json" ,
+            "value/plain" ,
+            "value/parameters" ,
             "image" ,
             "image/jpeg" ,
             "image/bmp" ,
@@ -47,20 +48,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             "binary" ,
         });
         
-        private static readonly Lazy<IReadOnlyCollection<string>> s_languages = new Lazy<IReadOnlyCollection<string>>( () =>
+        private static readonly Lazy<HashSet<string>> s_languages = new Lazy<HashSet<string>>( () =>
         {
             var languages = CultureInfo.GetCultures( CultureTypes.AllCultures ).Select( culture => culture.Name );
 
             return new HashSet<string>( languages , StringComparer.OrdinalIgnoreCase );
         });
 
-        private static readonly Lazy<IReadOnlyCollection<string>> s_transmissions = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<HashSet<string>> s_transmissions = new Lazy<HashSet<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "unicast",
             "multicast",
         });
 
-        private static readonly Lazy<IReadOnlyCollection<string>> s_transports = new Lazy<IReadOnlyCollection<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
+        private static readonly Lazy<HashSet<string>> s_transports = new Lazy<HashSet<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
             "RTP",
             "RTP/AVP",
@@ -104,5 +105,63 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public static IReadOnlyCollection<string> Transmissions { get => s_transmissions.Value; }
 
         public static IReadOnlyCollection<string> Transports { get => s_transports.Value; }
+
+
+
+
+
+
+        public static void AddEncoding( string value )
+        {
+            ThrowIfBadString( value );
+
+            lock ( s_lock )
+            {
+                s_encodings.Value.Add( value );
+            }
+        }
+
+        public static void AddTransmission( string value )
+        {
+            ThrowIfBadString( value );
+
+            lock ( s_lock )
+            {
+                s_transmissions.Value.Add( value );
+            }
+        }
+
+        public static void AddTransport( string value )
+        {
+            ThrowIfBadString( value );
+
+            lock ( s_lock )
+            {
+                s_transports.Value.Add( value );
+            }
+        }
+
+        public static void AddLanguage( string value )
+        {
+            ThrowIfBadString( value );
+
+            lock ( s_lock )
+            {
+                s_languages.Value.Add( value );
+            }
+        }
+
+        private static void ThrowIfBadString( string value )
+        {
+            if ( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+        }
     }
 }
