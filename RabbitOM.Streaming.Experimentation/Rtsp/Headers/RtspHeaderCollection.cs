@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -101,6 +102,33 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 _current = default;
             }
         }
+
+
+
+
+
+
+        public static List<KeyValuePair<string,RtspHeaderValue>> EnumerateValues( RtspHeaderCollection collection )
+        {
+            if ( collection == null )
+            {
+                throw new ArgumentNullException( nameof( collection ) );
+            }
+
+            var headers = new List<KeyValuePair<string,RtspHeaderValue>>();
+
+            foreach ( var header in collection )
+            {
+                foreach ( var value in header.Value )
+                {
+                    headers.Add( new KeyValuePair<string, RtspHeaderValue>( header.Key , value ) );
+                }
+            }
+
+            return headers;
+        }
+
+
 
 
 
