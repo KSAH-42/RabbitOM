@@ -6,6 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters
     {
         public static StringValueAdapter TrimAdapter { get; } = new TrimValueAdapter();
         public static StringValueAdapter TrimWithUnQuoteAdapter { get; } = new TrimWithUnQuoteValueAdapter();
+        public static StringValueAdapter TrimWithSuppressQuoteAdapter { get; } = new TrimWithSuppressQuoteValueAdapter();
         public static StringValueAdapter QuoteAdapter { get; } = new QuoteValueAdapter();
 
 

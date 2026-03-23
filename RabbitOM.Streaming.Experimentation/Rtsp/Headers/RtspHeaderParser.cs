@@ -20,9 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            result = new KeyValuePair<string, string>( 
-                StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 0 ) ) , 
-                StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( tokens.ElementAtOrDefault( 1 ) ) );
+            result = new KeyValuePair<string, string>( tokens.ElementAtOrDefault( 0 ) , tokens.ElementAtOrDefault( 1 ) );
 
             return true;
         }
@@ -54,10 +52,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     insideQuotes = ! insideQuotes;
                 }
-                //else
-                {
-                    builder.Append( element );
-                }
+                
+                builder.Append( element );
 
                 if ( ! insideQuotes )
                 {

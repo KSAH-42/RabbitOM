@@ -62,11 +62,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     {
                         if ( ValueComparer.Equals( "url" , parameter.Key ) )
                         {
-                            url = parameter.Value;
+                            url = ValueAdapter.Adapt( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
-                            ssrc = parameter.Value;
+                            ssrc = ValueAdapter.Adapt( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
                         {
