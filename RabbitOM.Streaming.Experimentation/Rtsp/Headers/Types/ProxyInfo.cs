@@ -10,6 +10,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
+
+
         public ProxyInfo( string protocol , string version , string receivedBy )
             : this ( protocol , version , receivedBy , null )
         {
@@ -50,6 +52,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
+
+
         public string Protocol { get; }
 
         public string Version { get; }
@@ -58,6 +62,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public string Comment { get; }
         
+
+
+
 
 
         public static bool TryParse( string input , out ProxyInfo result )
@@ -73,10 +80,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( matchResult.Success )
             {
-                if ( ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "protocol" ].Value ) || 
-                     ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "version" ].Value ) || 
-                     ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) ||
-                     ! RtspHeaderProtocolValidator.IsValidVersion( matchResult.Groups[ "version" ].Value ) )
+                if ( ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "protocol" ].Value ) )
+                {
+                    return false;
+                } 
+                
+                if ( ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "version" ].Value ) )
+                {
+                    return false;
+                }
+
+                if ( ! RtspHeaderProtocolValidator.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) )
+                {
+                    return false;
+                }
+
+                if ( ! RtspHeaderProtocolValidator.IsValidVersion( matchResult.Groups[ "version" ].Value ) )
                 {
                     return false;
                 }
@@ -91,6 +110,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             return result != null;
         }
+
+
+
 
 
 
