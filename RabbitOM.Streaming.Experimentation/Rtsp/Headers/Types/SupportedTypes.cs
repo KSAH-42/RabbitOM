@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
@@ -30,12 +31,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             "application/binary" ,
             "application/octet-stream",
             "application/x-rtsp-tunnelled",
-            "value" ,
-            "value/sdp" ,
-            "value/xml" ,
-            "value/json" ,
-            "value/plain" ,
-            "value/parameters" ,
+            "application/text",
+            "text" ,
+            "text/sdp" ,
+            "text/xml" ,
+            "text/json" ,
+            "text/plain" ,
+            "text/parameters" ,
             "image" ,
             "image/jpeg" ,
             "image/bmp" ,

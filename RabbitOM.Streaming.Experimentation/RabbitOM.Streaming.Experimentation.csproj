@@ -46,11 +46,8 @@
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AcceptRangesRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AcceptRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\Adapters\QuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Adapters\StringValueAdapter.cs" />
-    <Compile Include="Rtsp\Headers\Adapters\TrimValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Adapters\TrimWithSuppressQuoteValueAdapter.cs" />
-    <Compile Include="Rtsp\Headers\Adapters\UnQuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\Adapters\TrimWithUnQuoteValueAdapter.cs" />
     <Compile Include="Rtsp\Headers\AllowRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AuthenticateRtspHeaderValue.cs" />
