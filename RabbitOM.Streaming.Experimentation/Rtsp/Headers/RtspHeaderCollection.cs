@@ -190,7 +190,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveAt( string key , int index )
         {
-            if ( ! _items.TryGetValue( key ?? string.Empty , out var values ) )
+            key = key ?? string.Empty ;
+
+            if ( ! _items.TryGetValue( key , out var values ) )
             {
                 return false;
             }
@@ -201,6 +203,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             values.RemoveAt( index );
+
+            if ( values.Count == 0 )
+            {
+                _items.Remove( key );
+            }
 
             return true;
         }
