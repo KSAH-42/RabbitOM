@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
