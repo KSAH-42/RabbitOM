@@ -15,14 +15,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = default;
 
-            if ( ! TryParse( input , input?.Contains( separator ) == true ? separator : null , 2 , out string[] tokens ) )
+            if ( TryParse( input , input?.Contains( separator ) == true ? separator : null , 2 , out string[] tokens ) )
             {
-                return false;
+                result = new KeyValuePair<string, string>( tokens.ElementAtOrDefault( 0 ) , tokens.ElementAtOrDefault( 1 ) );
+                return true;
             }
 
-            result = new KeyValuePair<string, string>( tokens.ElementAtOrDefault( 0 ) , tokens.ElementAtOrDefault( 1 ) );
-
-            return true;
+            return false;
         }
         
         public static bool TryParse( string input , string separator , out string[] result )
