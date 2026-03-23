@@ -226,40 +226,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryGetValue( string key , out RtspHeaderValue result )
         {
-            result = null;
+            result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.FirstOrDefault() : null;
 
-            if ( ! _items.TryGetValue( key ?? string.Empty , out var values ) )
-            {
-                return false;
-            }
-
-            if ( values.Count <= 0 )
-            {
-                return false;
-            }
-            
-            result = values.First();
-
-            return true;
+            return result != null;
         }
 
         public bool TryGetValueAt( string key , int index , out RtspHeaderValue result )
         {
-            result = null;
+            result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.ElementAtOrDefault( index ) : null;
 
-            if ( ! _items.TryGetValue( key ?? string.Empty , out var values ) )
-            {
-                return false;
-            }
-
-            if ( index < 0 || index >= _items.Count )
-            {
-                return false;
-            }
-            
-            result = values.ElementAt( index );
-
-            return true;
+            return result != null;
         }
 
         public bool TryGetValues( string key , out RtspHeaderValue[] result )
