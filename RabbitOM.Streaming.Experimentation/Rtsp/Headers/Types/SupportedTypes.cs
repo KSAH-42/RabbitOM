@@ -101,6 +101,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
         }
 
+        public static void RemoveTransmission( string value )
+        {
+            lock ( s_lock )
+            {
+                s_transmissions.Value.Remove( value );
+            }
+        }
+
+        public static void RemoveTransmissions()
+        {
+            lock ( s_lock )
+            {
+                s_transmissions.Value.Clear();
+            }
+        }
+
         public static void AddTransport( string value )
         {
             ThrowIfInvalid( value );
@@ -111,6 +127,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
         }
 
+        public static void RemoveTransport( string value )
+        {
+            lock ( s_lock )
+            {
+                s_transports.Value.Remove( value );
+            }
+        }
+
+        public static void RemoveTransports()
+        {
+            lock ( s_lock )
+            {
+                s_transports.Value.Clear();
+            }
+        }
+
         public static void AddLanguage( string value )
         {
             ThrowIfInvalid( value );
@@ -118,6 +150,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             lock ( s_lock )
             {
                 s_languages.Value.Add( value );
+            }
+        }
+
+        public static void RemoveLanguage( string value )
+        {
+            lock ( s_lock )
+            {
+                s_languages.Value.Remove( value );
+            }
+        }
+
+        public static void RemoveLanguages()
+        {
+            lock ( s_lock )
+            {
+                s_languages.Value.Clear();
             }
         }
 

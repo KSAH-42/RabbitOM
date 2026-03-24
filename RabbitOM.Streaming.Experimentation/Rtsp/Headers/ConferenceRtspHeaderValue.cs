@@ -185,11 +185,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                                 header.Port = value;
                             }
                         }
-                        else if ( SupportedTypes.Transports.Contains( parameter.Key ) )
+                        else if ( RtspHeaderProtocolValidator.IsValidTransport( parameter.Key ) )
                         {
                             header.Transport = token;
                         }
-                        else if ( SupportedTypes.Transmissions.Contains( parameter.Key ) )
+                        else if ( RtspHeaderProtocolValidator.IsValidTransmission( parameter.Key ) )
                         {
                             header.Transmission = token;
                         }
@@ -200,11 +200,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                     else
                     {
-                        if ( SupportedTypes.Transports.Contains( token ) )
+                        if ( RtspHeaderProtocolValidator.IsValidTransport( token ) )
                         {
                             header.Transport = token;
                         }
-                        else if ( SupportedTypes.Transmissions.Contains( token ) )
+                        else if ( RtspHeaderProtocolValidator.IsValidTransmission( token ) )
                         {
                             header.Transmission = token;
                         }

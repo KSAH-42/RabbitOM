@@ -26,14 +26,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Version.TryParse( value , out _ );
         }
 
+        public static bool IsValidTransport( string value )
+        {
+            return SupportedTypes.Transports.Count == 0 || SupportedTypes.Transports.Contains( value );
+        }
+
+        public static bool IsValidTransmission( string value )
+        {
+            return SupportedTypes.Transmissions.Count == 0 || SupportedTypes.Transmissions.Contains( value );
+        }
+
         public static bool IsValidLanguage( string value )
         {
-            return SupportedTypes.Languages.Contains( value );
+            return SupportedTypes.Languages.Count == 0 || SupportedTypes.Languages.Contains( value );
         }
 
         public static bool IsValidEncoding( string value )
         {
-            return SupportedTypes.Encodings.Contains( value );
+            return SupportedTypes.Encodings.Count == 0 || SupportedTypes.Encodings.Contains( value );
         }
 
         public static bool IsValidUri( string value )
