@@ -10,6 +10,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static readonly string TypeName = "If-Modified-Since";
         
         public DateTime Value { get; set; }
+        
+        public static implicit operator IfModifiedSinceRtspHeaderValue( DateTime value )
+        {
+            return new IfModifiedSinceRtspHeaderValue() { Value = value };
+        }
 
         public override string ToString()
         {

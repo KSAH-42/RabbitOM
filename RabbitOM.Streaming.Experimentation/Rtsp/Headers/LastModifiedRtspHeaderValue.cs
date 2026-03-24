@@ -11,6 +11,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public DateTime Value { get; set; }
 
+        public static implicit operator LastModifiedRtspHeaderValue( DateTime value )
+        {
+            return new LastModifiedRtspHeaderValue() { Value = value };
+        }
+
         public static bool TryParse( string input , out LastModifiedRtspHeaderValue result )
         {
             result = DateTime.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 

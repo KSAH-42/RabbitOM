@@ -10,6 +10,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         /// <remarks>
         ///     <para> setter is allowed in case that CSeq value can not be parsed </para>
         /// </remarks>
+        
+        // TODO: remove class CSeqRtspHeaderValue and nullable ushort, and not ushort directly, we don't know if the value has been set
+
         public CSeqRtspHeaderValue CSeq
         {
             get => GetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName );

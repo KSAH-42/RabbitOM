@@ -11,6 +11,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public DateTime Value { get; set; }
 
+        public static implicit operator ExpiresRtspHeaderValue( DateTime value )
+        {
+            return new ExpiresRtspHeaderValue() { Value = value };
+        }
+
         public static bool TryParse( string input , out ExpiresRtspHeaderValue result )
         {
             result = DateTime.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var value ) 

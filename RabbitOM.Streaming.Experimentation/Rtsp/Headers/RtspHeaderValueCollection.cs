@@ -79,60 +79,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public bool ContainsKey( string key )
-        {
-            return _items.ContainsKey( key ?? string.Empty );
-        }
-
-        public void Add( string key , RtspHeaderValue value )
-        {
-            if ( string.IsNullOrWhiteSpace( key ) )
-            {
-                throw new ArgumentException( nameof( key ) );
-            }
-
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            GetOrCreateHeaderValueList(key).Add( value );
-        }
-
-        public bool Remove( string key )
-        {
-            return _items.Remove( key ?? string.Empty );
-        }
-
-        public bool RemoveAt( string key , int index )
-        {
-            key = key ?? string.Empty ;
-
-            if ( ! _items.TryGetValue( key , out var values ) )
-            {
-                return false;
-            }
-
-            if ( index < 0 || index >= values.Count )
-            {
-                return false;
-            }
-
-            values.RemoveAt( index );
-
-            if ( values.Count == 0 )
-            {
-                _items.Remove( key );
-            }
-
-            return true;
-        }
-
-        public void Clear()
-        {
-            _items.Clear();
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return new Enumerator( this );
@@ -210,6 +156,60 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             headers.Add( value );
+        }
+
+        public bool ContainsKey( string key )
+        {
+            return _items.ContainsKey( key ?? string.Empty );
+        }
+
+        public void Add( string key , RtspHeaderValue value )
+        {
+            if ( string.IsNullOrWhiteSpace( key ) )
+            {
+                throw new ArgumentException( nameof( key ) );
+            }
+
+            if ( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            GetOrCreateHeaderValueList(key).Add( value );
+        }
+
+        public bool Remove( string key )
+        {
+            return _items.Remove( key ?? string.Empty );
+        }
+
+        public bool RemoveAt( string key , int index )
+        {
+            key = key ?? string.Empty ;
+
+            if ( ! _items.TryGetValue( key , out var values ) )
+            {
+                return false;
+            }
+
+            if ( index < 0 || index >= values.Count )
+            {
+                return false;
+            }
+
+            values.RemoveAt( index );
+
+            if ( values.Count == 0 )
+            {
+                _items.Remove( key );
+            }
+
+            return true;
+        }
+
+        public void Clear()
+        {
+            _items.Clear();
         }
 
         public void CopyTo( Array array , int index )
