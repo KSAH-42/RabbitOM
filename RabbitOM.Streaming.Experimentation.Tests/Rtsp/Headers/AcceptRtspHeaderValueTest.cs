@@ -33,8 +33,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
         [TestCase( ",,,," )]
         [TestCase( " , , , , " )]
         [TestCase( " ;, ;, ;=,;q=1, " )]
-        [TestCase( "application/strange" )]
-        [TestCase( "application/strange; q=z" )]
+        [TestCase( "appl ication/text" )]
+        [TestCase( " appl ication/text " )]
         public void CheckTryParseFailed( string input )
         {
             if ( AcceptRtspHeaderValue.TryParse( input , out var header ) )
@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
                 Assert.Fail( "parse must failed" );
             }
 
-            Assert.IsNull( header , "the header be null null" );
+            Assert.IsNull( header , "the header be null" );
         }
 
         [Test]
@@ -75,9 +75,6 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
             Assert.AreEqual( 1 , header.Mimes.Count );
 
             Assert.IsFalse( header.AddMime( "application/text" ) );
-            Assert.AreEqual( 1 , header.Mimes.Count );
-
-            Assert.IsFalse( header.AddMime( "application/bizar" ) );
             Assert.AreEqual( 1 , header.Mimes.Count );
 
             Assert.IsTrue( header.AddMime( "application/json" ) );

@@ -19,36 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             "br",
             "*",
         });
-        
-        private static readonly Lazy<HashSet<string>> s_mimes = new Lazy<HashSet<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
-        {
-            "application/sdp",
-            "application/value" ,
-            "application/xml" ,
-            "application/json" ,
-            "application/parameters" ,
-            "application/binary" ,
-            "application/octet-stream",
-            "application/x-rtsp-tunnelled",
-            "application/text",
-            "text" ,
-            "text/sdp" ,
-            "text/xml" ,
-            "text/json" ,
-            "text/plain" ,
-            "text/parameters" ,
-            "image" ,
-            "image/jpeg" ,
-            "image/bmp" ,
-            "image/bitmap" ,
-            "video" ,
-            "audio" ,
-            "sdp" ,
-            "xml" ,
-            "json" ,
-            "binary" ,
-        });
-        
+                
         private static readonly Lazy<HashSet<string>> s_languages = new Lazy<HashSet<string>>( () =>
         {
             var languages = CultureInfo.GetCultures( CultureTypes.AllCultures ).Select( culture => culture.Name );
@@ -98,8 +69,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
         public static IReadOnlyCollection<string> Encodings { get => s_encodings.Value; }
-
-        public static IReadOnlyCollection<string> Mimes { get => s_mimes.Value; }
 
         public static IReadOnlyCollection<string> Languages { get => s_languages.Value; }
 

@@ -26,11 +26,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return Version.TryParse( value , out _ );
         }
 
-        public static bool IsValidMime( string value )
-        {
-            return SupportedTypes.Mimes.Contains( value );
-        }
-
         public static bool IsValidLanguage( string value )
         {
             return SupportedTypes.Languages.Contains( value );
@@ -69,6 +64,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return true;
         }
 
+        public static bool IsValidMime( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            var succeed = false;
+
+            foreach ( var element in value )
+            {
+                if ( ! IsValidChar( element ) || QuotesChars.Contains( element ) || element == ' ' )
+                {
+                    return false;
+                }
+
+                succeed |= char.IsLetterOrDigit( element ) || element == '*' ;
+            }
+
+            return succeed;
+        }
+
         public static bool IsValidToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
@@ -80,7 +97,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             foreach ( var element in value )
             {
-                if ( ! IsValidChar( element ) /*|| QuotesChars.Contains( element )*/ )
+                if ( ! IsValidChar( element ) )
                 {
                     return false;
                 }
