@@ -13,6 +13,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         string[] AllKeys { get; }
 
 
+
+        void SetValue<TValue>( string key , TValue value ) where TValue : RtspHeaderValue;
+        TValue GetValue<TValue>( string name ) where TValue : RtspHeaderValue;
+        TValue GetValue<TValue>( string name , Func<TValue> factory ) where TValue : RtspHeaderValue;
         RtspHeaderValue[] GetValues( string name );
         bool ContainsKey( string name );
         bool TryGetValue( string name , out RtspHeaderValue value );

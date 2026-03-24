@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -10,9 +11,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public class RtspHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IHeaderCollection , IReadOnlyHeaderCollection
     {
         private readonly Dictionary<string,List<RtspHeaderValue>> _items = new Dictionary<string, List<RtspHeaderValue>>( StringComparer.OrdinalIgnoreCase );
-
-
         
+
+
+
 
         public RtspHeaderValue[] this[string key] 
         { 
@@ -23,6 +25,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _items[ key ].ElementAt( index );
         }
+        
+
 
 
 
@@ -50,6 +54,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => false;
         }
+        
+
 
 
 
@@ -106,14 +112,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
         public static List<KeyValuePair<string,RtspHeaderValue>> EnumerateValues( RtspHeaderCollection collection )
         {
             if ( collection == null )
             {
                 throw new ArgumentNullException( nameof( collection ) );
             }
-
+            
             var headers = new List<KeyValuePair<string,RtspHeaderValue>>();
 
             foreach ( var header in collection )
@@ -135,11 +140,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string key , RtspHeaderValue value )
         {
-            if ( key == null )
-            {
-                throw new ArgumentNullException( nameof( key ) );
-            }
-
             if ( string.IsNullOrWhiteSpace( key ) )
             {
                 throw new ArgumentException( nameof( key ) );
@@ -176,6 +176,64 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public IEnumerator<KeyValuePair<string , RtspHeaderValue[]>> GetEnumerator()
         {
             return new Enumerator( this );
+        }
+
+        public void SetValue<TValue>( string key , TValue value ) where TValue : RtspHeaderValue
+        {
+            if ( string.IsNullOrWhiteSpace( key ) )
+            {
+                throw new ArgumentException( nameof( key ) );
+            }
+
+            if ( value == null )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            var headers = GetOrCreateHeaderValueList(key);
+
+            if ( headers.Count > 0 )
+            {
+                headers.RemoveAt( 0 );
+            }
+
+            headers.Add( value );
+        }
+
+        public TValue GetValue<TValue>( string name ) where TValue : RtspHeaderValue
+        {
+            return TryGetValueAt( name , 0 , out var result ) ? result as TValue: null;
+        }
+
+        public TValue GetValue<TValue>( string name , Func<TValue> factory ) where TValue : RtspHeaderValue
+        {
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentException( nameof( factory ) );
+            }
+
+            if ( factory == null )
+            {
+                throw new ArgumentNullException( nameof( factory ) );
+            }
+
+            TValue value = _items.TryGetValue( name , out var result ) ? result as TValue : null;
+                
+            if ( value == null )
+            {
+                value = factory() ?? throw new InvalidOperationException( "the factory produce a null instance" );
+
+                var headers = GetOrCreateHeaderValueList(name);
+
+                if ( headers.Count > 0 )
+                {
+                    headers.RemoveAt( 0 );
+                }
+
+                headers.Add( value );
+            }
+
+            return value;
         }
 
         public RtspHeaderValue[] GetValues( string name )
@@ -246,7 +304,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
         // TODO: implement this method
-        public bool TryParseWithAdd( string input )
+        public virtual bool TryParseWithAdd( string input )
         {
             throw new NotImplementedException();
         }
