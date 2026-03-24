@@ -8,7 +8,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "CSeq";
 
+        public CSeqRtspHeaderValue() { }
+        public CSeqRtspHeaderValue(uint value ) => Value = value;
+
         public uint Value { get; set; }
+
+        public static implicit operator CSeqRtspHeaderValue( uint value )
+        {
+            return new CSeqRtspHeaderValue( value );
+        }
 
         public static bool TryParse( string input , out CSeqRtspHeaderValue result )
         {
