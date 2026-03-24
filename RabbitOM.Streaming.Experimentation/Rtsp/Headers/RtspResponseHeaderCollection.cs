@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class RtspResponseHeaderCollection : RtspHeaderCollection
+    public sealed class RtspResponseHeaderCollection : RtspHeaderCollection
     {
         /// <summary>
         /// Gets / Sets the command sequence

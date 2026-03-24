@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class RtspRequestHeaderCollection : RtspHeaderCollection
+    public sealed class RtspRequestHeaderCollection : RtspHeaderCollection
     {
         /// <summary>
         /// Gets / Sets the command sequence
