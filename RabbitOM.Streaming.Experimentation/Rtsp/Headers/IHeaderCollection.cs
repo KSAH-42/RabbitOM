@@ -12,6 +12,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         bool RemoveAt( string name , int index );
         bool TryAdd( string name , string value );
         bool TryAdd( string name , RtspHeaderValue value );
-        bool TryParseWithAdd( string input );
     }
 }

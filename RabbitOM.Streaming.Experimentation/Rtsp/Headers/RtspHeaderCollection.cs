@@ -6,7 +6,6 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: adding unit tests
-
     public class RtspHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IHeaderCollection , IReadOnlyHeaderCollection
     {
         private readonly Dictionary<string,List<RtspHeaderValue>> _items = new Dictionary<string, List<RtspHeaderValue>>( StringComparer.OrdinalIgnoreCase );
@@ -328,12 +327,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.ToArray() : null;
 
             return result != null;
-        }
-
-        // TODO: implement this method
-        public virtual bool TryParseWithAdd( string input )
-        {
-            throw new NotImplementedException();
         }
 
 
