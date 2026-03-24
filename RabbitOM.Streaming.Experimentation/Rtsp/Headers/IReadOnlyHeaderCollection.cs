@@ -11,6 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         string[] AllKeys { get; }
+        bool IsEmpty { get; }
 
 
 

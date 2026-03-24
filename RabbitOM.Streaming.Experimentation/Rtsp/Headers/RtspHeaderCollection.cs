@@ -39,6 +39,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _collection.AllKeys;
         }
+
+        public bool IsEmpty
+        {
+            get => _collection.IsEmpty;
+        }
         
         public bool IsReadOnly
         {
