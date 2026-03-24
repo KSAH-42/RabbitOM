@@ -4,11 +4,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public class RtspResponseHeaderCollection : RtspHeaderCollection
     {
-        public CSeqRtspHeaderValue CSeq
-        {
-            get => GetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName , () => new CSeqRtspHeaderValue() );
-        }
-
         public AllowRtspHeaderValue Allow
         {
             get => GetValue<AllowRtspHeaderValue>( AllowRtspHeaderValue.TypeName );
@@ -49,6 +44,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => GetValue<ContentRangeRtspHeaderValue>( ContentRangeRtspHeaderValue.TypeName );
             set => SetValue<ContentRangeRtspHeaderValue>( ContentRangeRtspHeaderValue.TypeName , value );
+        }
+        
+        public CSeqRtspHeaderValue CSeq
+        {
+            get => GetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName );
+            set => SetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName , value );
         }
         
         public DateRtspHeaderValue Date

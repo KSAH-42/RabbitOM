@@ -137,6 +137,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public void Add( string key , string value )
+        {
+            if ( string.IsNullOrWhiteSpace( key ) )
+            {
+                throw new ArgumentException( nameof( key ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            GetOrCreateHeaderValueList(key).Add( new StringRtspHeaderValue( value ) );
+        }
+
         public void Add( string key , RtspHeaderValue value )
         {
             if ( string.IsNullOrWhiteSpace( key ) )
@@ -266,6 +281,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 _items.Remove( key );
             }
+
+            return true;
+        }
+
+        public bool TryAdd( string key , string value )
+        {
+            if ( string.IsNullOrWhiteSpace( key ) || string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            GetOrCreateHeaderValueList(key).Add( new StringRtspHeaderValue( value ) );
 
             return true;
         }

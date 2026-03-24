@@ -83,6 +83,7 @@
     <Compile Include="Rtsp\Headers\ScaleRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\StringRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\StringWithQualityRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfo.cs" />

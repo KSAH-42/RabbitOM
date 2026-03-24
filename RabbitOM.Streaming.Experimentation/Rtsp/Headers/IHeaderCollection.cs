@@ -4,18 +4,14 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: and extension method for methods to accept string instead of RtspHeaderValue when adding value on the collection
     public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IReadOnlyHeaderCollection
     {
-        void Add( string name , RtspHeaderValue value ); // should be a virtual method
-        
-        // TODO: TO AVOID REMOVING CSeq include void Clear() methods
-
-        bool Remove( string name ); // TODO: should be a virtual method TO AVOID REMOVING CSeq
-        bool RemoveAt( string name , int index ); // TODO: should be a virtual method TO AVOID REMOVING CSeq
-
-
-        bool TryAdd( string name , RtspHeaderValue value ); // TODO: should be a virtual method
-        bool TryParseWithAdd( string input ); // TODO: should be a virtual method
+        void Add( string name , string value );
+        void Add( string name , RtspHeaderValue value );
+        bool Remove( string name );
+        bool RemoveAt( string name , int index );
+        bool TryAdd( string name , string value );
+        bool TryAdd( string name , RtspHeaderValue value );
+        bool TryParseWithAdd( string input );
     }
 }
