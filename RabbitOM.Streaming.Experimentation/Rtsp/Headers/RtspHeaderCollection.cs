@@ -177,19 +177,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return new Enumerator( this );
         }
 
-        public void SetValue<TValue>( string key , TValue value ) where TValue : RtspHeaderValue
+        public void SetValue<TValue>( string name , TValue value ) where TValue : RtspHeaderValue
         {
-            if ( string.IsNullOrWhiteSpace( key ) )
+            if ( string.IsNullOrWhiteSpace( name ) )
             {
-                throw new ArgumentException( nameof( key ) );
+                throw new ArgumentException( nameof( name ) );
             }
+
+            var headers = GetOrCreateHeaderValueList( name );
 
             if ( value == null )
             {
-                throw new ArgumentNullException( nameof( value ) );
+                _items.Remove( name );
+                return;
             }
-
-            var headers = GetOrCreateHeaderValueList(key);
 
             if ( headers.Count > 0 )
             {
