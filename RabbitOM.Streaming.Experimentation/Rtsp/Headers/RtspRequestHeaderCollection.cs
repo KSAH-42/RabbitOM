@@ -4,6 +4,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public class RtspRequestHeaderCollection : RtspHeaderCollection
     {
+        /// <summary>
+        /// Gets / Sets the command sequence
+        /// </summary>
+        /// <remarks>
+        ///     <para> setter is allowed in case that CSeq value can not be parsed </para>
+        /// </remarks>
+        public CSeqRtspHeaderValue CSeq
+        {
+            get => GetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName );
+            set => SetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName , value );
+        }
+        
+
+        
         public AcceptRtspHeaderValue Accept
         {
             get => GetValue<AcceptRtspHeaderValue>( AcceptRtspHeaderValue.TypeName );
@@ -56,12 +70,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => GetValue<ConnectionRtspHeaderValue>( ConnectionRtspHeaderValue.TypeName );
             set => SetValue<ConnectionRtspHeaderValue>( ConnectionRtspHeaderValue.TypeName , value );
-        }
-        
-        public CSeqRtspHeaderValue CSeq
-        {
-            get => GetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName );
-            set => SetValue<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName , value );
         }
         
         public DateRtspHeaderValue Date

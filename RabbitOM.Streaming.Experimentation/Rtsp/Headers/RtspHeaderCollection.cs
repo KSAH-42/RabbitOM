@@ -1,46 +1,43 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: adding unit tests
     public class RtspHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IHeaderCollection , IReadOnlyHeaderCollection
     {
-        private readonly Dictionary<string,List<RtspHeaderValue>> _items = new Dictionary<string, List<RtspHeaderValue>>( StringComparer.OrdinalIgnoreCase );
+        private readonly RtspHeaderValueCollection _collection = new RtspHeaderValueCollection();
         
-
 
 
 
         public RtspHeaderValue[] this[string key] 
         { 
-            get => _items[ key ].ToArray();
+            get => _collection.GetValues( key );
         }
 
         public RtspHeaderValue this[string key,int index]
         {
-            get => _items[ key ].ElementAt( index );
+            get => _collection.GetValueAt<RtspHeaderValue>( key , index );
         }
         
 
 
 
-
         public object SyncRoot
         {
-            get => _items;
+            get => _collection;
         }
 
         public int Count
         {
-            get => _items.Count;
+            get => _collection.Count;
         }
 
         public string[] AllKeys
         {
-            get => _items.Keys.ToArray();
+            get => _collection.AllKeys;
         }
         
         public bool IsReadOnly
@@ -53,60 +50,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => false;
         }
         
-
-
-
-
-        public struct Enumerator : IEnumerator<KeyValuePair<string , RtspHeaderValue[]>>
-        {
-            private readonly IEnumerator<KeyValuePair<string,List<RtspHeaderValue>>> _enumerator;
-
-            private KeyValuePair<string,RtspHeaderValue[]> _current;
-            
-
-            internal Enumerator( RtspHeaderCollection collection )
-            {
-                _enumerator = collection._items.GetEnumerator();
-                _current = default;
-            }
-
-
-            object IEnumerator.Current
-            {
-                get => _current;
-            }
-
-            public KeyValuePair<string , RtspHeaderValue[]> Current
-            {
-                get => _current;
-            }
-
-
-            public void Dispose()
-            {
-                _enumerator.Dispose();
-            }
-
-            public bool MoveNext()
-            {
-                if (  _enumerator.MoveNext() )
-                {
-                    _current = new KeyValuePair<string, RtspHeaderValue[]>( _enumerator.Current.Key , _enumerator.Current.Value.ToArray() );
-                
-                    return true;
-                }
-
-                return false;
-            }
-
-            public void Reset()
-            {
-                _enumerator.Reset();
-                _current = default;
-            }
-        }
-
-
 
 
 
@@ -134,216 +77,99 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
         public void Add( string key , string value )
         {
-            if ( string.IsNullOrWhiteSpace( key ) )
-            {
-                throw new ArgumentException( nameof( key ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            GetOrCreateHeaderValueList(key).Add( new StringRtspHeaderValue( value ) );
+            Add( key , new StringRtspHeaderValue( value ?? throw new ArgumentNullException( nameof( value ) ) ) );
         }
 
         public void Add( string key , RtspHeaderValue value )
         {
-            if ( string.IsNullOrWhiteSpace( key ) )
-            {
-                throw new ArgumentException( nameof( key ) );
-            }
-
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            GetOrCreateHeaderValueList(key).Add( value );
+            _collection.Add( key , value );
         }
 
         public void Clear()
         {
-            _items.Clear();
+            _collection.Clear();
         }
 
         public bool ContainsKey( string key )
         {
-            return _items.ContainsKey( key ?? string.Empty );
+            return _collection.ContainsKey( key );
         }
 
         public void CopyTo( Array array , int index )
         {
-            Array.Copy( _items.ToArray() , 0 , array , 0 , _items.Count );
+            _collection.CopyTo( array , index );
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new Enumerator( this );
+            return _collection.GetEnumerator();
         }
 
         public IEnumerator<KeyValuePair<string , RtspHeaderValue[]>> GetEnumerator()
         {
-            return new Enumerator( this );
+            return _collection.GetEnumerator();
         }
 
         public void SetValue<TValue>( string name , TValue value ) where TValue : RtspHeaderValue
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            var headers = GetOrCreateHeaderValueList( name );
-
-            if ( value == null )
-            {
-                _items.Remove( name );
-                return;
-            }
-
-            if ( headers.Count > 0 )
-            {
-                headers.RemoveAt( 0 );
-            }
-
-            headers.Add( value );
+            _collection.SetValue<TValue>( name , value );
         }
 
         public TValue GetValue<TValue>( string name ) where TValue : RtspHeaderValue
         {
-            return TryGetValueAt( name , 0 , out var result ) ? result as TValue: null;
+            return _collection.GetValue<TValue>( name );
         }
 
         public TValue GetValue<TValue>( string name , Func<TValue> factory ) where TValue : RtspHeaderValue
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( factory ) );
-            }
+            return _collection.GetValue<TValue>( name , factory );
+        }
 
-            if ( factory == null )
-            {
-                throw new ArgumentNullException( nameof( factory ) );
-            }
-
-            TValue value = _items.TryGetValue( name , out var result ) ? result as TValue : null;
-                
-            if ( value == null )
-            {
-                value = factory() ?? throw new InvalidOperationException( "the factory produce a null instance" );
-
-                var headers = GetOrCreateHeaderValueList(name);
-
-                if ( headers.Count > 0 )
-                {
-                    headers.RemoveAt( 0 );
-                }
-
-                headers.Add( value );
-            }
-
-            return value;
+        public TValue GetValueAt<TValue>( string name , int index ) where TValue : RtspHeaderValue
+        {
+            return _collection.GetValueAt<TValue>( name , index );
         }
 
         public RtspHeaderValue[] GetValues( string name )
         {
-            return TryGetValues( name , out var result ) ? result : Array.Empty<RtspHeaderValue>();
+            return _collection.GetValues( name );
         }
                         
         public bool Remove( string key )
         {
-            return _items.Remove( key ?? string.Empty );
+            return _collection.Remove( key );
         }
 
         public bool RemoveAt( string key , int index )
         {
-            key = key ?? string.Empty ;
-
-            if ( ! _items.TryGetValue( key , out var values ) )
-            {
-                return false;
-            }
-
-            if ( index < 0 || index >= values.Count )
-            {
-                return false;
-            }
-
-            values.RemoveAt( index );
-
-            if ( values.Count == 0 )
-            {
-                _items.Remove( key );
-            }
-
-            return true;
+            return _collection.RemoveAt( key , index );
         }
 
         public bool TryAdd( string key , string value )
         {
-            if ( string.IsNullOrWhiteSpace( key ) || string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            GetOrCreateHeaderValueList(key).Add( new StringRtspHeaderValue( value ) );
-
-            return true;
+            return TryAdd( key , new StringRtspHeaderValue( value ) );
         }
 
         public bool TryAdd( string key , RtspHeaderValue value )
         {
-            if ( string.IsNullOrWhiteSpace( key ) || value == null )
-            {
-                return false;
-            }
-
-            GetOrCreateHeaderValueList(key).Add( value );
-
-            return true;
+            return _collection.TryAdd( key , value );
         }
 
         public bool TryGetValue( string key , out RtspHeaderValue result )
         {
-            result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.FirstOrDefault() : null;
-
-            return result != null;
+            return _collection.TryGetValue( key , out result );
         }
 
         public bool TryGetValueAt( string key , int index , out RtspHeaderValue result )
         {
-            result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.ElementAtOrDefault( index ) : null;
-
-            return result != null;
+            return _collection.TryGetValueAt( key , index ,out result );
         }
 
         public bool TryGetValues( string key , out RtspHeaderValue[] result )
         {
-            result = _items.TryGetValue( key ?? string.Empty , out var values ) ? values.ToArray() : null;
-
-            return result != null;
-        }
-
-
-
-
-
-
-        private List<RtspHeaderValue> GetOrCreateHeaderValueList( string key )
-        {
-            System.Diagnostics.Debug.Assert( ! string.IsNullOrWhiteSpace( key ) );
-
-            if ( ! _items.TryGetValue( key , out var headerValues ) )
-            {
-                _items[ key ] = ( headerValues = new List<RtspHeaderValue>() );
-            }
-        
-            return headerValues;
+            return _collection.TryGetValues( key , out result );
         }
     }
 }
