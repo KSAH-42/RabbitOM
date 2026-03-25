@@ -4,6 +4,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class RtspRequestHeaderCollection : RtspHeaderCollection
     {
+        private static readonly RtspHeaderParsers s_parsers = new RtspHeaderParsers();
+
+        static RtspRequestHeaderCollection()
+        {
+            s_parsers.AddParser<CSeqRtspHeaderValue>( CSeqRtspHeaderValue.TypeName , CSeqRtspHeaderValue.TryParse );
+            s_parsers.AddParser<AcceptRtspHeaderValue>( AcceptRtspHeaderValue.TypeName , AcceptRtspHeaderValue.TryParse );
+            s_parsers.AddParser<AcceptEncodingRtspHeaderValue>( AcceptEncodingRtspHeaderValue.TypeName , AcceptEncodingRtspHeaderValue.TryParse );
+            s_parsers.AddParser<AcceptLanguageRtspHeaderValue>( AcceptLanguageRtspHeaderValue.TypeName , AcceptLanguageRtspHeaderValue.TryParse );
+            s_parsers.AddParser<AuthorizationRtspHeaderValue>( AuthorizationRtspHeaderValue.TypeName , AuthorizationRtspHeaderValue.TryParse );
+            s_parsers.AddParser<BandwidthRtspHeaderValue>( BandwidthRtspHeaderValue.TypeName , BandwidthRtspHeaderValue.TryParse );
+            s_parsers.AddParser<BlockSizeRtspHeaderValue>( BlockSizeRtspHeaderValue.TypeName , BlockSizeRtspHeaderValue.TryParse );
+            s_parsers.AddParser<CacheControlRtspHeaderValue>( CacheControlRtspHeaderValue.TypeName , CacheControlRtspHeaderValue.TryParse );
+            s_parsers.AddParser<ConferenceRtspHeaderValue>( ConferenceRtspHeaderValue.TypeName , ConferenceRtspHeaderValue.TryParse );
+            s_parsers.AddParser<ConnectionRtspHeaderValue>( ConnectionRtspHeaderValue.TypeName , ConnectionRtspHeaderValue.TryParse );
+            s_parsers.AddParser<DateRtspHeaderValue>( DateRtspHeaderValue.TypeName , DateRtspHeaderValue.TryParse );
+            s_parsers.AddParser<ExpiresRtspHeaderValue>( ExpiresRtspHeaderValue.TypeName , ExpiresRtspHeaderValue.TryParse );
+            s_parsers.AddParser<IfMatchRtspHeaderValue>( IfMatchRtspHeaderValue.TypeName , IfMatchRtspHeaderValue.TryParse );
+            s_parsers.AddParser<IfModifiedSinceRtspHeaderValue>( IfModifiedSinceRtspHeaderValue.TypeName , IfModifiedSinceRtspHeaderValue.TryParse );
+            s_parsers.AddParser<MaxForwardsRtspHeaderValue>( MaxForwardsRtspHeaderValue.TypeName , MaxForwardsRtspHeaderValue.TryParse );
+            s_parsers.AddParser<PublicRtspHeaderValue>( PublicRtspHeaderValue.TypeName , PublicRtspHeaderValue.TryParse );
+            s_parsers.AddParser<RefererRtspHeaderValue>( RefererRtspHeaderValue.TypeName , RefererRtspHeaderValue.TryParse );
+            s_parsers.AddParser<ScaleRtspHeaderValue>( ScaleRtspHeaderValue.TypeName , ScaleRtspHeaderValue.TryParse );
+            s_parsers.AddParser<SessionRtspHeaderValue>( SessionRtspHeaderValue.TypeName , SessionRtspHeaderValue.TryParse );
+            s_parsers.AddParser<SpeedRtspHeaderValue>( SpeedRtspHeaderValue.TypeName , SpeedRtspHeaderValue.TryParse );
+            s_parsers.AddParser<TransportRtspHeaderValue>( TransportRtspHeaderValue.TypeName , TransportRtspHeaderValue.TryParse );
+            s_parsers.AddParser<UserAgentRtspHeaderValue>( UserAgentRtspHeaderValue.TypeName , UserAgentRtspHeaderValue.TryParse );
+            s_parsers.AddParser<ViaRtspHeaderValue>( ViaRtspHeaderValue.TypeName , ViaRtspHeaderValue.TryParse );
+            s_parsers.AddParser<WarningRtspHeaderValue>( WarningRtspHeaderValue.TypeName , WarningRtspHeaderValue.TryParse );
+        }
+
         /// <summary>
         /// Gets / Sets the command sequence
         /// </summary>
