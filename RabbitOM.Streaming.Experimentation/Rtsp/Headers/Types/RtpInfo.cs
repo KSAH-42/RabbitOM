@@ -4,12 +4,12 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
     
     public sealed class RtpInfo : RtspHeaderValue
     { 
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
         public RtpInfo( string url ) : this( url , null , null , null ) { }
 
@@ -29,8 +29,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 throw new ArgumentException( nameof( url ) );
             }
 
-            Url = ValueAdapter.Adapt( url );
-            SSRC = ValueAdapter.Adapt( ssrc );
+            Url = ValueNormalizer.Normalize( url );
+            SSRC = ValueNormalizer.Normalize( ssrc );
             Sequence = sequence;
             RtpTime = rtpTime;
         }
@@ -62,22 +62,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     {
                         if ( ValueComparer.Equals( "url" , parameter.Key ) )
                         {
-                            url = ValueAdapter.Adapt( parameter.Value );
+                            url = ValueNormalizer.Normalize( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
-                            ssrc = ValueAdapter.Adapt( parameter.Value );
+                            ssrc = ValueNormalizer.Normalize( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
                         {
-                            if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
+                            if ( ushort.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out var value ) )
                             {
                                 seq = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
                         {
-                            if ( ushort.TryParse( ValueAdapter.Adapt( parameter.Value ) , out var value ) )
+                            if ( ushort.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out var value ) )
                             {
                                 rtpTime = value;
                             }

@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public static readonly string TypeName = "Accept-Ranges";
 
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         
 
         public bool Bytes { get; set; }

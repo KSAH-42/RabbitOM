@@ -6,16 +6,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 
     public sealed class CacheControlRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "Cache-Control";
 
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
-
-
+        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
         private readonly Dictionary<string,string> _extensions = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
         
@@ -159,21 +157,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
             
-            name = ValueAdapter.Adapt( name );
+            name = ValueNormalizer.Normalize( name );
 
             if ( string.IsNullOrWhiteSpace( name ) || _extensions.ContainsKey( name ) )
             {
                 return false;
             }
 
-            _extensions[ name ] = ValueAdapter.Adapt( value );
+            _extensions[ name ] = ValueNormalizer.Normalize( value );
 
             return true;
         }
 
         public bool RemoveExtension( string name )
         {
-            return _extensions.Remove( ValueAdapter.Adapt( name ) );
+            return _extensions.Remove( ValueNormalizer.Normalize( name ) );
         }
 
         public void RemoveExtensions()

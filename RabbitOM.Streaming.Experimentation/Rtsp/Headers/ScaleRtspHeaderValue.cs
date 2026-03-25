@@ -1,4 +1,4 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 using System;
 using System.Globalization;
 
@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out ScaleRtspHeaderValue result )
         {
-            result = float.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value ) ? new ScaleRtspHeaderValue() { Value = value } : null ;
+            result = float.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value ) ? new ScaleRtspHeaderValue() { Value = value } : null ;
 
             return result != null;
         }

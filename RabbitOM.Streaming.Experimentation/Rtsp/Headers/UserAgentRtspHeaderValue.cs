@@ -4,14 +4,14 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
    
     public sealed class UserAgentRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "User-Agent";
 
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
         
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
@@ -25,19 +25,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Product
         {
             get => _product;
-            set => _product = ValueAdapter.Adapt( value );
+            set => _product = ValueNormalizer.Normalize( value );
         }
 
         public string Version
         {
             get => _version;
-            set => _version = ValueAdapter.Adapt( value );
+            set => _version = ValueNormalizer.Normalize( value );
         }
         
         public string Comment
         {
             get => _comment;
-            set => _comment = ValueAdapter.Adapt( value );
+            set => _comment = ValueNormalizer.Normalize( value );
         }
         
 
@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             result = null;
 
-            input = ValueAdapter.Adapt( input );
+            input = ValueNormalizer.Normalize( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {

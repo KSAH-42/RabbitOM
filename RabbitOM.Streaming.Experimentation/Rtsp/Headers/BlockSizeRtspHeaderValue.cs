@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 
     public sealed class BlockSizeRtspHeaderValue : RtspHeaderValue
     {
@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out BlockSizeRtspHeaderValue result )
         {
-            result = ushort.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out var value ) ? new BlockSizeRtspHeaderValue() { Value = value } : null ;
+            result = ushort.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( input ) , out var value ) ? new BlockSizeRtspHeaderValue() { Value = value } : null ;
 
             return result != null;
         }

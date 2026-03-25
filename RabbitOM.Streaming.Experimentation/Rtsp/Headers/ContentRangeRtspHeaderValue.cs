@@ -5,13 +5,13 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
     
     public sealed class ContentRangeRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "Content-Range";
         
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
         
 
         private string _unit = string.Empty;
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Unit
         {
             get => _unit;
-            set => _unit = ValueAdapter.Adapt( value );
+            set => _unit = ValueNormalizer.Normalize( value );
         }
 
         public long? Start
@@ -64,18 +64,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                     if ( RtspHeaderParser.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out KeyValuePair<string,string> range ) )
                     {
-                        if ( long.TryParse( ValueAdapter.Adapt( range.Key ) , out long number ) )
+                        if ( long.TryParse( ValueNormalizer.Normalize( range.Key ) , out long number ) )
                         {
                             header.Start = number;
                         }
 
-                        if ( long.TryParse( ValueAdapter.Adapt( range.Value ) , out number ) )
+                        if ( long.TryParse( ValueNormalizer.Normalize( range.Value ) , out number ) )
                         {
                             header.End = number;
                         }
                     }
 
-                    if ( long.TryParse( ValueAdapter.Adapt( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
+                    if ( long.TryParse( ValueNormalizer.Normalize( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
                     {
                         header.Size = size;
                     }                    

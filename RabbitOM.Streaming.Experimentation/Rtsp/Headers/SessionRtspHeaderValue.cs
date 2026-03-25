@@ -5,14 +5,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
    
     public sealed class SessionRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "Session";
 
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
         
 
         private string _identifier = string.Empty;
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Identifier
         {
             get => _identifier;
-            set => _identifier = ValueAdapter.Adapt( value );
+            set => _identifier = ValueNormalizer.Normalize( value );
         }
 
         public long? Timeout
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( ValueComparer.Equals( "timeout" , parameter.Key ) )
                         {
-                            if ( long.TryParse( ValueAdapter.Adapt( parameter.Value ) , out long value ) )
+                            if ( long.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out long value ) )
                             {
                                 header.Timeout = value;
                             }
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddExtension( string value )
         {
-            if ( RtspHeaderProtocolValidator.IsValid( value = ValueAdapter.Adapt( value ) ) )
+            if ( RtspHeaderProtocolValidator.IsValid( value = ValueNormalizer.Normalize( value ) ) )
             {
                 return _extensions.Add( value );
             }
@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveExtension( string value )
         {
-            return _extensions.Remove( ValueAdapter.Adapt( value ) );
+            return _extensions.Remove( ValueNormalizer.Normalize( value ) );
         }
 
         public void RemoveExtensions()

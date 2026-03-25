@@ -5,22 +5,22 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
     
     public sealed class StringWithQualityRtspHeaderValue : RtspHeaderValue , IEquatable<StringWithQualityRtspHeaderValue>
     {
-        public static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
 
         public StringWithQualityRtspHeaderValue( string value )
         {
-            Value = RtspHeaderProtocolValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
+            Value = RtspHeaderProtocolValidator.IsValidToken( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
         }
 
         public StringWithQualityRtspHeaderValue( string value , double quality )
         {
-            Value = RtspHeaderProtocolValidator.IsValidToken( value = ValueAdapter.Adapt( value ) ) ? value : throw new ArgumentException();
+            Value = RtspHeaderProtocolValidator.IsValidToken( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -109,7 +109,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             if ( ValueComparer.Equals( "q" , parameter.Key ) )
                             {
-                                if ( double.TryParse( ValueAdapter.Adapt( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
+                                if ( double.TryParse( ValueNormalizer.Normalize( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                                 {
                                     result = new StringWithQualityRtspHeaderValue( name , quality );
                                     break;

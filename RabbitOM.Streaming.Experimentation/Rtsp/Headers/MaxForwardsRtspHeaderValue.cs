@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
     public sealed class MaxForwardsRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "Max-Forwards";
@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out MaxForwardsRtspHeaderValue result )
         {
-            result = uint.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out var value ) ? new MaxForwardsRtspHeaderValue() { Value = value } : null;
+            result = uint.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( input ) , out var value ) ? new MaxForwardsRtspHeaderValue() { Value = value } : null;
 
             return result != null;
         }

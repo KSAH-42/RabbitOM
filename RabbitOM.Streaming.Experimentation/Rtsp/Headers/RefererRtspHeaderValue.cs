@@ -2,27 +2,27 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
     
     public sealed class RefererRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "Referer";
         
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
         
         private string _uri = string.Empty;
         
         public string Uri
         {
             get => _uri;
-            set => _uri = ValueAdapter.Adapt( value );
+            set => _uri = ValueNormalizer.Normalize( value );
         }
 
         public static bool TryParse( string input , out RefererRtspHeaderValue result )
         {
             result = null;
 
-            var value = ValueAdapter.Adapt( input );
+            var value = ValueNormalizer.Normalize( input );
 
             if ( RtspHeaderProtocolValidator.IsValidUri( value ) )
             {

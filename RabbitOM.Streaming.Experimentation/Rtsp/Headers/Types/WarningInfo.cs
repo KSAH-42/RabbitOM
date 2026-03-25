@@ -4,11 +4,11 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 
     public sealed class WarningInfo : RtspHeaderValue
     {
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
                     
 
         
@@ -30,8 +30,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
 
             Code = code;
-            Agent = ValueAdapter.Adapt( agent );
-            Comment = ValueAdapter.Adapt( comment );
+            Agent = ValueNormalizer.Normalize( agent );
+            Comment = ValueNormalizer.Normalize( comment );
         }
 
 

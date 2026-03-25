@@ -4,13 +4,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 
     public sealed class IfMatchRtspHeaderValue : RtspHeaderValue
     {
         public static readonly string TypeName = "If-Match";
 
-        public static readonly StringValueAdapter ValueAdapter = StringValueAdapter.TrimWithUnQuoteAdapter;
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
 
         private readonly HashSet<string> _entitiesTags = new HashSet<string>( StringComparer.OrdinalIgnoreCase );
@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool AddEntityTag( string etag , Func<string,bool> validator )
         {
-            if ( validator?.Invoke( etag = ValueAdapter.Adapt( etag ) ) == true )
+            if ( validator?.Invoke( etag = ValueNormalizer.Normalize( etag ) ) == true )
             {
                 return _entitiesTags.Add( etag );
             }
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveEntityTag( string etag )
         {
-            return _entitiesTags.Remove( ValueAdapter.Adapt( etag ) );
+            return _entitiesTags.Remove( ValueNormalizer.Normalize( etag ) );
         }
 
         public void RemoveEntitiesTags()

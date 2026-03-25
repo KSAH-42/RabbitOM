@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 
     public sealed class PublicRtspHeaderValue : RtspHeaderValue
     {
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach( var token in tokens )
                 {
-                    if ( RtspMethod.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( token ) , out var method ) )
+                    if ( RtspMethod.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( token ) , out var method ) )
                     {
                         header.AddMethod( method );
                     }

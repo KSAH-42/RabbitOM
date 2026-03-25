@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Adapters;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
 
     public sealed class ContentLengthRtspHeaderValue : RtspHeaderValue
     {
@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out ContentLengthRtspHeaderValue result )
         {
-            result = long.TryParse( StringValueAdapter.TrimWithUnQuoteAdapter.Adapt( input ) , out long value ) ? new ContentLengthRtspHeaderValue() { Value = value } : null ;
+            result = long.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( input ) , out long value ) ? new ContentLengthRtspHeaderValue() { Value = value } : null ;
 
             return result != null;
         }
