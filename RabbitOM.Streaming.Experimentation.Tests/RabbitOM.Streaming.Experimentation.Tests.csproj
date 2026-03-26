@@ -149,9 +149,7 @@
     <Compile Include="Rtsp\Headers\DateRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeaderValueTest.cs" />
-    <Compile Include="Rtsp\Headers\ContentLengthRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\BandwithRtspHeaderValueTest.cs" />
-    <Compile Include="Rtsp\Headers\CSeqRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\AcceptRangesRtspHeaderValueTest.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderValueTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

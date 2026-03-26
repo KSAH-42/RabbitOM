@@ -58,9 +58,7 @@
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentBaseRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\ContentLengthRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\CSeqRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DateRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ExpiresRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValue.cs" />
