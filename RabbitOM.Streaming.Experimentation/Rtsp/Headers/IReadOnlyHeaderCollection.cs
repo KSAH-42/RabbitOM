@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,RtspHeaderValue[]>> , IReadOnlyCollection<KeyValuePair<string,RtspHeaderValue[]>>
     {
-        RtspHeaderValue[] this[ string name ] { get; }
+        RtspHeaderValue this[ string name ] { get; }
         RtspHeaderValue this[ string name , int index ] { get; }
 
 

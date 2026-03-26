@@ -12,9 +12,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public RtspHeaderValue[] this[string key] 
+        public RtspHeaderValue this[string key] 
         { 
-            get => _collection.GetValues( key );
+            get => _collection.GetValueAt<RtspHeaderValue>( key , 0 );
         }
 
         public RtspHeaderValue this[string key,int index]

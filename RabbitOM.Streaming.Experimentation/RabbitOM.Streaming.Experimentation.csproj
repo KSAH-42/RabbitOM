@@ -75,7 +75,7 @@
     <Compile Include="Rtsp\Headers\RefererRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParsers.cs" />
-    <Compile Include="Rtsp\Headers\RtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderNameValueCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderValue.cs" />
