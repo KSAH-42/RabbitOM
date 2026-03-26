@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public sealed class RtspHeaderValueCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>>
+    public sealed class RtspHeaderNameValueCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>>
     {
         private readonly Dictionary<string,List<RtspHeaderValue>> _items = new Dictionary<string, List<RtspHeaderValue>>( StringComparer.OrdinalIgnoreCase );
         
@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             private KeyValuePair<string,RtspHeaderValue[]> _current;
             
-            internal Enumerator( RtspHeaderValueCollection collection )
+            internal Enumerator( RtspHeaderNameValueCollection collection )
             {
                 _enumerator = collection._items.GetEnumerator();
                 _current = default;
@@ -89,6 +89,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return new Enumerator( this );
         }
 
+        public RtspHeaderValue[] GetValues( string name )
+        {
+            return TryGetValues( name , out var result ) ? result : Array.Empty<RtspHeaderValue>();
+        }
+           
         public TValue GetValue<TValue>( string name ) where TValue : RtspHeaderValue
         {
             return TryGetValue( name , out var result ) ? result as TValue: null;
@@ -130,11 +135,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return TryGetValueAt( name , index , out var result ) ? result as TValue: null;
         }
 
-        public RtspHeaderValue[] GetValues( string name )
-        {
-            return TryGetValues( name , out var result ) ? result : Array.Empty<RtspHeaderValue>();
-        }
-           
         public void SetValue<TValue>( string name , TValue value ) where TValue : RtspHeaderValue
         {
             if ( string.IsNullOrWhiteSpace( name ) )

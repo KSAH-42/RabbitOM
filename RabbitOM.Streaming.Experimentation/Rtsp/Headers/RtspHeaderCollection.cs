@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     // TODO: adding unit tests
     public class RtspHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IHeaderCollection , IReadOnlyHeaderCollection
     {
-        private readonly RtspHeaderValueCollection _collection = new RtspHeaderValueCollection();
+        private readonly RtspHeaderNameValueCollection _collection = new RtspHeaderNameValueCollection();
         
 
 
