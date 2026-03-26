@@ -82,31 +82,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public void Add( string key , string value )
-        {
-            Add( key , new StringRtspHeaderValue( value ?? throw new ArgumentNullException( nameof( value ) ) ) );
-        }
-
-        public void Add( string key , RtspHeaderValue value )
-        {
-            _collection.Add( key , value );
-        }
-
-        public void Clear()
-        {
-            _collection.Clear();
-        }
-
-        public bool ContainsKey( string key )
-        {
-            return _collection.ContainsKey( key );
-        }
-
-        public void CopyTo( Array array , int index )
-        {
-            _collection.CopyTo( array , index );
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _collection.GetEnumerator();
@@ -117,11 +92,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _collection.GetEnumerator();
         }
 
-        public void SetValue<TValue>( string name , TValue value ) where TValue : RtspHeaderValue
+        public RtspHeaderValue[] GetValues( string name )
         {
-            _collection.SetValue<TValue>( name , value );
+            return _collection.GetValues( name );
         }
-
+                        
         public TValue GetValue<TValue>( string name ) where TValue : RtspHeaderValue
         {
             return _collection.GetValue<TValue>( name );
@@ -137,11 +112,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _collection.GetValueAt<TValue>( name , index );
         }
 
-        public RtspHeaderValue[] GetValues( string name )
+        public void SetValue<TValue>( string name , TValue value ) where TValue : RtspHeaderValue
         {
-            return _collection.GetValues( name );
+            _collection.SetValue<TValue>( name , value );
         }
-                        
+
+        public void Add( string key , string value )
+        {
+            Add( key , new StringRtspHeaderValue( value ?? throw new ArgumentNullException( nameof( value ) ) ) );
+        }
+
+        public void Add( string key , RtspHeaderValue value )
+        {
+            _collection.Add( key , value );
+        }
+
         public bool Remove( string key )
         {
             return _collection.Remove( key );
@@ -151,7 +136,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return _collection.RemoveAt( key , index );
         }
+        public void Clear()
+        {
+            _collection.Clear();
+        }
 
+        public bool ContainsKey( string key )
+        {
+            return _collection.ContainsKey( key );
+        }
+
+        public void CopyTo( Array array , int index )
+        {
+            _collection.CopyTo( array , index );
+        }
+        
         public bool TryAdd( string key , string value )
         {
             return TryAdd( key , new StringRtspHeaderValue( value ) );
