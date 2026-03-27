@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public HeaderValueCollection<string> Connection
         {
-            get => GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>( (value) => ! string.IsNullOrWhiteSpace( value ) ) );
+            get => GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>( HeaderProtocolValidator.IsValidToken ) );
         }
 
         public DateTime? Date
@@ -79,10 +79,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => SetValue( HeaderNames.From , value );
         }
         
-        public IfMatchHeaderValue IfMatch
+        public HeaderValueCollection<string> IfMatch
         {
-            get => GetValueObject( HeaderNames.IfMatch ) as IfMatchHeaderValue;
-            set => SetValueObject( HeaderNames.IfMatch , value );
+            get => GetValueObject( HeaderNames.IfMatch , () => new HeaderValueCollection<string>( HeaderProtocolValidator.IsValidToken ) );
         }
         
         public DateTime? IfModifiedSince
