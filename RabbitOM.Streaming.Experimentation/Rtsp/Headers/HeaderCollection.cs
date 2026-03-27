@@ -144,76 +144,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
         }
         
-        protected void AddOrUpdateObject( string name , object value )
-        {
-            if ( name == null )
-            {
-                throw new ArgumentNullException( nameof( name ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( s_forbiddenHeaders.Contains( name ) )
-            {
-                throw new ArgumentException( $"This header is not allowed: {name}" );
-            }
-
-            var list = GetOrCreateValues( name );
-
-            if ( list.Count == 0 )
-            {
-                list.Add( value );
-            }
-            else
-            {
-                list[ 0 ] = value ;
-            }
-        }
-
-        protected void SetValueObject( string name , object value )
-        {
-            if ( name == null )
-            {
-                throw new ArgumentNullException( nameof( name ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            if ( s_forbiddenHeaders.Contains( name ) )
-            {
-                throw new ArgumentException( $"This header is not allowed: {name}" );
-            }
-
-            var list = GetOrCreateValues( name );
-
-            if ( value != null )
-            {
-                if ( list.Count == 0 )
-                {
-                    list.Add( value );
-                }
-                else
-                {
-                    list[ 0 ] = value ;
-                }
-            }
-            else
-            {
-                _collection.Remove( name );
-            }
-        }
-
         public bool Remove( string name )
         {
             return _collection.Remove( name ?? string.Empty );
@@ -357,24 +287,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
         protected void SetValue( string name , object value )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            SetValueObject( name , value );
+        }
+
+        protected void SetValueObject( string name , object value )
+        {
+            if ( name == null )
             {
-                return;
+                throw new ArgumentNullException( nameof( name ) );
             }
 
-            if ( ! _collection.TryGetValue( name , out var list ) )
+            if ( string.IsNullOrWhiteSpace( name ) )
             {
-                return;
+                throw new ArgumentException( nameof( name ) );
             }
+
+            if ( s_forbiddenHeaders.Contains( name ) )
+            {
+                throw new ArgumentException( $"This header is not allowed: {name}" );
+            }
+
+            var list = GetOrCreateValues( name );
 
             if ( value != null )
             {
-                if ( list.Count > 0 )
+                if ( list.Count == 0 )
                 {
-                    list[ 0 ] = value;
+                    list.Add( value );
+                }
+                else
+                {
+                    list[ 0 ] = value ;
                 }
             }
             else
@@ -382,7 +327,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 _collection.Remove( name );
             }
         }
-        
+
         protected object GetValueObject( string name )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
