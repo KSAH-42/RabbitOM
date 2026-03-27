@@ -43,12 +43,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int Count
         {
-            get => _collection.Count;
+            get => _collection.Values.Sum( element => element.Count );
         }
 
         public bool IsEmpty
         {
-            get => _collection.Count == 0;
+            get => _collection.Values.Sum( element => element.Count ) == 0;
         }
 
         public bool IsSynchronized
