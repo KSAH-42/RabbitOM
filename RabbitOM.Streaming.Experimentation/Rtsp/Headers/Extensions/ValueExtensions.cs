@@ -67,7 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Extensions
             return null;
         }
 
-        public static string ToUniversalDateString( this DateTime value )
+        public static string ToGmtDate( this DateTime value )
         {
             return ( value.Kind == DateTimeKind.Local ? value.ToUniversalTime() : value ).ToString( "r" , CultureInfo.InvariantCulture);
         }

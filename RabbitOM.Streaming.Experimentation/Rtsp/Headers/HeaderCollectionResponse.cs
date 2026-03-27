@@ -60,19 +60,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public DateTime? Date
         {
             get => GetValue( HeaderNames.Date ).ToNullableDateTime();
-            set => SetValue( HeaderNames.Date , value?.ToUniversalDateString() );
+            set => SetValue( HeaderNames.Date , value?.ToGmtDate() );
         }
         
         public DateTime? Expires
         {
             get => GetValue( HeaderNames.Expires ).ToNullableDateTime();
-            set => SetValue( HeaderNames.Expires , value?.ToUniversalDateString() );
+            set => SetValue( HeaderNames.Expires , value?.ToGmtDate() );
         }
 
         public DateTime? LastModified
         {
             get => GetValue( HeaderNames.LastModified ).ToNullableDateTime();
-            set => SetValue( HeaderNames.LastModified , value?.ToUniversalDateString() );
+            set => SetValue( HeaderNames.LastModified , value?.ToGmtDate() );
         }
         
         public Uri Location
@@ -92,6 +92,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => GetValueObject( HeaderNames.Public , () => new HeaderValueCollection<MethodHeaderValue>() );
         }
         
+        public RetryAfterHeaderValue RetryAfter
+        {
+            get => GetValueObject( HeaderNames.RetryAfter ) as RetryAfterHeaderValue;
+            set => SetValueObject( HeaderNames.RetryAfter , value );
+        }
+
         public RtpInfoHeaderValue RtpInfo
         {
             get => GetValueObject( HeaderNames.RtpInfo ) as RtpInfoHeaderValue;

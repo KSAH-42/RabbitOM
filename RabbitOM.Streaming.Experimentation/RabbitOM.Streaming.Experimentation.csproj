@@ -162,6 +162,7 @@
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\IReadOnlyHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\MethodHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\RetryAfterHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SessionHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\StringWithQualityHeaderValue.cs" />
