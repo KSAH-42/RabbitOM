@@ -1,4 +1,9 @@
-﻿using System;
+﻿// TODO: add unit test to ensure that CSeq and ContentLength headers are NOT exposed by this class
+
+/*
+ * CSeq , Content-Length are not present and it will be to dto send by the channel
+ */
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -47,17 +52,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => SetValue( HeaderNames.MediaDuration , value );
         }
         
-
-
-
-
-
         public AuthenticateHeaderValue Authenticate
         {
             get => GetValueObject( HeaderNames.Authenticate ) as AuthenticateHeaderValue;
             set => SetValueObject( HeaderNames.Authenticate , value );
         }
-
 
         public CacheControlHeaderValue CacheControl
         {
@@ -95,12 +94,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => GetValueObject( HeaderNames.Transport ) as TransportHeaderValue;
             set => SetValueObject( HeaderNames.Transport , value );
         }
-        
-
-
-
-
-        
+                
         public HeaderValueCollection<MethodHeaderValue> Allow
         {
             get
