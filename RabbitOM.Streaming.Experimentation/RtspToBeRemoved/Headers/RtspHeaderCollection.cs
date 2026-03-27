@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
     // TODO: adding unit tests
     public class RtspHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IHeaderCollection , IReadOnlyHeaderCollection

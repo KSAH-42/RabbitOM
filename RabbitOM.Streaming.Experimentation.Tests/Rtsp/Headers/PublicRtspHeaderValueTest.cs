@@ -4,8 +4,8 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved;
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers;
     
     [TestFixture]
     public class PublicRtspHeaderValueTest

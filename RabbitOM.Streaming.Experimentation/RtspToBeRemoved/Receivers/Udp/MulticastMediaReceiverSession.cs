@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Receivers.Udp
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Receivers.Udp
 {
     public class MulticastMediaReceiverSession : IMediaStreamingSession
     {

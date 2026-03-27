@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 {
     public sealed class RtspClient : IDisposable
     {

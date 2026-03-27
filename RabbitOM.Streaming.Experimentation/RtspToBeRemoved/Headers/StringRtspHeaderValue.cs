@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
     public sealed class StringRtspHeaderValue : RtspHeaderValue
     {

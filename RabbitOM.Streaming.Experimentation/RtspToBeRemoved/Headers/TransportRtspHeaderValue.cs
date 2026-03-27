@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Normalizers;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Normalizers;
     
     public sealed class TransportRtspHeaderValue : RtspHeaderValue
     {

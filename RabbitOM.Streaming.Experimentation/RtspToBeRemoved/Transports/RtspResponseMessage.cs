@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Transports
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Transports
 {
     public sealed class RtspResponseMessage
     {        

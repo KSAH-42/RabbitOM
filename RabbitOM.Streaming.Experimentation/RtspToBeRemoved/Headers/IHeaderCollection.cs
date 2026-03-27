@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
     public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IReadOnlyHeaderCollection
     {

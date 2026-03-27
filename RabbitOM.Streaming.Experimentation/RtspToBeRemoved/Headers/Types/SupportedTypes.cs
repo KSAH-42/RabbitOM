@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Types
 {
     public static class SupportedTypes
     {

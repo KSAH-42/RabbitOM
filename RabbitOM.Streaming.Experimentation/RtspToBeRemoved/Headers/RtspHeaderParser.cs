@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
     internal static class RtspHeaderParser
     {

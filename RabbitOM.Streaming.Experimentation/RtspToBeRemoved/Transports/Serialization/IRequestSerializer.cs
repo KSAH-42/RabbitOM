@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Transports.Serialization
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Transports.Serialization
 {
     public interface IRequestSerializer
     {

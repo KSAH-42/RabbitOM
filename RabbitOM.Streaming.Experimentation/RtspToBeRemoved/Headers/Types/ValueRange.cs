@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Normalizers;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Normalizers;
 
     public struct ValueRange : IEquatable<ValueRange>
     {

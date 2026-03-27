@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 {
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers;
 
     public sealed class RtspClientRequest
     {

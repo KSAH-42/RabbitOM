@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 {
     public static class RtspAuthenticationTypes
     {

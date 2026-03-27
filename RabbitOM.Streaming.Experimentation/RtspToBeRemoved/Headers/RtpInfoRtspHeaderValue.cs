@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Types;
 
     public sealed class RtpInfoRtspHeaderValue : RtspHeaderValue
     {

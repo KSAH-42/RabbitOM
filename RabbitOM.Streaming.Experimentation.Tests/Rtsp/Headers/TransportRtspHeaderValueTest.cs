@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers;
-    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers;
+    using RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers.Types;
 
     [TestFixture]
     public class TransportRtspHeaderValueTest

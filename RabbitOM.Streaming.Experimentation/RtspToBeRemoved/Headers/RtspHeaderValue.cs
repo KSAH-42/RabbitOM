@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Headers
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
 {
     // Name this class as RtspHeaderValue and not RtspHeader for the following reasons:
     // the first one is due to the that fact that a header is compose of a name and it's value like:

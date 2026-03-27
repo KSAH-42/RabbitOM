@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved.Receivers.Tcp
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Receivers.Tcp
 {
     public class TcpMediaReceiver : RtspMediaReceiver, IMediaReceiverConfigurer<TcpMediaReceiverConfiguration>
     {

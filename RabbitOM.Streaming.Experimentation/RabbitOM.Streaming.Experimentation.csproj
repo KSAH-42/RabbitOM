@@ -159,7 +159,6 @@
     <Compile Include="Rtsp\Headers\HeaderParser.cs" />
     <Compile Include="Rtsp\Headers\HeaderProtocolValidator.cs" />
     <Compile Include="Rtsp\Headers\HeaderValueCollection.cs" />
-    <Compile Include="Rtsp\Headers\IfMatchHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\IReadOnlyHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\MethodHeaderValue.cs" />

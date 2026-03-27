@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.RtspToBeRemoved
+namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 {
     public struct InterleavedPacket
     {
