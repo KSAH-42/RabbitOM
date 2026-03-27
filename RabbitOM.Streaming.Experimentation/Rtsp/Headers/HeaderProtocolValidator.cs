@@ -153,5 +153,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return code >= 0;
         }
+
+        public static bool IsValidHeaderName( string value )
+        {
+            return IsValidToken( value );
+        }
+
+        public static bool IsValidHeaderValue( string value )
+        {
+            return IsValidToken( value );
+        }
     }
 }

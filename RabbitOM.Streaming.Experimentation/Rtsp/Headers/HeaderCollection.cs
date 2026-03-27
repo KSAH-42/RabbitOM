@@ -5,6 +5,8 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    // TODO: review and add test when injected un authorized chars and so on
+
     public class HeaderCollection : IEnumerable, IHeaderCollection, IReadOnlyHeaderCollection
     {
         private readonly IReadOnlyCollection<string> s_forbiddenHeaders = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
@@ -142,24 +144,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string name , string value )
         {
-            if ( name == null )
+            if ( ! HeaderProtocolValidator.IsValidHeaderName( name ) )
             {
-                throw new ArgumentNullException( nameof( name ) );
+                throw new ArgumentException( name );
             }
 
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( ! HeaderProtocolValidator.IsValidHeaderValue( value ) )
             {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
+                throw new ArgumentException( value );
             }
 
             if ( s_forbiddenHeaders.Contains( name ) )
@@ -172,24 +164,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void AddOrUpdate( string name , string value )
         {
-            if ( name == null )
+            if ( ! HeaderProtocolValidator.IsValidHeaderName( name ) )
             {
-                throw new ArgumentNullException( nameof( name ) );
+                throw new ArgumentException( name );
             }
 
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( ! HeaderProtocolValidator.IsValidHeaderValue( value ) )
             {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            if ( value == null )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
+                throw new ArgumentException( value );
             }
 
             if ( s_forbiddenHeaders.Contains( name ) )
@@ -286,14 +268,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void SetValue( string name , string value )
         {
-            if ( name == null )
+            if ( ! HeaderProtocolValidator.IsValidHeaderName( name ) )
             {
-                throw new ArgumentNullException( nameof( name ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( name ) );
+                return;
             }
 
             if ( s_forbiddenHeaders.Contains( name ) )
@@ -303,11 +280,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( _collection.TryGetValue( name , out var list ) )
             {
-                if ( string.IsNullOrWhiteSpace( value ) )
-                {
-                    _collection.Remove( name );
-                }
-                else
+                if ( HeaderProtocolValidator.IsValidHeaderValue( value ) )
                 {
                     if ( list.Count == 0 )
                     {
@@ -318,10 +291,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         list[ 0 ] = value ;
                     }
                 }
+                else
+                {
+                    _collection.Remove( name );
+                }
             }
             else
             {
-                if ( ! string.IsNullOrWhiteSpace( value ) )
+                if ( HeaderProtocolValidator.IsValidHeaderValue( value ) )
                 {
                     GetOrCreateValues( name ).Add( value );
                 }
@@ -333,7 +310,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public bool TryAdd( string name , string value )
         {
-            if ( string.IsNullOrWhiteSpace( name ) || string.IsNullOrWhiteSpace( value ) )
+            if ( ! HeaderProtocolValidator.IsValidHeaderName( name ) || ! HeaderProtocolValidator.IsValidHeaderValue( value ) )
             {
                 return false;
             }
@@ -347,6 +324,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return true;
         }
+
         public bool TryGetValue( string name , out string result )
         {
             result = null;
@@ -411,12 +389,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         protected void SetValueObject( string name , object value )
         {
-            if ( name == null )
-            {
-                throw new ArgumentNullException( nameof( name ) );
-            }
-
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( ! HeaderProtocolValidator.IsValidHeaderName( name ))
             {
                 throw new ArgumentException( nameof( name ) );
             }
@@ -425,7 +398,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 throw new ArgumentException( $"This header is not allowed: {name}" );
             }
-
+            // TODO: possible issue because the validator must used here
             var list = GetOrCreateValues( name );
 
             if ( value != null )
@@ -447,17 +420,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         protected object GetValueObject( string name )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( _collection.TryGetValue( name ?? string.Empty , out var list ) )
             {
-                return null;
+                return list.FirstOrDefault();
             }
-
-            if ( ! _collection.TryGetValue( name ?? string.Empty , out var list ) )
-            {
-                return null;
-            }
-
-            return list.FirstOrDefault();
+            
+            return null;
         }
 
         protected TValue GetValueObject<TValue>( string name , Func<TValue> factory ) where TValue : class
