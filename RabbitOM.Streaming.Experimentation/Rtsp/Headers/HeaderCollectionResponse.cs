@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
               
         public HeaderValueCollection<string> Connection
         {
-            get => GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>( (value) => ! string.IsNullOrWhiteSpace( value ) ) );
+            get => GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>( HeaderProtocolValidator.IsValidToken ) );
         }
         
         public Uri ContentBase
