@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,RtspHeaderValue[]>> , IReadOnlyCollection<KeyValuePair<string,RtspHeaderValue[]>>
+    public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,string[]>> , IReadOnlyCollection<KeyValuePair<string,string[]>>
     {
-        RtspHeaderValue this[ string name ] { get; }
-        RtspHeaderValue this[ string name , int index ] { get; }
+        string this[ string name ] { get; }
+        string this[ string name , int index ] { get; }
 
 
         string[] AllKeys { get; }
@@ -15,13 +15,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        void SetValue<TValue>( string key , TValue value ) where TValue : RtspHeaderValue;
-        TValue GetValue<TValue>( string name ) where TValue : RtspHeaderValue;
-        TValue GetValue<TValue>( string name , Func<TValue> factory ) where TValue : RtspHeaderValue;
-        RtspHeaderValue[] GetValues( string name );
+        string GetValue( string name );
+        string[] GetValues( string name );
         bool ContainsKey( string name );
-        bool TryGetValue( string name , out RtspHeaderValue value );
-        bool TryGetValueAt( string name , int index , out RtspHeaderValue value );
-        bool TryGetValues( string name , out RtspHeaderValue[] values );
+        bool TryGetValue( string name , out string value );
+        bool TryGetValueAt( string name , int index , out string value );
+        bool TryGetValues( string name , out string[] values );
     }
 }

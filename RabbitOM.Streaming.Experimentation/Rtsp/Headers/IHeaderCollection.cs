@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string , RtspHeaderValue[]>> , IReadOnlyHeaderCollection
+    public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string , string[]>> , IReadOnlyHeaderCollection
     {
         void Add( string name , string value );
-        void Add( string name , RtspHeaderValue value );
+        bool TryAdd( string name , string value );
         bool Remove( string name );
         bool RemoveAt( string name , int index );
-        bool TryAdd( string name , string value );
-        bool TryAdd( string name , RtspHeaderValue value );
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
     public sealed class RtspClient : IDisposable
     {
         private readonly Action<InterleavedPacket> _interleaveHandler;
@@ -31,10 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Version DefaultVersion { get; }
 
-        public IReadOnlyDictionary<string,string> DefaultHeaders
-        {
-            get => throw new NotImplementedException();
-        }
+        public HeaderCollectionRequest DefaultHeaders { get; } = new HeaderCollectionRequest();
 
 
 
@@ -57,24 +55,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
-
-        public bool AddDefaultHeader( string name , string value )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveDefaultHeader( string name )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ClearDefaultHeaders()
-        {
-            throw new NotImplementedException();
-        }
-        
+                
         public RtspClientResponse Options()
         {
             throw new NotImplementedException();

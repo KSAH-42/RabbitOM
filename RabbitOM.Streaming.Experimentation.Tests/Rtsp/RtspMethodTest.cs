@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp;
+    using RabbitOM.Streaming.Experimentation.RtspToBeRemoved;
 
     [TestFixture]
     public class RtspMethodTest
