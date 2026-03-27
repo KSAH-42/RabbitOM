@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public static class TransmissionTypes
+    public static class KnownEncodingTypes
     {
         private static readonly object s_lock = new object();
 
         private static readonly Lazy<HashSet<string>> s_values = new Lazy<HashSet<string>>( () => new HashSet<string>( StringComparer.OrdinalIgnoreCase)
         {
-            "unicast",
-            "multicast",
+            "zip",
+            "tar",
+            "gzip",
+            "identity" ,
+            "deflate" ,
+            "br",
+            "*",
         });
-
-
 
 
 
@@ -24,10 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-
-
-
-        public static void AddTransmission( string value )
+        public static void AddEncoding( string value )
         {
             if ( value == null )
             {
@@ -44,8 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 s_values.Value.Add( value );
             }
         }
-
-        public static void RemoveTransmission( string value )
+        public static void RemoveEncoding( string value )
         {
             lock ( s_lock )
             {
@@ -53,7 +50,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
         }
 
-        public static void RemoveTransmissions()
+        public static void RemoveEncodings()
         {
             lock ( s_lock )
             {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public static class LanguageTypes
+    public static class KnownLanguageTypes
     {
         private static readonly object s_lock = new object();
 

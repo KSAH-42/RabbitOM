@@ -28,22 +28,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool IsValidTransport( string value )
         {
-            return TransportTypes.Values.Count == 0 || TransportTypes.Values.Contains( value );
+            return KnownTransportTypes.Values.Count == 0 || KnownTransportTypes.Values.Contains( value );
         }
 
         public static bool IsValidTransmission( string value )
         {
-            return TransmissionTypes.Values.Count == 0 || TransmissionTypes.Values.Contains( value );
+            return KnownTransmissionTypes.Values.Count == 0 || KnownTransmissionTypes.Values.Contains( value );
         }
 
         public static bool IsValidLanguage( string value )
         {
-            return LanguageTypes.Values.Count == 0 || LanguageTypes.Values.Contains( value );
+            return KnownLanguageTypes.Values.Count == 0 || KnownLanguageTypes.Values.Contains( value );
         }
 
         public static bool IsValidEncoding( string value )
         {
-            return EncodingTypes.Values.Count == 0 || EncodingTypes.Values.Contains( value );
+            return KnownEncodingTypes.Values.Count == 0 || KnownEncodingTypes.Values.Contains( value );
         }
 
         public static bool IsValidUri( string value )
