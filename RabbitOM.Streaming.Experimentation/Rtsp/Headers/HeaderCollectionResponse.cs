@@ -60,19 +60,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public DateTime? Date
         {
             get => GetValue( HeaderNames.Date ).ToNullableDateTime();
-            set => SetValue( HeaderNames.Date , value );
+            set => SetValue( HeaderNames.Date , value?.ToUniversalDateString() );
         }
         
         public DateTime? Expires
         {
             get => GetValue( HeaderNames.Expires ).ToNullableDateTime();
-            set => SetValue( HeaderNames.Expires , value );
+            set => SetValue( HeaderNames.Expires , value?.ToUniversalDateString() );
         }
 
         public DateTime? LastModified
         {
             get => GetValue( HeaderNames.LastModified ).ToNullableDateTime();
-            set => SetValue( HeaderNames.LastModified , value );
+            set => SetValue( HeaderNames.LastModified , value?.ToUniversalDateString() );
         }
         
         public Uri Location

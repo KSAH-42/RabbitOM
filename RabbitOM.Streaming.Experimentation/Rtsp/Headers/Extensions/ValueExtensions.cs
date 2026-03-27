@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Extensions
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
+
     internal static class ValueExtensions
     {
         public static uint? ToNullableUInt( this string value )
@@ -64,14 +67,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Extensions
             return null;
         }
 
+        public static string ToUniversalDateString( this DateTime value )
+        {
+            return ( value.Kind == DateTimeKind.Local ? value.ToUniversalTime() : value ).ToString( "r" , CultureInfo.InvariantCulture);
+        }
+
         public static DateTime? ToNullableDateTime( this string value )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return null;
-            }
-
-            if ( DateTime.TryParse( value , out var result ) )
+            if ( DateTime.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( value ) , CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal , out var result ) )
             {
                 return result;
             }

@@ -64,13 +64,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public DateTime? Date
         {
             get => GetValue( HeaderNames.Date ).ToNullableDateTime();
-            set => SetValue( HeaderNames.Date , value );
+            set => SetValue( HeaderNames.Date , value?.ToUniversalDateString() );
         }
         
         public DateTime? Expires
         {
             get => GetValue( HeaderNames.Expires ).ToNullableDateTime();
-            set => SetValue( HeaderNames.Expires , value );
+            set => SetValue( HeaderNames.Expires , value?.ToUniversalDateString() );
         }
            
         public Uri From
@@ -88,7 +88,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public DateTime? IfModifiedSince
         {
             get => GetValue( HeaderNames.IfModifiedSince ).ToNullableDateTime();
-            set => SetValue( HeaderNames.IfModifiedSince , value );
+            set => SetValue( HeaderNames.IfModifiedSince , value?.ToUniversalDateString() );
         }
              
                 
