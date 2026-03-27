@@ -157,7 +157,6 @@
     <Compile Include="Rtsp\Headers\HeaderCollectionRequest.cs" />
     <Compile Include="Rtsp\Headers\HeaderCollectionResponse.cs" />
     <Compile Include="Rtsp\Headers\HeaderNames.cs" />
-    <Compile Include="Rtsp\Headers\HeaderNameValueCollection.cs" />
     <Compile Include="Rtsp\Headers\HeaderParser.cs" />
     <Compile Include="Rtsp\Headers\HeaderProtocolValidator.cs" />
     <Compile Include="Rtsp\Headers\HeaderValueCollection.cs" />
