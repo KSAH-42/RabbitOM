@@ -89,8 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => GetValue( HeaderNames.IfModifiedSince ).ToNullableDateTime();
             set => SetValue( HeaderNames.IfModifiedSince , value?.ToUniversalDateString() );
-        }
-             
+        }  
                 
         public uint? MaxForwards
         {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class HeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>, IHeaderCollection, IReadOnlyHeaderCollection
+    public class HeaderCollection : IEnumerable, IHeaderCollection, IReadOnlyHeaderCollection
     {
         private readonly IReadOnlyCollection<string> s_forbiddenHeaders = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
         {
@@ -62,6 +62,72 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
         
+
+
+
+
+
+
+        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
+        {
+            private readonly IEnumerator<KeyValuePair<string,List<object>>> _enumerator;
+            private IEnumerator<object> _valuesEnumerator;
+            private KeyValuePair<string,string> _current;
+
+            public Enumerator( HeaderCollection collection )
+            {
+                _enumerator = collection._collection.GetEnumerator();
+                _valuesEnumerator = null;
+                _current = default;
+            }
+
+            KeyValuePair<string , string> IEnumerator<KeyValuePair<string , string>>.Current
+            {
+                get => _current ;
+            }
+
+            public object Current
+            {
+                get => _current;
+            }
+
+            public void Dispose()
+            {
+                _enumerator.Dispose();
+                _valuesEnumerator?.Dispose();
+            }
+
+            public bool MoveNext()
+            {
+                while ( true )
+                {
+                    if ( _valuesEnumerator != null && _valuesEnumerator.MoveNext() )
+                    {
+                        break;
+                    }
+
+                    if ( ! _enumerator.MoveNext() )
+                    {
+                        return false;
+                    }
+
+                    _valuesEnumerator = _enumerator.Current.Value.GetEnumerator();
+                }
+
+                _current = new KeyValuePair<string,string>( _enumerator.Current.Key , _valuesEnumerator.Current?.ToString() ?? string.Empty );
+
+                return true;
+            }
+
+            public void Reset()
+            {
+                _enumerator.Reset();
+                _valuesEnumerator = null;
+                _current = default;
+            }
+        }
+
+
 
 
 
@@ -179,7 +245,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void CopyTo( Array array , int index )
         {
-            var items = ToKeyValues().ToArray();
+            var queue = new Queue<KeyValuePair<string,string>>();
+            
+            using ( IEnumerator<KeyValuePair<string,string>> enumerator = new Enumerator( this ) )
+            {
+                while ( enumerator.MoveNext() )
+                {
+                    queue.Enqueue( enumerator.Current );
+                }
+            }
+
+            var items = queue.ToArray();
 
             Array.Copy( items , 0 , array , index , items.Length );
         }
@@ -201,11 +277,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ToKeyValues().GetEnumerator();
+            return new Enumerator( this );
         }
-        IEnumerator<KeyValuePair<string , IEnumerable<string>>> IEnumerable<KeyValuePair<string , IEnumerable<string>>>.GetEnumerator()
+        IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
         {
-            return ToKeyValues().GetEnumerator();
+            return new Enumerator( this );
         }
 
         public void SetValue( string name , string value )
@@ -428,11 +504,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return values;
-        }
-
-        private IEnumerable<KeyValuePair<string , IEnumerable<string>>> ToKeyValues()
-        {
-            return _collection.Select( x => new KeyValuePair<string , IEnumerable<string>> ( x.Key , x.Value.Select( y => y.ToString() ) ));
         }
     }
 }

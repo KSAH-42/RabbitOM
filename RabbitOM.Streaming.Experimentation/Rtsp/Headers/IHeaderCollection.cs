@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string , IEnumerable<string>>> , IReadOnlyHeaderCollection
+    public interface IHeaderCollection : ICollection , IEnumerable , IEnumerable<KeyValuePair<string ,string>> , IReadOnlyHeaderCollection
     {
         void Add( string name , string value );
         bool TryAdd( string name , string value );
