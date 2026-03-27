@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,string[]>> , IReadOnlyCollection<KeyValuePair<string,string[]>>
+    public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,IEnumerable<string>>> , IReadOnlyCollection<KeyValuePair<string,IEnumerable<string>>>
     {
         string this[ string name ] { get; }
         string this[ string name , int index ] { get; }
@@ -16,10 +16,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         string GetValue( string name );
-        string[] GetValues( string name );
+        IEnumerable<string> GetValues( string name );
         bool ContainsKey( string name );
         bool TryGetValue( string name , out string value );
         bool TryGetValueAt( string name , int index , out string value );
-        bool TryGetValues( string name , out string[] values );
+        bool TryGetValues( string name , out IEnumerable<string> values );
     }
 }

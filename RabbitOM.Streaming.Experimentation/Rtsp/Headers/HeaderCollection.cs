@@ -5,8 +5,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public class HeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string[]>>, IHeaderCollection, IReadOnlyHeaderCollection
+    public class HeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>, IHeaderCollection, IReadOnlyHeaderCollection
     {
+        private readonly IReadOnlyCollection<string> s_forbiddenHeaders = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+        {
+            "CSeq" , "Content-Length"
+        };
+
         private readonly Dictionary<string,List<object>> _collection = new Dictionary<string, List<object>>( StringComparer.OrdinalIgnoreCase );
 
 
@@ -91,6 +96,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( value ) );
             }
 
+            if ( s_forbiddenHeaders.Contains( name ) )
+            {
+                throw new ArgumentException( $"This header is not allowed: {name}" );
+            }
+
             GetOrCreateValues( name ).Add( value.Trim() );
         }
 
@@ -114,6 +124,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( string.IsNullOrWhiteSpace( value ) )
             {
                 throw new ArgumentException( nameof( value ) );
+            }
+
+            if ( s_forbiddenHeaders.Contains( name ) )
+            {
+                throw new ArgumentException( $"This header is not allowed: {name}" );
             }
 
             var list = GetOrCreateValues( name );
@@ -145,6 +160,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( value ) );
             }
 
+            if ( s_forbiddenHeaders.Contains( name ) )
+            {
+                throw new ArgumentException( $"This header is not allowed: {name}" );
+            }
+
             var list = GetOrCreateValues( name );
 
             if ( list.Count == 0 )
@@ -167,6 +187,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( string.IsNullOrWhiteSpace( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
+            }
+
+            if ( s_forbiddenHeaders.Contains( name ) )
+            {
+                throw new ArgumentException( $"This header is not allowed: {name}" );
             }
 
             var list = GetOrCreateValues( name );
@@ -239,9 +264,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return TryGetValueAt( name , index , out var result ) ? result : string.Empty;
         }
 
-        public string[] GetValues( string name )
+        public IEnumerable<string> GetValues( string name )
         {
-            return TryGetValues( name , out var result ) ? result : Array.Empty<string>();
+            return TryGetValues( name , out var result ) ? result : Enumerable.Empty<string>();
         }
 
         public void SetValue( string name , object value )
@@ -277,7 +302,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return ToKeyValues().GetEnumerator();
         }
-        IEnumerator<KeyValuePair<string , string[]>> IEnumerable<KeyValuePair<string , string[]>>.GetEnumerator()
+        IEnumerator<KeyValuePair<string , IEnumerable<string>>> IEnumerable<KeyValuePair<string , IEnumerable<string>>>.GetEnumerator()
         {
             return ToKeyValues().GetEnumerator();
         }
@@ -287,6 +312,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public bool TryAdd( string name , string value )
         {
             if ( string.IsNullOrWhiteSpace( name ) || string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            if ( s_forbiddenHeaders.Contains( name ) )
             {
                 return false;
             }
@@ -331,7 +361,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return result != null;
         }
         
-        public bool TryGetValues( string name , out string[] result )
+        public bool TryGetValues( string name , out IEnumerable<string> result )
         {
             result = null;
 
@@ -342,7 +372,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( list.Count > 0 )
             {
-                result = list.Select( x => x.ToString() ).ToArray();
+                result = list.Select( x => x.ToString() );
             }
 
             return result != null;
@@ -353,6 +383,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         private List<object> GetOrCreateValues( string name )
         {
+            System.Diagnostics.Debug.Assert( ! string.IsNullOrWhiteSpace( name ) );
+
             if ( ! _collection.TryGetValue( name , out var values ) )
             {
                 _collection[ name ] = ( values = new List<object>() );
@@ -361,9 +393,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return values;
         }
 
-        private IEnumerable<KeyValuePair<string , string[]>> ToKeyValues()
+        private IEnumerable<KeyValuePair<string , IEnumerable<string>>> ToKeyValues()
         {
-            return _collection.Select( x => new KeyValuePair<string , string[]> ( x.Key , x.Value.Select( y => y.ToString() ).ToArray() ));
+            return _collection.Select( x => new KeyValuePair<string , IEnumerable<string>> ( x.Key , x.Value.Select( y => y.ToString() ) ));
         }
     }
 }
