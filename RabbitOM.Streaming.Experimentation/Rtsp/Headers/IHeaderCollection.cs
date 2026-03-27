@@ -10,5 +10,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         bool TryAdd( string name , string value );
         bool Remove( string name );
         bool RemoveAt( string name , int index );
+        void SetValue( string name , string value );
     }
 }

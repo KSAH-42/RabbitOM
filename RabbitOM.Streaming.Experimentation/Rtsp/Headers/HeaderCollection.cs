@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -199,8 +198,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return TryGetValues( name , out var result ) ? result : Enumerable.Empty<string>();
         }
-
-        
+                
         IEnumerator IEnumerable.GetEnumerator()
         {
             return ToKeyValues().GetEnumerator();
@@ -210,6 +208,49 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return ToKeyValues().GetEnumerator();
         }
 
+        public void SetValue( string name , string value )
+        {
+            if ( name == null )
+            {
+                throw new ArgumentNullException( nameof( name ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentException( nameof( name ) );
+            }
+
+            if ( s_forbiddenHeaders.Contains( name ) )
+            {
+                throw new ArgumentException( $"This header is not allowed: {name}" );
+            }
+
+            if ( _collection.TryGetValue( name , out var list ) )
+            {
+                if ( string.IsNullOrWhiteSpace( value ) )
+                {
+                    _collection.Remove( name );
+                }
+                else
+                {
+                    if ( list.Count == 0 )
+                    {
+                        list.Add( value );
+                    }
+                    else
+                    {
+                        list[ 0 ] = value ;
+                    }
+                }
+            }
+            else
+            {
+                if ( ! string.IsNullOrWhiteSpace( value ) )
+                {
+                    GetOrCreateValues( name ).Add( value );
+                }
+            }
+        }
 
 
 
