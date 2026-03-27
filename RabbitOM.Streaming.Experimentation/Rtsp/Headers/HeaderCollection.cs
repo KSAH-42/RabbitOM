@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -269,34 +270,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return TryGetValues( name , out var result ) ? result : Enumerable.Empty<string>();
         }
 
-        public void SetValue( string name , object value )
-        {
-            var key = name ?? string.Empty;
-
-            if ( ! _collection.TryGetValue( key , out var list ) )
-            {
-                return;
-            }
-
-            if ( value != null )
-            {
-                if ( list.Count > 0 )
-                {
-                    list[ 0 ] = value;
-                }
-            }
-            else
-            {
-                _collection.Remove( key );
-            }
-        }
-        
-        protected object GetValueObject( string name )
-        {
-            return _collection.ContainsKey( name ) ? _collection[ name ].First() : null;
-        }
-        
-
         
         IEnumerator IEnumerable.GetEnumerator()
         {
@@ -306,6 +279,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return ToKeyValues().GetEnumerator();
         }
+
+
 
 
         
@@ -377,6 +352,82 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return result != null;
         }
+
+
+
+
+
+
+        protected void SetValue( string name , object value )
+        {
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                return;
+            }
+
+            if ( ! _collection.TryGetValue( name , out var list ) )
+            {
+                return;
+            }
+
+            if ( value != null )
+            {
+                if ( list.Count > 0 )
+                {
+                    list[ 0 ] = value;
+                }
+            }
+            else
+            {
+                _collection.Remove( name );
+            }
+        }
+        
+        protected object GetValueObject( string name )
+        {
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                return null;
+            }
+
+            if ( ! _collection.TryGetValue( name ?? string.Empty , out var list ) )
+            {
+                return null;
+            }
+
+            return list.FirstOrDefault();
+        }
+
+        protected TValue GetValueObject<TValue>( string name , Func<TValue> factory ) where TValue : class
+        {
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                return null;
+            }
+
+            if ( factory == null )
+            {
+                return null;
+            }
+
+            if ( _collection.TryGetValue( name , out var list ) )
+            {
+                return list.FirstOrDefault() as TValue;
+            }
+
+            var createdValue = factory();
+
+            if ( createdValue == null )
+            {
+                return null;
+            }
+
+            GetOrCreateValues( name ).Add( createdValue );
+
+            return createdValue;
+        }
+
+        
 
 
 
