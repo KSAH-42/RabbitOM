@@ -7,7 +7,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class HeaderValueCollection<TValue> : IEnumerable, IEnumerable<TValue>, ICollection, ICollection<TValue>
     {
         private readonly List<TValue> _collection = new List<TValue>();
+
+        private readonly Func<TValue,bool> _validator;
         
+
+
+
+
+        public HeaderValueCollection()
+        {
+        }
+
+        public HeaderValueCollection( Func<TValue,bool> validator )
+        {
+            _validator = validator ?? throw new ArgumentNullException( nameof( validator ) );
+        }
+
+
+
 
 
         public object SyncRoot
@@ -35,8 +52,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => false;
         }
 
-        // TODO: add TryAdd method
-        // TODO: add validation to avoid to inject separator
         public void Add( TValue item )
         {
             if ( item == null )
@@ -44,7 +59,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( item ) );
             }
 
+            if ( _validator != null && ! _validator( item ) )
+            {
+                throw new ArgumentException( nameof( item ) );
+            }
+
             _collection.Add( item );
+        }
+
+        public bool TryAdd( TValue item )
+        {
+            if ( item == null )
+            {
+                return false;
+            }
+
+            if ( _validator != null && ! _validator( item ) )
+            {
+                return false;
+            }
+
+            _collection.Add( item );
+
+            return true;
         }
 
         public void Clear()

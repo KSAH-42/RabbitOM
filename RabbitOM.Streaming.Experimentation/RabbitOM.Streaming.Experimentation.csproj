@@ -147,7 +147,6 @@
     <Compile Include="Rtsp\Headers\AuthorizationHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\CacheControlHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConferenceHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\ConnectionHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Converters\StringValueNormalizer.cs" />
     <Compile Include="Rtsp\Headers\Converters\TrimWithQuoteSuppressValueNormalizer.cs" />

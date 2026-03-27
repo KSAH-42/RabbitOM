@@ -10,38 +10,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Extensions;
 
     public sealed class HeaderCollectionRequest : HeaderCollection
-    {
-        
+    {        
         public HeaderValueCollection<StringWithQualityHeaderValue> Accept
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Accept , () => new HeaderValueCollection<StringWithQualityHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Accept , () => new HeaderValueCollection<StringWithQualityHeaderValue>() );
         }
         
         public HeaderValueCollection<StringWithQualityHeaderValue> AcceptEncoding
         {
-            get
-            {
-                return GetValueObject( HeaderNames.AcceptEncoding , () => new HeaderValueCollection<StringWithQualityHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.AcceptEncoding , () => new HeaderValueCollection<StringWithQualityHeaderValue>() );
         }
         
         public HeaderValueCollection<StringWithQualityHeaderValue> AcceptLanguage
         {
-            get
-            {
-                return GetValueObject( HeaderNames.AcceptLanguage , () => new HeaderValueCollection<StringWithQualityHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.AcceptLanguage , () => new HeaderValueCollection<StringWithQualityHeaderValue>() );
         }
 
         public AuthorizationHeaderValue Authorization
         {
             get => GetValueObject( HeaderNames.Authorization ) as AuthorizationHeaderValue;
             set => SetValueObject( HeaderNames.Authorization , value );
-        }
-        
+        }        
 
         public uint? Bandwidth
         {
@@ -55,7 +44,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => SetValue( HeaderNames.BlockSize , value );
         }
         
-        
         public CacheControlHeaderValue CacheControl
         {
             get => GetValueObject( HeaderNames.CacheControl ) as CacheControlHeaderValue;
@@ -68,10 +56,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => SetValueObject( HeaderNames.Conference , value );
         }
         
-        public ConnectionHeaderValue Connection
+        public HeaderValueCollection<string> Connection
         {
-            get => GetValueObject( HeaderNames.Connection ) as ConnectionHeaderValue;
-            set => SetValueObject( HeaderNames.Connection , value );
+            get => GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>( (value) => ! string.IsNullOrWhiteSpace( value ) ) );
         }
 
         public DateTime? Date
@@ -113,10 +100,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public HeaderValueCollection<MethodHeaderValue> Public
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Public , () => new HeaderValueCollection<MethodHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Public , () => new HeaderValueCollection<MethodHeaderValue>() );
         }
         
         public Uri Referer
@@ -163,18 +147,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public HeaderValueCollection<ViaHeaderValue> Via
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Via , () => new HeaderValueCollection<ViaHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Via , () => new HeaderValueCollection<ViaHeaderValue>() );
         }
 
         public HeaderValueCollection<WarningHeaderValue> Warning
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Warning , () => new HeaderValueCollection<WarningHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Warning , () => new HeaderValueCollection<WarningHeaderValue>() );
         }
     }
 }

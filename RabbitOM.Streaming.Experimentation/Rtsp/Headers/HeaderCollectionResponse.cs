@@ -13,10 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public HeaderValueCollection<MethodHeaderValue> Allow
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Allow , () => new HeaderValueCollection<MethodHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Allow , () => new HeaderValueCollection<MethodHeaderValue>() );
         }
 
         public AuthenticateHeaderValue Authenticate
@@ -45,10 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
               
         public HeaderValueCollection<string> Connection
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>() );
-            }
+            get => GetValueObject( HeaderNames.Connection , () => new HeaderValueCollection<string>( (value) => ! string.IsNullOrWhiteSpace( value ) ) );
         }
         
         public Uri ContentBase
@@ -95,10 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public HeaderValueCollection<MethodHeaderValue> Public
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Public , () => new HeaderValueCollection<MethodHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Public , () => new HeaderValueCollection<MethodHeaderValue>() );
         }
         
         public RtpInfoHeaderValue RtpInfo
@@ -121,18 +112,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
           
         public HeaderValueCollection<ViaHeaderValue> Via
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Via , () => new HeaderValueCollection<ViaHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Via , () => new HeaderValueCollection<ViaHeaderValue>() );
         }
 
         public HeaderValueCollection<WarningHeaderValue> Warning
         {
-            get
-            {
-                return GetValueObject( HeaderNames.Warning , () => new HeaderValueCollection<WarningHeaderValue>() );
-            }
+            get => GetValueObject( HeaderNames.Warning , () => new HeaderValueCollection<WarningHeaderValue>() );
         }
     }
 }
