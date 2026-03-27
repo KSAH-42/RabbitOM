@@ -168,8 +168,12 @@
     <Compile Include="Rtsp\Headers\StringWithQualityHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SupportedTypes.cs" />
     <Compile Include="Rtsp\Headers\TransportHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\Types\EncodingTypes.cs" />
+    <Compile Include="Rtsp\Headers\Types\LanguageTypes.cs" />
+    <Compile Include="Rtsp\Headers\Types\TransmissionTypes.cs" />
+    <Compile Include="Rtsp\Headers\Types\TransportTypes.cs" />
+    <Compile Include="Rtsp\Headers\Types\ValueRange.cs" />
     <Compile Include="Rtsp\Headers\UserAgentHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\ValueRange.cs" />
     <Compile Include="Rtsp\Headers\ViaHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WarningHeaderValue.cs" />
     <Compile Include="Rtsp\InterleavedPacket.cs" />

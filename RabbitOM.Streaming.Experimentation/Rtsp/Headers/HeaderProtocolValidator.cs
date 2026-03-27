@@ -4,6 +4,8 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     internal static class HeaderProtocolValidator
     {
         private static readonly IReadOnlyCollection<char> InvalidChars     = new HashSet<char>() { '²' , 'é' , '~' , 'ç' , 'è' , '$' , '£' , '€' , '¤' , '¨' , 'µ' , 'ù' , '^' , '§'  , '[' , ']' , '{' , '}' , '<' , '>' };
@@ -26,22 +28,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool IsValidTransport( string value )
         {
-            return SupportedTypes.Transports.Count == 0 || SupportedTypes.Transports.Contains( value );
+            return TransportTypes.Values.Count == 0 || TransportTypes.Values.Contains( value );
         }
 
         public static bool IsValidTransmission( string value )
         {
-            return SupportedTypes.Transmissions.Count == 0 || SupportedTypes.Transmissions.Contains( value );
+            return TransmissionTypes.Values.Count == 0 || TransmissionTypes.Values.Contains( value );
         }
 
         public static bool IsValidLanguage( string value )
         {
-            return SupportedTypes.Languages.Count == 0 || SupportedTypes.Languages.Contains( value );
+            return LanguageTypes.Values.Count == 0 || LanguageTypes.Values.Contains( value );
         }
 
         public static bool IsValidEncoding( string value )
         {
-            return SupportedTypes.Encodings.Count == 0 || SupportedTypes.Encodings.Contains( value );
+            return EncodingTypes.Values.Count == 0 || EncodingTypes.Values.Contains( value );
         }
 
         public static bool IsValidUri( string value )

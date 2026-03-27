@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
    
     public sealed class ConferenceHeaderValue
