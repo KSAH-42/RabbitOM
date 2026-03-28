@@ -154,9 +154,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return code >= 0;
         }
 
+        // TODO: add code to check if contains also space, crlf, .... something who break the protocol
         public static bool IsValidHeaderName( string value )
         {
-            return IsValidToken( value );
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            var succeed = false;
+
+            foreach ( var element in value )
+            {
+                if ( ! IsValidChar( element ) || QuotesChars.Contains( element ) || element == ' ' )
+                {
+                    return false;
+                }
+
+                succeed |= char.IsLetterOrDigit( element );
+            }
+
+            return succeed;
         }
 
         public static bool IsValidHeaderValue( string value )
