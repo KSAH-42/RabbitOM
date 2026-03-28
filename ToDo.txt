@@ -1,3 +1,8 @@
+client.DefaultHeaders.Add( name , value )
+ -> _registry.canParse( name )
+      -> _items[ name ] = _registry.parse( name , value );
+ -> _items[ name ] = value;
+
 Concernant le logging... 
 
 RabbitOM.Streaming.Diagnostics.Logging
