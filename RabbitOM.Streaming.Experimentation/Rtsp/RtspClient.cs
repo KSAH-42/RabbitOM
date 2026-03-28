@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Version DefaultVersion { get; }
 
-        public HeaderCollectionRequest DefaultHeaders { get; } = new HeaderCollectionRequest();
+        public RequestHeaderCollection DefaultHeaders { get; } = new RequestHeaderCollection();
 
 
 

@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Extensions;
 
-    public sealed class HeaderCollectionRequest : HeaderCollection
+    public sealed class RequestHeaderCollection : HeaderCollection
     {        
         public HeaderValueCollection<StringWithQualityHeaderValue> Accept
         {
