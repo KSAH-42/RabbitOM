@@ -148,6 +148,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( name );
             }
 
+            // TODO: need to allow empty ? headervalue class can return empty a string
+            // TODO: need to remove this code ?
             if ( ! HeaderProtocolValidator.IsValidHeaderValue( value ) )
             {
                 throw new ArgumentException( value );
