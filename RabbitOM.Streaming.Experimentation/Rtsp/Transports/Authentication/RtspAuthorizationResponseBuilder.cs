@@ -44,12 +44,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                     return string.Empty;
                 }
 
-                string ComputeHash( Func<string,string> algorithm )
+                string ComputeHash( Func<string,string> hashFunction )
                 {
-                    var hashA1 = algorithm( UserName + ":" + Realm + ":" + Password );
-                    var hashA2 = algorithm( Method + ":" + Uri  );
+                    var hashA1 = hashFunction( UserName + ":" + Realm + ":" + Password );
+                    var hashA2 = hashFunction( Method + ":" + Uri  );
 
-                    return algorithm( hashA1 + ":" + Nonce + ":" + hashA2 );
+                    return hashFunction( hashA1 + ":" + Nonce + ":" + hashA2 );
                 }
 
                 if ( RtspAuthenticationTypes.IsMd5Algorithm( Algorithm ) )
