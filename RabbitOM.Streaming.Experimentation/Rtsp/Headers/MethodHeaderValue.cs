@@ -5,8 +5,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class MethodHeaderValue
     {
+        public static readonly MethodHeaderValue OPTIONS = new MethodHeaderValue( "OPTIONS" );
+        
+        public static readonly MethodHeaderValue DESCRIBE = new MethodHeaderValue( "DESCRIBE" );
+        
+        public static readonly MethodHeaderValue SETUP = new MethodHeaderValue( "SETUP" );
+        
+        public static readonly MethodHeaderValue PLAY = new MethodHeaderValue( "PLAY" );
+        
+        public static readonly MethodHeaderValue PAUSE = new MethodHeaderValue( "PAUSE" );
+        
+        public static readonly MethodHeaderValue TEARDOWN = new MethodHeaderValue( "TEARDOWN" );
+        
+        public static readonly MethodHeaderValue GET_PARAMETER = new MethodHeaderValue( "GET_PARAMETER" );
+        
+        public static readonly MethodHeaderValue SET_PARAMETER = new MethodHeaderValue( "SET_PARAMETER" );
+        
+        public static readonly MethodHeaderValue ANNOUNCE = new MethodHeaderValue( "ANNOUNCE" );
+        
+        public static readonly MethodHeaderValue REDIRECT = new MethodHeaderValue( "REDIRECT" );
+        
+        public static readonly MethodHeaderValue RECORD = new MethodHeaderValue( "RECORD" );
+
+
+
+
+
+
         private MethodHeaderValue( string name ) => Name = name;
         
+
 
 
 
@@ -17,33 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-        public static MethodHeaderValue OPTIONS { get; }  =new MethodHeaderValue( "OPTIONS" );
         
-        public static MethodHeaderValue DESCRIBE { get; } = new MethodHeaderValue( "DESCRIBE" );
-        
-        public static MethodHeaderValue SETUP { get; } = new MethodHeaderValue( "SETUP" );
-        
-        public static MethodHeaderValue PLAY { get; } = new MethodHeaderValue( "PLAY" );
-        
-        public static MethodHeaderValue PAUSE { get; } = new MethodHeaderValue( "PAUSE" );
-        
-        public static MethodHeaderValue TEARDOWN { get; } = new MethodHeaderValue( "TEARDOWN" );
-        
-        public static MethodHeaderValue GET_PARAMETER { get; } = new MethodHeaderValue( "GET_PARAMETER" );
-        
-        public static MethodHeaderValue SET_PARAMETER { get; } = new MethodHeaderValue( "SET_PARAMETER" );
-        
-        public static MethodHeaderValue ANNOUNCE { get; } = new MethodHeaderValue( "ANNOUNCE" );
-        
-        public static MethodHeaderValue REDIRECT { get; } = new MethodHeaderValue( "REDIRECT" );
-        
-        public static MethodHeaderValue RECORD { get; } = new MethodHeaderValue( "RECORD" );
-
-
-
-
         public static bool Equals( MethodHeaderValue method , string name )
         {
             if ( method == null || string.IsNullOrWhiteSpace( name ) )
@@ -53,9 +55,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return StringComparer.OrdinalIgnoreCase.Equals( method.Name , name?.Trim() );
         }
-
-
-        
 
         public static bool TryParse( string value , out MethodHeaderValue result )
         {
@@ -68,7 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var methodName = value.Trim();
 
-            foreach ( var property in typeof( MethodHeaderValue ).GetProperties( BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty ) )
+            foreach ( var property in typeof( MethodHeaderValue ).GetFields( BindingFlags.Public | BindingFlags.Static ) )
             {
                 var method = property.GetValue( null ) as MethodHeaderValue ;
 

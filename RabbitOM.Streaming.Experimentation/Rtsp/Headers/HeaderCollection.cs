@@ -6,7 +6,6 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: review and add test when injected un authorized chars and so on
-
     public class HeaderCollection : IEnumerable, IHeaderCollection, IReadOnlyHeaderCollection
     {
         private readonly IReadOnlyCollection<string> s_forbiddenHeaders = new HashSet<string>( StringComparer.OrdinalIgnoreCase )

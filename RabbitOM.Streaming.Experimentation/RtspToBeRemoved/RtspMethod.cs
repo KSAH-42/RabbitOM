@@ -5,8 +5,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 {
     public sealed class RtspMethod
     {
+        public static readonly RtspMethod OPTIONS = new RtspMethod( "OPTIONS" );
+        
+        public static readonly RtspMethod DESCRIBE = new RtspMethod( "DESCRIBE" );
+        
+        public static readonly RtspMethod SETUP = new RtspMethod( "SETUP" );
+        
+        public static readonly RtspMethod PLAY = new RtspMethod( "PLAY" );
+        
+        public static readonly RtspMethod PAUSE = new RtspMethod( "PAUSE" );
+        
+        public static readonly RtspMethod TEARDOWN = new RtspMethod( "TEARDOWN" );
+        
+        public static readonly RtspMethod GET_PARAMETER = new RtspMethod( "GET_PARAMETER" );
+        
+        public static readonly RtspMethod SET_PARAMETER = new RtspMethod( "SET_PARAMETER" );
+        
+        public static readonly RtspMethod ANNOUNCE = new RtspMethod( "ANNOUNCE" );
+        
+        public static readonly RtspMethod REDIRECT = new RtspMethod( "REDIRECT" );
+        
+        public static readonly RtspMethod RECORD = new RtspMethod( "RECORD" );
+
+
+
+
+
+
         private RtspMethod( string name ) => Name = name;
         
+
 
 
 
@@ -17,33 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 
 
 
-
-
-        public static RtspMethod OPTIONS { get; }  =new RtspMethod( "OPTIONS" );
         
-        public static RtspMethod DESCRIBE { get; } = new RtspMethod( "DESCRIBE" );
-        
-        public static RtspMethod SETUP { get; } = new RtspMethod( "SETUP" );
-        
-        public static RtspMethod PLAY { get; } = new RtspMethod( "PLAY" );
-        
-        public static RtspMethod PAUSE { get; } = new RtspMethod( "PAUSE" );
-        
-        public static RtspMethod TEARDOWN { get; } = new RtspMethod( "TEARDOWN" );
-        
-        public static RtspMethod GET_PARAMETER { get; } = new RtspMethod( "GET_PARAMETER" );
-        
-        public static RtspMethod SET_PARAMETER { get; } = new RtspMethod( "SET_PARAMETER" );
-        
-        public static RtspMethod ANNOUNCE { get; } = new RtspMethod( "ANNOUNCE" );
-        
-        public static RtspMethod REDIRECT { get; } = new RtspMethod( "REDIRECT" );
-        
-        public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
-
-
-
-
         public static bool Equals( RtspMethod method , string name )
         {
             if ( method == null || string.IsNullOrWhiteSpace( name ) )
@@ -53,9 +55,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 
             return StringComparer.OrdinalIgnoreCase.Equals( method.Name , name?.Trim() );
         }
-
-
-        
 
         public static bool TryParse( string value , out RtspMethod result )
         {
@@ -68,7 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved
 
             var methodName = value.Trim();
 
-            foreach ( var property in typeof( RtspMethod ).GetProperties( BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty ) )
+            foreach ( var property in typeof( RtspMethod ).GetFields( BindingFlags.Public | BindingFlags.Static ) )
             {
                 var method = property.GetValue( null ) as RtspMethod ;
 
