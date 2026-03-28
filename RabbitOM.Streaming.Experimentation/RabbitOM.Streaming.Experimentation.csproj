@@ -166,7 +166,6 @@
     <Compile Include="Rtsp\Headers\RtpInfoHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SessionHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\StringWithQualityHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\SupportedTypes.cs" />
     <Compile Include="Rtsp\Headers\TransportHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Types\KnownEncodingTypes.cs" />
     <Compile Include="Rtsp\Headers\Types\KnownLanguageTypes.cs" />
