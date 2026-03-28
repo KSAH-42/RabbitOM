@@ -266,6 +266,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return new Enumerator( this );
         }
 
+        // the SetValue do the same thing of AddOrUpdate method except, that it force removal if it an empty value is passed
         public void SetValue( string name , string value )
         {
             if ( ! HeaderProtocolValidator.IsValidHeaderName( name ) )
