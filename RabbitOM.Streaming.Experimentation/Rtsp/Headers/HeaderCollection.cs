@@ -71,13 +71,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         // to avoid using linq, and avoid allocation of key<string,string[]>, or any cast of key<string,IEnumerable<string>>
         // and preserve immutability 
 
-        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
+        public struct FlattenEnumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
         {
             private readonly IEnumerator<KeyValuePair<string,List<object>>> _enumerator;
             private IEnumerator<object> _valuesEnumerator;
             private KeyValuePair<string,string> _current;
 
-            public Enumerator( HeaderCollection collection )
+            public FlattenEnumerator( HeaderCollection collection )
             {
                 _enumerator = collection._collection.GetEnumerator();
                 _valuesEnumerator = null;
@@ -232,7 +232,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             var queue = new Queue<KeyValuePair<string,string>>();
             
-            using ( IEnumerator<KeyValuePair<string,string>> enumerator = new Enumerator( this ) )
+            using ( IEnumerator<KeyValuePair<string,string>> enumerator = new FlattenEnumerator( this ) )
             {
                 while ( enumerator.MoveNext() )
                 {
@@ -262,11 +262,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new Enumerator( this );
+            return new FlattenEnumerator( this );
         }
         IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
         {
-            return new Enumerator( this );
+            return new FlattenEnumerator( this );
         }
 
         // the SetValue do the same thing of AddOrUpdate method except, that it force removal if it an empty value is passed
