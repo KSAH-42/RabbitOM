@@ -13,6 +13,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
 
+
+
+
+
+        // TODO: add a special validator to check it does not include the seperator
         public StringWithQualityHeaderValue( string value )
         {
             Value = HeaderProtocolValidator.IsValidToken( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
@@ -27,10 +32,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+
+
         public string Value { get; }
 
         public double? Quality { get; }
         
+
+
+
 
 
 
@@ -58,40 +69,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return ValueComparer.Equals( a.Value , b.Value ) && a.Quality == b.Quality;
         }
-
-
-
-
-        public override bool Equals( object obj )
-        {
-            return Equals( obj as StringWithQualityHeaderValue );
-        }
-        
-        public bool Equals( StringWithQualityHeaderValue obj )
-        {
-            return Equals( this , obj );
-        }
-
-        public override int GetHashCode()
-        {
-            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            if ( string.IsNullOrWhiteSpace( Value ) )
-            {
-                return string.Empty;
-            }
-
-            return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
-        }
-
-
-
-
-
-        
 
         public static bool TryParse( string input , out StringWithQualityHeaderValue result )
         {
@@ -126,6 +103,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+
+
+
+
+        public override bool Equals( object obj )
+        {
+            return Equals( obj as StringWithQualityHeaderValue );
+        }
+        
+        public bool Equals( StringWithQualityHeaderValue obj )
+        {
+            return Equals( this , obj );
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            if ( string.IsNullOrWhiteSpace( Value ) )
+            {
+                return string.Empty;
+            }
+
+            return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
         }
     }
 }
