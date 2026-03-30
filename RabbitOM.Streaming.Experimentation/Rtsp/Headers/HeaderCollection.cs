@@ -68,6 +68,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        // to avoid using linq, and avoid allocation of key<string,string[]>, or any cast of key<string,IEnumerable<string>>
+        // and preserve immutability 
 
         public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
         {
