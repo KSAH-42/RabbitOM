@@ -7,11 +7,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
     
-    public sealed class StringWithQualityHeaderValue : IEquatable<StringWithQualityHeaderValue>
+    public sealed class StringWithQualityHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
 
 
 
@@ -33,8 +32,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
         public string Value { get; }
 
         public double? Quality { get; }
@@ -48,16 +45,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static implicit operator StringWithQualityHeaderValue( string value )
         {
             return new StringWithQualityHeaderValue( value );
-        }
-
-        public static bool Equals( StringWithQualityHeaderValue a , StringWithQualityHeaderValue b )
-        {
-            if ( object.ReferenceEquals( a , null ) || object.ReferenceEquals( b , null ) )
-            {
-                return false;
-            }
-
-            return ValueComparer.Equals( a.Value , b.Value ) && a.Quality == b.Quality;
         }
 
         public static bool TryParse( string input , out StringWithQualityHeaderValue result )
@@ -98,21 +85,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-        public override bool Equals( object obj )
-        {
-            return Equals( obj as StringWithQualityHeaderValue );
-        }
-        
-        public bool Equals( StringWithQualityHeaderValue obj )
-        {
-            return Equals( this , obj );
-        }
-
-        public override int GetHashCode()
-        {
-            return Value.ToLower().GetHashCode() ^ Quality.GetHashCode();
-        }
 
         public override string ToString()
         {
