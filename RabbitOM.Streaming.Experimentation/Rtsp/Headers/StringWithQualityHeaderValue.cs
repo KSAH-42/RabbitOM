@@ -50,18 +50,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return new StringWithQualityHeaderValue( value );
         }
 
-        public static bool IsNullOrEmpty( StringWithQualityHeaderValue obj )
-        {
-            return object.ReferenceEquals( obj , null ) || string.IsNullOrWhiteSpace( obj.Value );
-        }
-
         public static bool Equals( StringWithQualityHeaderValue a , StringWithQualityHeaderValue b )
         {
-            if ( object.ReferenceEquals( a , b ) )
-            {
-                return true;
-            }
-
             if ( object.ReferenceEquals( a , null ) || object.ReferenceEquals( b , null ) )
             {
                 return false;
