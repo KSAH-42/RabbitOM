@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Net.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public static class KnownEncodingTypes
     {
