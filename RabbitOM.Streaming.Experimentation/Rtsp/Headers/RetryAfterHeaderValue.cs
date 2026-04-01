@@ -30,6 +30,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
         
 
+
+
+
+
         public DateTime? Date
         {
             get => _date;
@@ -39,6 +43,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _delta;
         }
+
+
 
 
 
@@ -65,6 +71,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 
             return result != null;
         }
+
+
 
 
 
