@@ -6,21 +6,66 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 
     public sealed class RtspAuthorizationResponseBuilder
     {
-        public string Method { get; set; }
+        private string _method = string.Empty;
+        private string _scheme = string.Empty;
+        private string _algorithm = string.Empty;
+        private string _username = string.Empty;
+        private string _password = string.Empty;
+        private string _uri = string.Empty;
+        private string _realm = string.Empty;
+        private string _nonce = string.Empty;
 
-        public string Scheme { get; set; }
+
+
+
+
+        public string Method
+        {
+            get => _method;
+            set => _method = value ?? string.Empty;
+        }
+
+        public string Scheme
+        {
+            get => _scheme;
+            set => _scheme = value ?? string.Empty;
+        }
         
-        public string Algorithm { get; set; }
+        public string Algorithm
+        {
+            get => _algorithm;
+            set => _algorithm = value ?? string.Empty;
+        }
         
-        public string UserName { get; set; }
+        public string UserName
+        {
+            get => _username;
+            set => _username = value ?? string.Empty;
+        }
         
-        public string Password { get; set; }
+        public string Password
+        {
+            get => _password;
+            set => _password = value ?? string.Empty;
+        }
         
-        public string Uri { get; set; }
+        public string Uri
+        {
+            get => _uri;
+            set => _uri = value ?? string.Empty;
+        }
         
-        public string Realm { get; set; }
+        public string Realm
+        {
+            get => _realm;
+            set => _realm = value ?? string.Empty;
+        }
         
-        public string Nonce { get; set; }
+        public string Nonce
+        {
+            get => _nonce;
+            set => _nonce = value ?? string.Empty;
+        }
 
 
 
