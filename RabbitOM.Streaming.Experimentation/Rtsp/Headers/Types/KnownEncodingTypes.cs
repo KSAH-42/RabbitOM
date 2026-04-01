@@ -6,14 +6,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public static class KnownEncodingTypes
     {
-        public const string ZipEncoding = "zip";
-        public const string GZipEncoding = "gzip";
-        public const string TarEncoding = "tar";
-        public const string IdentityEncoding = "identity";
-        public const string DeflateEncoding = "deflate";
-        public const string BrEncoding = "br";
-        public const string AnyEncoding = "*";
-
+        public const string Zip = "zip";
+        public const string GZip = "gzip";
+        public const string Tar = "tar";
+        public const string Identity = "identity";
+        public const string Deflate = "deflate";
+        public const string BR = "br";
+        public const string Any = "*";
 
 
 
@@ -24,18 +23,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             return typeof(KnownEncodingTypes)
             .GetFields(System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.Static)
-            .Where( field => field.Name.EndsWith( "Encoding" ) )
+            .Where( field => field.FieldType == typeof( string ) )
             .Select( field => field.GetValue( null ) as string )
-            .Where( value => ! string.IsNullOrWhiteSpace( value ) )
             .ToHashSet<string>( StringComparer.OrdinalIgnoreCase );
         });
 
 
 
 
-
         public static IReadOnlyCollection<string> Values { get => s_values.Value; }
-
 
 
 
@@ -57,7 +53,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 s_values.Value.Add( value );
             }
         }
-
         public static void RemoveEncoding( string value )
         {
             lock ( s_lock )
