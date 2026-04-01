@@ -14,6 +14,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public const string BrEncoding = "br";
         public const string AnyEncoding = "*";
 
+
+
+
+
         private static readonly object s_lock = new object();
 
         private static readonly Lazy<HashSet<string>> s_values = new Lazy<HashSet<string>>( () => 
@@ -29,7 +33,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
+
         public static IReadOnlyCollection<string> Values { get => s_values.Value; }
+
+
 
 
 
@@ -50,6 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 s_values.Value.Add( value );
             }
         }
+
         public static void RemoveEncoding( string value )
         {
             lock ( s_lock )
