@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+
     public sealed class RtspAuthorizationResponseBuilder
     {
         public string Method { get; set; }
@@ -32,12 +34,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                 return string.Empty;
             }
 
-            if ( RtspAuthenticationTypes.IsBasicAuthentication( Scheme ) )
+            if ( AuthenticationTypes.IsBasicAuthentication( Scheme ) )
             {
                 return RtspAuthorizationAlgorithms.ComputeAsBasic( $"{UserName}:{Password}" );
             }
 
-            if ( RtspAuthenticationTypes.IsDigestAuthentication( Scheme ) )
+            if ( AuthenticationTypes.IsDigestAuthentication( Scheme ) )
             {
                 if ( string.IsNullOrWhiteSpace( Method ) || string.IsNullOrWhiteSpace( Uri ) || string.IsNullOrWhiteSpace( Realm ) || string.IsNullOrWhiteSpace( Nonce ) )
                 {
@@ -52,27 +54,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                     return hashFunction( hashA1 + ":" + Nonce + ":" + hashA2 );
                 }
 
-                if ( RtspAuthenticationTypes.IsMd5Algorithm( Algorithm ) )
+                if ( AuthenticationTypes.IsMd5Algorithm( Algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsMD5 );
                 }
 
-                if ( RtspAuthenticationTypes.IsSha1Algorithm( Algorithm ) )
+                if ( AuthenticationTypes.IsSha1Algorithm( Algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA1 );
                 }
 
-                if ( RtspAuthenticationTypes.IsSha256Algorithm( Algorithm ) )
+                if ( AuthenticationTypes.IsSha256Algorithm( Algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA256 );
                 }
 
-                if ( RtspAuthenticationTypes.IsSha384Algorithm( Algorithm ) )
+                if ( AuthenticationTypes.IsSha384Algorithm( Algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA384 );
                 }
 
-                if ( RtspAuthenticationTypes.IsSha512Algorithm( Algorithm ) )
+                if ( AuthenticationTypes.IsSha512Algorithm( Algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA512 );
                 }

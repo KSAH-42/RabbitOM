@@ -5,6 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
    
     public sealed class AuthenticateHeaderValue
@@ -136,7 +137,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         return false;
                     }
                     
-                    if ( RtspAuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
+                    if ( AuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
                     {
                         if ( ! HeaderProtocolValidator.IsValidToken( header.Nonce ) )
                         {

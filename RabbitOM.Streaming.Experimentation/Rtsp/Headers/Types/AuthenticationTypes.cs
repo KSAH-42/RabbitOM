@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public static class RtspAuthenticationTypes
+    public static class AuthenticationTypes
     {
         private readonly static HashSet<string> Md5Algorithms 
             = new [] { "MD5" , "MD5-sess" }
