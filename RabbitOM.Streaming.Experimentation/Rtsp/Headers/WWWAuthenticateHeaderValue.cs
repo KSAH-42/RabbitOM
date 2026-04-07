@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
    
-    public sealed class AuthenticateHeaderValue
+    public sealed class WWWAuthenticateHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryParse( string input , out AuthenticateHeaderValue result )
+        public static bool TryParse( string input , out WWWAuthenticateHeaderValue result )
         {
             result = null;
 
@@ -90,7 +90,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     return false;
                 }
 
-                var header = new AuthenticateHeaderValue() { Scheme = scheme };
+                var header = new WWWAuthenticateHeaderValue() { Scheme = scheme };
                 
                 if ( HeaderParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
                 {

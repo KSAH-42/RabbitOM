@@ -16,10 +16,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => GetValueObject( HeaderNames.Allow , () => new HeaderValueCollection<MethodHeaderValue>() );
         }
 
-        public AuthenticateHeaderValue Authenticate
+        public WWWAuthenticateHeaderValue WWWAuthenticate
         {
-            get => GetValueObject( HeaderNames.Authenticate ) as AuthenticateHeaderValue;
-            set => SetValueObject( HeaderNames.Authenticate , value );
+            get => GetValueObject( HeaderNames.WWWAuthenticate ) as WWWAuthenticateHeaderValue;
+            set => SetValueObject( HeaderNames.WWWAuthenticate , value );
         }
                 
         public uint? Bandwidth

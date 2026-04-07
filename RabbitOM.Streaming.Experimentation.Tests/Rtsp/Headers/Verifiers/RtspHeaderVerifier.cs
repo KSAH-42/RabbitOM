@@ -35,8 +35,8 @@ namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Headers.Verifiers
 
             "Authorization",
             "Proxy-Authorization",
-            "WWW-Authenticate",
-            "Proxy-Authenticate",
+            "WWW-WWWAuthenticate",
+            "Proxy-WWWAuthenticate",
 
             "Content-Type",
             "Content-Length",

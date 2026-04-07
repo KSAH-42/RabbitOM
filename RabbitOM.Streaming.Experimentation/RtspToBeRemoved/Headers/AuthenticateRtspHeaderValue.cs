@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp2BeRemoved.Headers
    
     public sealed class AuthenticateRtspHeaderValue : RtspHeaderValue
     {
-        public static readonly string TypeName = "WWW-Authenticate";
+        public static readonly string TypeName = "WWW-WWWAuthenticate";
 
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;

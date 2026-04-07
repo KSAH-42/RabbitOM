@@ -9,7 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string AcceptLanguage = "Accept-Language";
         public const string AcceptRanges = "Accept-Ranges";
         public const string Allow = "Allow";
-        public const string Authenticate = "WWW-Authenticate";
         public const string Authorization = "Authorization";
         public const string Bandwidth = "Bandwidth";
         public const string BlockSize = "BlockSize";
@@ -35,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string MaxForwards = "Max-Forwards";
         public const string MediaDuration = "Media-Duration";
         public const string Pragma = "Pragma";
-        public const string ProxyAuthenticate = "Proxy-Authenticate";
+        public const string ProxyAuthenticate = "Proxy-WWWAuthenticate";
         public const string ProxyAuthorization = "Proxy-Authorization";
         public const string ProxyRequire = "Proxy-Require";
         public const string Public = "Public";
@@ -54,5 +53,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string UserAgent = "User-Agent";
         public const string Via = "Via";
         public const string Warning = "Warning";
+        public const string WWWAuthenticate = "WWW-Authenticate";
     }
 }
