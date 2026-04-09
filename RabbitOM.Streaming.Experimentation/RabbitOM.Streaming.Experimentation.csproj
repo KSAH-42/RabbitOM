@@ -143,7 +143,7 @@
     <Compile Include="RtspToBeRemoved\Transports\Serialization\IRequestSerializer.cs" />
     <Compile Include="RtspToBeRemoved\Transports\SslClientChannel.cs" />
     <Compile Include="RtspToBeRemoved\Transports\TcpClientChannel.cs" />
-    <Compile Include="Rtsp\Headers\AuthenticateHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\WWWAuthenticateHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AuthorizationHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\CacheControlHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConferenceHeaderValue.cs" />

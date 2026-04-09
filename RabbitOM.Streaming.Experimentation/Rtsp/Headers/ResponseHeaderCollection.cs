@@ -16,12 +16,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => GetValueObject( HeaderNames.Allow , () => new HeaderValueCollection<MethodHeaderValue>() );
         }
 
-        public WWWAuthenticateHeaderValue WWWAuthenticate
-        {
-            get => GetValueObject( HeaderNames.WWWAuthenticate ) as WWWAuthenticateHeaderValue;
-            set => SetValueObject( HeaderNames.WWWAuthenticate , value );
-        }
-                
         public uint? Bandwidth
         {
             get => GetValue( HeaderNames.Bandwidth ).ToNullableUInt();
@@ -124,6 +118,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public HeaderValueCollection<WarningHeaderValue> Warning
         {
             get => GetValueObject( HeaderNames.Warning , () => new HeaderValueCollection<WarningHeaderValue>() );
+        }
+
+        public WWWAuthenticateHeaderValue WWWAuthenticate
+        {
+            get => GetValueObject( HeaderNames.WWWAuthenticate ) as WWWAuthenticateHeaderValue;
+            set => SetValueObject( HeaderNames.WWWAuthenticate , value );
         }
     }
 }
