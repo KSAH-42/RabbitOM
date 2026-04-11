@@ -29,6 +29,11 @@ internal class Program
    	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
    	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
 
+   	        requestHeaders.AcceptLanguage = new AcceptLanguageRtspHeader();
+   	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("fr-FR") );
+   	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-GB") );
+   	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-US") );
+   	           	        
    	        client.DefaultHeaders.AddRange( requestHeaders.ToList() );
         }
     }
