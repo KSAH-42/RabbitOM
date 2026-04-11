@@ -35,6 +35,8 @@ internal class Program
    	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-US") );
    	           	        
    	        client.DefaultHeaders.AddRange( requestHeaders.ToList() );
+
+   	        // client.DefaultHeaders => collection that accept only RtspHeader, extensions method will be added for add( string name , string value ); the collection must expose virtual method to deny header if it's for request or response usage, etc...
         }
     }
 }
