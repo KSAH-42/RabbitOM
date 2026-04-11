@@ -33,6 +33,10 @@ internal class Program
    	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("fr-FR") );
    	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-GB") );
    	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-US") );
+
+			requestHeaders.AddHeader( "HeaderA" , "1" );
+   	        requestHeaders.AddHeader( "HeaderB" , "1" );
+   	        requestHeaders.AddHeader( "HeaderC" , "1" );
    	           	        
    	        client.DefaultHeaders.AddRange( requestHeaders.ToList() );
 
