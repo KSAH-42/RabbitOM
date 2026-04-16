@@ -16,9 +16,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         
         private BitmapPixelsData _pixelsData;
 
-        private double _width;
-
-        private double _height;
+        private readonly RenderingSizeInfo _renderingSize = new RenderingSizeInfo();
 
         
 
@@ -35,7 +33,14 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
                 
                 if ( decoder.Frames.Count > 0 )
                 {
-                    OnDraw( decoder.Frames[0] );
+                    var frame = decoder.Frames[0];
+
+                    if ( _renderingSize.ChangeValues( frame.Width , frame.Height ) )
+                    {
+                        Clear();
+                    }
+
+                    OnDraw( frame );
                 }
             }
             catch ( Exception ex )
@@ -66,8 +71,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         public override void Clear()
         {
             _pixelsData = BitmapPixelsData.Empty;
-            _width = 0;
-            _height = 0;
+            _renderingSize.ClearValues();
             SetImageSource( TargetControl , _writableBitmap = null );
         }
 
@@ -81,18 +85,6 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         /// <param name="source">the source</param>
         private void OnDraw( BitmapSource source )
         {
-            if ( source == null )
-            {
-                return;
-            }
-
-            if ( _width != source.Width || _height != source.Height )
-            {
-                _width = source.Width;
-                _height = source.Height;
-                Clear();
-            }
-            
             var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
                 ? BitmapPixelsData.TryCreate( source, out _pixelsData )
                 : BitmapPixelsData.TryCopy( source, ref _pixelsData );

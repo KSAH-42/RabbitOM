@@ -65,6 +65,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Renders\JpegRenderer.cs" />
+    <Compile Include="Renders\RenderingSizeInfo.cs" />
     <Compile Include="Renders\Renderer.cs" />
     <Compile Include="WritableBitmapLocker.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
