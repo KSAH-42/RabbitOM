@@ -153,16 +153,11 @@ namespace RabbitOM.Sample.Client.Mjpeg
         
         private void OnRenderFrame( object sender , RtpMediaBuildedEventArgs e )
         {
-            var jpegFrame = e.MediaElement as JpegFrameMediaElement;
-
-            if ( jpegFrame != null )
-            {
-                _renderer.Frame = jpegFrame.Buffer;
+            _renderer.Frame = e.MediaElement.Buffer;
                 
-                if ( _renderer.CanRender() )
-                {
-                    _renderer.Render();
-                }
+            if ( _renderer.CanRender() )
+            {
+                _renderer.Render();
             }
         }
 
