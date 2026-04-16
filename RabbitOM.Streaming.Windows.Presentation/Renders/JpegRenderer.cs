@@ -16,7 +16,11 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         
         private BitmapPixelsData _pixelsData;
 
+        private int _width;
 
+        private int _height;
+
+        
 
 
 
@@ -62,7 +66,6 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         public override void Clear()
         {
             _pixelsData = BitmapPixelsData.Empty;
-
             SetImageSource( TargetControl , _writableBitmap = null );
         }
 
@@ -81,6 +84,11 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
             {
                 return;
             }
+
+            if ( _width != source.Width || _height != source.Height )
+            {
+                Clear();
+            }
             
             var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
                 ? BitmapPixelsData.TryCreate( source, out _pixelsData )
@@ -90,7 +98,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
             {
                 return;
             }
-            
+
             if ( _writableBitmap == null || _writableBitmap.PixelWidth != source.Width || _writableBitmap.PixelHeight != source.Height )
             {
                 _writableBitmap = new WriteableBitmap(source.PixelWidth,source.PixelHeight,source.DpiX,source.DpiY, source.Format , null);

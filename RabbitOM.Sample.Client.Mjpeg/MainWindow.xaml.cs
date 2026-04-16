@@ -11,6 +11,7 @@ namespace RabbitOM.Sample.Client.Mjpeg
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
     using RabbitOM.Sample.Client.Mjpeg.Extensions;
+    using System.Windows.Navigation;
 
     public partial class MainWindow : Window
     {
@@ -154,11 +155,16 @@ namespace RabbitOM.Sample.Client.Mjpeg
         
         private void OnRenderFrame( object sender , RtpMediaBuildedEventArgs e )
         {
-            _renderer.Frame = e.MediaElement.Buffer;
+            var jpegFrame = e.MediaElement as JpegFrameMediaElement;
 
-            if ( _renderer.CanRender() )
+            if ( jpegFrame != null )
             {
-                _renderer.Render();
+                _renderer.Frame = jpegFrame.Buffer;
+                
+                if ( _renderer.CanRender() )
+                {
+                    _renderer.Render();
+                }
             }
         }
 
@@ -203,7 +209,10 @@ namespace RabbitOM.Sample.Client.Mjpeg
 
             if ( result.HasValue && result.Value )
             {
-                _resolutionInfo = new ResolutionInfo( dialog.WidthResolution , dialog.HeightResolution );
+                if ( dialog.ReplaceResolution )
+                    _resolutionInfo = new ResolutionInfo( dialog.WidthResolution , dialog.HeightResolution );
+                else
+                    _resolutionInfo = null;
             }
         }
     }
