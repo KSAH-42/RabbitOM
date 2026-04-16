@@ -71,7 +71,6 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         public override void Clear()
         {
             _pixelsData = BitmapPixelsData.Empty;
-            _renderingSize.ClearValues();
             SetImageSource( TargetControl , _writableBitmap = null );
         }
 
