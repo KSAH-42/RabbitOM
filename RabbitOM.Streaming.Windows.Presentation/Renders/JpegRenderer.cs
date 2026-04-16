@@ -16,9 +16,9 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         
         private BitmapPixelsData _pixelsData;
 
-        private int _width;
+        private double _width;
 
-        private int _height;
+        private double _height;
 
         
 
@@ -66,9 +66,10 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         public override void Clear()
         {
             _pixelsData = BitmapPixelsData.Empty;
+            _width = 0;
+            _height = 0;
             SetImageSource( TargetControl , _writableBitmap = null );
         }
-
 
 
 
@@ -87,6 +88,8 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
 
             if ( _width != source.Width || _height != source.Height )
             {
+                _width = source.Width;
+                _height = source.Height;
                 Clear();
             }
             
