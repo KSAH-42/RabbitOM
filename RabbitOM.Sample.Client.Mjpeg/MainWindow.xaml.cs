@@ -11,7 +11,6 @@ namespace RabbitOM.Sample.Client.Mjpeg
     using RabbitOM.Streaming.Net.Rtsp.Clients;
     using RabbitOM.Streaming.Windows.Presentation.Renders;
     using RabbitOM.Sample.Client.Mjpeg.Extensions;
-    using System.Windows.Navigation;
 
     public partial class MainWindow : Window
     {
@@ -24,7 +23,6 @@ namespace RabbitOM.Sample.Client.Mjpeg
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
         private readonly Renderer _renderer = new JpegRenderer();
         private ResolutionInfo? _resolutionInfo;
-
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
