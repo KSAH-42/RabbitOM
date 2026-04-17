@@ -77,12 +77,8 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         /// <param name="frame">the source</param>
         private void OnDraw( BitmapSource frame )
         {
-            if ( _renderingSize.ChangeValues( frame.Width , frame.Height ) )
-            {
-                _pixelsData = BitmapPixelsData.Empty;
-            }
-
-            var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
+            var succeed = _renderingSize.ChangeValues( frame.Width , frame.Height ) 
+               || BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
                 ? BitmapPixelsData.TryCreate( frame, out _pixelsData )
                 : BitmapPixelsData.TryCopy( frame, ref _pixelsData );
             
