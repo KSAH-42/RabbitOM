@@ -33,14 +33,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
                 
                 if ( decoder.Frames.Count > 0 )
                 {
-                    var frame = decoder.Frames[0];
-
-                    if ( _renderingSize.ChangeValues( frame.Width , frame.Height ) )
-                    {
-                        Clear();
-                    }
-
-                    OnDraw( frame );
+                    OnDraw( decoder.Frames[0] );
                 }
             }
             catch ( Exception ex )
@@ -81,23 +74,28 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         /// <summary>
         /// Occurs when the image must be draw
         /// </summary>
-        /// <param name="source">the source</param>
-        private void OnDraw( BitmapSource source )
+        /// <param name="frame">the source</param>
+        private void OnDraw( BitmapSource frame )
         {
+            if ( _renderingSize.ChangeValues( frame.Width , frame.Height ) )
+            {
+                _pixelsData = BitmapPixelsData.Empty;
+            }
+
             var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
-                ? BitmapPixelsData.TryCreate( source, out _pixelsData )
-                : BitmapPixelsData.TryCopy( source, ref _pixelsData );
+                ? BitmapPixelsData.TryCreate( frame, out _pixelsData )
+                : BitmapPixelsData.TryCopy( frame, ref _pixelsData );
             
             if ( ! succeed )
             {
                 return;
             }
 
-            if ( _writableBitmap == null || _writableBitmap.PixelWidth != source.Width || _writableBitmap.PixelHeight != source.Height )
+            if ( _writableBitmap == null || _writableBitmap.PixelWidth != frame.Width || _writableBitmap.PixelHeight != frame.Height )
             {
-                _writableBitmap = new WriteableBitmap(source.PixelWidth,source.PixelHeight,source.DpiX,source.DpiY, source.Format , null);
+                _writableBitmap = new WriteableBitmap(frame.PixelWidth,frame.PixelHeight,frame.DpiX,frame.DpiY, frame.Format , null);
                 
-                _bitmapRegion = new Int32Rect(0,0,source.PixelWidth,source.PixelHeight);
+                _bitmapRegion = new Int32Rect(0,0,frame.PixelWidth,frame.PixelHeight);
                 
                 SetImageSource( TargetControl , _writableBitmap );
             }   
