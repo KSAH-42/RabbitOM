@@ -388,7 +388,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
 
-        public void SendAsInterleaved( byte[] buffer )
+        public void SendInterleaved( byte[] buffer )
         {
             throw new NotImplementedException();
         }
