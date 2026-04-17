@@ -31,7 +31,7 @@ namespace RabbitOM.Sample.Client.Mjpeg
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
-            
+
             _frameBuilder.MediaBuilded += OnBuildFrame;            
         }
 
