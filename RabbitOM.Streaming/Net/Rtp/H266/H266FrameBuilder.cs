@@ -32,9 +32,9 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
-            e.CanContinue = RtpPacket.IsDynamicType( e.Packet );
-
             base.OnPacketAdding( e );
+
+            e.CanContinue &= RtpPacket.IsDynamicType( e.Packet );
         }
 
         protected override void OnSequenceCompleted( RtpSequenceEventArgs e )

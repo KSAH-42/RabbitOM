@@ -30,9 +30,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
-            e.CanContinue = e.Packet.Type == RtpPacketType.JPEG;
-
             base.OnPacketAdding( e );
+
+            e.CanContinue &= e.Packet.Type == RtpPacketType.JPEG;
         }
 
         protected override void OnSequenceCompleted( RtpSequenceEventArgs e )

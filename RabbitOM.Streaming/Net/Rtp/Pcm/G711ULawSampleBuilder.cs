@@ -6,9 +6,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
     {
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
-            e.CanContinue = e.Packet.Type == RtpPacketType.PCM_U;
-
             base.OnPacketAdding( e );
+
+            e.CanContinue &= e.Packet.Type == RtpPacketType.PCM_U;
         }
     }
 }

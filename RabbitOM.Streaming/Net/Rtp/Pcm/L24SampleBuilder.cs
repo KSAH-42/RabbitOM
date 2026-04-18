@@ -6,9 +6,9 @@ namespace RabbitOM.Streaming.Net.Rtp.Pcm
     {
         protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
         {
-            e.CanContinue = RtpPacket.IsDynamicType( e.Packet );
-
             base.OnPacketAdding( e );
+
+            e.CanContinue &= RtpPacket.IsDynamicType( e.Packet );
         }
     }
 }
