@@ -8,9 +8,14 @@ namespace RabbitOM.Streaming.Net.Rtp
         private bool _canContinue;
 
         public RtpPacketAddingEventArgs( RtpPacket packet  )
+            : this ( packet , true )
+        {
+        }
+
+        public RtpPacketAddingEventArgs( RtpPacket packet , bool canContinue )
         {
             _packet = packet ?? throw new ArgumentNullException( nameof( packet ) );
-            _canContinue = true;
+            _canContinue = canContinue;
         }
 
         public RtpPacket Packet
