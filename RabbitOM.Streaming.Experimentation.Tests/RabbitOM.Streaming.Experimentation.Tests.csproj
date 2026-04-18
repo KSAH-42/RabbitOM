@@ -8,6 +8,7 @@
   <Import Project="..\packages\Microsoft.Testing.Platform.MSBuild.2.0.2\build\Microsoft.Testing.Platform.MSBuild.props" Condition="Exists('..\packages\Microsoft.Testing.Platform.MSBuild.2.0.2\build\Microsoft.Testing.Platform.MSBuild.props')" />
   <Import Project="..\packages\Microsoft.Testing.Platform.2.0.2\build\netstandard2.0\Microsoft.Testing.Platform.props" Condition="Exists('..\packages\Microsoft.Testing.Platform.2.0.2\build\netstandard2.0\Microsoft.Testing.Platform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\packages\Microsoft.TestPlatform.Build.18.4.0\build\net462\Microsoft.TestPlatform.Build.targets" Condition="Exists('..\packages\Microsoft.TestPlatform.Build.18.4.0\build\net462\Microsoft.TestPlatform.Build.targets')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
