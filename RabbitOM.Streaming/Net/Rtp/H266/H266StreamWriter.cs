@@ -183,8 +183,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
         private void OnWriteFragementationStart( RtpPacket packet , in H266NalUnitFragment nalUnit )
         {
-            Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Clear();
@@ -196,8 +194,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
         private void OnWriteFragementationData( RtpPacket packet , in H266NalUnitFragment nalUnit )
         {
-            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
@@ -206,8 +202,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
         private void OnWriteFragementationStop( RtpPacket packet , in H266NalUnitFragment nalUnit )
         {
-            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    

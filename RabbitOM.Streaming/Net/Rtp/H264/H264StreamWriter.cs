@@ -165,8 +165,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         private void OnWriteStartFU_A( RtpPacket packet , in H264NalUnitFragmentA nalUnit )
         {
-            Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Clear();
@@ -178,8 +176,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         private void OnWriteDataFU_A( RtpPacket packet , in H264NalUnitFragmentA nalUnit )
         {
-            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
@@ -188,8 +184,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
 
         private void OnWriteStopFU_A( RtpPacket packet , in H264NalUnitFragmentA nalUnit )
         {
-            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );                
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Write( nalUnit.Payload );

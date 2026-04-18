@@ -237,8 +237,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         private void OnWriteFragmentationStart( RtpPacket packet , in H265NalUnitFragment nalUnit )
         {
-            Debug.Assert( _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Clear();
@@ -250,8 +248,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         private void OnWriteFragmentationData( RtpPacket packet , in H265NalUnitFragment nalUnit )
         {
-            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Write( nalUnit.Payload );
@@ -260,8 +256,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
 
         private void OnWriteFragmentationStop( RtpPacket packet , in H265NalUnitFragment nalUnit )
         {
-            Debug.Assert( ! _streamOfNalUnitsFragmented.IsEmpty );
-
             if ( ! _skipFragmentedNals )
             {
                 _streamOfNalUnitsFragmented.Write( nalUnit.Payload );                    
