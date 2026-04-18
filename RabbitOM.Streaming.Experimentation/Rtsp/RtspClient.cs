@@ -34,6 +34,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RequestHeaderCollection DefaultHeaders { get; } = new RequestHeaderCollection();
 
+        // dont't add here any property to store sessions objects or session ids, the server can return a specific codes or even warning and start the stream
+        // the management of sessions must be done in higher level
 
 
 
