@@ -32,4 +32,4 @@ jobs:
 
     - name: UnitTests
       run: |
-        msbuild $SOLUTION_NAME /t:VSTest /p:Configuration="Release"
+        dotnet test -c release
