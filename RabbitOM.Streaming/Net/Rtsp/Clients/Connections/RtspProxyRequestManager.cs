@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
             _requestHandlers       = new RtspProxyRequestHandlerList();
             _chunks                = new RtspChunkQueue();
             _extractor             = new RtspMessageExtactor();
-            _buffer                = new byte[ 8096 * 8 * 2 ];
+            _buffer                = new byte[ 8096 ];
         }
 
 
