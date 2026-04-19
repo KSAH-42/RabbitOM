@@ -14,9 +14,9 @@ https://www.happytimesoft.com/products/rtsp-server/index.html
 
 go to the rtsp server folder, and add movies and the same folder and edit the xml configuration used by this server. and then launch this sample application.
 
-you can also copy the configuration files located in Resources\Configuration\ folder
+you can also copy the configuration files located in Resources\Configuration\ folder include movies files that match with the configuration file
 
-and run using the following command: 
+and then run using the following command: 
 
 RtspServer.exe -c config-JPEG.xml
 

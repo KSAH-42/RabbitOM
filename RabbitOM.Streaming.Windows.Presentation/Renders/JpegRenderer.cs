@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
                 {
                     var frame = decoder.Frames[0];
 
-                    if ( ! _renderingSize.ChangeValues( frame.Width , frame.Height ) )
+                    if ( _renderingSize.ChangeValues( frame.Width , frame.Height ) )
                     {
                         _pixelsData = BitmapPixelsData.Empty;
                     }
