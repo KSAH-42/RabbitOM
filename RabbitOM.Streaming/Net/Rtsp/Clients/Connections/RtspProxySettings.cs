@@ -7,6 +7,14 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
     /// </summary>
     public sealed class RtspSettings
     {
+        /// <summary>
+        /// The default timeout value
+        /// </summary>
+        public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds( 15 );
+
+
+
+
         private readonly object _lock = new object();
 
         private string _uri;
@@ -132,6 +140,19 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
                     _sendTimeout = value;
                 }
             }
+        }
+
+
+
+
+        /// <summary>
+        /// Gets the timeout value or returns <see cref="RtspSettings.DefaultTimeout"/>
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns the argument value if the number of ticks are greater than zero, otherwise the method returns the default timeout value</returns>
+        public static TimeSpan GetTimeoutOrDefault( in TimeSpan timeout  )
+        {
+            return timeout.Ticks > 0 ? timeout : DefaultTimeout;
         }
     }
 }

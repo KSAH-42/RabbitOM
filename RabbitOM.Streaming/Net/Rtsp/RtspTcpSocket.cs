@@ -187,14 +187,9 @@ namespace RabbitOM.Streaming.Net.Rtsp
                 return false;
             }
 
-            var socket = _socket;
-
             try
             {
-                if ( socket != null )
-                {
-                    return socket.Send(buffer, offset , count , SocketFlags.None ) > 0;
-                }
+                return _socket?.Send(buffer, offset , count , SocketFlags.None ) > 0 ;
             }
             catch ( Exception ex )
             {
@@ -222,7 +217,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
             {
                 return 0;
             }
-
+            
             try
             {
                 return _socket?.Receive(buffer, offset , buffer.Length , SocketFlags.None ) ?? 0 ;
@@ -233,6 +228,31 @@ namespace RabbitOM.Streaming.Net.Rtsp
             }
 
             return -1;
+        }
+
+        /// <summary>
+        /// Waiting for data received
+        /// </summary>
+        /// <param name="timeout">the timeout</param>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool WaitForDataReceived( in TimeSpan timeout )
+        {
+            var socket = _socket;
+
+            try
+            {
+                // TODO: to be refactored
+                if ( socket != null && socket.Poll( (int) timeout.Ticks , SelectMode.SelectRead ) )
+                {
+                    return socket.Available > 0;
+                }
+            }
+            catch ( Exception ex )
+            {
+                OnError( ex );
+            }
+
+            return false;
         }
 
 
