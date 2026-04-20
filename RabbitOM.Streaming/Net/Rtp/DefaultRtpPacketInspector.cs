@@ -56,5 +56,35 @@ namespace RabbitOM.Streaming.Net.Rtp
                 throw new InvalidOperationException( $"UnAuthorize packet : invalid type {packet.Type}" );
             }
         }
+
+        public override bool TryInspect( RtpPacket packet )
+        {
+            if ( packet == null || ! packet.TryValidate() )
+            {
+                return false;
+            }
+
+            if ( MinimumPayloadSize.HasValue && MinimumPayloadSize > packet.Payload.Count )
+            {
+                return false;
+            }
+
+            if ( MaximumPayloadSize.HasValue && MaximumPayloadSize < packet.Payload.Count )
+            {
+                return false;
+            }
+
+            if ( RecognizedSSRC.HasValue && RecognizedSSRC != packet.SSRC )
+            {
+                return false;
+            }
+
+            if ( PacketsTypes.Count > 0 && ! PacketsTypes.Contains( packet.Type ) )
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

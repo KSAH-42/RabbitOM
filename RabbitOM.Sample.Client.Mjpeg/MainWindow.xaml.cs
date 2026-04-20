@@ -137,9 +137,10 @@ namespace RabbitOM.Sample.Client.Mjpeg
         {
             if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) )
             {
-                _inspector.Inspect( packet );
-
-                _frameBuilder.AddPacket( packet );
+                if ( _inspector.TryInspect( packet ) )
+                {
+                    _frameBuilder.AddPacket( packet );
+                }
             }
         }
 
