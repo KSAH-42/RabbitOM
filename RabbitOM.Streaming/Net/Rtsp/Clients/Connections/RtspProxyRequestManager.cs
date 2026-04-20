@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
             {
                 while ( _chunkListenerThread.CanContinue() )
                 {
-                    if ( WaitChunks() )
+                    if ( RtspChunkQueue.Wait( _chunks , _chunkListenerThread.ExitHandle ) )
                     {
                         ReceiveChunks();
                     }
@@ -64,16 +64,15 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
 
             _requestListenerThread.Start( () =>
             {
-                do
+                while( _requestListenerThread.CanContinue() )
                 {
-                    int bytesReceived = ReceiveMessages();
+                    var bytesReceived = _proxy.WaitForData() ? ReceiveMessages() : 0;
 
                     if ( bytesReceived <= 0 )
                     {
                         _requestListenerThread.CanContinue( _proxy.ReceiveTimeout );
                     }
                 }
-                while( _requestListenerThread.CanContinue() );
             } );
         }
 
@@ -189,21 +188,18 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
         {
             try
             {
-                if ( _proxy.WaitForData() )
+                int bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
+
+                if ( bytesReceived > 0 )
                 {
-                    int bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
+                    var data = new byte[ bytesReceived ];
 
-                    if ( bytesReceived > 0 )
-                    {
-                        var data = new byte[ bytesReceived ];
+                    Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
 
-                        Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
-
-                        _chunks.TryEnqueue( data );
-                    }
-
-                    return bytesReceived;
+                    _chunks.TryEnqueue( data );
                 }
+
+                return bytesReceived;
             }
             catch ( Exception ex )
             {
@@ -211,15 +207,6 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
             }
 
             return -1;
-        }
-
-        /// <summary>
-        /// Wait chunk
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
-        private bool WaitChunks()
-        {
-            return RtspChunkQueue.Wait( _chunks , _chunkListenerThread.ExitHandle );
         }
 
         /// <summary>
