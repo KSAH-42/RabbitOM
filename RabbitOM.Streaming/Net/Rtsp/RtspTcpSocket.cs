@@ -235,7 +235,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public bool WaitForDataReceived( in TimeSpan timeout )
+        public bool WaitForData( in TimeSpan timeout )
         {
             var socket = _socket;
 

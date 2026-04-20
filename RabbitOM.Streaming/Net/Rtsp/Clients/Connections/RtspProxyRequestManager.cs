@@ -189,18 +189,21 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
         {
             try
             {
-                int bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
-
-                if ( bytesReceived > 0 )
+                if ( _proxy.WaitForData() )
                 {
-                    var data = new byte[ bytesReceived ];
+                    int bytesReceived = _proxy.Receive( _buffer , 0 , _buffer.Length );
 
-                    Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
+                    if ( bytesReceived > 0 )
+                    {
+                        var data = new byte[ bytesReceived ];
 
-                    _chunks.TryEnqueue( data );
+                        Buffer.BlockCopy( _buffer , 0 , data , 0 , data.Length );
+
+                        _chunks.TryEnqueue( data );
+                    }
+
+                    return bytesReceived;
                 }
-
-                return bytesReceived;
             }
             catch ( Exception ex )
             {

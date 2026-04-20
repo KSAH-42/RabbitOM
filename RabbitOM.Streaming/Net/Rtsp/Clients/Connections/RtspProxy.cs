@@ -539,13 +539,17 @@ namespace RabbitOM.Streaming.Net.Rtsp.Clients.Connections
         /// <returns>returns the number of bytes read</returns>
         public int Receive( byte[] buffer , int offset , int count )
         {
+            return _socket.Receive(buffer, offset, count);
+        }
+
+        /// <summary>
+        /// Wait for receiving data
+        /// </summary>
+        /// <returns>returns true for a success, otherwise false</returns>
+        public bool WaitForData()
+        {
             // TODO: for the next implementation of the rtsp client, make a refactoring somewhere because the _settings timeout values can defined yet because the receiver thread is started after the connection of on the succeed, and the timeout are set ather calling the connect method, find something better for the next implementation
-            if ( _socket.WaitForDataReceived( RtspSettings.GetTimeoutOrDefault( _settings.ReceiveTimeout ) ) )
-            {
-                return _socket.Receive(buffer, offset, count);
-            }
-            
-            return 0;
+            return _socket.WaitForData( RtspSettings.GetTimeoutOrDefault( _settings.ReceiveTimeout ) );
         }
 
         /// <summary>
