@@ -55,6 +55,14 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
             {
                 image.BeginInit();
                 image.Source = source;
+                
+                if ( source != null )
+                {
+                    RenderOptions.SetCachingHint( image , CachingHint.Cache );
+                    RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.LowQuality );
+                    RenderOptions.SetEdgeMode( image , EdgeMode.Aliased );
+                }
+
                 image.EndInit();
             }
         }
