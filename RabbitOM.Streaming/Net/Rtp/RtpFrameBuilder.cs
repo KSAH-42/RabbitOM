@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : IMediaBuilder , IConfigurer<RtpFrameBuilderAggregationConfiguration> , IDisposable
+    public abstract class RtpFrameBuilder : IMediaBuilder , IConfigurer<RtpFrameBuilderNetworkConfiguration> , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator() { MaximumNumberOfPackets = 200 };
+        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator() { MaximumNumberOfPackets = 300 };
 
         
        
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public void Configure( RtpFrameBuilderAggregationConfiguration configuration )
+        public void Configure( RtpFrameBuilderNetworkConfiguration configuration )
         {
             _aggregator.MaximumNumberOfPackets = configuration.MaximumNumberOfPackets;
         }
