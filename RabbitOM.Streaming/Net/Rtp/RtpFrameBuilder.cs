@@ -45,12 +45,7 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         public void Configure( RtpFrameBuilderAggregationConfiguration configuration )
         {
-            if ( configuration == null )
-            {
-                throw new ArgumentNullException( nameof( configuration ) );
-            }
-
-            _aggregator.MaximumNumberOfPackets = configuration.MaximumNumberOfPackets;
+            _aggregator.MaximumNumberOfPackets = configuration?.MaximumNumberOfPackets ?? throw new ArgumentNullException( nameof( configuration ) );
         }
 
         public void AddPacket( RtpPacket packet )
