@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp
     {
         public RtpFrameBuilderAggregationConfiguration( int maximumNumerOfPackets )
         {
-            if ( maximumNumerOfPackets <= 1 || maximumNumerOfPackets > 2000 )
+            if ( maximumNumerOfPackets <= 0 )
             {
                 throw new ArgumentOutOfRangeException( nameof( maximumNumerOfPackets ) );
             }

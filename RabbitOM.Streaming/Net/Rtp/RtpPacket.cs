@@ -115,8 +115,8 @@ namespace RabbitOM.Streaming.Net.Rtp
             
             var packet = new RtpPacket();
 
-            packet.Version         = (byte) (   buffer[ 0 ] >> 6 );
-            packet.HasPadding      = (byte) ( ( buffer[ 0 ] >> 5 ) & 0x1 ) == 1;
+            packet.Version         = (byte) ( ( buffer[ 0 ] >> 6 ) & 0x3 );
+            packet.HasPadding      = (byte) ( ( buffer[ 0 ] >> 5 ) & 0x1 ) >= 1;
             packet.HasExtension    = (byte) ( ( buffer[ 0 ] >> 4 ) & 0x1 ) == 1;
             packet.NumberOfCSRC    = (ushort) ( buffer[ 0 ] & 0x0F );
 
