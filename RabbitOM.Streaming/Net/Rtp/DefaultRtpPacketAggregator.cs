@@ -14,13 +14,20 @@ namespace RabbitOM.Streaming.Net.Rtp
 
         private uint? _currentSequenceNumber;
 
+        private int _maximumNumberOfPackets;
+
         private IReadOnlyCollection<RtpPacket> _sequence;
-        
 
 
 
 
 
+
+        public override int MaximumNumberOfPackets
+        {
+            get => _maximumNumberOfPackets;
+            set => _maximumNumberOfPackets = value;
+        }
 
         public override bool HasCompleteSequence
         {
@@ -50,7 +57,7 @@ namespace RabbitOM.Streaming.Net.Rtp
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( _isCompleted )
+            if ( _isCompleted || _maximumNumberOfPackets <= _packets.Count )
             {
                 throw new InvalidOperationException( "The aggregator contains remaining packets and full sequence, adding one more packet will break the sequence. Please, retrieve the sequence if you need it and remove all remaining packets." );
             }
