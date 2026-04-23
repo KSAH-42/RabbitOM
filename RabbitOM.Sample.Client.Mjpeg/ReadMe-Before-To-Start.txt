@@ -1,5 +1,26 @@
-﻿
+﻿//////////////////////////////////////////////////////////////////////////
+                       ABOUT VLC
+//////////////////////////////////////////////////////////////////////////
 
+Recommendation if you are using VLC for testing mjpeg connection,
+sometimes VLC will not be able to connect, because VLC rely in Live555, and Live555
+doesn't not support some authorization scheme and algorithm
+and sometimes VLC seems to cache the previous connection settings
+or to select the highest algorithm and finished to use basic if it's doesn't work
+
+my recommendation it to close VLC, change settings on the camera and then restart VLC
+
+For instance, if you are using vlc and hik camera will not be able to connect
+if the configuration/system/security || configuration/système/Sécurité
+on the web page as the following settings:
+    "authentication RTSP   : digest"
+and "RTSP Digest Algorithm : SHA256" 
+and save settings, vlc will not be able to connect
+instead, if you don't move forward test because vlc doesn't on mjpeg, try this sample even if vlc doesn't connect
+
+//////////////////////////////////////////////////////////////////////////
+                     ABOUT   HAPPY RTSP SERVER
+//////////////////////////////////////////////////////////////////////////
 This sample illustrate how to receive video from a Mjpeg source only. 
 
 For H254, or H265, etc... others indivuals samples will be provided.

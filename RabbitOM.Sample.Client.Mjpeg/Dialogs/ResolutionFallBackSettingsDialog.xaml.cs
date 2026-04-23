@@ -1,6 +1,4 @@
-﻿// Resolution fallback are used in case when jpeg resolutions are not present on the standard rtp rfc
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 
