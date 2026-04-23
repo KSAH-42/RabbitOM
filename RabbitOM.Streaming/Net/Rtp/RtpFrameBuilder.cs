@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
 
             var addingPacket = new RtpPacketAddingEventArgs( packet );
-
+            
             try
             {
                 OnPacketAdding( addingPacket );
@@ -79,6 +79,12 @@ namespace RabbitOM.Streaming.Net.Rtp
                 }
 
                 OnSequenceCompleted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+            }
+            catch ( Exception exception )
+            {
+                _aggregator.RemovePackets();
+
+                throw exception;
             }
             finally
             {
