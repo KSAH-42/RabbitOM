@@ -88,9 +88,7 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
             finally
             {
-                var removePackets = addingPacket.CanContinue == false || _aggregator.HasCompleteSequence || _aggregator.MaximumNumberOfPackets <= _aggregator.Packets.Count;
-
-                if ( removePackets )
+                if ( addingPacket.CanContinue == false || _aggregator.HasCompleteSequence || _aggregator.MaximumNumberOfPackets <= _aggregator.Packets.Count )
                 {
                     _aggregator.RemovePackets();
                 }
