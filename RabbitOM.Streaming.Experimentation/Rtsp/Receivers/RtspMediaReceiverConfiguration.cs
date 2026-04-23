@@ -11,5 +11,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         public TimeSpan HeartBeatTimeout { get; }
         public string HeartBeatMethod { get; }
         public MediaContentType ContentType { get; }
+        public int ReceiveBufferSize { get; }
     }
 }
