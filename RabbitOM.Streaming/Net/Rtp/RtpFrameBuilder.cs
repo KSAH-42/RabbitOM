@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : IMediaBuilder , IConfigurer<RtpFrameBuilderAggregationConfiguration> , IDisposable
+    public abstract class RtpFrameBuilder : IMediaBuilder , IConfigurer<RtpFrameBuilderConfiguration> , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
@@ -17,10 +17,7 @@ namespace RabbitOM.Streaming.Net.Rtp
         public event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
         public event EventHandler<RtpClearedEventArgs> Cleared;
-
         
-
-
 
 
 
@@ -34,16 +31,13 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-
         private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator() { MaximumNumberOfPackets = 1000 };
-
         
-       
 
 
 
 
-        public void Configure( RtpFrameBuilderAggregationConfiguration configuration )
+        public void Configure( RtpFrameBuilderConfiguration configuration )
         {
             _aggregator.MaximumNumberOfPackets = configuration?.MaximumNumberOfPackets ?? throw new ArgumentNullException( nameof( configuration ) );
         }
@@ -55,31 +49,26 @@ namespace RabbitOM.Streaming.Net.Rtp
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            if ( _aggregator.MaximumNumberOfPackets <= _aggregator.Packets.Count )
-            {
-                return;
-            }
-
             var addingPacket = new RtpPacketAddingEventArgs( packet );
-
-            OnPacketAdding( addingPacket );
-
-            if ( ! addingPacket.CanContinue )
-            {
-                return;
-            }
-
-            _aggregator.AddPacket( packet );
-
-            OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
-
-            if ( ! _aggregator.HasCompleteSequence )
-            {
-                return;
-            }
 
             try
             {
+                OnPacketAdding( addingPacket );
+
+                if ( ! addingPacket.CanContinue )
+                {
+                    return;
+                }
+
+                _aggregator.AddPacket( packet );
+
+                OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
+
+                if ( ! _aggregator.HasCompleteSequence )
+                {
+                    return;
+                }
+            
                 if ( _aggregator.HasUnOrderedSequence )
                 {
                     OnSequenceSorting( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
@@ -93,7 +82,14 @@ namespace RabbitOM.Streaming.Net.Rtp
             }
             finally
             {
-                _aggregator.RemovePackets();
+                var removePackets = addingPacket.CanContinue == false
+                    || _aggregator.HasCompleteSequence 
+                    || _aggregator.MaximumNumberOfPackets <= _aggregator.Packets.Count;
+
+                if ( removePackets )
+                {
+                    _aggregator.RemovePackets();
+                }
             }
         }
 
@@ -114,9 +110,6 @@ namespace RabbitOM.Streaming.Net.Rtp
         {
         }
         
-
-
-
 
 
 

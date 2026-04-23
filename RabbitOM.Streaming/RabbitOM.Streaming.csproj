@@ -81,7 +81,7 @@
     <Compile Include="Net\Rtp\H266\Payloads\Types\H266NalUnit.cs" />
     <Compile Include="Net\Rtp\IConfigurer.cs" />
     <Compile Include="Net\Rtp\RtpClearedEventArgs.cs" />
-    <Compile Include="Net\Rtp\RtpFrameBuilderAggregationConfiguration.cs" />
+    <Compile Include="Net\Rtp\RtpFrameBuilderConfiguration.cs" />
     <Compile Include="Net\Rtp\RtpSequenceEventArgs.cs" />
     <Compile Include="Net\Rtp\RtpStartCodePrefix.cs" />
     <Compile Include="ResolutionInfo.cs" />

@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public sealed class RtpFrameBuilderAggregationConfiguration 
+    public sealed class RtpFrameBuilderConfiguration 
     {
-        public RtpFrameBuilderAggregationConfiguration( int maximumNumerOfPackets )
+        public RtpFrameBuilderConfiguration( int maximumNumerOfPackets )
         {
             if ( maximumNumerOfPackets <= 0 )
             {
