@@ -5,10 +5,10 @@
 Recommendation if you are using VLC for testing mjpeg connection,
 sometimes VLC will not be able to connect, because VLC rely in Live555, and Live555
 doesn't not support some authorization scheme and algorithm
-and sometimes VLC seems to cache the previous connection settings
+and sometimes VLC seems (not sure) to cache the previous connection settings
 or to select the highest algorithm and finished to use basic if it's doesn't work
 
-my recommendation it to close VLC, change settings on the camera and then restart VLC
+my recommendation is to change camera settings before, and then to close VLC, and then restart VLC.
 
 For instance, if you are using vlc and hik camera will not be able to connect
 if the configuration/system/security || configuration/système/Sécurité

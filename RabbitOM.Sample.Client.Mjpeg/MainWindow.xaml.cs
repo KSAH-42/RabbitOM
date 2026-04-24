@@ -118,7 +118,7 @@ namespace RabbitOM.Sample.Client.Mjpeg
                 // resolution fallback are used in case where rtsp server can not deliver the width and height due of the jpeg rtp rfc limitation, it's happen when the resolution become to big and can not be placed in the rtp jpeg packet.
                 var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
                     
-                configurer?.Configure( new JpegFrameBuilderConfiguration( _resolutionInfo ) );
+                configurer?.Configure( JpegFrameBuilderConfiguration.CreateConfigurationFrom( _resolutionInfo ) );
                 
                 _renderer.TargetControl = _image;
             } ) );
