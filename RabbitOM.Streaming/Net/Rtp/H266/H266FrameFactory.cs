@@ -9,18 +9,38 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
     {
         private readonly H266StreamWriter _writer = new H266StreamWriter();
 
-        public void Configure( H266FrameBuilderConfiguration configuration )
-        {
-            if ( configuration == null )
-            {
-                throw new ArgumentNullException( nameof( configuration ) );
-            }
 
-            _writer.Settings.PPS  = configuration.PPS;
-            _writer.Settings.SPS  = configuration.SPS;
-            _writer.Settings.VPS  = configuration.VPS;
-            _writer.Settings.DONL = configuration.DONL;
+
+
+
+        public byte[] SPS
+        {
+            get => _writer.Settings.SPS;
+            set => _writer.Settings.SPS = value;
         }
+
+        public byte[] PPS
+        {
+            get => _writer.Settings.PPS;
+            set => _writer.Settings.PPS = value;
+        }
+
+        public byte[] VPS
+        {
+            get => _writer.Settings.VPS;
+            set => _writer.Settings.VPS = value;
+        }
+
+        public bool DONL
+        {
+            get => _writer.Settings.DONL;
+            set => _writer.Settings.DONL = value;
+        }
+
+
+
+
+
 
         public bool TryCreate( IEnumerable<RtpPacket> packets , out H266FrameMediaElement result )
         {

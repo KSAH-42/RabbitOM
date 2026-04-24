@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    public abstract class RtpFrameBuilder : IMediaBuilder , IConfigurer<RtpFrameBuilderConfiguration> , IDisposable
+    public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
@@ -37,10 +37,15 @@ namespace RabbitOM.Streaming.Net.Rtp
 
 
 
-        public void Configure( RtpFrameBuilderConfiguration configuration )
+        public int MaximumNumberOfPackets
         {
-            _aggregator.MaximumNumberOfPackets = configuration?.MaximumNumberOfPackets ?? throw new ArgumentNullException( nameof( configuration ) );
+            get => _aggregator.MaximumNumberOfPackets;
+            set => _aggregator.MaximumNumberOfPackets = value > 0 ? value : throw new ArgumentOutOfRangeException( nameof( value ) ); 
         }
+
+
+
+
 
         public void AddPacket( RtpPacket packet )
         {

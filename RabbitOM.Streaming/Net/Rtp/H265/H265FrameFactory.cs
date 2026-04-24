@@ -15,23 +15,47 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     {
         private readonly H265StreamWriter _writer = new H265StreamWriter();
 
-        /// <summary>
-        /// Configure
-        /// </summary>
-        /// <param name="configuration">the configuration</param>
-        /// <exception cref="ArgumentNullException"/>
-        public void Configure( H265FrameBuilderConfiguration configuration )
-        {
-            if ( configuration == null )
-            {
-                throw new ArgumentNullException( nameof( configuration ) );
-            }
 
-            _writer.Settings.VPS  = configuration.VPS;
-            _writer.Settings.SPS  = configuration.SPS;
-            _writer.Settings.PPS  = configuration.PPS;
-            _writer.Settings.DONL = configuration.DONL;
+
+        /// <summary>
+        /// Gets / Sets the SPS
+        /// </summary>
+        public byte[] SPS
+        {
+            get => _writer.Settings.SPS;
+            set => _writer.Settings.SPS = value;
         }
+
+        /// <summary>
+        /// Gets / Sets the PPS
+        /// </summary>
+        public byte[] PPS
+        {
+            get => _writer.Settings.PPS;
+            set => _writer.Settings.PPS = value;
+        }
+
+        /// <summary>
+        /// Gets / Sets the VPS
+        /// </summary>
+        public byte[] VPS
+        {
+            get => _writer.Settings.VPS;
+            set => _writer.Settings.VPS = value;
+        }
+
+        /// <summary>
+        /// Gets / Sets the DONL
+        /// </summary>
+        public bool DONL
+        {
+            get => _writer.Settings.DONL;
+            set => _writer.Settings.DONL = value;
+        }
+
+
+
+
 
         /// <summary>
         /// Try to create the frame

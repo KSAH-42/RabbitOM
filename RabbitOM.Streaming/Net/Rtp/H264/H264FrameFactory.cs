@@ -9,16 +9,23 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     {
         private readonly H264StreamWriter _writer = new H264StreamWriter();
 
-        public void Configure( H264FrameBuilderConfiguration configuration )
-        {
-            if ( configuration == null )
-            {
-                throw new ArgumentNullException( nameof( configuration ) );
-            }
 
-            _writer.Settings.SPS = configuration.SPS;
-            _writer.Settings.PPS = configuration.PPS;
+
+        
+        public byte[] SPS
+        {
+            get => _writer.Settings.SPS;
+            set => _writer.Settings.SPS = value;
         }
+
+        public byte[] PPS
+        {
+            get => _writer.Settings.PPS;
+            set => _writer.Settings.PPS = value;
+        }
+
+
+
 
         public bool TryCreateFrame( IEnumerable<RtpPacket> packets , out H264FrameMediaElement result )
         {

@@ -2,9 +2,12 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H266
 {
-    public class H266FrameBuilder : RtpFrameBuilder , IConfigurer<H266FrameBuilderConfiguration>
+    public class H266FrameBuilder : RtpFrameBuilder
     {
         private readonly H266FrameFactory _frameFactory = new H266FrameFactory();
+
+
+
 
         public H266FrameBuilder()
         {
@@ -13,10 +16,37 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 #endif
         }
 
-        public virtual void Configure( H266FrameBuilderConfiguration configuration )
+
+
+
+
+        public byte[] SPS
         {
-            _frameFactory.Configure( configuration );
+            get => _frameFactory.SPS;
+            set => _frameFactory.SPS = value;
         }
+
+        public byte[] PPS
+        {
+            get => _frameFactory.PPS;
+            set => _frameFactory.PPS = value;
+        }
+
+        public byte[] VPS
+        {
+            get => _frameFactory.VPS;
+            set => _frameFactory.VPS = value;
+        }
+
+        public bool DONL
+        {
+            get => _frameFactory.DONL;
+            set => _frameFactory.DONL = value;
+        }
+
+
+
+
 
         protected override void Dispose( bool disposing )
         {

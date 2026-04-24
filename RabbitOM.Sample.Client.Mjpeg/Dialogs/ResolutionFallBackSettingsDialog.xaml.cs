@@ -58,6 +58,7 @@ namespace RabbitOM.Sample.Client.Mjpeg.Dialogs
 
 
 
+
         private void OnCanAcceptSettings( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = WidthResolution >= 2 && HeightResolution >= 2;

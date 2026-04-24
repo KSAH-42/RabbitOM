@@ -114,12 +114,6 @@ namespace RabbitOM.Sample.Client.Mjpeg
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
                 _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
-                
-                // resolution fallback are used in case where rtsp server can not deliver the width and height due of the jpeg rtp rfc limitation, it's happen when the resolution become too big and can not be placed in the rtp jpeg packet.
-                var configurer = _frameBuilder as IConfigurer<JpegFrameBuilderConfiguration>;
-                    
-                configurer?.Configure( JpegFrameBuilderConfiguration.CreateConfigurationFrom( _resolutionInfo ) );
-                
                 _renderer.TargetControl = _image;
             } ) );
         }
@@ -191,13 +185,11 @@ namespace RabbitOM.Sample.Client.Mjpeg
 
         private void OnExecuteConfigureResolution( object sender , RoutedEventArgs e )
         {
-            var resolutionInfo = _resolutionInfo.HasValue ? _resolutionInfo : ResolutionInfo.Resolution_1280x960;
-
             var dialog = new Dialogs.ResolutionFallBackSettingsDialog() 
             { 
                 Owner = Window.GetWindow( this ) ,
-                HeightResolution = resolutionInfo.Value.Height ,
-                WidthResolution = resolutionInfo.Value.Width ,
+                WidthResolution = _resolutionInfo.HasValue ? _resolutionInfo.Value.Width : ResolutionInfo.Resolution_1280x960.Width,
+                HeightResolution = _resolutionInfo.HasValue ? _resolutionInfo.Value.Height : ResolutionInfo.Resolution_1280x960.Height,
                 ReplaceResolution = _resolutionInfo.HasValue,
             };
 
@@ -209,6 +201,9 @@ namespace RabbitOM.Sample.Client.Mjpeg
                     _resolutionInfo = new ResolutionInfo( dialog.WidthResolution , dialog.HeightResolution );
                 else
                     _resolutionInfo = null;
+
+                if ( _frameBuilder is JpegFrameBuilder builder )
+                    builder.ResolutionFallBack = _resolutionInfo;
             }
         }
     }

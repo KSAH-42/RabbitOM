@@ -16,18 +16,12 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
         private readonly JpegImageBuilder _imageBuilder = new JpegImageBuilder();
 
         /// <summary>
-        /// Configure
+        /// Gets / Sets the resolution fallback settings
         /// </summary>
-        /// <param name="configuration">the configuration</param>
-        /// <exception cref="ArgumentNullException"/>
-        public void Configure( JpegFrameBuilderConfiguration configuration )
+        public ResolutionInfo? ResolutionFallback
         {
-            if ( configuration == null )
-            {
-                throw new ArgumentNullException( nameof( configuration ) );
-            }
-
-            _imageBuilder.ResolutionFallback      = configuration.ResolutionFallBack;
+            get => _imageBuilder.ResolutionFallback;
+            set => _imageBuilder.ResolutionFallback = value;
         }
 
         /// <summary>

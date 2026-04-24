@@ -2,14 +2,41 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H265
 {
-    public class H265FrameBuilder : RtpFrameBuilder , IConfigurer<H265FrameBuilderConfiguration>
+    public class H265FrameBuilder : RtpFrameBuilder
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
-        public virtual void Configure( H265FrameBuilderConfiguration configuration )
+
+
+
+
+        public byte[] SPS
         {
-            _frameFactory.Configure( configuration );
+            get => _frameFactory.SPS;
+            set => _frameFactory.SPS = value;
         }
+
+        public byte[] PPS
+        {
+            get => _frameFactory.PPS;
+            set => _frameFactory.PPS = value;
+        }
+
+        public byte[] VPS
+        {
+            get => _frameFactory.VPS;
+            set => _frameFactory.VPS = value;
+        }
+
+        public bool DONL
+        {
+            get => _frameFactory.DONL;
+            set => _frameFactory.DONL = value;
+        }
+
+
+
+
 
         protected override void Dispose( bool disposing )
         {

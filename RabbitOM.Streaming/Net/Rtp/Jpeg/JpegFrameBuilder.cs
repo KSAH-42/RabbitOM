@@ -2,14 +2,19 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.Jpeg
 {
-    public class JpegFrameBuilder : RtpFrameBuilder , IConfigurer<JpegFrameBuilderConfiguration>
+    public class JpegFrameBuilder : RtpFrameBuilder
     {
         private readonly JpegFrameFactory _factory = new JpegFrameFactory();
 
-        public virtual void Configure( JpegFrameBuilderConfiguration configuration )
+
+
+        public ResolutionInfo? ResolutionFallBack
         {
-            _factory.Configure( configuration );
+            get => _factory.ResolutionFallback;
+            set => _factory.ResolutionFallback = value;
         }
+
+
 
         protected override void Dispose( bool disposing )
         {

@@ -2,14 +2,28 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    public class H264FrameBuilder : RtpFrameBuilder , IConfigurer<H264FrameBuilderConfiguration>
+    public class H264FrameBuilder : RtpFrameBuilder
     {
         private readonly H264FrameFactory _frameFactory = new H264FrameFactory();
         
-        public virtual void Configure( H264FrameBuilderConfiguration configuration )
+
+
+
+        public byte[] SPS
         {
-            _frameFactory.Configure( configuration );
+            get => _frameFactory.SPS;
+            set => _frameFactory.SPS = value;
         }
+
+        public byte[] PPS
+        {
+            get => _frameFactory.PPS;
+            set => _frameFactory.PPS = value;
+        }
+
+
+
+
 
         protected override void Dispose( bool disposing )
         {
