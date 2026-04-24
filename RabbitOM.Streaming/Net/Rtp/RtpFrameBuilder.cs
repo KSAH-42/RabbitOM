@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Net.Rtp
 {
-    // TODO: replace "public event EventHandler<TEventArgs> by "public event EventStreamingHeadler" where the EventStreamingHeadler is : public delegate EventStreamingHeadler<T>( object sender, in T evt ); // where T is a struct
-    // make if modification if it really brings significant new memory perf otherwize do not change, it is juste a little bit, do not refactor
-
     public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
