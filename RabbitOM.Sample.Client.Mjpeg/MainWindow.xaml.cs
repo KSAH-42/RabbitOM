@@ -1,6 +1,4 @@
-﻿/// see => ReadMe-Before-To-Start.txt
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 
