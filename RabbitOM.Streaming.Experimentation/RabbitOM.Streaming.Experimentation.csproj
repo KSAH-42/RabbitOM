@@ -101,9 +101,9 @@
     <Compile Include="Rtsp\Headers\CacheControlHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConferenceHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\Converters\StringValueNormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Converters\TrimWithQuoteSuppressValueNormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Converters\TrimWithUnQuoteValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Normalizers\StringValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Normalizers\TrimWithQuoteSuppressValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Normalizers\TrimWithUnQuoteValueNormalizer.cs" />
     <Compile Include="Rtsp\Headers\Extensions\ValueExtensions.cs" />
     <Compile Include="Rtsp\Headers\HeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RequestHeaderCollection.cs" />
