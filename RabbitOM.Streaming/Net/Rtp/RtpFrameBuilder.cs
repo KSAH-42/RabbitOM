@@ -56,47 +56,46 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             var addingPacket = new RtpPacketAddingEventArgs( packet );
             
+            OnPacketAdding( addingPacket );
+
+            if ( ! addingPacket.CanContinue )
+            {
+                return;
+            }
+                
             try
             {
-                OnPacketAdding( addingPacket );
-
-                if ( ! addingPacket.CanContinue )
-                {
-                    return;
-                }
-
                 _aggregator.AddPacket( packet );
 
                 OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
 
-                if ( ! _aggregator.HasCompleteSequence )
+                if ( _aggregator.IsSequenceTooLong )
                 {
+                    _aggregator.RemovePackets();
                     return;
                 }
-            
-                if ( _aggregator.HasUnOrderedSequence )
+
+                if ( _aggregator.HasCompleteSequence )
                 {
-                    OnSequenceSorting( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+                    if ( _aggregator.HasUnOrderedSequence )
+                    {
+                        OnSequenceSorting( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
 
-                    _aggregator.SortSequence();
+                        _aggregator.SortSequence();
 
-                    OnSequenceSorted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+                        OnSequenceSorted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+                    }
+
+                    OnSequenceCompleted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
+
+                    _aggregator.RemovePackets();
                 }
-
-                OnSequenceCompleted( new RtpSequenceEventArgs( _aggregator.GetSequence() ) );
             }
-            catch ( Exception exception )
+            catch ( Exception )
             {
                 _aggregator.RemovePackets();
 
-                throw exception;
-            }
-            finally
-            {
-                if ( addingPacket.CanContinue == false || _aggregator.HasCompleteSequence || _aggregator.MaximumNumberOfPackets <= _aggregator.Packets.Count )
-                {
-                    _aggregator.RemovePackets();
-                }
+                throw;
             }
         }
 

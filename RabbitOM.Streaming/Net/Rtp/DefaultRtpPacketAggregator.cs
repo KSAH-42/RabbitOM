@@ -29,6 +29,11 @@ namespace RabbitOM.Streaming.Net.Rtp
             set => _maximumNumberOfPackets = value;
         }
 
+        public override bool IsSequenceTooLong
+        {
+            get => _maximumNumberOfPackets <= _packets.Count;
+        }
+
         public override bool HasCompleteSequence
         {
             get => _isCompleted;
