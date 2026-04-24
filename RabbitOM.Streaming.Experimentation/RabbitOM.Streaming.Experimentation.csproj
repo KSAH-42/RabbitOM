@@ -108,8 +108,8 @@
     <Compile Include="Rtsp\Headers\HeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RequestHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\ResponseHeaderCollection.cs" />
-    <Compile Include="Rtsp\Headers\HeaderNames.cs" />
-    <Compile Include="Rtsp\Headers\HeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\Types\HeaderNames.cs" />
+    <Compile Include="Rtsp\Headers\Internals\HeaderParser.cs" />
     <Compile Include="Rtsp\Headers\HeaderProtocolValidator.cs" />
     <Compile Include="Rtsp\Headers\HeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Rtsp\Headers\RetryAfterHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SessionHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\StringWithQualityHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\Types\StringWithQualityHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\TransportHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Types\KnownEncodingTypes.cs" />
     <Compile Include="Rtsp\Headers\Types\KnownLanguageTypes.cs" />
