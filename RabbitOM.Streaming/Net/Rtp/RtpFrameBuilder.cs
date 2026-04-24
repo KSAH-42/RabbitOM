@@ -56,15 +56,15 @@ namespace RabbitOM.Streaming.Net.Rtp
 
             var addingPacket = new RtpPacketAddingEventArgs( packet );
             
-            OnPacketAdding( addingPacket );
-
-            if ( ! addingPacket.CanContinue )
-            {
-                return;
-            }
-                
             try
             {
+                OnPacketAdding( addingPacket );
+
+                if ( ! addingPacket.CanContinue )
+                {
+                    return;
+                }
+
                 _aggregator.AddPacket( packet );
 
                 OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
