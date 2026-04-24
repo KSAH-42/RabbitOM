@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg
     /// <remarks>
     ///     <para>this is class is mark as internal, to force the focus of people to use builder instead of this class</para>
     /// </remarks>
-    internal sealed class JpegFrameFactory : IDisposable
+    public sealed class JpegFrameFactory : IDisposable
     {
         private readonly JpegImageBuilder _imageBuilder = new JpegImageBuilder();
 

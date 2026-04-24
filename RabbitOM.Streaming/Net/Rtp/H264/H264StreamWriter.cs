@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     using RabbitOM.Streaming.Net.Rtp.H264.Payloads;
     using RabbitOM.Streaming.Net.Rtp.H264.Payloads.Types;
 
-    internal sealed class H264StreamWriter : IDisposable
+    public sealed class H264StreamWriter : IDisposable
     {
         private readonly H264StreamWriterSettings _settings = new H264StreamWriterSettings();
         private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();

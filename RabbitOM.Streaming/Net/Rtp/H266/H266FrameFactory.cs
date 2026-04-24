@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 {
     using RabbitOM.Streaming.Net.Rtp.H266.Payloads;
 
-    internal sealed class H266FrameFactory : IDisposable
+    public sealed class H266FrameFactory : IDisposable
     {
         private readonly H266StreamWriter _writer = new H266StreamWriter();
 

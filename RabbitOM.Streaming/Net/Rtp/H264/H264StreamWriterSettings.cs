@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Net.Rtp.H264
 {
-    internal sealed class H264StreamWriterSettings
+    public sealed class H264StreamWriterSettings
     {
         public byte[] SPS { get; set; }
         

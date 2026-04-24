@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     /// <summary>
     /// Represent the H265 stream writer used to generate a H265 data frame
     /// </summary>
-    internal sealed class H265StreamWriter : IDisposable
+    public sealed class H265StreamWriter : IDisposable
     {
         private readonly H265StreamWriterSettings _settings = new H265StreamWriterSettings();
         private readonly MemoryStreamWriter _streamOfNalUnits = new MemoryStreamWriter();
