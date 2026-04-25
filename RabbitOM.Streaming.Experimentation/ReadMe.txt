@@ -33,8 +33,12 @@ internal class Program
 
             var request = new RtspClientRequest();
 
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("application/sdp") );
-   	        request.Headers.Accept.Mimes.Add( new StringWithQuality("text/sdp") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
             request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
 
             var response0 = client.Options();
