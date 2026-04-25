@@ -14,33 +14,34 @@ internal class Program
     {
         using ( var client = new RabbitOM.Net.Rtsp.RtspClient() )
         {
-    	    var requestHeaders = new RequestRtspHeader();
+            client.DefaultHeaders.Accept = new AcceptRtspHeader();
+   	        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+   	        
+            client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
+            
+   	        client.Connect( "rtsp://127.0.0.1/city1.mp4" );
 
-   	        requestHeaders.Accept = new AcceptRtspHeader();
-   	        requestHeaders.Accept.Mimes.Add( new StringWithQuality("sdp") );
-   	        requestHeaders.Accept.Mimes.Add( new StringWithQuality("application/sdp") );
-   	        requestHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
-   	        requestHeaders.Accept.Mimes.Add( new StringWithQuality("text/sdp") );
-   	       
-   	        requestHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
-   	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
-   	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
-   	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
-   	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
-   	        requestHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
+            var request = new RtspClientRequest();
 
-   	        requestHeaders.AcceptLanguage = new AcceptLanguageRtspHeader();
-   	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("fr-FR") );
-   	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-GB") );
-   	        requestHeaders.AcceptLanguage.Cultures.Add( new StringWithQuality("en-US") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("application/sdp") );
+   	        request.Headers.Accept.Mimes.Add( new StringWithQuality("text/sdp") );
+            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
 
-			requestHeaders.AddHeader( "HeaderA" , "1" );
-   	        requestHeaders.AddHeader( "HeaderB" , "1" );
-   	        requestHeaders.AddHeader( "HeaderC" , "1" );
-   	           	        
-   	        client.DefaultHeaders.AddRange( requestHeaders.ToList() );
+            var response0 = client.Options();
 
-   	        // client.DefaultHeaders => collection that accept only RtspHeader, extensions method will be added for add( string name , string value ); the collection must expose virtual method to deny header if it's for request or response usage, etc...
+            var response1 = client.Options( request );
+            
+            var response2 = client.Options( "*" , request );
         }
     }
 }
