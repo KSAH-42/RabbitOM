@@ -96,6 +96,11 @@
     <Compile Include="RtspToBeRemoved\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="RtspToBeRemoved\RtspAuthenticationTypes.cs" />
     <Compile Include="RtspToBeRemoved\RtspMethod.cs" />
+    <Compile Include="Rtsp\Headers\AcceptHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\StringWithQualityHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\PublicHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\AllowHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\MethodHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AuthorizationHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\CacheControlHeaderValue.cs" />
@@ -118,7 +123,7 @@
     <Compile Include="Rtsp\Headers\RetryAfterHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SessionHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\Types\StringWithQualityHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\StringWithQualityHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\TransportHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Types\KnownEncodingTypes.cs" />
     <Compile Include="Rtsp\Headers\Types\KnownLanguageTypes.cs" />

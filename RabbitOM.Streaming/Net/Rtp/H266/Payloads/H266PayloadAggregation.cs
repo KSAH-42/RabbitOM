@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
 {
-    public struct H266PayloadAggregate
+    public struct H266PayloadAggregation
     {
         public IReadOnlyCollection<ArraySegment<byte>> NalUnits { get; private set; }
 
-        public static H266PayloadAggregate Parse( in ArraySegment<byte> buffer , bool donl )
+        public static H266PayloadAggregation Parse( in ArraySegment<byte> buffer , bool donl )
         {
             var nalUnits = new List<ArraySegment<byte>>();
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266.Payloads
                 index += size;
             }
 
-            return new H266PayloadAggregate() { NalUnits = nalUnits };
+            return new H266PayloadAggregation() { NalUnits = nalUnits };
         }       
     }           
 }

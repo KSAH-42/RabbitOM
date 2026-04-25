@@ -69,7 +69,7 @@
     <Compile Include="Net\Rtp\H266\H266FrameBuilder.cs" />
     <Compile Include="Net\Rtp\H266\H266FrameFactory.cs" />
     <Compile Include="Net\Rtp\H266\H266FrameMediaElement.cs" />
-    <Compile Include="Net\Rtp\H266\Payloads\H266PayloadAggregate.cs" />
+    <Compile Include="Net\Rtp\H266\Payloads\H266PayloadAggregation.cs" />
     <Compile Include="Net\Rtp\H266\Payloads\H266Payload.cs" />
     <Compile Include="Net\Rtp\H266\Payloads\H266PayloadType.cs" />
     <Compile Include="Net\Rtp\H266\H266StreamWriter.cs" />

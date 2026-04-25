@@ -133,7 +133,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
                 throw new ArgumentNullException( nameof( packet ) );
             }
 
-            foreach ( var nalUnit in H266PayloadAggregate.Parse( packet.Payload , _settings.DONL ).NalUnits )
+            foreach ( var nalUnit in H266PayloadAggregation.Parse( packet.Payload , _settings.DONL ).NalUnits )
             {
                 if ( ! H266NalUnit.IsNullOrForbidden( nalUnit ) )
                 {
