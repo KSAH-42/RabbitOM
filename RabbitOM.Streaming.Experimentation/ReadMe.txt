@@ -46,6 +46,12 @@ internal class Program
             var response1 = client.Options( request );
             
             var response2 = client.Options( "*" , request );
+
+            request = new RtspClientRequest();
+
+            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
+
+            var response3 = client.Describe( request );
         }
     }
 }
