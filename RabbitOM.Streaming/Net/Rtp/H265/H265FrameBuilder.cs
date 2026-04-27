@@ -6,10 +6,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
     {
         private readonly H265FrameFactory _frameFactory = new H265FrameFactory();
 
-
-
-
-
         public byte[] SPS
         {
             get => _frameFactory.SPS;
@@ -33,10 +29,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H265
             get => _frameFactory.DONL;
             set => _frameFactory.DONL = value;
         }
-
-
-
-
 
         protected override void Dispose( bool disposing )
         {

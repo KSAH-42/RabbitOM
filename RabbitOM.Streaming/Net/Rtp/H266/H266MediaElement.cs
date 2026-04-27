@@ -1,8 +1,8 @@
 ﻿namespace RabbitOM.Streaming.Net.Rtp.H266
 {
-    public class H266FrameMediaElement : RtpMediaElement
+    public class H266MediaElement : RtpMediaElement
     {
-        public H266FrameMediaElement( byte[] buffer , byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps ) : base ( buffer )
+        public H266MediaElement( byte[] buffer , byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] vps ) : base ( buffer )
         {
             StartCodePrefix = startCodePrefix;
             PPS = pps;

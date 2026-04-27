@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
 
 
-        public bool TryCreate( IEnumerable<RtpPacket> packets , out H266FrameMediaElement result )
+        public bool TryCreate( IEnumerable<RtpPacket> packets , out H266MediaElement result )
         {
             result = null;
 
@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Net.Rtp.H266
 
             if ( _writer.Length > 0 && _writer.Settings.TryValidate() )
             {
-                result = new H266FrameMediaElement( _writer.ToArray() 
+                result = new H266MediaElement( _writer.ToArray() 
                     , RtpStartCodePrefix.Default 
                     , _writer.Settings.PPS 
                     , _writer.Settings.SPS 

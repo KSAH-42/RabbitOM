@@ -6,9 +6,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
     {
         private readonly H264FrameFactory _frameFactory = new H264FrameFactory();
         
-
-
-
         public byte[] SPS
         {
             get => _frameFactory.SPS;
@@ -20,10 +17,6 @@ namespace RabbitOM.Streaming.Net.Rtp.H264
             get => _frameFactory.PPS;
             set => _frameFactory.PPS = value;
         }
-
-
-
-
 
         protected override void Dispose( bool disposing )
         {

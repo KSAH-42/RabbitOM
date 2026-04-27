@@ -97,7 +97,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
         ///     <para>Another approach is used here.</para>
         ///     <para>Here, we just saves the position on the stream when headers are created, and restore it if no changed occurs.</para>
         /// </remarks>
-        public JpegFrameMediaElement BuildFrame()
+        public JpegMediaElement BuildFrame()
         {
             var firstFragment = _fragments.Peek();
 
@@ -129,7 +129,7 @@ namespace RabbitOM.Streaming.Net.Rtp.Jpeg.Imaging
 
             _writer.WriteEndOfImage();
 
-            return new JpegFrameMediaElement( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
+            return new JpegMediaElement( _writer.ToArray() , firstFragment.Width , firstFragment.Height );
         }
 
 
