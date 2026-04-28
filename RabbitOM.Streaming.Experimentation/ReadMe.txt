@@ -8,56 +8,65 @@ it should not be considered as the final implementation but closer to the final 
 so do not used theses classes, until it was moved to the main assembly.
 
 
-public void Run()
-{            
-    using var client = new RtspClient( packet => Console.WriteLine( "Data received: channel:{0} size:{0}" , packet.Channel , packet.Buffer.Length ) );
-            
-    client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/plain") );
-    client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/custom") );
-   	client.DefaultHeaders.Add( "X-Header-1" , "123")
-    client.DefaultHeaders.Add( "X-Header-2" , "123")
-    client.DefaultHeaders.Add( "X-Header-3" , "123")
-    client.DefaultHeaders.Add( "X-Header-4" , "123")
-   	        
-    client.Connect(Uri);
+public sealed class RtspClientTemporyTest
+{
+    public string Uri { get; set; }
+    public string TransportType { get; set; }
+    private bool UseTcpTranport { get => TransportType == "tcp" || TransportType == "interleaved"; }
+    private bool UseUdpTranport { get => TransportType == "udp"; }
+    private bool UseMulticastTranport { get => TransportType == "multicast"; }
 
-    using var optionsResponse = client.Options();
+
+    public void Run()
+    {            
+        using var client = new RtspClient( packet => Console.WriteLine( "Data received: channel:{0} size:{0}" , packet.Channel , packet.Buffer.Length ) );
            
-    optionsResponse.EnsureSuccess();
+        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
+        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
+        client.DefaultHeaders.Add( "X-Header-1" , "123" );
+        client.DefaultHeaders.Add( "X-Header-2" , "1234" );
+        client.DefaultHeaders.Add( "X-Header-3" , "12345" );
+            
+        client.Connect(Uri);
 
-    using var describeResponse = client.Describe();
+        using var optionsResponse = client.Options( "*" );
+           
+        optionsResponse.EnsureSuccess();
+
+        using var describeResponse = client.Describe();
     
-    describeResponse.EnsureSuccess();
+        describeResponse.EnsureSuccess();
             
-    if ( ! RtspSessionDescriptor.TryParse( describeResponse.Body.ReadAsString() , out var sdp ) )
-    {
-        throw new InvalidOperationException("no sdp");
+        if ( ! RtspSessionDescriptor.TryParse( describeResponse.Body.ReadAsString() , out var sdp ) )
+        {
+            throw new InvalidOperationException("no sdp");
+        }
+            
+        SetupRtspRequestBuilder setupBuilder = UseMulticastTranport
+            ? new SetupMulticastRtspRequestBuilder()   { IpAddress = "224.0.0.1" , Port = 152 , TTL = 123 }
+            : UseUdpTranport
+            ? new SetupUnicastUdpRtspRequestBuilder()  { Port = 123 }
+            : new SetupInterleavedRtspRequestBuilder();
+            
+        using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildRequest() );
+            
+        var sessionHeader = SessionRtspHeader.Parse( setupResponse.Body.ReadAsString() );
+
+        var playBuilder = new PlayRtspRequestBuilder() { SessionId = sessionHeader.Id };
+
+        using var playResponse = client.Play( playBuilder.BuildRequest() );
+
+        playResponse.EnsureSuccess();
+
+        Console.WriteLine( "playing.." );
+        Console.WriteLine( "Press any keys to stop..." );
+
+        Console.ReadKey();
+
+        var tearDownBuilder = new TearDownRtspRequestBuilder() { SessionId = sessionHeader.Id };
+            
+        client.TearDown( tearDownBuilder.BuildRequest() );
     }
-            
-    SetupRtspRequestBuilder setupBuilder = UseMulticastTranport
-        ? new SetupMulticastRtspRequestBuilder()   { IpAddress = "224.0.0.1" , Port = 152 , TTL = 123 }
-        : UseUdpTranport
-        ? new SetupUnicastUdpRtspRequestBuilder()  { Port = 123 }
-        : new SetupInterleavedRtspRequestBuilder();
-            
-    using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildRequest() );
-            
-    var sessionHeader = SessionRtspHeader.Parse( setupResponse.Body.ReadAsString() );
-
-    var playBuilder = new PlayTransportRtspRequestBuilder() { SessionId = sessionHeader.Id };
-
-    using var playResponse = client.Play( playBuilder.BuildRequest() );
-
-    playResponse.EnsureSuccess();
-
-    Console.WriteLine( "playing.." );
-    Console.WriteLine( "Press any keys to stop..." );
-
-    Console.ReadKey();
-
-    var tearDownBuilder = new TearDownRtspRequestBuilder() { SessionId = sessionHeader.Id };
-            
-    client.TearDown( tearDownBuilder.BuildRequest() );
 }
 
 internal class Program
