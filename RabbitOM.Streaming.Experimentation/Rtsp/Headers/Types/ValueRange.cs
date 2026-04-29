@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Normalizers;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
 
     public struct ValueRange : IEquatable<ValueRange>
     {
@@ -68,7 +68,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             // TODO: add a new adapter that replace all quotes, not trim quotes, but before to check if it is possible to remove adapter when using the parser to retrive a key value pair, perhaps a new type called property and some static methods for filter or even make any comparisions between name and value
 
-            if ( HeaderParser.TryParse( StringValueNormalizer.TrimWithSuppressQuoteNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
+            if ( RtspHeaderValueParser.TryParse( StringValueNormalizer.TrimWithSuppressQuoteNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
             {
                 if ( ! int.TryParse( ValueNormalizer.Normalize( tokens.ElementAtOrDefault( 0 ) ) , out var minimum ) )
                 {

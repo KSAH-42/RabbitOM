@@ -32,11 +32,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Version DefaultVersion { get; }
 
-        public RequestHeaderCollection DefaultHeaders { get; } = new RequestHeaderCollection();
+        public RequestsRtspHeaderCollection DefaultHeaders { get; } = new RequestsRtspHeaderCollection();
 
         // dont't add here any property to store sessions objects or session ids, the server can return a specific codes or even warning and start the stream
         // the management of sessions must be done in higher level
-
 
 
 
@@ -390,6 +389,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
 
+        // push interleaved data to server if it has recording caps
         public void SendInterleaved( byte[] buffer )
         {
             throw new NotImplementedException();

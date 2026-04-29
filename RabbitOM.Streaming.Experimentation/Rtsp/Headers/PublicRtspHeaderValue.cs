@@ -1,0 +1,51 @@
+﻿using System;
+
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
+{
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+
+    public sealed class PublicRtspHeaderValue
+    {
+        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+
+        public StringCollection Methods { get; } = new StringCollection( ValueNormalizer , IsValidMethod );
+        
+        public override string ToString()
+        {
+            return string.Join( ", " , Methods );
+        }
+
+        public static bool IsValidMethod( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
+            return Token.IsValidToken( value ) && RtspMethod.TryParse( value , out _ );
+        }
+
+        public static bool TryParse( string input , out PublicRtspHeaderValue result )
+        {
+            result = null;
+
+            if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
+            {
+                var header = new PublicRtspHeaderValue();
+
+                foreach( var token in tokens )
+                {
+                    header.Methods.TryAdd( token );
+                }
+
+                if ( header.Methods.Count > 0 )
+                {
+                    result = header;
+                }
+            }
+
+            return result != null;
+        }
+    }
+}

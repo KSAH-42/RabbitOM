@@ -11,15 +11,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         string[] AllKeys { get; }
-        bool IsEmpty { get; }
 
 
-
-        string GetValue( string name );
-        IEnumerable<string> GetValues( string name );
         bool ContainsKey( string name );
+        string GetValue( string name );
+        string GetValueAt( string name , int index );
+        string[] GetValues( string name );
         bool TryGetValue( string name , out string value );
         bool TryGetValueAt( string name , int index , out string value );
-        bool TryGetValues( string name , out IEnumerable<string> values );
+        bool TryGetValues( string name , out string[] values );
     }
 }

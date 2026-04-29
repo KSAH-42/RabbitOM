@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
+    // TODO: rename (because the scheme word is not used) or move the SupportedTypes class
     public static class AuthenticationTypes
     {
         private readonly static HashSet<string> Md5Algorithms 

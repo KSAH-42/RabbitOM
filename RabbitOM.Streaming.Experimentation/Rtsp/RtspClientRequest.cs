@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
     public sealed class RtspClientRequest
     {
-        public RequestHeaderCollection Headers { get; } = new RequestHeaderCollection();
+        public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
         public MemoryStream Body { get; } = new MemoryStream();
     }
 }

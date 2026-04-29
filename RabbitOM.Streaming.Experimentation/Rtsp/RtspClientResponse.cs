@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     {
         public RtspStatusCode Status { get; }
         
-        public ResponseHeaderCollection Headers { get; } = new ResponseHeaderCollection();
+        public ResponsesRtspHeaderCollection Headers { get; } = new ResponsesRtspHeaderCollection();
         
         public MemoryStream Body { get; } = new MemoryStream();
     }
