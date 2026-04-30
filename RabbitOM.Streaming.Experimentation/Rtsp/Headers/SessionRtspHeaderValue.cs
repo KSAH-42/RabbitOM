@@ -12,11 +12,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
+
         
 
         private string _identifier = string.Empty;
         private long? _timeout;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , IsValidExtension );
+        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
 
         
 
@@ -38,11 +40,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-        public static bool IsValidExtension( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && Token.IsValidToken( value );
-        }
-
+        
         public static bool TryParse( string input , out SessionRtspHeaderValue result )
         {
             result = null;
@@ -83,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( Token.IsValidToken( header.Identifier ) )
+                if ( ValueValidator.TryValidate( header.Identifier ) )
                 {
                     result = header;
                 }

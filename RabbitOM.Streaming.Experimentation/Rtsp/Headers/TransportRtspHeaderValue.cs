@@ -11,7 +11,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
        
+
 
         private string _transport = string.Empty;
         private string _transmission = string.Empty;
@@ -27,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private ValueRange? _clientPort;
         private ValueRange? _serverPort;
         private ValueRange? _interleaved;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , IsValidExtension );
+        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
 
 
 
@@ -122,10 +124,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
 
 
-        public static bool IsValidExtension( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && Token.IsValidToken( value );
-        }
+        
 
         public static bool TryParse( string input , out TransportRtspHeaderValue result )
         {
@@ -235,7 +234,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( Token.IsValidToken( header.Transport ) && Token.IsValidToken( header.Transmission ) )
+                if ( ValueValidator.TryValidate( header.Transport ) && ValueValidator.TryValidate( header.Transmission ) )
                 {
                     result = header;
                 }

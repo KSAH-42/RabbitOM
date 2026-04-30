@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances
         
         public static StringValueValidator MimeValidator { get; } = new DefaultHeaderValidator( new DefaultHeaderValidatorSettings() { OnValidate = value => value.IndexOf( '/' ) > 0 && value.Count( x => x == '/' ) == 1 && value.Any( x => x == '\\' || x == ' ' ) == false } );
 
-        public static StringValueValidator UriValidator { get; } = new UriRtspHeaderValidator();
+        public static StringValueValidator UriValidator { get; } = new UriStringValidator();
         
 
 

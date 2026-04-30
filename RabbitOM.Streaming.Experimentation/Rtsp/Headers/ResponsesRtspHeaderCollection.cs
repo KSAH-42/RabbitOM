@@ -4,25 +4,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class ResponsesRtspHeaderCollection : RtspHeaderCollection
     {
-        private static readonly RtspHeaderServiceSettings  s_settings = new RtspHeaderServiceSettings
-        ( 
-            RtspHeaderParserFactory.CreateResponsesParsersFrom<ResponsesRtspHeaderCollection>() ,
-            
-            new string[]
-            {
-                RtspHeaderNames.CSeq , 
-                RtspHeaderNames.ContentLength,
-                RtspHeaderNames.Authorization,
-            }
-        );
-        
-
+        private static readonly RtspHeaderServiceSettings s_settings = RtspHeaderServiceSettingsFactory.CreateServiceSettingsForResponses();
 
         public ResponsesRtspHeaderCollection() : base( new RtspHeaderService( s_settings ) )
         {
         }
-        
-
 
         public AllowRtspHeaderValue Allow
         {

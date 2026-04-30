@@ -12,7 +12,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;        
+
 
         private string _conferenceId = string.Empty;
         private string _transport = string.Empty;
@@ -28,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _access = string.Empty;
         private byte? _ttl;
         private ValueRange? _port;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , IsExtensionValid );
+        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
 
 
         public string ConferenceId
@@ -122,10 +123,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
 
 
-        public static bool IsExtensionValid( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && Token.IsValidToken( value );
-        }
+        
 
         public static bool TryParse( string input , out ConferenceRtspHeaderValue result )
         {
@@ -135,7 +133,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeaderValue();
 
-                foreach ( var token in tokens.Where( Token.IsValidToken ) )
+                foreach ( var token in tokens.Where( ValueValidator.TryValidate ) )
                 {                    
                     if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -226,7 +224,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( Token.IsValidToken( header.ConferenceId ) )
+                if ( ValueValidator.TryValidate( header.ConferenceId ) )
                 {
                     result = header;
                 }

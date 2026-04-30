@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+
     public sealed class ProxyInfo
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comment>.*)\))?\s*$";
-
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
 
 
@@ -20,17 +21,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public ProxyInfo( string protocol , string version , string receivedBy , string comment )
         {
-            if ( ! Token.IsValidToken( protocol ) )
+            if ( ! ValueValidator.TryValidate( protocol ) )
             {
                 throw new ArgumentException( protocol , "the argument called protocol contains bad things");
             }
 
-            if ( ! Token.IsValidToken( version ) )
+            if ( ! ValueValidator.TryValidate( version ) )
             {
                 throw new ArgumentException( version , "the argument called version is not valid or may contains invalid chars");
             }
 
-            if ( ! Token.IsValidToken( receivedBy ) )
+            if ( ! ValueValidator.TryValidate( receivedBy ) )
             {
                 throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
             }
@@ -38,11 +39,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             if ( ! System.Version.TryParse( version , out _ ) )
             {
                 throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
-            }
-
-            if ( ! Token.IsValid( comment , x => ! Token.ParenthesisChars.Contains( x ) ) )
-            {
-                throw new ArgumentException( comment , "the argument called comment is not valid or may contains invalid chars");
             }
 
             Protocol = protocol.Trim();
@@ -67,12 +63,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        // TODO: refactor too call on foreach see class Token 
         public static bool TryParse( string input , out ProxyInfo result )
         {
             result = null;
 
-            if ( ! Token.IsValid( input ) )
+            if ( ! ValueValidator.TryValidate( input ) )
             {
                 return false;
             }
@@ -81,27 +76,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( matchResult.Success )
             {
-                if ( ! Token.IsValidToken( matchResult.Groups[ "protocol" ].Value ) )
+                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "protocol" ].Value ) )
                 {
                     return false;
                 } 
                 
-                if ( ! Token.IsValidToken( matchResult.Groups[ "version" ].Value ) )
+                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "version" ].Value ) )
                 {
                     return false;
                 }
 
-                if ( ! Token.IsValidToken( matchResult.Groups[ "receivedBy" ].Value ) )
+                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "receivedBy" ].Value ) )
                 {
                     return false;
                 }
 
                 if ( ! System.Version.TryParse( matchResult.Groups[ "version" ].Value , out _ ) )
-                {
-                    return false;
-                }
-
-                if ( ! Token.IsValid( matchResult.Groups[ "comment" ].Value , x => ! Token.ParenthesisChars.Contains( x ) ) )
                 {
                     return false;
                 }

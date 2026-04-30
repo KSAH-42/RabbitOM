@@ -8,14 +8,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class ConnectionRtspHeaderValue
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
         
-        public StringCollection Directives { get; } = new StringCollection( ValueNormalizer , IsValidDirective );
+        public StringCollection Directives { get; } = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
         
-        public static bool IsValidDirective( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && Token.IsValidToken( value );
-        }
-
         public static bool TryParse( string input , out ConnectionRtspHeaderValue result )
         {
             result = null;

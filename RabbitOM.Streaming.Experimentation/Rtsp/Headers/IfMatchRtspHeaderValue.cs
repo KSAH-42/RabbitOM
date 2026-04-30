@@ -10,12 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
-        public StringCollection ETags { get; } = new StringCollection( ValueNormalizer , IsValidETag );
-
-        public static bool IsValidETag( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && ! Token.IsValidToken( value );
-        }
+        public StringCollection ETags { get; } = new StringCollection( ValueNormalizer , StringValueValidator.DefaultValidator.TryValidate );
 
         public static bool TryParse( string input , out IfMatchRtspHeaderValue result )
         {

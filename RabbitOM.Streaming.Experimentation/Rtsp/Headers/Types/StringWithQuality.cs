@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
 
 
@@ -19,12 +19,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         // TODO: add a special validator to check it does not include the seperator
         public StringWithQuality( string value )
         {
-            Value = Token.IsValidToken( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
+            Value = ValueValidator.TryValidate( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
         }
 
         public StringWithQuality( string value , double quality )
         {
-            Value = Token.IsValidToken( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
+            Value = ValueValidator.TryValidate( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
             Quality = quality;
         }
 
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( Token.IsValidToken( name ) )
+                if ( ValueValidator.TryValidate( name ) )
                 {
                     foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                     {

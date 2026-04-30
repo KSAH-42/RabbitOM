@@ -4,27 +4,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class RequestsRtspHeaderCollection : RtspHeaderCollection
     {        
-        private static readonly RtspHeaderServiceSettings  s_settings = new RtspHeaderServiceSettings
-        ( 
-            RtspHeaderParserFactory.CreateRequestsParsersFrom<RequestsRtspHeaderCollection>() ,
-            
-            new string[]
-            {
-                RtspHeaderNames.CSeq , 
-                RtspHeaderNames.ContentLength,
-                RtspHeaderNames.WWWAuthenticate,
-                RtspHeaderNames.RetryAfter,
-            }
-        );
-
-
-
+        private static readonly RtspHeaderServiceSettings s_settings = RtspHeaderServiceSettingsFactory.CreateServiceSettingsForRequests();
+        
         public RequestsRtspHeaderCollection() : base( new RtspHeaderService( s_settings ) )
         {
         }
         
-
-
         public AcceptRtspHeaderValue Accept
         {
             get => Service.GetHeaderValue( RtspHeaderNames.Accept ) as AcceptRtspHeaderValue;
@@ -43,7 +28,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Service.SetHeaderValue( RtspHeaderNames.AcceptLanguage , value );
         }
 
-        public AuthorizationRtspHeaderValue Authorization // Need to Remove and let the Communication layer to populate them ?
+        // TODO: question for a small rabbit or even a great: do we need to remove and let the communication layer to populate them ?
+        // => if not null force them, if not let sub communication layer to populate them
+        public AuthorizationRtspHeaderValue Authorization 
         {
             get => Service.GetHeaderValue( RtspHeaderNames.Authorization ) as AuthorizationRtspHeaderValue;
             set => Service.SetHeaderValue( RtspHeaderNames.Authorization , value );

@@ -1,4 +1,16 @@
-﻿this assembly is used for experimentation for finding different approachs of some existing implementation.
+﻿next step make it possible to write something like this:
+
+client.Options( new RtspClientRequest( new RequestsRtspHeaderCollection()
+{
+    Session = new SessionRtspHeaderValue() { Identifier = "23" } ,
+    MyHeader = new MyHeader() 
+    {
+        A = "C"
+    }
+} ) );
+
+
+this assembly is used for experimentation for finding different approachs of some existing implementation.
 If the implementation will be enougth, it will be moved to the main assembly.
 
 some modifications on headers will comes and can potentially changed entirely the existing code.

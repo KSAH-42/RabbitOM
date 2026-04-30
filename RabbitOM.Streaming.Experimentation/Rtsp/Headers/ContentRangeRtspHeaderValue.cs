@@ -11,6 +11,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class ContentRangeRtspHeaderValue
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
+
         
 
         private string _unit = string.Empty;
@@ -79,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         header.Size = size;
                     }                    
 
-                    if ( Token.IsValidToken( header.Unit ) )
+                    if ( ValueValidator.TryValidate( header.Unit ) )
                     {
                         if ( header.Start.HasValue && header.End.HasValue )
                         {

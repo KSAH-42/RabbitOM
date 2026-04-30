@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances
 {
-    public sealed class UriRtspHeaderValidator : StringValueValidator
+    public sealed class UriStringValidator : StringValueValidator
     {
-        internal UriRtspHeaderValidator() { }
+        internal UriStringValidator() { }
 
         public override bool TryValidate( string value )
         {

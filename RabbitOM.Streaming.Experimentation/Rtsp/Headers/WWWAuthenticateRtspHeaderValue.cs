@@ -12,6 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
        
 
 
@@ -22,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _algorithm = string.Empty;
         private bool? _stale;
         private string _qualityOfProtection = string.Empty;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , IsValidExtension );
+        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
 
         
 
@@ -79,11 +80,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
 
-        public static bool IsValidExtension( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) && Token.IsValidToken( value );
-        }
-
         public static bool TryParse( string input , out WWWAuthenticateRtspHeaderValue result )
         {
             result = null;
@@ -92,7 +88,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var scheme = tokens.FirstOrDefault();
                 
-                if ( ! Token.IsValidToken( scheme ) )
+                if ( ! ValueValidator.TryValidate( scheme ) )
                 {
                     return false;
                 }
@@ -139,14 +135,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( ! Token.IsValidToken( header.Scheme ) || ! Token.IsValidToken( header.Realm ) )
+                    if ( ! ValueValidator.TryValidate( header.Scheme ) || ! ValueValidator.TryValidate( header.Realm ) )
                     {
                         return false;
                     }
                     
                     if ( AuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
                     {
-                        if ( ! Token.IsValidToken( header.Nonce ) )
+                        if ( ! ValueValidator.TryValidate( header.Nonce ) )
                         {
                             return false;
                         }

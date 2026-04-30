@@ -8,6 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class PublicRtspHeaderValue
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
         public StringCollection Methods { get; } = new StringCollection( ValueNormalizer , IsValidMethod );
         
@@ -18,12 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool IsValidMethod( string value )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            return Token.IsValidToken( value ) && RtspMethod.TryParse( value , out _ );
+            return ValueValidator.TryValidate( value ) && RtspMethod.TryParse( value , out _ );
         }
 
         public static bool TryParse( string input , out PublicRtspHeaderValue result )

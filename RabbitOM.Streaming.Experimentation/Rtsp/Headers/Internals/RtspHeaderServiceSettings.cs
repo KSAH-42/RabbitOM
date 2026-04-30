@@ -28,6 +28,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _parsers = new Dictionary<string, RtspHeaderParser>( parsers.ToDictionary( parser => parser.Name ) , StringComparer.OrdinalIgnoreCase );
 
             _forbiddenHeaders = new HashSet<string>( forbiddenHeaders , StringComparer.OrdinalIgnoreCase );
+
+            // TODO: throw exception if forbidden headers are also in the parse collection
         }
 
 

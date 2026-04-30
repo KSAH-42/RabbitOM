@@ -9,28 +9,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
     public sealed class WarningInfo
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-    
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
 
         
-        public WarningInfo( int code , string agent )
-            : this( code , agent , null )
+        public WarningInfo( int code , string agent ) : this( code , agent , null )
         {
         }
 
         public WarningInfo( int code , string agent , string comment )
         {
-            if ( ! IsValidCode( code ) )
+            if ( code < 0 )
             {
                 throw new ArgumentException( $"invalid value value:{code}" , nameof( code ) );
             }
 
-            if ( ! IsValidAgent( agent ) )
-            {
-                throw new ArgumentException( "invalid agent name" , nameof( agent ) );
-            }
-
-            if ( ! IsValidComment( comment ) )
+            if ( ValueValidator.TryValidate( agent ) )
             {
                 throw new ArgumentException( "invalid agent name" , nameof( agent ) );
             }
@@ -51,33 +45,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public static bool IsValidCode( int value )
-        {
-            return value >= 0;
-        }
-
-        public static bool IsValidAgent( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            return Token.IsValid( value ,  x => x != ' ' );
-        }
-
-        public static bool IsValidComment( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            return Token.IsValid( value ,  x => ! Token.ParenthesisChars.Contains( x ) );
-        }
-
-       
-
         public static bool TryParse( string input , out WarningInfo result )
         {
             result = null;
@@ -89,12 +56,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     return false;
                 }
 
-                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var code ) || ! IsValidCode( code ) )
+                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var code ) || code < 0 )
                 {
                     return false;
                 }
 
-                if ( ! IsValidAgent( tokens.ElementAtOrDefault( 1 ) ) || ! IsValidComment( tokens.ElementAtOrDefault( 2 ) ) )
+                if ( ! ValueValidator.TryValidate( tokens.ElementAtOrDefault(1) ) )
                 {
                     return false;
                 }

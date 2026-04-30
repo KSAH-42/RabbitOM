@@ -113,7 +113,7 @@
     <Compile Include="Rtsp\Headers\Compliances\StringValueValidator.cs" />
     <Compile Include="Rtsp\Headers\Compliances\TrimWithQuoteSuppressValueNormalizer.cs" />
     <Compile Include="Rtsp\Headers\Compliances\TrimWithUnQuoteValueNormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\UriRtspHeaderValidator.cs" />
+    <Compile Include="Rtsp\Headers\Compliances\UriStringValidator.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderValue.cs" />
@@ -121,9 +121,9 @@
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderParser.cs" />
-    <Compile Include="Rtsp\Headers\Internals\RtspHeaderParserFactory.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderService.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderServiceSettings.cs" />
+    <Compile Include="Rtsp\Headers\Internals\RtspHeaderServiceSettingsFactory.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueParser.cs" />
     <Compile Include="Rtsp\Headers\IReadOnlyHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeaderValue.cs" />
@@ -147,7 +147,6 @@
     <Compile Include="Rtsp\Headers\Types\StringWithQuality.cs" />
     <Compile Include="Rtsp\Headers\Types\StringWithQualityCollection.cs" />
     <Compile Include="Rtsp\Headers\Types\SupportedTypes.cs" />
-    <Compile Include="Rtsp\Headers\Types\Token.cs" />
     <Compile Include="Rtsp\Headers\Types\ValueRange.cs" />
     <Compile Include="Rtsp\Headers\Types\WarningInfo.cs" />
     <Compile Include="Rtsp\Headers\UriRtspHeaderValue.cs" />

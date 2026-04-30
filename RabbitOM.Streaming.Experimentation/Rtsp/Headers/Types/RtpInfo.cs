@@ -10,6 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
     { 
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
         public RtpInfo( string url ) : this( url , null , null , null ) { }
 
@@ -29,9 +30,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 throw new ArgumentException( nameof( url ) );
             }
 
-            if ( ! string.IsNullOrEmpty( ssrc ) && ! Token.IsValidToken( ssrc ) )
+            if ( ! string.IsNullOrEmpty( ssrc ) && ! ValueValidator.TryValidate( ssrc ) )
             {
-                throw new ArgumentException( nameof( url ) );
+                throw new ArgumentException( nameof( ssrc ) );
             }
 
             Url = ValueNormalizer.Normalize( url );
@@ -41,6 +42,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         }
 
 
+
+
         public string Url { get; }
 
         public string SSRC { get; }
@@ -48,6 +51,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public ushort? Sequence { get; }
         
         public ushort? RtpTime { get; }
+
+
 
 
         public static bool TryParse( string input , out RtpInfo result )
@@ -95,7 +100,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     return false;
                 }
 
-                if ( ! string.IsNullOrEmpty( ssrc ) && ! Token.IsValidToken( ssrc ) )
+                if ( ! ValueValidator.TryValidate( ssrc ) )
                 {
                     return false;
                 }

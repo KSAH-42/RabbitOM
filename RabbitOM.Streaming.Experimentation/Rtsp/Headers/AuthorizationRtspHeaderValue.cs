@@ -176,7 +176,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( Token.IsValidToken( header.Scheme ) && Token.IsValidToken( header.UserName ) )
+                    if ( ValueValidator.TryValidate( header.Scheme ) && ValueValidator.TryValidate( header.UserName ) )
                     {
                         result = header;
                     }

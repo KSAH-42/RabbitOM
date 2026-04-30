@@ -62,95 +62,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        // Flatten the dictionary in order to reduce allocation and preserve readonly access instead of using IEnumerator<KeyValuePair<string , string[]> or IEnumerator<KeyValuePair<string , IReadOnlyColletion<string>> where cast be apply
-        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string , string>>
-        {
-            private readonly IEnumerator<KeyValuePair<string,IList<object>>> _enumerator;
-            private IEnumerator<object> _valuesEnumerator;
-            private KeyValuePair<string,string> _current;
-
-
-
-
-            internal Enumerator( RtspHeaderService service )
-            {
-                _enumerator = service.Headers.GetEnumerator();
-                _valuesEnumerator = null;
-                _current = default;
-            }
-
-
-
-
-            KeyValuePair<string , string> IEnumerator<KeyValuePair<string , string>>.Current
-            {
-                get => _current ;
-            }
-
-            public object Current
-            {
-                get => _current;
-            }
-
-            
-            
-            // => for upper level using foreach time complexity could be:
-
-            // O(n) = O(1 + K) + O(n) => O(K + T)
-            // O (n *(K + T) ) => O(n²) where T could be equal to n
-            // or
-            // Ω(n) => add a struct with toString and change the interface to get O(n + P) = Ω(n)
-
-            public bool MoveNext()
-            {
-                // O(1 + 3K) => O(K)
-                while ( true ) 
-                {
-                    // O(1)
-                    if ( _valuesEnumerator != null && _valuesEnumerator.MoveNext() )
-                    {
-                        break;
-                    }
-
-                    // O(1)
-                    if ( ! _enumerator.MoveNext() )
-                    {
-                        return false;
-                    }
-
-                    // O(1)
-                    _valuesEnumerator = _enumerator.Current.Value.GetEnumerator();
-                }
-
-                // O(1 + n) => O(T)
-                _current = new KeyValuePair<string,string>( _enumerator.Current.Key , _valuesEnumerator.Current?.ToString() ?? string.Empty );
-
-                return true;
-            }
-
-            public void Reset()
-            {
-                _enumerator.Reset();
-                _valuesEnumerator = null;
-                _current = default;
-            }
-
-            public void Dispose()
-            {
-                _enumerator.Dispose();
-                _valuesEnumerator?.Dispose();
-                _valuesEnumerator = null;
-                _current = default;
-            }
-        }
-
-
-
-
-
-
-
-
         public void Add( string name , string value )
         {
             _service.AddHeader( name , value );
@@ -219,6 +130,86 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public bool TryGetValues( string name , out string[] values )
         {
             return _service.TryGetHeaderValues( name , out values );
+        }
+
+
+
+
+
+
+        // Flatten the dictionary in order to reduce allocation and preserve readonly access instead of using IEnumerator<KeyValuePair<string , string[]> or IEnumerator<KeyValuePair<string , IReadOnlyColletion<string>> where cast be apply
+        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string , string>>
+        {
+            private readonly IEnumerator<KeyValuePair<string,IList<object>>> _enumerator;
+            private IEnumerator<object> _valuesEnumerator;
+            private KeyValuePair<string,string> _current;
+
+            internal Enumerator( RtspHeaderService service )
+            {
+                _enumerator = service.Headers.GetEnumerator();
+                _valuesEnumerator = null;
+                _current = default;
+            }
+
+            KeyValuePair<string , string> IEnumerator<KeyValuePair<string , string>>.Current
+            {
+                get => _current ;
+            }
+
+            public object Current
+            {
+                get => _current;
+            }
+
+            // => for upper level using foreach time complexity could be:
+
+            // O(n) = O(1 + K) + O(n) => O(K + T)
+            // O (n *(K + T) ) => O(n²) where T could be equal to n
+            // or
+            // Ω(n) => add a struct with toString and change the interface to get O(n + P) = Ω(n)
+            // => so replace (???) the KeyValuePair<string,string> by the KeyValuePair<string,RtspHeaderValue> where RtspHeaderValue is a struct and to string will switch between the raw string value or the header value class and the to string can be called out size the MoveNext method
+
+            public bool MoveNext()
+            {
+                // O(1 + 3K) => O(K)
+                while ( true ) 
+                {
+                    // O(1)
+                    if ( _valuesEnumerator != null && _valuesEnumerator.MoveNext() )
+                    {
+                        break;
+                    }
+
+                    // O(1)
+                    if ( ! _enumerator.MoveNext() )
+                    {
+                        return false;
+                    }
+
+                    // O(1)
+                    _valuesEnumerator = _enumerator.Current.Value.GetEnumerator();
+                }
+
+                // O(1 + n) => O(T)
+                _current = new KeyValuePair<string,string>( _enumerator.Current.Key , _valuesEnumerator.Current?.ToString() ?? string.Empty );
+
+                return true;
+            }
+
+            public void Reset()
+            {
+                _enumerator.Reset();
+                _valuesEnumerator = null;
+                _current = default;
+            }
+
+            public void Dispose()
+            {
+                _enumerator.Dispose();
+                _valuesEnumerator?.Dispose();
+                _valuesEnumerator = null;
+                _current = default;
+            }
         }
     }
 }
