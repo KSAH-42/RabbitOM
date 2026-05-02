@@ -3,14 +3,14 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public sealed class PublicRtspHeaderValue
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
         private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
-        public StringCollection Methods { get; } = new StringCollection( ValueNormalizer , IsValidMethod );
+        public StringCollection Methods { get; } = new StringCollection( IsValidMethod );
         
         public override string ToString()
         {

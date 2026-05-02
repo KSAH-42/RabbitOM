@@ -163,7 +163,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             // => for upper level using foreach time complexity could be:
 
-            // O(n) = O(1 + K) + O(n) => O(K + T)
+            // O(n) = O(1 + 3K) + O(T) => O(K + T)
             // O (n *(K + T) ) => O(n²) where T could be equal to n
             // or
             // Ω(n) => add a struct with toString and change the interface to get O(n + P) = Ω(n)

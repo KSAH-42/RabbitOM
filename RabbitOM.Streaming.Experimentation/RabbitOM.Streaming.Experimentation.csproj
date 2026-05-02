@@ -105,15 +105,6 @@
     <Compile Include="Rtsp\Headers\BandwidthRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\BlockSizeRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\CacheControlRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\DefaultHeaderValidator.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\DefaultHeaderValidatorSettings.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\INormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\IValidator.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\StringValueNormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\StringValueValidator.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\TrimWithQuoteSuppressValueNormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\TrimWithUnQuoteValueNormalizer.cs" />
-    <Compile Include="Rtsp\Headers\Compliances\UriStringValidator.cs" />
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderValue.cs" />
@@ -138,6 +129,18 @@
     <Compile Include="Rtsp\Headers\SpeedRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Types\AuthenticationTypes.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\DefaultHeaderValidator.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\DefaultHeaderValidatorSettings.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\DefaultStringValueChecker.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\INormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\IValidator.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\IValueChecker.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\StringValueChecker.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\StringValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\StringValueValidator.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\TrimWithRemoveAllQuotesValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\TrimWithUnQuoteValueNormalizer.cs" />
+    <Compile Include="Rtsp\Headers\Types\Compliances\UriStringValidator.cs" />
     <Compile Include="Rtsp\Headers\Types\HeaderValueCollectionT.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfoItem.cs" />
     <Compile Include="Rtsp\Headers\Types\RtpInfo.cs" />
@@ -154,6 +157,7 @@
     <Compile Include="Rtsp\Headers\ViaRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\ICallback.cs" />
     <Compile Include="Rtsp\InterleavedPacket.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />
@@ -211,6 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Rtsp\Headers\Compliances\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

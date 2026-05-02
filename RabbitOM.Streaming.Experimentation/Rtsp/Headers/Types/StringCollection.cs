@@ -5,19 +5,15 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
-
     public sealed class StringCollection : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string>
     {
-        private readonly INormalizer<string> _normalizer;
         private readonly Func<string,bool> _validator;
         private readonly List<string> _collection;
 
 
 
-        public StringCollection( INormalizer<string> normalizer , Func<string,bool> validator = null )
+        public StringCollection( Func<string,bool> validator = null )
         {
-            _normalizer = normalizer ?? throw new ArgumentNullException( nameof( normalizer ) );
             _collection = new List<string>();
             _validator = validator;
         }
@@ -51,7 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public void Add( string item )
         {
-            if ( string.IsNullOrWhiteSpace( _normalizer.Normalize( item ) ) )
+            if ( string.IsNullOrWhiteSpace( item ) )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
@@ -61,12 +57,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 throw new ArgumentException( nameof( item ) );
             }
             
-            _collection.Add( _normalizer.Normalize( item ) );
+            _collection.Add( item );
         }
 
         public bool TryAdd( string item )
         {
-            if ( string.IsNullOrWhiteSpace( _normalizer.Normalize( item ) ) )
+            if ( string.IsNullOrWhiteSpace( item ) )
             {
                 return false;
             }
@@ -76,7 +72,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 return false;
             }
 
-            _collection.Add( _normalizer.Normalize( item ) );
+            _collection.Add( item );
 
             return true;
         }
@@ -88,7 +84,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public bool Contains( string item )
         {
-            return _collection.Contains( _normalizer.Normalize( item ) );
+            return _collection.Contains( item );
         }
 
         public void CopyTo( string[] array , int arrayIndex )
@@ -98,7 +94,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public bool Remove( string item )
         {
-            return _collection.Remove( _normalizer.Normalize( item ) );
+            return _collection.Remove( item );
         }
 
         public bool RemoveAt( int index )

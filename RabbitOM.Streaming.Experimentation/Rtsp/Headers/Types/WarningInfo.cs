@@ -4,43 +4,37 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class WarningInfo
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-
-
         
-        public WarningInfo( int code , string agent ) : this( code , agent , null )
+
+
+        private int _code;
+        private string _agent = string.Empty;
+        private string _comment = string.Empty;
+        
+
+
+        public int Code
         {
+            get => _code;
+            set => _code = value;
         }
 
-        public WarningInfo( int code , string agent , string comment )
+        public string Agent
         {
-            if ( code < 0 )
-            {
-                throw new ArgumentException( $"invalid value value:{code}" , nameof( code ) );
-            }
-
-            if ( ValueValidator.TryValidate( agent ) )
-            {
-                throw new ArgumentException( "invalid agent name" , nameof( agent ) );
-            }
-
-            Code = code;
-            Agent = ValueNormalizer.Normalize( agent );
-            Comment = ValueNormalizer.Normalize( comment );
+            get => _agent;
+            set => _agent = ValueNormalizer.Normalize( value );
         }
-
-
-
-        public int Code { get; }
-
-        public string Agent { get; }
         
-        public string Comment { get; }
+        public string Comment
+        {
+            get => _comment;
+            set => _comment = ValueNormalizer.Normalize( value );
+        }
         
 
 
@@ -51,22 +45,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( RtspHeaderValueParser.TryParse( input , " " , out string[] tokens ) )
             {
-                if ( tokens.Length >= 4 )
+                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var code ) )
                 {
                     return false;
                 }
-
-                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out var code ) || code < 0 )
+                
+                result = new WarningInfo()
                 {
-                    return false;
-                }
-
-                if ( ! ValueValidator.TryValidate( tokens.ElementAtOrDefault(1) ) )
-                {
-                    return false;
-                }
-
-                result = new WarningInfo( code , tokens.ElementAtOrDefault(1) , tokens.ElementAtOrDefault(2) );
+                    Code = code ,
+                    Agent = tokens.ElementAtOrDefault( 1 ),
+                    Comment = tokens.ElementAtOrDefault( 2 ),
+                };
             }
             
             return result != null;
@@ -91,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 builder.AppendFormat( " \"{0}\"" , Comment );
             }
             
-            return builder.ToString();
+            return builder.ToString().Trim();
         }
     }
 }

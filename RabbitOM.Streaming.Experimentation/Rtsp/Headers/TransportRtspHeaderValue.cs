@@ -5,7 +5,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class TransportRtspHeaderValue
     {
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private ValueRange? _clientPort;
         private ValueRange? _serverPort;
         private ValueRange? _interleaved;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
+        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
 
 
 

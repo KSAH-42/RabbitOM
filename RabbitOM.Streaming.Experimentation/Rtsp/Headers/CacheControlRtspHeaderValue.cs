@@ -7,7 +7,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public sealed class CacheControlRtspHeaderValue
     {
@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int? StaleIfError { get; set; }
 
-        public StringExtensionCollection Extensions { get; } = new StringExtensionCollection( ValueNormalizer , IsValidExtenion );
+        public StringExtensionCollection Extensions { get; } = new StringExtensionCollection( IsValidExtenion );
         
 
 

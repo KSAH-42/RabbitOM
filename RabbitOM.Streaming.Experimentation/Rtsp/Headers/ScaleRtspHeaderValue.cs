@@ -1,9 +1,10 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
+
     public sealed class ScaleRtspHeaderValue
     {
         public float Value { get; set; }

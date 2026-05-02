@@ -6,7 +6,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class AuthorizationRtspHeaderValue
     {
@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _qualityOfProtection = string.Empty;
         private string _nonceCount = string.Empty;
         private string _clientNonce = string.Empty;                
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
+        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
 
         
 

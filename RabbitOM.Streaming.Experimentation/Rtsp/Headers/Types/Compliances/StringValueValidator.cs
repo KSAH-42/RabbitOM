@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances
 {
     public abstract class StringValueValidator : IValidator<string>
     {

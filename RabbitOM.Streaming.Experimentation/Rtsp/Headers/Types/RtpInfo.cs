@@ -4,53 +4,48 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class RtpInfo
     { 
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-
-        public RtpInfo( string url ) : this( url , null , null , null ) { }
-
-        public RtpInfo( string url , ushort sequence ) : this( url , sequence , null , null ) { }
         
-        public RtpInfo( string url , ushort sequence , ushort rtpTime ) : this( url , sequence , rtpTime , null ) { }
 
-        public RtpInfo( string url , ushort? sequence , ushort? rtpTime , string ssrc )
+
+
+        private string _url = string.Empty;
+        private string _ssrc = string.Empty;
+        private ushort? _sequence;
+        private ushort? _rtpTime;
+
+
+
+
+        public string Url
         {
-            if ( string.IsNullOrWhiteSpace( url ) )
-            {
-                throw new ArgumentException( nameof( url ) );
-            }
-
-            if ( ! Uri.IsWellFormedUriString( url , UriKind.RelativeOrAbsolute ) )
-            {
-                throw new ArgumentException( nameof( url ) );
-            }
-
-            if ( ! string.IsNullOrEmpty( ssrc ) && ! ValueValidator.TryValidate( ssrc ) )
-            {
-                throw new ArgumentException( nameof( ssrc ) );
-            }
-
-            Url = ValueNormalizer.Normalize( url );
-            SSRC = ValueNormalizer.Normalize( ssrc );
-            Sequence = sequence;
-            RtpTime = rtpTime;
+            get => _url;
+            set => _url = ValueNormalizer.Normalize( value );
         }
 
-
-
-
-        public string Url { get; }
-
-        public string SSRC { get; }
+        public string SSRC
+        {
+            get => _ssrc;
+            set => _ssrc = ValueNormalizer.Normalize( value );
+        }
         
-        public ushort? Sequence { get; }
+        public ushort? Sequence
+        {
+            get => _sequence;
+            set => _sequence = value;
+        }
         
-        public ushort? RtpTime { get; }
+        public ushort? RtpTime
+        {
+            get => _rtpTime;
+            set => _rtpTime = value;
+        }
+
 
 
 
@@ -61,10 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( RtspHeaderValueParser.TryParse( input , ";" , out string[] tokens ) )
             {
-                string url = "";
-                string ssrc = "";
-                ushort? rtpTime = null;
-                ushort? seq = null;
+                var info = new RtpInfo();
 
                 foreach ( var token in tokens )
                 {
@@ -72,44 +64,44 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                     {
                         if ( ValueComparer.Equals( "url" , parameter.Key ) )
                         {
-                            url = ValueNormalizer.Normalize( parameter.Value );
+                            info.Url = parameter.Value;
                         }
                         else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
-                            ssrc = ValueNormalizer.Normalize( parameter.Value );
+                            info.SSRC = parameter.Value;
                         }
                         else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
                         {
                             if ( ushort.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out var value ) )
                             {
-                                seq = value;
+                                info.Sequence = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
                         {
                             if ( ushort.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out var value ) )
                             {
-                                rtpTime = value;
+                                info.RtpTime = value;
                             }
                         }
                     }
                 }
 
-                if ( string.IsNullOrWhiteSpace( url ) || ! Uri.IsWellFormedUriString( url , UriKind.RelativeOrAbsolute ) )
+                if ( string.IsNullOrWhiteSpace( info.Url ) )
                 {
                     return false;
                 }
 
-                if ( ! ValueValidator.TryValidate( ssrc ) )
-                {
-                    return false;
-                }
-
-                result = new RtpInfo( url , seq , rtpTime , ssrc );
+                result = info;
             }
 
             return result != null;
         }
+
+
+
+
+
 
 
         public override string ToString()

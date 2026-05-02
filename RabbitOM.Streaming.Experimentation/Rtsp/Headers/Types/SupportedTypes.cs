@@ -165,7 +165,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public static bool IsMimeSupported( string value )
         {
-            if ( string.IsNullOrWhiteSpace( value ) || value.IndexOf( "/" ) <= 0 )
+            if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
             }
@@ -184,11 +184,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
 
             if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            if ( ! value.Contains( "/" ) )
             {
                 throw new ArgumentException( nameof( value ) );
             }

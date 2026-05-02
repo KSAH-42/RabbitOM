@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances
 {
     public abstract class StringValueNormalizer : INormalizer<string>
     {
         public static StringValueNormalizer TrimWithUnQuoteNormalizer { get; } = new TrimWithUnQuoteValueNormalizer();
        
-        public static StringValueNormalizer TrimWithSuppressQuoteNormalizer { get; } = new TrimWithQuoteSuppressValueNormalizer();
+        public static StringValueNormalizer TrimWithRemoveAllQuotesNormalizer { get; } = new TrimWithRemoveAllQuotesValueNormalizer();
         
 
 

@@ -5,18 +5,16 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
-
     public sealed class StringExtensionCollection : IEnumerable , IEnumerable<KeyValuePair<string,string>>
     {
-        private readonly INormalizer<string> _normalizer;
-
         private readonly Dictionary<string,string> _collection;
         private readonly Func<string,string,bool> _validator;
 
-        public StringExtensionCollection( INormalizer<string> normalizer , Func<string,string,bool> validator = null )
+
+
+
+        public StringExtensionCollection( Func<string,string,bool> validator = null )
         {
-            _normalizer = normalizer ?? throw new ArgumentNullException( nameof( normalizer ) );
             _collection = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
             _validator = validator;
         }
@@ -43,12 +41,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-
-
         public void Add( string name , string value )
         {
-            name = _normalizer.Normalize( name );
-
             if ( string.IsNullOrWhiteSpace( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
@@ -64,13 +58,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 throw new InvalidOperationException( nameof( name ) );
             }
 
-            _collection[ name ] = _normalizer.Normalize( value );
+            _collection[ name ] = value ?? string.Empty;
         }
 
         public bool TryAdd( string name , string value )
         {
-            name = _normalizer.Normalize( name );
-
             if ( string.IsNullOrWhiteSpace( name ) )
             {
                 return false;
@@ -81,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 return false;
             }
 
-            _collection[ name ] = _normalizer.Normalize( value );
+            _collection[ name ] = value ?? string.Empty;
 
             return true;
         }
@@ -93,17 +85,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public bool Contains( KeyValuePair<string , string> item )
         {
-            return _collection.Contains( item );
+            return  item.Key != null && _collection.Contains( item );
         }
 
         public bool ContainsKey( string key )
         {
-            return _collection.ContainsKey( _normalizer.Normalize( key ) );
+            return _collection.ContainsKey( key ?? string.Empty );
         }
 
         public void CopyTo( KeyValuePair<string , string>[] array , int arrayIndex )
         {
             _collection.ToList().CopyTo( array , arrayIndex );
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _collection.GetEnumerator();
         }
 
         public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
@@ -113,17 +110,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public bool Remove( string name )
         {
-            return _collection.Remove( _normalizer.Normalize( name ) );
+            return _collection.Remove( name ?? string.Empty );
         }
 
         public bool TryGetValue( string key , out string value )
         {
-            return _collection.TryGetValue( _normalizer.Normalize( key ) , out value );
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _collection.GetEnumerator();
+            return _collection.TryGetValue( key ?? string.Empty , out value );
         }
     }
 }

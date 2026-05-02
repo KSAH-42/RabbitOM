@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances
 {
-    public sealed class TrimWithQuoteSuppressValueNormalizer : StringValueNormalizer
+    public sealed class TrimWithRemoveAllQuotesValueNormalizer : StringValueNormalizer
     {
         public override string Normalize( string value )
         {

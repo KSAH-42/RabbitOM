@@ -5,26 +5,35 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class StringWithQuality
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
+        
 
 
 
-
-        // TODO: add a special validator to check it does not include the seperator
         public StringWithQuality( string value )
         {
-            Value = ValueValidator.TryValidate( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            Value = ValueNormalizer.Normalize( value );
         }
 
         public StringWithQuality( string value , double quality )
         {
-            Value = ValueValidator.TryValidate( value = ValueNormalizer.Normalize( value ) ) ? value : throw new ArgumentException();
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            Value = ValueNormalizer.Normalize( value );
+
             Quality = quality;
         }
 
@@ -60,27 +69,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( ValueValidator.TryValidate( name ) )
+                if ( string.IsNullOrWhiteSpace( name ) )
                 {
-                    foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
+                    return false;
+                }
+
+                foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
+                {
+                    if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                        if ( ValueComparer.Equals( "q" , parameter.Key ) )
                         {
-                            if ( ValueComparer.Equals( "q" , parameter.Key ) )
+                            if ( double.TryParse( ValueNormalizer.Normalize( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                             {
-                                if ( double.TryParse( ValueNormalizer.Normalize( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
-                                {
-                                    result = new StringWithQuality( name , quality );
-                                    break;
-                                }
+                                result = new StringWithQuality( name , quality );
+                                break;
                             }
                         }
                     }
+                }
 
-                    if ( result == null )
-                    {
-                        result = new StringWithQuality( name );
-                    }
+                if ( result == null )
+                {
+                    result = new StringWithQuality( name );
                 }
             }
 

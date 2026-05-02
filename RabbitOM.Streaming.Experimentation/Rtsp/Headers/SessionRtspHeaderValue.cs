@@ -6,7 +6,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
    
     public sealed class SessionRtspHeaderValue
     {
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         private string _identifier = string.Empty;
         private long? _timeout;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
+        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
 
         
 

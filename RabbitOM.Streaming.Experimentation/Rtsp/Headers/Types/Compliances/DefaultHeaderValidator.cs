@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances
 {
     public sealed class DefaultHeaderValidator : StringValueValidator
     {

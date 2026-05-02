@@ -1,46 +1,75 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    // we don't use is to to have the save code for string conversion in one place
+    // and we can't compare to enum to a string where a rtsp is mainly based string
+
     public sealed class RtspMethod
     {
-        public static readonly RtspMethod OPTIONS = new RtspMethod( "OPTIONS" );
+        private static readonly Lazy<IReadOnlyDictionary<string,RtspMethod>> s_methods = new Lazy<IReadOnlyDictionary<string, RtspMethod>>( () =>
+        {
+            var methods = new Dictionary<string,RtspMethod>( StringComparer.OrdinalIgnoreCase );
+
+            foreach ( var property in typeof( RtspMethod ).GetFields( BindingFlags.Public | BindingFlags.Static ) )
+            {
+                var method = property.GetValue( null ) as RtspMethod ;
+
+                if ( method != null )
+                {
+                    methods[ method.Value ] = method;
+                }
+            }
+
+            return methods;
+        });
+
+
+
+
+        public static RtspMethod OPTIONS { get; } = new RtspMethod( "OPTIONS" );
         
-        public static readonly RtspMethod DESCRIBE = new RtspMethod( "DESCRIBE" );
+        public static RtspMethod DESCRIBE { get; } = new RtspMethod( "DESCRIBE" );
         
-        public static readonly RtspMethod SETUP = new RtspMethod( "SETUP" );
+        public static RtspMethod SETUP { get; } = new RtspMethod( "SETUP" );
         
-        public static readonly RtspMethod PLAY = new RtspMethod( "PLAY" );
+        public static RtspMethod PLAY { get; } = new RtspMethod( "PLAY" );
         
-        public static readonly RtspMethod PAUSE = new RtspMethod( "PAUSE" );
+        public static RtspMethod PAUSE { get; } = new RtspMethod( "PAUSE" );
         
-        public static readonly RtspMethod TEARDOWN = new RtspMethod( "TEARDOWN" );
+        public static RtspMethod TEARDOWN { get; } = new RtspMethod( "TEARDOWN" );
         
-        public static readonly RtspMethod GET_PARAMETER = new RtspMethod( "GET_PARAMETER" );
+        public static RtspMethod GET_PARAMETER { get; } = new RtspMethod( "GET_PARAMETER" );
         
-        public static readonly RtspMethod SET_PARAMETER = new RtspMethod( "SET_PARAMETER" );
+        public static RtspMethod SET_PARAMETER { get; } = new RtspMethod( "SET_PARAMETER" );
         
-        public static readonly RtspMethod ANNOUNCE = new RtspMethod( "ANNOUNCE" );
+        public static RtspMethod ANNOUNCE { get; } = new RtspMethod( "ANNOUNCE" );
         
-        public static readonly RtspMethod REDIRECT = new RtspMethod( "REDIRECT" );
+        public static RtspMethod REDIRECT { get; } = new RtspMethod( "REDIRECT" );
         
-        public static readonly RtspMethod RECORD = new RtspMethod( "RECORD" );
+        public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
 
 
 
 
 
 
-        private RtspMethod( string name ) => Name = name;
+        private RtspMethod( string value )
+        {
+            Value = value;
+        }
         
-
-
-
-
-        public string Name { get; }
+        public string Value
+        {
+            get;
+        }
        
-        public override string ToString() => Name;
+        public override string ToString()
+        {
+            return Value;
+        }
 
 
 
@@ -53,32 +82,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 return false;
             }
 
-            return StringComparer.OrdinalIgnoreCase.Equals( method.Name , name?.Trim() );
+            return StringComparer.OrdinalIgnoreCase.Equals( method.Value , name?.Trim() );
         }
 
         public static bool TryParse( string value , out RtspMethod result )
         {
-            result = null;
-
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            var methodName = value.Trim();
-
-            foreach ( var property in typeof( RtspMethod ).GetFields( BindingFlags.Public | BindingFlags.Static ) )
-            {
-                var method = property.GetValue( null ) as RtspMethod ;
-
-                if ( method != null && StringComparer.OrdinalIgnoreCase.Equals( method.Name , methodName ) )
-                {
-                    result = method;
-                    break;
-                }
-            }
-
-            return result != null;
+            return s_methods.Value.TryGetValue( value , out result );
         }
     }
 }

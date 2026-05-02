@@ -3,14 +3,11 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public struct ValueRange : IEquatable<ValueRange>
     {
         public static readonly ValueRange Zero = new ValueRange( 0 , 0 );
-
-        public readonly static StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
 
 
 
@@ -18,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public ValueRange( int minimum , int maximum )
         {
-            if ( minimum < 0 || maximum < 0 || minimum > maximum )
+            if ( minimum > maximum )
             {
                 throw new ArgumentOutOfRangeException();
             }
@@ -66,31 +63,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = default;
 
-            // TODO: add a new adapter that replace all quotes, not trim quotes, but before to check if it is possible to remove adapter when using the parser to retrive a key value pair, perhaps a new type called property and some static methods for filter or even make any comparisions between name and value
-
-            if ( RtspHeaderValueParser.TryParse( StringValueNormalizer.TrimWithSuppressQuoteNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
+            if ( ! RtspHeaderValueParser.TryParse( StringValueNormalizer.TrimWithRemoveAllQuotesNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
             {
-                if ( ! int.TryParse( ValueNormalizer.Normalize( tokens.ElementAtOrDefault( 0 ) ) , out var minimum ) )
-                {
-                    return false;
-                }
-
-                if ( ! int.TryParse( ValueNormalizer.Normalize( tokens.ElementAtOrDefault( 1 ) ) , out var maximum ) )
-                {
-                    return false;
-                }
-
-                if ( minimum < 0 || maximum < 0 || minimum > maximum )
-                {
-                    return false;
-                }
-
-                result = new ValueRange( minimum , maximum );
-                
-                return true;
+                return false;
             }
-            
-            return false;
+
+            int minimum = 0;
+                
+            if ( ! string.IsNullOrWhiteSpace( tokens.ElementAtOrDefault( 0 ) ) )
+            {
+                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out minimum ) )
+                {
+                    return false;
+                }
+            }
+
+            int maximum = 0;
+
+            if ( ! string.IsNullOrWhiteSpace( tokens.ElementAtOrDefault( 1 ) ) )
+            {
+                if ( ! int.TryParse( tokens.ElementAtOrDefault( 1 ) , out maximum ) )
+                {
+                    return false;
+                }
+            }
+
+            if ( minimum > maximum )
+            {
+                return false;
+            }
+
+            result = new ValueRange( minimum , maximum );
+                
+            return true;
         }
 
 

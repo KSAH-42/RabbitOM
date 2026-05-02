@@ -6,7 +6,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
    
     public sealed class ConferenceRtspHeaderValue
     {
@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _access = string.Empty;
         private byte? _ttl;
         private ValueRange? _port;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
+        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
 
 
         public string ConferenceId

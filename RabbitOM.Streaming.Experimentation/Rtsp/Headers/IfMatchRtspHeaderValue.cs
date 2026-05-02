@@ -4,13 +4,13 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public sealed class IfMatchRtspHeaderValue
     {
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
-        public StringCollection ETags { get; } = new StringCollection( ValueNormalizer , StringValueValidator.DefaultValidator.TryValidate );
+        public StringCollection ETags { get; } = new StringCollection( StringValueValidator.DefaultValidator.TryValidate );
 
         public static bool TryParse( string input , out IfMatchRtspHeaderValue result )
         {

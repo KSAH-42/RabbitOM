@@ -4,17 +4,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
+    // removing connect and disconnect methods
+    // and use a socket pool to retrieve the current active socket
+    // and keep the current active and discard socket after an expiration delay
+    // add configuration class to specify how to manage the socket pools
+    //  the fast mode, will keep a single socket
+    // don't add static socket pool class
+    // and the end add async methods as partial class
+    
     public sealed class RtspClient : IDisposable
     {
-        private readonly Action<InterleavedPacket> _interleaveHandler;
+        private readonly IEventSink _eventSink;
         
         
 
 
 
-        public RtspClient() { }
+        public RtspClient() 
+        { 
+        }
 
-        public RtspClient( Action<InterleavedPacket> interleavedHandler ) => _interleaveHandler = interleavedHandler;
+        public RtspClient( IEventSink eventSink )
+        {
+            _eventSink = eventSink ?? throw new ArgumentNullException( nameof( eventSink ) );
+        }
 
   
 
@@ -28,42 +41,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public TimeSpan SendTimeout { get; set; }
 
-        public Uri BaseAddress { get; }
+        public Uri BaseAddress { get; set; } // should reset the the sockets pools or the comm pools
 
-        public Version DefaultVersion { get; }
+        public Version Version { get; set; } // for changing protocol version
 
-        public RequestsRtspHeaderCollection DefaultHeaders { get; } = new RequestsRtspHeaderCollection();
+        public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 
-        // dont't add here any property to store sessions objects or session ids, the server can return a specific codes or even warning and start the stream
-        // the management of sessions must be done in higher level
-
+    
 
 
-        public void Connect( string baseAddress )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void Connect( Uri baseAddress )
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void Disconnect()
-        {
-            throw new NotImplementedException();
-        }
-        
-        public void Dispose()
-        {
-            //throw new NotImplementedException();
-        }
-                
+
+
         public RtspClientResponse Options()
         {
             throw new NotImplementedException();
         }
-        
+
         public RtspClientResponse Options( RtspClientRequest request )
         {
             throw new NotImplementedException();
@@ -94,6 +87,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+        public RtspClientResponse Describe( RtspClientRequest request )
+        {
+            throw new NotImplementedException();
+        }
+        
         public RtspClientResponse Describe( string uri )
         {
             throw new NotImplementedException();
@@ -114,12 +112,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Describe( RtspClientRequest request )
+        public RtspClientResponse Setup()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Setup()
+        public RtspClientResponse Setup( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -144,12 +142,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Setup( RtspClientRequest request )
+        public RtspClientResponse Play()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Play()
+        public RtspClientResponse Play( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -174,12 +172,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Play( RtspClientRequest request )
+        public RtspClientResponse Pause()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Pause()
+        public RtspClientResponse Pause( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -204,12 +202,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Pause( RtspClientRequest request )
+        public RtspClientResponse TearDown()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse TearDown()
+        public RtspClientResponse TearDown( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -234,12 +232,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse TearDown( RtspClientRequest request )
+        public RtspClientResponse GetParameter()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse GetParameter()
+        public RtspClientResponse GetParameter( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -264,15 +262,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse GetParameter( RtspClientRequest request )
-        {
-            throw new NotImplementedException();
-        }
-        
         public RtspClientResponse SetParameter()
         {
             throw new NotImplementedException();
         }
+
+        public RtspClientResponse SetParameter( RtspClientRequest request )
+        {
+            throw new NotImplementedException();
+        }
+        
         
         public RtspClientResponse SetParameter( string uri )
         {
@@ -294,12 +293,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse SetParameter( RtspClientRequest request )
+        public RtspClientResponse Announce()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Announce()
+        public RtspClientResponse Announce( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -324,12 +323,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Announce( RtspClientRequest request )
+        public RtspClientResponse Redirect()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Redirect()
+        public RtspClientResponse Redirect( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -354,12 +353,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Redirect( RtspClientRequest request )
+        public RtspClientResponse Record()
         {
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Record()
+        public RtspClientResponse Record( RtspClientRequest request )
         {
             throw new NotImplementedException();
         }
@@ -384,15 +383,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        public RtspClientResponse Record( RtspClientRequest request )
-        {
-            throw new NotImplementedException();
-        }
-
         // push interleaved data to server if it has recording caps
         public void SendInterleaved( byte[] buffer )
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

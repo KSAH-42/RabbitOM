@@ -6,7 +6,7 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public sealed class WWWAuthenticateRtspHeaderValue
     {
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _algorithm = string.Empty;
         private bool? _stale;
         private string _qualityOfProtection = string.Empty;
-        private readonly StringCollection _extensions = new StringCollection( ValueNormalizer , ValueValidator.TryValidate );
+        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
 
         
 

@@ -4,61 +4,50 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Compliances;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public sealed class ProxyInfo
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comment>.*)\))?\s*$";
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
+        private static readonly StringValueNormalizer ValueNormalize = StringValueNormalizer.TrimWithUnQuoteNormalizer;
 
 
 
 
-        public ProxyInfo( string protocol , string version , string receivedBy )
-            : this ( protocol , version , receivedBy , null )
+
+        private string _protocol = string.Empty;
+        private string _version = string.Empty;
+        private string _receivedBy = string.Empty;
+        private string _comment = string.Empty;
+
+
+
+
+
+        public string Protocol
         {
+            get => _protocol;
+            set => _protocol = ValueNormalize.Normalize( value );
         }
 
-        public ProxyInfo( string protocol , string version , string receivedBy , string comment )
+        public string Version
         {
-            if ( ! ValueValidator.TryValidate( protocol ) )
-            {
-                throw new ArgumentException( protocol , "the argument called protocol contains bad things");
-            }
-
-            if ( ! ValueValidator.TryValidate( version ) )
-            {
-                throw new ArgumentException( version , "the argument called version is not valid or may contains invalid chars");
-            }
-
-            if ( ! ValueValidator.TryValidate( receivedBy ) )
-            {
-                throw new ArgumentException( receivedBy , "the argument called receivedBy is not valid or may contains invalid chars");
-            }
-
-            if ( ! System.Version.TryParse( version , out _ ) )
-            {
-                throw new ArgumentException( nameof( version ) ,"the version is not well formated" );
-            }
-
-            Protocol = protocol.Trim();
-            Version = version.Trim();
-            ReceivedBy = receivedBy.Trim();
-            Comment = comment?.Trim();
+            get => _version;
+            set => _version = ValueNormalize.Normalize( value );
         }
 
+        public string ReceivedBy
+        {
+            get => _receivedBy;
+            set => _receivedBy = ValueNormalize.Normalize( value );
+        }
 
+        public string Comment
+        {
+            get => _comment;
+            set => _comment = ValueNormalize.Normalize( value );
+        }
 
-
-
-        public string Protocol { get; }
-
-        public string Version { get; }
-
-        public string ReceivedBy { get; }
-
-        public string Comment { get; }
-        
 
 
 
@@ -67,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = null;
 
-            if ( ! ValueValidator.TryValidate( input ) )
+            if ( string.IsNullOrWhiteSpace( input ) )
             {
                 return false;
             }
@@ -76,27 +65,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( matchResult.Success )
             {
-                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "protocol" ].Value ) )
+                result = new ProxyInfo()
                 {
-                    return false;
-                } 
-                
-                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "version" ].Value ) )
-                {
-                    return false;
-                }
-
-                if ( ! ValueValidator.TryValidate( matchResult.Groups[ "receivedBy" ].Value ) )
-                {
-                    return false;
-                }
-
-                if ( ! System.Version.TryParse( matchResult.Groups[ "version" ].Value , out _ ) )
-                {
-                    return false;
-                }
-
-                result = new ProxyInfo( matchResult.Groups[ "protocol" ].Value , matchResult.Groups[ "version" ].Value , matchResult.Groups[ "receivedBy" ].Value , matchResult.Groups[ "comment" ].Value );
+                    Protocol   = matchResult.Groups[ "protocol" ].Value ,
+                    Version    = matchResult.Groups[ "version" ].Value ,
+                    ReceivedBy = matchResult.Groups[ "receivedBy" ].Value ,
+                    Comment    = matchResult.Groups[ "comment" ].Value ,
+                };
             }
 
             return result != null;

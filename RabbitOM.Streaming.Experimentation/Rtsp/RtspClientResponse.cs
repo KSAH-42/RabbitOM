@@ -12,5 +12,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public ResponsesRtspHeaderCollection Headers { get; } = new ResponsesRtspHeaderCollection();
         
         public MemoryStream Body { get; } = new MemoryStream();
+
+        public void EnsureSuccess()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
