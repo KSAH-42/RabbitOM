@@ -1,3 +1,19 @@
+Try to make a quick search about the existance of idl framework for encoders and decoders, a kind of media rpc standard.
+
+Put idl on decoder  => to generate code
+Put idl on encoder  => to generate code
+
+Put idl on CDN ???  => to generate code
+
+
+and idl for streaming with rpc style for building CDN ? I don't know if rtsp can be a good candidate because it we can describe the idl
+but it provide many things streaming transport. but...
+
+> before todo: next project after closing this one 
+ => how to generate a local decoder process based from schema ? forget ffmpeg.
+
+
+
 ﻿next step make it possible to write something like this:
 
 client.Options( new RtspClientRequest( new RequestsRtspHeaderCollection()
@@ -39,8 +55,6 @@ public sealed class RtspClientTemporyTest
         client.DefaultHeaders.Add( "X-Header-2" , "1234" );
         client.DefaultHeaders.Add( "X-Header-3" , "12345" );
             
-        client.Connect(Uri);
-
         using var optionsResponse = client.Options( "*" );
            
         optionsResponse.EnsureSuccess();
@@ -102,8 +116,6 @@ internal class Program
    	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
    	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
             
-   	        client.Connect( "rtsp://127.0.0.1/city1.mp4" );
-
             var request = new RtspClientRequest();
 
             request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options") );
