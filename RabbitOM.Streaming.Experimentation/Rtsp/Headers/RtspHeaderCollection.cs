@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public abstract class RtspHeaderCollection : IHeaderCollection , IReadOnlyHeaderCollection
+    public abstract class RtspHeaderCollection : IEnumerable , IHeaderCollection , IReadOnlyHeaderCollection
     {
         private readonly RtspHeaderService _service;
 
@@ -21,12 +21,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string this[ string name ]
         {
-            get => _service.GetHeaderValueByName( name );
+            get => _service.GetHeaderValue( name )?.ToString() ?? throw new InvalidOperationException();
         }
 
         public string this[ string name , int index]
         {
-            get => _service.GetHeaderValueByName( name , index );
+            get => _service.GetHeaderValue( name , index )?.ToString() ?? throw new InvalidOperationException();
         }
 
 
@@ -43,14 +43,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _service.CountHeaders();
         }
         
-        public string[] AllKeys
+        public IEnumerable<string> AllKeys
         {
-            get => _service.GetHeaderKeys();
-        }
-
-        public bool IsSynchronized
-        {
-            get => false;
+            get => _service.Headers.Keys;
         }
 
         internal RtspHeaderService Service
@@ -58,20 +53,42 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _service;
         }
 
-
-
-
-
-        public void Add( string name , string value )
+        public bool IsSynchronized
         {
-            _service.AddHeader( name , value );
+            get => false;
         }
+
+        
+
+
+
+
 
         public bool ContainsKey( string name )
         {
             return _service.ContainsHeader( name );
         }
 
+        public void Add( string name , string value )
+        {
+            _service.AddHeader( name , value );
+        }
+
+        public bool Remove( string name )
+        {
+            return _service.RemoveHeader( name );
+        }
+
+        public bool RemoveAt( string name , int index )
+        {
+            return _service.RemoveHeader( name , index );
+        }
+
+        public void Clear()
+        {
+            _service.RemoveHeaders();
+        }
+        
         public void CopyTo( Array array , int index )
         {
             _service.CopyHeadersTo( array , index );
@@ -89,27 +106,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string GetValue( string name )
         {
-            return _service.GetHeaderValueByName( name );
+            return _service.GetHeaderValue( name )?.ToString() ?? string.Empty;
         }
 
         public string GetValueAt( string name , int index )
         {
-            return _service.GetHeaderValueByName( name , index );
+            return _service.GetHeaderValue( name , index )?.ToString() ?? string.Empty;
         }
 
-        public string[] GetValues( string name )
+        public IEnumerable<string> GetValues( string name )
         {
-            return _service.GetHeaderValuesByName( name );
-        }
-
-        public bool Remove( string name )
-        {
-            return _service.RemoveHeaderByName( name );
-        }
-
-        public bool RemoveAt( string name , int index )
-        {
-            return _service.RemoveHeaderByName( name , index );
+            return _service.GetHeaderValues( name );
         }
 
         public bool TryAdd( string name , string value )
@@ -127,9 +134,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _service.TryGetHeaderValue( name , index , out value );
         }
 
-        public bool TryGetValues( string name , out string[] values )
+        public bool TryGetValues( string name , out IEnumerable<string> values )
         {
             return _service.TryGetHeaderValues( name , out values );
+        }
+
+        IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
 
 
@@ -138,11 +150,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
         // Flatten the dictionary in order to reduce allocation and preserve readonly access instead of using IEnumerator<KeyValuePair<string , string[]> or IEnumerator<KeyValuePair<string , IReadOnlyColletion<string>> where cast be apply
-        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string , string>>
+        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
         {
             private readonly IEnumerator<KeyValuePair<string,IList<object>>> _enumerator;
             private IEnumerator<object> _valuesEnumerator;
             private KeyValuePair<string,string> _current;
+
+
+
 
             internal Enumerator( RtspHeaderService service )
             {
@@ -151,15 +166,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 _current = default;
             }
 
-            KeyValuePair<string , string> IEnumerator<KeyValuePair<string , string>>.Current
-            {
-                get => _current ;
-            }
+
+
 
             public object Current
             {
                 get => _current;
             }
+
+            KeyValuePair<string,string> IEnumerator<KeyValuePair<string,string>>.Current
+            {
+                get => _current ;
+            }
+
+            
+
 
             // => for upper level using foreach time complexity could be:
 

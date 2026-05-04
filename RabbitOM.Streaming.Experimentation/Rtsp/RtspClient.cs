@@ -12,14 +12,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     // don't add static socket pool class
     // and the end add async methods as partial class
     
-    public sealed class RtspClient : IDisposable
+    public sealed class RtspClient : IClient , IDisposable
     {
         private readonly IEventSink _eventSink;
         
         
 
 
-
+        
         public RtspClient() 
         { 
         }
@@ -35,8 +35,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public bool IsConnected { get; }
 
-        public int Retries { get; set; }
-
         public TimeSpan ReceiveTimeout { get; set; }
 
         public TimeSpan SendTimeout { get; set; }
@@ -47,7 +45,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 
-    
+        public int Retries { get; set; }
+
+        public bool IsDisposed { get; }
+
+        
+
 
 
 
@@ -82,6 +85,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
         public RtspClientResponse Describe()
         {
             throw new NotImplementedException();
@@ -112,6 +119,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
         public RtspClientResponse Setup()
         {
             throw new NotImplementedException();
@@ -142,6 +152,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
         public RtspClientResponse Play()
         {
             throw new NotImplementedException();
@@ -172,6 +186,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
         public RtspClientResponse Pause()
         {
             throw new NotImplementedException();
@@ -202,6 +220,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
+
+
+
         public RtspClientResponse TearDown()
         {
             throw new NotImplementedException();
@@ -213,7 +238,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         }
         
         public RtspClientResponse TearDown( string uri )
-        {
+        { 
             throw new NotImplementedException();
         }
         
@@ -232,6 +257,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
+
+
+
+
         public RtspClientResponse GetParameter()
         {
             throw new NotImplementedException();
@@ -262,6 +295,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
+
+
+
+
         public RtspClientResponse SetParameter()
         {
             throw new NotImplementedException();
@@ -271,7 +312,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         {
             throw new NotImplementedException();
         }
-        
         
         public RtspClientResponse SetParameter( string uri )
         {
@@ -293,6 +333,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
+
+
+
         public RtspClientResponse Announce()
         {
             throw new NotImplementedException();
@@ -323,6 +370,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
+
+
+
+
         public RtspClientResponse Redirect()
         {
             throw new NotImplementedException();
@@ -353,6 +408,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
+
+
+
+
+
+
+
+
         public RtspClientResponse Record()
         {
             throw new NotImplementedException();
@@ -383,11 +446,60 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
         
-        // push interleaved data to server if it has recording caps
-        public void SendInterleaved( byte[] buffer )
+
+
+
+
+
+
+
+
+        // for using custom methods
+
+        // GET_FRAME rtsp://1.2.3.4/channel/0 rtsp/1.0
+        // Accept: image/jpeg
+        // CSeq: 123
+
+        public RtspClientResponse Send( RtspMethod method , string uri  )
         {
             throw new NotImplementedException();
         }
+
+        public RtspClientResponse Send( RtspMethod method , string uri , RtspClientRequest request )
+        {
+            throw new NotImplementedException();
+        }
+
+        public RtspClientResponse Send( RtspMethod method , Uri uri )
+        {
+            throw new NotImplementedException();
+        }
+
+        public RtspClientResponse Send( RtspMethod method , Uri uri , RtspClientRequest request )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+
+        // for pushing data to the server
+        public void SendAsInterleaved( byte[] buffer )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendAsInterleaved( in ArraySegment<byte> buffer )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
 
         public void Dispose()
         {

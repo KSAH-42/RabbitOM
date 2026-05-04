@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
@@ -10,8 +12,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public string Uri { get; set; }
 
-        public RtspMessageHeader[] Headers { get; set; }
+        public ICollection<RtspMessageHeader> Headers { get; set; }
 
-        public byte[] Body { get; set; }
+        public ArraySegment<byte> Body { get; set; }
     }
 }

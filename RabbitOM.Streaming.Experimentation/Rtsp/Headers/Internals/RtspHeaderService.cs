@@ -12,6 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
         public RtspHeaderService( RtspHeaderServiceSettings settings )
         {
             _settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
@@ -37,17 +38,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public void AddHeader( string name , string value )
-        {
-            // ensure if not a forbidden header
-            //  no: throw 
-            // check if the parser is registered 
-            //  no: queue the header as string
-            //  yes: parse and queue the header value class
-
-            throw new NotImplementedException();
-        }
-
         public bool ContainsHeader( string name )
         {
             throw new NotImplementedException();
@@ -63,42 +53,49 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             throw new NotImplementedException();
         }
 
+        public void AddHeader( string name , string value )
+        {
+            // ensure if not a forbidden header
+            //  no: throw 
+            // check if the parser is registered 
+            //  no: queue the header as string
+            //  yes: parse and queue the header value class
+
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveHeader( string name )
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveHeader( string name , int index )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveHeaders()
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetHeaderValue( string typeName , object value )
         {
+            // TODO: clear the list add the new one 
             throw new NotImplementedException();
         }
 
-        public object GetHeaderValue( string typeName )
+        public object GetHeaderValue( string name )
         {
             throw new NotImplementedException();
         }
 
-        public string GetHeaderValueByName( string name )
+        public object GetHeaderValue( string name , int index )
         {
             throw new NotImplementedException();
         }
 
-        public string[] GetHeaderKeys()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetHeaderValueByName( string name , int index )
-        {
-            throw new NotImplementedException();
-        }
-
-        public string[] GetHeaderValuesByName( string name )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveHeaderByName( string name )
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RemoveHeaderByName( string name , int index )
+        public IEnumerable<string> GetHeaderValues( string name )
         {
             throw new NotImplementedException();
         }
@@ -118,7 +115,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             throw new NotImplementedException();
         }
 
-        public bool TryGetHeaderValues( string name , out string[] values )
+        public bool TryGetHeaderValues( string name , out IEnumerable<string> values )
         {
             throw new NotImplementedException();
         }

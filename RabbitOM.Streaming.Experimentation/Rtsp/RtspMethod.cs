@@ -1,31 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    // we don't use is to to have the save code for string conversion in one place
-    // and we can't compare to enum to a string where a rtsp is mainly based string
-
     public sealed class RtspMethod
     {
-        private static readonly Lazy<IReadOnlyDictionary<string,RtspMethod>> s_methods = new Lazy<IReadOnlyDictionary<string, RtspMethod>>( () =>
+        private readonly string _functionName;
+
+
+
+        public RtspMethod( string functionName )
         {
-            var methods = new Dictionary<string,RtspMethod>( StringComparer.OrdinalIgnoreCase );
-
-            foreach ( var property in typeof( RtspMethod ).GetFields( BindingFlags.Public | BindingFlags.Static ) )
+            if ( functionName == null )
             {
-                var method = property.GetValue( null ) as RtspMethod ;
-
-                if ( method != null )
-                {
-                    methods[ method.Value ] = method;
-                }
+                throw new ArgumentNullException( nameof( functionName ) );
             }
 
-            return methods;
-        });
+            if ( ! IsValid( functionName ) )
+            {
+                throw new ArgumentException( nameof( functionName ) );
+            }
 
+            _functionName = functionName;
+        }
+        
+        public string FunctionName
+        {
+            get => _functionName;
+        }
+       
 
 
 
@@ -52,29 +54,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
 
 
-
-
-
-
-        private RtspMethod( string value )
-        {
-            Value = value;
-        }
         
-        public string Value
+        public static bool IsValid( string name )
         {
-            get;
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                return false;
+            }
+
+            foreach ( var element in name )
+            {
+                if ( char.IsLetter( element ) && char.IsUpper( element ) || char.IsDigit( element ) )
+                {
+                    continue;
+                }
+
+                if ( element == '_' || element == '-' || element == '.' )
+                {
+                    continue;
+                }
+
+                return false;
+            }
+
+            return true;
         }
-       
-        public override string ToString()
-        {
-            return Value;
-        }
 
-
-
-
-        
         public static bool Equals( RtspMethod method , string name )
         {
             if ( method == null || string.IsNullOrWhiteSpace( name ) )
@@ -82,12 +87,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 return false;
             }
 
-            return StringComparer.OrdinalIgnoreCase.Equals( method.Value , name?.Trim() );
+            return StringComparer.OrdinalIgnoreCase.Equals( method.FunctionName , name?.Trim() );
         }
 
-        public static bool TryParse( string value , out RtspMethod result )
+        public static bool TryParse( string input , out RtspMethod result )
         {
-            return s_methods.Value.TryGetValue( value , out result );
+            result = IsValid( input ) ? new RtspMethod( input ) : null;
+
+            return result != null;
+        }
+
+
+
+
+
+
+
+        public override string ToString()
+        {
+            return _functionName;
         }
     }
 }

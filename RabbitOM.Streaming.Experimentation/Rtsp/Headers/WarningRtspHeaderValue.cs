@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     
     public sealed class WarningRtspHeaderValue
     {
-        public ItemValueCollection<WarningInfo> Infos { get; } = new ItemValueCollection<WarningInfo>();
+        public ItemCollection<WarningInfo> Infos { get; } = new ItemCollection<WarningInfo>();
         
         public override string ToString()
         {

@@ -4,14 +4,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public struct RtspMessageHeader
     {
-        public RtspMessageHeader( string name , string value )
-        {
-            Name = name;
-            Value = value;
-        }
+        public string Name { get; set; }
 
-        public string Name { get; }
-
-        public string Value { get; }
+        public string Value { get; set; }
     }
 }

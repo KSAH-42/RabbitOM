@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class ItemValueCollection<T> : IEnumerable , IEnumerable<T> , ICollection<T> , IReadOnlyCollection<T> where T : class
+    public sealed class ItemCollection<T> : IEnumerable , IEnumerable<T> , ICollection<T> , IReadOnlyCollection<T> where T : class
     {
         private readonly List<T> _collection = new List<T>();
 

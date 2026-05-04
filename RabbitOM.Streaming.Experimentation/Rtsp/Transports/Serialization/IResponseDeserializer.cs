@@ -4,6 +4,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Serialization
 {
     public interface IResponseDeserializer
     {
-        RtspResponseMessage Deserialize( byte[] input );
+        RtspResponseMessage Deserialize( in ArraySegment<byte> buffer );
     }
 }

@@ -19,6 +19,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RequestsRtspHeaderCollection Headers { get; }
 
-        public MemoryStream Body { get; } = new MemoryStream();
+        public Stream Body { get; }
     }
 }
