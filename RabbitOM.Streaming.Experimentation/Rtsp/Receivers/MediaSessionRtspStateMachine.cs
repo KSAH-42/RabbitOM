@@ -56,6 +56,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
                 {
                     _session.Close();
                 }
+
+                _session.Dispose();
             }
 
             base.Dispose( disposing );
