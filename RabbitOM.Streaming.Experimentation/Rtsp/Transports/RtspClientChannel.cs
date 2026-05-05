@@ -24,14 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        public abstract string Address { get; set; }
-        
-        public abstract TimeSpan ReceiveTimeout { get; set; }
-        
-        public abstract TimeSpan SendTimeout { get; set; }
-
         public abstract bool IsOpened { get; }
-
 
 
 
@@ -43,7 +36,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public abstract void Abort();
 
-        public abstract RtspResponseMessage SendMessage( RtspRequestMessage request );
+        public abstract void Send( in InterleavedPacket packet );
+        
+        public abstract RtspResponseMessage Send( RtspRequestMessage request );
 
         public void Dispose()
         {

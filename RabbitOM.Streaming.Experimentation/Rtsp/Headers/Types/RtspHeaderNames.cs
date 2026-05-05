@@ -53,6 +53,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string UserAgent = "User-Agent";
         public const string Via = "Via";
         public const string Warning = "Warning";
-        public const string WWWAuthenticate = "WWW-Authenticate";
+        public const string WWWAuthenticate = "WWW-Send";
     }
 }

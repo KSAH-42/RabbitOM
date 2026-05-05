@@ -480,20 +480,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
 
-
-
-
-
-
-
-
-        // for pushing data to the server
-        public void SendAsInterleaved( byte[] buffer )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SendAsInterleaved( in ArraySegment<byte> buffer )
+        public void Send( in InterleavedPacket packet )
         {
             throw new NotImplementedException();
         }

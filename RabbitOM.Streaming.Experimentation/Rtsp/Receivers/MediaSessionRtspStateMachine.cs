@@ -47,20 +47,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         {
             if ( disposing )
             {
-                if ( _session.IsStreamingStarted )
-                {
-                    _session.StopStreaming();
-                }
-
-                if ( _session.IsOpened )
-                {
-                    _session.Close();
-                }
+                OnDispose();
 
                 _session.Dispose();
             }
 
             base.Dispose( disposing );
+        }
+
+        private void OnDispose()
+        {
+            if ( _session.IsStreamingStarted )
+            {
+                _session.StopStreaming();
+            }
+
+            if ( _session.IsOpened )
+            {
+                _session.Close();
+            }
         }
     }
 }

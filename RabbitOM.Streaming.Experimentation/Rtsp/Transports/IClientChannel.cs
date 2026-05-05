@@ -12,14 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        string Address { get; set; }
-        
-        TimeSpan ReceiveTimeout { get; set; }
-        
-        TimeSpan SendTimeout { get; set; }
-
         bool IsOpened { get; }
-
 
 
 
@@ -29,6 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         void Abort();
 
-        RtspResponseMessage SendMessage( RtspRequestMessage request );
+
+        RtspResponseMessage Send( RtspRequestMessage request );
     }
 }

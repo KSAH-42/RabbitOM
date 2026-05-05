@@ -4,6 +4,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public struct InterleavedPacket
     {
+        public InterleavedPacket( byte[] buffer ) : this ( buffer , 0 )
+        {
+        }
+
         public InterleavedPacket( byte[] buffer , int channel )
         {
             if ( buffer == null )
@@ -20,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             {
                 throw new ArgumentOutOfRangeException( nameof( channel ) );
             }
-
+            
             Buffer = buffer;
             Channel = channel;
         }

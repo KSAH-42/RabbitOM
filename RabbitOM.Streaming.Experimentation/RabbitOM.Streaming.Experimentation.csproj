@@ -205,8 +205,6 @@
     <Compile Include="Rtsp\Transports\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\Serialization\IRequestSerializer.cs" />
     <Compile Include="Rtsp\Transports\Serialization\IResponseDeserializer.cs" />
-    <Compile Include="Rtsp\Transports\SslClientChannel.cs" />
-    <Compile Include="Rtsp\Transports\TcpClientChannel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">
