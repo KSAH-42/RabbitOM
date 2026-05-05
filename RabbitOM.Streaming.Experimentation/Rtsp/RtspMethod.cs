@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public static bool IsValid( string name )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( name == null || name.Length <= 0 )
             {
                 return false;
             }

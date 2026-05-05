@@ -11,10 +11,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     //  the fast mode, will keep a single socket
     // don't add static socket pool class
     // and the end add async methods as partial class
-    
+
     public sealed class RtspClient : IClient , IDisposable
     {
-        private readonly IEventSink _eventSink;
+        private readonly RtspClientContext _context;
         
         
 
@@ -24,17 +24,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         { 
         }
 
-        public RtspClient( IEventSink eventSink )
+        public RtspClient( RtspClientContext context )
         {
-            _eventSink = eventSink ?? throw new ArgumentNullException( nameof( eventSink ) );
+            _context = context ?? throw new ArgumentNullException( nameof( _context ) );
         }
 
-  
+
+
 
         
-
         public bool IsConnected { get; }
 
+        public bool IsDisposed { get; }
+        
         public TimeSpan ReceiveTimeout { get; set; }
 
         public TimeSpan SendTimeout { get; set; }
@@ -45,9 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 
-        public int Retries { get; set; }
-
-        public bool IsDisposed { get; }
+        
 
         
 

@@ -2,24 +2,22 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
 {
-    public class TcpMediaReceiverSession : IMediaStreamingSession
+    public sealed class TcpMediaReceiverSession : IMediaSession
     {
-        private readonly RtspMediaReceiver _receiver;
-
-        public TcpMediaReceiverSession( RtspMediaReceiver receiver )
-        {
-            _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
-        } 
-
         public bool IsOpened => throw new NotImplementedException();
 
         public bool IsStreamingStarted => throw new NotImplementedException();
 
         public bool IsReceivingData => throw new NotImplementedException();
 
-        public TimeSpan IdleTimeout => throw new NotImplementedException();
+        public TimeSpan PingInteral => throw new NotImplementedException();
 
-        public bool CheckStatus()
+        public TimeSpan RetryInteral => throw new NotImplementedException();
+
+
+
+
+        public bool Open()
         {
             throw new NotImplementedException();
         }
@@ -34,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
             throw new NotImplementedException();
         }
 
-        public bool Open()
+        public bool SendHeartBeat()
         {
             throw new NotImplementedException();
         }
@@ -44,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
             throw new NotImplementedException();
         }
 
-        public bool StopStreaming()
+        public void StopStreaming()
         {
             throw new NotImplementedException();
         }

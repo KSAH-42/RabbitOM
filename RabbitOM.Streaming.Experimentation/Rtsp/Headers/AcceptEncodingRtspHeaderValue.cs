@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    
+
     public sealed class AcceptEncodingRtspHeaderValue
     {
         public StringWithQualityCollection Formats { get; } = new StringWithQualityCollection( format => SupportedTypes.IsEncodingSupported( format.Value ) );

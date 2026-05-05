@@ -157,8 +157,8 @@
     <Compile Include="Rtsp\Headers\ViaRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\IEventSink.cs" />
     <Compile Include="Rtsp\IClient.cs" />
+    <Compile Include="Rtsp\IHandler.cs" />
     <Compile Include="Rtsp\InterleavedPacket.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />
@@ -175,12 +175,11 @@
     <Compile Include="Rtsp\Receivers\IMediaReceiver.cs" />
     <Compile Include="Rtsp\Receivers\IMediaReceiverConfigurer.cs" />
     <Compile Include="Rtsp\Receivers\IMediaSession.cs" />
-    <Compile Include="Rtsp\Receivers\IMediaStreamingSession.cs" />
     <Compile Include="Rtsp\Receivers\MediaContentType.cs" />
+    <Compile Include="Rtsp\Receivers\MediaSessionRtspStateMachine.cs" />
     <Compile Include="Rtsp\Receivers\RtspMediaReceiver.cs" />
     <Compile Include="Rtsp\Receivers\RtspMediaReceiverConfiguration.cs" />
     <Compile Include="Rtsp\Receivers\RtspStateMachine.cs" />
-    <Compile Include="Rtsp\Receivers\StreamingRtspStateMachine.cs" />
     <Compile Include="Rtsp\Receivers\StreamingStatus.cs" />
     <Compile Include="Rtsp\Receivers\Tcp\TcpMediaReceiver.cs" />
     <Compile Include="Rtsp\Receivers\Tcp\TcpMediaReceiverConfiguration.cs" />
@@ -192,6 +191,7 @@
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverConfiguration.cs" />
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverSession.cs" />
     <Compile Include="Rtsp\RtspClient.cs" />
+    <Compile Include="Rtsp\RtspClientContext.cs" />
     <Compile Include="Rtsp\RtspClientRequest.cs" />
     <Compile Include="Rtsp\RtspClientResponse.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />

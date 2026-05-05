@@ -1,3 +1,54 @@
+
+internal class Program
+{
+    static void Main( string[] args )
+    {
+        using ( var client = new RabbitOM.Net.Rtsp.RtspClient() )
+        {
+            client.DefaultHeaders.Accept = new AcceptRtspHeader();
+   	        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
+   	        
+            client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
+            
+            var request = new RtspClientRequest();
+
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
+            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
+
+            var response0 = client.Options();
+
+            var response1 = client.Options( request );
+            
+            var response2 = client.Options( "*" , new RtspClientRequest( new RequestsRtspHeaderCollection()
+            {
+                UserAgent = new UserAgentRtspHeaderValue( "myPlayer" , "1.0" , "rtsp client" ),
+            } ) );
+
+            request = new RtspClientRequest();
+
+            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
+
+            var response3 = client.Describe( request );
+        }
+    }
+}
+
+
 Try to make a quick search about the existance of idl framework for encoders and decoders, a kind of media rpc standard.
 
 Put idl on decoder  => to generate code
@@ -14,18 +65,6 @@ but it provide many things streaming transport. but...
 
 
 
-﻿next step make it possible to write something like this:
-
-client.Options( new RtspClientRequest( new RequestsRtspHeaderCollection()
-{
-    Session = new SessionRtspHeaderValue() { Identifier = "23" } ,
-    MyHeader = new MyHeader() 
-    {
-        A = "C"
-    }
-} ) );
-
-
 this assembly is used for experimentation for finding different approachs of some existing implementation.
 If the implementation will be enougth, it will be moved to the main assembly.
 
@@ -34,6 +73,7 @@ some modifications on headers will comes and can potentially changed entirely th
 it should not be considered as the final implementation but closer to the final implementation.
 
 so do not used theses classes, until it was moved to the main assembly.
+
 
 
 public sealed class RtspClientTemporyTest
@@ -47,7 +87,7 @@ public sealed class RtspClientTemporyTest
 
     public void Run()
     {            
-        using var client = new RtspClient( packet => Console.WriteLine( "Data received: channel:{0} size:{0}" , packet.Channel , packet.Buffer.Length ) );
+        using var client = new RtspClient() );
            
         client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
         client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
@@ -92,51 +132,5 @@ public sealed class RtspClientTemporyTest
         var tearDownBuilder = new TearDownRtspRequestBuilder() { SessionId = sessionHeader.Id };
             
         client.TearDown( tearDownBuilder.BuildRequest() );
-    }
-}
-
-internal class Program
-{
-    static void Main( string[] args )
-    {
-        using ( var client = new RabbitOM.Net.Rtsp.RtspClient() )
-        {
-            client.DefaultHeaders.Accept = new AcceptRtspHeader();
-   	        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-   	        
-            client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
-            
-            var request = new RtspClientRequest();
-
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
-
-            var response0 = client.Options();
-
-            var response1 = client.Options( request );
-            
-            var response2 = client.Options( "*" , request );
-
-            request = new RtspClientRequest();
-
-            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
-
-            var response3 = client.Describe( request );
-        }
     }
 }
