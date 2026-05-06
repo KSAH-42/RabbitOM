@@ -4,28 +4,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public sealed class RtspMethod
     {
-        private readonly string _functionName;
+        private readonly string _procedureName;
 
 
 
-        public RtspMethod( string functionName )
+        public RtspMethod( string procedureName )
         {
-            if ( functionName == null )
+            if ( procedureName == null )
             {
-                throw new ArgumentNullException( nameof( functionName ) );
+                throw new ArgumentNullException( nameof( procedureName ) );
             }
 
-            if ( ! IsValid( functionName ) )
+            if ( ! IsValid( procedureName ) )
             {
-                throw new ArgumentException( nameof( functionName ) );
+                throw new ArgumentException( nameof( procedureName ) );
             }
 
-            _functionName = functionName;
+            _procedureName = procedureName;
         }
         
-        public string FunctionName
+        public string ProdecureName
         {
-            get => _functionName;
+            get => _procedureName;
         }
        
 
@@ -87,7 +87,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 return false;
             }
 
-            return StringComparer.OrdinalIgnoreCase.Equals( method.FunctionName , name?.Trim() );
+            return StringComparer.OrdinalIgnoreCase.Equals( method.ProdecureName , name?.Trim() );
         }
 
         public static bool TryParse( string input , out RtspMethod result )
@@ -105,7 +105,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public override string ToString()
         {
-            return _functionName;
+            return _procedureName;
         }
     }
 }
