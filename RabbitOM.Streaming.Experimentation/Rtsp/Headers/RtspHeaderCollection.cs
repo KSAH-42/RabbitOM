@@ -11,10 +11,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+
+
+
         internal RtspHeaderCollection( RtspHeaderService service )
         {
             _service = service ?? throw new ArgumentNullException( nameof( service ) );
         }
+
+
+
+
+
 
 
 
@@ -28,6 +37,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _service.GetHeaderValue( name , index )?.ToString() ?? throw new InvalidOperationException();
         }
+
+
+
+
+
+
+
 
 
 
@@ -48,17 +64,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _service.Headers.Keys;
         }
 
-        internal RtspHeaderService Service
-        {
-            get => _service;
-        }
-
         public bool IsSynchronized
         {
             get => false;
         }
 
+        internal RtspHeaderService Service
+        {
+            get => _service;
+        }
+
         
+        
+
+
+
+
 
 
 
@@ -104,6 +125,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return new Enumerator( this._service );
         }
 
+        IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
+        {
+            return new Enumerator( this._service );
+        }
+
         public string GetValue( string name )
         {
             return _service.GetHeaderValue( name )?.ToString() ?? string.Empty;
@@ -139,11 +165,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _service.TryGetHeaderValues( name , out values );
         }
 
-        IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
+        
 
 
 

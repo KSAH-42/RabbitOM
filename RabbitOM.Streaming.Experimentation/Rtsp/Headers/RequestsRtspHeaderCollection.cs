@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
         // TODO: question for a small rabbit or even a great: do we need to remove and let the communication layer to populate them ?
-        // => if not null force them, if not let sub communication layer to populate them
+        // => if not null force them, if null the sub communication, populate it
         public AuthorizationRtspHeaderValue Authorization 
         {
             get => Service.GetHeaderValue( RtspHeaderNames.Authorization ) as AuthorizationRtspHeaderValue;

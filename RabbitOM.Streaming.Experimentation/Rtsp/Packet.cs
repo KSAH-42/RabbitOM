@@ -2,13 +2,13 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public struct InterleavedPacket
+    public struct Packet
     {
-        public InterleavedPacket( byte[] buffer ) : this ( buffer , 0 )
+        public Packet( byte[] buffer ) : this ( buffer , 0 )
         {
         }
 
-        public InterleavedPacket( byte[] buffer , int channel )
+        public Packet( byte[] buffer , int channel )
         {
             if ( buffer == null )
             {
@@ -35,5 +35,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public byte[] Buffer { get; }
 
         public int Channel { get; }
+
+
+
+
+
+        public static bool IsNullOrEmpty( in Packet packet )
+        {
+            return packet.Buffer == null || packet.Buffer.Length == 0;
+        }
     }
 }

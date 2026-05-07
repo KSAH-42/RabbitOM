@@ -5,6 +5,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Serialization
 {
     public interface IRequestSerializer
     {
-        ArraySegment<byte> Serialize( RtspRequestMessage message );
+        byte[] Serialize( RtspRequestMessage message );
     }
 }

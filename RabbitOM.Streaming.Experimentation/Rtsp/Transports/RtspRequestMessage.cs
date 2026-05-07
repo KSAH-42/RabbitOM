@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {

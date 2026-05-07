@@ -11,29 +11,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
+        private static readonly StringValueChecker ValueChecker = StringValueChecker.StringQualityChecker;
         
 
 
 
         public StringWithQuality( string value )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            Value = ValueNormalizer.Normalize( value );
+            Value = ValueChecker.EnsureValue( value );
         }
 
         public StringWithQuality( string value , double quality )
         {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            Value = ValueNormalizer.Normalize( value );
-
+            Value = ValueChecker.EnsureValue( value );
             Quality = quality;
         }
 
@@ -51,11 +41,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public static implicit operator StringWithQuality( string value )
-        {
-            return new StringWithQuality( value );
-        }
-
         public static bool IsNullOrEmpty( StringWithQuality obj )
         {
             return object.ReferenceEquals( obj , null ) || string.IsNullOrWhiteSpace( obj.Value );
@@ -69,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             {
                 var name = tokens.FirstOrDefault( token => ! token.Contains( "=" ) );
 
-                if ( string.IsNullOrWhiteSpace( name ) )
+                if ( ValueChecker.CheckValue( name ) )
                 {
                     return false;
                 }

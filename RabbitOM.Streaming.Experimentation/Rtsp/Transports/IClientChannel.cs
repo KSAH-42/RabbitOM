@@ -22,6 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         void Abort();
 
+        void Send( in Packet packet );
 
         RtspResponseMessage Send( RtspRequestMessage request );
     }

@@ -8,6 +8,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
+
+
+
+
         public RtspMethod( string procedureName )
         {
             if ( procedureName == null )
@@ -23,6 +27,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             _procedureName = procedureName;
         }
         
+
+
+
+
+
+
         public string ProdecureName
         {
             get => _procedureName;
@@ -54,6 +64,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
 
 
+
+
+
+
+
+
         
         public static bool IsValid( string name )
         {
@@ -78,16 +94,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             }
 
             return true;
-        }
-
-        public static bool Equals( RtspMethod method , string name )
-        {
-            if ( method == null || string.IsNullOrWhiteSpace( name ) )
-            {
-                return false;
-            }
-
-            return StringComparer.OrdinalIgnoreCase.Equals( method.ProdecureName , name?.Trim() );
         }
 
         public static bool TryParse( string input , out RtspMethod result )

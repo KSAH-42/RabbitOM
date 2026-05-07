@@ -219,5 +219,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         RtspClientResponse Send( RtspMethod method , Uri uri );
         
         RtspClientResponse Send( RtspMethod method , Uri uri , RtspClientRequest request );
+
+
+        
+
+        
+        // for pushing data to the server using interleaved, if the server support this feature
+        // the rfc allow that, but it's will unsual
+        // normally it should be present in the interface because this feature is supported on the paper
+        // for ip camera, it doesn't make sense to use this method, but for computer server, it make sense
+        // for instance, an iot device or event a smartphone pushing data to a server, calling setup, then record and push interleaved packet, and then teardown when there is nothing to send
+        void Send( in Packet packet );
     }
 }

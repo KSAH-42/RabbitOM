@@ -2,36 +2,28 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Transports;
+
     public sealed class RtspClientContext 
     {
-        public ushort SocketBufferSize { get; }
+        public uint BufferSize { get; }
 
-        public sbyte ConnectionPoolSize { get; } // set 1 to emulate a single single socket
+        public sbyte ChannelPoolSize { get; } // set 1 to emulate a single socket
 
-        public TimeSpan ConnectionPoolExpirationDelay { get; }
+        public TimeSpan ChannelPoolExpirationDelay { get; }
 
-        public TimeSpan RetriesDelay { get; }
+        public TimeSpan RetryDelay { get; }
         
         public sbyte NumberOfRetries { get; }
 
         public IHandler Handler { get; }
 
+        public IClientChannelFactory ChannelFactory { get; }
+
         // public EventHandler ConnectedHandler { get; }
 
         // public EventHandler DisconnectedHandler { get; }
 
-        // public EventHandler<InterleavedPacket> InterleavedPacketReceivedHandler { get; }
-
-        // public Action<string> LogInfo { get; }
-
-        // public Action<string> LogDebug { get; }
-
-        // public Action<string> LogWarning { get; }
-
-        // public Action<string> LogError { get; }
-
-        // public StringValueNormalizer ValueNormalizer { get; }
-
-        // public StringValueChecker ValueChecker { get; }
+        // public Action<string> Log { get; }
     }
 }

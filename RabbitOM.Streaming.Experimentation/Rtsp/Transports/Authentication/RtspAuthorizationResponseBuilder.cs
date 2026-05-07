@@ -91,12 +91,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
                     return string.Empty;
                 }
 
-                string ComputeHash( Func<string,string> hashFunction )
+                string ComputeHash( Func<string,string> createHash )
                 {
-                    var hashA1 = hashFunction( UserName + ":" + Realm + ":" + Password );
-                    var hashA2 = hashFunction( Method + ":" + Uri  );
+                    var hashA1 = createHash( UserName + ":" + Realm + ":" + Password );
+                    var hashA2 = createHash( Method + ":" + Uri  );
 
-                    return hashFunction( hashA1 + ":" + Nonce + ":" + hashA2 );
+                    return createHash( hashA1 + ":" + Nonce + ":" + hashA2 );
                 }
 
                 if ( AuthenticationTypes.IsMd5Algorithm( Algorithm ) )

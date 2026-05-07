@@ -1,37 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances
 {
     public sealed class DefaultStringValueChecker : StringValueChecker 
     {
-        private static readonly HashSet<char> InvalidChars = new HashSet<char>() { '²' , 'é' , '~' , 'ç' , 'è' , '$' , '£' , '€' , '¤' , '¨' , 'µ' , 'ù' , '^' , '§'  , '[' , ']' , '{' , '}' , '<' , '>' };
+        private readonly static IReadOnlyCollection<char> SpecialAllowedChars = new HashSet<char>() { '.','!','$','|','_','-','*','&','~','%' };
 
         public override bool CheckValue( string value )
         {
+            return OnCheckValue( value );
+        }
+
+        public override string EnsureValue( string value )
+        {
+            return OnCheckValue( value ) ? value : throw new FormatException();
+        }
+
+
+
+
+        private bool OnCheckValue( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return false;
+            }
+
             foreach ( var character in value ?? string.Empty )
             {
-                if ( character <= 31 || character >= 127 || char.IsControl( character ) || InvalidChars.Contains( character ) )
+                if ( char.IsLetterOrDigit( character ) || SpecialAllowedChars.Contains( character ) )
+                {
+                    continue;
+                }
+
+                if ( char.IsControl( character ) || InvalidChars.Contains( character ) )
+                {
+                    return false;
+                }
+
+                if ( character <= 31 || character >= 127 )
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        public override string EnsureValue( string value )
-        {
-            foreach ( var character in value ?? string.Empty )
-            {
-                if ( character <= 31 || character >= 127 || char.IsControl( character ) || InvalidChars.Contains( character ) )
-                {
-                    throw new InvalidDataException( $"the value contains bad characters : {value}" );
-                }
-            }
-
-            return value ?? string.Empty;
         }
     }
 }

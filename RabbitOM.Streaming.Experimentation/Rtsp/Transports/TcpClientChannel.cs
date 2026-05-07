@@ -2,13 +2,19 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-    /// TODO: should handle ssl stream when uri scheme is equals to rtsps don't use a bool something this
     public sealed class TcpClientChannel : RtspClientChannel
     {
+        public EndPoint EndPoint { get; set; }
+
         public override bool IsOpened
         {
             get => throw new NotImplementedException();
         }
+
+
+
+
+
 
         public override void Open()
         {
@@ -30,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
-        public override void Send( in InterleavedPacket packet )
+        public override void Send( in Packet packet )
         {
             throw new NotImplementedException();
         }

@@ -487,9 +487,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-        // for push data to the server
-        public void Send( in InterleavedPacket packet )
+        // for pushing data to the server using interleaved, if the server support this feature
+        // the rfc allow that, but it's unsual
+        // normally it should be present in the interface because this feature is supported on the paper
+        // for ip camera, it doesn't make sense to use this method, but for computer server, it make sense
+        // for instance, an iot device or event a smartphone pushing data to a server, calling setup, then record and push interleaved packet, and then teardown when there is nothing to send
+
+        public void Send( in Packet packet )
         {
+            if ( Packet.IsNullOrEmpty( packet ) )
+            {
+                throw new ArgumentException( nameof( packet ) );
+            }
+            
             throw new NotImplementedException();
         }
 
@@ -503,7 +513,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            // TODO
         }
     }
 }
