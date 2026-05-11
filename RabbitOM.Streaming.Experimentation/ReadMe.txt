@@ -10,7 +10,7 @@ internal class Program
             client.BaseAddress = new Uri( "rtsp://127.0.0.1/channel/1?type=mpeg" );
                 
             client.DefaultHeaders.Accept = new AcceptRtspHeader();
-   	        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
+ 	    client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
@@ -18,11 +18,11 @@ internal class Program
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
    	        
             client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
             
             var request = new RtspClientRequest();
 
@@ -56,34 +56,6 @@ internal class Program
         }
     }
 }
-
-
-Try to make a quick search about the existance of idl framework for encoders and decoders, a kind of media rpc standard.
-
-Put idl on decoder  => to generate code
-Put idl on encoder  => to generate code
-
-Put idl on CDN ???  => to generate code
-
-
-and idl for streaming with rpc style for building CDN ? I don't know if rtsp can be a good candidate because it we can describe the idl
-but it provide many things streaming transport. but...
-
-> before todo: next project after closing this one 
- => how to generate a local decoder process based from schema ? forget ffmpeg.
-
-
-
-this assembly is used for experimentation for finding different approachs of some existing implementation.
-If the implementation will be enougth, it will be moved to the main assembly.
-
-some modifications on headers will comes and can potentially changed entirely the existing code.
-
-it should not be considered as the final implementation but closer to the final implementation.
-
-so do not used theses classes, until it was moved to the main assembly.
-
-
 
 public sealed class RtspClientTemporyTest
 {
