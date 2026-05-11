@@ -7,9 +7,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class StringWithQualityRtspHeaderValueCollection : IEnumerable , IEnumerable<StringWithQualityRtspHeaderValue> , ICollection<StringWithQualityRtspHeaderValue> , IReadOnlyCollection<StringWithQualityRtspHeaderValue>
     {
-        private readonly List<StringWithQualityRtspHeaderValue> _collection = new List<StringWithQualityRtspHeaderValue>();
+        private readonly List<StringWithQualityRtspHeaderValue> _collection;
+
+        private readonly Func<StringWithQualityRtspHeaderValue,bool> _validator;
 
 
+
+        public StringWithQualityRtspHeaderValueCollection()
+        {
+            _collection = new List<StringWithQualityRtspHeaderValue>();
+        }
+
+        public StringWithQualityRtspHeaderValueCollection( Func<StringWithQualityRtspHeaderValue,bool> validator )
+        {
+            _validator  = validator ?? throw new ArgumentNullException( nameof( validator ) );
+            _collection = new List<StringWithQualityRtspHeaderValue>();
+        }
 
 
 
@@ -44,12 +57,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 throw new ArgumentNullException( nameof( item ) );
             }
 
+            if ( _validator?.Invoke( item ) == false )
+            {
+                throw new ArgumentException( nameof( item ) );
+            }
+
             _collection.Add( item );
         }
 
         public bool TryAdd( StringWithQualityRtspHeaderValue item )
         {
             if ( item == null )
+            {
+                return false;
+            }
+
+            if ( _validator?.Invoke( item ) == false )
             {
                 return false;
             }

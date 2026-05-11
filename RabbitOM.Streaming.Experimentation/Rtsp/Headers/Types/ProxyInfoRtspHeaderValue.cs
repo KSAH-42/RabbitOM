@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class ProxyInfo
+    public sealed class ProxyInfoRtspHeaderValue
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comment>.*)\))?\s*$";
     
@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public static bool TryParse( string input , out ProxyInfo result )
+        public static bool TryParse( string input , out ProxyInfoRtspHeaderValue result )
         {
             result = null;
 
@@ -61,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             if ( matchResult.Success )
             {
-                result = new ProxyInfo()
+                result = new ProxyInfoRtspHeaderValue()
                 {
                     Protocol   = matchResult.Groups[ "protocol" ].Value ,
                     Version    = matchResult.Groups[ "version" ].Value ,

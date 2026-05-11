@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _access = string.Empty;
         private byte? _ttl;
         private ValueRange? _port;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
 
 

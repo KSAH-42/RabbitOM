@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class ProxyInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<ProxyInfo> , ICollection<ProxyInfo> , IReadOnlyCollection<ProxyInfo>
+    public sealed class ProxyInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<ProxyInfoRtspHeaderValue> , ICollection<ProxyInfoRtspHeaderValue> , IReadOnlyCollection<ProxyInfoRtspHeaderValue>
     {
-        private readonly List<ProxyInfo> _collection = new List<ProxyInfo>();
+        private readonly List<ProxyInfoRtspHeaderValue> _collection = new List<ProxyInfoRtspHeaderValue>();
 
 
 
@@ -32,12 +32,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return GetEnumerator();
         }
 
-        public IEnumerator<ProxyInfo> GetEnumerator()
+        public IEnumerator<ProxyInfoRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( ProxyInfo item )
+        public void Add( ProxyInfoRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Add( item );
         }
 
-        public bool TryAdd( ProxyInfo item )
+        public bool TryAdd( ProxyInfoRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -64,17 +64,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Clear();
         }
 
-        public bool Contains( ProxyInfo item )
+        public bool Contains( ProxyInfoRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( ProxyInfo[] array , int arrayIndex )
+        public void CopyTo( ProxyInfoRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( ProxyInfo item )
+        public bool Remove( ProxyInfoRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return true;
         }
 
-        public bool RemoveBy( Func<ProxyInfo,bool> predicate )
+        public bool RemoveBy( Func<ProxyInfoRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

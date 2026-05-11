@@ -13,6 +13,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
                 
 
+
+
+
+
         public bool NoCache { get; set; }
 
         public bool NoStore { get; set; }
@@ -37,13 +41,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int? StaleIfError { get; set; }
 
-        public StringParameterRtspHeaderValueCollection Parameters { get; } = new StringParameterRtspHeaderValueCollection( ( string name , string value ) =>
-        {
-            return RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) ? string.IsNullOrEmpty( value ) || RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) : false;
-        } );
+        public StringParameterRtspHeaderValueCollection Parameters { get; } = new StringParameterRtspHeaderValueCollection();
         
 
-       
 
 
 

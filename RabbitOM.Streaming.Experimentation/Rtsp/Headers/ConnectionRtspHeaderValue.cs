@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     
     public sealed class ConnectionRtspHeaderValue
     {
-        public StringRtspHeaderValueCollection Directives { get; } = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        public StringRtspHeaderValueCollection Directives { get; } = new StringRtspHeaderValueCollection();
         
         public static bool TryParse( string input , out ConnectionRtspHeaderValue result )
         {

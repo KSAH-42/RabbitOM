@@ -7,16 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class StringRtspHeaderValueCollection : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string>
     {
-        private readonly Func<string,bool> _validator;
-        private readonly List<string> _collection;
-
-
-
-        public StringRtspHeaderValueCollection( Func<string,bool> validator = null )
-        {
-            _collection = new List<string>();
-            _validator = validator;
-        }
+        private readonly List<string> _collection = new List<string>();
 
 
 
@@ -34,47 +25,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return _collection.GetEnumerator();
         }
 
         public IEnumerator<string> GetEnumerator()
         {
             return _collection.GetEnumerator();
-        }
+        }       
 
         public void Add( string item )
         {
-            if ( string.IsNullOrWhiteSpace( item ) )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( item ) )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
 
-            if ( _validator != null && ! _validator( item ) )
-            {
-                throw new ArgumentException( nameof( item ) );
-            }
-            
             _collection.Add( item );
-        }
-
-        public bool TryAdd( string item )
-        {
-            if ( string.IsNullOrWhiteSpace( item ) )
-            {
-                return false;
-            }
-
-            if ( _validator != null && ! _validator( item ) )
-            {
-                return false;
-            }
-
-            _collection.Add( item );
-
-            return true;
         }
 
         public void Clear()
@@ -124,6 +92,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
 
             return _collection.Remove( item );
+        }
+
+        public bool TryAdd( string item )
+        {
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( item ) )
+            {
+                return false;
+            }
+
+            _collection.Add( item );
+
+            return true;
         }
     }
 }

@@ -30,12 +30,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string this[ string name ]
         {
-            get => _service.GetHeaderValue( name )?.ToString() ?? throw new InvalidOperationException();
+            get => _service.GetHeaderValue( name )?.ToString() ?? throw new KeyNotFoundException();
         }
 
         public string this[ string name , int index]
         {
-            get => _service.GetHeaderValue( name , index )?.ToString() ?? throw new InvalidOperationException();
+            get => _service.GetHeaderValue( name , index )?.ToString() ?? throw new KeyNotFoundException();
         }
 
 

@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class RtpInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<RtpInfo> , ICollection<RtpInfo> , IReadOnlyCollection<RtpInfo>
+    public sealed class RtpInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<RtpInfoRtspHeaderValue> , ICollection<RtpInfoRtspHeaderValue> , IReadOnlyCollection<RtpInfoRtspHeaderValue>
     {
-        private readonly List<RtpInfo> _collection = new List<RtpInfo>();
+        private readonly List<RtpInfoRtspHeaderValue> _collection = new List<RtpInfoRtspHeaderValue>();
 
 
 
@@ -32,12 +32,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return GetEnumerator();
         }
 
-        public IEnumerator<RtpInfo> GetEnumerator()
+        public IEnumerator<RtpInfoRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( RtpInfo item )
+        public void Add( RtpInfoRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -47,7 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Add( item );
         }
 
-        public bool TryAdd( RtpInfo item )
+        public bool TryAdd( RtpInfoRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -64,17 +64,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Clear();
         }
 
-        public bool Contains( RtpInfo item )
+        public bool Contains( RtpInfoRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( RtpInfo[] array , int arrayIndex )
+        public void CopyTo( RtpInfoRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( RtpInfo item )
+        public bool Remove( RtpInfoRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -91,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return true;
         }
 
-        public bool RemoveBy( Func<RtpInfo,bool> predicate )
+        public bool RemoveBy( Func<RtpInfoRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

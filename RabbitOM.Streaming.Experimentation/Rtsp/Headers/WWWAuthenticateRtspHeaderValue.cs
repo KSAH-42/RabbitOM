@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _algorithm = string.Empty;
         private bool? _stale;
         private string _qualityOfProtection = string.Empty;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
         
 

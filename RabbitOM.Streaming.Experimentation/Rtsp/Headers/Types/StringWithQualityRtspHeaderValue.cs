@@ -48,6 +48,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
+        public static implicit operator StringWithQualityRtspHeaderValue( string value )
+        {
+            return new StringWithQualityRtspHeaderValue( value );
+        }
+
+
+
+
+
+
+
         public static bool IsValidValue( string value )
         {
             return RtspHeaderValueValidator.TryEnsureWellFormedToken( value )
@@ -92,6 +103,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             return result != null;
         }
+
 
 
 

@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     
     public sealed class IfMatchRtspHeaderValue
     {
-        public StringRtspHeaderValueCollection ETags { get; } = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        public StringRtspHeaderValueCollection ETags { get; } = new StringRtspHeaderValueCollection();
 
         public static bool TryParse( string input , out IfMatchRtspHeaderValue result )
         {

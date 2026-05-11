@@ -14,12 +14,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             throw new NotImplementedException();
         }
 
-        public static string EnsureNotNullOrEmpty( string  value )
+        public static object EnsureNotNull( object value )
         {
             throw new NotImplementedException();
         }
 
-        public static string EnsureContainsNoSpace( string  value )
+        public static TValue EnsureNotNull<TValue>( TValue value ) where TValue : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string EnsureNotNullOrEmpty( string value )
+        {
+            throw new NotImplementedException();
+        }
+
+        public static string EnsureContainsNoSpace( string value )
         {
             throw new NotImplementedException();
         }

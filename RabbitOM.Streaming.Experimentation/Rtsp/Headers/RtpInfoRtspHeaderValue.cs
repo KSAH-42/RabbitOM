@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( RtpInfo.TryParse( token , out var info ) )
+                    if ( Types.RtpInfoRtspHeaderValue.TryParse( token , out var info ) )
                     {
                         header.RtpInfos.TryAdd( info );
                     }

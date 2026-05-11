@@ -4,33 +4,26 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class UriRtspHeaderValue
     {
-        private string _uri = string.Empty;
+        private Uri _uri;
         
-        public string Uri
+        public Uri Value
         {
             get => _uri;
-            set => _uri = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
+            set => _uri = RtspHeaderValueValidator.EnsureNotNull<Uri>( value );
         }
 
         public static bool TryParse( string input , out UriRtspHeaderValue result )
         {
-            result = null;
+            result = System.Uri.TryCreate( RtspHeaderValueSanitizer.UnQuotesWithTrim( input ) , UriKind.RelativeOrAbsolute , out var value ) 
+                ? new UriRtspHeaderValue() { Value = value }
+                : null;
 
-            var value = RtspHeaderValueSanitizer.UnQuotesWithTrim( input );
-
-            if ( string.IsNullOrWhiteSpace( value ) || ! System.Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute ) )
-            {
-                return false;
-            }
-
-            result = new UriRtspHeaderValue() { Uri = value };
-            
-            return true;
+            return result != null;
         }
 
         public override string ToString()
         {
-            return string.IsNullOrWhiteSpace( Uri ) ? string.Empty : Uri;
+            return _uri?.ToString() ?? string.Empty;
         }
     }
 }

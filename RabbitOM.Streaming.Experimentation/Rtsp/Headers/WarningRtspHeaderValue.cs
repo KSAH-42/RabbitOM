@@ -7,11 +7,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     
     public sealed class WarningRtspHeaderValue
     {
-        public WarningInfoRtspHeaderValueCollection Infos { get; } = new WarningInfoRtspHeaderValueCollection();
+        public WarningInfoRtspHeaderValueCollection Values { get; } = new WarningInfoRtspHeaderValueCollection();
         
         public override string ToString()
         {
-            return string.Join( ", " , Infos );
+            return string.Join( ", " , Values );
         }
 
         public static bool TryParse( string input , out WarningRtspHeaderValue result )
@@ -24,13 +24,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( WarningInfo.TryParse( token , out var warning ) )
+                    if ( Types.WarningInfoRtspHeaderValue.TryParse( token , out var warning ) )
                     {
-                        header.Infos.TryAdd( warning );
+                        header.Values.TryAdd( warning );
                     }
                 }
 
-                if ( header.Infos.Count > 0 )
+                if ( header.Values.Count > 0 )
                 {
                     result = header;
                 }

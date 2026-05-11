@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         private string _identifier = string.Empty;
         private long? _timeout;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
         
 

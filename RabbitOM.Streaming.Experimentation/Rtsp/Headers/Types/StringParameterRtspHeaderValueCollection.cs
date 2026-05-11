@@ -7,17 +7,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class StringParameterRtspHeaderValueCollection : IEnumerable , IEnumerable<KeyValuePair<string,string>>
     {
-        private readonly Dictionary<string,string> _collection;
-        private readonly Func<string,string,bool> _validator;
+        private readonly Dictionary<string,string> _collection = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
 
 
-
-
-        public StringParameterRtspHeaderValueCollection( Func<string,string,bool> validator = null )
-        {
-            _collection = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
-            _validator = validator;
-        }
 
         
         
@@ -43,12 +35,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public void Add( string name , string value )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
             }
 
-            if ( _validator != null && ! _validator( name , value ) )
+            if ( value?.Length > 0 && ! RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) )
             {
                 throw new ArgumentException();
             }
@@ -59,23 +51,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             }
 
             _collection[ name ] = value ?? string.Empty;
-        }
-
-        public bool TryAdd( string name , string value )
-        {
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                return false;
-            }
-
-            if ( _validator != null && ! _validator( name , value ) )
-            {
-                return false;
-            }
-
-            _collection[ name ] = value ?? string.Empty;
-
-            return true;
         }
 
         public void Clear()
@@ -111,6 +86,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public bool Remove( string name )
         {
             return _collection.Remove( name ?? string.Empty );
+        }
+
+        public bool TryAdd( string name , string value )
+        {
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
+            {
+                return false;
+            }
+
+            if ( value?.Length > 0 && ! RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) )
+            {
+                return false;
+            }
+
+            _collection[ name ] = value ?? string.Empty;
+
+            return true;
         }
 
         public bool TryGetValue( string key , out string value )

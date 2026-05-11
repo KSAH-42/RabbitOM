@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( ProxyInfo.TryParse( token , out var proxy ) )
+                    if ( ProxyInfoRtspHeaderValue.TryParse( token , out var proxy ) )
                     {
                         header.Proxies.TryAdd( proxy );
                     }

@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _qualityOfProtection = string.Empty;
         private string _nonceCount = string.Empty;
         private string _clientNonce = string.Empty;                
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
 
 

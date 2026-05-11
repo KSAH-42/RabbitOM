@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class MethodRtspHeaderValueCollection : IEnumerable , IEnumerable<RtspMethod> , ICollection<RtspMethod> , IReadOnlyCollection<RtspMethod>
+    public sealed class RtspMethodHeaderValueCollection : IEnumerable , IEnumerable<RtspMethod> , ICollection<RtspMethod> , IReadOnlyCollection<RtspMethod>
     {
         private readonly HashSet<RtspMethod> _collection = new HashSet<RtspMethod>();
 

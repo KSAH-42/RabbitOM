@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
@@ -40,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool ContainsHeader( string name )
         {
-            throw new NotImplementedException();
+            return _headers.ContainsKey( name ?? string.Empty );
         }
 
         public void CopyHeadersTo( Array array , int index )
@@ -50,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int CountHeaders()
         {
-            throw new NotImplementedException();
+            return _headers.Count;
         }
 
         public void AddHeader( string name , string value )
@@ -66,17 +67,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool RemoveHeader( string name )
         {
-            throw new NotImplementedException();
+            return _headers.Remove( name ?? string.Empty );
         }
 
         public bool RemoveHeader( string name , int index )
         {
-            throw new NotImplementedException();
+            if ( ! _headers.TryGetValue( name ?? string.Empty , out var values ) )
+            {
+                return false;
+            }
+
+            Debug.Assert( values != null );
+
+            if ( index < 0 || index >= values.Count )
+            {
+                return false;
+            }
+
+            values.RemoveAt( index );
+
+            return true;
         }
 
         public void RemoveHeaders()
         {
-            throw new NotImplementedException();
+            _headers.Clear();
         }
 
         public void SetHeaderValue( string typeName , object value )

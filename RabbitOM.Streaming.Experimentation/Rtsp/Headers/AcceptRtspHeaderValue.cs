@@ -6,13 +6,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     
     public sealed class AcceptRtspHeaderValue
     {
-        public StringWithQualityRtspHeaderValueCollection Mimes { get; } = new StringWithQualityRtspHeaderValueCollection();
-        
-        public override string ToString()
+        public StringWithQualityRtspHeaderValueCollection Mimes { get; } = new StringWithQualityRtspHeaderValueCollection( mime =>
         {
-            return string.Join( ", " , Mimes );
-        }
-
+            return SupportedTypes.IsMimeSupported( mime.Value );
+        } );
+        
         public static bool TryParse( string input , out AcceptRtspHeaderValue result )
         {
             result = null;
@@ -36,6 +34,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , Mimes );
         }
     }
 }

@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
  
     public sealed class PublicRtspHeaderValue
     {
-        public MethodRtspHeaderValueCollection Methods { get; } = new MethodRtspHeaderValueCollection();
+        public RtspMethodHeaderValueCollection Methods { get; } = new RtspMethodHeaderValueCollection();
         
         public override string ToString()
         {

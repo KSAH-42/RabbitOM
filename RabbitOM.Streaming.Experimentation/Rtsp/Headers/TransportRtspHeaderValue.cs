@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private ValueRange? _clientPort;
         private ValueRange? _serverPort;
         private ValueRange? _interleaved;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
 
 

@@ -6,13 +6,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptEncodingRtspHeaderValue
     {
-        public StringWithQualityRtspHeaderValueCollection Formats { get; } = new StringWithQualityRtspHeaderValueCollection();
-        
-        public override string ToString()
+        public StringWithQualityRtspHeaderValueCollection Types { get; } = new StringWithQualityRtspHeaderValueCollection( type =>
         {
-            return string.Join( ", " , Formats );
-        }
-
+            return SupportedTypes.IsEncodingSupported( type.Value );
+        } );
+        
         public static bool TryParse( string input , out AcceptEncodingRtspHeaderValue result )
         {
             result = null;
@@ -25,17 +23,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
                     {
-                        header.Formats.TryAdd( element );
+                        header.Types.TryAdd( element );
                     }
                 }
 
-                if ( header.Formats.Count > 0 )
+                if ( header.Types.Count > 0 )
                 {
                     result = header;
                 }
             }
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , Types );
         }
     }
 }
