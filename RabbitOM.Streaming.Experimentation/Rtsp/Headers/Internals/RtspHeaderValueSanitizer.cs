@@ -4,19 +4,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     internal static class RtspHeaderValueSanitizer
     {
+        private static readonly char[] SpaceAndQuotesChars = { ' ' , '\'' , '\"' , '`' };
+
         public static string UnQuotesWithTrim( string value )
         {
-            throw new NotImplementedException();
+            return value?.Trim( SpaceAndQuotesChars ) ?? string.Empty;
         }
 
-        public static string NormalizeOutput( string v )
+        public static string TrimWithRemoveAllQuotesNormalizer( string value )
         {
-            throw new NotImplementedException();
-        }
-
-        internal static string TrimWithRemoveAllQuotesNormalizer( string input )
-        {
-            throw new NotImplementedException();
+            return value?.Replace( "\'" , "" ).Replace( "\"" , "" ).Replace( "`" , "" ).Trim() ?? string.Empty;
         }
     }
 }

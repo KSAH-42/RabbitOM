@@ -22,10 +22,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public IClientChannelFactory ChannelFactory { get; }
 
-        // public EventHandler ConnectedHandler { get; }
-
-        // public EventHandler DisconnectedHandler { get; }
-
         // public Action<string> Log { get; }
     }
 }

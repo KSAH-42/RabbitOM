@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public sealed class TcpClientChannel : RtspClientChannel
     {
-        public EndPoint EndPoint { get; set; }
+        public override EndPoint EndPoint { get; }
 
         public override bool IsOpened
         {

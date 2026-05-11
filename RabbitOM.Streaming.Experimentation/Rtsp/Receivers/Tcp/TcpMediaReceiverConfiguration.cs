@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
 {
-    public class TcpMediaReceiverConfiguration : RtspMediaReceiverConfiguration
+    public sealed class TcpMediaReceiverConfiguration : RtspMediaReceiverConfiguration
     {
         
     }

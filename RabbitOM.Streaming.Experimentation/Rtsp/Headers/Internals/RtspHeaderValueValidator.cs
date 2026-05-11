@@ -70,7 +70,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             throw new NotImplementedException();
         }
 
-        internal static bool ContainsNoSpace( string value )
+        public static bool ContainsNoSpace( string value )
         {
             throw new NotImplementedException();
         }

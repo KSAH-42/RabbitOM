@@ -13,6 +13,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public ICollection<RtspMessageHeader> Headers { get; set; }
 
-        public ArraySegment<byte> Body { get; set; }
+        public byte[] Body { get; set; }
     }
 }

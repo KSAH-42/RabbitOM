@@ -174,7 +174,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else if ( ValueComparer.Equals( "ttl" , parameter.Key ) )
                         {
-                            if ( byte.TryParse( parameter.Value?.TrimWithUnQuotes() ?? string.Empty , out byte value ) )
+                            if ( byte.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out byte value ) )
                             {
                                 header._ttl = value;
                             }

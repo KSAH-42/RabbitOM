@@ -24,7 +24,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        
+        public abstract EndPoint EndPoint { get; }
+
         public abstract bool IsOpened { get; }
 
 

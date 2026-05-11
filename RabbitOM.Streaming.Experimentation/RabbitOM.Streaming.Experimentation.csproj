@@ -118,7 +118,6 @@
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueParser.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueSanitizer.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueValidator.cs" />
-    <Compile Include="Rtsp\Headers\Internals\RtspStringExtensions.cs" />
     <Compile Include="Rtsp\Headers\IReadOnlyHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderValue.cs" />
