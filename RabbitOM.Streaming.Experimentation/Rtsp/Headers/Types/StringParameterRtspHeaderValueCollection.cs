@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class StringExtensionCollection : IEnumerable , IEnumerable<KeyValuePair<string,string>>
+    public sealed class StringParameterRtspHeaderValueCollection : IEnumerable , IEnumerable<KeyValuePair<string,string>>
     {
         private readonly Dictionary<string,string> _collection;
         private readonly Func<string,string,bool> _validator;
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-        public StringExtensionCollection( Func<string,string,bool> validator = null )
+        public StringParameterRtspHeaderValueCollection( Func<string,string,bool> validator = null )
         {
             _collection = new Dictionary<string, string>( StringComparer.OrdinalIgnoreCase );
             _validator = validator;

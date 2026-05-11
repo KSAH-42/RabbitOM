@@ -6,13 +6,10 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class AuthorizationRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
 
 
         private string _scheme = string.Empty;        
@@ -27,83 +24,85 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _qualityOfProtection = string.Empty;
         private string _nonceCount = string.Empty;
         private string _clientNonce = string.Empty;                
-        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
 
-        
+
+
+
 
         public string Scheme
         {
             get => _scheme;
-            set => _scheme = ValueNormalizer.Normalize( value );
+            set => _scheme = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string UserName
         {
             get => _userName;
-            set => _userName = ValueNormalizer.Normalize( value );
+            set => _userName = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Realm
         {
             get => _realm;
-            set => _realm = ValueNormalizer.Normalize( value );
+            set => _realm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string Nonce
         {
             get => _nonce;
-            set => _nonce = ValueNormalizer.Normalize( value );
+            set => _nonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string Domain
         {
             get => _domain;
-            set => _domain = ValueNormalizer.Normalize( value );
+            set => _domain = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string Uri
         {
             get => _uri;
-            set => _uri = ValueNormalizer.Normalize( value );
+            set => _uri = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string Opaque
         {
             get => _opaque;
-            set => _opaque = ValueNormalizer.Normalize( value );
+            set => _opaque = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string Response
         {
             get => _response;
-            set => _response = ValueNormalizer.Normalize( value );
+            set => _response = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Algorithm
         {
             get => _algorithm;
-            set => _algorithm = ValueNormalizer.Normalize( value );
-        }
-
-        public string QualityOfProtection
-        {
-            get => _qualityOfProtection;
-            set => _qualityOfProtection = ValueNormalizer.Normalize( value );
+            set => _algorithm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string NonceCount
         {
             get => _nonceCount;
-            set => _nonceCount = ValueNormalizer.Normalize( value );
+            set => _nonceCount = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string ClientNonce
         {
             get => _clientNonce;
-            set => _clientNonce = ValueNormalizer.Normalize( value );
+            set => _clientNonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
                 
-        public StringCollection Extensions
+        public string QualityOfProtection
+        {
+            get => _qualityOfProtection;
+            set => _qualityOfProtection = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        public StringRtspHeaderValueCollection Extensions
         { 
             get => _extensions; 
         }
@@ -117,7 +116,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( RtspHeaderValueParser.TryParse( input , " " , out string[] tokens ) )
             {
-                var header = new AuthorizationRtspHeaderValue() { Scheme = tokens.FirstOrDefault() };
+                var header = new AuthorizationRtspHeaderValue()
+                {
+                    _scheme = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault() ) 
+                };
                 
                 if ( RtspHeaderValueParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
@@ -127,56 +129,56 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         {
                             if ( ValueComparer.Equals( "username" , parameter.Key ) )
                             {
-                                header.UserName = parameter.Value;
+                                header._userName = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "realm" , parameter.Key ) )
                             {
-                                header.Realm = parameter.Value;
+                                header._realm = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
                             {
-                                header.Nonce = parameter.Value;
+                                header._nonce = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
                             {
-                                header.Opaque = parameter.Value;
+                                header._opaque = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "domain" , parameter.Key ) )
                             {
-                                header.Domain = parameter.Value;
+                                header._domain = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "uri" , parameter.Key ) )
                             {
-                                header.Uri = parameter.Value;
+                                header._uri = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "response" , parameter.Key ) )
                             {
-                                header.Response = parameter.Value;
+                                header._response = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }                            
                             else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
                             {
-                                header.Algorithm = parameter.Value;
+                                header._algorithm = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "cnonce" , parameter.Key ) )
                             {
-                                header.ClientNonce = parameter.Value;
+                                header._clientNonce = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "nc" , parameter.Key ) )
                             {
-                                header.NonceCount = parameter.Value;
+                                header._nonceCount = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
                             {
-                                header.QualityOfProtection = parameter.Value;
+                                header._qualityOfProtection = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                             }
                             else
                             {
-                                header.Extensions.TryAdd( token );
+                                header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                             }
                         }
                     }
 
-                    if ( ValueValidator.TryValidate( header.Scheme ) && ValueValidator.TryValidate( header.UserName ) )
+                    if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._scheme ) && RtspHeaderValueValidator.TryEnsureWellFormedToken( header._userName ) )
                     {
                         result = header;
                     }

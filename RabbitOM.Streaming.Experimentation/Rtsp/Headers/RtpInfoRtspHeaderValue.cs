@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class RtpInfoRtspHeaderValue
     {
-        public ItemCollection<RtpInfo> RtpInfos { get; } = new ItemCollection<RtpInfo>();
+        public RtpInfoRtspHeaderValueCollection RtpInfos { get; } = new RtpInfoRtspHeaderValueCollection();
 
         public override string ToString()
         {

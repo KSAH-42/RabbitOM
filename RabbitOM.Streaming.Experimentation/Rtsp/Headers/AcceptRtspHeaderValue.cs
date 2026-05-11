@@ -3,22 +3,14 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
+    
     public sealed class AcceptRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
-        public StringWithQualityCollection Mimes { get; } = new StringWithQualityCollection( IsValidMime );
+        public StringWithQualityRtspHeaderValueCollection Mimes { get; } = new StringWithQualityRtspHeaderValueCollection();
         
         public override string ToString()
         {
             return string.Join( ", " , Mimes );
-        }
-
-        public static bool IsValidMime( StringWithQuality encoding )
-        {
-            return encoding != null && SupportedTypes.IsMimeSupported( encoding.Value );
         }
 
         public static bool TryParse( string input , out AcceptRtspHeaderValue result )
@@ -31,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( ValueNormalizer.Normalize( token ) , out var element ) )
+                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
                     {
                         header.Mimes.TryAdd( element );
                     }

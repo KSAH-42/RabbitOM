@@ -6,26 +6,22 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
    
     public sealed class SessionRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-
         
 
         private string _identifier = string.Empty;
         private long? _timeout;
-        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
 
         
 
         public string Identifier
         {
             get => _identifier;
-            set => _identifier = ValueNormalizer.Normalize( value );
+            set => _identifier = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public long? Timeout
@@ -34,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _timeout = value;
         }
 
-        public StringCollection Extensions
+        public StringRtspHeaderValueCollection Extensions
         {
             get => _extensions;
         }
@@ -47,14 +43,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( RtspHeaderValueParser.TryParse( input , ";" , out string[] tokens ) )
             {
-                var identifer = tokens.FirstOrDefault( token => ! token.Contains( "=" ) && token.Any( x => char.IsLetterOrDigit(x) ) );
+                var identifer = tokens.FirstOrDefault( RtspHeaderValueValidator.TryEnsureWellFormedToken );
 
-                if ( string.IsNullOrWhiteSpace( identifer ) )
+                if ( ! string.IsNullOrWhiteSpace( identifer ) )
                 {
                     return false;
                 }
                 
-                var header = new SessionRtspHeaderValue() { Identifier = identifer };
+                var header = new SessionRtspHeaderValue() { _identifier = RtspHeaderValueSanitizer.UnQuotesWithTrim( identifer ) };
                 
                 foreach( var token in tokens )
                 {
@@ -62,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( ValueComparer.Equals( "timeout" , parameter.Key ) )
                         {
-                            if ( long.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out long value ) )
+                            if ( long.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out long value ) )
                             {
                                 header.Timeout = value;
                             }
@@ -81,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ValueValidator.TryValidate( header.Identifier ) )
+                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Identifier ) )
                 {
                     result = header;
                 }

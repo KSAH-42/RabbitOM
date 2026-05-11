@@ -5,16 +5,11 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class TransportRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-       
-
-
+        
         private string _transport = string.Empty;
         private string _transmission = string.Empty;
         private string _source = string.Empty;
@@ -29,56 +24,56 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private ValueRange? _clientPort;
         private ValueRange? _serverPort;
         private ValueRange? _interleaved;
-        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
 
 
 
         public string Transport 
         { 
             get => _transport; 
-            set => _transport = ValueNormalizer.Normalize( value ); 
+            set => _transport = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
 
         public string Transmission
         { 
             get => _transmission; 
-            set => _transmission = ValueNormalizer.Normalize( value ); 
+            set => _transmission = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
 
         public string Source
         { 
             get => _source; 
-            set => _source = ValueNormalizer.Normalize( value ); 
+            set => _source = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Destination
         { 
             get => _destination; 
-            set => _destination = ValueNormalizer.Normalize( value ); 
+            set => _destination = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Address
         { 
             get => _address; 
-            set => _address = ValueNormalizer.Normalize( value ); 
+            set => _address = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Host
         { 
             get => _host; 
-            set => _host = ValueNormalizer.Normalize( value ); 
+            set => _host = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string SSRC
         { 
             get => _ssrc; 
-            set => _ssrc = ValueNormalizer.Normalize( value ); 
+            set => _ssrc = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Mode
         { 
             get => _mode; 
-            set => _mode = ValueNormalizer.Normalize( value ); 
+            set => _mode = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public byte? TTL
@@ -117,7 +112,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _interleaved = value;
         }
         
-        public StringCollection Extensions
+        public StringRtspHeaderValueCollection Extensions
         {
             get => _extensions;
         }
@@ -140,101 +135,101 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( ValueComparer.Equals( "destination" , parameter.Key ) )
                         {
-                            header.Destination = parameter.Value;
+                            header._destination = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "source" , parameter.Key ) )
                         {
-                            header.Source = parameter.Value;
+                            header._source = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "address" , parameter.Key ) )
                         {
-                            header.Address = parameter.Value ;
+                            header._address = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "host" , parameter.Key ) )
                         {
-                            header.Host = parameter.Value;
+                            header._host = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
-                            header.SSRC = parameter.Value;
+                            header._ssrc = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "mode" , parameter.Key ) )
                         {
-                            header.Mode = parameter.Value;
+                            header._mode = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "layers" , parameter.Key ) )
                         {
-                            if ( int.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out int value ) )
+                            if ( int.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out int value ) )
                             {
-                                header.Layers = value;
+                                header._layers = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "ttl" , parameter.Key ) )
                         {
-                            if ( byte.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out byte value ) )
+                            if ( byte.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out byte value ) )
                             {
-                                header.TTL = value;
+                                header._ttl = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
-                                header.Port = value;
+                                header._port = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "client_port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
-                                header.ClientPort = value;
+                                header._clientPort = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "server_port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
-                                header.ServerPort = value;
+                                header._serverPort = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "interleaved" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
-                                header.Interleaved = value;
+                                header._interleaved = value;
                             }
                         }
                         else if ( SupportedTypes.IsTransportSupported( parameter.Key ) )
                         {
-                            header.Transport = token;
+                            header._transport = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( SupportedTypes.IsTransmissionSupported( parameter.Key ) )
                         {
-                            header.Transmission = token;
+                            header._transmission = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else
                         {
-                            header.Extensions.TryAdd( token );
+                            header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                         }
                     }
                     else
                     {
                         if ( SupportedTypes.IsTransportSupported( token ) )
                         {
-                            header.Transport = token;
+                            header._transport = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                         }
                         else if ( SupportedTypes.IsTransmissionSupported( token ) )
                         {
-                            header.Transmission = token;
+                            header._transmission = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                         }
                         else    
                         {
-                            header.Extensions.TryAdd( token );
+                            header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                         }
                     }
                 }
                 
-                if ( ValueValidator.TryValidate( header.Transport ) && ValueValidator.TryValidate( header.Transmission ) )
+                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Transport ) && RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Transmission ) )
                 {
                     result = header;
                 }

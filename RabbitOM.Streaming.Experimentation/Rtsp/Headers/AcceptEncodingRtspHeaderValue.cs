@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class AcceptEncodingRtspHeaderValue
     {
-        public StringWithQualityCollection Formats { get; } = new StringWithQualityCollection( format => SupportedTypes.IsEncodingSupported( format.Value ) );
+        public StringWithQualityRtspHeaderValueCollection Formats { get; } = new StringWithQualityRtspHeaderValueCollection();
         
         public override string ToString()
         {
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( token , out var element ) )
+                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
                     {
                         header.Formats.TryAdd( element );
                     }

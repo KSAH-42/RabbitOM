@@ -2,25 +2,21 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-  
     public sealed class UriRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        
         private string _uri = string.Empty;
         
         public string Uri
         {
             get => _uri;
-            set => _uri = ValueNormalizer.Normalize( value );
+            set => _uri = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
         }
 
         public static bool TryParse( string input , out UriRtspHeaderValue result )
         {
             result = null;
 
-            var value = ValueNormalizer.Normalize( input );
+            var value = RtspHeaderValueSanitizer.UnQuotesWithTrim( input );
 
             if ( string.IsNullOrWhiteSpace( value ) || ! System.Uri.IsWellFormedUriString( value , UriKind.RelativeOrAbsolute ) )
             {

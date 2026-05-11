@@ -4,13 +4,10 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
+    
     public sealed class IfMatchRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
-        public StringCollection ETags { get; } = new StringCollection( StringValueValidator.DefaultValidator.TryValidate );
+        public StringRtspHeaderValueCollection ETags { get; } = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
 
         public static bool TryParse( string input , out IfMatchRtspHeaderValue result )
         {
@@ -22,7 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    header.ETags.TryAdd( token );
+                    header.ETags.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                 }
             
                 if ( header.ETags.Count > 0 )

@@ -5,28 +5,19 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-    
     public sealed class ContentRangeRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-
-        
-
         private string _unit = string.Empty;
         private long? _start;
         private long? _end;
         private long? _size;
-
-
+        
 
 
         public string Unit
         {
             get => _unit;
-            set => _unit = ValueNormalizer.Normalize( value );
+            set => _unit = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public long? Start
@@ -48,6 +39,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
+
+
+
+
+
         public static bool TryParse( string input , out ContentRangeRtspHeaderValue result )
         {
             result = null;
@@ -56,39 +52,37 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 if ( RtspHeaderValueParser.TryParse( tokens.ElementAtOrDefault( 1 ) , "/" , out string[] tokensRange ) )
                 {
-                    var header = new ContentRangeRtspHeaderValue() { Unit = tokens.FirstOrDefault() };
-
-                    if ( header.Unit == tokensRange.FirstOrDefault() )
-                    {
-                        return false;
-                    }
+                    var header = new ContentRangeRtspHeaderValue()
+                    { 
+                        _unit = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault() ) 
+                    };
 
                     if ( RtspHeaderValueParser.TryParse( tokensRange.ElementAtOrDefault( 0 ) , "-" , out KeyValuePair<string,string> range ) )
                     {
-                        if ( long.TryParse( ValueNormalizer.Normalize( range.Key ) , out long number ) )
+                        if ( long.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( range.Key ) , out long number ) )
                         {
-                            header.Start = number;
+                            header._start = number;
                         }
 
-                        if ( long.TryParse( ValueNormalizer.Normalize( range.Value ) , out number ) )
+                        if ( long.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( range.Value ) , out number ) )
                         {
-                            header.End = number;
+                            header._end = number;
                         }
                     }
 
-                    if ( long.TryParse( ValueNormalizer.Normalize( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
+                    if ( long.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
                     {
-                        header.Size = size;
+                        header._size = size;
                     }                    
 
-                    if ( ValueValidator.TryValidate( header.Unit ) )
+                    if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._unit ) )
                     {
-                        if ( header.Start.HasValue && header.End.HasValue )
+                        if ( header._start.HasValue && header._end.HasValue )
                         {
                             result = header;
                         }
                     
-                        else if ( header.Size.HasValue && ! header.Start.HasValue && ! header.End.HasValue )
+                        else if ( header._size.HasValue && ! header._start.HasValue && ! header._end.HasValue )
                         {
                             result = header;
                         }
@@ -99,6 +93,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return result != null;
         }
         
+
+
+
+
+
+
+
 
         public override string ToString()
         {

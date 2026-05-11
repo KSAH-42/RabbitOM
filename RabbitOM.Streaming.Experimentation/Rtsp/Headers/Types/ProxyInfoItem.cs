@@ -4,13 +4,10 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
     public sealed class ProxyInfo
     { 
         private static readonly string RegularExpression = @"^\s*(?<protocol>[A-Za-z]+)\s*\/\s*(?<version>\d+\.\d+)\s+(?<receivedBy>[^\s()]+)(?:\s*\((?<comment>.*)\))?\s*$";
-        private static readonly StringValueNormalizer ValueNormalize = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
+    
 
 
 
@@ -27,30 +24,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public string Protocol
         {
             get => _protocol;
-            set => _protocol = ValueNormalize.Normalize( value );
+            set => _protocol = EnsureValue( value );
         }
 
         public string Version
         {
             get => _version;
-            set => _version = ValueNormalize.Normalize( value );
+            set => _version = EnsureValue( value );
         }
 
         public string ReceivedBy
         {
             get => _receivedBy;
-            set => _receivedBy = ValueNormalize.Normalize( value );
+            set => _receivedBy = EnsureValue( value );
         }
 
         public string Comment
         {
             get => _comment;
-            set => _comment = ValueNormalize.Normalize( value );
+            set => _comment = EnsureValue( value );
         }
 
 
 
 
+        private static string EnsureValue( string value )
+        {
+            var result = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
+
+            RtspHeaderValueValidator.EnsureWellFormedToken( result );
+            RtspHeaderValueValidator.EnsureNotNullOrWhiteSpace( result );
+
+            return result;
+        }
 
         public static bool TryParse( string input , out ProxyInfo result )
         {

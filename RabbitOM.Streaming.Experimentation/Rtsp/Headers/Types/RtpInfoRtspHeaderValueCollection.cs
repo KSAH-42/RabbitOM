@@ -5,9 +5,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class ItemCollection<T> : IEnumerable , IEnumerable<T> , ICollection<T> , IReadOnlyCollection<T> where T : class
+    public sealed class RtpInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<RtpInfo> , ICollection<RtpInfo> , IReadOnlyCollection<RtpInfo>
     {
-        private readonly List<T> _collection = new List<T>();
+        private readonly List<RtpInfo> _collection = new List<RtpInfo>();
+
+
+
+
 
         public int Count
         {
@@ -28,12 +32,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return GetEnumerator();
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public IEnumerator<RtpInfo> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( T item )
+        public void Add( RtpInfo item )
         {
             if ( item == null )
             {
@@ -43,7 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Add( item );
         }
 
-        public bool TryAdd( T item )
+        public bool TryAdd( RtpInfo item )
         {
             if ( item == null )
             {
@@ -60,17 +64,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Clear();
         }
 
-        public bool Contains( T item )
+        public bool Contains( RtpInfo item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( T[] array , int arrayIndex )
+        public void CopyTo( RtpInfo[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( T item )
+        public bool Remove( RtpInfo item )
         {
             return _collection.Remove( item );
         }
@@ -87,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return true;
         }
 
-        public bool RemoveBy( Func<T,bool> predicate )
+        public bool RemoveBy( Func<RtpInfo,bool> predicate )
         {
             if ( predicate == null )
             {

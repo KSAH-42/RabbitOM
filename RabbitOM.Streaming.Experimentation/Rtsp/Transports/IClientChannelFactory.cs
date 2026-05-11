@@ -4,6 +4,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public interface IClientChannelFactory 
     {
-        IClientChannel CreateChannel( Uri uri );
+        IClientChannel CreateChannel( EndPoint endpoint );
     }
 }

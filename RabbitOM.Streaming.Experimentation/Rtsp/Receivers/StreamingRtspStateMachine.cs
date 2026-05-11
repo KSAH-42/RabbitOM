@@ -8,11 +8,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         that's the main reasons, or to invoke custom methods
     */
             
-    public sealed class MediaSessionRtspStateMachine : RtspStateMachine
+    public sealed class StreamingRtspStateMachine : RtspStateMachine
     {
-        private readonly IMediaSession _session;
+        private readonly IMediaStreamingSession _session;
 
-        public MediaSessionRtspStateMachine( IMediaSession session )
+        public StreamingRtspStateMachine( IMediaStreamingSession session )
         {
             _session = session ?? throw new ArgumentNullException( nameof( session ) );
         } 

@@ -4,15 +4,9 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-    
     public sealed class WarningInfo
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        
-
-
-        private int _code;
+    private int _code;
         private string _agent = string.Empty;
         private string _comment = string.Empty;
         
@@ -27,17 +21,26 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public string Agent
         {
             get => _agent;
-            set => _agent = ValueNormalizer.Normalize( value );
+            set => _agent = EnsureValue( value );
         }
         
         public string Comment
         {
             get => _comment;
-            set => _comment = ValueNormalizer.Normalize( value );
+            set => _comment = EnsureValue( value );
         }
         
 
 
+        private static string EnsureValue( string value )
+        {
+            var result = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
+
+            RtspHeaderValueValidator.EnsureWellFormedToken( result );
+            RtspHeaderValueValidator.EnsureNotNullOrWhiteSpace( result );
+
+            return result;
+        }
 
         public static bool TryParse( string input , out WarningInfo result )
         {
@@ -52,9 +55,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 
                 result = new WarningInfo()
                 {
-                    Code = code ,
-                    Agent = tokens.ElementAtOrDefault( 1 ),
-                    Comment = tokens.ElementAtOrDefault( 2 ),
+                    _code = code ,
+                    _agent = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.ElementAtOrDefault( 1 ) ),
+                    _comment = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.ElementAtOrDefault( 2 ) ),
                 };
             }
             

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+using System;
+using System.Xml.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
@@ -73,28 +75,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public static bool IsValid( string name )
         {
-            if ( name == null || name.Length <= 0 )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
             {
                 return false;
             }
 
-            foreach ( var element in name )
+            return RtspHeaderValueValidator.Contains( name , element =>
             {
-                if ( char.IsLetter( element ) && char.IsUpper( element ) || char.IsDigit( element ) )
-                {
-                    continue;
-                }
-
-                if ( element == '_' || element == '-' || element == '.' )
-                {
-                    continue;
-                }
-
-                return false;
-            }
-
-            return true;
+                return char.IsDigit( element ) 
+                    && char.IsUpper( element )
+                    || char.IsDigit( element )
+                    || element == '_' 
+                    || element == '-' 
+                    || element == '.'
+                    ;
+            });
         }
+
 
         public static bool TryParse( string input , out RtspMethod result )
         {

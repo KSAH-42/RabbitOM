@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
         
-        public RtspClient() 
+        public RtspClient() : this ( new RtspClientContext() )
         { 
         }
 

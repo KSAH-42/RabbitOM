@@ -3,8 +3,12 @@ internal class Program
 {
     static void Main( string[] args )
     {
-        using ( var client = new RabbitOM.Net.Rtsp.RtspClient() )
+        var context = new RtspClientContext();
+            
+        using ( var client = new RtspClient( context ) )
         {
+            client.BaseAddress = new Uri( "rtsp://127.0.0.1/channel/1?type=mpeg" );
+                
             client.DefaultHeaders.Accept = new AcceptRtspHeader();
    	        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
@@ -30,20 +34,25 @@ internal class Program
             request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
             request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
 
-            var response0 = client.Options();
+            var optionsResponse = client.Options();
+                
+            optionsResponse.EnsureSuccess();
 
-            var response1 = client.Options( request );
-            
-            var response2 = client.Options( "*" , new RtspClientRequest( new RequestsRtspHeaderCollection()
-            {
-                UserAgent = new UserAgentRtspHeaderValue( "myPlayer" , "1.0" , "rtsp client" ),
-            } ) );
+            var describeResponse = client.Describe();
 
-            request = new RtspClientRequest();
+            describeResponse.EnsureSuccess();
 
-            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
+            var setupResponse = client.Setup();
 
-            var response3 = client.Describe( request );
+            setupResponse.EnsureSuccess();
+                
+            var playResponse = client.Play();
+
+            playResponse.EnsureSuccess();
+
+            var tearDownResponse = client.TearDown();
+
+            tearDownResponse.EnsureSuccess();
         }
     }
 }

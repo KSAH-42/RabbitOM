@@ -7,15 +7,11 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
 
     public sealed class CacheControlRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
                 
-
 
         public bool NoCache { get; set; }
 
@@ -41,15 +37,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public int? StaleIfError { get; set; }
 
-        public StringExtensionCollection Extensions { get; } = new StringExtensionCollection( IsValidExtenion );
+        public StringParameterRtspHeaderValueCollection Parameters { get; } = new StringParameterRtspHeaderValueCollection( ( string name , string value ) =>
+        {
+            return RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) ? string.IsNullOrEmpty( value ) || RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) : false;
+        } );
         
 
+       
 
 
-        public static bool IsValidExtenion( string name , string value )
-        {
-            return ValueValidator.TryValidate( name ) ? string.IsNullOrWhiteSpace( value ) || ValueValidator.TryValidate( value ) : false;
-        }
+
+
 
         public static bool TryParse( string input , out CacheControlRtspHeaderValue result )
         {
@@ -58,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
                 var header = new CacheControlRtspHeaderValue();
-
+                
                 foreach ( var token in tokens.Where( element => ! element.Contains( "=" ) ) )
                 {
                     if ( ValueComparer.Equals( "no-cache" , token ) )
@@ -129,7 +127,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else
                         {
-                            header.Extensions.TryAdd( parameter.Key , parameter.Value );
+                            header.Parameters.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Key ) , RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) );
                         }
                     }
                 }
@@ -210,7 +208,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.AppendFormat( "stale-if-error={0}, " , StaleIfError );
             }
 
-            foreach ( var extension in Extensions )
+            foreach ( var extension in Parameters )
             { 
                 if ( long.TryParse( extension.Value , out var _ ) )
                 {

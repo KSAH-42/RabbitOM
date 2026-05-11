@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ViaRtspHeaderValue
     { 
-        public ItemCollection<ProxyInfo> Proxies { get; } = new ItemCollection<ProxyInfo>();
+        public ProxyInfoRtspHeaderValueCollection Proxies { get; } = new ProxyInfoRtspHeaderValueCollection();
         
         public override string ToString()
         {

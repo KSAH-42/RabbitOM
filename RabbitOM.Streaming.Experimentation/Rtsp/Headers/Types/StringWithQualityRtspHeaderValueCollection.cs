@@ -5,18 +5,10 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class StringCollection : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string>
+    public sealed class StringWithQualityRtspHeaderValueCollection : IEnumerable , IEnumerable<StringWithQualityRtspHeaderValue> , ICollection<StringWithQualityRtspHeaderValue> , IReadOnlyCollection<StringWithQualityRtspHeaderValue>
     {
-        private readonly Func<string,bool> _validator;
-        private readonly List<string> _collection;
+        private readonly List<StringWithQualityRtspHeaderValue> _collection = new List<StringWithQualityRtspHeaderValue>();
 
-
-
-        public StringCollection( Func<string,bool> validator = null )
-        {
-            _collection = new List<string>();
-            _validator = validator;
-        }
 
 
 
@@ -40,34 +32,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return GetEnumerator();
         }
 
-        public IEnumerator<string> GetEnumerator()
+        public IEnumerator<StringWithQualityRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( string item )
+        public void Add( StringWithQualityRtspHeaderValue item )
         {
-            if ( string.IsNullOrWhiteSpace( item ) )
+            if ( item == null )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
 
-            if ( _validator != null && ! _validator( item ) )
-            {
-                throw new ArgumentException( nameof( item ) );
-            }
-            
             _collection.Add( item );
         }
 
-        public bool TryAdd( string item )
+        public bool TryAdd( StringWithQualityRtspHeaderValue item )
         {
-            if ( string.IsNullOrWhiteSpace( item ) )
-            {
-                return false;
-            }
-
-            if ( _validator != null && ! _validator( item ) )
+            if ( item == null )
             {
                 return false;
             }
@@ -82,17 +64,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Clear();
         }
 
-        public bool Contains( string item )
+        public bool Contains( StringWithQualityRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( string[] array , int arrayIndex )
+        public void CopyTo( StringWithQualityRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( string item )
+        public bool Remove( StringWithQualityRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -109,7 +91,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return true;
         }
 
-        public bool RemoveBy( Func<string,bool> predicate )
+        public bool RemoveBy( Func<StringWithQualityRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

@@ -3,23 +3,14 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
+ 
     public sealed class PublicRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-
-        public StringCollection Methods { get; } = new StringCollection( IsValidMethod );
+        public MethodRtspHeaderValueCollection Methods { get; } = new MethodRtspHeaderValueCollection();
         
         public override string ToString()
         {
             return string.Join( ", " , Methods );
-        }
-
-        public static bool IsValidMethod( string value )
-        {
-            return ValueValidator.TryValidate( value ) && RtspMethod.TryParse( value , out _ );
         }
 
         public static bool TryParse( string input , out PublicRtspHeaderValue result )
@@ -32,7 +23,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach( var token in tokens )
                 {
-                    header.Methods.TryAdd( token );
+                    if ( RtspMethod.TryParse( token , out var method ) )
+                    {
+                        header.Methods.TryAdd( method );
+                    }
                 }
 
                 if ( header.Methods.Count > 0 )

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
 {
-    public sealed class TcpMediaReceiverSession : IMediaSession
+    public sealed class MulticastMediaReceiverStreamingSession : IMediaStreamingSession
     {
         public bool IsOpened => throw new NotImplementedException();
 
@@ -13,6 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
         public TimeSpan PingInteral => throw new NotImplementedException();
 
         public TimeSpan RetryInteral => throw new NotImplementedException();
+
 
 
 

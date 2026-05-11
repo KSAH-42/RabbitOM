@@ -6,14 +6,11 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
    
     public sealed class ConferenceRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;        
-
+        
 
         private string _conferenceId = string.Empty;
         private string _transport = string.Empty;
@@ -29,79 +26,81 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _access = string.Empty;
         private byte? _ttl;
         private ValueRange? _port;
-        private readonly StringCollection _extensions = new StringCollection( ValueValidator.TryValidate );
+        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+
+
 
 
         public string ConferenceId
         {
             get => _conferenceId;
-            set => _conferenceId = ValueNormalizer.Normalize( value );
+            set => _conferenceId = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Transport
         {
             get => _transport;
-            set => _transport = ValueNormalizer.Normalize( value );
+            set => _transport = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Transmission
         {
             get => _transmission;
-            set => _transmission = ValueNormalizer.Normalize( value );
+            set => _transmission = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Source
         {
             get => _source;
-            set => _source = ValueNormalizer.Normalize( value );
+            set => _source = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Destination
         {
             get => _destination;
-            set => _destination = ValueNormalizer.Normalize( value );
+            set => _destination = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Address
         {
             get => _address;
-            set => _address = ValueNormalizer.Normalize( value );
+            set => _address = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Host
         {
             get => _host;
-            set => _host = ValueNormalizer.Normalize( value );
+            set => _host = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Role
         {
             get => _role;
-            set => _role = ValueNormalizer.Normalize( value );
+            set => _role = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Mode
         {
             get => _mode;
-            set => _mode = ValueNormalizer.Normalize( value );
+            set => _mode = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Tag
         {
             get => _tag;
-            set => _tag = ValueNormalizer.Normalize( value );
+            set => _tag = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Session
         {
             get => _session;
-            set => _session = ValueNormalizer.Normalize( value );
+            set => _session = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Access
         {
             get => _access;
-            set => _access = ValueNormalizer.Normalize( value );
+            set => _access = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public byte? TTL
@@ -116,14 +115,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _port = value;
         }
         
-        public StringCollection Extensions
+        public StringRtspHeaderValueCollection Extensions
         {
             get => _extensions;
         }
-        
 
 
         
+
 
         public static bool TryParse( string input , out ConferenceRtspHeaderValue result )
         {
@@ -133,98 +132,98 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeaderValue();
 
-                foreach ( var token in tokens.Where( ValueValidator.TryValidate ) )
+                foreach ( var token in tokens.Where( RtspHeaderValueValidator.TryEnsureWellFormedToken ) )
                 {                    
                     if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
                         if ( ValueComparer.Equals( "destination" , parameter.Key ) )
                         {
-                            header.Destination = parameter.Value;
+                            header._destination = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "source" , parameter.Key ) )
                         {
-                            header.Source = parameter.Value;
+                            header._source = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "address" , parameter.Key ) )
                         {
-                            header.Address = parameter.Value;
+                            header._address = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "host" , parameter.Key ) )
                         {
-                            header.Host = parameter.Value;
+                            header._host = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "role" , parameter.Key ) )
                         {
-                            header.Role = parameter.Value;
+                            header._role = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "mode" , parameter.Key ) )
                         {
-                            header.Mode = parameter.Value;
+                            header._mode = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "tag" , parameter.Key ) )
                         {
-                            header.Tag = parameter.Value;
+                            header._tag = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "session" , parameter.Key ) )
                         {
-                            header.Session = parameter.Value;
+                            header._session = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "access" , parameter.Key ) )
                         {
-                            header.Access = parameter.Value;
+                            header._access = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "ttl" , parameter.Key ) )
                         {
-                            if ( byte.TryParse( ValueNormalizer.Normalize( parameter.Value ) , out byte value ) )
+                            if ( byte.TryParse( parameter.Value?.TrimWithUnQuotes() ?? string.Empty , out byte value ) )
                             {
-                                header.TTL = value;
+                                header._ttl = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "port" , parameter.Key ) )
                         {
                             if ( ValueRange.TryParse( parameter.Value , out var value ) )
                             {
-                                header.Port = value;
+                                header._port = value;
                             }
                         }
                         else if ( SupportedTypes.IsTransportSupported( parameter.Key ) )
                         {
-                            header.Transport = token;
+                            header._transport = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                         }
                         else if ( SupportedTypes.IsTransmissionSupported( parameter.Key ) )
                         {
-                            header.Transmission = token;
+                            header._transmission = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                         }
                         else
                         {
-                            header.Extensions.TryAdd( token );
+                            header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                         }
                     }
                     else
                     {
                         if ( SupportedTypes.IsTransportSupported( token ) )
                         {
-                            header.Transport = token;
+                            header._transport = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                         }
                         else if ( SupportedTypes.IsTransmissionSupported( token ) )
                         {
-                            header.Transmission = token;
+                            header._transmission = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                         }
                         else    
                         {
-                            if ( ! string.IsNullOrWhiteSpace( header.ConferenceId ) )
+                            if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._conferenceId ) )
                             {
-                                header.Extensions.TryAdd( token );
+                                header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                             }
                             else
                             {
-                                header.ConferenceId = token;
+                                header._conferenceId = RtspHeaderValueSanitizer.UnQuotesWithTrim( token );
                             }
                         }
                     }
                 }
                 
-                if ( ValueValidator.TryValidate( header.ConferenceId ) )
+                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._conferenceId ) )
                 {
                     result = header;
                 }

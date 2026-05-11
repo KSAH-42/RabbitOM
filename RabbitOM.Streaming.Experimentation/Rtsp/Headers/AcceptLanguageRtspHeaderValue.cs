@@ -3,22 +3,14 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
+    
     public sealed class AcceptLanguageRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-
-        public StringWithQualityCollection Cultures { get; } = new StringWithQualityCollection( IsValidLanguage );
+        public StringWithQualityRtspHeaderValueCollection Cultures { get; } = new StringWithQualityRtspHeaderValueCollection();
         
         public override string ToString()
         {
             return string.Join( ", " , Cultures );
-        }
-
-        public static bool IsValidLanguage( StringWithQuality encoding )
-        {
-            return encoding != null && SupportedTypes.IsLanguageSupported( encoding.Value );
         }
 
         public static bool TryParse( string input , out AcceptLanguageRtspHeaderValue result )
@@ -31,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQuality.TryParse( ValueNormalizer.Normalize( token ) , out var element ) )
+                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
                     {
                         header.Cultures.TryAdd( element );
                     }

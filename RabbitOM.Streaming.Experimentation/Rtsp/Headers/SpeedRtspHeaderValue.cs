@@ -3,8 +3,6 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
     public sealed class SpeedRtspHeaderValue
     {
         public double Value { get; set; }
@@ -16,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool TryParse( string input , out SpeedRtspHeaderValue result )
         {
-            result = double.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture  , out var value ) ? new SpeedRtspHeaderValue() { Value = value } : null ;
+            result = double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture  , out var value ) ? new SpeedRtspHeaderValue() { Value = value } : null ;
 
             return result != null;
         }

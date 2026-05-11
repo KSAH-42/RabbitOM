@@ -6,7 +6,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
     public sealed class RtspClientContext 
     {
-        public uint BufferSize { get; }
+        public uint ReceiveBufferSize { get; }
+
+        public uint SendBufferSize { get; }
 
         public sbyte ChannelPoolSize { get; } // set 1 to emulate a single socket
 

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
 {
-    public sealed class MulticastMediaReceiverSession : IMediaSession
+    public sealed class UdpMediaReceiverStreamingSession : IMediaStreamingSession
     {
         public bool IsOpened => throw new NotImplementedException();
 
@@ -13,7 +13,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Udp
         public TimeSpan PingInteral => throw new NotImplementedException();
 
         public TimeSpan RetryInteral => throw new NotImplementedException();
-
 
 
 

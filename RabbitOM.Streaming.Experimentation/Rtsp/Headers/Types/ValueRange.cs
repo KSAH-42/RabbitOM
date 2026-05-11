@@ -3,8 +3,6 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
     public struct ValueRange : IEquatable<ValueRange>
     {
         public static readonly ValueRange Zero = new ValueRange( 0 , 0 );
@@ -63,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             result = default;
 
-            if ( ! RtspHeaderValueParser.TryParse( StringValueNormalizer.TrimWithRemoveAllQuotesNormalizer.Normalize( input ) , "-" , out string[] tokens ) )
+            if ( ! RtspHeaderValueParser.TryParse( RtspHeaderValueSanitizer.TrimWithRemoveAllQuotesNormalizer( input ) , "-" , out string[] tokens ) )
             {
                 return false;
             }

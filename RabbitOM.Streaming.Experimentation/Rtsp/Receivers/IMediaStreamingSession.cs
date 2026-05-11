@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
-    public interface IMediaSession: IDisposable
+    public interface IMediaStreamingSession: IDisposable
     {
         bool IsOpened { get; }
 

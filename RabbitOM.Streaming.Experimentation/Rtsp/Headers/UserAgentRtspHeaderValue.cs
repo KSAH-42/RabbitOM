@@ -4,13 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-   
     public sealed class UserAgentRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
         
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
@@ -24,28 +20,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Product
         {
             get => _product;
-            set => _product = ValueNormalizer.Normalize( value );
+            set => _product = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
 
         public string Version
         {
             get => _version;
-            set => _version = ValueNormalizer.Normalize( value );
+            set => _version = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
         
         public string Comment
         {
             get => _comment;
-            set => _comment = ValueNormalizer.Normalize( value );
+            set => _comment = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
         
+
 
 
         public static bool TryParse( string input , out UserAgentRtspHeaderValue result )
         {
             result = null;
 
-            input = ValueNormalizer.Normalize( input );
+            input = RtspHeaderValueSanitizer.UnQuotesWithTrim( input );
 
             if ( string.IsNullOrWhiteSpace( input ) )
             {
@@ -71,7 +68,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ValueValidator.TryValidate( header.Product ) && ValueValidator.TryValidate( header.Version ) )
+                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Product ) && RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Version ) )
                 {
                     result = header;
                 }

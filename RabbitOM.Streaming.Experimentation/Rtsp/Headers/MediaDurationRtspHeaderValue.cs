@@ -3,15 +3,13 @@ using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
-
     public sealed class MediaDurationRtspHeaderValue
     {
         public double Value { get; set; }
 
         public static bool TryParse( string input , out MediaDurationRtspHeaderValue result )
         {
-            result = double.TryParse( StringValueNormalizer.TrimWithUnQuoteNormalizer.Normalize( input ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value ) ? new MediaDurationRtspHeaderValue() { Value = value } : null;
+            result = double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( input ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var value ) ? new MediaDurationRtspHeaderValue() { Value = value } : null;
 
             return result != null;
         }

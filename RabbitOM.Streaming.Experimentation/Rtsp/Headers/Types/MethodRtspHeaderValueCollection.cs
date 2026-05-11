@@ -5,19 +5,11 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
-    public sealed class StringWithQualityCollection : IEnumerable , IEnumerable<StringWithQuality> , ICollection<StringWithQuality> , IReadOnlyCollection<StringWithQuality>
+    public sealed class MethodRtspHeaderValueCollection : IEnumerable , IEnumerable<RtspMethod> , ICollection<RtspMethod> , IReadOnlyCollection<RtspMethod>
     {
-        private readonly List<StringWithQuality> _collection;
-
-        private readonly Func<StringWithQuality,bool> _validator;
+        private readonly HashSet<RtspMethod> _collection = new HashSet<RtspMethod>();
 
 
-
-        public StringWithQualityCollection( Func<StringWithQuality,bool> validator = null )
-        {
-            _collection = new List<StringWithQuality>();
-            _validator = validator;
-        }
 
 
 
@@ -40,34 +32,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return GetEnumerator();
         }
 
-        public IEnumerator<StringWithQuality> GetEnumerator()
+        public IEnumerator<RtspMethod> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( StringWithQuality item )
+        public void Add( RtspMethod item )
         {
             if ( item == null )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
 
-            if ( _validator != null && ! _validator( item ) )
-            {
-                throw new ArgumentException( nameof( item ) );
-            }
-            
             _collection.Add( item );
         }
 
-        public bool TryAdd( StringWithQuality item )
+        public bool TryAdd( RtspMethod item )
         {
             if ( item == null )
-            {
-                return false;
-            }
-
-            if ( _validator != null && ! _validator( item ) )
             {
                 return false;
             }
@@ -82,17 +64,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Clear();
         }
 
-        public bool Contains( StringWithQuality item )
+        public bool Contains( RtspMethod item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( StringWithQuality[] array , int arrayIndex )
+        public void CopyTo( RtspMethod[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( StringWithQuality item )
+        public bool Remove( RtspMethod item )
         {
             return _collection.Remove( item );
         }
@@ -104,12 +86,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 return false;
             }
 
-            _collection.RemoveAt( index );
+            var element = _collection.ElementAtOrDefault( index );
+
+            if ( element == null )
+            {
+                return false;
+            }
+
+            _collection.Remove( element );
 
             return true;
         }
 
-        public bool RemoveBy( Func<StringWithQuality,bool> predicate )
+        public bool RemoveBy( Func<RtspMethod,bool> predicate )
         {
             if ( predicate == null )
             {

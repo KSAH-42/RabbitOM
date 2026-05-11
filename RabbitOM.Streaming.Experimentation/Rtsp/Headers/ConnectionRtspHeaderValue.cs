@@ -3,14 +3,10 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types.Compliances;
     
     public sealed class ConnectionRtspHeaderValue
     {
-        private static readonly StringValueNormalizer ValueNormalizer = StringValueNormalizer.TrimWithUnQuoteNormalizer;
-        private static readonly StringValueValidator ValueValidator = StringValueValidator.DefaultValidator;
-        
-        public StringCollection Directives { get; } = new StringCollection( ValueValidator.TryValidate );
+        public StringRtspHeaderValueCollection Directives { get; } = new StringRtspHeaderValueCollection( RtspHeaderValueValidator.TryEnsureWellFormedToken );
         
         public static bool TryParse( string input , out ConnectionRtspHeaderValue result )
         {
@@ -22,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    header.Directives.TryAdd( token );
+                    header.Directives.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                 }
 
                 if ( header.Directives.Count > 0 )
