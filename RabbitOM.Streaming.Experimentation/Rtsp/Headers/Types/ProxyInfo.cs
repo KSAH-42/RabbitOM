@@ -24,39 +24,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public string Protocol
         {
             get => _protocol;
-            set => _protocol = EnsureValue( value );
+            set => _protocol = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Version
         {
             get => _version;
-            set => _version = EnsureValue( value );
+            set => _version = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string ReceivedBy
         {
             get => _receivedBy;
-            set => _receivedBy = EnsureValue( value );
+            set => _receivedBy = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Comment
         {
             get => _comment;
-            set => _comment = EnsureValue( value );
+            set => _comment = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
 
 
-
-        private static string EnsureValue( string value )
-        {
-            var result = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
-
-            RtspHeaderValueValidator.EnsureWellFormedToken( result );
-            RtspHeaderValueValidator.EnsureNotNullOrWhiteSpace( result );
-
-            return result;
-        }
 
         public static bool TryParse( string input , out ProxyInfo result )
         {

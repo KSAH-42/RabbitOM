@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class WarningInfo
     {
-    private int _code;
+        private int _code;
         private string _agent = string.Empty;
         private string _comment = string.Empty;
         
@@ -21,26 +21,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public string Agent
         {
             get => _agent;
-            set => _agent = EnsureValue( value );
+            set => _agent = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public string Comment
         {
             get => _comment;
-            set => _comment = EnsureValue( value );
+            set => _comment = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
 
-
-        private static string EnsureValue( string value )
-        {
-            var result = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
-
-            RtspHeaderValueValidator.EnsureWellFormedToken( result );
-            RtspHeaderValueValidator.EnsureNotNullOrWhiteSpace( result );
-
-            return result;
-        }
 
         public static bool TryParse( string input , out WarningInfo result )
         {

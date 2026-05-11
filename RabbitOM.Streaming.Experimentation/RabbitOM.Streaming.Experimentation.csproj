@@ -132,7 +132,7 @@
     <Compile Include="Rtsp\Headers\TransportRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\Types\AuthenticationTypes.cs" />
     <Compile Include="Rtsp\Headers\Types\MethodRtspHeaderValueCollection.cs" />
-    <Compile Include="Rtsp\Headers\Types\ProxyInfoItem.cs" />
+    <Compile Include="Rtsp\Headers\Types\ProxyInfo.cs" />
     <Compile Include="Rtsp\Headers\Types\ProxyInfoRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\Types\RtpInfo.cs" />
     <Compile Include="Rtsp\Headers\Types\RtpInfoRtspHeaderValueCollection.cs" />

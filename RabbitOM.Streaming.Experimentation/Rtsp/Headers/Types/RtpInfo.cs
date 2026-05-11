@@ -22,13 +22,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         public string Url
         {
             get => _url;
-            set => _url = EnsureValue( value );
+            set => _url = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string SSRC
         {
             get => _ssrc;
-            set => _ssrc = EnsureValue( value );
+            set => _ssrc = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
         
         public ushort? Sequence
@@ -45,16 +45,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-
-        private static string EnsureValue( string value )
-        {
-            var result = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
-
-            RtspHeaderValueValidator.EnsureWellFormedToken( result );
-            RtspHeaderValueValidator.EnsureNotNullOrWhiteSpace( result );
-
-            return result;
-        }
 
         public static bool TryParse( string input , out RtpInfo result )
         {
