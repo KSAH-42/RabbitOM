@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
     // TODO: rename (because the scheme word is not used) or move the SupportedTypes class
     public static class AuthenticationTypes

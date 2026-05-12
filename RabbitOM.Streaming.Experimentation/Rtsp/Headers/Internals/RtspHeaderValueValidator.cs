@@ -1,29 +1,18 @@
 ﻿using System;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     internal static class RtspHeaderValueValidator
     {
-        private static string Symbols      = " /\\{}[]()\"'`!#$%&*+-.^_|~";
+        private static string Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~";
         
         private static string TokenSymbols = "!#$%&'*+-.^_|~";
 
 
 
 
-
-        public static bool IsNotNullOrEmptyIf( string value , Func<char , bool> predicate )
-        {
-            return ! string.IsNullOrEmpty( value ) && value.Any( predicate );
-        }
-
-
-
-
-
-
-        
         public static string EnsureWellFormed( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
@@ -153,6 +142,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static bool IsNotNullOrEmpty( string value )
         {
             return ! string.IsNullOrEmpty( value );
+        }
+
+        public static bool IsNotNullOrEmptyIf( string value , Func<char , bool> predicate )
+        {
+            return ! string.IsNullOrEmpty( value ) && value.Any( predicate );
+        }
+
+        public static bool IsNotPrintable( in char value )
+        {
+            return value <= 31 || value >= 127;
         }
 
         public static bool HasLettersOrDigits( string value )

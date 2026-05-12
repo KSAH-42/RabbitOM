@@ -3,13 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class WarningInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<WarningInfoRtspHeaderValue> , ICollection<WarningInfoRtspHeaderValue> , IReadOnlyCollection<WarningInfoRtspHeaderValue>
+    public sealed class StringWithQualityRtspHeaderValueCollection : IEnumerable , IEnumerable<StringWithQualityRtspHeaderValue> , ICollection<StringWithQualityRtspHeaderValue> , IReadOnlyCollection<StringWithQualityRtspHeaderValue>
     {
-        private readonly List<WarningInfoRtspHeaderValue> _collection = new List<WarningInfoRtspHeaderValue>();
+        private readonly List<StringWithQualityRtspHeaderValue> _collection;
+
+        private readonly Func<StringWithQualityRtspHeaderValue,bool> _validator;
 
 
+
+        public StringWithQualityRtspHeaderValueCollection()
+        {
+            _collection = new List<StringWithQualityRtspHeaderValue>();
+        }
+
+        public StringWithQualityRtspHeaderValueCollection( Func<StringWithQualityRtspHeaderValue,bool> validator )
+        {
+            _validator  = validator ?? throw new ArgumentNullException( nameof( validator ) );
+            _collection = new List<StringWithQualityRtspHeaderValue>();
+        }
 
 
 
@@ -32,24 +45,34 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return GetEnumerator();
         }
 
-        public IEnumerator<WarningInfoRtspHeaderValue> GetEnumerator()
+        public IEnumerator<StringWithQualityRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( WarningInfoRtspHeaderValue item )
+        public void Add( StringWithQualityRtspHeaderValue item )
         {
             if ( item == null )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
 
+            if ( _validator?.Invoke( item ) == false )
+            {
+                throw new ArgumentException( nameof( item ) );
+            }
+
             _collection.Add( item );
         }
 
-        public bool TryAdd( WarningInfoRtspHeaderValue item )
+        public bool TryAdd( StringWithQualityRtspHeaderValue item )
         {
             if ( item == null )
+            {
+                return false;
+            }
+
+            if ( _validator?.Invoke( item ) == false )
             {
                 return false;
             }
@@ -64,17 +87,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             _collection.Clear();
         }
 
-        public bool Contains( WarningInfoRtspHeaderValue item )
+        public bool Contains( StringWithQualityRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( WarningInfoRtspHeaderValue[] array , int arrayIndex )
+        public void CopyTo( StringWithQualityRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( WarningInfoRtspHeaderValue item )
+        public bool Remove( StringWithQualityRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -91,7 +114,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
             return true;
         }
 
-        public bool RemoveBy( Func<WarningInfoRtspHeaderValue,bool> predicate )
+        public bool RemoveBy( Func<StringWithQualityRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

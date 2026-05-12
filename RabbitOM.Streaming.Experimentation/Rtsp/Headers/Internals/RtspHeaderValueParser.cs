@@ -5,10 +5,14 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderValueParser
+    internal static class RtspHeaderValueParser
     {
-        private static readonly IReadOnlyCollection<char> QuotesChars = new HashSet<char>() { '\'' , '\"' , '`' };      
-        
+        private const string QuotesChars = "\"'`";
+
+
+
+
+
         public static bool TryParse( string input , string separator , out KeyValuePair<string,string> result )
         {
             result = default;
@@ -22,6 +26,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return false;
         }
         
+
+
+
+
+
         public static bool TryParse( string input , string separator , out string[] result )
         {
             return TryParse( input , separator , null , out result );
@@ -42,10 +51,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             // we don't used string.split here
             // because we need to ignore separators between quotes
+            // and stop parse if we detect also none printable chars
+            // like controls chars (DEL, tabs, CR, NLF), etc... 
 
             foreach ( var element in input )
             {
-                if ( QuotesChars.Contains( element ) )
+                if ( element <= 31 || element >= 127 )
+                {
+                    return false;
+                }
+               
+                if ( QuotesChars.IndexOf( element ) >= 0 )
                 {
                     insideQuotes = ! insideQuotes;
                 }
@@ -78,7 +94,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             var tokens = segments
                 .Select( element => element.Trim() )
                 .Where( element => ! string.IsNullOrWhiteSpace( element ) )
-                .ToArray();
+                .ToArray()
+                ;
 
             if ( tokens.Length > 0 )
             {

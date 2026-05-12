@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
     public struct ValueRange : IEquatable<ValueRange>
     {

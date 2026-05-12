@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
     
     public sealed class WarningRtspHeaderValue
     {
@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( Types.WarningInfoRtspHeaderValue.TryParse( token , out var warning ) )
+                    if ( DataTypes.WarningInfoRtspHeaderValue.TryParse( token , out var warning ) )
                     {
                         header.Values.TryAdd( warning );
                     }

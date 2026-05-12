@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
     
     public sealed class TransportRtspHeaderValue
     {

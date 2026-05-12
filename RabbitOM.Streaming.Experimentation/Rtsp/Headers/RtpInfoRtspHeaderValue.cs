@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
 
     public sealed class RtpInfoRtspHeaderValue
     {
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( Types.RtpInfoRtspHeaderValue.TryParse( token , out var info ) )
+                    if ( DataTypes.RtpInfoRtspHeaderValue.TryParse( token , out var info ) )
                     {
                         header.RtpInfos.TryAdd( info );
                     }
