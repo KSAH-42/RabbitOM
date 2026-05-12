@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public static bool IsValidValue( string value )
         {
-            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) && RtspHeaderValueValidator.TryEnsureHasLettersAndDigits( value );
+            return RtspHeaderValueValidator.IsWellFormedToken( value ) && RtspHeaderValueValidator.HasLettersOrDigits( value );
         }
 
         public static bool TryParse( string input , out StringWithQualityRtspHeaderValue result )

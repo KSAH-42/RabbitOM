@@ -13,15 +13,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool Contains( string value , Func<char , bool> predicate )
+        public static bool IsNotNullOrEmptyIf( string value , Func<char , bool> predicate )
         {
             return ! string.IsNullOrEmpty( value ) && value.Any( predicate );
         }
 
-        public static bool ContainsNoSpace( string value )
-        {
-            return ! string.IsNullOrEmpty( value ) && value.IndexOf( ' ' ) < 0;
-        }
 
 
 
@@ -124,7 +120,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryEnsureWellFormed( string value )
+        public static bool IsWellFormed( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -134,7 +130,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool TryEnsureWellFormedToken( string value )
+        public static bool IsWellFormedToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -144,7 +140,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool TryEnsureWellFormedTokenOrEmpty( string value )
+        public static bool IsWellFormedTokenOrEmpty( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -154,7 +150,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool TryEnsureHasLettersAndDigits( string value )
+        public static bool IsNotNullOrEmpty( string value )
+        {
+            return ! string.IsNullOrEmpty( value );
+        }
+
+        public static bool HasLettersOrDigits( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -164,14 +165,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Any( character => char.IsLetterOrDigit( character ) );
         }
 
-        public static bool TryEnsureNotNullOrEmpty( string value )
+        public static bool HasNoSpace( string value )
         {
-            return ! string.IsNullOrEmpty( value );
-        }
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return false;
+            }
 
-        public static bool TryEnsureNoSpace( string value )
-        {
-            return value?.IndexOf( ' ' ) >= 0;
+            return value.IndexOf( ' ' ) > 0;
         }
     }
 }

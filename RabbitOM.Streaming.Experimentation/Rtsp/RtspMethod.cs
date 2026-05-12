@@ -75,12 +75,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public static bool IsValid( string name )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormedToken( name ) )
             {
                 return false;
             }
 
-            return RtspHeaderValueValidator.Contains( name , element =>
+            return RtspHeaderValueValidator.IsNotNullOrEmptyIf( name , element =>
             {
                 return char.IsDigit( element ) 
                     && char.IsUpper( element )

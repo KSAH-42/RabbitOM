@@ -37,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public void Add( string item )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( item ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormedToken( item ) )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
         public bool TryAdd( string item )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( item ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormedToken( item ) )
             {
                 return false;
             }

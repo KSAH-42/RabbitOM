@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string Allow = "Allow";
         public const string Authorization = "Authorization";
         public const string Bandwidth = "Bandwidth";
-        public const string BlockSize = "BlockSize";
+        public const string BlockSize = "Blocksize";
         public const string CacheControl = "Cache-Control";
         public const string Connection = "Connection";
         public const string Conference = "Conference";
@@ -34,25 +34,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string MaxForwards = "Max-Forwards";
         public const string MediaDuration = "Media-Duration";
         public const string Pragma = "Pragma";
-        public const string ProxyAuthenticate = "Proxy-WWWAuthenticate";
+        public const string ProxyAuthenticate = "Proxy-Authenticate";
         public const string ProxyAuthorization = "Proxy-Authorization";
         public const string ProxyRequire = "Proxy-Require";
         public const string Public = "Public";
+        public const string PipelinedRequests = "Pipelined-Requests";
         public const string Range = "Range";
         public const string Referer = "Referer";
         public const string Require = "Require";
         public const string RetryAfter = "Retry-After";
         public const string RtpInfo = "RTP-Info";
         public const string Scale = "Scale";
+        public const string SdpRequested = "SDP-Requested";
         public const string Server = "Server";
         public const string Session = "Session";
         public const string Speed = "Speed";
+        public const string Supported = "Supported";
+        public const string SwitchStream = "Switch-Stream";
         public const string To = "To";
         public const string Transport = "Transport";
-        public const string Unsupported = "Unsupported";
+        public const string UnSupported = "Unsupported";
         public const string UserAgent = "User-Agent";
         public const string Via = "Via";
         public const string Warning = "Warning";
-        public const string WWWAuthenticate = "WWW-Send";
+        public const string WWWAuthenticate = "WWW-Authenticate";
     }
 }

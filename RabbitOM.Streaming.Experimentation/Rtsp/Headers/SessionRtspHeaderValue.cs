@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( RtspHeaderValueParser.TryParse( input , ";" , out string[] tokens ) )
             {
-                var identifer = tokens.FirstOrDefault( RtspHeaderValueValidator.TryEnsureWellFormedToken );
+                var identifer = tokens.FirstOrDefault( RtspHeaderValueValidator.IsWellFormedToken );
 
                 if ( ! string.IsNullOrWhiteSpace( identifer ) )
                 {
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Identifier ) )
+                if ( RtspHeaderValueValidator.IsWellFormedToken( header.Identifier ) )
                 {
                     result = header;
                 }

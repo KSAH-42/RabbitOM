@@ -83,7 +83,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var scheme = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault() );
                 
-                if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( scheme ) )
+                if ( ! RtspHeaderValueValidator.IsWellFormedToken( scheme ) )
                 {
                     return false;
                 }
@@ -130,14 +130,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Scheme ) || ! RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Realm ) )
+                    if ( ! RtspHeaderValueValidator.IsWellFormedToken( header.Scheme ) || ! RtspHeaderValueValidator.IsWellFormedToken( header.Realm ) )
                     {
                         return false;
                     }
                     
                     if ( AuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
                     {
-                        if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Nonce ) )
+                        if ( ! RtspHeaderValueValidator.IsWellFormedToken( header.Nonce ) )
                         {
                             return false;
                         }
