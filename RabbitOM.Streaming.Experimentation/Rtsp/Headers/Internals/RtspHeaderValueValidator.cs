@@ -154,6 +154,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
         }
 
+        public static bool TryEnsureHasLettersAndDigits( string value )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return false;
+            }
+
+            return value.Any( character => char.IsLetterOrDigit( character ) );
+        }
 
         public static bool TryEnsureNotNullOrEmpty( string value )
         {

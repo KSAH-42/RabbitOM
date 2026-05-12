@@ -7,32 +7,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 {
     public sealed class StringWithQualityRtspHeaderValue
     {
-        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-    
-        private static readonly IReadOnlyCollection<char> AcceptedChars = ".!$_/|*-&~`%#'\"".ToHashSet();
-
-
-
         public StringWithQualityRtspHeaderValue( string value )
         {
-            RtspHeaderValueValidator.EnsureNotNullOrEmpty( value );
             RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureContains( value , x => char.IsLetterOrDigit( x ) || AcceptedChars.Contains( x ) );
+            RtspHeaderValueValidator.EnsureHasLettersAndDigits( value );
 
             Value = value;
         }
 
         public StringWithQualityRtspHeaderValue( string value , double quality )
         {
-            RtspHeaderValueValidator.EnsureNotNullOrEmpty( value );
             RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureContainsNoSpace( value );
-            RtspHeaderValueValidator.EnsureContains( value , x => char.IsLetterOrDigit( x ) || AcceptedChars.Contains( x ) );
+            RtspHeaderValueValidator.EnsureHasLettersAndDigits( value );
 
             Value = value;
             Quality = quality;
         }
-
 
 
 
@@ -44,26 +34,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
 
 
-
-
-
         public static implicit operator StringWithQualityRtspHeaderValue( string value )
         {
             return new StringWithQualityRtspHeaderValue( value );
         }
-
-
-
-
+        
 
 
 
         public static bool IsValidValue( string value )
         {
-            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value )
-                && RtspHeaderValueValidator.ContainsNoSpace( value )
-                && RtspHeaderValueValidator.Contains( value , x => char.IsLetterOrDigit( x ) || AcceptedChars.Contains( x ) )
-                ;
+            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) && RtspHeaderValueValidator.TryEnsureHasLettersAndDigits( value );
         }
 
         public static bool TryParse( string input , out StringWithQualityRtspHeaderValue result )
@@ -83,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
                 {
                     if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( ValueComparer.Equals( "q" , parameter.Key ) )
+                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) )
                         {
                             if ( double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
                             {
@@ -102,9 +83,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
 
             return result != null;
         }
-
-
-
+        
 
 
 
