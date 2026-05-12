@@ -53,14 +53,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
         
-        public static bool IsValidValue( string value )
-        {
-            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value , x => x == '/' ) 
-                && RtspHeaderValueValidator.TryEnsureLettersOrDigits( value )
-                && RtspHeaderValueValidator.TryEnsureAny( value , (x,i) => x == '/' && i > 0 && i < value.Length )
-                ;
-        }
-
         public static bool TryParse( string input , out MediaTypeWithQualityRtspHeaderValue result )
         {
             result = null;
@@ -69,33 +61,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             {
                 var name = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault( token => ! token.Contains( "=" ) ) );
 
-                if ( ! IsValidValue( name ) )
-                {
-                    return false;
-                }
+                var boolIsValid =  RtspHeaderValueValidator.TryEnsureWellFormedToken( name , x => x == '/' ) 
+                                && RtspHeaderValueValidator.TryEnsureLettersOrDigits( name )
+                                && RtspHeaderValueValidator.TryEnsureAny( name , (x,i) => x == '/' && i > 0 && i < name.Length );
 
-                var parameters = new StringParameterRtspHeaderValueCollection();
-                double? quality = null;
-
-                foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
+                if ( boolIsValid )
                 {
-                    if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                    var parameters = new StringParameterRtspHeaderValueCollection();
+                    
+                    double? quality = null;
+
+                    foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                     {
-                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) && quality.HasValue == false )
+                        if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                         {
-                            if ( double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var qualityValue ) )
+                            if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) && quality.HasValue == false )
                             {
-                                quality = qualityValue;
+                                if ( double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var qualityValue ) )
+                                {
+                                    quality = qualityValue;
+                                }
+                            }
+                            else
+                            {
+                               parameters.TryAdd( parameter.Key , RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) );
                             }
                         }
-                        else
-                        {
-                           parameters.TryAdd( parameter.Key , RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) );
-                        }
                     }
-                }
 
-                result = new MediaTypeWithQualityRtspHeaderValue( name , quality , parameters );
+                    result = new MediaTypeWithQualityRtspHeaderValue( name , quality , parameters );
+                }
             }
 
             return result != null;
@@ -108,19 +103,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         {
             var builder = new StringBuilder();
 
-            builder.Append( Value );
+            builder.AppendFormat( "{0}; " , Value );
 
             if ( Quality.HasValue )
             {
-                builder.Append( $"; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" );
+                builder.AppendFormat( "q={0}; " , Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo) );
             }
 
             foreach ( var parameter in Parameters )
             {
-                builder.Append( $"; {parameter.Key}={parameter.Value}" );
+                builder.AppendFormat( "{0}={1}; " , parameter.Key , parameter.Value );
             }
 
-            return builder.ToString();
+            return builder.ToString().Trim( ' ' , ';' );
         }
     }
 }
