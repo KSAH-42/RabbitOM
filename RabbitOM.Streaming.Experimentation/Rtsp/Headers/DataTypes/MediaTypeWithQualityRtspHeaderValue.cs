@@ -9,29 +9,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
     public sealed class MediaTypeWithQualityRtspHeaderValue
     {
         public MediaTypeWithQualityRtspHeaderValue( string value )
+            : this( value , null , new StringParameterRtspHeaderValueCollection() )
         {
-            RtspHeaderValueValidator.EnsureWellFormedToken( value , x => x == '/' );
-            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
-            RtspHeaderValueValidator.EnsureAny( value , (x,i) => x == '/' && i > 0 && i < value.Length );
-
-            Value = value;
-            Parameters = new StringParameterRtspHeaderValueCollection();
         }
 
         public MediaTypeWithQualityRtspHeaderValue( string value , double quality )
+            : this( value , quality , new StringParameterRtspHeaderValueCollection() )
         {
-            RtspHeaderValueValidator.EnsureWellFormedToken( value , x => x == '/' );
-            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
-            RtspHeaderValueValidator.EnsureAny( value , (x,i) => x == '/' && i > 0 && i < value.Length );
-            
-            Value = value;
-            Quality = quality;
-            Parameters = new StringParameterRtspHeaderValueCollection();
         }
 
         public MediaTypeWithQualityRtspHeaderValue( string value , double? quality , StringParameterRtspHeaderValueCollection parameters )
         {
-            RtspHeaderValueValidator.EnsureWellFormedToken( value );
+            RtspHeaderValueValidator.EnsureWellFormedToken( value , x => x == '/' );
             RtspHeaderValueValidator.EnsureLettersOrDigits( value );
             RtspHeaderValueValidator.EnsureAny( value , (x,i) => x == '/' && i > 0 && i < value.Length );
             RtspHeaderValueValidator.EnsureNotNull( parameters );
