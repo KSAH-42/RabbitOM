@@ -17,7 +17,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.Types
         {
             RtspHeaderValueValidator.EnsureNotNullOrEmpty( value );
             RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureContainsNoSpace( value );
             RtspHeaderValueValidator.EnsureContains( value , x => char.IsLetterOrDigit( x ) || AcceptedChars.Contains( x ) );
 
             Value = value;

@@ -10,7 +10,7 @@ internal class Program
             client.BaseAddress = new Uri( "rtsp://127.0.0.1/channel/1?type=mpeg" );
                 
             client.DefaultHeaders.Accept = new AcceptRtspHeader();
- 	    client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
+            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
@@ -18,11 +18,11 @@ internal class Program
             client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
    	        
             client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
+   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
             
             var request = new RtspClientRequest();
 

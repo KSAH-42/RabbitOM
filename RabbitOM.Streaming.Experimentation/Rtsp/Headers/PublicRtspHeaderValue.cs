@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public static bool TryParse( string input , out PublicRtspHeaderValue result )
         {
             result = null;
-
+            
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
                 var header = new PublicRtspHeaderValue();
