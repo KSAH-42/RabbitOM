@@ -132,7 +132,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeaderValue();
 
-                foreach ( var token in tokens.Where( RtspHeaderValueValidator.IsWellFormedToken ) )
+                foreach ( var token in tokens.Where( RtspHeaderValueValidator.TryEnsureWellFormedToken ) )
                 {                    
                     if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -211,7 +211,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else    
                         {
-                            if ( RtspHeaderValueValidator.IsWellFormedToken( header._conferenceId ) )
+                            if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._conferenceId ) )
                             {
                                 header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                             }
@@ -223,7 +223,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.IsWellFormedToken( header._conferenceId ) )
+                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._conferenceId ) )
                 {
                     result = header;
                 }

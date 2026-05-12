@@ -10,7 +10,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         public StringWithQualityRtspHeaderValue( string value )
         {
             RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureHasLettersAndDigits( value );
+            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
 
             Value = value;
         }
@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         public StringWithQualityRtspHeaderValue( string value , double quality )
         {
             RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureHasLettersAndDigits( value );
+            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
 
             Value = value;
             Quality = quality;
@@ -34,17 +34,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
-        public static implicit operator StringWithQualityRtspHeaderValue( string value )
-        {
-            return new StringWithQualityRtspHeaderValue( value );
-        }
         
-
-
-
         public static bool IsValidValue( string value )
         {
-            return RtspHeaderValueValidator.IsWellFormedToken( value ) && RtspHeaderValueValidator.HasLettersOrDigits( value );
+            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) && RtspHeaderValueValidator.TryEnsureLettersOrDigits( value );
         }
 
         public static bool TryParse( string input , out StringWithQualityRtspHeaderValue result )

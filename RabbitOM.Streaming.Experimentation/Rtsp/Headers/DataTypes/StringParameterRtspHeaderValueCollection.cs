@@ -35,12 +35,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public void Add( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.IsWellFormedToken( name ) )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
             }
 
-            if ( value?.Length > 0 && ! RtspHeaderValueValidator.IsWellFormedToken( value ) )
+            if ( value?.Length > 0 && ! RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) )
             {
                 throw new ArgumentException();
             }
@@ -90,12 +90,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public bool TryAdd( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.IsWellFormedToken( name ) )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
             {
                 return false;
             }
 
-            if ( value?.Length > 0 && ! RtspHeaderValueValidator.IsWellFormedToken( value ) )
+            if ( value?.Length > 0 && ! RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) )
             {
                 return false;
             }

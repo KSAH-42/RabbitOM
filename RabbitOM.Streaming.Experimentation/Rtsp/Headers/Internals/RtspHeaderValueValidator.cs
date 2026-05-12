@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    internal static class RtspHeaderValueValidator
+    public static class RtspHeaderValueValidator
     {
         private static string Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~";
         
@@ -33,6 +32,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
         }
 
+        public static string EnsureWellFormedToken( string value , Func<char,bool> predicate )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+            }
+
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 || predicate( character ) ) ? value : throw new FormatException();
+        }
+
         public static string EnsureWellFormedTokenOrEmpty( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
@@ -43,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
         }
 
-        public static string EnsureContainsNoSpace( string value )
+        public static string EnsureNoSpaces( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -53,7 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Any( character => character == ' ' ) ? throw new FormatException() : value;
         }
 
-        public static string EnsureHasLettersAndDigits( string value )
+        public static string EnsureLettersOrDigits( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -63,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Any( character => char.IsLetterOrDigit( character ) ) ? value : throw new FormatException();
         }
 
-        public static string EnsureContains( string value , Func<char, bool> predicate )
+        public static string EnsureAny( string value , Func<char, bool> predicate )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -71,6 +85,46 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return value.Any( predicate ) ? value : throw new FormatException();
+        }
+
+        public static string EnsureAny( string value , Func<char,int, bool> predicate )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            return value.Where( predicate ).Any() ? value : throw new FormatException();
+        }
+
+        public static string EnsureNotStartsWidth( string value , string text )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            if ( string.IsNullOrEmpty( text ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            return ! value.StartsWith( text ) ? value : throw new FormatException();
+        }
+
+        public static string EnsureNotEndsWidth( string value , string text )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            if ( string.IsNullOrEmpty( text ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            return ! value.EndsWith( text ) ? value : throw new FormatException();
         }
 
         public static string EnsureNoQuotes( string value )
@@ -109,7 +163,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool IsWellFormed( string value )
+        public static bool TryEnsureWellFormed( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -119,7 +173,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool IsWellFormedToken( string value )
+        public static bool TryEnsureWellFormedToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -129,7 +183,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool IsWellFormedTokenOrEmpty( string value )
+        public static bool TryEnsureWellFormedToken( string value , Func<char,bool> predicate )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) || predicate == null )
+            {
+                return false;
+            }
+
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 || predicate( character ) );
+        }
+
+        public static bool TryEnsureWellFormedTokenOrEmpty( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -139,22 +203,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool IsNotNullOrEmpty( string value )
+        public static bool TryEnsureNotNullOrEmpty( string value )
         {
             return ! string.IsNullOrEmpty( value );
         }
 
-        public static bool IsNotNullOrEmptyIf( string value , Func<char , bool> predicate )
+        public static bool TryEnsureAny( string value , Func<char , bool> predicate )
         {
             return ! string.IsNullOrEmpty( value ) && value.Any( predicate );
         }
 
-        public static bool IsNotPrintable( in char value )
+        public static bool TryEnsureAny( string value , Func<char , int, bool> predicate )
+        {
+            return ! string.IsNullOrEmpty( value ) && value.Where( predicate ).Any();
+        }
+
+        public static bool TryEnsureNotPrintable( in char value )
         {
             return value <= 31 || value >= 127;
         }
 
-        public static bool HasLettersOrDigits( string value )
+        public static bool TryEnsureLettersOrDigits( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -164,7 +233,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Any( character => char.IsLetterOrDigit( character ) );
         }
 
-        public static bool HasNoSpace( string value )
+        public static bool TryEnsureNoSpaces( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -172,6 +241,26 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return value.IndexOf( ' ' ) > 0;
+        }
+
+        public static bool TryEnsureNotStartsWidth( string value , string text )
+        {
+            if ( string.IsNullOrEmpty( value ) || string.IsNullOrEmpty( value ) )
+            {
+                return false;
+            }
+
+            return ! value.StartsWith( text );
+        }
+
+        public static bool TryEnsureNotEndsWidth( string value , string text )
+        {
+            if ( string.IsNullOrEmpty( value ) || string.IsNullOrEmpty( value ) )
+            {
+                return false;
+            }
+
+            return ! value.EndsWith( text );
         }
     }
 }

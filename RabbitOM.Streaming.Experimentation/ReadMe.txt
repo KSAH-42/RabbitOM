@@ -1,9 +1,17 @@
+// TODO: adding compliances tests
 
 internal class Program
 {
     static void Main( string[] args )
     {
-        var context = new RtspClientContext();
+        var context = new RtspClientContextBuider()
+            .SetPoolConnectionSize(12)
+            .SetBufferSize( 12 )
+            .SetMaximumOfRetries( 3 )
+            .UseMemoryPool()
+            .SetChannelFactory( new MyRtspChannelFactory() )
+            .Build()
+            ;
             
         using ( var client = new RtspClient( context ) )
         {

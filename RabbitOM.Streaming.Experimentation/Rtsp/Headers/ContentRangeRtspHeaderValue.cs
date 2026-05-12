@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         header._size = size;
                     }                    
 
-                    if ( RtspHeaderValueValidator.IsWellFormedToken( header._unit ) )
+                    if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._unit ) )
                     {
                         if ( header._start.HasValue && header._end.HasValue )
                         {

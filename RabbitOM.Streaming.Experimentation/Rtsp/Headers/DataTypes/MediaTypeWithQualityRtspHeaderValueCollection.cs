@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class StringRtspHeaderValueCollection : IEnumerable , IEnumerable<string> , ICollection<string> , IReadOnlyCollection<string>
+    public sealed class MediaTypeWithQualityRtspHeaderValueCollection : IEnumerable , IEnumerable<MediaTypeWithQualityRtspHeaderValue> , ICollection<MediaTypeWithQualityRtspHeaderValue> , IReadOnlyCollection<MediaTypeWithQualityRtspHeaderValue>
     {
-        private readonly List<string> _collection = new List<string>();
-
+        private readonly List<MediaTypeWithQualityRtspHeaderValue> _collection = new List<MediaTypeWithQualityRtspHeaderValue>();
 
 
 
@@ -25,19 +24,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
+
         IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<MediaTypeWithQualityRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public IEnumerator<string> GetEnumerator()
+        public void Add( MediaTypeWithQualityRtspHeaderValue item )
         {
-            return _collection.GetEnumerator();
-        }       
-
-        public void Add( string item )
-        {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( item ) )
+            if ( item == null )
             {
                 throw new ArgumentNullException( nameof( item ) );
             }
@@ -45,22 +45,34 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Add( item );
         }
 
+        public bool TryAdd( MediaTypeWithQualityRtspHeaderValue item )
+        {
+            if ( item == null )
+            {
+                return false;
+            }
+
+            _collection.Add( item );
+
+            return true;
+        }
+
         public void Clear()
         {
             _collection.Clear();
         }
 
-        public bool Contains( string item )
+        public bool Contains( MediaTypeWithQualityRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( string[] array , int arrayIndex )
+        public void CopyTo( MediaTypeWithQualityRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( string item )
+        public bool Remove( MediaTypeWithQualityRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -77,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return true;
         }
 
-        public bool RemoveBy( Func<string,bool> predicate )
+        public bool RemoveBy( Func<MediaTypeWithQualityRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {
@@ -92,18 +104,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             }
 
             return _collection.Remove( item );
-        }
-
-        public bool TryAdd( string item )
-        {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( item ) )
-            {
-                return false;
-            }
-
-            _collection.Add( item );
-
-            return true;
         }
     }
 }
