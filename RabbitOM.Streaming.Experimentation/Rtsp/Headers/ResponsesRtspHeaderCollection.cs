@@ -46,6 +46,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Service.SetHeaderValue( RtspHeaderNames.ContentBase , value );
         }
 
+        public UriRtspHeaderValue ContentLocation
+        {
+            get => Service.GetHeaderValue( RtspHeaderNames.ContentLocation ) as UriRtspHeaderValue;
+            set => Service.SetHeaderValue( RtspHeaderNames.ContentLocation , value );
+        }
+
+        public ContentTypeRtspHeaderValue ContentType
+        {
+            get => Service.GetHeaderValue( RtspHeaderNames.ContentType ) as ContentTypeRtspHeaderValue;
+            set => Service.SetHeaderValue( RtspHeaderNames.ContentType , value );
+        }
+
         public ContentRangeRtspHeaderValue ContentRange
         {
             get => Service.GetHeaderValue( RtspHeaderNames.ContentRange ) as ContentRangeRtspHeaderValue;

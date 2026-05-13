@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderValueValidator
+    internal static class RtspHeaderValueValidator
     {
         private static string Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~";
         

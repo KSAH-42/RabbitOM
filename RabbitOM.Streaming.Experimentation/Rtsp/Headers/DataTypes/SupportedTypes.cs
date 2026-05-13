@@ -38,9 +38,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             s_mimes.Add( "application/octet-stream" );
             s_mimes.Add( "application/zip" );
             s_mimes.Add( "image/jpeg" );
+            s_mimes.Add( "image/bmp" );
+            s_mimes.Add( "image/bitmap" );
             s_mimes.Add( "image/png" );
             s_mimes.Add( "video/jpeg" );
             s_mimes.Add( "video/mpeg" );
+            s_mimes.Add( "video/mpeg-generic" );
             s_mimes.Add( "video/mpeg2" );
             s_mimes.Add( "video/mpeg2-generic" );
             s_mimes.Add( "video/mpeg4" );
@@ -48,9 +51,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             s_mimes.Add( "video/H264" );
             s_mimes.Add( "video/H265" );
             s_mimes.Add( "video/H266" );
+            s_mimes.Add( "audio/wave" );
             s_mimes.Add( "audio/PCM" );
             s_mimes.Add( "audio/PCMA" );
-            s_mimes.Add( "audio/mpeg4-generic" );
+            s_mimes.Add( "audio/MP3" );
 
             s_encodings.Add( "zip" );
             s_encodings.Add( "gzip" );
@@ -58,6 +62,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             s_encodings.Add( "identity" );
             s_encodings.Add( "deflate" );
             s_encodings.Add( "br" );
+            s_encodings.Add( "base64" );
             s_encodings.Add( "*" );
 
             s_transmissions.Add( "unicast" );

@@ -4,17 +4,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
     
-    public sealed class AcceptRtspHeaderValue
+    public sealed class ContentTypeRtspHeaderValue
     {
         public MediaTypeWithQualityRtspHeaderValueCollection Values { get; } = new MediaTypeWithQualityRtspHeaderValueCollection();
         
-        public static bool TryParse( string input , out AcceptRtspHeaderValue result )
+        public static bool TryParse( string input , out ContentTypeRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
-                var header = new AcceptRtspHeaderValue();
+                var header = new ContentTypeRtspHeaderValue();
 
                 foreach ( var token in tokens )
                 {

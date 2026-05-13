@@ -64,6 +64,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Service.SetHeaderValue( RtspHeaderNames.Connection , value );
         }
 
+        public ContentTypeRtspHeaderValue ContentType
+        {
+            get => Service.GetHeaderValue( RtspHeaderNames.ContentType ) as ContentTypeRtspHeaderValue;
+            set => Service.SetHeaderValue( RtspHeaderNames.ContentType , value );
+        }
+
         public DateTimeRtspHeaderValue Date
         {
             get => Service.GetHeaderValue( RtspHeaderNames.Date ) as DateTimeRtspHeaderValue;
