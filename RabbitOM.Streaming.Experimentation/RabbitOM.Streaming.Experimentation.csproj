@@ -108,7 +108,7 @@
     <Compile Include="Rtsp\Headers\ConferenceRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\AuthenticationTypes.cs" />
+    <Compile Include="Rtsp\Headers\ContentTypeRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ProxyInfoRtspHeaderValue.cs" />
@@ -188,6 +188,7 @@
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiver.cs" />
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverConfiguration.cs" />
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverStreamingSession.cs" />
+    <Compile Include="Rtsp\RtspAuthenticationSchemes.cs" />
     <Compile Include="Rtsp\RtspClient.cs" />
     <Compile Include="Rtsp\RtspClientContext.cs" />
     <Compile Include="Rtsp\RtspClientRequest.cs" />
