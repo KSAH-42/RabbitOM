@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => Service.GetHeaderValue( RtspHeaderNames.Accept ) as AcceptRtspHeaderValue;
             set => Service.SetHeaderValue( RtspHeaderNames.Accept , value );
         }
-        
+
         public AcceptEncodingRtspHeaderValue AcceptEncoding
         {
             get => Service.GetHeaderValue( RtspHeaderNames.AcceptEncoding ) as AcceptEncodingRtspHeaderValue;
@@ -106,6 +106,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Service.SetHeaderValue( RtspHeaderNames.Public , value );
         }
         
+        public RequireRtspHeaderValue Require
+        {
+            get => Service.GetHeaderValue( RtspHeaderNames.Require ) as RequireRtspHeaderValue;
+            set => Service.SetHeaderValue( RtspHeaderNames.Require , value );
+        }
+
         public UriRtspHeaderValue Referer
         {
             get => Service.GetHeaderValue( RtspHeaderNames.Referer ) as UriRtspHeaderValue;

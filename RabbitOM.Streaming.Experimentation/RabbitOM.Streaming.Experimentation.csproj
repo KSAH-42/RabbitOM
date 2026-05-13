@@ -140,6 +140,7 @@
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RequestsRtspHeaderCollection.cs" />
+    <Compile Include="Rtsp\Headers\RequireRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ResponsesRtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderCollection.cs" />

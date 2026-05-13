@@ -1,9 +1,9 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-using System;
-using System.Xml.Linq;
+﻿using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    
     public sealed class RtspMethod
     {
         private readonly string _procedureName;
@@ -12,25 +12,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-
-        public RtspMethod( string procedureName )
+        private RtspMethod( string procedureName )
         {
-            if ( procedureName == null )
-            {
-                throw new ArgumentNullException( nameof( procedureName ) );
-            }
-
-            if ( ! IsValid( procedureName ) )
-            {
-                throw new ArgumentException( nameof( procedureName ) );
-            }
-
-            _procedureName = procedureName;
+            _procedureName = RtspHeaderValueValidator.EnsureNoSpaces( procedureName );
         }
         
-
-
 
 
 
@@ -71,31 +57,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-        
-        public static bool IsValid( string name )
+        public static RtspMethod NewMethod( string procedureName )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) )
+            return new RtspMethod( RtspHeaderValueValidator.EnsureWellFormedTokenIfAll( procedureName , element =>
             {
-                return false;
-            }
-
-            return RtspHeaderValueValidator.TryEnsureAny( name , element =>
-            {
-                return char.IsDigit( element ) 
-                    && char.IsUpper( element )
+                return char.IsLetter( element ) && char.IsUpper( element )
                     || char.IsDigit( element )
                     || element == '_' 
                     || element == '-' 
                     || element == '.'
                     ;
-            });
+            }) );
         }
-
 
         public static bool TryParse( string input , out RtspMethod result )
         {
-            result = IsValid( input ) ? new RtspMethod( input ) : null;
+            result = RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( input , element =>
+            {
+                return char.IsLetter( element ) && char.IsUpper( element )
+                    || char.IsDigit( element )
+                    || element == '_' 
+                    || element == '-' 
+                    || element == '.'
+                    ;
+            }) ? new RtspMethod( input ) : null ;
 
             return result != null;
         }

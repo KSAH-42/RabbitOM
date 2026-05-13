@@ -17,6 +17,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _comment = string.Empty;
                 
 
+
+
         public string Product
         {
             get => _product;
@@ -32,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Comment
         {
             get => _comment;
-            set => _comment = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
+            set => _comment = RtspHeaderValueValidator.EnsureWellFormedTokenIfAll( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) , x => x != '(' && x != ')' ); 
         }
         
 
@@ -53,29 +55,47 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( matches.Count > 0 )
             {
-                var header = new UserAgentRtspHeaderValue();
+                var product = string.Empty;
+                var version = string.Empty;
+                var comment = string.Empty;
 
                 foreach ( Match match in matches )
                 {
                     if ( match.Groups["product"].Success )
                     {
-                        header.Product = match.Groups["product"].Value;
-                        header.Version = match.Groups["version"].Value;
+                        product = match.Groups["product"].Value;
+                        version = match.Groups["version"].Value;
                     }
                     else if ( match.Groups["comment"].Success )
                     {
-                        header.Comment = match.Groups["comment"].Value;
+                        comment = match.Groups["comment"].Value;
                     }
                 }
 
-                if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Product ) && RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Version ) )
+                if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( product ) )
                 {
-                    result = header;
+                    return false;
                 }
+
+                if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( version ) )
+                {
+                    return false;
+                }
+
+                result = new UserAgentRtspHeaderValue()
+                {
+                    _product = product ,
+                    _version = version ,
+                    _comment = RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( comment , x => x != '(' && x != ')' ) 
+                    ? comment 
+                    : "",
+                };
             }
 
             return result != null;
         }
+
+
 
 
 

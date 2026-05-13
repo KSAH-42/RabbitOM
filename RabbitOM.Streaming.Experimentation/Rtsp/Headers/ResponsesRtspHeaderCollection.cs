@@ -88,6 +88,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Service.SetHeaderValue( RtspHeaderNames.Public , value );
         }
         
+        public RequireRtspHeaderValue Require
+        {
+            get => Service.GetHeaderValue( RtspHeaderNames.Require ) as RequireRtspHeaderValue;
+            set => Service.SetHeaderValue( RtspHeaderNames.Require , value );
+        }
+
         public DateTimeRtspHeaderValue RetryAfter
         {
             get => Service.GetHeaderValue( RtspHeaderNames.RetryAfter ) as DateTimeRtspHeaderValue;

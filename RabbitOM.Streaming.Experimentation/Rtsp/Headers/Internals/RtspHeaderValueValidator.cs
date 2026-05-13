@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
         }
 
-        public static string EnsureWellFormedToken( string value , Func<char,bool> predicate )
+        public static string EnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -183,7 +183,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
         }
 
-        public static bool TryEnsureWellFormedToken( string value , Func<char,bool> predicate )
+        public static bool TryEnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
         {
             if ( string.IsNullOrWhiteSpace( value ) || predicate == null )
             {
