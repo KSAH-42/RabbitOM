@@ -135,7 +135,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         return false;
                     }
                     
-                    if ( AuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
+                    if ( RtspAuthenticationSchemes.IsDigestAuthentication( header.Scheme ) )
                     {
                         if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Nonce ) )
                         {

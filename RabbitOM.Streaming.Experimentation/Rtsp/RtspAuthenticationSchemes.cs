@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
+namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    // TODO: rename (because the scheme word is not used) or move the SupportedTypes class
-    public static class AuthenticationTypes
+    internal static class RtspAuthenticationSchemes
     {
         private readonly static HashSet<string> Md5Algorithms 
             = new [] { "MD5" , "MD5-sess" }
