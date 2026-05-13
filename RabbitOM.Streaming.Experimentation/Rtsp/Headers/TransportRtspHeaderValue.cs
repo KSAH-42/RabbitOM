@@ -18,6 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _host = string.Empty;
         private string _ssrc = string.Empty;
         private string _mode = string.Empty;
+        private string _append = string.Empty;
         private byte? _ttl;
         private int? _layers;
         private ValueRange? _port;
@@ -74,6 +75,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         { 
             get => _mode; 
             set => _mode = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        public string Append
+        { 
+            get => _append; 
+            set => _append = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public byte? TTL
@@ -156,6 +163,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         else if ( ValueComparer.Equals( "mode" , parameter.Key ) )
                         {
                             header._mode = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
+                        }
+                        else if ( ValueComparer.Equals( "append" , parameter.Key ) )
+                        {
+                            header._append = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
                         }
                         else if ( ValueComparer.Equals( "layers" , parameter.Key ) )
                         {
@@ -284,6 +295,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( ! string.IsNullOrWhiteSpace( Mode ) )
             {
                 builder.AppendFormat( "mode=\"{0}\";" , Mode );
+            }
+
+            if ( ! string.IsNullOrWhiteSpace( Append ) )
+            {
+                builder.AppendFormat( "append=\"{0}\";" , Append );
             }
 
             if ( TTL.HasValue )

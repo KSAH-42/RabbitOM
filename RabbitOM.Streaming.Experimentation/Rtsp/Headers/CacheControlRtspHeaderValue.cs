@@ -33,6 +33,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool Immutable { get; set; }
 
+        public bool OnlyIfCached { get; set; }
+
         public int? MaximumAge { get; set; }
 
         public int? ShareMaximumAge { get; set; }
@@ -40,6 +42,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public int? StaleWhileRevalidate { get; set; }
 
         public int? StaleIfError { get; set; }
+
+        public int? MaximumStale { get; set; }
+
+        public int? MinimumFresh { get; set; }
 
         public StringParameterRtspHeaderValueCollection Parameters { get; } = new StringParameterRtspHeaderValueCollection();
         
@@ -91,6 +97,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         header.Immutable = true;
                     }
+                    else if ( ValueComparer.Equals( "only-if-cached" , token ) )
+                    {
+                        header.OnlyIfCached = true;
+                    }
                 }
 
                 foreach ( var token in tokens.Where( element => element.Contains( "=" ) ) )
@@ -102,6 +112,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                             if ( int.TryParse( parameter.Value , out var number ) )
                             {
                                 header.MaximumAge = number;
+                            }
+                        }
+                        else if ( ValueComparer.Equals( "max-stale" , parameter.Key ) )
+                        {
+                            if ( int.TryParse( parameter.Value , out var number ) )
+                            {
+                                header.MaximumStale = number;
+                            }
+                        }
+                        else if ( ValueComparer.Equals( "min-fresh" , parameter.Key ) )
+                        {
+                            if ( int.TryParse( parameter.Value , out var number ) )
+                            {
+                                header.MinimumFresh = number;
                             }
                         }
                         else if ( ValueComparer.Equals( "s-maxage" , parameter.Key ) )
@@ -188,6 +212,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 builder.Append( "immutable, " );
             }
 
+            if ( OnlyIfCached )
+            {
+                builder.Append( "only-if-cached, " );
+            }
+
             if ( MaximumAge.HasValue )
             {
                 builder.AppendFormat( "max-age={0}, " , MaximumAge );
@@ -201,6 +230,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( StaleWhileRevalidate.HasValue )
             {
                 builder.AppendFormat( "stale-while-revalidate={0}, " , StaleWhileRevalidate );
+            }
+
+            if ( MaximumStale.HasValue )
+            {
+                builder.AppendFormat( "max-stale={0}, " , MaximumStale );
+            }
+
+            if ( MinimumFresh.HasValue )
+            {
+                builder.AppendFormat( "min-fresh={0}, " , MinimumFresh );
             }
 
             if ( StaleIfError.HasValue )

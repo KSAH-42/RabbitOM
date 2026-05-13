@@ -136,6 +136,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Service.SetHeaderValue( RtspHeaderNames.Speed , value );
         }
 
+        public TimeStampRtspHeaderValue TimeStamp
+        {
+            get => Service.GetHeaderValue( RtspHeaderNames.TimeStamp ) as TimeStampRtspHeaderValue;
+            set => Service.SetHeaderValue( RtspHeaderNames.TimeStamp , value );
+        }
+
         public UriRtspHeaderValue To
         {
             get => Service.GetHeaderValue( RtspHeaderNames.To ) as UriRtspHeaderValue;

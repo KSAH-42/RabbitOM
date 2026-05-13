@@ -115,7 +115,6 @@
     <Compile Include="Rtsp\Headers\DataTypes\ProxyInfoRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\RtpInfoRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\RtpInfoRtspHeaderValueCollection.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\RtspHeaderNames.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\RtspMethodHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringParameterRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringRtspHeaderValueCollection.cs" />
@@ -144,9 +143,11 @@
     <Compile Include="Rtsp\Headers\ResponsesRtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RtpInfoRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RtspHeaderCollection.cs" />
+    <Compile Include="Rtsp\Headers\RtspHeaderNames.cs" />
     <Compile Include="Rtsp\Headers\ScaleRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SessionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\SpeedRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\TimeStampRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\TransportRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\UriRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\UserAgentRtspHeaderValue.cs" />
