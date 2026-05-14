@@ -6,10 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     
     public sealed class AcceptLanguageRtspHeaderValue
     {
-        public StringWithQualityRtspHeaderValueCollection Cultures { get; } = new StringWithQualityRtspHeaderValueCollection( culture =>
-        {
-            return SupportedTypes.IsLanguageSupported( culture.Value );
-        } );
+        public LanguageWithQualityRtspHeaderValueCollection Values { get; } = new LanguageWithQualityRtspHeaderValueCollection();
         
         public static bool TryParse( string input , out AcceptLanguageRtspHeaderValue result )
         {
@@ -21,13 +18,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
+                    if ( LanguageWithQualityRtspHeaderValue.TryParse( token , out var element ) )
                     {
-                        header.Cultures.TryAdd( element );
+                        header.Values.TryAdd( element );
                     }
                 }
 
-                if ( header.Cultures.Count > 0 )
+                if ( header.Values.Count > 0 )
                 {
                     result = header;
                 }
@@ -38,7 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , Cultures );
+            return string.Join( ", " , Values );
         }
     }
 }

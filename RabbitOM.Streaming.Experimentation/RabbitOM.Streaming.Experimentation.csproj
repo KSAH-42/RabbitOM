@@ -109,6 +109,8 @@
     <Compile Include="Rtsp\Headers\ConnectionRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentRangeRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ContentTypeRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\LanguageWithQualityRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\LanguageWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ProxyInfoRtspHeaderValue.cs" />
