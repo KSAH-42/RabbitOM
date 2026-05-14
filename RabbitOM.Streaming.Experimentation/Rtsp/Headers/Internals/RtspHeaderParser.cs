@@ -41,5 +41,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return _parseDelegate( input , out result );
         }
+
+        public static RtspHeaderParser NewParser<TResult>( string name , TryParseDelegate<TResult> tryParseDelegate )
+        {
+            return new RtspHeaderParser( name , new TryParseDelegate<object>( (string input, out object result ) =>
+            {
+                result = null;
+
+                if ( tryParseDelegate( input , out TResult headerValue ) )
+                {
+                    result = headerValue;
+                    return true;
+                }
+
+                return false;
+            } ));
+        }
     }
 }

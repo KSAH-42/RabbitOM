@@ -3,7 +3,9 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-    
+
+    // TODO: add unit test to detect that implicit operator( string type) is not implemented, it should be block, because it lets to people to think what we can write every thing, lets the developer to use add( string name, string value) method instead
+
     public sealed class AcceptRtspHeaderValue
     {
         public MediaTypeWithQualityRtspHeaderValueCollection Values { get; } = new MediaTypeWithQualityRtspHeaderValueCollection();

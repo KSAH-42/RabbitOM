@@ -130,7 +130,6 @@
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderParser.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderService.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderServiceSettings.cs" />
-    <Compile Include="Rtsp\Headers\Internals\RtspHeaderServiceSettingsFactory.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueParser.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueSanitizer.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueValidator.cs" />

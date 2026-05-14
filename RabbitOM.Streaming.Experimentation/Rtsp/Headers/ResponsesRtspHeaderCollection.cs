@@ -1,10 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class ResponsesRtspHeaderCollection : RtspHeaderCollection
     {
-        private static readonly RtspHeaderServiceSettings s_settings = RtspHeaderServiceSettingsFactory.CreateServiceSettingsForResponses();
+        private static readonly RtspHeaderServiceSettings s_settings = new RtspHeaderServiceSettings( new List<RtspHeaderParser>()
+        {
+            RtspHeaderParser.NewParser<AllowRtspHeaderValue>( RtspHeaderNames.Allow , AllowRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<BandwidthRtspHeaderValue>( RtspHeaderNames.Bandwidth , BandwidthRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<CacheControlRtspHeaderValue>( RtspHeaderNames.CacheControl , CacheControlRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<ConferenceRtspHeaderValue>( RtspHeaderNames.Conference , ConferenceRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<ConnectionRtspHeaderValue>( RtspHeaderNames.Connection , ConnectionRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<UriRtspHeaderValue>( RtspHeaderNames.ContentBase , UriRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<UriRtspHeaderValue>( RtspHeaderNames.ContentLocation , UriRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<ContentTypeRtspHeaderValue>( RtspHeaderNames.ContentType , ContentTypeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<ContentRangeRtspHeaderValue>( RtspHeaderNames.ContentRange , ContentRangeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.Date , DateTimeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.Expires , DateTimeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.LastModified , DateTimeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<UriRtspHeaderValue>( RtspHeaderNames.Location , UriRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<MediaDurationRtspHeaderValue>( RtspHeaderNames.MediaDuration , MediaDurationRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<PublicRtspHeaderValue>( RtspHeaderNames.Public , PublicRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<RequireRtspHeaderValue>( RtspHeaderNames.Require , RequireRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.RetryAfter , DateTimeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<RtpInfoRtspHeaderValue>( RtspHeaderNames.RtpInfo , RtpInfoRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<TransportRtspHeaderValue>( RtspHeaderNames.Transport , TransportRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<ViaRtspHeaderValue>( RtspHeaderNames.Via , ViaRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<WarningRtspHeaderValue>( RtspHeaderNames.Warning , WarningRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<WWWAuthenticateRtspHeaderValue>( RtspHeaderNames.WWWAuthenticate , WWWAuthenticateRtspHeaderValue.TryParse ),
+        } , 
+        new [] 
+        { 
+            RtspHeaderNames.CSeq , 
+            RtspHeaderNames.ContentLength , 
+            RtspHeaderNames.Authorization 
+        });
 
         public ResponsesRtspHeaderCollection() : base( new RtspHeaderService( s_settings ) )
         {
