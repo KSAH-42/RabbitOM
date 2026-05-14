@@ -155,6 +155,7 @@
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
     <Compile Include="Rtsp\IClient.cs" />
     <Compile Include="Rtsp\IHandler.cs" />
+    <Compile Include="Rtsp\ILogger.cs" />
     <Compile Include="Rtsp\NullHandler.cs" />
     <Compile Include="Rtsp\Packet.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Rtsp\Transports\Authentication\RtspAuthorizationAlgorithms.cs" />
     <Compile Include="Rtsp\Transports\Authentication\RtspAuthorizationResponseBuilder.cs" />
     <Compile Include="Rtsp\Transports\EndPoint.cs" />
+    <Compile Include="Rtsp\Transports\IAllocator.cs" />
     <Compile Include="Rtsp\Transports\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\IClientChannelFactory.cs" />
     <Compile Include="Rtsp\Transports\RtspClientChannel.cs" />

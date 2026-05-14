@@ -178,7 +178,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._scheme ) && RtspHeaderValueValidator.TryEnsureWellFormedToken( header._userName ) )
+                    if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._scheme ) )
                     {
                         result = header;
                     }
@@ -190,6 +190,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         
         
+
 
         public override string ToString()
         {

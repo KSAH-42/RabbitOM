@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Transports;
-
+    
     public sealed class RtspClientContext 
     {
         public uint ReceiveBufferSize { get; }
@@ -22,6 +22,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public IClientChannelFactory ChannelFactory { get; }
 
-        // public Action<string> Log { get; }
+        public IAllocator Allocator { get; }
+
+        public ILogger Logger { get; }
+
+        public ushort MinimumSequenceValue { get; }
+
+        public ushort MaximumSequenceValue { get; }
+
+
+
+
+        public ushort GetNextSequenceValue()
+        {
+            throw new ArgumentNullException();
+        }
+
+        public void ClearSequenceValue()
+        {
+            throw new ArgumentNullException();
+        }
     }
 }
