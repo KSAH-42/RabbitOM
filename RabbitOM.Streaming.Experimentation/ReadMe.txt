@@ -4,7 +4,7 @@ internal class Program
 {
     static void Main( string[] args )
     {
-        var context = new RtspClientContextBuider()
+        var context = new RtspClientContext.Buider()
             .SetPoolConnectionSize(12)
             .SetBufferSize( 12 )
             .SetMaximumOfRetries( 3 )
