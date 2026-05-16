@@ -1,12 +1,12 @@
 // TODO: adding compliances tests
 
 SOLID as: 
-  Simple as comment, forget single responsabilty, add feature on your washing machine for creating your coffee
-  Open source comments, 
+  String as comment, forget single responsabilty, add feature on your washing machine for creating your coffee
+  Open carriage return, 
   Large block of comments, 
-  Injection of comments : building injection framework to inject unnecessary comments
-  Dependency of comments,
-   the new building block of solid principles
+  Injection of strings : building injection framework to inject powerfull comments
+  Dependency of comments
+   the new solid principlesd
 
 as a roswellian engineer:
   think and design on a garage from the 51 zone.

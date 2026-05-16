@@ -2,9 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Authentication
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
-    public sealed class RtspAuthorisationHashAlgorithm : IDisposable
+    internal sealed class RtspAuthorisationHashAlgorithm : IDisposable
     {
         private readonly HashAlgorithm _hashAlgorithm;
 

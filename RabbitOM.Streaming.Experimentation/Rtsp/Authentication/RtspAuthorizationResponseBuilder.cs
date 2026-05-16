@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Authentication
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
-    public sealed class RtspAuthorizationResponseBuilder
+    internal sealed class RtspAuthorizationResponseBuilder
     {
         private string _method = string.Empty;
         private string _scheme = string.Empty;
