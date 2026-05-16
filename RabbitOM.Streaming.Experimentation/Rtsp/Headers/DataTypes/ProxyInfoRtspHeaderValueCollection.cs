@@ -11,6 +11,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
+        public ProxyInfoRtspHeaderValue this[ int index ]
+        {
+            get => _collection[ index ];
+        }
+
 
 
         public int Count

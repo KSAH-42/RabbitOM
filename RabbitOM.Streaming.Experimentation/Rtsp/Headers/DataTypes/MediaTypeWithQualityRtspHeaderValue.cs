@@ -9,16 +9,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
     public sealed class MediaTypeWithQualityRtspHeaderValue
     {
         public MediaTypeWithQualityRtspHeaderValue( string value )
-            : this( value , null , new StringParameterRtspHeaderValueCollection() )
+            : this( value , null , null , new StringParameterRtspHeaderValueCollection() )
         {
         }
 
         public MediaTypeWithQualityRtspHeaderValue( string value , double quality )
-            : this( value , quality , new StringParameterRtspHeaderValueCollection() )
+            : this( value , quality , null , new StringParameterRtspHeaderValueCollection() )
         {
         }
 
-        public MediaTypeWithQualityRtspHeaderValue( string value , double? quality , StringParameterRtspHeaderValueCollection parameters )
+        public MediaTypeWithQualityRtspHeaderValue( string value , double quality , string charset )
+            : this( value , quality , charset , new StringParameterRtspHeaderValueCollection() )
+        {
+        }
+
+        public MediaTypeWithQualityRtspHeaderValue( string value , double? quality , string charset , StringParameterRtspHeaderValueCollection parameters )
         {
             RtspHeaderValueValidator.EnsureWellFormedTokenIfAll( value , x => x == '/' );
             RtspHeaderValueValidator.EnsureLettersOrDigits( value );
@@ -27,6 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             Value = value;
             Quality = quality;
+            CharSet = string.IsNullOrEmpty( charset ) ? string.Empty : RtspHeaderValueValidator.EnsureWellFormedToken( charset );
             Parameters = parameters;
         }
 
@@ -37,6 +43,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public double? Quality { get; }
         
+        public string CharSet { get; }
+
         public StringParameterRtspHeaderValueCollection Parameters { get; }
 
 
@@ -52,11 +60,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
                 var boolIsValid =  RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( name , x => x == '/' ) 
                                 && RtspHeaderValueValidator.TryEnsureLettersOrDigits( name )
-                                && RtspHeaderValueValidator.TryEnsureAny( name , (x,i) => x == '/' && i > 0 && i < name.Length );
+                                && RtspHeaderValueValidator.TryEnsureAny( name , (x,i) => x == '/' && i > 0 && i < name.Length )
+                                ;
 
                 if ( boolIsValid )
                 {
                     var parameters = new StringParameterRtspHeaderValueCollection();
+                    
+                    var charset = string.Empty;
                     
                     double? quality = null;
 
@@ -71,6 +82,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                                     quality = qualityValue;
                                 }
                             }
+                            if ( StringComparer.OrdinalIgnoreCase.Equals( "charset" , parameter.Key )  )
+                            {
+                                if ( string.IsNullOrEmpty( charset ) )
+                                {
+                                    charset = RtspHeaderValueSanitizer.TrimWithRemoveAllQuotesNormalizer( parameter.Value );
+                                }
+                            }
                             else
                             {
                                parameters.TryAdd( parameter.Key , RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) );
@@ -78,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                         }
                     }
 
-                    result = new MediaTypeWithQualityRtspHeaderValue( name , quality , parameters );
+                    result = new MediaTypeWithQualityRtspHeaderValue( name , quality , charset , parameters );
                 }
             }
 
@@ -97,6 +115,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             if ( Quality.HasValue )
             {
                 builder.AppendFormat( "q={0}; " , Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo) );
+            }
+
+            if ( ! string.IsNullOrEmpty( CharSet ) )
+            {
+                builder.AppendFormat( "charset={0}; " , CharSet );
             }
 
             foreach ( var parameter in Parameters )

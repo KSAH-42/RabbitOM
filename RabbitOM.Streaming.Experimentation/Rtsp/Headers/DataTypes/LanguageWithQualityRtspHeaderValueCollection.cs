@@ -10,6 +10,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         private readonly List<LanguageWithQualityRtspHeaderValue> _collection = new List<LanguageWithQualityRtspHeaderValue>();
 
 
+        public LanguageWithQualityRtspHeaderValue this[ int index ]
+        {
+            get => _collection[ index ];
+        }
+
 
         public int Count
         {

@@ -11,6 +11,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
+        public MediaTypeWithQualityRtspHeaderValue this[ int index ]
+        {
+            get => _collection[ index ];
+        }
+
+
+
         public int Count
         {
             get => _collection.Count;

@@ -12,6 +12,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
+        public RtpInfoRtspHeaderValue this[ int index ]
+        {
+            get => _collection[ index ];
+        }
+
+
+
 
         public int Count
         {

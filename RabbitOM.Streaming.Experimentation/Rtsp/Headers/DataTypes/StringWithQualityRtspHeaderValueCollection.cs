@@ -7,23 +7,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
     public sealed class StringWithQualityRtspHeaderValueCollection : IEnumerable , IEnumerable<StringWithQualityRtspHeaderValue> , ICollection<StringWithQualityRtspHeaderValue> , IReadOnlyCollection<StringWithQualityRtspHeaderValue>
     {
-        private readonly List<StringWithQualityRtspHeaderValue> _collection;
-
-        private readonly Func<StringWithQualityRtspHeaderValue,bool> _validator;
+        private readonly List<StringWithQualityRtspHeaderValue> _collection = new List<StringWithQualityRtspHeaderValue>();
 
 
 
-        public StringWithQualityRtspHeaderValueCollection()
+        public StringWithQualityRtspHeaderValue this[ int index ]
         {
-            _collection = new List<StringWithQualityRtspHeaderValue>();
+            get => _collection[ index ];
         }
-
-        public StringWithQualityRtspHeaderValueCollection( Func<StringWithQualityRtspHeaderValue,bool> validator )
-        {
-            _validator  = validator ?? throw new ArgumentNullException( nameof( validator ) );
-            _collection = new List<StringWithQualityRtspHeaderValue>();
-        }
-
+        
 
 
         public int Count
@@ -57,22 +49,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                 throw new ArgumentNullException( nameof( item ) );
             }
 
-            if ( _validator?.Invoke( item ) == false )
-            {
-                throw new ArgumentException( nameof( item ) );
-            }
-
             _collection.Add( item );
         }
 
         public bool TryAdd( StringWithQualityRtspHeaderValue item )
         {
             if ( item == null )
-            {
-                return false;
-            }
-
-            if ( _validator?.Invoke( item ) == false )
             {
                 return false;
             }

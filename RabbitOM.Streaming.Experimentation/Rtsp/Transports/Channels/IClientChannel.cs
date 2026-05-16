@@ -10,6 +10,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         event EventHandler Aborted;
 
+        event EventHandler<RtspRequestMessageEventArgs> RequestSended;
+
+        event EventHandler<RtspResponseMessageEventArgs> ResponseReceived;
+
 
 
         bool IsOpened { get; }
