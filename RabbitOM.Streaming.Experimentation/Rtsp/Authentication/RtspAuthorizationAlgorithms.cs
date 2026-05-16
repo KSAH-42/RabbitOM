@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
     public static class RtspAuthorizationAlgorithms
     {

@@ -1,10 +1,13 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Tcp
 {
     public sealed class TcpClientChannel : RtspClientChannel
     {
-        public override EndPoint EndPoint { get; }
+        public override EndPoint EndPoint 
+        { 
+            get => throw new NotImplementedException();
+        }
 
         public override bool IsOpened
         {
@@ -18,6 +21,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public override void Open()
         {
+            // _socket = new Socket( ... );
+            // _socket.Connect(); :!
+            // _requestManager = new ClientRequestManager( this.Endpoint.IsSecured ? new SSLTcpBinaryChannel( _socket ) : new TcpBinaryChannel( _socket ) );
             throw new NotImplementedException();
         }
 
@@ -33,11 +39,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public override RtspResponseMessage Send( RtspRequestMessage request )
         {
+            // return _requestManager.SendRequest( request );
             throw new NotImplementedException();
         }
 
         public override void Send( in Packet packet )
         {
+            // _requestManager.SendPacket( packet );
             throw new NotImplementedException();
         }
     }

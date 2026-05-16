@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-
     public sealed class RtspAuthorizationResponseBuilder
     {
         private string _method = string.Empty;
@@ -66,60 +64,59 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Authentication
             get => _nonce;
             set => _nonce = value ?? string.Empty;
         }
-
-
+        
 
 
 
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( UserName ) || string.IsNullOrWhiteSpace( Password ) )
+            if ( string.IsNullOrWhiteSpace( _username ) || string.IsNullOrWhiteSpace( _password ) )
             {
                 return string.Empty;
             }
 
-            if ( RtspAuthenticationSchemes.IsBasicAuthentication( Scheme ) )
+            if ( RtspAuthenticationSchemes.IsBasicAuthentication( _scheme ) )
             {
-                return RtspAuthorizationAlgorithms.ComputeAsBasic( $"{UserName}:{Password}" );
+                return RtspAuthorizationAlgorithms.ComputeAsBasic( $"{_username}:{_password}" );
             }
 
-            if ( RtspAuthenticationSchemes.IsDigestAuthentication( Scheme ) )
+            if ( RtspAuthenticationSchemes.IsDigestAuthentication( _scheme ) )
             {
-                if ( string.IsNullOrWhiteSpace( Method ) || string.IsNullOrWhiteSpace( Uri ) || string.IsNullOrWhiteSpace( Realm ) || string.IsNullOrWhiteSpace( Nonce ) )
+                if ( string.IsNullOrWhiteSpace( _method ) || string.IsNullOrWhiteSpace( _uri ) || string.IsNullOrWhiteSpace( _realm ) || string.IsNullOrWhiteSpace( _nonce ) )
                 {
                     return string.Empty;
                 }
 
                 string ComputeHash( Func<string,string> createHash )
                 {
-                    var hashA1 = createHash( UserName + ":" + Realm + ":" + Password );
-                    var hashA2 = createHash( Method + ":" + Uri  );
+                    var hashA1 = createHash( _username + ":" + _realm + ":" + _password );
+                    var hashA2 = createHash( _method + ":" + _uri  );
 
-                    return createHash( hashA1 + ":" + Nonce + ":" + hashA2 );
+                    return createHash( hashA1 + ":" + _nonce + ":" + hashA2 );
                 }
 
-                if ( RtspAuthenticationSchemes.IsMd5Algorithm( Algorithm ) )
+                if ( RtspAuthenticationSchemes.IsMd5Algorithm( _algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsMD5 );
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha1Algorithm( Algorithm ) )
+                if ( RtspAuthenticationSchemes.IsSha1Algorithm( _algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA1 );
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha256Algorithm( Algorithm ) )
+                if ( RtspAuthenticationSchemes.IsSha256Algorithm( _algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA256 );
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha384Algorithm( Algorithm ) )
+                if ( RtspAuthenticationSchemes.IsSha384Algorithm( _algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA384 );
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha512Algorithm( Algorithm ) )
+                if ( RtspAuthenticationSchemes.IsSha512Algorithm( _algorithm ) )
                 {
                     return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA512 );
                 }

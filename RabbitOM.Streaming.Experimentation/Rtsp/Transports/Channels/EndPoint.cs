@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public sealed class EndPoint
     {
@@ -8,7 +8,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public ushort Port { get; }
 
-        public uint BufferSize { get; }
+        public uint ReceiveBufferSize { get; }
+
+        public uint SendBufferSize { get; }
 
         public bool IsSecured { get; }
 

@@ -3,6 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Transports;
+    using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels;
     
     public sealed class RtspClientContext 
     {
@@ -32,12 +33,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
+        // TODO: don't forget to move this method the internal class
         public ushort GetNextSequenceValue()
         {
             throw new ArgumentNullException();
         }
 
+        // TODO: don't forget to move this method the internal class
         public void ClearSequenceValue()
         {
             throw new ArgumentNullException();
