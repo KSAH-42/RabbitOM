@@ -1,15 +1,15 @@
 // TODO: adding compliances tests
 
 SOLID as: 
-  Simple comment, forget single responsabilty, add feature on your washing machine for creating your coffee
+  Simple as comment, forget single responsabilty, add feature on your washing machine for creating your coffee
   Open source comments, 
   Large block of comments, 
   Injection of comments : building injection framework to inject unnecessary comments
   Dependency of comments,
-   the new building of solid principles
+   the new building block of solid principles
 
-as a rosewellian architect:
-  une architecture à la rosewell, designé dans un garage de la zone 51.
+as a roswellian engineer:
+  think and design on a garage from the 51 zone.
 
 internal class Program
 {
