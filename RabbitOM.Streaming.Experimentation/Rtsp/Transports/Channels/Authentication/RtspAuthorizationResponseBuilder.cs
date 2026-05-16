@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Authentication
 {
@@ -78,9 +79,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Authentica
 
             if ( RtspAuthenticationSchemes.IsBasicAuthentication( _scheme ) )
             {
-                return RtspAuthorizationAlgorithms.ComputeAsBasic( $"{_username}:{_password}" );
+                return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{_username}:{_password}" ) );
             }
-
+            
             if ( RtspAuthenticationSchemes.IsDigestAuthentication( _scheme ) )
             {
                 if ( string.IsNullOrWhiteSpace( _method ) || string.IsNullOrWhiteSpace( _uri ) || string.IsNullOrWhiteSpace( _realm ) || string.IsNullOrWhiteSpace( _nonce ) )
@@ -88,37 +89,43 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Authentica
                     return string.Empty;
                 }
 
-                string ComputeHash( Func<string,string> createHash )
-                {
-                    var hashA1 = createHash( _username + ":" + _realm + ":" + _password );
-                    var hashA2 = createHash( _method + ":" + _uri  );
-
-                    return createHash( hashA1 + ":" + _nonce + ":" + hashA2 );
-                }
+                RtspAuthorisationHashAlgorithm hashAlgorithm = null;
 
                 if ( RtspAuthenticationSchemes.IsMd5Algorithm( _algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsMD5 );
+                    hashAlgorithm = RtspAuthorisationHashAlgorithm.CreateMD5();
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha1Algorithm( _algorithm ) )
+                else if ( RtspAuthenticationSchemes.IsSha1Algorithm( _algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA1 );
+                    hashAlgorithm = RtspAuthorisationHashAlgorithm.CreateSHA1();
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha256Algorithm( _algorithm ) )
+                else if ( RtspAuthenticationSchemes.IsSha256Algorithm( _algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA256 );
+                    hashAlgorithm = RtspAuthorisationHashAlgorithm.CreateSHA256();
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha384Algorithm( _algorithm ) )
+                else if ( RtspAuthenticationSchemes.IsSha384Algorithm( _algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA384 );
+                    hashAlgorithm = RtspAuthorisationHashAlgorithm.CreateSHA384();
                 }
 
-                if ( RtspAuthenticationSchemes.IsSha512Algorithm( _algorithm ) )
+                else if ( RtspAuthenticationSchemes.IsSha512Algorithm( _algorithm ) )
                 {
-                    return ComputeHash( RtspAuthorizationAlgorithms.ComputeAsSHA512 );
+                    hashAlgorithm = RtspAuthorisationHashAlgorithm.CreateSHA512();
+                }
+                else
+                {
+                    return string.Empty;
+                }
+
+                using( hashAlgorithm )
+                {
+                    var hashA1 = hashAlgorithm.Compute( _username + ":" + _realm + ":" + _password );
+                    var hashA2 = hashAlgorithm.Compute( _method + ":" + _uri  );
+
+                    return hashAlgorithm.Compute( hashA1 + ":" + _nonce + ":" + hashA2 );
                 }
             }
 
