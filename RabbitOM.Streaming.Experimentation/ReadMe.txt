@@ -2,7 +2,7 @@
 
 SOLID as: 
   String as comment, forget single responsabilty, add feature on your washing machine for creating your coffee
-  Open carriage return, 
+  Open carriage return standard, 
   Large block of comments, 
   Injection of strings : building injection framework to inject powerfull comments
   Dependency of comments

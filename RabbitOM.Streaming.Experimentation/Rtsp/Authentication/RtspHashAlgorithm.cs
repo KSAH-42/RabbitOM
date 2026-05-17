@@ -4,42 +4,42 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
-    internal sealed class RtspAuthorisationHashAlgorithm : IDisposable
+    internal sealed class RtspHashAlgorithm : IDisposable
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
 
 
-        private RtspAuthorisationHashAlgorithm( HashAlgorithm hashAlgorithm )
+        private RtspHashAlgorithm( HashAlgorithm hashAlgorithm )
         {
             _hashAlgorithm = hashAlgorithm ?? throw new ArgumentNullException( nameof( hashAlgorithm ) );
         }
 
 
 
-        public static RtspAuthorisationHashAlgorithm CreateMD5()
+        public static RtspHashAlgorithm CreateMD5()
         {
-            return new RtspAuthorisationHashAlgorithm( MD5.Create() );
+            return new RtspHashAlgorithm( MD5.Create() );
         }
 
-        public static RtspAuthorisationHashAlgorithm CreateSHA1()
+        public static RtspHashAlgorithm CreateSHA1()
         {
-            return new RtspAuthorisationHashAlgorithm( SHA1.Create() );
+            return new RtspHashAlgorithm( SHA1.Create() );
         }
 
-        public static RtspAuthorisationHashAlgorithm CreateSHA256()
+        public static RtspHashAlgorithm CreateSHA256()
         {
-            return new RtspAuthorisationHashAlgorithm( SHA256.Create() );
+            return new RtspHashAlgorithm( SHA256.Create() );
         }
 
-        public static RtspAuthorisationHashAlgorithm CreateSHA384()
+        public static RtspHashAlgorithm CreateSHA384()
         {
-            return new RtspAuthorisationHashAlgorithm( SHA384.Create() );
+            return new RtspHashAlgorithm( SHA384.Create() );
         }
 
-        public static RtspAuthorisationHashAlgorithm CreateSHA512()
+        public static RtspHashAlgorithm CreateSHA512()
         {
-            return new RtspAuthorisationHashAlgorithm( SHA512.Create() );
+            return new RtspHashAlgorithm( SHA512.Create() );
         }
 
 
