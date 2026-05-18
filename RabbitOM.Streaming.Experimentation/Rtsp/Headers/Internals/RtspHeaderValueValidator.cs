@@ -22,6 +22,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
         }
 
+        public static string EnsureWellFormedOrEmpty( string value )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return string.Empty;
+            }
+
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
+        }
+
         public static string EnsureWellFormedToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
@@ -168,6 +178,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( string.IsNullOrWhiteSpace( value ) )
             {
                 return false;
+            }
+
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 );
+        }
+
+        public static bool TryEnsureWellFormedOrEmpty( string value )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return true;
             }
 
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 );

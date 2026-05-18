@@ -96,8 +96,8 @@
     <Compile Include="RtspToBeRemoved\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="RtspToBeRemoved\RtspAuthenticationTypes.cs" />
     <Compile Include="RtspToBeRemoved\RtspMethod.cs" />
-    <Compile Include="Rtsp\Authentication\RtspHashAlgorithm.cs" />
     <Compile Include="Rtsp\Authentication\RtspAuthorizationResponseBuilder.cs" />
+    <Compile Include="Rtsp\Authentication\RtspHashAlgorithm.cs" />
     <Compile Include="Rtsp\Headers\AcceptEncodingRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AcceptLanguageRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\AcceptRangesRtspHeaderValue.cs" />

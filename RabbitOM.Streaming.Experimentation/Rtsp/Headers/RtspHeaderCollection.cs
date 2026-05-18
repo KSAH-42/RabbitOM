@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -56,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public int Count
         {
-            get => _service.CountHeaders();
+            get => _service.Headers.Count;
         }
         
         public IEnumerable<string> AllKeys
@@ -112,22 +113,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public void CopyTo( Array array , int index )
         {
-            _service.CopyHeadersTo( array , index );
+            var items = _service.Headers.ToArray();
+
+            items.CopyTo( array , index );
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new Enumerator( this._service );
+            return new Enumerator( this );
         }
 
         public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
         {
-            return new Enumerator( this._service );
+            return new Enumerator( this );
         }
 
         IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
         {
-            return new Enumerator( this._service );
+            return new Enumerator( this );
         }
 
         public string GetValue( string name )
@@ -171,7 +174,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        // Flatten the dictionary in order to reduce allocation and preserve readonly access instead of using IEnumerator<KeyValuePair<string , string[]> or IEnumerator<KeyValuePair<string , IReadOnlyColletion<string>> where cast be apply
         public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
         {
             private readonly IEnumerator<KeyValuePair<string,IList<object>>> _enumerator;
@@ -181,9 +183,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-            internal Enumerator( RtspHeaderService service )
+            internal Enumerator( RtspHeaderCollection collection )
             {
-                _enumerator = service.Headers.GetEnumerator();
+                _enumerator = collection.Service.Headers.GetEnumerator();
                 _valuesEnumerator = null;
                 _current = default;
             }
@@ -204,36 +206,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             
 
 
-            // => for upper level using foreach time complexity could be:
-
-            // O(n) = O(1 + 3K) + O(T) => O(K + T)
-            // O (n *(K + T) ) => O(n²) where T could be equal to n
-            // or
-            // Ω(n) => add a struct with toString and change the interface to get O(n + P) = Ω(n)
-            // => so replace (???) the KeyValuePair<string,string> by the KeyValuePair<string,RtspHeaderValue> where RtspHeaderValue is a struct and to string will switch between the raw string value or the header value class and the to string can be called out size the MoveNext method
-
             public bool MoveNext()
             {
-                // O(1 + 3K) => O(K)
                 while ( true ) 
                 {
-                    // O(1)
                     if ( _valuesEnumerator != null && _valuesEnumerator.MoveNext() )
                     {
                         break;
                     }
 
-                    // O(1)
                     if ( ! _enumerator.MoveNext() )
                     {
                         return false;
                     }
 
-                    // O(1)
                     _valuesEnumerator = _enumerator.Current.Value.GetEnumerator();
                 }
 
-                // O(1 + n) => O(T)
                 _current = new KeyValuePair<string,string>( _enumerator.Current.Key , _valuesEnumerator.Current?.ToString() ?? string.Empty );
 
                 return true;

@@ -8,50 +8,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
-
-
         private RtspHashAlgorithm( HashAlgorithm hashAlgorithm )
         {
             _hashAlgorithm = hashAlgorithm ?? throw new ArgumentNullException( nameof( hashAlgorithm ) );
         }
 
+        public static RtspHashAlgorithm CreateMD5() => new RtspHashAlgorithm( MD5.Create() );
+        
+        public static RtspHashAlgorithm CreateSHA1() => new RtspHashAlgorithm( SHA1.Create() );
 
+        public static RtspHashAlgorithm CreateSHA256() => new RtspHashAlgorithm( SHA256.Create() );
+        
+        public static RtspHashAlgorithm CreateSHA384() => new RtspHashAlgorithm( SHA384.Create() );
 
-        public static RtspHashAlgorithm CreateMD5()
-        {
-            return new RtspHashAlgorithm( MD5.Create() );
-        }
-
-        public static RtspHashAlgorithm CreateSHA1()
-        {
-            return new RtspHashAlgorithm( SHA1.Create() );
-        }
-
-        public static RtspHashAlgorithm CreateSHA256()
-        {
-            return new RtspHashAlgorithm( SHA256.Create() );
-        }
-
-        public static RtspHashAlgorithm CreateSHA384()
-        {
-            return new RtspHashAlgorithm( SHA384.Create() );
-        }
-
-        public static RtspHashAlgorithm CreateSHA512()
-        {
-            return new RtspHashAlgorithm( SHA512.Create() );
-        }
-
-
-
+        public static RtspHashAlgorithm CreateSHA512() => new RtspHashAlgorithm( SHA512.Create() );
 
         public string Compute( string input )
         {
             if ( string.IsNullOrWhiteSpace( input ) )
             {
-                return string.Empty;
+                throw new ArgumentException( nameof( input ) );
             }
-
+            
             var bytes = _hashAlgorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) ) ?? Array.Empty<byte>();
 
             var builder = new StringBuilder();
