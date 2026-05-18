@@ -132,6 +132,8 @@
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderParser.cs" />
+    <Compile Include="Rtsp\Headers\Internals\RtspHeaderRegistry.cs" />
+    <Compile Include="Rtsp\Headers\Internals\RtspHeaderRegistrySettings.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderService.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderServiceSettings.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueParser.cs" />

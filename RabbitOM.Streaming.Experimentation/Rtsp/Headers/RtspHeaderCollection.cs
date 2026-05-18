@@ -57,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         
         public int Count
         {
-            get => _service.Headers.Count;
+            get => _service.Headers.Sum( x => x.Value.Count );
         }
         
         public IEnumerable<string> AllKeys
@@ -93,7 +93,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string name , string value )
         {
-            _service.AddHeader( name , value );
+            // validation header
+
+            _service.AddHeader( RtspHeaderValueValidator.EnsureWellFormed( name ) , RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( value ) );
         }
 
         public bool Remove( string name )
