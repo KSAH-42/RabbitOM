@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Windows.Presentation.Renders
         {
             try 
             {
-                var decoder = JpegBitmapDecoder.Create( new MemoryStream( Frame ) , BitmapCreateOptions.IgnoreImageCache , BitmapCacheOption.Default );
+                var decoder = JpegBitmapDecoder.Create( new MemoryStream( Frame ) , BitmapCreateOptions.IgnoreImageCache , BitmapCacheOption.None );
                 
                 if ( decoder.Frames.Count > 0 )
                 {
