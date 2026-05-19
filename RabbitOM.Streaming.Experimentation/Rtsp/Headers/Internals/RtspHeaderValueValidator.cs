@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    // TODO: refactor and try to remove some methods in this class
+
     internal static class RtspHeaderValueValidator
     {
         private static string Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~";
@@ -55,6 +57,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 || predicate( character ) ) ? value : throw new FormatException();
+        }
+
+        public static string EnsureWellFormedTokenAndAll( string value , Func<char,bool> predicate )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            if ( predicate == null )
+            {
+                throw new ArgumentNullException( nameof( predicate ) );
+            }
+
+            return value.All( character => (char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) && predicate( character ) ) ? value : throw new FormatException();
         }
 
         public static string EnsureWellFormedTokenOrEmpty( string value )
