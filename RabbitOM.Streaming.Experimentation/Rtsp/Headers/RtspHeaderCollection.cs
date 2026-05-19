@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public abstract class RtspHeaderCollection : IEnumerable , IHeaderCollection , IReadOnlyHeaderCollection
     {
-        private readonly RtspHeaderService _service;
+        private readonly RtspHeaderRegistry _registry;
 
 
 
@@ -16,9 +15,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        internal RtspHeaderCollection( RtspHeaderService service )
+        internal RtspHeaderCollection( RtspHeaderRegistry registry )
         {
-            _service = service ?? throw new ArgumentNullException( nameof( service ) );
+            _registry = registry ?? throw new ArgumentNullException( nameof( registry ) );
         }
 
 
@@ -31,12 +30,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public string this[ string name ]
         {
-            get => _service.GetHeaderValue( name )?.ToString() ?? throw new KeyNotFoundException();
+            get => _registry.GetHeaderValue( name );
         }
 
         public string this[ string name , int index]
         {
-            get => _service.GetHeaderValue( name , index )?.ToString() ?? throw new KeyNotFoundException();
+            get => _registry.GetHeaderValue( name , index );
         }
 
 
@@ -52,17 +51,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public object SyncRoot
         {
-            get => _service;
+            get => _registry;
         }
         
         public int Count
         {
-            get => _service.Headers.Sum( x => x.Value.Count );
+            get => _registry.CountHeaders();
         }
         
         public IEnumerable<string> AllKeys
         {
-            get => _service.Headers.Keys;
+            get => _registry.GetHeaderNames();
         }
 
         public bool IsSynchronized
@@ -70,9 +69,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => false;
         }
 
-        internal RtspHeaderService Service
+        internal RtspHeaderRegistry Registry
         {
-            get => _service;
+            get => _registry;
         }
 
         
@@ -88,162 +87,82 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool ContainsKey( string name )
         {
-            return _service.ContainsHeader( name );
+            return _registry.ContainsHeader( name );
         }
 
         public void Add( string name , string value )
         {
-            // validation header
-
-            _service.AddHeader( RtspHeaderValueValidator.EnsureWellFormed( name ) , RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( value ) );
+            _registry.AddHeader( RtspHeaderValueValidator.EnsureWellFormed( name ) , RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( value ) );
         }
 
         public bool Remove( string name )
         {
-            return _service.RemoveHeader( name );
+            return _registry.RemoveHeader( name );
         }
 
         public bool RemoveAt( string name , int index )
         {
-            return _service.RemoveHeader( name , index );
+            return _registry.RemoveHeader( name , index );
         }
 
         public void Clear()
         {
-            _service.RemoveHeaders();
+            _registry.ClearHeaders();
         }
         
         public void CopyTo( Array array , int index )
         {
-            var items = _service.Headers.ToArray();
-
-            items.CopyTo( array , index );
+            _registry.CopyTo( array , index );
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new Enumerator( this );
+            return _registry.GetEnumerator();
         }
 
         public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
         {
-            return new Enumerator( this );
+            return _registry.GetEnumerator();
         }
 
         IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
         {
-            return new Enumerator( this );
+            return _registry.GetEnumerator();
         }
 
         public string GetValue( string name )
         {
-            return _service.GetHeaderValue( name )?.ToString() ?? string.Empty;
+            return _registry.GetHeaderValue( name );
         }
 
         public string GetValueAt( string name , int index )
         {
-            return _service.GetHeaderValue( name , index )?.ToString() ?? string.Empty;
+            return _registry.GetHeaderValue( name , index );
         }
 
         public IEnumerable<string> GetValues( string name )
         {
-            return _service.GetHeaderValues( name );
+            return _registry.GetHeaderValues( name );
         }
 
         public bool TryAdd( string name , string value )
         {
-            return _service.TryAddHeader( name , value );
+            return _registry.TryAddHeader( name , value );
         }
 
         public bool TryGetValue( string name , out string value )
         {
-            return _service.TryGetHeaderValue( name , out value );
+            return _registry.TryGetHeaderValue( name , out value );
         }
 
         public bool TryGetValueAt( string name , int index , out string value )
         {
-            return _service.TryGetHeaderValue( name , index , out value );
+            return _registry.TryGetHeaderValueAt( name , index , out value );
         }
 
         public bool TryGetValues( string name , out IEnumerable<string> values )
         {
-            return _service.TryGetHeaderValues( name , out values );
-        }
-
-        
-
-
-
-
-
-        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
-        {
-            private readonly IEnumerator<KeyValuePair<string,IList<object>>> _enumerator;
-            private IEnumerator<object> _valuesEnumerator;
-            private KeyValuePair<string,string> _current;
-
-
-
-
-            internal Enumerator( RtspHeaderCollection collection )
-            {
-                _enumerator = collection.Service.Headers.GetEnumerator();
-                _valuesEnumerator = null;
-                _current = default;
-            }
-
-
-
-
-            public object Current
-            {
-                get => _current;
-            }
-
-            KeyValuePair<string,string> IEnumerator<KeyValuePair<string,string>>.Current
-            {
-                get => _current ;
-            }
-
-            
-
-
-            public bool MoveNext()
-            {
-                while ( true ) 
-                {
-                    if ( _valuesEnumerator != null && _valuesEnumerator.MoveNext() )
-                    {
-                        break;
-                    }
-
-                    if ( ! _enumerator.MoveNext() )
-                    {
-                        return false;
-                    }
-
-                    _valuesEnumerator = _enumerator.Current.Value.GetEnumerator();
-                }
-
-                _current = new KeyValuePair<string,string>( _enumerator.Current.Key , _valuesEnumerator.Current?.ToString() ?? string.Empty );
-
-                return true;
-            }
-
-            public void Reset()
-            {
-                _enumerator.Reset();
-                _valuesEnumerator = null;
-                _current = default;
-            }
-
-            public void Dispose()
-            {
-                _enumerator.Dispose();
-                _valuesEnumerator?.Dispose();
-                _valuesEnumerator = null;
-                _current = default;
-            }
+            return _registry.TryGetHeaderValues( name , out values );
         }
     }
 }

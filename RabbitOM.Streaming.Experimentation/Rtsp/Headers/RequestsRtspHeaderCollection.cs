@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class RequestsRtspHeaderCollection : RtspHeaderCollection
     {        
-        private static readonly RtspHeaderServiceSettings s_settings = new RtspHeaderServiceSettings( new List<RtspHeaderParser>()
+        private static readonly RtspHeaderRegistrySettings s_settings = new RtspHeaderRegistrySettings( new List<RtspHeaderParser>()
         {
             RtspHeaderParser.NewParser<AcceptRtspHeaderValue>( RtspHeaderNames.Accept , AcceptRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<AcceptEncodingRtspHeaderValue>( RtspHeaderNames.AcceptEncoding , AcceptEncodingRtspHeaderValue.TryParse ),
@@ -43,176 +43,176 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderNames.WWWAuthenticate 
         });
         
-        public RequestsRtspHeaderCollection() : base( new RtspHeaderService( s_settings ) )
+        public RequestsRtspHeaderCollection() : base( new RtspHeaderRegistry( s_settings ) )
         {
         }
         
         public AcceptRtspHeaderValue Accept
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Accept ) as AcceptRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Accept , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Accept ) as AcceptRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Accept , value );
         }
 
         public AcceptEncodingRtspHeaderValue AcceptEncoding
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.AcceptEncoding ) as AcceptEncodingRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.AcceptEncoding , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.AcceptEncoding ) as AcceptEncodingRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.AcceptEncoding , value );
         }
         
         public AcceptLanguageRtspHeaderValue AcceptLanguage
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.AcceptLanguage ) as AcceptLanguageRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.AcceptLanguage , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.AcceptLanguage ) as AcceptLanguageRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.AcceptLanguage , value );
         }
 
         public AuthorizationRtspHeaderValue Authorization 
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Authorization ) as AuthorizationRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Authorization , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Authorization ) as AuthorizationRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Authorization , value );
         }        
 
         public BandwidthRtspHeaderValue Bandwidth
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Bandwidth ) as BandwidthRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Bandwidth , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Bandwidth ) as BandwidthRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Bandwidth , value );
         }
         
         public BlockSizeRtspHeaderValue BlockSize
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.BlockSize ) as BlockSizeRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.BlockSize , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.BlockSize ) as BlockSizeRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.BlockSize , value );
         }
         
         public CacheControlRtspHeaderValue CacheControl
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.CacheControl ) as CacheControlRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.CacheControl , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.CacheControl ) as CacheControlRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.CacheControl , value );
         }
         
         public ConferenceRtspHeaderValue Conference
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Conference ) as ConferenceRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Conference , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Conference ) as ConferenceRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Conference , value );
         }
         
         public ConnectionRtspHeaderValue Connection
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Connection ) as ConnectionRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Connection , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Connection ) as ConnectionRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Connection , value );
         }
 
         public ContentTypeRtspHeaderValue ContentType
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.ContentType ) as ContentTypeRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.ContentType , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.ContentType ) as ContentTypeRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.ContentType , value );
         }
 
         public DateTimeRtspHeaderValue Date
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Date ) as DateTimeRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Date , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Date ) as DateTimeRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Date , value );
         }
         
         public DateTimeRtspHeaderValue Expires
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Expires ) as DateTimeRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Expires , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Expires ) as DateTimeRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Expires , value );
         }
            
         public UriRtspHeaderValue From
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.From ) as UriRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.From , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.From ) as UriRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.From , value );
         }
         
         public IfMatchRtspHeaderValue IfMatch
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.IfMatch ) as IfMatchRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.IfMatch , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.IfMatch ) as IfMatchRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.IfMatch , value );
         }
         
         public DateTimeRtspHeaderValue IfModifiedSince
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.IfModifiedSince ) as DateTimeRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.IfModifiedSince , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.IfModifiedSince ) as DateTimeRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.IfModifiedSince , value );
         }  
                 
         public MaxForwardsRtspHeaderValue MaxForwards
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.MaxForwards ) as MaxForwardsRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.MaxForwards , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.MaxForwards ) as MaxForwardsRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.MaxForwards , value );
         }
         
         public PublicRtspHeaderValue Public
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Public ) as PublicRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Public , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Public ) as PublicRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Public , value );
         }
         
         public RequireRtspHeaderValue Require
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Require ) as RequireRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Require , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Require ) as RequireRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Require , value );
         }
 
         public UriRtspHeaderValue Referer
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Referer ) as UriRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Referer , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Referer ) as UriRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Referer , value );
         }
         
         public ScaleRtspHeaderValue Scale
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Scale ) as ScaleRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Scale , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Scale ) as ScaleRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Scale , value );
         }
         
         public SessionRtspHeaderValue Session
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Session ) as SessionRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Session , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Session ) as SessionRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Session , value );
         }
         
         public SpeedRtspHeaderValue Speed
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Speed ) as SpeedRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Speed , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Speed ) as SpeedRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Speed , value );
         }
 
         public TimeStampRtspHeaderValue TimeStamp
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.TimeStamp ) as TimeStampRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.TimeStamp , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.TimeStamp ) as TimeStampRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.TimeStamp , value );
         }
 
         public UriRtspHeaderValue To
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.To ) as UriRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.To , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.To ) as UriRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.To , value );
         }
         
         public TransportRtspHeaderValue Transport
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Transport ) as TransportRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Transport , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Transport ) as TransportRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Transport , value );
         }
         
         public UserAgentRtspHeaderValue UserAgent
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.UserAgent ) as UserAgentRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.UserAgent , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.UserAgent ) as UserAgentRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.UserAgent , value );
         }
         
         public ViaRtspHeaderValue Via
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Via ) as ViaRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Via , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Via ) as ViaRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Via , value );
         }
 
         public WarningRtspHeaderValue Warning
         {
-            get => Service.GetHeaderValue( RtspHeaderNames.Warning ) as WarningRtspHeaderValue;
-            set => Service.SetHeaderValue( RtspHeaderNames.Warning , value );
+            get => Registry.GetHeaderValueAs( RtspHeaderNames.Warning ) as WarningRtspHeaderValue;
+            set => Registry.SetHeaderValueAs( RtspHeaderNames.Warning , value );
         }
     }
 }
