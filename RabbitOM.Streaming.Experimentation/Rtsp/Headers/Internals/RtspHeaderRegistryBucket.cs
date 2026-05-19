@@ -1,41 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    internal sealed class RtspHeaderRegistryBucket
+    internal struct RtspHeaderRegistryBucket
     {
-        private object _valueObject = null;
+        private readonly IList<object> _values;
         
-        private readonly List<object> _values = new List<object>();
+        private object _valueObject;
 
-        
-        
-        public bool IsEmpty 
-        { 
-            get
-            {
-                return _values.Count == 0;
-            }
-        }
 
-        public IList<object> Values
+
+
+
+        public RtspHeaderRegistryBucket( IList<object> values )
         {
-            get
+            if ( values == null )
             {
-                return _values;
+                throw new ArgumentNullException( nameof( values ) );
             }
+
+            _values = values;
+            _valueObject = null;
         }
 
+
+
+
+
+        
         public object ValueObject
         {
             get
             {
+                if ( _values.Count == 0 )
+                {
+                    _valueObject = null;
+                }
+
                 return _valueObject;
             }
 
             set
             {
+                Debug.Assert( _values != null , "in net48, the default constructor is mandatory and it must not be called" );
+
                 if ( _valueObject != null )
                 {
                     _values.Remove( _valueObject );
@@ -47,6 +57,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     _values.Add( value );
                 }
             }
+        }
+
+        public IList<object> Values
+        {
+            get
+            {
+                Debug.Assert( _values != null , "in net48, the default constructor is mandatory and it must not be called" );
+                
+                return _values;
+            }
+        }
+
+        public bool IsEmpty 
+        { 
+            get
+            {
+                return _values.Count == 0;
+            }
+        }
+
+
+
+
+
+
+        public static RtspHeaderRegistryBucket NewBucket()
+        {
+            return new RtspHeaderRegistryBucket( new List<object>() );
+        }
+
+        public static RtspHeaderRegistryBucket NewBucket( object valueObject )
+        {
+            return new RtspHeaderRegistryBucket( new List<object>() ) { ValueObject = valueObject };
         }
     }
 }

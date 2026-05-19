@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public RtspHeaderRegistry( RtspHeaderRegistrySettings settings )
         {
             _settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
-
+            
             _headers = new Dictionary<string, RtspHeaderRegistryBucket>( StringComparer.OrdinalIgnoreCase );
         }
 
@@ -25,6 +25,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        public void CopyTo( Array array , int index )
+        {
+            _headers.Values.ToArray().CopyTo( array , index );
+        }
+        
         public int CountHeaders()
         {
             return _headers.Values.Sum( bucket => bucket.Values.Count );
@@ -59,7 +64,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! _headers.ContainsKey( name ) )
             {
-                _headers[ name ] = new RtspHeaderRegistryBucket();
+                _headers[ name ] = RtspHeaderRegistryBucket.NewBucket();
             }
 
             _headers[ name ].Values.Add( value ?? string.Empty );
@@ -102,11 +107,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _headers.Clear();
         }
 
-        public void CopyTo( Array array , int index )
-        {
-            _headers.Values.ToArray().CopyTo( array , index );
-        }
-        
         public IEnumerable<string> GetHeaderNames()
         {
             return _headers.Keys;
@@ -124,9 +124,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( name ) );
             }
 
-            var bucket = _headers[ name ] ?? throw new InvalidOperationException();
-
-            return bucket.Values.First().ToString() ?? throw new InvalidOperationException() ;
+            return _headers[ name ].Values.First().ToString() ?? throw new InvalidOperationException() ;
         }
         
         public string GetHeaderValue( string name , int index )
@@ -149,7 +147,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _headers[ name ].Values.Select( value => value.ToString() );
         }
 
-        public object GetHeaderValueAs( string name )
+        public object GetValue( string name )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
             {
@@ -159,22 +157,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _headers.TryGetValue( name , out var bucket ) ? bucket.ValueObject : null;
         }
         
-        public TObject GetHeaderValueAs<TObject>( string name ) where TObject : class
-        {
-            if ( string.IsNullOrWhiteSpace( name ) )
-            {
-                throw new ArgumentException( nameof( name ) );
-            }
-
-            if ( _headers.TryGetValue( name , out var bucket ) )
-            {
-                return bucket.ValueObject as TObject;
-            }
-
-            return null;
-        }
-        
-        public void SetHeaderValueAs<TObject>( string name , TObject value )
+        public void SetValue( string name , object value )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
             {
@@ -194,7 +177,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 if ( value != null )
                 {
-                    _headers[ name ] = new RtspHeaderRegistryBucket() { ValueObject = value };
+                    _headers[ name ] = RtspHeaderRegistryBucket.NewBucket( value );
                 }
             }
         }
@@ -213,7 +196,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! _headers.ContainsKey( name ) )
             {
-                _headers[ name ] = new RtspHeaderRegistryBucket();
+                _headers[ name ] = RtspHeaderRegistryBucket.NewBucket();
             }
 
             _headers[ name ].Values.Add( value ?? string.Empty );

@@ -12,17 +12,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-
-
         internal RtspHeaderCollection( RtspHeaderRegistry registry )
         {
             _registry = registry ?? throw new ArgumentNullException( nameof( registry ) );
         }
-
-
-
-
 
 
 
@@ -37,12 +30,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => _registry.GetHeaderValue( name , index );
         }
-
-
-
-
-
-
 
 
 
@@ -74,12 +61,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _registry;
         }
 
-        
-        
-
-
-
-
 
 
 
@@ -92,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string name , string value )
         {
-            _registry.AddHeader( RtspHeaderValueValidator.EnsureWellFormed( name ) , RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( value ) );
+            _registry.AddHeader( RtspHeaderValueValidator.EnsureWellFormed( name ) , RtspHeaderValueValidator.EnsureWellFormedOrEmpty( value ) );
         }
 
         public bool Remove( string name )
@@ -147,7 +128,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAdd( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormed( name ) || ! RtspHeaderValueValidator.TryEnsureWellFormedTokenOrEmpty( value ) )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormed( name ) || ! RtspHeaderValueValidator.TryEnsureWellFormedOrEmpty( value ) )
             {
                 return false;
             }
