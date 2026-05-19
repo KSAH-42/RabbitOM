@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
         TimeSpan PingInteral { get; }
 
-        TimeSpan RetryInteral { get; }
+        TimeSpan RetryInterval { get; }
         
 
 

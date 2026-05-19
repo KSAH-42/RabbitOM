@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 
         public override TimeSpan IdleTime 
         { 
-            get => _session.IsOpened ? _session.PingInteral : _session.RetryInteral;
+            get => _session.IsOpened ? _session.PingInteral : _session.RetryInterval;
         }
 
         public override void Run()

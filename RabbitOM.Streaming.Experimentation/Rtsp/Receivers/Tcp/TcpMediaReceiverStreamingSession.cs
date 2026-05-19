@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
 
         public TimeSpan PingInteral => throw new NotImplementedException();
 
-        public TimeSpan RetryInteral => throw new NotImplementedException();
+        public TimeSpan RetryInterval => throw new NotImplementedException();
 
 
 
