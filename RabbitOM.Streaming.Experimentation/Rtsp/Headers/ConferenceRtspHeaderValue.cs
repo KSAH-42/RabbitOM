@@ -296,7 +296,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ! string.IsNullOrWhiteSpace( Access ) )
             {
-                builder.AppendFormat( "access={0}; " , Session);
+                builder.AppendFormat( "access={0}; " , Access);
             }
 
             if ( TTL.HasValue )

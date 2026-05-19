@@ -147,6 +147,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAdd( string name , string value )
         {
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormed( name ) || ! RtspHeaderValueValidator.TryEnsureWellFormedTokenOrEmpty( value ) )
+            {
+                return false;
+            }
+
             return _registry.TryAddHeader( name , value );
         }
 

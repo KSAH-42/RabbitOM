@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string ContentRange = "Content-Range";
         public const string ContentType = "Content-Type";
         public const string CSeq = "CSeq";
-        public const string Date = "Time";
+        public const string Date = "Date";
         public const string Expires = "Expires";
         public const string From = "From";
         public const string IfMatch = "If-Match";
