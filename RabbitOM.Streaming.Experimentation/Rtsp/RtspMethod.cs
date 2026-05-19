@@ -6,15 +6,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     
     public sealed class RtspMethod
     {
+        private static readonly Func<char,bool> CharValidator = value => 
+        {
+            if ( value == ' ' )
+            {
+                return false;
+            }
+
+            return char.IsLetter( value ) && char.IsUpper( value )
+                || char.IsDigit( value )
+                || value == '_' 
+                || value == '-' 
+                || value == '.'
+                ;
+        };
+
+        
+
+
         private readonly string _procedureName;
 
 
 
 
 
-        private RtspMethod( string procedureName )
+        public RtspMethod( string procedureName )
         {
-            _procedureName = RtspHeaderValueValidator.EnsureNoSpaces( procedureName );
+            RtspHeaderValueValidator.EnsureWellFormedTokenAndAll( procedureName , CharValidator );
+           
+            _procedureName = procedureName;
         }
         
 
@@ -56,31 +76,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-        public static RtspMethod NewMethod( string procedureName )
-        {
-            return new RtspMethod( RtspHeaderValueValidator.EnsureWellFormedTokenIfAll( procedureName , element =>
-            {
-                return char.IsLetter( element ) && char.IsUpper( element )
-                    || char.IsDigit( element )
-                    || element == '_' 
-                    || element == '-' 
-                    || element == '.'
-                    ;
-            }) );
-        }
-
         public static bool TryParse( string input , out RtspMethod result )
         {
-            result = RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( input , element =>
-            {
-                return char.IsLetter( element ) && char.IsUpper( element )
-                    || char.IsDigit( element )
-                    || element == '_' 
-                    || element == '-' 
-                    || element == '.'
-                    ;
-            }) ? new RtspMethod( input ) : null ;
+            result = RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( input , CharValidator ) ? new RtspMethod( input ) : null ;
 
             return result != null;
         }
