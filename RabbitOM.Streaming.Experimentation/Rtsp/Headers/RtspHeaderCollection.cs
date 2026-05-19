@@ -73,7 +73,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string name , string value )
         {
-            _registry.AddHeader( RtspHeaderValueValidator.EnsureWellFormed( name ) , RtspHeaderValueValidator.EnsureWellFormedOrEmpty( value ) );
+            RtspHeaderValueValidator.EnsureWellFormedToken( name );
+            RtspHeaderValueValidator.EnsureWellFormedOrEmpty( value );
+
+            _registry.AddHeader( name , value );
         }
 
         public bool Remove( string name )
@@ -101,12 +104,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _registry.GetEnumerator();
         }
 
-        public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
+        IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
         {
             return _registry.GetEnumerator();
         }
 
-        IEnumerator<KeyValuePair<string , string>> IEnumerable<KeyValuePair<string , string>>.GetEnumerator()
+        public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
         {
             return _registry.GetEnumerator();
         }

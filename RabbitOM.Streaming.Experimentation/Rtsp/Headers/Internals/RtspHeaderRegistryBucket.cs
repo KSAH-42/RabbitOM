@@ -29,6 +29,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+        public static RtspHeaderRegistryBucket NewBucket()
+        {
+            return new RtspHeaderRegistryBucket( new List<object>() );
+        }
+
+        public static RtspHeaderRegistryBucket NewBucket( object valueObject )
+        {
+            return new RtspHeaderRegistryBucket( new List<object>() ) { ValueObject = valueObject };
+        }
+
+
+
+
+
+
+
         
         public object ValueObject
         {
@@ -44,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             set
             {
-                Debug.Assert( _values != null , "in net48, the default constructor is mandatory and it must not be called" );
+                Debug.Assert( _values != null , "it seems that the default constructor has been called, and not allowed in this case" );
 
                 if ( _valueObject != null )
                 {
@@ -63,7 +80,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get
             {
-                Debug.Assert( _values != null , "in net48, the default constructor is mandatory and it must not be called" );
+                Debug.Assert( _values != null , "it seems that the default constructor has been called, and not allowed in this case" );
                 
                 return _values;
             }
@@ -75,21 +92,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 return _values.Count == 0;
             }
-        }
-
-
-
-
-
-
-        public static RtspHeaderRegistryBucket NewBucket()
-        {
-            return new RtspHeaderRegistryBucket( new List<object>() );
-        }
-
-        public static RtspHeaderRegistryBucket NewBucket( object valueObject )
-        {
-            return new RtspHeaderRegistryBucket( new List<object>() ) { ValueObject = valueObject };
         }
     }
 }

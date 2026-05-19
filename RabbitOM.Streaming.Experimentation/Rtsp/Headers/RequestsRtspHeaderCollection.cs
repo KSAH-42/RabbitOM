@@ -23,7 +23,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderParser.NewParser<IfMatchRtspHeaderValue>( RtspHeaderNames.IfMatch, IfMatchRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.IfModifiedSince, DateTimeRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<MaxForwardsRtspHeaderValue>( RtspHeaderNames.MaxForwards, MaxForwardsRtspHeaderValue.TryParse ),
-            RtspHeaderParser.NewParser<PublicRtspHeaderValue>( RtspHeaderNames.Public, PublicRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<RequireRtspHeaderValue>( RtspHeaderNames.Require, RequireRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<UriRtspHeaderValue>( RtspHeaderNames.Referer, UriRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<ScaleRtspHeaderValue>( RtspHeaderNames.Scale, ScaleRtspHeaderValue.TryParse ),
@@ -38,9 +37,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         } , 
         new [] 
         { 
-            RtspHeaderNames.CSeq , 
-            RtspHeaderNames.ContentLength , 
-            RtspHeaderNames.WWWAuthenticate 
+            RtspHeaderNames.ContentLength,
+            RtspHeaderNames.CSeq,
+            RtspHeaderNames.Public,
+            RtspHeaderNames.RtpInfo,
+            RtspHeaderNames.Server,
+            RtspHeaderNames.WWWAuthenticate,
         });
         
         public RequestsRtspHeaderCollection() : base( new RtspHeaderRegistry( s_settings ) )
@@ -141,12 +143,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => Registry.GetValue( RtspHeaderNames.MaxForwards ) as MaxForwardsRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.MaxForwards , value );
-        }
-        
-        public PublicRtspHeaderValue Public
-        {
-            get => Registry.GetValue( RtspHeaderNames.Public ) as PublicRtspHeaderValue;
-            set => Registry.SetValue( RtspHeaderNames.Public , value );
         }
         
         public RequireRtspHeaderValue Require
