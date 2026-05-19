@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-
     public interface IClient
     {
         bool IsConnected { get; }
@@ -11,7 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         TimeSpan SendTimeout { get; set; }
         Uri BaseAddress { get; set; }
         Version Version { get; set; }
-        RequestsRtspHeaderCollection Headers { get; }
 
     
 
