@@ -1,15 +1,15 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public sealed class InterleavedStreamElementReader : IStreamElementReader
+    public sealed class RtspInterleavedDataReader : IStreamReader
     {
         private readonly Stream _stream;
 
-        public InterleavedStreamElementReader( Stream stream )
+        public RtspInterleavedDataReader( Stream stream )
         {
-            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );;
+            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
         public IStreamElement ReadElement()
@@ -35,7 +35,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
                 return null;
             }
 
-            var buffer = new byte[ sizeMsb << 8  + sizeLsb ];
+            var size = sizeMsb << 8  + sizeLsb;
+
+            if ( size <= 0 )
+            {
+                return null;
+            }
+
+            var buffer = new byte[ size ];
             var offset = 0;
                 
             while ( offset < buffer.Length )
@@ -50,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
                 offset += bytesRead;
             }
 
-            return new InterleavedStreamElement() {  ChannelNumber = channel , Length = buffer.Length , Buffer = buffer };
+            return new RtspInterleavedData() { Channel = channel , Buffer = buffer };
         }
     }
 }

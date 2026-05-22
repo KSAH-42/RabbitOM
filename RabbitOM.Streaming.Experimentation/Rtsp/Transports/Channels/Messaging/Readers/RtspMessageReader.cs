@@ -1,20 +1,28 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public sealed class MessageStreamElementReader : IStreamElementReader
+    public sealed class RtspMessageReader : IStreamReader
     {
         private readonly Stream _stream;
-       
-        public MessageStreamElementReader( Stream stream )
+
+        public RtspMessageReader( Stream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
         public IStreamElement ReadElement()
         {
-            var message = new MessageStreamElement();
+            var message = new RtspMessage()
+            {
+                StartLine = _stream.ReadLine()
+            };
+
+            if ( message.StartLine == null )
+            {
+                return null;
+            }
 
             while ( true )
             {
@@ -30,10 +38,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
                     break;
                 }
 
-                message.Metadata.Add( line );
+                if ( RtspMessageHeader.TryParse( line , out var header ) )
+                {
+                    message.Headers.Add( header );
+                }
             }
 
-            var contentLength = MessageStreamElement.GetContentLength( message );
+            var contentLength = RtspMessage.GetContentLength( message );
 
             if ( contentLength > 0 )
             {

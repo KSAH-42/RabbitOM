@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public static class StreamExtensions
+    internal static class StreamExtensions
     {
         public static string ReadLine( this Stream stream )
         {
-            var sb = new StringBuilder();
+            Debug.Assert( stream != null );
 
+            var sb = new StringBuilder();
+            
             while ( true )
             {
                 var byteRead = stream.ReadByte();

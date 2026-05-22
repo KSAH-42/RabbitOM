@@ -1,15 +1,18 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public sealed class StreamElementReader : IStreamElementReader
+    public sealed class RtspStreamReader : IStreamReader
     {
         private readonly Stream _stream;
-        private readonly IStreamElementReader _messageReader;
-        private readonly IStreamElementReader _interleavedReader;
 
-        public StreamElementReader( Stream stream , IStreamElementReader messageReader , IStreamElementReader interleavedReader )
+        private readonly IStreamReader _messageReader;
+
+        private readonly IStreamReader _interleavedReader;
+
+
+        public RtspStreamReader( Stream stream , IStreamReader messageReader , IStreamReader interleavedReader )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
 
@@ -17,6 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
 
             _interleavedReader = interleavedReader ?? throw new ArgumentNullException( nameof( interleavedReader ) );
         } 
+
 
         public IStreamElement ReadElement()
         {
@@ -35,5 +39,4 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Models
             return _messageReader.ReadElement();
         }
     }
-
 }
