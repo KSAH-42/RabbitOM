@@ -3,26 +3,28 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public sealed class RtspMessageReader : IStreamReader
+    internal sealed class RtspMessageReader
     {
         private readonly Stream _stream;
-
+        
         public RtspMessageReader( Stream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-        public IStreamElement ReadElement()
+        public RtspMessage ReadElement( char prefixValue )
         {
-            var message = new RtspMessage()
-            {
-                StartLine = _stream.ReadLine()
-            };
+            var startLine = _stream.ReadLine();
 
-            if ( message.StartLine == null )
+            if ( startLine == null )
             {
                 return null;
             }
+
+            var message = new RtspMessage()
+            {
+                StartLine = $"{prefixValue }{startLine}"
+            };
 
             while ( true )
             {

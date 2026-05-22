@@ -7,18 +7,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
     {
         private readonly Stream _stream;
 
-        private readonly IStreamReader _messageReader;
+        private readonly RtspMessageReader _messageReader;
 
-        private readonly IStreamReader _interleavedReader;
+        private readonly RtspInterleavedDataReader _interleavedReader;
 
 
-        public RtspStreamReader( Stream stream , IStreamReader messageReader , IStreamReader interleavedReader )
+        public RtspStreamReader( Stream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
 
-            _messageReader = messageReader ?? throw new ArgumentNullException( nameof( messageReader ) );
+            _messageReader = new RtspMessageReader( stream );
 
-            _interleavedReader = interleavedReader ?? throw new ArgumentNullException( nameof( interleavedReader ) );
+            _interleavedReader = new RtspInterleavedDataReader( stream );
         } 
 
 
@@ -30,13 +30,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
             {
                 return null;
             }
-
             else if ( character == '$' )
             {
                 return _interleavedReader.ReadElement();
             }
             
-            return _messageReader.ReadElement();
+            return _messageReader.ReadElement( (char) character );
         }
     }
 }
