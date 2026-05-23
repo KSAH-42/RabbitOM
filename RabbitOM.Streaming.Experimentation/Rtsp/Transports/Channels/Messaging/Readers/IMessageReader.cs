@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public interface IStreamReader
+    public interface IMessageReader
     {
-        IStreamElement ReadElement();
+        RtspMessage ReadMessage();
     }
 }

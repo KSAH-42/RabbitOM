@@ -2,14 +2,12 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging
 {
-    public sealed class RtspMessageHeader : IStreamElement
+    public sealed class RtspHeader
     {
         public string Name { get; set; }
-
         public string Value { get; set; }
 
-
-        public static bool TryParse( string input , out RtspMessageHeader result )
+        public static bool TryParse( string input , out RtspHeader result )
         {
             throw new NotImplementedException();
         }

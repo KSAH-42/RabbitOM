@@ -1,18 +1,19 @@
 ﻿using System;
+using System.CodeDom;
 using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    internal sealed class RtspInterleavedDataReader
+    internal sealed class RtspInterleaveMessageReader
     {
         private readonly Stream _stream;
-
-        public RtspInterleavedDataReader( Stream stream )
+        
+        public RtspInterleaveMessageReader( Stream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-        public RtspInterleavedData ReadElement()
+        public RtspInterleaveMessage ReadMessage()
         {
             var channel = _stream.ReadByte();
 
@@ -57,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
                 offset += bytesRead;
             }
 
-            return new RtspInterleavedData() { Channel = channel , Buffer = buffer };
+            return new RtspInterleaveMessage() { Channel = channel , Buffer = buffer };
         }
     }
 }
