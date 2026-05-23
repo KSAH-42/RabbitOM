@@ -217,9 +217,7 @@
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageHeader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspRequestMessageEventArgs.cs" />
-    <Compile Include="Rtsp\Transports\Channels\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessageEventArgs.cs" />
     <Compile Include="Rtsp\Transports\Channels\TcpClientChannel.cs" />
     <Compile Include="Rtsp\Transports\IAllocator.cs" />

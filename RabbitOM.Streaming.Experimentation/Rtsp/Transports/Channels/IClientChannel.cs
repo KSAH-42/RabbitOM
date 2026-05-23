@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging;
+
     public interface IClientChannel : IDisposable
     {        
         event EventHandler Opened;
@@ -26,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         void Abort();
 
-        void Send( in Packet packet );
+        void Send( RtspInterleaveMessage interleavedData );
 
         RtspResponseMessage Send( RtspRequestMessage request );
     }

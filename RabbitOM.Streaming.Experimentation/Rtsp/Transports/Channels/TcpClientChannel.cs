@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging;
+
     public sealed class TcpClientChannel : RtspClientChannel
     {
         public override EndPoint EndPoint 
@@ -21,9 +23,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public override void Open()
         {
-            // _socket = new Socket( ... );
-            // _socket.Connect(); :!
-            // _requestManager = new ClientRequestManager( this.Endpoint.IsSecured ? new SSLTcpBinaryChannel( _socket ) : new TcpBinaryChannel( _socket ) );
             throw new NotImplementedException();
         }
 
@@ -37,15 +36,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             throw new NotImplementedException();
         }
 
-        public override RtspResponseMessage Send( RtspRequestMessage request )
+        public override void Send( RtspInterleaveMessage interleavedData )
         {
-            // return _requestManager.SendRequest( request );
             throw new NotImplementedException();
         }
 
-        public override void Send( in Packet packet )
+        public override RtspResponseMessage Send( RtspRequestMessage request )
         {
-            // _requestManager.SendPacket( packet );
             throw new NotImplementedException();
         }
     }

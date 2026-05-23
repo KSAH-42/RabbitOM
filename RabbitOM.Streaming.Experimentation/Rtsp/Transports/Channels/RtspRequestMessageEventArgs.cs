@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging;
+
     public sealed class RtspRequestMessageEventArgs : EventArgs
     {        
         public RtspRequestMessageEventArgs( RtspRequestMessage request )
