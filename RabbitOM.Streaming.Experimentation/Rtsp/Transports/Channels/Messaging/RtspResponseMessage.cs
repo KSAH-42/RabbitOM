@@ -11,11 +11,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging
         public string Reason { get; set; }
         public List<RtspHeader> Headers { get; set; }
         public byte[] Body { get; set; }
-
-
-        internal static bool IsResponseMessage( string startLine )
-        {
-            throw new NotImplementedException();
-        }
     }
 }

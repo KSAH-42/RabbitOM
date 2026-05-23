@@ -12,6 +12,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
+        public bool CanReadMessage( string startLine )
+        {
+            throw new NotImplementedException();
+        }
+
         public RtspRequestMessage ReadMessage( string startLine )
         {
             throw new NotImplementedException();            

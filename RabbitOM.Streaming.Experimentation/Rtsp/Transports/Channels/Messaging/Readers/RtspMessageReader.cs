@@ -6,15 +6,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly Stream _stream;
-
         private readonly RtspInterleaveMessageReader _interleaveMessageReader;
-
         private readonly RtspRequestMessageReader _requestMessageReader;
-
         private readonly RtspResponseMessageReader _responseMessageReader;
         
-
-
 
         public RtspMessageReader( Stream stream )
         {
@@ -30,7 +25,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
         }
 
 
-
         public RtspMessage ReadMessage()
         {
             var prefix = _stream.ReadByte();
@@ -40,23 +34,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
                 return null;
             }
 
-            if ( RtspInterleaveMessage.IsInterleaveMessage( (char) prefix ) )
+            if ( prefix == '$' )
             {
                 return _interleaveMessageReader.ReadMessage();
             }
 
-            var startLine = _stream.ReadLine();
-
-            if ( RtspResponseMessage.IsResponseMessage( startLine ) )
-            {
-                return _responseMessageReader.ReadMessage( startLine );
-            }
-
-            if ( RtspRequestMessage.IsRequestMessage( startLine ) )
+            var startLine = $"{(char)prefix}{_stream.ReadLine()}";
+            
+            if ( _requestMessageReader.CanReadMessage( startLine ) )
             {
                 return _requestMessageReader.ReadMessage( startLine );
             }
 
+            if ( _responseMessageReader.CanReadMessage( startLine ) )
+            {
+                return _responseMessageReader.ReadMessage( startLine );
+            }
+ 
             throw new InvalidDataException();
         }
     }

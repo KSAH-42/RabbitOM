@@ -6,10 +6,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging
     {
         public int Channel { get; set; }
         public byte[] Buffer { get; set; }
-
-        public static bool IsInterleaveMessage( char value )
-        {
-            return value == '$';
-        }
     }
 }
