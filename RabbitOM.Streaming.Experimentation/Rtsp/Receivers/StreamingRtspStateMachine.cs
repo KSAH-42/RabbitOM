@@ -22,6 +22,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
             get => _session.IsOpened ? _session.PingInteral : _session.RetryInterval;
         }
 
+        // a real state machine should use state
+        // combine with a kind of switch cases and invoke method with status updating
+        // and recall again and again
+        // from the rfc any rtsp clients must use a state machine
+        // here we use a kind of state of machine 
+        // session state are expose as boolean not enum 
+        // and the data type has a strongly a impact of how an algorithm 
+        // should be implemented
+        // the idea is you right the state machine has you want, instead
+        // of dealing the enum states, you must deal with a contract
+
         public override void Run()
         {
             if ( _session.IsOpened )

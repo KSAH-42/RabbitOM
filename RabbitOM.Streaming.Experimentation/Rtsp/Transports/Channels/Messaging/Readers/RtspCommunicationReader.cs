@@ -3,11 +3,11 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public sealed class RtspCommunicationReader : IMessageReader
+    internal sealed class RtspCommunicationReader : IMessageReader
     {
-        private readonly Stream _stream;
+        private readonly RtspStream _stream;
         
-        public RtspCommunicationReader( Stream stream )
+        public RtspCommunicationReader( RtspStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }

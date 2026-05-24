@@ -3,7 +3,7 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    public sealed class RtspInterleaveReader : IMessageReader
+    internal sealed class RtspInterleaveReader : IMessageReader
     {
         private readonly Stream _stream;
         
@@ -14,6 +14,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
 
         public RtspMessage ReadMessage()
         {
+            var magicByte = _stream.ReadByte();
+
+            if ( magicByte != '$' )
+            {
+                return null;
+            }
+
             var channel = _stream.ReadByte();
 
             if ( channel < 0 )

@@ -159,6 +159,7 @@
     <Compile Include="Rtsp\Headers\ViaRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\IAllocator.cs" />
     <Compile Include="Rtsp\IClient.cs" />
     <Compile Include="Rtsp\IHandler.cs" />
     <Compile Include="Rtsp\ILogger.cs" />
@@ -219,8 +220,9 @@
     <Compile Include="Rtsp\Transports\Channels\RtspRequestMessageEventArgs.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessageEventArgs.cs" />
     <Compile Include="Rtsp\Transports\Channels\TcpClientChannel.cs" />
-    <Compile Include="Rtsp\Transports\IAllocator.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
+    <Compile Include="Rtsp\Transports\NetworkRtspStream.cs" />
+    <Compile Include="Rtsp\Transports\RtspStream.cs" />
     <Compile Include="Rtsp\Transports\SecureTcpTransport.cs" />
     <Compile Include="Rtsp\Transports\TcpTransport.cs" />
   </ItemGroup>

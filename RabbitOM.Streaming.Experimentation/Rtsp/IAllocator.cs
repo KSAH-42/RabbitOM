@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
+namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public interface IAllocator : IDisposable
     {
