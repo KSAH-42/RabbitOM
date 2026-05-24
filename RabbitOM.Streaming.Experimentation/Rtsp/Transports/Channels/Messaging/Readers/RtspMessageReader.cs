@@ -38,6 +38,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
             // not nesserary the interleaved reader
             // used IXXXXXXXXXXXXX with a peek Message instead of using a stream ? 
             // adding a IMessageStream with buffering caps ???
+            // for solving Peek() method or seeking, that can cause issue for
+            // others reader that need to seek backwards
             // avoid solid interface segration
             // avoid passing args
             // avoid using PipeReader class => adding nuget package ....
