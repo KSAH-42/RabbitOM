@@ -205,10 +205,9 @@
     <Compile Include="Rtsp\Transports\Channels\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\IClientChannelFactory.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\IMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspInterleaveMessageReader.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspCommunicationReader.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspInterleaveReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspRequestMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspResponseMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\StreamExtensions.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspHeader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspInterleaveMessage.cs" />

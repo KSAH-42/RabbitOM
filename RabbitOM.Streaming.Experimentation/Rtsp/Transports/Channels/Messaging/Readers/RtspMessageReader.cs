@@ -6,22 +6,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly Stream _stream;
-        private readonly RtspInterleaveMessageReader _interleaveMessageReader;
-        private readonly RtspRequestMessageReader _requestMessageReader;
-        private readonly RtspResponseMessageReader _responseMessageReader;
-        
+        private readonly IMessageReader _communicationReader;
+        private readonly IMessageReader _interleavedReader;        
 
-        public RtspMessageReader( Stream stream )
+
+        public RtspMessageReader( Stream stream , IMessageReader communicationReader , IMessageReader interleaveReader )
         {
-            if ( stream == null )
-            {
-                throw new ArgumentNullException( nameof( stream ) );
-            }
-
-            _stream = stream;
-            _interleaveMessageReader = new RtspInterleaveMessageReader( _stream );
-            _requestMessageReader = new RtspRequestMessageReader( _stream );
-            _responseMessageReader = new RtspResponseMessageReader( _stream );
+            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
+            _communicationReader = communicationReader ?? throw new ArgumentNullException( nameof( communicationReader ) );
+            _interleavedReader = interleaveReader ?? throw new ArgumentNullException( nameof( interleaveReader ) );
         }
 
 
@@ -36,22 +29,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
 
             if ( prefix == '$' )
             {
-                return _interleaveMessageReader.ReadMessage();
+                return _interleavedReader.ReadMessage();
             }
-
-            var startLine = $"{(char)prefix}{_stream.ReadLine()}";
             
-            if ( _requestMessageReader.CanReadMessage( startLine ) )
-            {
-                return _requestMessageReader.ReadMessage( startLine );
-            }
-
-            if ( _responseMessageReader.CanReadMessage( startLine ) )
-            {
-                return _responseMessageReader.ReadMessage( startLine );
-            }
- 
-            throw new InvalidDataException();
+            // stream must support seeking or peek method
+            // do we need to use a stream or use interface instead ?
+            // the communication reader should be able to go back and
+            // not nesserary the interleaved reader
+            // used IXXXXXXXXXXXXX with a peek Message instead of using a stream ? 
+            // adding a IMessageStream with buffering caps ???
+            // avoid solid interface segration
+            // avoid passing args
+            // avoid using PipeReader class => adding nuget package ....
+            // a custom class inject can fix the problem
+            // but find a better approach
+            
+            return _communicationReader.ReadMessage();
         }
     }
 }

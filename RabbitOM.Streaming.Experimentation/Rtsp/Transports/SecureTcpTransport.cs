@@ -17,8 +17,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _socket = socket ?? throw new ArgumentNullException();
             _stream = new SslStream( new NetworkStream( socket ) );
         }
-
-        
         
         
 
@@ -27,37 +25,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             get => throw new NotImplementedException();
         }
 
-        public bool CanWrite
-        {
-            get => throw new NotImplementedException();
-        }
-
-        public bool CanReceive
-        {
-            get => throw new NotImplementedException();
-        }
 
 
-
-
-
-
-        public int WriteBytes( byte[] buffer )
+        public int Send( byte[] buffer , int offset , int count )
         {
             throw new NotImplementedException();
         }
 
-        public int WriteBytes( byte[] buffer , int offset , int count )
-        {
-            throw new NotImplementedException();
-        }
-
-        public int ReceiveBytes( byte[] buffer )
-        {
-            throw new NotImplementedException();
-        }
-
-        public int ReceiveBytes( byte[] buffer , int offset , int count )
+        public int Receive( byte[] buffer , int offset , int count )
         {
             throw new NotImplementedException();
         }

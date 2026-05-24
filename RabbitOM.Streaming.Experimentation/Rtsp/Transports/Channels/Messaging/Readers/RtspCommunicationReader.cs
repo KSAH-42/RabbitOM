@@ -3,21 +3,16 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    internal sealed class RtspRequestMessageReader
+    public sealed class RtspCommunicationReader : IMessageReader
     {
         private readonly Stream _stream;
         
-        public RtspRequestMessageReader( Stream stream )
+        public RtspCommunicationReader( Stream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-        public bool CanReadMessage( string startLine )
-        {
-            throw new NotImplementedException();
-        }
-
-        public RtspRequestMessage ReadMessage( string startLine )
+        public RtspMessage ReadMessage()
         {
             throw new NotImplementedException();            
         }

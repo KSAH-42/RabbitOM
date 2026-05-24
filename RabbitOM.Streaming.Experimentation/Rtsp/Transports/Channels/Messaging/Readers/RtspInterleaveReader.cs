@@ -1,19 +1,18 @@
 ﻿using System;
-using System.CodeDom;
 using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    internal sealed class RtspInterleaveMessageReader
+    public sealed class RtspInterleaveReader : IMessageReader
     {
         private readonly Stream _stream;
         
-        public RtspInterleaveMessageReader( Stream stream )
+        public RtspInterleaveReader( Stream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-        public RtspInterleaveMessage ReadMessage()
+        public RtspMessage ReadMessage()
         {
             var channel = _stream.ReadByte();
 

@@ -8,6 +8,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     public sealed class RtspClientResponse 
     {
         public RtspStatusCode Status { get; }
+
+        public string Reason { get; }
         
         public ResponsesRtspHeaderCollection Headers { get; }
         

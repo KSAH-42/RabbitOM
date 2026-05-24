@@ -6,19 +6,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     {
         bool IsOpened { get; }
 
-        bool CanWrite { get; }
+        int Send( byte[] buffer , int offset , int count );
 
-        bool CanReceive { get; }
-
-
-
-        int WriteBytes( byte[] buffer );
-
-        int WriteBytes( byte[] buffer , int offset , int count );
-
-        int ReceiveBytes( byte[] buffer );
-
-        int ReceiveBytes( byte[] buffer , int offset , int count );
+        int Receive( byte[] buffer , int offset , int count );
 
         void Close();
     }

@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging
         public string Uri { get; set; }
         public string Protocol { get; set; }
         public string Version { get; set; }
-        public List<RtspHeader> Headers { get; set; }
+        public List<RtspHeader> Headers { get; } = new List<RtspHeader>();
         public byte[] Body { get; set; }
     }
 }
