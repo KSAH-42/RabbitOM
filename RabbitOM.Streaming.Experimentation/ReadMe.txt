@@ -1,4 +1,6 @@
 // TODO: adding compliances tests
+// TODO: think is some hidden header could be exposed as public in the public
+// RequestRtspHeaderValueCollection and for ResponseRtspHeaderValueCollection
 
 SOLID as: 
   String as comment, forget single responsabilty, add feature on your washing machine for creating your coffee
