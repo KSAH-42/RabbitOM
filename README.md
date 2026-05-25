@@ -323,13 +323,13 @@ public sealed class RtspClientTemporyTest
             ? new SetupUnicastUdpRtspContentBuilder()  { Port = 123 }
             : new SetupInterleavedRtspContentBuilder();
             
-        using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildContent() );
+        using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildRequest() );
             
         var sessionHeader = SessionRtspHeader.Parse( setupResponse.Body.ReadAsString() );
 
         var playBuilder = new PlayRtspContentBuilder() { SessionId = sessionHeader.Id };
 
-        using var playResponse = client.Play( playBuilder.BuildContent() );
+        using var playResponse = client.Play( playBuilder.BuildRequest() );
 
         playResponse.EnsureSuccess();
 
@@ -340,7 +340,7 @@ public sealed class RtspClientTemporyTest
 
         var tearDownBuilder = new TearDownRtspContentBuilder() { SessionId = sessionHeader.Id };
             
-        client.TearDown( tearDownBuilder.BuildContent() );
+        client.TearDown( tearDownBuilder.BuildRequest() );
     }
 }
 
