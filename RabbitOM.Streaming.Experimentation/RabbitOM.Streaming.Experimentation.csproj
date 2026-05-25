@@ -209,8 +209,7 @@
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\IMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspInterleaveMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspRequestMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspResponseMessageReader.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspRequestResponseMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspInterleaveMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspMessage.cs" />

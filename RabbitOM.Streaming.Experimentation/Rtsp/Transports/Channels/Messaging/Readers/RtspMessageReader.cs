@@ -1,13 +1,11 @@
 ﻿using System;
-using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly IStream _stream;
-        private readonly RtspRequestMessageReader _requestReader;
-        private readonly RtspResponseMessageReader _responseReader;
+        private readonly RtspRequestResponseMessageReader _requestResponseReader;
         private readonly RtspInterleaveMessageReader _interleavedReader;        
 
 
@@ -18,10 +16,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
 
         public RtspMessageReader( IStream stream )
         {
-            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
-         
-            _requestReader = new RtspRequestMessageReader( stream );
-            _responseReader = new RtspResponseMessageReader( stream );
+            if ( _stream == null )
+            {
+                throw new ArgumentNullException( nameof( stream ) );
+            }
+
+            _stream = stream;
+            _requestResponseReader = new RtspRequestResponseMessageReader( stream );
             _interleavedReader = new RtspInterleaveMessageReader( stream );
         }
 
@@ -42,24 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
                 return _interleavedReader.ReadMessage();
             }
 
-            var startLine = _stream.ReadLine();
-
-            if ( startLine != null )
-            {
-                if ( _responseReader.CanReadMessage( startLine ) )
-                {
-                    return _responseReader.ReadMessage( startLine );
-                }
-
-                if ( _requestReader.CanReadMessage( startLine ) )
-                {
-                    return _requestReader.ReadMessage( startLine );
-                }
-
-                throw new InvalidDataException();
-            }
-            
-            return null;
+            return _requestResponseReader.ReadMessage( _stream.ReadLine() );
         }
     }
 }
