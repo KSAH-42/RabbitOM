@@ -1,12 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    
+
     public sealed class RtspMethod
     {
-        private static readonly Func<char,bool> CharValidator = value => 
+        private static readonly Lazy<IReadOnlyDictionary<string,RtspMethod>> s_knowMethods = new Lazy<IReadOnlyDictionary<string, RtspMethod>>( () =>
+        {
+            return typeof( RtspMethod )
+                .GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public )
+                .Select( property => property.GetValue( null ) as RtspMethod )
+                .Where( method => method != null )
+                .ToDictionary( method => method.ProdecureName )
+                ;
+        });
+
+        private static readonly Func<char,bool> s_charValidator = value => 
         {
             if ( value == ' ' )
             {
@@ -21,24 +33,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 ;
         };
 
-        
+
 
 
         private readonly string _procedureName;
 
 
 
-
-
         public RtspMethod( string procedureName )
         {
-            RtspHeaderValueValidator.EnsureWellFormedTokenAndAll( procedureName , CharValidator );
+            RtspHeaderValueValidator.EnsureWellFormedTokenAndAll( procedureName , s_charValidator );
            
             _procedureName = procedureName;
         }
         
-
-
 
 
         public string ProdecureName
@@ -75,16 +83,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
         public static bool TryParse( string input , out RtspMethod result )
         {
-            result = RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( input , CharValidator ) ? new RtspMethod( input ) : null ;
+            result = null;
+
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( input , s_charValidator ) )
+            {
+                return false;
+            }
+
+            if ( ! s_knowMethods.Value.TryGetValue( input , out result ) )
+            {
+                result = new RtspMethod( input );
+            }
 
             return result != null;
         }
-
-
-
 
 
 

@@ -9,31 +9,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
         private readonly RtspInterleaveMessageReader _interleavedReader;        
 
 
-
-
-        // so we don't use a pipereader class, instead a special stream
-        // with some custom read optimizations and additional methods
-
         public RtspMessageReader( IStream stream )
         {
-            if ( _stream == null )
-            {
-                throw new ArgumentNullException( nameof( stream ) );
-            }
-
-            _stream = stream;
+            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
             _requestResponseReader = new RtspRequestResponseMessageReader( stream );
             _interleavedReader = new RtspInterleaveMessageReader( stream );
         }
-
-
 
 
         public RtspMessage ReadMessage()
         {
             var prefix = _stream.PeekByte();
 
-            if ( prefix <= 0 )
+            if ( prefix > 0 )
             {
                 return null;
             }
@@ -43,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 return _interleavedReader.ReadMessage();
             }
 
-            return _requestResponseReader.ReadMessage( _stream.ReadLine() );
+            return _requestResponseReader.ReadMessage();
         }
     }
 }
