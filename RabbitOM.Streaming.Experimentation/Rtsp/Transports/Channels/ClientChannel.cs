@@ -12,10 +12,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public event EventHandler Aborted;
 
-        public event EventHandler<RtspRequestMessageEventArgs> RequestSended;
+        public event EventHandler<RtspMessageEventArgs> MessageSended;
 
-        public event EventHandler<RtspResponseMessageEventArgs> ResponseReceived;
-
+        public event EventHandler<RtspMessageEventArgs> MessageReceived;
 
 
 
@@ -84,14 +83,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             Aborted?.TryInvoke( this , e );
         }
 
-        protected virtual void OnRequestSended( RtspRequestMessageEventArgs e )
+        protected virtual void OnMessageSended( RtspMessageEventArgs e )
         {
-            RequestSended?.TryInvoke( this , e );
+            MessageSended?.TryInvoke( this , e );
         }
 
-        protected virtual void OnResponseReceived( RtspResponseMessageEventArgs e )
+        protected virtual void OnMessageReceived( RtspMessageEventArgs e )
         {
-            ResponseReceived?.TryInvoke( this , e );
+            MessageReceived?.TryInvoke( this , e );
         }
     }
 }

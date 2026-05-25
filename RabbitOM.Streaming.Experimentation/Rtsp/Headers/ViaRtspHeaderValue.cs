@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class ViaRtspHeaderValue
     { 
-        public ProxyInfoRtspHeaderValueCollection Proxies { get; } = new ProxyInfoRtspHeaderValueCollection();
+        public ProxyRtspHeaderValueCollection Proxies { get; } = new ProxyRtspHeaderValueCollection();
         
         public override string ToString()
         {
@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( ProxyInfoRtspHeaderValue.TryParse( token , out var proxy ) )
+                    if ( ProxyRtspHeaderValue.TryParse( token , out var proxy ) )
                     {
                         header.Proxies.TryAdd( proxy );
                     }

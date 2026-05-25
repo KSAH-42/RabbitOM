@@ -5,16 +5,18 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class ProxyInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<ProxyInfoRtspHeaderValue> , ICollection<ProxyInfoRtspHeaderValue> , IReadOnlyCollection<ProxyInfoRtspHeaderValue>
+    public sealed class RtpFieldRtspHeaderValueCollection : IEnumerable , IEnumerable<RtpFieldRtspHeaderValue> , ICollection<RtpFieldRtspHeaderValue> , IReadOnlyCollection<RtpFieldRtspHeaderValue>
     {
-        private readonly List<ProxyInfoRtspHeaderValue> _collection = new List<ProxyInfoRtspHeaderValue>();
+        private readonly List<RtpFieldRtspHeaderValue> _collection = new List<RtpFieldRtspHeaderValue>();
 
 
 
-        public ProxyInfoRtspHeaderValue this[ int index ]
+
+        public RtpFieldRtspHeaderValue this[ int index ]
         {
             get => _collection[ index ];
         }
+
 
 
 
@@ -37,12 +39,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return GetEnumerator();
         }
 
-        public IEnumerator<ProxyInfoRtspHeaderValue> GetEnumerator()
+        public IEnumerator<RtpFieldRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( ProxyInfoRtspHeaderValue item )
+        public void Add( RtpFieldRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -52,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Add( item );
         }
 
-        public bool TryAdd( ProxyInfoRtspHeaderValue item )
+        public bool TryAdd( RtpFieldRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -69,17 +71,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Clear();
         }
 
-        public bool Contains( ProxyInfoRtspHeaderValue item )
+        public bool Contains( RtpFieldRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( ProxyInfoRtspHeaderValue[] array , int arrayIndex )
+        public void CopyTo( RtpFieldRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( ProxyInfoRtspHeaderValue item )
+        public bool Remove( RtpFieldRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -96,7 +98,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return true;
         }
 
-        public bool RemoveBy( Func<ProxyInfoRtspHeaderValue,bool> predicate )
+        public bool RemoveBy( Func<RtpFieldRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

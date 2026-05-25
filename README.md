@@ -256,7 +256,7 @@ This project contains also a sample that demonstrate how to create a video playe
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
 
 
-# About the next rtsp client (experimentatl)
+# About the next rtsp client (experimental)
 
 
 the actual rtsp client will be replace by a receiver class and the rtsp client will replace the actual RtspConnection class.

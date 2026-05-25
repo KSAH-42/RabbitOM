@@ -115,10 +115,10 @@
     <Compile Include="Rtsp\Headers\DataTypes\LanguageWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValueCollection.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\ProxyInfoRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\ProxyInfoRtspHeaderValueCollection.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\RtpInfoRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\RtpInfoRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\ProxyRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\ProxyRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\RtpFieldRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\RtpFieldRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\RtspMethodHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringParameterRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringRtspHeaderValueCollection.cs" />
@@ -126,8 +126,8 @@
     <Compile Include="Rtsp\Headers\DataTypes\StringWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\SupportedTypes.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ValueRange.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\WarningInfoRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\WarningInfoRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\WarningFieldRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\WarningFieldRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DateTimeRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
@@ -217,8 +217,7 @@
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
-    <Compile Include="Rtsp\Transports\Channels\RtspRequestMessageEventArgs.cs" />
-    <Compile Include="Rtsp\Transports\Channels\RtspResponseMessageEventArgs.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspMessageEventArgs.cs" />
     <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
     <Compile Include="Rtsp\Transports\RtspsTransport.cs" />

@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class WarningInfoRtspHeaderValueCollection : IEnumerable , IEnumerable<WarningInfoRtspHeaderValue> , ICollection<WarningInfoRtspHeaderValue> , IReadOnlyCollection<WarningInfoRtspHeaderValue>
+    public sealed class WarningFieldRtspHeaderValueCollection : IEnumerable , IEnumerable<WarningFieldRtspHeaderValue> , ICollection<WarningFieldRtspHeaderValue> , IReadOnlyCollection<WarningFieldRtspHeaderValue>
     {
-        private readonly List<WarningInfoRtspHeaderValue> _collection = new List<WarningInfoRtspHeaderValue>();
+        private readonly List<WarningFieldRtspHeaderValue> _collection = new List<WarningFieldRtspHeaderValue>();
 
 
 
-        public WarningInfoRtspHeaderValue this[ int index ]
+        public WarningFieldRtspHeaderValue this[ int index ]
         {
             get => _collection[ index ];
         }
@@ -37,12 +37,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return GetEnumerator();
         }
 
-        public IEnumerator<WarningInfoRtspHeaderValue> GetEnumerator()
+        public IEnumerator<WarningFieldRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( WarningInfoRtspHeaderValue item )
+        public void Add( WarningFieldRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Add( item );
         }
 
-        public bool TryAdd( WarningInfoRtspHeaderValue item )
+        public bool TryAdd( WarningFieldRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -69,17 +69,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Clear();
         }
 
-        public bool Contains( WarningInfoRtspHeaderValue item )
+        public bool Contains( WarningFieldRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( WarningInfoRtspHeaderValue[] array , int arrayIndex )
+        public void CopyTo( WarningFieldRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( WarningInfoRtspHeaderValue item )
+        public bool Remove( WarningFieldRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return true;
         }
 
-        public bool RemoveBy( Func<WarningInfoRtspHeaderValue,bool> predicate )
+        public bool RemoveBy( Func<WarningFieldRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

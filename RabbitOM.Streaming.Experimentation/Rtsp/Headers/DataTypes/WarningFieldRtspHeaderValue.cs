@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class WarningInfoRtspHeaderValue
+    public sealed class WarningFieldRtspHeaderValue
     {
         private int _code;
         private string _agent = string.Empty;
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         
 
 
-        public static bool TryParse( string input , out WarningInfoRtspHeaderValue result )
+        public static bool TryParse( string input , out WarningFieldRtspHeaderValue result )
         {
             result = null;
 
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                     return false;
                 }
                 
-                result = new WarningInfoRtspHeaderValue()
+                result = new WarningFieldRtspHeaderValue()
                 {
                     _code = code ,
                     _agent = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.ElementAtOrDefault( 1 ) ),
