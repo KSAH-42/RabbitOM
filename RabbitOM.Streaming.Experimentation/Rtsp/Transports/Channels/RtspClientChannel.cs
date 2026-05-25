@@ -47,9 +47,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public abstract void Abort();
 
-        public abstract void Send( RtspInterleaveMessage interleavedData );
+        public abstract void SendMessage( RtspInterleaveMessage interleavedData );
         
-        public abstract RtspResponseMessage Send( RtspRequestMessage request );
+        public abstract RtspResponseMessage SendMessage( RtspRequestMessage request );
 
         public void Dispose()
         {

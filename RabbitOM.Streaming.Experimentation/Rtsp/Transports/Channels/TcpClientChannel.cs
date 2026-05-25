@@ -36,12 +36,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             throw new NotImplementedException();
         }
 
-        public override void Send( RtspInterleaveMessage interleavedData )
+        public override void SendMessage( RtspInterleaveMessage interleavedData )
         {
             throw new NotImplementedException();
         }
 
-        public override RtspResponseMessage Send( RtspRequestMessage request )
+        public override RtspResponseMessage SendMessage( RtspRequestMessage request )
         {
             throw new NotImplementedException();
         }

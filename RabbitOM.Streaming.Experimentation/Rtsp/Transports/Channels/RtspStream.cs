@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public abstract class RtspStream : Stream
     {

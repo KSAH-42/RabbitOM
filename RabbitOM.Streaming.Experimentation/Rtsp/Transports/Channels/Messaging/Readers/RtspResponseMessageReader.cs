@@ -1,18 +1,22 @@
 ﻿using System;
-using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
 {
-    internal sealed class RtspCommunicationReader : IMessageReader
+    public sealed class RtspResponseMessageReader
     {
         private readonly RtspStream _stream;
         
-        public RtspCommunicationReader( RtspStream stream )
+        public RtspResponseMessageReader( RtspStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-        public RtspMessage ReadMessage()
+        public bool CanReadMessage( string startLine )
+        {
+            throw new NotImplementedException();            
+        }
+
+        public RtspMessage ReadMessage( string startLine )
         {
             throw new NotImplementedException();            
         }

@@ -60,24 +60,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                     {
                         if ( ValueComparer.Equals( "url" , parameter.Key ) )
                         {
-                            info.Url = parameter.Value;
+                            info._url = parameter.Value;
                         }
                         else if ( ValueComparer.Equals( "ssrc" , parameter.Key ) )
                         {
-                            info.SSRC = parameter.Value;
+                            info._ssrc = parameter.Value;
                         }
                         else if ( ValueComparer.Equals( "seq" , parameter.Key ) )
                         {
                             if ( ushort.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out var value ) )
                             {
-                                info.Sequence = value;
+                                info._sequence = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
                         {
                             if ( ushort.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out var value ) )
                             {
-                                info.RtpTime = value;
+                                info._rtpTime = value;
                             }
                         }
                     }

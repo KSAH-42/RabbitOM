@@ -6,18 +6,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly RtspStream _stream;
-        private readonly IMessageReader _communicationReader;
-        private readonly IMessageReader _interleavedReader;        
+        private readonly RtspRequestMessageReader _requestReader;
+        private readonly RtspRequestMessageReader _responseReader;
+        private readonly RtspInterleaveMessageReader _interleavedReader;        
 
 
-        public RtspMessageReader( RtspStream stream , IMessageReader communicationReader , IMessageReader interleaveReader )
+
+
+        public RtspMessageReader( RtspStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
 
-            _communicationReader = communicationReader ?? throw new ArgumentNullException( nameof( communicationReader ) );
-
-            _interleavedReader = interleaveReader ?? throw new ArgumentNullException( nameof( interleaveReader ) );
+            _requestReader = new RtspRequestMessageReader( stream );
+            _responseReader = new RtspRequestMessageReader( stream );
+            _interleavedReader = new RtspInterleaveMessageReader( stream );
         }
+
+
 
 
         public RtspMessage ReadMessage()
@@ -33,8 +38,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
             {
                 return _interleavedReader.ReadMessage();
             }
+
+            var startLine = _stream.ReadLine();
+
+            if ( startLine != null )
+            {
+                if ( _responseReader.CanReadMessage( startLine ) )
+                {
+                    return _responseReader.ReadMessage( startLine );
+                }
+
+                if ( _requestReader.CanReadMessage( startLine ) )
+                {
+                    return _requestReader.ReadMessage( startLine );
+                }
+
+                throw new InvalidDataException();
+            }
             
-            return _communicationReader.ReadMessage();
+            return null;
         }
     }
 }

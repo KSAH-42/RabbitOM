@@ -8,11 +8,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         public RtpInfoRtspHeaderValueCollection RtpInfos { get; } = new RtpInfoRtspHeaderValueCollection();
 
-        public override string ToString()
-        {
-            return string.Join( ", " , RtpInfos );
-        }
-
         public static bool TryParse( string input , out RtpInfoRtspHeaderValue result )
         {
             result = null;
@@ -36,6 +31,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , RtpInfos );
         }
     }
 }

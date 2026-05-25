@@ -65,8 +65,7 @@ For instance Rtp frame builder are not thread safe, some class are immutable but
 For Rtp Frame Builder, theses classe are design to be incorporated as a single member on a media pipeline that run a seperate thread or you must garanties that any called comes from the same thread that the cases for event handler exposed by the RtspClient class. 
 In others words theses rtp classes are design to be used only inside a thread. Any interactions with that, must used marshalling calls instead. Synchronized class will be introduce by using something similar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption handlers hook on the receive object passed into the ctor. Tests are successfull, but it may be possible that these class will not be added for the future. So at this moment, and for inheritance refactoring reasons theses classes are not present. So at this times, nothing of that will be added but it will be added if it it becomes a necessity.
 
-
-# How to receive raw rtp packets using the rtsp client ?
+# About the actual rtsp client and how to receive packets ?
 
 Like this :
 
@@ -259,3 +258,90 @@ This project contains also a sample that demonstrate how to create a video playe
 # Getting more details ?
 
 If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
+
+
+
+# About the next rtsp client (experimentatl)
+
+
+the actual rtsp client will be replace by a receiver class and the rtsp client will replace the actual RtspConnection class.
+
+The implementation will be VERY SIMILAR to this one
+
+~~~~C#
+
+public sealed class RtspClientTemporyTest
+{
+    public string Uri { get; set; }
+    public string TransportType { get; set; }
+    private bool UseTcpTranport { get => TransportType == "tcp" || TransportType == "interleaved"; }
+    private bool UseUdpTranport { get => TransportType == "udp"; }
+    private bool UseMulticastTranport { get => TransportType == "multicast"; }
+
+
+    public void Run()
+    {            
+        var context = new RtspClientContext.Buider()
+            .SetPoolConnectionSize(12)
+            .SetBufferSize( 12 )
+            .SetMaximumOfRetries( 3 )
+            .UseMemoryPool()
+            .SetChannelFactory( new MyRtspChannelFactory() )
+            .Build()
+            ;
+
+        using var client = new RtspClient( context );
+                  
+        client.BaseAddress = new Uri( "rtsp://127.0.0.1/channel/1?type=mpeg" );
+        client.Credential = new NetworkCredential( "myuser" , "mypassord" );
+                
+        client.DefaultHeaders.Accept = new AcceptRtspHeader();
+        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/sdp") );
+        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/blabla") );
+            
+        client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
+   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
+   	    
+        using var optionsResponse = client.Options();
+           
+        optionsResponse.EnsureSuccess();
+            
+        using var describeResponse = client.Describe();
+    
+        describeResponse.EnsureSuccess();
+            
+        if ( ! RtspSessionDescriptor.TryParse( describeResponse.Body.ReadAsString() , out var sdp ) )
+        {
+            throw new InvalidOperationException("no sdp");
+        }
+            
+        SetupRtspContentBuilder setupBuilder = UseMulticastTranport
+            ? new SetupMulticastRtspContentBuilder()   { IpAddress = "224.0.0.1" , Port = 152 , TTL = 123 }
+            : UseUdpTranport
+            ? new SetupUnicastUdpRtspContentBuilder()  { Port = 123 }
+            : new SetupInterleavedRtspContentBuilder();
+            
+        using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildContent() );
+            
+        var sessionHeader = SessionRtspHeader.Parse( setupResponse.Body.ReadAsString() );
+
+        var playBuilder = new PlayRtspContentBuilder() { SessionId = sessionHeader.Id };
+
+        using var playResponse = client.Play( playBuilder.BuildContent() );
+
+        playResponse.EnsureSuccess();
+
+        Console.WriteLine( "playing.." );
+        Console.WriteLine( "Press any keys to stop..." );
+
+        Console.ReadKey();
+
+        var tearDownBuilder = new TearDownRtspContentBuilder() { SessionId = sessionHeader.Id };
+            
+        client.TearDown( tearDownBuilder.BuildContent() );
+    }
+}
+
+~~~~

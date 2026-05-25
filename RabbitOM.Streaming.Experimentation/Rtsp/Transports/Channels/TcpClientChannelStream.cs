@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {    
-    public sealed class NetworkRtspStream : RtspStream
+    public sealed class TcpClientChannelStream : RtspStream
     {
         private int _position = 0;
         private int _length = 0;
@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         
 
 
-        public NetworkRtspStream(Stream innerStream, int bufferSize )
+        public TcpClientChannelStream(Stream innerStream, int bufferSize )
         {
             if ( innerStream == null )
             {
