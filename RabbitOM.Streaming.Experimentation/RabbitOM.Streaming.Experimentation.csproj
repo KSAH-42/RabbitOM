@@ -202,6 +202,7 @@
     <Compile Include="Rtsp\RtspClientResponse.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
+    <Compile Include="Rtsp\Transports\Channels\ClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\EndPoint.cs" />
     <Compile Include="Rtsp\Transports\Channels\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\IClientChannelFactory.cs" />
@@ -210,7 +211,7 @@
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspRequestMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\Readers\RtspResponseMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Messaging\RtspHeader.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Messaging\RtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspInterleaveMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\Messaging\RtspRequestMessage.cs" />
@@ -218,12 +219,11 @@
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspRequestMessageEventArgs.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessageEventArgs.cs" />
-    <Compile Include="Rtsp\Transports\Channels\RtspStream.cs" />
-    <Compile Include="Rtsp\Transports\Channels\TcpClientChannel.cs" />
-    <Compile Include="Rtsp\Transports\Channels\TcpClientChannelStream.cs" />
+    <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
-    <Compile Include="Rtsp\Transports\SecureTcpTransport.cs" />
-    <Compile Include="Rtsp\Transports\TcpTransport.cs" />
+    <Compile Include="Rtsp\Transports\RtspsTransport.cs" />
+    <Compile Include="Rtsp\Transports\RtspStream.cs" />
+    <Compile Include="Rtsp\Transports\RtspTransport.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">

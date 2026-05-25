@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Net.Sockets;
-using System.Net.Security;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-    public sealed class SecureTcpTransport : ITransport
+    public sealed class RtspTransport : ITransport
     {
         private readonly Socket _socket;
-        private readonly SslStream _stream;
 
 
 
-
-        public SecureTcpTransport( Socket socket )
+        public RtspTransport( Socket socket )
         {
             _socket = socket ?? throw new ArgumentNullException();
-            _stream = new SslStream( new NetworkStream( socket ) );
         }
+
         
         
 
@@ -24,6 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
             get => throw new NotImplementedException();
         }
+
 
 
 

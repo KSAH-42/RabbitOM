@@ -4,9 +4,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
 {
     public sealed class RtspInterleaveMessageReader
     {
-        private readonly RtspStream _stream;
+        private readonly IStream _stream;
         
-        public RtspInterleaveMessageReader( RtspStream stream )
+        public RtspInterleaveMessageReader( IStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
@@ -51,7 +51,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
                 while ( offset < buffer.Length )
                 {
                     var bytesRead = _stream.Read( buffer , offset , buffer.Length - offset );
-
+                    
                     if ( bytesRead <= 0 )
                     {
                         return null;

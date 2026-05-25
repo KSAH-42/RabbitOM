@@ -3,6 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using System.Net;
 
     // removing connect and disconnect methods
     // and use a socket pool to retrieve the current active socket
@@ -44,6 +45,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public Uri BaseAddress { get; set; } // should reset the the sockets pools or the comm pools
 
         public Version Version { get; set; } // for changing protocol version
+
+        public NetworkCredential Credentials { get; set; }
 
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 

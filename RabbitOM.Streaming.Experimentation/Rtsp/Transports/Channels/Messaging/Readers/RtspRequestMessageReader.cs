@@ -5,9 +5,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
 {
     public sealed class RtspRequestMessageReader
     {
-        private readonly RtspStream _stream;
+        private readonly IStream _stream;
         
-        public RtspRequestMessageReader( RtspStream stream )
+        public RtspRequestMessageReader( IStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }

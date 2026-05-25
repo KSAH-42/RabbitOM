@@ -2,7 +2,6 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Transports;
     using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels;
     
     public sealed class RtspClientContext 

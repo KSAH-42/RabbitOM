@@ -5,20 +5,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.
 {
     public sealed class RtspMessageReader : IMessageReader
     {
-        private readonly RtspStream _stream;
+        private readonly IStream _stream;
         private readonly RtspRequestMessageReader _requestReader;
-        private readonly RtspRequestMessageReader _responseReader;
+        private readonly RtspResponseMessageReader _responseReader;
         private readonly RtspInterleaveMessageReader _interleavedReader;        
 
 
 
 
-        public RtspMessageReader( RtspStream stream )
+        // so we don't use a pipereader class, instead a special stream
+        // with some custom read optimizations and additional methods
+
+        public RtspMessageReader( IStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
-
+         
             _requestReader = new RtspRequestMessageReader( stream );
-            _responseReader = new RtspRequestMessageReader( stream );
+            _responseReader = new RtspResponseMessageReader( stream );
             _interleavedReader = new RtspInterleaveMessageReader( stream );
         }
 
