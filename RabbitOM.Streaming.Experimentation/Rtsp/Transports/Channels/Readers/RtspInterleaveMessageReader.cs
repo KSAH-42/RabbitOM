@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging.Readers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspInterleaveMessageReader
     {

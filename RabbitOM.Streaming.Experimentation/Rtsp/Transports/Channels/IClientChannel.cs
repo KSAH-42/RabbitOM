@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging;
-
     public interface IClientChannel : IDisposable
     {        
         event EventHandler Opened;
@@ -11,8 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         event EventHandler Closed;
 
         event EventHandler Aborted;
-
-        event EventHandler<RtspMessageEventArgs> MessageSended;
 
         event EventHandler<RtspMessageEventArgs> MessageReceived;
 

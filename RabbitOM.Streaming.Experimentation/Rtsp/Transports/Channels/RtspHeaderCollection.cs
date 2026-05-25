@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public sealed class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string[]>>
     {

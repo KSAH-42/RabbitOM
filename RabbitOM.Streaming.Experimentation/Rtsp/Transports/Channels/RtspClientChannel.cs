@@ -2,48 +2,86 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Messaging;
+    public abstract class RtspClientChannel : IClientChannel
+    {        
+        public event EventHandler Opened;
 
-    public sealed class RtspClientChannel : ClientChannel
-    {
-        public override EndPoint EndPoint 
-        { 
-            get => throw new NotImplementedException();
+        public event EventHandler Closed;
+
+        public event EventHandler Aborted;
+
+        public event EventHandler<RtspMessageEventArgs> MessageReceived;
+
+
+
+
+
+        ~RtspClientChannel()
+        {
+            Dispose( false );
         }
 
-        public override bool IsOpened
+
+
+
+
+        public abstract EndPoint EndPoint { get; }
+
+        public abstract bool IsOpened { get; }
+
+
+
+
+
+
+
+
+        public abstract void Open();
+        
+        public abstract void Close();
+
+        public abstract void Abort();
+
+        public abstract void SendMessage( RtspInterleaveMessage interleavedData );
+        
+        public abstract RtspResponseMessage SendMessage( RtspRequestMessage request );
+
+        public void Dispose()
         {
-            get => throw new NotImplementedException();
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                Close();
+            }
         }
 
 
 
 
 
-
-        public override void Open()
+        protected virtual void OnOpened( EventArgs e )
         {
-            throw new NotImplementedException();
+            Opened?.TryInvoke( this , e );
         }
 
-        public override void Close()
+        protected virtual void OnClosed( EventArgs e )
         {
-            throw new NotImplementedException();
+            Closed?.TryInvoke( this , e );
         }
 
-        public override void Abort()
+        protected virtual void OnAborted( EventArgs e )
         {
-            throw new NotImplementedException();
+            Aborted?.TryInvoke( this , e );
         }
 
-        public override void SendMessage( RtspInterleaveMessage interleavedData )
+        protected virtual void OnMessageReceived( RtspMessageEventArgs e )
         {
-            throw new NotImplementedException();
-        }
-
-        public override RtspResponseMessage SendMessage( RtspRequestMessage request )
-        {
-            throw new NotImplementedException();
+            MessageReceived?.TryInvoke( this , e );
         }
     }
 }
