@@ -255,11 +255,6 @@ This project contains also a sample that demonstrate how to create a video playe
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
 
-# Getting more details ?
-
-If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
-
-
 
 # About the next rtsp client (experimentatl)
 
@@ -345,3 +340,9 @@ public sealed class RtspClientTemporyTest
 }
 
 ~~~~
+
+
+
+# Getting more details ?
+
+If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
