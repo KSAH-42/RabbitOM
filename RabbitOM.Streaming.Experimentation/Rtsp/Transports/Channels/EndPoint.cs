@@ -8,9 +8,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public ushort Port { get; }
 
-        public uint ReceiveBufferSize { get; }
+        public ushort ReceiveBufferSize { get; }
 
-        public uint SendBufferSize { get; }
+        public ushort SendBufferSize { get; }
 
         public bool IsSecured { get; }
 

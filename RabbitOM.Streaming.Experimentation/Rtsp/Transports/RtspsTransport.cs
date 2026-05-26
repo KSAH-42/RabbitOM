@@ -1,45 +1,39 @@
 ﻿using System;
-using System.Net.Sockets;
 using System.Net.Security;
+using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public sealed class RtspsTransport : ITransport
     {
-        private readonly Socket _socket;
         private readonly SslStream _stream;
 
-
-
-
-        public RtspsTransport( Socket socket )
+        public RtspsTransport( Socket socket , string hostName )
         {
-            _socket = socket ?? throw new ArgumentNullException();
-            _stream = new SslStream( new NetworkStream( socket ) );
+            _stream = new SslStream( new NetworkStream( socket ) , false , OnValidateCertificate , null );
+            _stream.AuthenticateAsClient( hostName );
         }
         
-        
-
-        public bool IsOpened
+        private static bool OnValidateCertificate( object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
-            get => throw new NotImplementedException();
+            return sslPolicyErrors == SslPolicyErrors.None;
         }
 
-
-
-        public int Send( byte[] buffer , int offset , int count )
+        public void Send( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            _stream.Write( buffer , offset , count );
+            _stream.Flush();
         }
 
         public int Receive( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            return _stream.Read( buffer , offset , count );
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            _stream.Close();
         }
 
         public void Dispose()

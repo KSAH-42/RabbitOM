@@ -7,37 +7,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     {
         private readonly Socket _socket;
 
-
-
         public RtspTransport( Socket socket )
         {
             _socket = socket ?? throw new ArgumentNullException();
         }
 
-        
-        
-
-        public bool IsOpened
+        public void Send( byte[] buffer , int offset , int count )
         {
-            get => throw new NotImplementedException();
-        }
-
-
-
-
-        public int Send( byte[] buffer , int offset , int count )
-        {
-            throw new NotImplementedException();
+            _socket.Send( buffer , 0 , SocketFlags.None );
         }
 
         public int Receive( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            return _socket.Receive( buffer , offset , count , SocketFlags.None );
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            _socket.Close();
         }
 
         public void Dispose()

@@ -9,11 +9,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         private readonly byte[] _buffer;
 
 
-
-
-
-
-        public RtspStream( ITransport transport ) : this ( transport , 8024 )
+        public RtspStream( ITransport transport ) 
+            : this ( transport , 8024 )
         {
         }
 
@@ -37,17 +34,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
             Dispose();
         }
-
-        
-        
         
         
         public bool CanRead => throw new NotImplementedException();
 
         public bool CanWrite => throw new NotImplementedException();
-
-        
-
 
 
         
@@ -69,7 +60,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
             throw new NotImplementedException();
         }
-
         
         public int ReadByte()
         {
@@ -88,7 +78,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             //       >> return builder.ToString()
             throw new NotImplementedException();
         }
-
         
         public int Read( byte[] buffer , int offset , int count )
         {
