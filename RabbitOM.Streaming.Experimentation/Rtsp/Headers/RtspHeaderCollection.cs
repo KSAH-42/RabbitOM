@@ -79,6 +79,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _registry.AddHeader( name , value );
         }
 
+        public void AddParse( string input )
+        {
+            RtspHeaderValueValidator.EnsureWellFormed( input );
+
+            _registry.AddParseHeader( input );
+        }
+
         public bool Remove( string name )
         {
             return _registry.RemoveHeader( name );
@@ -131,12 +138,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAdd( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormed( name ) || ! RtspHeaderValueValidator.TryEnsureWellFormedOrEmpty( value ) )
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) || ! RtspHeaderValueValidator.TryEnsureWellFormedOrEmpty( value ) )
             {
                 return false;
             }
 
             return _registry.TryAddHeader( name , value );
+        }
+
+        public bool TryAddParseHeader( string input )
+        {
+            if ( ! RtspHeaderValueValidator.TryEnsureWellFormed( input ) )
+            {
+                return false;
+            }
+
+            return _registry.TryAddParseHeader( input );
         }
 
         public bool TryGetValue( string name , out string value )

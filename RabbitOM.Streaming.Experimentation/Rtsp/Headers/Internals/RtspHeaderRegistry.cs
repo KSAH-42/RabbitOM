@@ -69,6 +69,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             _headers[ name ].Values.Add( value ?? string.Empty );
         }
+
+        public void AddParseHeader( string input )
+        {
+            throw new NotImplementedException();
+        }
         
         public bool RemoveHeader( string name )
         {
@@ -202,6 +207,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             _headers[ name ].Values.Add( value ?? string.Empty );
 
             return true;
+        }
+
+        public bool TryAddParseHeader( string input )
+        {
+            throw new NotImplementedException();
         }
         
         public bool TryGetHeaderValues( string name , out IEnumerable<string> result )
