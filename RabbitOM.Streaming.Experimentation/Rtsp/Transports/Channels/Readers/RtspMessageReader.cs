@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     {
         private readonly IStream _stream;
         private readonly RtspRequestResponseMessageReader _requestResponseReader;
-        private readonly RtspInterleaveMessageReader _interleavedReader;        
+        private readonly RtspInterleaveMessageReader _interleavedReader;    
 
 
         public RtspMessageReader( IStream stream )

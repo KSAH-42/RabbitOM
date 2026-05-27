@@ -60,13 +60,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 }
             }
 
-            // C -> S message received ? 
+            // S -> C message received ? 
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
             {
                 return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
             }
 
-            // S -> C message received ? (see rfc)
+            // C -> S message received ? (see rfc)
             if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
             {
                 return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };
