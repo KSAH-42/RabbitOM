@@ -214,8 +214,10 @@
     <Compile Include="Rtsp\Transports\Channels\RtspInterleaveMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageEventArgs.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspRequestLine.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessage.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspStatusLine.cs" />
     <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
     <Compile Include="Rtsp\Transports\RtspsTransport.cs" />

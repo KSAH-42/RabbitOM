@@ -6,11 +6,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
     public sealed class RtspResponseMessage : RtspMessage
     {
-        public string Protocol { get; set; }
-        public string Version { get; set; }
-        public string Code { get; set; }
-        public string Reason { get; set; }
-        public RtspHeaderCollection Headers { get; } = new RtspHeaderCollection();
+        public RtspStatusLine StatusLine { get; set; }
+        
+        public RtspHeaderCollection Headers { get; set; }
+        
         public byte[] Body { get; set; }
     }
 }

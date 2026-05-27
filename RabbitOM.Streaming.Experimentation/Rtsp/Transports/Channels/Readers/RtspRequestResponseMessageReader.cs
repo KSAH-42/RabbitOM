@@ -1,7 +1,4 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-using System;
-using System.Linq;
-using System.Text;
+﻿using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
@@ -14,20 +11,68 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-
-        public string ProtocolName { get; set; } = "RTSP";
-
-        public string Version { get; set; } = "1.0";
-
-
         public RtspMessage ReadMessage()
         {
             var startLine = _stream.ReadLine();
 
-            // TODO use regualar expression to parse the start line 
-            // it should be the best approach
+            if ( startLine == null )
+            {
+                return null;
+            }
 
-            throw new NotImplementedException();
+            var headers = new RtspHeaderCollection();
+
+            while ( true )
+            {
+                var header = _stream.ReadLine();
+
+                if ( header == null )
+                {
+                    return null;
+                }
+
+                if ( header == "" )
+                {
+                    break;
+                }
+
+                headers.TryAddParse( header );
+            }
+
+            byte[] body = null;
+
+            if ( headers.ContentLength.HasValue && headers.ContentLength > 0 )
+            {
+                body = new byte[ headers.ContentLength.Value ];
+
+                int offset = 0;
+
+                while ( offset < body.Length )
+                {
+                    var bytesRead = _stream.Read( body , offset , body.Length - offset );
+
+                    if ( bytesRead <= 0 )
+                    {
+                        break;
+                    }
+
+                    offset += bytesRead;
+                }
+            }
+
+            // C -> S message received ? 
+            if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
+            {
+                return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
+            }
+
+            // S -> C message received ? (see rfc)
+            if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
+            {
+                return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };
+            }
+            
+            return null;
         }
     }
 }
