@@ -5,11 +5,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;
-        
         private readonly byte[] _buffer;
 
 
-        public RtspStream( ITransport transport ) 
+        public RtspStream( ITransport transport )
             : this ( transport , 8024 )
         {
         }
@@ -34,17 +33,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
             Dispose();
         }
-        
-        
-        public bool CanRead => throw new NotImplementedException();
-
-        public bool CanWrite => throw new NotImplementedException();
 
 
-        
+        public bool CanRead => true;
+
+        public bool CanWrite => true;
+
+
+
         public void Close()
         {
-            throw new NotImplementedException();
+            _transport.Close();
         }
 
         public void Dispose()
@@ -60,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
             throw new NotImplementedException();
         }
-        
+
         public int ReadByte()
         {
             // EnsureCachingData();
@@ -78,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             //       >> return builder.ToString()
             throw new NotImplementedException();
         }
-        
+
         public int Read( byte[] buffer , int offset , int count )
         {
             // EnsureCachingData();
@@ -86,14 +85,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
-        public int Write( byte[] buffer , int offset , int count )
+        public void Write( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            _transport.Send( buffer , offset , count );
         }
 
-        public int WriteByte( byte value )
+        public void WriteByte( byte value )
         {
-            throw new NotImplementedException();
+            _transport.Send( new byte[] { value } , 0 , 1 );
         }
 
         private bool EnsureCachingData()

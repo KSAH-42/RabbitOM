@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public abstract class RtspClientChannel : IClientChannel
-    {        
+    {
         public event EventHandler Opened;
 
         public event EventHandler Closed;
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public abstract EndPoint EndPoint { get; }
+        public abstract Binding EndPoint { get; }
 
         public abstract bool IsOpened { get; }
 

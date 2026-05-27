@@ -3,12 +3,12 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels;
-    
-    public sealed class RtspClientContext 
-    {
-        public ushort ReceiveBufferSize { get; }
 
-        public ushort SendBufferSize { get; }
+    public sealed class RtspClientContext
+    {
+        public int ReceiveBufferSize { get; }
+
+        public int SendBufferSize { get; }
 
         public sbyte ChannelPoolSize { get; } // set 1 to emulate a single socket
 

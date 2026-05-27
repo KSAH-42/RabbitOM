@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
         {
             var prefix = _stream.PeekByte();
 
-            if ( prefix > 0 )
+            if ( prefix <= 0 )
             {
                 return null;
             }

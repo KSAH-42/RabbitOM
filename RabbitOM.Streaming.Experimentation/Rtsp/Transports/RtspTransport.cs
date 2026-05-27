@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Send( byte[] buffer , int offset , int count )
         {
-            _socket.Send( buffer , 0 , SocketFlags.None );
+            _socket.Send( buffer , offset , count , SocketFlags.None );
         }
 
         public int Receive( byte[] buffer , int offset , int count )

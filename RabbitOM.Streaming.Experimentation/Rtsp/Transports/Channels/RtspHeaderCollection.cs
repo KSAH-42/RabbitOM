@@ -105,6 +105,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             throw new NotImplementedException();
         }
 
+        public void RemoveAt( string name , int index )
+        {
+            throw new NotImplementedException();
+        }
+
         public void Clear()
         {
             throw new NotImplementedException();

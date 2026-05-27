@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     public sealed class RtspRequestResponseMessageReader
     {
         private readonly IStream _stream;
-        
+
         public RtspRequestResponseMessageReader( IStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
@@ -45,7 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             {
                 body = new byte[ headers.ContentLength.Value ];
 
-                int offset = 0;
+                var offset = 0;
 
                 while ( offset < body.Length )
                 {
@@ -60,18 +60,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 }
             }
 
-            // S -> C message received ? 
+            // Response from the server ?
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
             {
                 return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
             }
 
-            // C -> S message received ? (see rfc)
+            // Request from the server ? (see rfc)
             if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
             {
                 return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };
             }
-            
+
             return null;
         }
     }

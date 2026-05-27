@@ -202,6 +202,7 @@
     <Compile Include="Rtsp\RtspClientResponse.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Binding.cs" />
     <Compile Include="Rtsp\Transports\Channels\EndPoint.cs" />
     <Compile Include="Rtsp\Transports\Channels\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\IClientChannelFactory.cs" />
@@ -218,6 +219,8 @@
     <Compile Include="Rtsp\Transports\Channels\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspStatusLine.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Writers\IMessageWriter.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Writers\MessageWriter.cs" />
     <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
     <Compile Include="Rtsp\Transports\RtspsTransport.cs" />

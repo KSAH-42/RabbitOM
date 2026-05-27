@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _stream = new SslStream( new NetworkStream( socket ) , false , OnValidateCertificate , null );
             _stream.AuthenticateAsClient( hostName );
         }
-        
+
         private static bool OnValidateCertificate( object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             return sslPolicyErrors == SslPolicyErrors.None;

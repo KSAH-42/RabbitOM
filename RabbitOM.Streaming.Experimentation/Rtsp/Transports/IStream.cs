@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     // for instance any read on the stream will use an internal large buffer
     // without to increment the fully position, only when the count bytes use to read,
     // is just smaller than the size of the internal buffer.
-    
+
     //     / \
     //    / | \
     //   /  |  \
@@ -23,12 +23,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     public interface IStream : IDisposable
     {
         bool CanRead { get; }
-        
+
         bool CanWrite { get; }
 
 
 
-        
+
         string ReadLine();
 
         int PeekByte();
@@ -37,9 +37,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         int Read( byte[] buffer , int offset , int count );
 
-        int WriteByte( byte value );
+        void WriteByte( byte value );
 
-        int Write( byte[] buffer , int offset , int count );
+        void Write( byte[] buffer , int offset , int count );
 
         void Close();
     }

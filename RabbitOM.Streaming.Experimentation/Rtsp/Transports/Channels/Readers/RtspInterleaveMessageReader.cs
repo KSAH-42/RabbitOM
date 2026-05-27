@@ -43,27 +43,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             var length = (ushort) ( (lengthMsb << 8  + lengthLsb) & 0xFFFF );
 
-            if ( length > 0 )
+            if ( length <= 0 )
             {
-                var buffer = new byte[ length ];
-                var offset = 0;
-                
-                while ( offset < buffer.Length )
-                {
-                    var bytesRead = _stream.Read( buffer , offset , buffer.Length - offset );
-                    
-                    if ( bytesRead <= 0 )
-                    {
-                        return null;
-                    }
+                return null;
+            }
 
-                    offset += bytesRead;
+            var buffer = new byte[ length ];
+            var offset = 0;
+
+            while ( offset < buffer.Length )
+            {
+                var bytesRead = _stream.Read( buffer , offset , buffer.Length - offset );
+
+                if ( bytesRead <= 0 )
+                {
+                    return null;
                 }
 
-                return new RtspInterleaveMessage() { Channel = channel , Length = length , Buffer = buffer };
+                offset += bytesRead;
             }
-            
-            return null;
+
+            return new RtspInterleaveMessage() { Channel = channel , Length = length , Buffer = buffer };
         }
     }
 }
