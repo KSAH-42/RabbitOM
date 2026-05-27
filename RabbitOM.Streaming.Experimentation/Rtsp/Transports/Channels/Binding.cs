@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     {
         public bool IsSecured { get; }
 
-        public int RequestRetries { get; }
+        public int ReceiveRetries { get; }
 
         public int ReceiveBufferSize { get; }
 
