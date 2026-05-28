@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
@@ -6,13 +7,41 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\'' , '\"' , '`' };
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsSpaceAndQuotesAt( string value , int index )
+        {
+            return value[index] == SpaceAndQuotesChars[0]
+                || value[index] == SpaceAndQuotesChars[1]
+                || value[index] == SpaceAndQuotesChars[2]
+                || value[index] == SpaceAndQuotesChars[3];
+        }
+
         public static string UnQuotesWithTrim( string value )
         {
-            return value?.Trim( SpaceAndQuotesChars ) ?? string.Empty;
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return string.Empty;
+            }
+
+            if ( IsSpaceAndQuotesAt( value , 0 ) )
+            {
+                return value.Trim( SpaceAndQuotesChars );
+            }
+
+            var lastIndex = value.Length - 1;
+
+            if ( lastIndex > 1 && IsSpaceAndQuotesAt( value , lastIndex ) )
+            {
+                return value.Trim( SpaceAndQuotesChars );
+            }
+
+            return value;
         }
 
         public static string TrimWithRemoveAllQuotesNormalizer( string value )
         {
+            // TODO: this code is inefficient, optimize this
+
             return value?.Replace( "\'" , "" ).Replace( "\"" , "" ).Replace( "`" , "" ).Trim() ?? string.Empty;
         }
     }
