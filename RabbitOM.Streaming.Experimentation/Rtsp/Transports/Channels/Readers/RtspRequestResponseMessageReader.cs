@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( headers.ContentLength.HasValue && headers.ContentLength > 0 )
             {
-                body = new byte[ headers.ContentLength.Value ];
+                body = new byte[ headers.ContentLength.Value ]; // TODO: use allocator
 
                 var offset = 0;
 

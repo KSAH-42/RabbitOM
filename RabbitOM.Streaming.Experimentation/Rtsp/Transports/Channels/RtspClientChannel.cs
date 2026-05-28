@@ -25,8 +25,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public abstract Binding EndPoint { get; }
-
         public abstract bool IsOpened { get; }
 
 
@@ -37,13 +35,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
         public abstract void Open();
-        
+
         public abstract void Close();
 
         public abstract void Abort();
 
         public abstract void SendMessage( RtspInterleaveMessage interleavedData );
-        
+
         public abstract RtspResponseMessage SendMessage( RtspRequestMessage request );
 
         public void Dispose()

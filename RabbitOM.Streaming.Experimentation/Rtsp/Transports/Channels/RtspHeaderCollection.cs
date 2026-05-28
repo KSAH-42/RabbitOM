@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    public sealed class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string[]>>
+    // TODO: /!\ not finished, implement an enumerator
+    // TODO: it's a low level class, the risk of casting IEnumerable<string> into List is low, expose IReadOnlyCollection an do not make a toArray()
+    // TODO: /!\ refactor the count properties, used instead a counter to avoid linq expression that slow down the performance
+    // TODO: /!\ take care about the mirror class 
+
+    public sealed class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>
     {
         // we don't use NameValueCollection here is more slower than the dictionary
 
@@ -13,15 +19,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
         public string this[ string name ]
         {
-            get => throw new NotImplementedException();
+            get => GetValue( name );
         }
 
         public string this[ string name , int index ]
         {
-            get => throw new NotImplementedException();
+            get => GetValueAt( name , index );
         }
 
 
@@ -32,12 +37,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public int Count
         {
-            get => throw new NotImplementedException();
+            get => _collection.Values.Sum( x => x.Count );
         }
 
         public IEnumerable<string> AllKeys
         {
-            get => throw new NotImplementedException();
+            get => _collection.Keys;
         }
 
         // TODO: need to remove and let the upper layer to parse this header ?
@@ -62,62 +67,114 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _collection.Select( x => new KeyValuePair<string, IEnumerable<string>>( x.Key , x.Value ) ).GetEnumerator();
         }
 
-        public IEnumerator<KeyValuePair<string , string[]>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string , IEnumerable<string>>> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _collection.Select( x => new KeyValuePair<string, IEnumerable<string>>( x.Key , x.Value ) ).GetEnumerator();
         }
 
         public bool Contains( string name )
         {
-            throw new NotImplementedException();
+            return _collection.ContainsKey( name );
         }
 
         public void Add( string name , string value )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentException( nameof( name ) );
+            }
+
+            if ( ! _collection.ContainsKey( name ) )
+            {
+                _collection[ name ] = new List<string>();
+            }
+
+            _collection[ name ].Add( value ?? string.Empty );
         }
 
         public string GetValue( string name )
         {
-            throw new NotImplementedException();
+            return _collection[ name ][0];
         }
 
         public string GetValueAt( string name , int index )
         {
-            throw new NotImplementedException();
+            return _collection[ name ][index];
         }
 
-        public string[] GetValues( string name )
+        public IEnumerable<string> GetValues( string name )
         {
-            throw new NotImplementedException();
+            return _collection[ name ];
         }
 
         public void SetValue( string name , string value )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentException( nameof( name ) );
+            }
+
+            if ( value != null )
+            {
+                if ( ! _collection.ContainsKey( name ) )
+                {
+                    _collection[ name ] = new List<string>();
+                }
+
+                _collection[ name ].Add( value );
+            }
+            else
+            {
+                _collection.Remove( name ?? string.Empty );
+            }
         }
 
         public void Remove( string name )
         {
-            throw new NotImplementedException();
+            _collection.Remove( name ?? string.Empty );
         }
 
         public void RemoveAt( string name , int index )
         {
-            throw new NotImplementedException();
+            if ( _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            {
+                if ( index < 0 || index >= values.Count )
+                {
+                    return;
+                }
+
+                values.RemoveAt( index );
+
+                if ( values.Count == 0 )
+                {
+                    _collection.Remove( name );
+                }
+            }
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            _collection.Clear();
         }
 
         public bool TryAdd( string name , string value )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                return false;
+            }
+
+            if ( ! _collection.ContainsKey( name ) )
+            {
+                _collection[ name ] = new List<string>();
+            }
+
+            _collection[ name ].Add( value ?? string.Empty );
+
+            return true;
         }
 
         public bool TryAddParse( string input )
@@ -127,17 +184,54 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public bool TryGetValue( string name , out string result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( ! _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            {
+                return false;
+            }
+
+            if ( values.Count <= 0 )
+            {
+                return false;
+            }
+
+            result = values[0];
+
+            return true;
         }
 
         public bool TryGetValueAt( string name , int index , out string result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( ! _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            {
+                return false;
+            }
+
+            if ( index < 0 || index >= values.Count )
+            {
+                return false;
+            }
+
+            result = values[ index ];
+
+            return true;
         }
 
-        public bool TryGetValues( string name , out string[] result )
+        public bool TryGetValues( string name , out IEnumerable<string> result )
         {
-            throw new NotImplementedException();
+            result = null;
+
+            if ( ! _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            {
+                return false;
+            }
+
+            result = values;
+
+            return true;
         }
     }
 }

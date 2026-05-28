@@ -2,12 +2,19 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
-    // stream could be: RRRIIIRIQRIIIIIIIIIIIQIIIIRIIIIIIIII
+    // stream could be: RIIRIRIIIRIQIRIIIIIIIIIIIQIIIIRIIIIIIIII
     // where R: response from S
     // where Q: request from S
-    // where I: interleaved data to S
-    // where S: the magic or the buggy server or maybe the magic buggy server !
-    // hey do we need to adapt the reading from unknow rtsp source ?
+    // where I: interleaved data from S
+    // the stream buffer window must allow to grab a certains amount of data like this:
+    // [0..N/2]
+    // [0..N/2]
+    // > and iterate until to trigger a socket reading operation after reaching the windows size of the inner buffer
+    // normally the grabbing could be something like this
+    // [0..A]
+    // [A..B]
+    // [B..H]
+    // [H..N]
 
     public interface IMessageReader
     {

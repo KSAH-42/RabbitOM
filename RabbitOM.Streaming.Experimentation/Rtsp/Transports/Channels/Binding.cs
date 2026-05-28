@@ -4,9 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public sealed class Binding
     {
-        public bool IsSecured { get; }
-
-        public int ReceiveRetries { get; }
+        public int ReceiveRetries { get; } // number of retries during socket read timeout exception
 
         public int ReceiveBufferSize { get; }
 
