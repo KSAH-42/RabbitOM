@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     internal static class RtspHeaderValueSanitizer
     {
-        private static readonly char[] SpaceAndQuotesChars = { ' ' , '\'' , '\"' , '`' };
+        private static readonly char[] SpaceAndQuotesChars = { ' ' , '\"' , '\'' , '`' };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsSpaceAndQuotesAt( string value , int index )
         {
+            Debug.Assert( SpaceAndQuotesChars.Length == 4 );
             return value[index] == SpaceAndQuotesChars[0]
                 || value[index] == SpaceAndQuotesChars[1]
                 || value[index] == SpaceAndQuotesChars[2]
@@ -30,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var lastIndex = value.Length - 1;
 
-            if ( lastIndex > 1 && IsSpaceAndQuotesAt( value , lastIndex ) )
+            if ( lastIndex > 0 && IsSpaceAndQuotesAt( value , lastIndex ) )
             {
                 return value.Trim( SpaceAndQuotesChars );
             }
@@ -40,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static string TrimWithRemoveAllQuotesNormalizer( string value )
         {
-            // TODO: this code is inefficient, optimize this
+            // TODO: this code is inefficient, optimize this BUT we have 2 calls counts
 
             return value?.Replace( "\'" , "" ).Replace( "\"" , "" ).Replace( "`" , "" ).Trim() ?? string.Empty;
         }
