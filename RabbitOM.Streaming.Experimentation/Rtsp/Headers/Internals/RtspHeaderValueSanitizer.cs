@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    internal static class RtspHeaderValueSanitizer
+    public static class RtspHeaderValueSanitizer
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\"' , '\'' , '`' };
 
