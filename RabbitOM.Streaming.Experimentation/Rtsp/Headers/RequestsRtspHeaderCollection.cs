@@ -34,9 +34,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderParser.NewParser<UserAgentRtspHeaderValue>( RtspHeaderNames.UserAgent, UserAgentRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<ViaRtspHeaderValue>( RtspHeaderNames.Via, ViaRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<WarningRtspHeaderValue>( RtspHeaderNames.Warning, WarningRtspHeaderValue.TryParse ),
-        } , 
-        new [] 
-        { 
+        } ,
+        new []
+        {
             RtspHeaderNames.ContentLength,
             RtspHeaderNames.CSeq,
             RtspHeaderNames.Public,
@@ -44,11 +44,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderNames.Server,
             RtspHeaderNames.WWWAuthenticate,
         });
-        
+
         public RequestsRtspHeaderCollection() : base( new RtspHeaderRegistry( s_settings ) )
         {
         }
-        
+
         public AcceptRtspHeaderValue Accept
         {
             get => Registry.GetValue( RtspHeaderNames.Accept ) as AcceptRtspHeaderValue;
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => Registry.GetValue( RtspHeaderNames.AcceptEncoding ) as AcceptEncodingRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.AcceptEncoding , value );
         }
-        
+
         public AcceptLanguageRtspHeaderValue AcceptLanguage
         {
             get => Registry.GetValue( RtspHeaderNames.AcceptLanguage ) as AcceptLanguageRtspHeaderValue;
@@ -71,7 +71,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => Registry.GetValue( RtspHeaderNames.Authorization ) as AuthorizationRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Authorization , value );
-        }        
+        }
 
         public BandwidthRtspHeaderValue Bandwidth
         {
@@ -84,19 +84,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => Registry.GetValue( RtspHeaderNames.BlockSize ) as BlockSizeRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.BlockSize , value );
         }
-        
+
         public CacheControlRtspHeaderValue CacheControl
         {
             get => Registry.GetValue( RtspHeaderNames.CacheControl ) as CacheControlRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.CacheControl , value );
         }
-        
+
         public ConferenceRtspHeaderValue Conference
         {
             get => Registry.GetValue( RtspHeaderNames.Conference ) as ConferenceRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Conference , value );
         }
-        
+
         public ConnectionRtspHeaderValue Connection
         {
             get => Registry.GetValue( RtspHeaderNames.Connection ) as ConnectionRtspHeaderValue;
@@ -114,37 +114,37 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => Registry.GetValue( RtspHeaderNames.Date ) as DateTimeRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Date , value );
         }
-        
+
         public DateTimeRtspHeaderValue Expires
         {
             get => Registry.GetValue( RtspHeaderNames.Expires ) as DateTimeRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Expires , value );
         }
-           
+
         public UriRtspHeaderValue From
         {
             get => Registry.GetValue( RtspHeaderNames.From ) as UriRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.From , value );
         }
-        
+
         public IfMatchRtspHeaderValue IfMatch
         {
             get => Registry.GetValue( RtspHeaderNames.IfMatch ) as IfMatchRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.IfMatch , value );
         }
-        
+
         public DateTimeRtspHeaderValue IfModifiedSince
         {
             get => Registry.GetValue( RtspHeaderNames.IfModifiedSince ) as DateTimeRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.IfModifiedSince , value );
-        }  
-                
+        }
+
         public MaxForwardsRtspHeaderValue MaxForwards
         {
             get => Registry.GetValue( RtspHeaderNames.MaxForwards ) as MaxForwardsRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.MaxForwards , value );
         }
-        
+
         public RequireRtspHeaderValue Require
         {
             get => Registry.GetValue( RtspHeaderNames.Require ) as RequireRtspHeaderValue;
@@ -156,19 +156,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => Registry.GetValue( RtspHeaderNames.Referer ) as UriRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Referer , value );
         }
-        
+
         public ScaleRtspHeaderValue Scale
         {
             get => Registry.GetValue( RtspHeaderNames.Scale ) as ScaleRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Scale , value );
         }
-        
+
         public SessionRtspHeaderValue Session
         {
             get => Registry.GetValue( RtspHeaderNames.Session ) as SessionRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Session , value );
         }
-        
+
         public SpeedRtspHeaderValue Speed
         {
             get => Registry.GetValue( RtspHeaderNames.Speed ) as SpeedRtspHeaderValue;
@@ -186,19 +186,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => Registry.GetValue( RtspHeaderNames.To ) as UriRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.To , value );
         }
-        
+
         public TransportRtspHeaderValue Transport
         {
             get => Registry.GetValue( RtspHeaderNames.Transport ) as TransportRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.Transport , value );
         }
-        
+
         public UserAgentRtspHeaderValue UserAgent
         {
             get => Registry.GetValue( RtspHeaderNames.UserAgent ) as UserAgentRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.UserAgent , value );
         }
-        
+
         public ViaRtspHeaderValue Via
         {
             get => Registry.GetValue( RtspHeaderNames.Via ) as ViaRtspHeaderValue;
