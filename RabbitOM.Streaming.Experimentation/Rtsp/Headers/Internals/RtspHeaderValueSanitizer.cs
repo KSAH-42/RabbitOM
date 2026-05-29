@@ -5,9 +5,11 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderValueSanitizer
+    internal static class RtspHeaderValueSanitizer
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\"' , '\'' , '`' };
+
+        // noloop are used, there is less IL code generated using this approach
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsSpaceOrQuoteValue( in char value )

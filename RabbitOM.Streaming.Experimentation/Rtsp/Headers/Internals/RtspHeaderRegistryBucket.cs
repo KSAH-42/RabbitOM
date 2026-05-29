@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     internal struct RtspHeaderRegistryBucket
     {
         private readonly IList<object> _values;
-        
+
         private object _valueObject;
 
 
@@ -45,8 +45,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-
-        
         public object ValueObject
         {
             get
@@ -61,13 +59,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             set
             {
-                Debug.Assert( _values != null , "it seems that the default constructor has been called, and not allowed in this case" );
+                Debug.Assert( _values != null , "it seems that the parameterized constructor has not been called, and not allowed in this case" );
 
                 if ( _valueObject != null )
                 {
                     _values.Remove( _valueObject );
                 }
-                
+
                 if ( value != null )
                 {
                     _valueObject = value;
@@ -80,14 +78,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get
             {
-                Debug.Assert( _values != null , "it seems that the default constructor has been called, and not allowed in this case" );
-                
+                Debug.Assert( _values != null , "it seems that the parameterized constructor has not been called, and not allowed in this case" );
+
                 return _values;
             }
         }
 
-        public bool IsEmpty 
-        { 
+        public bool IsEmpty
+        {
             get
             {
                 return _values.Count == 0;

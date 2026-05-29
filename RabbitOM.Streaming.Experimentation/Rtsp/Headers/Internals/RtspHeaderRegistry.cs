@@ -4,12 +4,14 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    // TODO: perf improvements: remove linq
+
     internal sealed partial class RtspHeaderRegistry
     {
         private readonly RtspHeaderRegistrySettings _settings;
 
         private readonly Dictionary<string,RtspHeaderRegistryBucket> _headers;
-        
+
 
 
 
@@ -17,7 +19,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public RtspHeaderRegistry( RtspHeaderRegistrySettings settings )
         {
             _settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
-            
+
             _headers = new Dictionary<string, RtspHeaderRegistryBucket>( StringComparer.OrdinalIgnoreCase );
         }
 
@@ -29,27 +31,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             _headers.Values.ToArray().CopyTo( array , index );
         }
-        
+
         public int CountHeaders()
         {
             return _headers.Values.Sum( bucket => bucket.Values.Count );
         }
-        
+
         public int CountHeadersKeys()
         {
             return _headers.Keys.Count;
         }
-        
+
         public bool ContainsHeader( string name )
         {
             return _headers.ContainsKey( name ?? string.Empty );
         }
-        
+
         public bool IsHeaderForbidden( string name )
         {
             return _settings.ForbiddenHeaders.Contains( name ?? string.Empty );
         }
-        
+
         public void AddHeader( string name , string value )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -74,12 +76,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             throw new NotImplementedException();
         }
-        
+
         public bool RemoveHeader( string name )
         {
             return _headers.Remove( name ?? string.Empty );
         }
-        
+
         public bool RemoveHeader( string name , int index )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -106,7 +108,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return true;
         }
-        
+
         public void ClearHeaders()
         {
             _headers.Clear();
@@ -116,7 +118,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             return _headers.Keys;
         }
-        
+
         public string GetHeaderValue( string name )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -131,7 +133,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return _headers[ name ].Values.First().ToString() ?? throw new InvalidOperationException() ;
         }
-        
+
         public string GetHeaderValue( string name , int index )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -161,7 +163,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return _headers.TryGetValue( name , out var bucket ) ? bucket.ValueObject : null;
         }
-        
+
         public void SetValue( string name , object value )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -186,7 +188,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 }
             }
         }
-        
+
         public bool TryAddHeader( string name , string value )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -213,7 +215,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             throw new NotImplementedException();
         }
-        
+
         public bool TryGetHeaderValues( string name , out IEnumerable<string> result )
         {
             result = null;
@@ -227,7 +229,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return true;
         }
-        
+
         public bool TryGetHeaderValue( string name , out string result )
         {
             result = string.Empty;
@@ -241,7 +243,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return true;
         }
-        
+
         public bool TryGetHeaderValueAt( string name , int index , out string result )
         {
             result = string.Empty;
@@ -255,7 +257,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return true;
         }
-        
+
         public IEnumerator<KeyValuePair<string,string>> GetEnumerator()
         {
             return new Enumerator( this );
