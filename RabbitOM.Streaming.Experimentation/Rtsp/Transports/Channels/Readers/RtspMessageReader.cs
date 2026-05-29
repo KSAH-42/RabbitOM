@@ -5,15 +5,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly IStream _stream;
-        private readonly RtspRequestResponseMessageReader _requestResponseReader;
-        private readonly RtspInterleaveMessageReader _interleavedReader;
+        private readonly IMessageReader _requestResponseReader;
+        private readonly IMessageReader _interleavedReader;
 
 
-        public RtspMessageReader( IStream stream )
+        public RtspMessageReader( IStream stream , IMessageReader requestResponseReader , IMessageReader interleavedReader )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
-            _requestResponseReader = new RtspRequestResponseMessageReader( stream );
-            _interleavedReader = new RtspInterleaveMessageReader( stream );
+            _requestResponseReader = requestResponseReader ?? throw new ArgumentNullException( nameof( requestResponseReader ) );
+            _interleavedReader = interleavedReader ?? throw new ArgumentNullException( nameof( interleavedReader ) );
         }
 
 

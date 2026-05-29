@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
-    public sealed class RtspRequestResponseMessageReader
+    public sealed class RtspRequestResponseMessageReader : IMessageReader
     {
         private readonly IStream _stream;
 
