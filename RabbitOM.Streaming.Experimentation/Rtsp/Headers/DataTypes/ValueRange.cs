@@ -61,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         {
             result = default;
 
-            if ( ! RtspHeaderValueParser.TryParse( RtspHeaderValueSanitizer.TrimWithRemoveAllQuotesNormalizer( input ) , "-" , out string[] tokens ) )
+            if ( ! RtspHeaderValueParser.TryParse( RtspHeaderValueSanitizer.TrimWithRemoveAllQuotes( input ) , "-" , out string[] tokens ) )
             {
                 return false;
             }

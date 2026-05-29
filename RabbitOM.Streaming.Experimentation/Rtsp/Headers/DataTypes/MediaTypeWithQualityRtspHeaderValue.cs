@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                             {
                                 if ( string.IsNullOrEmpty( charset ) )
                                 {
-                                    charset = RtspHeaderValueSanitizer.TrimWithRemoveAllQuotesNormalizer( parameter.Value );
+                                    charset = RtspHeaderValueSanitizer.TrimWithRemoveAllQuotes( parameter.Value );
                                 }
                             }
                             else
