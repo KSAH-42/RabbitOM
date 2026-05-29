@@ -162,6 +162,7 @@
     <Compile Include="Rtsp\IAllocator.cs" />
     <Compile Include="Rtsp\IClient.cs" />
     <Compile Include="Rtsp\IHandler.cs" />
+    <Compile Include="Rtsp\IListener.cs" />
     <Compile Include="Rtsp\ILogger.cs" />
     <Compile Include="Rtsp\NullHandler.cs" />
     <Compile Include="Rtsp\Packet.cs" />
