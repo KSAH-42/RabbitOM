@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\"' , '\'' , '`' };
 
-        // noloop are used, there is less IL code generated using this approach
+        // noloop are used here, there is less IL code generated if we are using this way
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsSpaceOrQuoteValue( in char value )

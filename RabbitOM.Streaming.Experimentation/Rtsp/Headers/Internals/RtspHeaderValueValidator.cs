@@ -4,6 +4,7 @@ using System.Linq;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: refactor and try to remove some methods in this class
+    // TODO: use a prevalidation to avoid repeat code a string.IsNullOrWhiteSpace find an elegant way to fix it.
 
     internal static class RtspHeaderValueValidator
     {

@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
+    // TODO: /!\ mirror type here
+
     public struct Packet
     {
         public Packet( byte[] buffer ) : this ( buffer , 0 )
