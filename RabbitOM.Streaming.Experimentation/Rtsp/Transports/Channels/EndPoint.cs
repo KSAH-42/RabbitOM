@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public sealed class EndPoint
     {
-        public string IpAddress { get; }
+        public string Address { get; }
 
         public ushort Port { get; }
     }
