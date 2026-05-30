@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
@@ -9,11 +10,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     // TODO: it's a low level class, the risk of casting IEnumerable<string> into List is low, expose IReadOnlyCollection an do not make a toArray()
     // TODO: /!\ refactor the count properties, used instead a counter to avoid linq expression that slow down the performance
     // TODO: /!\ take care about the mirror class 
+    // we don't use NameValueCollection here is more slower than the dictionary
+    // we don't use string.IsNullOrWhiteSpace here, because we are at a lower lever, and we prefer to speed up and let the validation done at a higher level
 
     public sealed class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>
     {
-        // we don't use NameValueCollection here is more slower than the dictionary
-
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
 
@@ -32,11 +33,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
-
-
         public int Count
         {
+            // TODO: snipe this code - too slow
             get => _collection.Values.Sum( x => x.Count );
         }
 
@@ -48,14 +47,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         // TODO: need to remove and let the upper layer to parse this header ?
         public long? CSeq
         {
-            get => throw new NotImplementedException();
+            get => throw new NotImplementedException(); // add string extensions ToNullableLong()
             set => throw new NotImplementedException();
         }
 
         // TODO: need to remove and let the upper layer to parse this header ?
         public long? ContentLength
         {
-            get => throw new NotImplementedException();
+            get => throw new NotImplementedException(); // add string extensions ToNullableLong()
             set => throw new NotImplementedException();
         }
 
@@ -64,14 +63,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        
         IEnumerator IEnumerable.GetEnumerator()
         {
+            // TODO: snipe this code - too slow
             return _collection.Select( x => new KeyValuePair<string, IEnumerable<string>>( x.Key , x.Value ) ).GetEnumerator();
         }
 
         public IEnumerator<KeyValuePair<string , IEnumerable<string>>> GetEnumerator()
         {
+            // TODO: snipe this code - too slow
             return _collection.Select( x => new KeyValuePair<string, IEnumerable<string>>( x.Key , x.Value ) ).GetEnumerator();
         }
 
@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public void Add( string name , string value )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( string.IsNullOrEmpty( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
             }
@@ -107,12 +107,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public IEnumerable<string> GetValues( string name )
         {
-            return _collection[ name ];
+            return new ReadOnlyCollection<string>( _collection[ name ] );
         }
 
         public void SetValue( string name , string value )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( string.IsNullOrEmpty( name ) )
             {
                 throw new ArgumentException( nameof( name ) );
             }
@@ -132,27 +132,41 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             }
         }
 
-        public void Remove( string name )
+        public bool Remove( string name )
         {
-            _collection.Remove( name ?? string.Empty );
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                return false;
+            }
+
+            return _collection.Remove( name );
         }
 
-        public void RemoveAt( string name , int index )
+        public bool RemoveAt( string name , int index )
         {
-            if ( _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            if ( string.IsNullOrEmpty( name ) )
             {
-                if ( index < 0 || index >= values.Count )
-                {
-                    return;
-                }
-
-                values.RemoveAt( index );
-
-                if ( values.Count == 0 )
-                {
-                    _collection.Remove( name );
-                }
+                return false;
             }
+
+            if ( ! _collection.TryGetValue( name , out var values ) )
+            {
+                return false;
+            }
+
+            if ( index < 0 || index >= values.Count )
+            {
+                return false;
+            }
+
+            values.RemoveAt( index );
+
+            if ( values.Count == 0 )
+            {
+                _collection.Remove( name );
+            }
+
+            return true;
         }
 
         public void Clear()
@@ -162,7 +176,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public bool TryAdd( string name , string value )
         {
-            if ( string.IsNullOrWhiteSpace( name ) )
+            if ( string.IsNullOrEmpty( name ) )
             {
                 return false;
             }
@@ -179,14 +193,47 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public bool TryAddParse( string input )
         {
-            throw new NotImplementedException();
+            if ( string.IsNullOrEmpty( input ) )
+            {
+                return false;
+            }
+
+            var index = input.IndexOf( ":" );
+
+            if ( index <= 0 )
+            {
+                return false;
+            }
+
+            var name = input.Substring( 0 , index - 1 );
+
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                return false;
+            }
+
+            if ( ! _collection.ContainsKey( name ) )
+            {
+                _collection[ name ] = new List<string>();
+            }
+
+            var value = ++ index < input.Length ? input.Substring( index , input.Length - index ) : string.Empty ;
+
+            _collection[ name ].Add( value );
+
+            return true;
         }
 
         public bool TryGetValue( string name , out string result )
         {
             result = null;
 
-            if ( ! _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                return false;
+            }
+
+            if ( ! _collection.TryGetValue( name , out var values ) )
             {
                 return false;
             }
@@ -205,7 +252,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         {
             result = null;
 
-            if ( ! _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                return false;
+            }
+
+            if ( ! _collection.TryGetValue( name , out var values ) )
             {
                 return false;
             }
@@ -224,14 +276,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         {
             result = null;
 
-            if ( ! _collection.TryGetValue( name ?? string.Empty , out var values ) )
+            if ( string.IsNullOrEmpty( name ) )
             {
                 return false;
             }
 
-            result = values;
+            result = _collection.TryGetValue( name , out var values ) ? new ReadOnlyCollection<string>( values ) : null;
 
-            return true;
+            return result != null;
         }
     }
 }
