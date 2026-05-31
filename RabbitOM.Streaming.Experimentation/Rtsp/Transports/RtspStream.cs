@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
@@ -88,11 +89,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         public void Write( byte[] buffer , int offset , int count )
         {
             _transport.Send( buffer , offset , count );
-        }
-
-        public void WriteByte( byte value )
-        {
-            _transport.Send( new byte[] { value } , 0 , 1 );
         }
 
         private bool EnsureCachingData()

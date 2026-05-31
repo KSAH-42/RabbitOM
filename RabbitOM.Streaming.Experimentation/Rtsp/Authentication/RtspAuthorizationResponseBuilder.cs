@@ -27,43 +27,43 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             get => _scheme;
             set => _scheme = value ?? string.Empty;
         }
-        
+
         public string Algorithm
         {
             get => _algorithm;
             set => _algorithm = value ?? string.Empty;
         }
-        
+
         public string UserName
         {
             get => _username;
             set => _username = value ?? string.Empty;
         }
-        
+
         public string Password
         {
             get => _password;
             set => _password = value ?? string.Empty;
         }
-        
+
         public string Uri
         {
             get => _uri;
             set => _uri = value ?? string.Empty;
         }
-        
+
         public string Realm
         {
             get => _realm;
             set => _realm = value ?? string.Empty;
         }
-        
+
         public string Nonce
         {
             get => _nonce;
             set => _nonce = value ?? string.Empty;
         }
-        
+
 
 
         public override string ToString()
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             {
                 return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{_username}:{_password}" ) );
             }
-            
+
             if ( RtspAuthenticationSchemes.IsDigestAuthentication( _scheme ) )
             {
                 if ( string.IsNullOrWhiteSpace( _method ) || string.IsNullOrWhiteSpace( _uri ) || string.IsNullOrWhiteSpace( _realm ) || string.IsNullOrWhiteSpace( _nonce ) )
@@ -95,7 +95,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                         return algorithm.Compute( hash1 + ":" + _nonce + ":" + hash2 );
                     }
                 }
-                
+
                 if ( RtspAuthenticationSchemes.IsMd5Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateMD5() );
@@ -105,17 +105,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA1() );
                 }
-                
+
                 if ( RtspAuthenticationSchemes.IsSha256Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA256() );
                 }
-                
+
                 if ( RtspAuthenticationSchemes.IsSha384Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA384() );
                 }
-                
+
                 if ( RtspAuthenticationSchemes.IsSha512Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA512() );
@@ -123,6 +123,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             }
 
             return string.Empty;
-        }  
+        }
     }
 }

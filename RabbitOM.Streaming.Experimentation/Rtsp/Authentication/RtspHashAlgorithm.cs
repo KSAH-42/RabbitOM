@@ -14,11 +14,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
         }
 
         public static RtspHashAlgorithm CreateMD5() => new RtspHashAlgorithm( MD5.Create() );
-        
+
         public static RtspHashAlgorithm CreateSHA1() => new RtspHashAlgorithm( SHA1.Create() );
 
         public static RtspHashAlgorithm CreateSHA256() => new RtspHashAlgorithm( SHA256.Create() );
-        
+
         public static RtspHashAlgorithm CreateSHA384() => new RtspHashAlgorithm( SHA384.Create() );
 
         public static RtspHashAlgorithm CreateSHA512() => new RtspHashAlgorithm( SHA512.Create() );
@@ -29,11 +29,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             {
                 throw new ArgumentException( nameof( input ) );
             }
-            
+
             var bytes = _hashAlgorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) ) ?? Array.Empty<byte>();
 
             var builder = new StringBuilder();
-                
+
             for ( var i = 0 ; i < bytes.Length ; i++ )
             {
                 builder.Append( bytes[i].ToString( "x2" ) );

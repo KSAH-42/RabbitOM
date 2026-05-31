@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 .GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public )
                 .Select( property => property.GetValue( null ) as RtspMethod )
                 .Where( method => method != null )
-                .ToDictionary( method => method.ProdecureName )
+                .ToDictionary( method => method.MethodName )
                 ;
         });
 
@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
 
 
-        public string ProdecureName
+        public string MethodName
         {
             get => _procedureName;
         }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
@@ -13,9 +14,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     // we don't use NameValueCollection here is more slower than the dictionary
     // we don't use string.IsNullOrWhiteSpace here, because we are at a lower lever, and we prefer to speed up and let the validation done at a higher level
 
-    public sealed class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>
+    public sealed partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>
     {
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
+
+
 
 
 
@@ -29,6 +32,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         {
             get => GetValueAt( name , index );
         }
+
+
+
 
 
 
@@ -57,6 +63,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             get => throw new NotImplementedException(); // add string extensions ToNullableLong()
             set => throw new NotImplementedException();
         }
+
+
 
 
 
@@ -95,18 +103,44 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             _collection[ name ].Add( value ?? string.Empty );
         }
 
+        public void AddRange( string name , IEnumerable<string> values )
+        {
+            if ( string.IsNullOrEmpty( name ) )
+            {
+                throw new ArgumentException( nameof( name ) );
+            }
+
+            if ( values == null )
+            {
+                throw new ArgumentNullException( nameof( values ) );
+            }
+
+            if ( ! _collection.ContainsKey( name ) )
+            {
+                _collection[ name ] = new List<string>();
+            }
+
+            var items = _collection[ name ];
+
+            foreach ( var value in values )
+            {
+                items.Add( value ?? string.Empty );
+            }
+        }
+
         public string GetValue( string name )
         {
-            return _collection[ name ][0];
+            return _collection[ name ][0] ?? throw new InvalidOperationException();
         }
 
         public string GetValueAt( string name , int index )
         {
-            return _collection[ name ][index];
+            return _collection[ name ][index] ?? throw new InvalidOperationException();
         }
 
         public IEnumerable<string> GetValues( string name )
         {
+            // avoiding IList cast here by wrapping the collection values into a standard .net class
             return new ReadOnlyCollection<string>( _collection[ name ] );
         }
 
@@ -191,6 +225,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             return true;
         }
 
+        public bool TryAddRange( string name , IEnumerable<string> values )
+        {
+            if ( string.IsNullOrEmpty( name ) || values == null)
+            {
+                return false;
+            }
+
+            if ( ! _collection.ContainsKey( name ) )
+            {
+                _collection[ name ] = new List<string>();
+            }
+
+            var items = _collection[ name ];
+
+            foreach( var value in values )
+            {
+                items.Add( value ?? string.Empty );
+            }
+
+            return true;
+        }
+
         public bool TryAddParse( string input )
         {
             if ( string.IsNullOrEmpty( input ) )
@@ -205,7 +261,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            var name = input.Substring( 0 , index - 1 );
+            var name = input.Substring( 0 , index );
 
             if ( string.IsNullOrEmpty( name ) )
             {
@@ -245,6 +301,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             result = values[0];
 
+            Debug.Assert( result != null );
+
             return true;
         }
 
@@ -268,6 +326,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             }
 
             result = values[ index ];
+
+            Debug.Assert( result != null );
 
             return true;
         }

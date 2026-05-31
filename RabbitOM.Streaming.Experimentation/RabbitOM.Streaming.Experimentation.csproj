@@ -213,6 +213,7 @@
     <Compile Include="Rtsp\Transports\Channels\Readers\RtspRequestResponseMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspHeaderCollection.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspHeaderCollection.Enumerator.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspInterleaveMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageEventArgs.cs" />

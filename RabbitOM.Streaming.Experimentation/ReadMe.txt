@@ -92,13 +92,9 @@ public sealed class RtspClientTemporyTest
         using var client = new RtspClient() );
            
         client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
-        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
-        client.DefaultHeaders.Add( "X-Header-1" , "123" );
-        client.DefaultHeaders.Add( "X-Header-2" , "1234" );
-        client.DefaultHeaders.Add( "X-Header-3" , "12345" );
             
         using var optionsResponse = client.Options( "*" );
-           
+
         optionsResponse.EnsureSuccess();
 
         using var describeResponse = client.Describe();

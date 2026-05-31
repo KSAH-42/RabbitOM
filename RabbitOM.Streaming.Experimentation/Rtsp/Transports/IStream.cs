@@ -37,8 +37,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         int Read( byte[] buffer , int offset , int count );
 
-        void WriteByte( byte value );
-
         void Write( byte[] buffer , int offset , int count );
 
         void Close();
