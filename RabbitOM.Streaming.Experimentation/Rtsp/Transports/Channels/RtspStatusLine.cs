@@ -16,7 +16,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
+        // here we don't use string.split at lower level
+        // the perf result show signatificative improvement
 
+        // RTSP/1.0 555 Doom-Patrol Dark-Series 
+
+        
+            
 
         public static bool TryParse( string input , out RtspStatusLine result )
         {
@@ -27,72 +33,57 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            // here we don't use string.split at lower level
-            // the perf result show signatificative improvement
-
-            // RTSP/1.0 555 Doom-Patrol Dark-Series 
-
-            // XXX1XXXXXX2222XXXXX2XXX
-
             var startLine = new RtspStatusLine();
             var builder = new StringBuilder();
-            var step = 0;
             var i = -1;
 
             while ( ++ i < input.Length )
             {
-                if ( input[ i ] == ' ' ) { continue; }
-
-                switch( step ++ )
+                if ( input[ i ] == ' ' )
                 {
-                    case 0:
+                    continue;
+                }
 
-                        while ( i < input.Length && input[i] != '/' )
+                if ( startLine.Protocol == null )
+                {
+                    while ( i < input.Length && input[i] != '/' )
+                    {
+                        var character = input[i++];
+
+                        if ( character != ' ' )
                         {
-                            var character = input[i++];
-
-                            if ( character != ' ' )
-                            {
-                                builder.Append( character );
-                            }
+                            builder.Append( character );
                         }
+                    }
 
-                        startLine.Protocol = builder.ToString();
+                    startLine.Protocol = builder.ToString();
+                }
+                else if ( startLine.Version == null )
+                {
+                    while ( i < input.Length && input[i] != ' ')
+                    {
+                        builder.Append( input[i++] );
+                    }
 
-                        break;
-
-                    case 1:
-
-                        while ( i < input.Length && input[i] != ' ')
-                        {
-                            builder.Append( input[i++] );
-                        }
-
-                        startLine.Version = builder.ToString();
-
-                        break;
-
-                    case 2:
-
-                        while ( i < input.Length && input[i] != ' ' )
-                        {
-                            builder.Append( input[i++] );
-                        }
+                    startLine.Version = builder.ToString();
+                }
+                else if ( startLine.Code == null )
+                {
+                    while ( i < input.Length && input[i] != ' ' )
+                    {
+                        builder.Append( input[i++] );
+                    }
                         
-                        startLine.Code = builder.ToString();
+                    startLine.Code = builder.ToString();
+                }
+                else if ( startLine.Reason == null )
+                {
+                    while ( i < input.Length )
+                    {
+                        builder.Append( input[i++] );
+                    }
 
-                        break;
-
-                    case 3:
-
-                        while ( i < input.Length )
-                        {
-                            builder.Append( input[i++] );
-                        }
-
-                        startLine.Reason = builder.ToString();
-
-                        break;
+                    startLine.Reason = builder.ToString();
                 }
 
                 builder.Clear();

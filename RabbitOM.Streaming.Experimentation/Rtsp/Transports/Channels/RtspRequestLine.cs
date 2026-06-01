@@ -34,68 +34,60 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             var startLine = new RtspRequestLine();
             var builder = new StringBuilder();
-            var step = 0;
             var i = -1;
 
             while ( ++ i < input.Length )
             {
-                if ( input[ i ] == ' ' ) { continue; }
-
-                switch( step ++ )
+                if ( input[ i ] == ' ' )
                 {
-                    case 0:
+                    continue;
+                }
 
-                        while ( i < input.Length && input[i] != ' ' )
-                        {
-                            builder.Append( input[i++] );
-                        }
+                if ( startLine.Method == null )
+                {
+                    while ( i < input.Length && input[i] != ' ' )
+                    {
+                        builder.Append( input[i++] );
+                    }
                         
-                        startLine.Method = builder.ToString();
+                    startLine.Method = builder.ToString();
+                }
+                else if ( startLine.Uri == null )
+                {
+                    while ( i < input.Length && input[i] != ' ' )
+                    {
+                        builder.Append( input[i++] );
+                    }
 
-                        break;
+                    startLine.Uri = builder.ToString();
+                }
+                else if ( startLine.Protocol == null )
+                {
+                    while ( i < input.Length && input[i] != '/' )
+                    {
+                        var character = input[i++];
 
-                    case 1:
-
-                        while ( i < input.Length && input[i] != ' ' )
+                        if ( character != ' ' )
                         {
-                            builder.Append( input[i++] );
+                            builder.Append( character );
+                        }
+                    }
+
+                    startLine.Protocol = builder.ToString();
+                }
+                else if ( startLine.Version == null )
+                {
+                    while ( i < input.Length )
+                    {
+                        if ( input[i] != ' ' )
+                        {
+                            builder.Append( input[i] );
                         }
 
-                        startLine.Uri = builder.ToString();
+                        i++;
+                    }
 
-                        break;
-
-                    case 2:
-
-                        while ( i < input.Length && input[i] != '/' )
-                        {
-                            var character = input[i++];
-
-                            if ( character != ' ' )
-                            {
-                                builder.Append( character );
-                            }
-                        }
-
-                        startLine.Protocol = builder.ToString();
-
-                        break;
-
-                    case 3:
-
-                        while ( i < input.Length )
-                        {
-                            if ( input[i] != ' ' )
-                            {
-                                builder.Append( input[i] );
-                            }
-
-                            i++;
-                        }
-
-                        startLine.Version = builder.ToString();
-
-                        break;
+                    startLine.Version = builder.ToString();
                 }
 
                 builder.Clear();
@@ -108,7 +100,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             return result != null;
         }
-
 
 
 
