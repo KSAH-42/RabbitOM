@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             // here we don't use string.split at lower level
             // the perf result show signatificative improvement
 
-            // RTSP / 1.0 555    Doom-Patrol Dark-Series 
+            // RTSP/1.0 555 Doom-Patrol Dark-Series 
 
             var startLine = new RtspStatusLine();
             var builder = new StringBuilder();
@@ -39,7 +39,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             {
                 var element = input[ i ];
 
-                if ( element == ' ' || element == '/' && startLine.Version == null )
+                if ( element == ' ' || element == '/' )
                 {
                     if ( builder.Length > 0 )
                     {
@@ -73,6 +73,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 else
                 {
                     builder.Append( element );
+
+                    if ( i + 1 >= input.Length )
+                    {
+                        startLine.Reason = builder.ToString();
+                    }
                 }
             }
 

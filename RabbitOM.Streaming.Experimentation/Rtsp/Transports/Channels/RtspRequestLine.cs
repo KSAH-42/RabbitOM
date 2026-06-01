@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             // here we don't use string.split at lower level
             // the perf result show signatificative improvement
 
-            //  input:" DESCRIBE     rtsp://1.1.1.1/predestination    RTSP  / 1.0  "
+            //  input:"DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0"
 
             var startLine = new RtspRequestLine();
             var builder = new StringBuilder();
@@ -73,6 +73,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 else
                 {
                     builder.Append( element );
+
+                    if ( i + 1 >= input.Length )
+                    {
+                        startLine.Version = builder.ToString();
+                    }
                 }
             }
 
