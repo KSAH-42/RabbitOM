@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
@@ -10,6 +11,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
+
+        public int? MaximumOfHeaders { get; set; } // For untrusted source
 
         public RtspMessage ReadMessage()
         {
@@ -36,6 +39,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                     break;
                 }
 
+                if ( MaximumOfHeaders.HasValue && MaximumOfHeaders.Value > headers.Count )
+                {
+                    // do not continue to read, that anormal situation and the execution flow should be interrupted, the system can not read headers undefinitively, stop and close the communication and retry later
+                    throw new ProtocolViolationException( "anormal situation to many headers in one single message, it seems that we received malformed packets, communication must be closed" );
+                }
+
                 headers.TryAddParse( header );
             }
 
@@ -60,13 +69,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 }
             }
 
-            // Response from the server ?
+            // Response from the server ? Most of the times... 
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
             {
                 return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
             }
 
-            // Request from the server ? (see rfc)
+            // Request from the server ? (see rfc) in rare cases
             if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
             {
                 return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };

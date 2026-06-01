@@ -9,13 +9,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private const string QuotesChars = "\"'`";
 
-
-
-
+        // TODO: change string separator parameter by a char parameter
 
         public static bool TryParse( string input , string separator , out KeyValuePair<string,string> result )
         {
             result = default;
+
+            // TODO: refactor this code
 
             if ( TryParse( input , input?.Contains( separator ) == true ? separator : null , 2 , out string[] tokens ) )
             {
@@ -25,34 +25,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return false;
         }
-        
 
-
-
-
+        // TODO: change string separator parameter by a char parameter
 
         public static bool TryParse( string input , string separator , out string[] result )
         {
             return TryParse( input , separator , null , out result );
         }
 
+        // TODO: change string separator parameter by a char parameter
+
         public static bool TryParse( string input , string separator , int? maxTokens , out string[] result )
         {
             result = null;
+
+            // TODO: try to remove string.IsNullOrWhiteSpace
 
             if ( string.IsNullOrWhiteSpace( input ) || string.IsNullOrEmpty( separator ) || separator.Any( element => QuotesChars.Contains( element ) ) )
             {
                 return false;
             }
-            
-            var segments = new List<string>();
-            var builder = new StringBuilder();
-            var insideQuotes = false;
 
             // we don't used string.split here
             // because we need to ignore separators between quotes
             // and stop parse if we detect also none printable chars
             // like controls chars (DEL, tabs, CR, NLF), etc... 
+
+            var segments = new List<string>();
+            var builder = new StringBuilder();
+            var insideQuotes = false;
 
             foreach ( var element in input )
             {
@@ -60,12 +61,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     return false;
                 }
-               
+
                 if ( QuotesChars.IndexOf( element ) >= 0 )
                 {
                     insideQuotes = ! insideQuotes;
                 }
-                
+
                 builder.Append( element );
 
                 if ( ! insideQuotes )
@@ -90,6 +91,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 segments.Add( builder.ToString() );
             }
+
+            // TODO: snipe this code: too slow
 
             var tokens = segments
                 .Select( element => element.Trim() )

@@ -1,4 +1,6 @@
-﻿using System;
+﻿// here we don't use string.split at lower level
+// the perf result show signatificative improvement
+using System;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
@@ -16,13 +18,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
-        // here we don't use string.split at lower level
-        // the perf result show signatificative improvement
-
-        //  input:"DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0"
-
-            
         public static bool TryParse( string input , out RtspRequestLine result )
         {
             result = null;
@@ -32,7 +27,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            var startLine = new RtspRequestLine();
+            // DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0
+
+            var requestLine = new RtspRequestLine();
             var builder = new StringBuilder();
             var i = -1;
 
@@ -43,25 +40,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                     continue;
                 }
 
-                if ( startLine.Method == null )
-                {
-                    while ( i < input.Length && input[i] != ' ' )
-                    {
-                        builder.Append( input[i++] );
-                    }
-                        
-                    startLine.Method = builder.ToString();
-                }
-                else if ( startLine.Uri == null )
+                if ( requestLine.Method == null )
                 {
                     while ( i < input.Length && input[i] != ' ' )
                     {
                         builder.Append( input[i++] );
                     }
 
-                    startLine.Uri = builder.ToString();
+                    requestLine.Method = builder.ToString();
                 }
-                else if ( startLine.Protocol == null )
+                else if ( requestLine.Uri == null )
+                {
+                    while ( i < input.Length && input[i] != ' ' )
+                    {
+                        builder.Append( input[i++] );
+                    }
+
+                    requestLine.Uri = builder.ToString();
+                }
+                else if ( requestLine.Protocol == null )
                 {
                     while ( i < input.Length && input[i] != '/' )
                     {
@@ -73,9 +70,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                         }
                     }
 
-                    startLine.Protocol = builder.ToString();
+                    requestLine.Protocol = builder.ToString();
                 }
-                else if ( startLine.Version == null )
+                else if ( requestLine.Version == null )
                 {
                     while ( i < input.Length )
                     {
@@ -87,16 +84,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                         i++;
                     }
 
-                    startLine.Version = builder.ToString();
+                    requestLine.Version = builder.ToString();
                 }
 
                 builder.Clear();
             }
 
-            result = string.IsNullOrEmpty( startLine.Method )
-                  || string.IsNullOrEmpty( startLine.Uri )
-                  || string.IsNullOrEmpty( startLine.Protocol )
-                  || string.IsNullOrEmpty( startLine.Version ) ? null : startLine;
+            result = string.IsNullOrEmpty( requestLine.Method )
+                  || string.IsNullOrEmpty( requestLine.Uri )
+                  || string.IsNullOrEmpty( requestLine.Protocol )
+                  || string.IsNullOrEmpty( requestLine.Version ) ? null : requestLine;
 
             return result != null;
         }
@@ -104,11 +101,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
-        // we are at the low level, do not add null empty checks
         public override string ToString()
         {
-            return $"{Method} {Uri} {Protocol}/{Version}";
+            // we are at the low level, do not add null empty checks
+            return $"{Method} {Uri} {Protocol}/{Version}"; 
         }
     }
 }

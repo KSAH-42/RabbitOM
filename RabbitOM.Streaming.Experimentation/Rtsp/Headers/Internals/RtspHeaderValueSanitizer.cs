@@ -65,8 +65,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             StringBuilder builder = null;
-            bool f1 = false;
-            bool f2 = false;
+            var f1 = false;
+            var f2 = false;
             var k = 0;
             var i = 0;
             var j = value.Length - 1;
