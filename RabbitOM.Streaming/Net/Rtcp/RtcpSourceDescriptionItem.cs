@@ -61,7 +61,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// <param name="payload">the payload</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( in ArraySegment<byte> payload , out RtcpSourceDescriptionItem result )
+        public static bool TryParse( ArraySegment<byte> payload , out RtcpSourceDescriptionItem result )
         {
             result = null;
 

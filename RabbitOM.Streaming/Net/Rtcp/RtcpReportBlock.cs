@@ -96,7 +96,7 @@ namespace RabbitOM.Streaming.Net.Rtcp
         /// <param name="buffer">the buffer</param>
         /// <param name="result">the result</param>
         /// <returns>returns true for a success, otherwise false</returns>
-        public static bool TryParse( in ArraySegment<byte> buffer , out RtcpReportBlock result )
+        public static bool TryParse( ArraySegment<byte> buffer , out RtcpReportBlock result )
         {
             result = default;
 
