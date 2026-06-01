@@ -18,7 +18,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
         public static bool TryParse( string input , out RtspStatusLine result )
         {
             result = null;
@@ -28,22 +27,45 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            // here we don't use string.split, the result show signatificative improvement 
+            // here we don't use string.split at lower level
+            // the perf result show signatificative improvement
 
-            // RTSP / 1.0 555 Doom-Patrol
+            // RTSP / 1.0 555    Doom-Patrol Dark-Series 
 
-            var statusLine = new RtspStatusLine();
+            var startLine = new RtspStatusLine();
             var builder = new StringBuilder();
-            
+
             for ( var i = 0 ; i < input.Length ; ++ i )
             {
                 var element = input[ i ];
 
-                if ( element == ' ' || element == '/' && statusLine.Version == null )
+                if ( element == ' ' || element == '/' && startLine.Version == null )
                 {
                     if ( builder.Length > 0 )
                     {
-                        Populate( statusLine , builder.ToString() );
+                        if ( startLine.Protocol == null )
+                        {
+                            startLine.Protocol = builder.ToString();
+                        }
+                        else if ( startLine.Version == null )
+                        {
+                            startLine.Version = builder.ToString();
+                        }
+                        else if ( startLine.Code == null )
+                        {
+                            startLine.Code = builder.ToString();
+                        }
+                        else
+                        {
+                            builder.Append( element );
+
+                            if ( i + 1 >= input.Length )
+                            {
+                                startLine.Reason = builder.ToString();
+                            }
+
+                            continue;
+                        }
 
                         builder.Clear();
                     }
@@ -54,43 +76,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 }
             }
 
-            if ( builder.Length > 0 )
-            {
-                Populate( statusLine , builder.ToString() );
-
-                builder.Clear();
-            }
-
-            if ( string.IsNullOrEmpty( statusLine.Protocol ) || string.IsNullOrEmpty( statusLine.Version ) || string.IsNullOrEmpty( statusLine.Code ) )
-            {
-                return false;
-            }
-
-            result = statusLine;
+            result = string.IsNullOrEmpty( startLine.Protocol )
+                  || string.IsNullOrEmpty( startLine.Version )
+                  || string.IsNullOrEmpty( startLine.Code ) ? null : startLine;
 
             return true;
         }
-
-        private static void Populate( RtspStatusLine line , string token )
-        {
-            if ( line.Protocol == null )
-            {
-                line.Protocol = token;
-            }
-            else if ( line.Version == null )
-            {
-                line.Version = token;
-            }
-            else if ( line.Code == null )
-            {
-                line.Code = token;
-            }
-            else if ( line.Reason == null )
-            {
-                line.Reason = token;
-            }
-        }
-
 
 
 
