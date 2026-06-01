@@ -32,53 +32,70 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             // RTSP/1.0 555 Doom-Patrol Dark-Series 
 
+            // XXX1XXXXXX2222XXXXX2XXX
+
             var startLine = new RtspStatusLine();
             var builder = new StringBuilder();
+            var step = 0;
+            var i = -1;
 
-            for ( var i = 0 ; i < input.Length ; ++ i )
+            while ( ++ i < input.Length )
             {
-                var element = input[ i ];
+                if ( input[ i ] == ' ' ) { continue; }
 
-                if ( element == ' ' || element == '/' )
+                switch( step ++ )
                 {
-                    if ( builder.Length > 0 )
-                    {
-                        if ( startLine.Protocol == null )
-                        {
-                            startLine.Protocol = builder.ToString();
-                        }
-                        else if ( startLine.Version == null )
-                        {
-                            startLine.Version = builder.ToString();
-                        }
-                        else if ( startLine.Code == null )
-                        {
-                            startLine.Code = builder.ToString();
-                        }
-                        else
-                        {
-                            builder.Append( element );
+                    case 0:
 
-                            if ( i + 1 >= input.Length )
+                        while ( i < input.Length && input[i] != '/' )
+                        {
+                            var character = input[i++];
+
+                            if ( character != ' ' )
                             {
-                                startLine.Reason = builder.ToString();
+                                builder.Append( character );
                             }
-
-                            continue;
                         }
 
-                        builder.Clear();
-                    }
-                }
-                else
-                {
-                    builder.Append( element );
+                        startLine.Protocol = builder.ToString();
 
-                    if ( i + 1 >= input.Length )
-                    {
+                        break;
+
+                    case 1:
+
+                        while ( i < input.Length && input[i] != ' ')
+                        {
+                            builder.Append( input[i++] );
+                        }
+
+                        startLine.Version = builder.ToString();
+
+                        break;
+
+                    case 2:
+
+                        while ( i < input.Length && input[i] != ' ' )
+                        {
+                            builder.Append( input[i++] );
+                        }
+                        
+                        startLine.Code = builder.ToString();
+
+                        break;
+
+                    case 3:
+
+                        while ( i < input.Length )
+                        {
+                            builder.Append( input[i++] );
+                        }
+
                         startLine.Reason = builder.ToString();
-                    }
+
+                        break;
                 }
+
+                builder.Clear();
             }
 
             result = string.IsNullOrEmpty( startLine.Protocol )

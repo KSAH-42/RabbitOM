@@ -17,7 +17,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
+        // here we don't use string.split at lower level
+        // the perf result show signatificative improvement
 
+        //  input:"DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0"
+
+            
         public static bool TryParse( string input , out RtspRequestLine result )
         {
             result = null;
@@ -27,58 +32,73 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            // here we don't use string.split at lower level
-            // the perf result show signatificative improvement
-
-            //  input:"DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0"
-
             var startLine = new RtspRequestLine();
             var builder = new StringBuilder();
+            var step = 0;
+            var i = -1;
 
-            for ( var i = 0 ; i < input.Length ; ++ i )
+            while ( ++ i < input.Length )
             {
-                var element = input[ i ];
+                if ( input[ i ] == ' ' ) { continue; }
 
-                if ( element == ' ' || element == '/' && startLine.Uri != null )
+                switch( step ++ )
                 {
-                    if ( builder.Length > 0 )
-                    {
-                        if ( startLine.Method == null )
-                        {
-                            startLine.Method = builder.ToString();
-                        }
-                        else if ( startLine.Uri == null )
-                        {
-                            startLine.Uri = builder.ToString();
-                        }
-                        else if ( startLine.Protocol == null )
-                        {
-                            startLine.Protocol = builder.ToString();
-                        }
-                        else if ( startLine.Version == null )
-                        {
-                            builder.Append( element );
+                    case 0:
 
-                            if ( i + 1 >= input.Length )
+                        while ( i < input.Length && input[i] != ' ' )
+                        {
+                            builder.Append( input[i++] );
+                        }
+                        
+                        startLine.Method = builder.ToString();
+
+                        break;
+
+                    case 1:
+
+                        while ( i < input.Length && input[i] != ' ' )
+                        {
+                            builder.Append( input[i++] );
+                        }
+
+                        startLine.Uri = builder.ToString();
+
+                        break;
+
+                    case 2:
+
+                        while ( i < input.Length && input[i] != '/' )
+                        {
+                            var character = input[i++];
+
+                            if ( character != ' ' )
                             {
-                                startLine.Version = builder.ToString();
+                                builder.Append( character );
+                            }
+                        }
+
+                        startLine.Protocol = builder.ToString();
+
+                        break;
+
+                    case 3:
+
+                        while ( i < input.Length )
+                        {
+                            if ( input[i] != ' ' )
+                            {
+                                builder.Append( input[i] );
                             }
 
-                            continue;
+                            i++;
                         }
 
-                        builder.Clear();
-                    }
-                }
-                else
-                {
-                    builder.Append( element );
-
-                    if ( i + 1 >= input.Length )
-                    {
                         startLine.Version = builder.ToString();
-                    }
+
+                        break;
                 }
+
+                builder.Clear();
             }
 
             result = string.IsNullOrEmpty( startLine.Method )
