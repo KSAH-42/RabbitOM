@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
-    public sealed class RtspInterleaveMessageReader : IMessageReader
+    public sealed class RtspInterleavedMessageReader : IMessageReader
     {
         private readonly IStream _stream;
 
-        public RtspInterleaveMessageReader( IStream stream )
+        public RtspInterleavedMessageReader( IStream stream )
         {
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 offset += bytesRead;
             }
 
-            return new RtspInterleaveMessage() { Channel = channel , Length = length , Buffer = buffer };
+            return new RtspInterleavedMessage() { Channel = channel , Length = length , Buffer = buffer };
         }
     }
 }

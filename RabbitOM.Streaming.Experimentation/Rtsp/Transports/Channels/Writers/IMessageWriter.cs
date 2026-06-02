@@ -2,8 +2,9 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
-    public interface IMessageWriter
+    public interface IMessageWriter<TMessage>
+        where TMessage : RtspMessage
     {
-        void WriteMessage( RtspMessage message );
+        void WriteMessage( TMessage message );
     }
 }

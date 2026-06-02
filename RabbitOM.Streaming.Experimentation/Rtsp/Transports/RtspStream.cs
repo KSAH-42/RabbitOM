@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Net.Sockets;
+using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;
-        private readonly byte[] _buffer;
+        private readonly int _bufferSize;
+        private readonly MemoryStream _readStream;
+        private readonly MemoryStream _writeStream;
 
 
         public RtspStream( ITransport transport )
@@ -14,7 +16,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
         }
 
-        public RtspStream( ITransport transport , ushort bufferSize )
+        public RtspStream( ITransport transport , int bufferSize )
         {
             if ( transport == null )
             {
@@ -27,13 +29,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             }
 
             _transport = transport;
-            _buffer = new byte[ bufferSize ];
+            _bufferSize = bufferSize;
         }
 
-        ~RtspStream()
-        {
-            Dispose();
-        }
 
 
         public bool CanRead => true;
@@ -42,53 +40,59 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        public void Close()
-        {
-            _transport.Close();
-        }
-
         public void Dispose()
         {
             Close();
-            GC.SuppressFinalize( this );
+        }
+
+        public void Close()
+        {
+            throw new NotImplementedException();
         }
 
         public int PeekByte()
         {
-            // EnsureCachingData();
-            // return _buffer[ _position ];
-
             throw new NotImplementedException();
         }
 
         public int ReadByte()
         {
-            // EnsureCachingData();
-            // return _buffer[ ++ _position ];
-
             throw new NotImplementedException();
         }
 
         public string ReadLine()
         {
-            // while ( true )
-            //   >> EnsureCachingData();
-            //     >> builder.Append( _buffer[ _position ])
-            //     >> if ( _buffer[ ++ _position ] == '\r' )
-            //       >> return builder.ToString()
             throw new NotImplementedException();
         }
 
         public int Read( byte[] buffer , int offset , int count )
         {
-            // EnsureCachingData();
-            // Array.Copy( _buffer , buffer , 0 , count );
             throw new NotImplementedException();
         }
 
         public void Write( byte[] buffer , int offset , int count )
         {
-            _transport.Send( buffer , offset , count );
+            throw new NotImplementedException();
+        }
+
+        public void WriteByte( byte value )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteLine()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void WriteLine( string value )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Flush()
+        {
+            throw new NotImplementedException();
         }
 
         private bool EnsureCachingData()
