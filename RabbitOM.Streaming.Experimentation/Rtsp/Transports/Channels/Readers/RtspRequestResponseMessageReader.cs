@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
@@ -41,8 +40,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 if ( MaximumOfHeaders.HasValue && MaximumOfHeaders.Value > headers.Count )
                 {
-                    // do not continue to read, that anormal situation and the execution flow should be interrupted, the system can not read headers undefinitively, stop and close the communication and retry later
-                    throw new ProtocolViolationException( "anormal situation to many headers in one single message, it seems that we received malformed packets, communication must be closed" );
+                    // do not continue to read, just stop or avoid to make something tolerant
+                    // that's an anormal situation and the execution flow should be interrupted,
+                    // just stop and close the communication and even retry later
+                    // and do not await the content-length undefinetively and extract the body in order to make it a tolerant read, it's a defect somewhere
+                    // throw exception now
+                    throw new System.Net.ProtocolViolationException( $"too many headers:{headers.Count}. That's an anormal situation to many headers in one single message, it seems that we received malformed packets, communication must be closed" );
                 }
 
                 headers.TryAddParse( header );

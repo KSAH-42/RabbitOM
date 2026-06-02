@@ -1,6 +1,4 @@
-﻿// here we don't use string.split at lower level
-// the perf result show signatificative improvement
-using System;
+﻿using System;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
@@ -26,10 +24,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            // RTSP/1.0 555 Doom-Patrol Dark-Series 
+            // RTSP/1.0 555 Doom-Patrol|Dark-Series 
 
             var statusLine = new RtspStatusLine();
-            var builder = new StringBuilder();
+            var builder = new StringBuilder(200);
             var i = -1;
 
             while ( ++ i < input.Length )
@@ -55,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 }
                 else if ( statusLine.Version == null )
                 {
-                    while ( i < input.Length && input[i] != ' ')
+                    while ( i < input.Length && input[i] != ' ' )
                     {
                         builder.Append( input[i++] );
                     }
@@ -84,9 +82,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 builder.Clear();
             }
 
-            result = string.IsNullOrEmpty( statusLine.Protocol )
-                  || string.IsNullOrEmpty( statusLine.Version )
-                  || string.IsNullOrEmpty( statusLine.Code ) ? null : statusLine;
+            if ( string.IsNullOrEmpty( statusLine.Protocol ) || string.IsNullOrEmpty( statusLine.Version ) || string.IsNullOrEmpty( statusLine.Code ) )
+            {
+                return false;
+            }
+
+            result = statusLine;
 
             return true;
         }
@@ -95,7 +96,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public override string ToString()
         {
-            // we are at the low level, do not add null empty checks
             return $"{Protocol}/{Version} {Code} {Reason}";
         }
     }

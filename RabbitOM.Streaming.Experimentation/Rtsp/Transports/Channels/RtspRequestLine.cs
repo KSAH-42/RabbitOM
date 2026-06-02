@@ -1,6 +1,4 @@
-﻿// here we don't use string.split at lower level
-// the perf result show signatificative improvement
-using System;
+﻿using System;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
@@ -17,7 +15,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
         public static bool TryParse( string input , out RtspRequestLine result )
         {
             result = null;
@@ -30,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             // DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0
 
             var requestLine = new RtspRequestLine();
-            var builder = new StringBuilder();
+            var builder = new StringBuilder(200);
             var i = -1;
 
             while ( ++ i < input.Length )
@@ -90,12 +87,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 builder.Clear();
             }
 
-            result = string.IsNullOrEmpty( requestLine.Method )
-                  || string.IsNullOrEmpty( requestLine.Uri )
-                  || string.IsNullOrEmpty( requestLine.Protocol )
-                  || string.IsNullOrEmpty( requestLine.Version ) ? null : requestLine;
+            if (   string.IsNullOrEmpty( requestLine.Method )
+                || string.IsNullOrEmpty( requestLine.Uri )
+                || string.IsNullOrEmpty( requestLine.Protocol )
+                || string.IsNullOrEmpty( requestLine.Version ) )
+            {
+                return false;
+            }
 
-            return result != null;
+            result = requestLine;
+
+            return true;
         }
 
 
@@ -103,7 +105,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public override string ToString()
         {
-            // we are at the low level, do not add null empty checks
             return $"{Method} {Uri} {Protocol}/{Version}"; 
         }
     }
