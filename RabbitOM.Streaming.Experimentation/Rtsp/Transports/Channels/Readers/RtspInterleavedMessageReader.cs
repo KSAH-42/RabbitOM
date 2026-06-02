@@ -4,37 +4,30 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspInterleavedMessageReader : IMessageReader
     {
-        private readonly IStream _stream;
+        private readonly RtspStreamReader _reader;
 
         public RtspInterleavedMessageReader( IStream stream )
         {
-            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
+            _reader = new RtspStreamReader( stream );
         }
 
         public RtspMessage ReadMessage()
         {
-            var magicByte = _stream.ReadByte();
-
-            if ( magicByte != '$' )
-            {
-                return null;
-            }
-
-            var channel = _stream.ReadByte();
+            var channel = _reader.ReadByte();
 
             if ( channel < 0 )
             {
                 return null;
             }
 
-            var lengthMsb = _stream.ReadByte();
+            var lengthMsb = _reader.ReadByte();
 
             if ( lengthMsb < 0 )
             {
                 return null;
             }
 
-            var lengthLsb = _stream.ReadByte();
+            var lengthLsb = _reader.ReadByte();
 
             if ( lengthLsb < 0 )
             {
@@ -53,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             while ( offset < buffer.Length )
             {
-                var bytesRead = _stream.Read( buffer , offset , buffer.Length - offset );
+                var bytesRead = _reader.Read( buffer , offset , buffer.Length - offset );
 
                 if ( bytesRead <= 0 )
                 {

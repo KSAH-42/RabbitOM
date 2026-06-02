@@ -5,11 +5,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
     public sealed class RtspInterleavedMessageWriter : IMessageWriter<RtspInterleavedMessage>
     {
-        private readonly IStream _stream;
+        private readonly RtspStreamWriter _writer;
 
         public RtspInterleavedMessageWriter( IStream stream )
         {
-            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
+            _writer = new RtspStreamWriter( stream );
         }
 
         public void WriteMessage( RtspInterleavedMessage message )

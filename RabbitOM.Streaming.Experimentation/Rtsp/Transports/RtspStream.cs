@@ -6,9 +6,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;
-        private readonly int _bufferSize;
-        private readonly MemoryStream _readStream;
-        private readonly MemoryStream _writeStream;
+        private readonly MemoryStream _readCache; // use a byte array instead ?
+        private readonly MemoryStream _writeCache; // for flushing
+
 
 
         public RtspStream( ITransport transport )
@@ -29,38 +29,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             }
 
             _transport = transport;
-            _bufferSize = bufferSize;
+            _readCache = new MemoryStream( bufferSize );
+            _writeCache = new MemoryStream();
         }
 
 
 
-        public bool CanRead => true;
-
-        public bool CanWrite => true;
 
 
 
-        public void Dispose()
-        {
-            Close();
-        }
-
-        public void Close()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int PeekByte()
-        {
-            throw new NotImplementedException();
-        }
 
         public int ReadByte()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string ReadLine()
         {
             throw new NotImplementedException();
         }
@@ -70,22 +49,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
-        public void Write( byte[] buffer , int offset , int count )
-        {
-            throw new NotImplementedException();
-        }
-
         public void WriteByte( byte value )
         {
             throw new NotImplementedException();
         }
 
-        public void WriteLine()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteLine( string value )
+        public void Write( byte[] buffer , int offset , int count )
         {
             throw new NotImplementedException();
         }
@@ -95,11 +64,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
-        private bool EnsureCachingData()
+        public void Close()
         {
-            // if ( _position >= _buffer.Length ) 
-            //    _transport.Receive( _buffer , 0 , _buffer.length );
+            throw new NotImplementedException();
+        }
 
+        public void Dispose()
+        {
             throw new NotImplementedException();
         }
     }

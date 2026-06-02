@@ -4,18 +4,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspRequestResponseMessageReader : IMessageReader
     {
-        private readonly IStream _stream;
+        private readonly RtspStreamReader _reader;
 
         public RtspRequestResponseMessageReader( IStream stream )
         {
-            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
+            _reader = new RtspStreamReader( stream );
         }
 
         public int? MaximumOfHeaders { get; set; } // For untrusted source
 
         public RtspMessage ReadMessage()
         {
-            var startLine = _stream.ReadLine();
+            var startLine = _reader.ReadLine();
 
             if ( startLine == null )
             {
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             while ( true )
             {
-                var header = _stream.ReadLine();
+                var header = _reader.ReadLine();
 
                 if ( header == null )
                 {
@@ -61,7 +61,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 while ( offset < body.Length )
                 {
-                    var bytesRead = _stream.Read( body , offset , body.Length - offset );
+                    var bytesRead = _reader.Read( body , offset , body.Length - offset );
 
                     if ( bytesRead <= 0 )
                     {

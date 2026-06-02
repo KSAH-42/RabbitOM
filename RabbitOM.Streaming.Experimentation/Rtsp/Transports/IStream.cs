@@ -26,26 +26,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
     public interface IStream : IDisposable
     {
-        bool CanRead { get; }
-
-        bool CanWrite { get; }
-
-
-
-
-        string ReadLine();
-
-        int PeekByte();
-
         int ReadByte();
 
         int Read( byte[] buffer , int offset , int count );
 
         void WriteByte( byte value );
-
-        void WriteLine();
-
-        void WriteLine( string value );
 
         void Write( byte[] buffer , int offset , int count );
 

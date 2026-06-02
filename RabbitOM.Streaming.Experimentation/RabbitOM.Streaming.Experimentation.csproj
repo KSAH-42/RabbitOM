@@ -228,6 +228,8 @@
     <Compile Include="Rtsp\Transports\ITransport.cs" />
     <Compile Include="Rtsp\Transports\RtspsTransport.cs" />
     <Compile Include="Rtsp\Transports\RtspStream.cs" />
+    <Compile Include="Rtsp\Transports\RtspStreamReader.cs" />
+    <Compile Include="Rtsp\Transports\RtspStreamWriter.cs" />
     <Compile Include="Rtsp\Transports\RtspTransport.cs" />
   </ItemGroup>
   <ItemGroup>
