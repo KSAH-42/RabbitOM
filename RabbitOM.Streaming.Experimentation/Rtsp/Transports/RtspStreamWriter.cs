@@ -36,6 +36,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
+        public void WriteLine( params object[] args )
+        {
+            throw new NotImplementedException();
+        }
+
         public void Flush()
         {
             throw new NotImplementedException();

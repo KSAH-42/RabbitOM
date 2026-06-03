@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+#pragma warning disable CS0169
+
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     public sealed class RtspStream : IStream
@@ -87,5 +89,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
             throw new NotImplementedException();
         }
+
+        private bool EnsureCachingData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
+
+#pragma warning restore CS0169
