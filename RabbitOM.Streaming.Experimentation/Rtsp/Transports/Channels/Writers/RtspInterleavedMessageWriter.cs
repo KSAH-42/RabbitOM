@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
@@ -14,7 +13,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
         public void WriteMessage( RtspInterleavedMessage message )
         {
-            throw new NotImplementedException();
+            _writer.WriteChar( '$' );
+            _writer.WriteByte( (byte) (message.Length >> 8 & 0xFF) );
+            _writer.WriteByte( (byte) (message.Length      & 0xFF) );
+            _writer.Write( message.Buffer , 0 , message.Buffer.Length );
+            _writer.Flush();
         }
     }
 }

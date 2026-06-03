@@ -105,7 +105,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public override string ToString()
         {
-            return $"{Method} {Uri} {Protocol}/{Version}"; 
+            return $"{Method} {Uri} {Protocol}/{Version}";
         }
     }
 }

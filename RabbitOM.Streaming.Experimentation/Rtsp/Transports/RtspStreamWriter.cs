@@ -16,6 +16,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
+        public void WriteChar( char value )
+        {
+            throw new NotImplementedException();
+        }
+
         public void WriteByte( byte value )
         {
             throw new NotImplementedException();
@@ -27,6 +32,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         }
 
         public void WriteLine( string line )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Flush()
         {
             throw new NotImplementedException();
         }

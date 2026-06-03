@@ -30,6 +30,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public ushort MaximumSequenceValue { get; }
 
+        public TimeSpan ReceiveTimeout { get; }
+
+        public TimeSpan SendTimeout { get; }
+
+
 
 
         // TODO: don't forget to move this method the internal class
