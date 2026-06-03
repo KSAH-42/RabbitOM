@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Version Version { get; set; } // for changing protocol version
 
-        public NetworkCredential Credentials { get; set; }
+        public NetworkCredential Credential { get; set; }
 
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 

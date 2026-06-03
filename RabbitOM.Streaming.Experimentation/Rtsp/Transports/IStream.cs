@@ -21,8 +21,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
     // this interface has been used instead of using the base .net class Stream
     // the reasons comes that the Stream class expose seeks methods that
-    // can introduce confusion due that a network stream can support seek, it's realtime data
-    // to do not replace this interface by the abstract stream class and throw exception on unsupported methods
+    // can introduce confusion due that a network stream can support seek, you know because it's realtime data
+    // and throw exception on unsupported methods is for me not a good option
+
+    // that's due when i write a plugin framework, i have expose many features
+    // and after that i have learn that we need to reduce the number of possibilities,
+    // features should be hidden and protected against bad usages, the problem is not the abstract Stream class... 
 
     public interface IStream : IDisposable
     {
