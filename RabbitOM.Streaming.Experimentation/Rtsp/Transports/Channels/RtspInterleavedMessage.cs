@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public sealed class RtspInterleavedMessage : RtspMessage
     {
-        public int Channel { get; set; }
+        public byte Channel { get; set; }
 
         public ushort Length { get; set; }
 

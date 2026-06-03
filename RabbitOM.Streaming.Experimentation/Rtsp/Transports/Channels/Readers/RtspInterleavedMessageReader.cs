@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 offset += bytesRead;
             }
 
-            return new RtspInterleavedMessage() { Channel = channel , Length = length , Buffer = buffer };
+            return new RtspInterleavedMessage() { Channel = (byte) ( channel & 0xFF ) , Length = length , Buffer = buffer };
         }
     }
 }
