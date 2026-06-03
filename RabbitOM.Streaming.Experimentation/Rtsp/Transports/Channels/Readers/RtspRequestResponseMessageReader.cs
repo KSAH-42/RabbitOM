@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             _reader = new RtspStreamReader( stream );
         }
 
-        public int? MaximumOfHeaders { get; set; } // For untrusted source
+        public int? MaximumOfHeaders { get; set; }
 
         public RtspMessage ReadMessage()
         {

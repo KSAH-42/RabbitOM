@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     {
         private readonly static StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
 
-        public bool Value { get; set; }
+        public bool IsEnabled { get; set; }
 
         public static bool TryParse( string input , out RateControlRtspHeaderValue result )
         {
@@ -16,11 +16,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( ValueComparer.Equals( value , "yes" ) )
             {
-                result = new RateControlRtspHeaderValue() { Value = true };
+                result = new RateControlRtspHeaderValue() { IsEnabled = true };
             }
             else if ( ValueComparer.Equals( value , "no" ) )
             {
-                result = new RateControlRtspHeaderValue() { Value = false };
+                result = new RateControlRtspHeaderValue() { IsEnabled = false };
             }
 
             return result != null;
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return Value ? "yes" : "no";
+            return IsEnabled ? "yes" : "no";
         }
     }
 }

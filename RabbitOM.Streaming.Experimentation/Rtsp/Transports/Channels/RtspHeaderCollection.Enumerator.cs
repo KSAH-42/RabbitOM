@@ -6,11 +6,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     public sealed partial class RtspHeaderCollection
     {
-        public struct Enumerator : IEnumerator<KeyValuePair<string , IEnumerator<string>>>
+        public struct Enumerator : IEnumerator<KeyValuePair<string , string>>
         {
+            public Enumerator( RtspHeaderCollection collection )
+            {
+            }
+
             object IEnumerator.Current => Current;
 
-            public KeyValuePair<string , IEnumerator<string>> Current => throw new NotImplementedException();
+            public KeyValuePair<string , string> Current => throw new NotImplementedException();
 
             public bool MoveNext()
             {

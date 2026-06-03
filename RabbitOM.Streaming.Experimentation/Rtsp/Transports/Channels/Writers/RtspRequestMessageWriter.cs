@@ -21,10 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
             foreach ( var header in request.Headers )
             {
-                foreach ( var headerValue in header.Value )
-                {
-                    _writer.WriteLine( "{0}: {1}" , header.Key , headerValue );
-                }
+                _writer.WriteLine( "{0}: {1}" , header.Key , header.Value );
             }
 
             _writer.WriteLine();

@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     // we don't use NameValueCollection here is more slower than the dictionary
     // we don't use string.IsNullOrWhiteSpace here, because we are at a lower lever, and we prefer to speed up and let the validation done at a higher level
 
-    public sealed partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , IEnumerable<string>>>
+    public sealed partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
     {
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
@@ -73,14 +73,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            // TODO: snipe this code - too slow
-            return _collection.Select( x => new KeyValuePair<string, IEnumerable<string>>( x.Key , x.Value ) ).GetEnumerator();
+            return new Enumerator( this );
         }
 
-        public IEnumerator<KeyValuePair<string , IEnumerable<string>>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
         {
-            // TODO: snipe this code - too slow
-            return _collection.Select( x => new KeyValuePair<string, IEnumerable<string>>( x.Key , x.Value ) ).GetEnumerator();
+            return new Enumerator( this );
         }
 
         public bool Contains( string name )

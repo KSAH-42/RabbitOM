@@ -47,24 +47,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             if ( ! headers.CSeq.HasValue || headers.CSeq.Value < 0 )
             {
-                throw new ArgumentException( nameof( request ) , "cseq header not found");
+                throw new ArgumentException( nameof( request ) , "cseq header not found or it'has an negative value");
             }
 
-            var body = request.Body;
+            var contentLength = request.Headers.ContentLength.HasValue ? request.Headers.ContentLength.Value : 0;
+            var bodyLength    = request.Body?.Length ?? 0;
 
-            if ( body != null && body.Length > 0 )
+            if ( bodyLength != contentLength || bodyLength < 0 || contentLength < 0 )
             {
-                if ( ! headers.ContentLength.HasValue || headers.ContentLength.Value != body.Length )
-                {
-                    throw new ArgumentException( nameof( request ) , "invadid body size or content length is different from the size of body" );
-                }
-            }
-            else
-            {
-                if ( headers.ContentLength.HasValue && headers.ContentLength.Value != 0 )
-                {
-                    throw new ArgumentException( nameof( request ) , "the body is null or empty while a header content length is set" );
-                }
+                throw new ArgumentException( nameof( request ) , "invadid body size or content length is different from the size of body" );
             }
         }
     }

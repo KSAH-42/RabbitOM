@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public Packet( byte[] buffer ) : this ( buffer , 0 )
         {
         }
-
+        
         public Packet( byte[] buffer , int channel )
         {
             if ( buffer == null )

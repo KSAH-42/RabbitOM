@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    internal static class RtspAuthenticationSchemes
+    public static class RtspAuthenticationSchemes
     {
         private readonly static HashSet<string> Md5Algorithms 
             = new [] { "MD5" , "MD5-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
-        
+
         private readonly static HashSet<string> Sha1Algorithms 
             = new [] { "SHA1" , "SHA-1" , "SHA1-sess" , "SHA-1-sess" , "SHA_1" , "SHA_1-sess" , "SHA" , "SHA-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
@@ -17,16 +17,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         private readonly static HashSet<string> Sha256Algorithms 
             = new [] { "SHA256" , "SHA-256" , "SHA256-sess" , "SHA-256-sess" , "SHA_256" , "SHA_256-sess" , "SHA256" , "SHA256-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
-        
+
         private readonly static HashSet<string> Sha384Algorithms 
             = new [] { "SHA384" , "SHA-384" , "SHA384-sess" , "SHA-384-sess" , "SHA_384" , "SHA_384-sess" , "SHA384" , "SHA384-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
-        
+
         private readonly static HashSet<string> Sha512Algorithms 
             = new [] { "SHA512" , "SHA-512" , "SHA512-sess" , "SHA-512-sess" , "SHA_512" , "SHA_512-sess" , "SHA512" , "SHA256-sess" }
                 .ToHashSet( StringComparer.OrdinalIgnoreCase );
 
-        
+
 
 
 

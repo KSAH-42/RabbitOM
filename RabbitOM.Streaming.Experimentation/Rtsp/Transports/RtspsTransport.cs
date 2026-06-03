@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public RtspsTransport( Socket socket , string hostName )
         {
-            _stream = new SslStream( new NetworkStream( socket ) , false , OnValidateCertificate , null );
+            _stream = new SslStream( new NetworkStream( socket ) , true , OnValidateCertificate , null );
             _stream.AuthenticateAsClient( hostName );
         }
 

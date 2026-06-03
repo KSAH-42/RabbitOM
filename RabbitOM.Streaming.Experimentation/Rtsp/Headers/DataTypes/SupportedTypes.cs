@@ -33,6 +33,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             s_mimes.Add( "text/sdp" );
             s_mimes.Add( "text/json" );
             s_mimes.Add( "text/xml" );
+            s_mimes.Add( "text/plain" );
+            s_mimes.Add( "text/parameters" );
             s_mimes.Add( "application/sdp" );
             s_mimes.Add( "application/json" );
             s_mimes.Add( "application/x-mpegURL" );

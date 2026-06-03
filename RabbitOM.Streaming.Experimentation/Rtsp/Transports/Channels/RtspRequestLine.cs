@@ -15,6 +15,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
+        // input: DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0
+
         public static bool TryParse( string input , out RtspRequestLine result )
         {
             result = null;
@@ -23,8 +25,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             {
                 return false;
             }
-
-            // DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0
 
             var requestLine = new RtspRequestLine();
             var builder = new StringBuilder(200);
@@ -87,10 +87,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 builder.Clear();
             }
 
-            if (   string.IsNullOrEmpty( requestLine.Method )
-                || string.IsNullOrEmpty( requestLine.Uri )
-                || string.IsNullOrEmpty( requestLine.Protocol )
-                || string.IsNullOrEmpty( requestLine.Version ) )
+            if ( string.IsNullOrEmpty( requestLine.Method ) || string.IsNullOrEmpty( requestLine.Uri ) || string.IsNullOrEmpty( requestLine.Protocol ) || string.IsNullOrEmpty( requestLine.Version ) )
             {
                 return false;
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
