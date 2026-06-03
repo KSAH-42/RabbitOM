@@ -129,6 +129,7 @@
     <Compile Include="Rtsp\Headers\DataTypes\WarningFieldRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\WarningFieldRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DateTimeRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\FramesRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderParser.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Rtsp\Headers\MaxForwardsRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\MediaDurationRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\PublicRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\RateControlRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\RequestsRtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Headers\RequireRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\ResponsesRtspHeaderCollection.cs" />

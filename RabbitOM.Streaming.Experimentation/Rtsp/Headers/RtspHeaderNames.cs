@@ -26,6 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string CSeq = "CSeq";
         public const string Date = "Date";
         public const string Expires = "Expires";
+        public const string Frames = "Frames";
         public const string From = "From";
         public const string IfMatch = "If-Match";
         public const string IfModifiedSince = "If-Modified-Since";
@@ -40,6 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public const string Public = "Public";
         public const string PipelinedRequests = "Pipelined-Requests";
         public const string Range = "Range";
+        public const string RateControl = "RateControl";
         public const string Referer = "Referer";
         public const string Require = "Require";
         public const string RetryAfter = "Retry-After";

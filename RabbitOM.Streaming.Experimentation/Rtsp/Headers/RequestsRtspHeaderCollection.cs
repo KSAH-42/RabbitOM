@@ -19,10 +19,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderParser.NewParser<ContentTypeRtspHeaderValue>( RtspHeaderNames.ContentType, ContentTypeRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.Date, DateTimeRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.Expires, DateTimeRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<FramesRtspHeaderValue>( RtspHeaderNames.Frames, FramesRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<UriRtspHeaderValue>( RtspHeaderNames.From, UriRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<IfMatchRtspHeaderValue>( RtspHeaderNames.IfMatch, IfMatchRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<DateTimeRtspHeaderValue>( RtspHeaderNames.IfModifiedSince, DateTimeRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<MaxForwardsRtspHeaderValue>( RtspHeaderNames.MaxForwards, MaxForwardsRtspHeaderValue.TryParse ),
+            RtspHeaderParser.NewParser<RateControlRtspHeaderValue>( RtspHeaderNames.RateControl, RateControlRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<RequireRtspHeaderValue>( RtspHeaderNames.Require, RequireRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<UriRtspHeaderValue>( RtspHeaderNames.Referer, UriRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<ScaleRtspHeaderValue>( RtspHeaderNames.Scale, ScaleRtspHeaderValue.TryParse ),
@@ -121,6 +123,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => Registry.SetValue( RtspHeaderNames.Expires , value );
         }
 
+        public FramesRtspHeaderValue Frames
+        {
+            get => Registry.GetValue( RtspHeaderNames.Frames ) as FramesRtspHeaderValue;
+            set => Registry.SetValue( RtspHeaderNames.Frames , value );
+        }
+
         public UriRtspHeaderValue From
         {
             get => Registry.GetValue( RtspHeaderNames.From ) as UriRtspHeaderValue;
@@ -143,6 +151,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         {
             get => Registry.GetValue( RtspHeaderNames.MaxForwards ) as MaxForwardsRtspHeaderValue;
             set => Registry.SetValue( RtspHeaderNames.MaxForwards , value );
+        }
+
+        public RateControlRtspHeaderValue RateControl
+        {
+            get => Registry.GetValue( RtspHeaderNames.RateControl ) as RateControlRtspHeaderValue;
+            set => Registry.SetValue( RtspHeaderNames.RateControl , value );
         }
 
         public RequireRtspHeaderValue Require
