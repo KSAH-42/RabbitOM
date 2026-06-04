@@ -8,27 +8,71 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     {
         public struct Enumerator : IEnumerator<KeyValuePair<string , string>>
         {
-            public Enumerator( RtspHeaderCollection collection )
+            private IEnumerator<KeyValuePair<string,List<string>>> _enumerator;
+            private IEnumerator<string> _valueEnumerator;
+            private KeyValuePair<string , string> _value;
+
+
+
+
+            internal Enumerator( RtspHeaderCollection headers )
             {
+                _enumerator = headers._collection.GetEnumerator();
+                _valueEnumerator = null;
+                _value = default;
             }
 
-            object IEnumerator.Current => Current;
 
-            public KeyValuePair<string , string> Current => throw new NotImplementedException();
+
+
+
+            object IEnumerator.Current => _value;
+
+            public KeyValuePair<string , string> Current => _value;
+
+
+
+
 
             public bool MoveNext()
             {
-                throw new NotImplementedException();
+                if ( _valueEnumerator == null || ! _valueEnumerator.MoveNext() )
+                {
+                    _valueEnumerator = null;
+
+                    while( _enumerator.MoveNext() )
+                    {
+                        var valueEnumerator = _enumerator.Current.Value.GetEnumerator();
+
+                        if ( valueEnumerator.MoveNext() )
+                        {
+                            _valueEnumerator = valueEnumerator;
+                            break;
+                        }
+                    }
+                }
+
+                if ( _valueEnumerator == null )
+                {
+                    return false;
+                }
+
+                _value = new KeyValuePair<string, string>( _enumerator.Current.Key , _valueEnumerator.Current );
+
+                return true;
             }
 
             public void Reset()
             {
-                throw new NotImplementedException();
+                _valueEnumerator = null;
+                _enumerator.Dispose();
+                _value = default;
             }
 
             public void Dispose()
             {
-                throw new NotImplementedException();
+                _valueEnumerator?.Dispose();
+                _enumerator.Dispose();
             }
         }
     }

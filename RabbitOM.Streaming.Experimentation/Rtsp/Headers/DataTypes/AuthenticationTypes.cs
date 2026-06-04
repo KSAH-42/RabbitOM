@@ -45,8 +45,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         public const string Sha384Algorithm = "SHA-384";
 
         public const string Sha512Algorithm = "SHA-512";
-        
-        
+
 
 
 

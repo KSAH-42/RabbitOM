@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: perf improvements: remove linq
+    // TODO: find something to improve perf on linq statements
 
     internal sealed partial class RtspHeaderRegistry
     {
