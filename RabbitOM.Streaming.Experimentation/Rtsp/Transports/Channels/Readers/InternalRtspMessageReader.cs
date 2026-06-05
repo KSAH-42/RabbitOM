@@ -2,25 +2,16 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
-    internal sealed class RtspMessageReaderInternal
+    internal sealed class InternalRtspMessageReader
     {
         private readonly RtspStreamReader _reader;
 
-
-
-
-        public RtspMessageReaderInternal( IStream stream )
+        public InternalRtspMessageReader( IStream stream )
         {
             _reader = new RtspStreamReader( stream );
         }
-        
-
-
 
         public int? MaximumOfHeaders { get; set; }
-        
-
-
 
         public int PeekValue()
         {

@@ -4,14 +4,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspMessageReader : IMessageReader
     {
-        private readonly RtspMessageReaderInternal _reader;
-
+        private readonly InternalRtspMessageReader _reader;
 
         public RtspMessageReader( IStream stream )
         {
-            _reader = new RtspMessageReaderInternal( stream );
+            _reader = new InternalRtspMessageReader( stream );
         }
-
 
         public RtspMessage ReadMessage()
         {

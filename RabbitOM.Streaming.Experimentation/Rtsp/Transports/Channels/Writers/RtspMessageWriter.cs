@@ -7,19 +7,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
         , IMessageWriter<RtspRequestMessage>
     {
         private readonly RtspStreamWriter _writer;
-        private readonly RtspRequestMessageValidator _requestValidator;
-        private readonly RtspInterleavedMessageValidator _interleavedValidator;
+        private readonly RtspMessageValidator _validator;
 
         public RtspMessageWriter( IStream stream )
         {
             _writer = new RtspStreamWriter( stream );
-            _requestValidator = new RtspRequestMessageValidator();
-            _interleavedValidator = new RtspInterleavedMessageValidator();
+            _validator = new RtspMessageValidator();
         }
 
         public void WriteMessage( RtspInterleavedMessage message )
         {
-            _interleavedValidator.ValidateMessage( message );
+            _validator.ValidateMessage( message );
 
             _writer.WriteChar( '$' );
             _writer.WriteByte( (byte) (message.Length >> 8 & 0xFF) );
@@ -30,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
         public void WriteMessage( RtspRequestMessage message )
         {
-            _requestValidator.ValidateRequest( message );
+            _validator.ValidateMessage( message );
 
             _writer.WriteLine( message.RequestLine.ToString() );
 
