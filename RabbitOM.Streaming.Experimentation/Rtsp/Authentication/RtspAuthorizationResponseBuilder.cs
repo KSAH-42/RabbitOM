@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 
                 string BuildDigestResponse( RtspHashAlgorithm algorithm )
                 {
-                    using( algorithm )
+                    using ( algorithm )
                     {
                         var hash1 = algorithm.Compute( _username + ":" + _realm + ":" + _password );
                         var hash2 = algorithm.Compute( _method + ":" + _uri  );
