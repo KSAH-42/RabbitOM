@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
 
-    internal sealed class RtspAuthorizationResponseBuilder
+    public sealed class RtspAuthorizationResponseBuilder
     {
         private string _method = string.Empty;
         private string _scheme = string.Empty;

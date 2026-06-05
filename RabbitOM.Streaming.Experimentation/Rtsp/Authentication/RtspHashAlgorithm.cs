@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {
-    internal sealed class RtspHashAlgorithm : IDisposable
+    public sealed class RtspHashAlgorithm : IDisposable
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
