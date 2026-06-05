@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( prefix == '$' )
             {
-                return _reader.ReadMessageAsInterleaved();
+                return _reader.ReadInterleavedMessage();
             }
 
             return _reader.ReadMessage();
