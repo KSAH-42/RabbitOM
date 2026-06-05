@@ -16,6 +16,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
+        public int Peek()
+        {
+            throw new NotImplementedException();
+        }
+
         public int ReadByte()
         {
             throw new NotImplementedException();

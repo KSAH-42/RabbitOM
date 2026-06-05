@@ -30,6 +30,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
     public interface IStream : IDisposable
     {
+        int Peek();
+
         int ReadByte();
 
         int Read( byte[] buffer , int offset , int count );
