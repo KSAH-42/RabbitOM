@@ -2,9 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
-    public sealed class RtspMessageWriter
-        : IMessageWriter<RtspInterleavedMessage>
-        , IMessageWriter<RtspRequestMessage>
+    public sealed class RtspMessageWriter : IMessageWriter<RtspInterleavedMessage> , IMessageWriter<RtspRequestMessage>
     {
         private readonly RtspStreamWriter _writer;
         private readonly RtspMessageValidator _validator;
