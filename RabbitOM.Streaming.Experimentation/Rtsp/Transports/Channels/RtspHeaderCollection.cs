@@ -46,17 +46,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         }
 
         // TODO: need to remove and let the upper layer to parse this header ?
+        // it make sense to used internal parsers class located in the headers namespace
         public long? CSeq
         {
-            get => TryGetValue( "CSeq" , out long? result ) ? result : null;
-            set => SetValue( "CSeq" , value.HasValue ? value.ToString() : null );
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         // TODO: need to remove and let the upper layer to parse this header ?
+        // it make sense to used internal parsers class located in the headers namespace
         public long? ContentLength
         {
-            get => TryGetValue( "Content-Length" , out long? result ) ? result : null;
-            set => SetValue( "Content-Length" , value.HasValue ? value.ToString() : null );
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
 
@@ -296,15 +298,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             OnAdded( name , value );
 
             return true;
-        }
-
-        public bool TryGetValue( string name , out long? result )
-        {
-            result = TryGetValue( name , out string value ) && long.TryParse( value , out var number )
-                ? new long?( number )
-                : null;
-
-            return result.HasValue;
         }
 
         public bool TryGetValue( string name , out string result )
