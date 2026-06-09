@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    public sealed partial class RtspHeaderCollection
+    public partial class RtspHeaderCollection
     {
         public struct Enumerator : IEnumerator<KeyValuePair<string , string>>
         {

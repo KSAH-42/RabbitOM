@@ -3,21 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    // TODO: /!\ not finished, implement an enumerator
-    // TODO: it's a low level class, the risk of casting IEnumerable<string> into List is low, expose IReadOnlyCollection an do not make a toArray()
-    // TODO: /!\ refactor the count properties, used instead a counter to avoid linq expression that slow down the performance
     // TODO: /!\ take care about the mirror class 
-    // we don't use NameValueCollection here is more slower than the dictionary
     // we don't use string.IsNullOrWhiteSpace here, because we are at a lower lever, and we prefer to speed up and let the validation done at a higher level
 
-    public sealed partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
+    public partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
     {
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
+        private int _count;
 
 
 
@@ -41,8 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public int Count
         {
-            // TODO: snipe this code - too slow
-            get => _collection.Values.Sum( x => x.Count );
+            get => _count;
         }
 
         public IEnumerable<string> AllKeys
@@ -53,15 +48,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         // TODO: need to remove and let the upper layer to parse this header ?
         public long? CSeq
         {
-            get => throw new NotImplementedException(); // add string extensions ToNullableLong()
-            set => throw new NotImplementedException();
+            get => TryGetValue( "CSeq" , out long? result ) ? result : null;
+            set => SetValue( "CSeq" , value.HasValue ? value.ToString() : null );
         }
 
         // TODO: need to remove and let the upper layer to parse this header ?
         public long? ContentLength
         {
-            get => throw new NotImplementedException(); // add string extensions ToNullableLong()
-            set => throw new NotImplementedException();
+            get => TryGetValue( "Content-Length" , out long? result ) ? result : null;
+            set => SetValue( "Content-Length" , value.HasValue ? value.ToString() : null );
         }
 
 
@@ -99,6 +94,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             }
 
             _collection[ name ].Add( value ?? string.Empty );
+
+            OnAdded( name , value );
         }
 
         public void AddRange( string name , IEnumerable<string> values )
@@ -123,6 +120,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             foreach ( var value in values )
             {
                 items.Add( value ?? string.Empty );
+
+                OnAdded( name , value );
             }
         }
 
@@ -157,10 +156,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 }
 
                 _collection[ name ].Add( value );
+
+                OnAdded( name , value );
             }
             else
             {
                 _collection.Remove( name ?? string.Empty );
+
+                OnRemoved( name );
             }
         }
 
@@ -171,7 +174,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            return _collection.Remove( name );
+            if ( ! _collection.Remove( name ) )
+            {
+                return false;
+            }
+
+            OnRemoved( name );
+
+            return true;
         }
 
         public bool RemoveAt( string name , int index )
@@ -198,12 +208,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 _collection.Remove( name );
             }
 
+            OnRemoved( name );
+
             return true;
         }
 
         public void Clear()
         {
             _collection.Clear();
+
+            OnClear();
         }
 
         public bool TryAdd( string name , string value )
@@ -219,6 +233,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             }
 
             _collection[ name ].Add( value ?? string.Empty );
+
+            OnAdded( name , value );
 
             return true;
         }
@@ -240,6 +256,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             foreach( var value in values )
             {
                 items.Add( value ?? string.Empty );
+
+                OnAdded( name , value );
             }
 
             return true;
@@ -275,7 +293,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             _collection[ name ].Add( value );
 
+            OnAdded( name , value );
+
             return true;
+        }
+
+        public bool TryGetValue( string name , out long? result )
+        {
+            result = TryGetValue( name , out string value ) && long.TryParse( value , out var number )
+                ? new long?( number )
+                : null;
+
+            return result.HasValue;
         }
 
         public bool TryGetValue( string name , out string result )
@@ -342,6 +371,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             result = _collection.TryGetValue( name , out var values ) ? new ReadOnlyCollection<string>( values ) : null;
 
             return result != null;
+        }
+
+
+
+
+
+
+        protected virtual void OnAdded( string name , string value )
+        {
+            _count ++;
+        }
+
+        protected virtual void OnRemoved( string name )
+        {
+            if ( _count > 0 )
+            {
+                _count --;
+            }
+        }
+
+        protected virtual void OnClear()
+        {
+            _count = 0;
         }
     }
 }

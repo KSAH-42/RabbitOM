@@ -53,12 +53,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers.Tcp
             throw new NotImplementedException();
         }
 
-        public override void BeginStopCommunication()
+        public override void Shutdown()
         {
             throw new NotImplementedException();
         }
 
-        public override bool EndStopCommunication(TimeSpan timeout)
+        public override bool WaitForShutdown(TimeSpan timeout)
         {
             throw new NotImplementedException();
         }
