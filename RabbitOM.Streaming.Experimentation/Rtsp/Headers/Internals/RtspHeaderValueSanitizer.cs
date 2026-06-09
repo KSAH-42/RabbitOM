@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    internal static class RtspHeaderValueSanitizer
+    public static class RtspHeaderValueSanitizer
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\"' , '\'' , '`' };
 
@@ -14,7 +14,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsSpaceOrQuoteValue( in char value )
         {
-            Debug.Assert( SpaceAndQuotesChars.Length == 4 );
             return value == SpaceAndQuotesChars[0]
                 || value == SpaceAndQuotesChars[1]
                 || value == SpaceAndQuotesChars[2]
@@ -24,7 +23,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool IsQuoteValue( in char value )
         {
-            Debug.Assert( SpaceAndQuotesChars.Length == 4 );
             return value == SpaceAndQuotesChars[1]
                 || value == SpaceAndQuotesChars[2]
                 || value == SpaceAndQuotesChars[3];
@@ -56,9 +54,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         // most of the time space and quotes are not present
         // input  = "  'd ''' f '''' "
         // output = "d  f"
+        
+        // TODO: refactor this code: don't touch the string if its correct
 
         public static string TrimWithRemoveAllQuotes( string value )
         {
+            throw new NotImplementedException();
+
+
             if ( string.IsNullOrEmpty( value ) )
             {
                 return string.Empty;
@@ -73,7 +76,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             while ( k < j )
             {
-                if ( ! f1 && IsSpaceOrQuoteValue( value[ i ] ) )
+                if ( !f1 && IsSpaceOrQuoteValue( value[i] ) )
                 {
                     i++;
                 }
@@ -82,7 +85,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     f1 = true;
                 }
 
-                if ( ! f2 && IsSpaceOrQuoteValue( value[ j - 1 ] ) )
+                if ( !f2 && IsSpaceOrQuoteValue( value[j - 1] ) )
                 {
                     j--;
                 }
@@ -93,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 if ( k < j )
                 {
-                    if ( f1 && ! IsQuoteValue( value[k] ) )
+                    if ( f1 && !IsQuoteValue( value[k] ) )
                     {
                         ( builder ?? ( builder = new StringBuilder() ) ).Append( value[k] );
                     }
