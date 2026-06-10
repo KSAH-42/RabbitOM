@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: refactor and try to remove some methods in this class
-    // TODO: use a prevalidation to avoid repeat code a string.IsNullOrWhiteSpace find an elegant way to fix it.
+    // TODO: simplify this class, start by removing unused methods
 
     internal static class RtspHeaderValueValidator
     {
-        private static string Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~";
-        
-        private static string TokenSymbols = "!#$%&'*+-.^_|~";
+        private static HashSet<char> Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~".ToHashSet();
+
+        private static HashSet<char> TokenSymbols = "!#$%&'*+-.^_|~".ToHashSet();
 
 
 
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( value ) );
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
         }
 
         public static string EnsureWellFormedOrEmpty( string value )
@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
         }
 
         // TODO: need to accept empty string ?
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( value ) );
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
         }
 
         public static string EnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 || predicate( character ) ) ? value : throw new FormatException();
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) || predicate( character ) ) ? value : throw new FormatException();
         }
 
         public static string EnsureWellFormedTokenAndAll( string value , Func<char,bool> predicate )
@@ -73,7 +73,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentNullException( nameof( predicate ) );
             }
 
-            return value.All( character => (char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) && predicate( character ) ) ? value : throw new FormatException();
+            return value.All( character => (char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) ) && predicate( character ) ) ? value : throw new FormatException();
         }
 
         public static string EnsureWellFormedTokenOrEmpty( string value )
@@ -83,7 +83,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) ) ? value : throw new FormatException();
         }
 
         public static string EnsureNoSpaces( string value )
@@ -199,7 +199,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 );
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) );
         }
 
         public static bool TryEnsureWellFormedOrEmpty( string value )
@@ -209,7 +209,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return true;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 );
+            return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) );
         }
 
         public static bool TryEnsureWellFormedToken( string value )
@@ -219,7 +219,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) );
         }
 
         public static bool TryEnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
@@ -229,7 +229,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 || predicate( character ) );
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) || predicate( character ) );
         }
 
         public static bool TryEnsureWellFormedTokenOrEmpty( string value )
@@ -239,7 +239,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.IndexOf( character ) >= 0 );
+            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) );
         }
 
         public static bool TryEnsureNotNullOrEmpty( string value )

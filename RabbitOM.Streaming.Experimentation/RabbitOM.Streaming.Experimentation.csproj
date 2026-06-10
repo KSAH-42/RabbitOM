@@ -119,14 +119,14 @@
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ProxyRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ProxyRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\RtpInfoSourceRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\RtpInfoSourceRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\RtspMethodHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringParameterRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringWithQualityRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\StringWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\SupportedTypes.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\TrackRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\TrackRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\TransportInfoRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\TransportInfoRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ValueRange.cs" />

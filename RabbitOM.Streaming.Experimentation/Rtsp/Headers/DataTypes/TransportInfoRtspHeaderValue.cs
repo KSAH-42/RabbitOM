@@ -26,57 +26,57 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
-        public string Transport 
+        public string Transport
         { 
-            get => _transport; 
+            get => _transport;
             set => _transport = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
 
         public string Transmission
         { 
-            get => _transmission; 
+            get => _transmission;
             set => _transmission = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
         }
 
         public string Source
         { 
-            get => _source; 
+            get => _source;
             set => _source = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Destination
         { 
-            get => _destination; 
+            get => _destination;
             set => _destination = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Address
         { 
-            get => _address; 
+            get => _address;
             set => _address = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Host
         { 
-            get => _host; 
+            get => _host;
             set => _host = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string SSRC
         { 
-            get => _ssrc; 
+            get => _ssrc;
             set => _ssrc = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Mode
         { 
-            get => _mode; 
+            get => _mode;
             set => _mode = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Append
         { 
-            get => _append; 
+            get => _append;
             set => _append = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
