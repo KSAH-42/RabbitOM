@@ -6,8 +6,7 @@ using System.Diagnostics;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    // TODO: /!\ take care about the mirror class 
-    // we don't use string.IsNullOrWhiteSpace here, because we are at a lower lever, and we prefer to speed up and let the validation done at a higher level
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
     public partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
     {
@@ -28,9 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         {
             get => GetValueAt( name , index );
         }
-
-
-
+        
 
 
 
@@ -45,25 +42,52 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             get => _collection.Keys;
         }
 
-        // TODO: need to remove and let the upper layer to parse this header ?
-        // it make sense to used internal parsers class located in the headers namespace
         public long? CSeq
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => ReadValueAsLong( this , RtspHeaderNames.CSeq );
+            set => WriteValue( this , RtspHeaderNames.CSeq , value );
         }
 
-        // TODO: need to remove and let the upper layer to parse this header ?
-        // it make sense to used internal parsers class located in the headers namespace
         public long? ContentLength
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => ReadValueAsLong( this , RtspHeaderNames.ContentLength );
+            set => WriteValue( this , RtspHeaderNames.ContentLength , value );
+        }
+        
+
+
+
+
+        public static long? ReadValueAsLong( RtspHeaderCollection collection , string name )
+        {
+            if ( collection == null )
+            {
+                throw new ArgumentNullException( nameof( collection ) );
+            }
+
+            if ( ! collection.TryGetValue( name ?? string.Empty, out var value ) )
+            {
+                return null;
+            }
+
+            if ( ! long.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) , out var result ) )
+            {
+                return null;
+            }
+
+            return result;
         }
 
+        public static void WriteValue( RtspHeaderCollection collection , string name , long? value )
+        {
+            if ( collection == null )
+            {
+                throw new ArgumentNullException( nameof( collection ) );
+            }
 
-
-
+            collection.SetValue( name , value.HasValue ? value.ToString() : null );
+        }
+        
 
 
 
@@ -139,7 +163,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public IEnumerable<string> GetValues( string name )
         {
-            // avoiding IList cast here by wrapping the collection values into a standard .net class
             return new ReadOnlyCollection<string>( _collection[ name ] );
         }
 
@@ -365,7 +388,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             return result != null;
         }
-
 
 
 
