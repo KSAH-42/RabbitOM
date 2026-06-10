@@ -55,53 +55,38 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         // input  = "  'd ''' f '''' "
         // output = "d  f"
         
-        // TODO: refactor this code: don't touch the string if its correct
-
         public static string TrimWithRemoveAllQuotes( string value )
         {
-            throw new NotImplementedException();
-
-
             if ( string.IsNullOrEmpty( value ) )
             {
                 return string.Empty;
             }
 
-            StringBuilder builder = null;
-            var f1 = false;
-            var f2 = false;
-            var k = 0;
             var i = 0;
             var j = value.Length - 1;
 
-            while ( k < j )
+            while ( IsSpaceOrQuoteValue( value[i] ) ) {  i ++; }
+            while ( IsSpaceOrQuoteValue( value[j] ) ) {  j --; }
+
+            if ( i == 0 && j == value.Length - 1 )
             {
-                if ( !f1 && IsSpaceOrQuoteValue( value[i] ) )
-                {
-                    i++;
-                }
-                else
-                {
-                    f1 = true;
-                }
+                return value;
+            }
 
-                if ( !f2 && IsSpaceOrQuoteValue( value[j - 1] ) )
-                {
-                    j--;
-                }
-                else
-                {
-                    f2 = true;
-                }
+            StringBuilder builder = null;
+            
+            while ( i <= j )
+            {
+                var element = value[i++];
 
-                if ( k < j )
+                if ( ! IsQuoteValue( element ) )
                 {
-                    if ( f1 && !IsQuoteValue( value[k] ) )
+                    if ( builder == null )
                     {
-                        ( builder ?? ( builder = new StringBuilder() ) ).Append( value[k] );
+                        builder = new StringBuilder(50);
                     }
 
-                    k++;
+                    builder.Append( element );
                 }
             }
 
