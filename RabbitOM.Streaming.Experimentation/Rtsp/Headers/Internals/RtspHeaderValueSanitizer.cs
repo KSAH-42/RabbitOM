@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public static class RtspHeaderValueSanitizer
+    internal static class RtspHeaderValueSanitizer
     {
         private static readonly char[] SpaceAndQuotesChars = { ' ' , '\"' , '\'' , '`' };
 
@@ -51,10 +49,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value;
         }
 
-        // most of the time space and quotes are not present
-        // input  = "  'd ''' f '''' "
-        // output = "d  f"
-        
         public static string TrimWithRemoveAllQuotes( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
@@ -62,35 +56,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return string.Empty;
             }
 
-            var i = 0;
-            var j = value.Length - 1;
-
-            while ( IsSpaceOrQuoteValue( value[i] ) ) {  i ++; }
-            while ( IsSpaceOrQuoteValue( value[j] ) ) {  j --; }
-
-            if ( i == 0 && j == value.Length - 1 )
-            {
-                return value;
-            }
-
-            StringBuilder builder = null;
-            
-            while ( i <= j )
-            {
-                var element = value[i++];
-
-                if ( ! IsQuoteValue( element ) )
-                {
-                    if ( builder == null )
-                    {
-                        builder = new StringBuilder(50);
-                    }
-
-                    builder.Append( element );
-                }
-            }
-
-            return builder?.ToString() ?? value;
+            return value.Trim( SpaceAndQuotesChars )
+                    .Replace( SpaceAndQuotesChars[1].ToString() , "" )
+                    .Replace( SpaceAndQuotesChars[2].ToString() , "" )
+                    .Replace( SpaceAndQuotesChars[3].ToString() , "" );
         }
     }
 }
