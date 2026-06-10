@@ -35,6 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.IndexOf( character ) >= 0 ) ? value : throw new FormatException();
         }
 
+        // TODO: need to accept empty string ?
         public static string EnsureWellFormedToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )

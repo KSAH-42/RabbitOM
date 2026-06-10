@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class RtpFieldRtspHeaderValueCollection : IEnumerable , IEnumerable<RtpFieldRtspHeaderValue> , ICollection<RtpFieldRtspHeaderValue> , IReadOnlyCollection<RtpFieldRtspHeaderValue>
+    public sealed class TrackRtspHeaderValueCollection : IEnumerable , IEnumerable<TrackRtspHeaderValue> , ICollection<TrackRtspHeaderValue> , IReadOnlyCollection<TrackRtspHeaderValue>
     {
-        private readonly List<RtpFieldRtspHeaderValue> _collection = new List<RtpFieldRtspHeaderValue>();
+        private readonly List<TrackRtspHeaderValue> _collection = new List<TrackRtspHeaderValue>();
 
 
 
 
-        public RtpFieldRtspHeaderValue this[ int index ]
+        public TrackRtspHeaderValue this[ int index ]
         {
             get => _collection[ index ];
         }
@@ -39,12 +39,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return GetEnumerator();
         }
 
-        public IEnumerator<RtpFieldRtspHeaderValue> GetEnumerator()
+        public IEnumerator<TrackRtspHeaderValue> GetEnumerator()
         {
             return _collection.GetEnumerator();
         }
 
-        public void Add( RtpFieldRtspHeaderValue item )
+        public void Add( TrackRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Add( item );
         }
 
-        public bool TryAdd( RtpFieldRtspHeaderValue item )
+        public bool TryAdd( TrackRtspHeaderValue item )
         {
             if ( item == null )
             {
@@ -71,17 +71,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Clear();
         }
 
-        public bool Contains( RtpFieldRtspHeaderValue item )
+        public bool Contains( TrackRtspHeaderValue item )
         {
             return _collection.Contains( item );
         }
 
-        public void CopyTo( RtpFieldRtspHeaderValue[] array , int arrayIndex )
+        public void CopyTo( TrackRtspHeaderValue[] array , int arrayIndex )
         {
             _collection.CopyTo( array , arrayIndex );
         }
 
-        public bool Remove( RtpFieldRtspHeaderValue item )
+        public bool Remove( TrackRtspHeaderValue item )
         {
             return _collection.Remove( item );
         }
@@ -98,7 +98,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return true;
         }
 
-        public bool RemoveBy( Func<RtpFieldRtspHeaderValue,bool> predicate )
+        public bool RemoveBy( Func<TrackRtspHeaderValue,bool> predicate )
         {
             if ( predicate == null )
             {

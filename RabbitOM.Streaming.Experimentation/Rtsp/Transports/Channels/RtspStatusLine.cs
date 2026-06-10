@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        // RTSP/1.0 555 Doom-Patrol|Dark-Series 
+        // RTSP / 1.0      555     Doom-Patrol|Dark-Series 
         public static bool TryParse( string input , out RtspStatusLine result )
         {
             result = null;
@@ -25,8 +25,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             {
                 return false;
             }
-
-            // we don't use string.split here, even are regular expression
 
             var statusLine = new RtspStatusLine();
             var builder = new StringBuilder(200);

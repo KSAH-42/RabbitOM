@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _algorithm = string.Empty;
         private bool? _stale;
         private string _qualityOfProtection = string.Empty;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
+        private readonly StringParameterRtspHeaderValueCollection _extensions = new StringParameterRtspHeaderValueCollection();
 
         
 
@@ -68,7 +68,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             set => _qualityOfProtection = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
-        public StringRtspHeaderValueCollection Extensions
+        public StringParameterRtspHeaderValueCollection Extensions
         {
             get => _extensions;
         }
@@ -125,7 +125,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                             }
                             else
                             {
-                                header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
+                                header._extensions.TryAdd( parameter.Key , parameter.Value );
                             }
                         }
                     }

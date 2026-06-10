@@ -26,8 +26,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 return false;
             }
 
-            // we don't use string.split here, even are regular expression
-
             var requestLine = new RtspRequestLine();
             var builder = new StringBuilder(100);
             var i = -1;

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public sealed class RtpFieldRtspHeaderValue
+    public sealed class TrackRtspHeaderValue
     { 
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
         
@@ -46,13 +46,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
-        public static bool TryParse( string input , out RtpFieldRtspHeaderValue result )
+        public static bool TryParse( string input , out TrackRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , ";" , out string[] tokens ) )
             {
-                var info = new RtpFieldRtspHeaderValue();
+                var info = new TrackRtspHeaderValue();
 
                 foreach ( var token in tokens )
                 {

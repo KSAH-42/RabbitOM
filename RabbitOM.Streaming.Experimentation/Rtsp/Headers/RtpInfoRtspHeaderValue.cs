@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
     public sealed class RtpInfoRtspHeaderValue
     {
-        public RtpFieldRtspHeaderValueCollection Fields { get; } = new RtpFieldRtspHeaderValueCollection();
+        public TrackRtspHeaderValueCollection Tracks { get; } = new TrackRtspHeaderValueCollection();
 
         public static bool TryParse( string input , out RtpInfoRtspHeaderValue result )
         {
@@ -18,13 +18,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
                 foreach ( var token in tokens )
                 {
-                    if ( RtpFieldRtspHeaderValue.TryParse( token , out var info ) )
+                    if ( TrackRtspHeaderValue.TryParse( token , out var info ) )
                     {
-                        header.Fields.TryAdd( info );
+                        header.Tracks.TryAdd( info );
                     }
                 }
 
-                if ( header.Fields.Count > 0 )
+                if ( header.Tracks.Count > 0 )
                 {
                     result = header;
                 }
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public override string ToString()
         {
-            return string.Join( ", " , Fields );
+            return string.Join( ", " , Tracks );
         }
     }
 }

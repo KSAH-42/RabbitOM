@@ -5,13 +5,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
 
     public sealed class ViaRtspHeaderValue
-    { 
+    {
         public ProxyRtspHeaderValueCollection Proxies { get; } = new ProxyRtspHeaderValueCollection();
-        
-        public override string ToString()
-        {
-            return string.Join( ", " , Proxies );
-        }
 
         public static bool TryParse( string input , out ViaRtspHeaderValue result )
         {
@@ -36,6 +31,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return result != null;
-        }        
+        }
+
+        public override string ToString()
+        {
+            return string.Join( ", " , Proxies );
+        }
     }
 }
