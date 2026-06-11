@@ -94,7 +94,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
-        private bool EnsureCachingData()
+        private bool BufferingDataIfNeeded()
         {
             throw new NotImplementedException();
         }
