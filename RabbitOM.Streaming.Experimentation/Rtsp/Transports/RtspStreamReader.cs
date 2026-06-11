@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
@@ -13,22 +14,46 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public int Read( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            return _stream.Read( buffer , offset , count );
         }
 
         public int Peek()
         {
-            throw new NotImplementedException();
+            return _stream.Peek();
         }
 
         public int ReadByte()
         {
-            throw new NotImplementedException();
+            return _stream.ReadByte();
         }
 
         public string ReadLine()
         {
-            throw new NotImplementedException();
+            var builder = new StringBuilder();
+
+            while ( true )
+            {
+                var byteValue = _stream.ReadByte();
+
+                if ( byteValue <= 0 )
+                {
+                    return null;
+                }
+
+                if ( byteValue == '\r' )
+                {
+                    continue;
+                }
+
+                if ( byteValue == '\n' )
+                {
+                    break;
+                }
+
+                builder.Append( (char) byteValue );
+            }
+
+            return builder.ToString();
         }
     }
 }
