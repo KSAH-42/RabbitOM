@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: simplify this class, start by removing unused methods
-
     internal static class RtspHeaderValueValidator
     {
         private static HashSet<char> Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~".ToHashSet();
@@ -86,16 +84,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) ) ? value : throw new FormatException();
         }
 
-        public static string EnsureNoSpaces( string value )
-        {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            return value.Any( character => character == ' ' ) ? throw new FormatException() : value;
-        }
-
         public static string EnsureLettersOrDigits( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
@@ -106,16 +94,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.Any( character => char.IsLetterOrDigit( character ) ) ? value : throw new FormatException();
         }
 
-        public static string EnsureAny( string value , Func<char, bool> predicate )
-        {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            return value.Any( predicate ) ? value : throw new FormatException();
-        }
-
         public static string EnsureAny( string value , Func<char,int, bool> predicate )
         {
             if ( string.IsNullOrEmpty( value ) )
@@ -124,61 +102,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return value.Where( predicate ).Any() ? value : throw new FormatException();
-        }
-
-        public static string EnsureNotStartsWidth( string value , string text )
-        {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrEmpty( text ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            return ! value.StartsWith( text ) ? value : throw new FormatException();
-        }
-
-        public static string EnsureNotEndsWidth( string value , string text )
-        {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            if ( string.IsNullOrEmpty( text ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            return ! value.EndsWith( text ) ? value : throw new FormatException();
-        }
-
-        public static string EnsureNoQuotes( string value )
-        {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            return value.All( character => character != '"' || character != '\'' || character != '`' ) ? value : throw new FormatException();
-        }
-
-        public static string EnsureNotNullOrEmpty( string value )
-        {
-            return ! string.IsNullOrEmpty( value ) ? value : throw new FormatException();
-        }
-        
-        public static string EnsureNotNullOrWhiteSpace( string value )
-        {
-            return ! string.IsNullOrWhiteSpace( value ) ? value : throw new FormatException();
-        }
-
-        public static object EnsureNotNull( object value )
-        {
-            return value != null ? value : throw new ArgumentNullException( nameof( value ) );
         }
 
         public static TValue EnsureNotNull<TValue>( TValue value ) where TValue : class
@@ -232,34 +155,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) || predicate( character ) );
         }
 
-        public static bool TryEnsureWellFormedTokenOrEmpty( string value )
-        {
-            if ( string.IsNullOrWhiteSpace( value ) )
-            {
-                return false;
-            }
-
-            return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) );
-        }
-
-        public static bool TryEnsureNotNullOrEmpty( string value )
-        {
-            return ! string.IsNullOrEmpty( value );
-        }
-
-        public static bool TryEnsureAny( string value , Func<char , bool> predicate )
-        {
-            return ! string.IsNullOrEmpty( value ) && value.Any( predicate );
-        }
-
         public static bool TryEnsureAny( string value , Func<char , int, bool> predicate )
         {
             return ! string.IsNullOrEmpty( value ) && value.Where( predicate ).Any();
-        }
-
-        public static bool TryEnsureNotPrintable( in char value )
-        {
-            return value <= 31 || value >= 127;
         }
 
         public static bool TryEnsureLettersOrDigits( string value )
@@ -270,36 +168,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             }
 
             return value.Any( character => char.IsLetterOrDigit( character ) );
-        }
-
-        public static bool TryEnsureNoSpaces( string value )
-        {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                return false;
-            }
-
-            return value.IndexOf( ' ' ) > 0;
-        }
-
-        public static bool TryEnsureNotStartsWidth( string value , string text )
-        {
-            if ( string.IsNullOrEmpty( value ) || string.IsNullOrEmpty( value ) )
-            {
-                return false;
-            }
-
-            return ! value.StartsWith( text );
-        }
-
-        public static bool TryEnsureNotEndsWidth( string value , string text )
-        {
-            if ( string.IsNullOrEmpty( value ) || string.IsNullOrEmpty( value ) )
-            {
-                return false;
-            }
-
-            return ! value.EndsWith( text );
         }
     }
 }

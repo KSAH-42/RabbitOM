@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    internal sealed class RtspMessageValidator
+    public sealed class RtspMessageValidator
     {
         public void ValidateMessage( RtspInterleavedMessage message )
         {
