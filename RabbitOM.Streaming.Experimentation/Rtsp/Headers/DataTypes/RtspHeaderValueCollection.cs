@@ -62,18 +62,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             _collection.Add( item );
         }
 
-        public bool TryAdd( TValue item )
-        {
-            if ( ! OnValidate( item ) )
-            {
-                return false;
-            }
-
-            _collection.Add( item );
-
-            return true;
-        }
-
         public void Clear()
         {
             _collection.Clear();
@@ -105,6 +93,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             return true;
         }
+
+        public bool TryAdd( TValue item )
+        {
+            if ( ! OnValidate( item ) )
+            {
+                return false;
+            }
+
+            _collection.Add( item );
+
+            return true;
+        }
+
+
 
 
 

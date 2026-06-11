@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     {
         public RtspRequestLine RequestLine { get; set; }
 
-        public RtspHeaderCollection Headers { get; set; }
+        public RtspMessageHeaderCollection Headers { get; set; }
 
         public byte[] Body { get; set; }
     }

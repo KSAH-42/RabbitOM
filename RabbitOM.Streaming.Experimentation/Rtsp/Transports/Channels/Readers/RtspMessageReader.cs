@@ -6,26 +6,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     {
         private readonly RtspStreamReader _reader;
 
+        private readonly RtspMessageReaderValidatorSettings _settings;
 
 
 
 
-        public RtspMessageReader( IStream stream )
+
+        public RtspMessageReader( IStream stream , RtspMessageReaderValidatorSettings settings )
         {
+            if ( settings == null )
+            {
+                throw new ArgumentNullException( nameof( settings ) );
+            }
+
             _reader = new RtspStreamReader( stream );
+            _settings = settings;
         }
-
-
-
-
-
-        public long? LimitOfHeadersCount { get; set; }
-
-        public long? LimitOfCumulatedHeadersSize { get; set; }
-
-        public long? LimitOfContentLength { get; set; }
-
-
 
 
 
@@ -52,14 +48,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 return null;
             }
 
-            var headers = new RtspHeaderCollection();
-
-            var validator = new RtspHeaderCollectionValidator( headers ) // for protocol violations
-            {
-                LimitOfHeadersCount = LimitOfHeadersCount,
-                LimitOfCumulatedHeadersSize = LimitOfCumulatedHeadersSize,
-                LimitOfContentLength = LimitOfContentLength,
-            };
+            var headers = new RtspMessageHeaderCollection();
+            var validator = new RtspMessageReaderValidator( headers , _settings );
 
             while ( true )
             {
@@ -77,7 +67,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 if ( headers.TryAddParse( header ) )
                 {
-                    validator.Validate( header );
+                    // Detect protocols violation
+                    validator.ValidateHeader( header );
                 }
             }
 
@@ -85,6 +76,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( headers.ContentLength.HasValue && headers.ContentLength > 0 )
             {
+                // Add a validator method if the validation of the body must be apply
+                // but if it is the case validate only the size
+                // if content validation must be done, it must apply using multiple threads and so in the upper level
+
                 body = new byte[ headers.ContentLength.Value ]; // TODO: use allocator
 
                 var offset = 0;

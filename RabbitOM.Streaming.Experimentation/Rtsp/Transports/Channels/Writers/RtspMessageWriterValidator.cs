@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
-    public sealed class RtspMessageValidator
+    public sealed class RtspMessageWriterValidator
     {
         public void ValidateMessage( RtspInterleavedMessage message )
         {

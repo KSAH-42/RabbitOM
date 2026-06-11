@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Net;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-    public sealed class RtspHeaderCollectionValidator
+    public sealed class RtspMessageReaderValidator
     {
-        private readonly RtspHeaderCollection _collection;
+        private readonly RtspMessageHeaderCollection _collection;
+
+        private readonly RtspMessageReaderValidatorSettings _settings;
 
         private long _cumulatedHeaderSize;
 
@@ -15,27 +17,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public RtspHeaderCollectionValidator( RtspHeaderCollection collection )
+        public RtspMessageReaderValidator( RtspMessageHeaderCollection collection , RtspMessageReaderValidatorSettings settings )
         {
             _collection = collection ?? throw new ArgumentNullException( nameof( collection ) );
-        }
+            _settings = settings ?? throw new ArgumentNullException( nameof( settings ) ) ;
+         }
 
 
 
 
-
-        public long? LimitOfHeadersCount { get; set; }
-
-        public long? LimitOfCumulatedHeadersSize { get; set; }
-
-        public long? LimitOfContentLength { get; set; }
-
-
-
-
-
-
-        public void Validate( string header )
+        public void ValidateHeader( string header )
         {
             if ( string.IsNullOrEmpty( header ) )
             {
@@ -47,12 +38,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 _cumulatedHeaderSize += header.Length;
             }
 
-            if ( LimitOfCumulatedHeadersSize.HasValue && _cumulatedHeaderSize < LimitOfCumulatedHeadersSize.Value )
+            if ( _settings.LimitOfCumulatedHeadersSize.HasValue && _cumulatedHeaderSize < _settings.LimitOfCumulatedHeadersSize.Value )
             {
                 throw new ProtocolViolationException( "the size has exceed" );
             }
 
-            if ( LimitOfHeadersCount.HasValue && LimitOfHeadersCount < _collection.Count )
+            if ( _settings.LimitOfHeadersCount.HasValue && _settings.LimitOfHeadersCount < _collection.Count )
             {
                 throw new ProtocolViolationException( $"too many headers {_collection.Count} that can cause security issues" );
             }
@@ -67,11 +58,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
                 throw new ProtocolViolationException( "the header Content-Length is present at multiple times" );
             }
 
-            if ( LimitOfContentLength.HasValue )
+            if ( _settings.LimitOfContentLength.HasValue )
             {
                 var contentLength = _collection.ContentLength;
 
-                if ( contentLength.HasValue && contentLength.Value > LimitOfContentLength.Value )
+                if ( contentLength.HasValue && contentLength.Value > _settings.LimitOfContentLength.Value )
                 {
                     throw new ProtocolViolationException( $"the Content-Length value ({contentLength.Value}) as exceed the limit" );
                 }
