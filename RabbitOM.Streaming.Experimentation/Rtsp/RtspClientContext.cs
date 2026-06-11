@@ -18,6 +18,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         
         public sbyte NumberOfRetries { get; }
 
+        public int MaximumOfHeaders { get; }
+
+        public int MaximumOfHeadersSize { get; }
+
         public IHandler Handler { get; }
 
         public IClientChannelFactory ChannelFactory { get; }

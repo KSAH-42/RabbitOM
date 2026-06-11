@@ -4,19 +4,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     internal sealed class InternalRtspMessageReader
     {
-        public const int DefaultMaximumOfHeaders = 100;
-        public const int DefaultMaximumOfHeaderSize = 8192;
-
         private readonly RtspStreamReader _reader;
+
+
+
+
+
 
         public InternalRtspMessageReader( IStream stream )
         {
             _reader = new RtspStreamReader( stream );
         }
 
+
+
+
+
+
         public long? MaximumOfHeaders { get; set; }
 
         public long? MaximumOfHeadersSize { get; set; }
+
+        public long? LimitOfContentLength { get; set; }
+
+
+
+
+
+
+
 
         public int PeekValue()
         {
@@ -89,10 +105,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             var headers = new RtspHeaderCollection();
 
-            var verifier = new RtspHeaderCollectionVerifier( headers )
+            var validator = new RtspHeaderCollectionValidator( headers ) // for protocol violations
             {
-                MaximumOfHeaders = MaximumOfHeaders,
-                MaximumOfHeadersSize = MaximumOfHeadersSize,
+                LimitOfHeadersCount = MaximumOfHeaders,
+                LimitOfCumulatedHeadersSize = MaximumOfHeadersSize,
+                LimitOfContentLength = LimitOfContentLength,
             };
 
             while ( true )
@@ -111,9 +128,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 if ( headers.TryAddParse( header ) )
                 {
-                    verifier.IncreaseTotalSize( header.Length );
-                    verifier.EnsureNoIllegalDuplication();
-                    verifier.EnsureMaximumOfHeaders();
+                    validator.Validate( header );
                 }
             }
 
