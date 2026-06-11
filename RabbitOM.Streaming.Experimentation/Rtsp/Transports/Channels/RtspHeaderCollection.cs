@@ -7,6 +7,7 @@ using System.Diagnostics;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using System.Net;
 
     public partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
     {
@@ -396,6 +397,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         protected virtual void OnAdded( string name , string value )
         {
             _count ++;
+
+            var checkCount = StringComparer.OrdinalIgnoreCase.Equals( name , RtspHeaderNames.CSeq )
+                          || StringComparer.OrdinalIgnoreCase.Equals( name , RtspHeaderNames.ContentLength )
+                          ;
+
+            if ( checkCount && _collection.TryGetValue( name , out var values ) && values.Count > 1 )
+            {
+                throw new ProtocolViolationException( $"the header {name} is present at multiple times: {values.Count} that can cause security issues" );
+            }
         }
 
         protected virtual void OnRemoved( string name )
