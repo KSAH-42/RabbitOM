@@ -7,9 +7,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
     public sealed class RtspMessageReaderValidator
     {
-        private readonly RtspMessageHeaderCollection _collection;
-
         private readonly RtspMessageReaderValidatorSettings _settings;
+
+        private readonly RtspMessageHeaderCollection _collection;
 
         private long _cumulatedHeaderSize;
 
@@ -17,11 +17,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
-        public RtspMessageReaderValidator( RtspMessageHeaderCollection collection , RtspMessageReaderValidatorSettings settings )
+        public RtspMessageReaderValidator( RtspMessageReaderValidatorSettings settings , RtspMessageHeaderCollection collection )
         {
-            _collection = collection ?? throw new ArgumentNullException( nameof( collection ) );
             _settings = settings ?? throw new ArgumentNullException( nameof( settings ) ) ;
+            _collection = collection ?? throw new ArgumentNullException( nameof( collection ) );
          }
+
 
 
 

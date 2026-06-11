@@ -49,7 +49,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
 
             var headers = new RtspMessageHeaderCollection();
-            var validator = new RtspMessageReaderValidator( headers , _settings );
+            var validator = new RtspMessageReaderValidator( _settings , headers );
 
             while ( true )
             {
