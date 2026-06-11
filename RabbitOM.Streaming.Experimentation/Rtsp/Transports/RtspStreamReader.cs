@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public RtspStreamReader( IStream stream )
         {
-            _stream = stream ?? throw new NotImplementedException( nameof( stream ) );
+            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
         public int Read( byte[] buffer , int offset , int count )
