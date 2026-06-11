@@ -218,6 +218,7 @@
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspHeaderCollection.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspHeaderCollection.Enumerator.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspHeaderCollectionVerifier.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspInterleavedMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageEventArgs.cs" />

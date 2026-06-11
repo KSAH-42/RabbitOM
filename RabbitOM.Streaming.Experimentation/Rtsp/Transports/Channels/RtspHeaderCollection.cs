@@ -7,15 +7,13 @@ using System.Diagnostics;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using System.Net;
-
+ 
     public partial class RtspHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
     {
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
-        private int _count;
-
-
+        private long _count;
+        
 
 
 
@@ -33,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public int Count
+        public long Count
         {
             get => _count;
         }
@@ -101,6 +99,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         public IEnumerator<KeyValuePair<string , string>> GetEnumerator()
         {
             return new Enumerator( this );
+        }
+
+        public int CountValues( string name )
+        {
+            return _collection.TryGetValue( name , out var values ) ? values.Count : 0;
         }
 
         public bool Contains( string name )
@@ -396,15 +399,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         protected virtual void OnAdded( string name , string value )
         {
-            _count ++;
-
-            var checkCount = StringComparer.OrdinalIgnoreCase.Equals( name , RtspHeaderNames.CSeq )
-                          || StringComparer.OrdinalIgnoreCase.Equals( name , RtspHeaderNames.ContentLength )
-                          ;
-
-            if ( checkCount && _collection.TryGetValue( name , out var values ) && values.Count > 1 )
+            checked
             {
-                throw new ProtocolViolationException( $"the header {name} is present at multiple times: {values.Count} that can cause security issues" );
+                _count ++;
             }
         }
 

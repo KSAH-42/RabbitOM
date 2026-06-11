@@ -4,6 +4,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     internal sealed class InternalRtspMessageReader
     {
+        public const int DefaultMaximumOfHeaders = 100;
+        public const int DefaultMaximumOfHeaderSize = 8192;
+
         private readonly RtspStreamReader _reader;
 
         public InternalRtspMessageReader( IStream stream )
@@ -11,7 +14,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             _reader = new RtspStreamReader( stream );
         }
 
-        public int? MaximumOfHeaders { get; set; }
+        public long? MaximumOfHeaders { get; set; }
+
+        public long? MaximumOfHeadersSize { get; set; }
 
         public int PeekValue()
         {
@@ -84,6 +89,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             var headers = new RtspHeaderCollection();
 
+            var verifier = new RtspHeaderCollectionVerifier( headers )
+            {
+                MaximumOfHeaders = MaximumOfHeaders,
+                MaximumOfHeadersSize = MaximumOfHeadersSize,
+            };
+
             while ( true )
             {
                 var header = _reader.ReadLine();
@@ -98,17 +109,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                     break;
                 }
 
-                if ( MaximumOfHeaders.HasValue && MaximumOfHeaders.Value > headers.Count )
+                if ( headers.TryAddParse( header ) )
                 {
-                    // do not continue to read, just stop or avoid to make something tolerant
-                    // that's an anormal situation and the execution flow should be interrupted,
-                    // just stop and close the communication and even retry later
-                    // and do not await the content-length undefinetively and extract the body in order to make it a tolerant read, it's a defect somewhere
-                    // throw exception now
-                    throw new System.Net.ProtocolViolationException( $"too many headers:{headers.Count}. That's an anormal situation to many headers in one single message, it seems that we received malformed packets, communication must be closed" );
+                    verifier.IncreaseTotalSize( header.Length );
+                    verifier.EnsureNoIllegalDuplication();
+                    verifier.EnsureMaximumOfHeaders();
                 }
-
-                headers.TryAddParse( header );
             }
 
             byte[] body = null;
