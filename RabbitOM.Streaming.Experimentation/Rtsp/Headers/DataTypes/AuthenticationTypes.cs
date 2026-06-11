@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
+    // TODO: move it to a different namespace ?
     public static class AuthenticationTypes
     {
         private readonly static HashSet<string> Md5Algorithms
