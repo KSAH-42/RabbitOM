@@ -8,42 +8,62 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public RtspStreamWriter( IStream stream )
         {
-            _stream = stream ?? throw new NotImplementedException( nameof( stream ) );
+            _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
         public void Write( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            _stream.Write( buffer , offset , count );
         }
 
-        public void WriteChar( char value )
+        public void WriteChar( in char value )
         {
-            throw new NotImplementedException();
+            _stream.WriteByte( (byte) value );
         }
 
-        public void WriteByte( byte value )
+        public void WriteByte( in byte value )
         {
-            throw new NotImplementedException();
+            _stream.WriteByte( value );
         }
 
         public void WriteLine()
         {
-            throw new NotImplementedException();
+            _stream.WriteByte( (byte) '\r' );
+            _stream.WriteByte( (byte) '\n' );
         }
 
         public void WriteLine( string line )
         {
-            throw new NotImplementedException();
+            if ( line == null )
+            {
+                return;
+            }
+
+            foreach ( var element in line )
+            {
+                _stream.WriteByte( (byte) element );
+            }
+
+            _stream.WriteByte( (byte) '\r' );
+            _stream.WriteByte( (byte) '\n' );
         }
 
         public void WriteLine( string format , params object[] args )
         {
-            throw new NotImplementedException();
+            var line = string.Format( format , args );
+
+            foreach ( var element in line )
+            {
+                _stream.WriteByte( (byte) element );
+            }
+
+            _stream.WriteByte( (byte) '\r' );
+            _stream.WriteByte( (byte) '\n' );
         }
 
         public void Flush()
         {
-            throw new NotImplementedException();
+            _stream.Flush();
         }
     }
 }
