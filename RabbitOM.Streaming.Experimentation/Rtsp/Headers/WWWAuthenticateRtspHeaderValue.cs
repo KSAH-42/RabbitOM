@@ -125,7 +125,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                             }
                             else
                             {
-                                header._extensions.TryAdd( parameter.Key , parameter.Value );
+                                if ( StringParameterRtspHeaderValue.TryCreate( parameter.Key , parameter.Value , out var extension ) )
+                                {
+                                    header._extensions.TryAdd( extension );
+                                }
                             }
                         }
                     }
@@ -135,7 +138,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         return false;
                     }
                     
-                    if ( AuthenticationTypes.IsDigestAuthentication( header.Scheme ) )
+                    if ( SupportedTypes.IsDigestAuthentication( header.Scheme ) )
                     {
                         if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Nonce ) )
                         {

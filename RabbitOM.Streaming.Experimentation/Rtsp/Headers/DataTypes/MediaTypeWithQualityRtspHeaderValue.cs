@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Globalization;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
@@ -91,7 +91,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                             }
                             else
                             {
-                               parameters.TryAdd( parameter.Key , RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) );
+                                if ( StringParameterRtspHeaderValue.TryCreate( parameter.Key , parameter.Value , out var optionalParameter ) )
+                                {
+                                    parameters.TryAdd( optionalParameter );
+                                }
                             }
                         }
                     }
@@ -124,7 +127,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             foreach ( var parameter in Parameters )
             {
-                builder.AppendFormat( "{0}={1}; " , parameter.Key , parameter.Value );
+                builder.AppendFormat( "{0}={1}; " , parameter.Name , parameter.Value );
             }
 
             return builder.ToString().Trim( ' ' , ';' );

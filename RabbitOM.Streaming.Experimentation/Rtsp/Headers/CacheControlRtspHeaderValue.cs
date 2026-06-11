@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class CacheControlRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-                
+
 
 
 
@@ -151,7 +151,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else
                         {
-                            header.Parameters.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Key ) , RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) );
+                            if ( StringParameterRtspHeaderValue.TryCreate( parameter.Key , parameter.Value , out var optionalParameter ) )
+                            {
+                                header.Parameters.TryAdd( optionalParameter );
+                            }
                         }
                     }
                 }
@@ -251,15 +254,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             { 
                 if ( long.TryParse( extension.Value , out var _ ) )
                 {
-                    builder.AppendFormat( "{0}={1}, " , extension.Key , extension.Value );
+                    builder.AppendFormat( "{0}={1}, " , extension.Name , extension.Value );
                 }
                 else if ( double.TryParse( extension.Value , NumberStyles.Float, CultureInfo.InvariantCulture , out var _ ) )
                 {
-                    builder.AppendFormat( "{0}={1} ," , extension.Key , extension.Value );
+                    builder.AppendFormat( "{0}={1} ," , extension.Name , extension.Value );
                 }
                 else
                 {
-                    builder.AppendFormat( "{0}=\"{1}\" ," , extension.Key , extension.Value );
+                    builder.AppendFormat( "{0}=\"{1}\" ," , extension.Name , extension.Value );
                 }
             }
 

@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Net;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-    using System.Net;
 
     // removing connect and disconnect methods
     // and use a socket pool to retrieve the current active socket
@@ -34,10 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
         
-        public bool IsConnected { get; }
 
-        public bool IsDisposed { get; }
-        
         public TimeSpan ReceiveTimeout { get; set; }
 
         public TimeSpan SendTimeout { get; set; }
@@ -50,6 +47,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 
+        public bool IsDisposed { get; }
+        
         
 
         

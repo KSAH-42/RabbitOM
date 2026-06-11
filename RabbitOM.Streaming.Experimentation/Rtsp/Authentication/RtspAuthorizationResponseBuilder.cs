@@ -75,12 +75,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                 return string.Empty;
             }
 
-            if ( AuthenticationTypes.IsBasicAuthentication( _scheme ) )
+            if ( SupportedTypes.IsBasicAuthentication( _scheme ) )
             {
                 return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{_username}:{_password}" ) );
             }
 
-            if ( AuthenticationTypes.IsDigestAuthentication( _scheme ) )
+            if ( SupportedTypes.IsDigestAuthentication( _scheme ) )
             {
                 if ( string.IsNullOrWhiteSpace( _method ) || string.IsNullOrWhiteSpace( _uri ) || string.IsNullOrWhiteSpace( _realm ) || string.IsNullOrWhiteSpace( _nonce ) )
                 {
@@ -98,27 +98,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                     }
                 }
 
-                if ( AuthenticationTypes.IsMd5Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsMd5Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateMD5() );
                 }
 
-                if ( AuthenticationTypes.IsSha1Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha1Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA1() );
                 }
 
-                if ( AuthenticationTypes.IsSha256Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha256Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA256() );
                 }
 
-                if ( AuthenticationTypes.IsSha384Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha384Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA384() );
                 }
 
-                if ( AuthenticationTypes.IsSha512Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha512Algorithm( _algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA512() );
                 }

@@ -4,10 +4,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public interface IClient
     {
-        bool IsConnected { get; }
         TimeSpan ReceiveTimeout { get; set; }
+
         TimeSpan SendTimeout { get; set; }
+
         Uri BaseAddress { get; set; }
+
         Version Version { get; set; }
 
     
