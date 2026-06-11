@@ -6,24 +6,23 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-    
+
     public sealed class AuthorizationRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
 
-
-        private string _scheme = string.Empty;        
+        private string _scheme = string.Empty;
         private string _userName = string.Empty;
-        private string _realm = string.Empty;        
-        private string _nonce = string.Empty;        
-        private string _domain = string.Empty;        
-        private string _uri = string.Empty;        
-        private string _opaque = string.Empty;        
+        private string _realm = string.Empty;
+        private string _nonce = string.Empty;
+        private string _domain = string.Empty;
+        private string _uri = string.Empty;
+        private string _opaque = string.Empty;
         private string _response = string.Empty;
         private string _algorithm = string.Empty;
         private string _qualityOfProtection = string.Empty;
         private string _nonceCount = string.Empty;
-        private string _clientNonce = string.Empty;                
+        private string _clientNonce = string.Empty;
         private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
 
@@ -35,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _scheme;
             set => _scheme = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string UserName
         {
             get => _userName;
@@ -47,31 +46,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _realm;
             set => _realm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Nonce
         {
             get => _nonce;
             set => _nonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Domain
         {
             get => _domain;
             set => _domain = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Uri
         {
             get => _uri;
             set => _uri = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Opaque
         {
             get => _opaque;
             set => _opaque = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Response
         {
             get => _response;
@@ -95,7 +94,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _clientNonce;
             set => _clientNonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-                
+
         public string QualityOfProtection
         {
             get => _qualityOfProtection;
@@ -103,11 +102,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
         public StringRtspHeaderValueCollection Extensions
-        { 
-            get => _extensions; 
+        {
+            get => _extensions;
         }
 
-        
+
 
 
         public static bool TryParse( string input , out AuthorizationRtspHeaderValue result )
@@ -120,7 +119,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     _scheme = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault() ) 
                 };
-                
+
                 if ( RtspHeaderValueParser.TryParse( string.Join( " " , tokens.Skip( 1 ) ) , "," , out tokens ) )
                 {
                     foreach ( var token in tokens )
@@ -188,8 +187,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return result != null;
         }
 
-        
-        
+
+
 
 
         public override string ToString()
@@ -210,7 +209,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 builder.AppendFormat( "opaque=\"{0}\", " , Opaque );
             }
-            
+
             builder.AppendFormat( "uri=\"{0}\", " , Uri );
             builder.AppendFormat( "response=\"{0}\", " , Response );
 

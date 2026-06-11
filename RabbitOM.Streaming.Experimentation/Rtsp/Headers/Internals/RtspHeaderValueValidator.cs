@@ -44,6 +44,26 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
         }
 
+        //public static string EnsureWellFormedToken( string value )
+        //{
+        //    if ( string.IsNullOrEmpty( value ) )
+        //    {
+        //        return string.Empty;
+        //    }
+
+        //    return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
+        //}
+
+        //public static string EnsureWellFormedTokenAndNotEmpty( string value )
+        //{
+        //    if ( string.IsNullOrWhiteSpace( value ) )
+        //    {
+        //        throw new ArgumentException( nameof( value ) );
+        //    }
+
+        //    return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
+        //}
+
         public static string EnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
         {
             if ( string.IsNullOrWhiteSpace( value ) )

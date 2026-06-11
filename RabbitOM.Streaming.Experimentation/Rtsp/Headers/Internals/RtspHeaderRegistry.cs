@@ -47,11 +47,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return _headers.ContainsKey( name ?? string.Empty );
         }
 
-        public bool IsHeaderForbidden( string name )
-        {
-            return _settings.ForbiddenHeaders.Contains( name ?? string.Empty );
-        }
-
         public void AddHeader( string name , string value )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
@@ -213,6 +208,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAddParseHeader( string input )
         {
+            // TODO: don't forget to implement this method
             throw new NotImplementedException();
         }
 
