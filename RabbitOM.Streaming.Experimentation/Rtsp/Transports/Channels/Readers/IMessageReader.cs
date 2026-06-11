@@ -18,6 +18,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
     public interface IMessageReader
     {
-        RtspMessage ReadMessage();
+        byte? Peek();
+
+        RtspMessage ReadControlMessage();
+
+        RtspInterleavedMessage ReadInterleavedMessage();
     }
 }

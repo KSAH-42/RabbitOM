@@ -213,7 +213,6 @@
     <Compile Include="Rtsp\Transports\Channels\IClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\IClientChannelFactory.cs" />
     <Compile Include="Rtsp\Transports\Channels\Readers\IMessageReader.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Readers\InternalRtspMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspHeaderCollection.cs" />
