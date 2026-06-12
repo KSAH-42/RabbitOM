@@ -16,7 +16,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        // RTSP / 1.0      555     Doom-Patrol|Dark-Series 
+        // protocol     version  code    <------- reason -------->
+        // RTSP       / 1.0      555     Doom-Patrol | Dark-Series
+
         public static bool TryParse( string input , out RtspStatusLine result )
         {
             result = null;

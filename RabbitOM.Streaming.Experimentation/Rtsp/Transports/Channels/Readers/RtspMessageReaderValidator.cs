@@ -17,11 +17,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
+
         public RtspMessageReaderValidator( RtspMessageReaderValidatorSettings settings , RtspMessageHeaderCollection collection )
         {
-            _settings = settings ?? throw new ArgumentNullException( nameof( settings ) ) ;
+            _settings   = settings   ?? throw new ArgumentNullException( nameof( settings ) );
             _collection = collection ?? throw new ArgumentNullException( nameof( collection ) );
-         }
+        }
 
 
 

@@ -7,13 +7,13 @@ using System.Diagnostics;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
- 
+
     public partial class RtspMessageHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
     {
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 
         private long _count;
-        
+
 
 
 
@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         {
             get => GetValueAt( name , index );
         }
-        
+
 
 
 
@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             get => ReadValueAsLong( this , RtspHeaderNames.ContentLength );
             set => WriteValue( this , RtspHeaderNames.ContentLength , value );
         }
-        
+
 
 
 
@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             collection.SetValue( name , value.HasValue ? value.ToString() : null );
         }
-        
+
 
 
 
