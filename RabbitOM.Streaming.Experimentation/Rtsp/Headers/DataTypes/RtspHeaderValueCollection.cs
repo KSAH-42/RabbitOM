@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    public class RtspHeaderValueCollection<TValue> : IEnumerable , IEnumerable<TValue> , ICollection<TValue> , IReadOnlyCollection<TValue>
+    public class RtspHeaderValueCollection<TValue> : ICollection<TValue> , IReadOnlyCollection<TValue>
         where TValue : class
     {
         private readonly List<TValue> _collection = new List<TValue>();
