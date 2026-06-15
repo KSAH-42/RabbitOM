@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class AcceptRtspHeaderValue
     {
         public MediaTypeWithQualityRtspHeaderValueCollection Values { get; } = new MediaTypeWithQualityRtspHeaderValueCollection();
-        
+
         public static bool TryParse( string input , out AcceptRtspHeaderValue result )
         {
             result = null;

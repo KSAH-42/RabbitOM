@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class AcceptEncodingRtspHeaderValue
     {
         public StringWithQualityRtspHeaderValueCollection Values { get; } = new StringWithQualityRtspHeaderValueCollection();
-        
+
         public static bool TryParse( string input , out AcceptEncodingRtspHeaderValue result )
         {
             result = null;
