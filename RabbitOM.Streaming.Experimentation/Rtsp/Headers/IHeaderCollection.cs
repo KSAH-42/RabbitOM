@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public interface IHeaderCollection : IEnumerable , IReadOnlyHeaderCollection
+    public interface IHeaderCollection : ICollection
     {
         void Add( string name , string value );
 

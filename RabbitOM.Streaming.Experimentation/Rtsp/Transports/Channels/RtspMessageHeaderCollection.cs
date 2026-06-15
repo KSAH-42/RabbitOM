@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-    public partial class RtspMessageHeaderCollection : IEnumerable, IEnumerable<KeyValuePair<string , string>>
+    public partial class RtspMessageHeaderCollection : IEnumerable<KeyValuePair<string , string>>
     {
         private readonly Dictionary<string,List<string>> _collection = new Dictionary<string, List<string>>( StringComparer.OrdinalIgnoreCase );
 

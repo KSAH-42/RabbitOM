@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     // TODO: refactor to allow a for each element include key, the value, and the index 
 
-    public interface IReadOnlyHeaderCollection : IEnumerable , IEnumerable<KeyValuePair<string,string>> , IReadOnlyCollection<KeyValuePair<string,string>>
+    public interface IReadOnlyHeaderCollection : IReadOnlyCollection<KeyValuePair<string,string>>
     {
         string this[ string name ] { get; }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    public abstract class RtspHeaderCollection : IEnumerable , IHeaderCollection , IReadOnlyHeaderCollection
+    public abstract class RtspHeaderCollection : IHeaderCollection , IReadOnlyHeaderCollection
     {
         private readonly RtspHeaderRegistry _registry;
 
@@ -12,10 +12,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        internal RtspHeaderCollection( RtspHeaderRegistry registry )
+        private protected RtspHeaderCollection( RtspHeaderRegistry registry )
         {
             _registry = registry ?? throw new ArgumentNullException( nameof( registry ) );
         }
+
 
 
 
@@ -56,7 +57,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => false;
         }
 
-        internal RtspHeaderRegistry Registry
+        private protected RtspHeaderRegistry Registry
         {
             get => _registry;
         }
