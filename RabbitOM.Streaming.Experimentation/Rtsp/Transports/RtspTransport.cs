@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public RtspTransport( Socket socket )
         {
-            _socket = socket ?? throw new ArgumentNullException();
+            _socket = socket ?? throw new ArgumentNullException( nameof( socket ) );
         }
 
         public void Send( byte[] buffer , int offset , int count )

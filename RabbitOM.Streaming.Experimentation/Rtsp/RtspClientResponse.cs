@@ -7,17 +7,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
     public sealed class RtspClientResponse
     {
-        public RtspClientResponse( RtspStatusCode status , string reason )
+        public RtspClientResponse( RtspStatusCode statusCode , string reason )
         {
-            Status = status;
+            StatusCode = statusCode;
             Reason = reason ?? string.Empty;
         }
 
 
 
 
+        public bool IsSuccessStatusCode { get => StatusCode >= (RtspStatusCode) 200 && StatusCode <= (RtspStatusCode) 299; }
 
-        public RtspStatusCode Status { get; }
+        public RtspStatusCode StatusCode { get; }
 
         public string Reason { get; }
 
@@ -29,16 +30,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-
         public void EnsureSuccess()
         {
-            if ( Status == RtspStatusCode.OK )
+            if ( ! IsSuccessStatusCode )
             {
-                return;
+                throw new InvalidOperationException();
             }
-
-            throw new InvalidOperationException();
         }
     }
 }

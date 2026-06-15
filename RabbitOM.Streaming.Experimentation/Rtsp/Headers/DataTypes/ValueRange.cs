@@ -52,7 +52,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
-        public static bool Equals( in ValueRange a , in ValueRange b )
+        public static bool Equals( ValueRange a , ValueRange b )
         {
             return a.Minimum == b.Minimum && a.Maximum == b.Maximum;
         }
@@ -61,16 +61,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         {
             result = default;
 
-            if ( ! RtspHeaderValueParser.TryParse( RtspHeaderValueSanitizer.TrimWithRemoveAllQuotes( input ) , "-" , out string[] tokens ) )
+            if ( string.IsNullOrEmpty( input ) )
+            {
+                return false;
+            }
+            
+            var tokens = input.Split( new [] { '-' } , StringSplitOptions.RemoveEmptyEntries );
+
+            if ( tokens.Length < 1 )
             {
                 return false;
             }
 
             int minimum = 0;
                 
-            if ( ! string.IsNullOrWhiteSpace( tokens.ElementAtOrDefault( 0 ) ) )
+            if ( ! string.IsNullOrEmpty( tokens.ElementAt( 0 ) ) )
             {
-                if ( ! int.TryParse( tokens.ElementAtOrDefault( 0 ) , out minimum ) )
+                if ( ! int.TryParse( tokens.ElementAt( 0 ) , out minimum ) )
                 {
                     return false;
                 }
@@ -78,8 +85,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             int maximum = 0;
 
-            if ( ! string.IsNullOrWhiteSpace( tokens.ElementAtOrDefault( 1 ) ) )
+            if ( ! string.IsNullOrEmpty( tokens.ElementAtOrDefault( 1 ) ) )
             {
+                // TODO: do we need to be resilient here and accept a failure ?
+
                 if ( ! int.TryParse( tokens.ElementAtOrDefault( 1 ) , out maximum ) )
                 {
                     return false;
@@ -92,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             }
 
             result = new ValueRange( minimum , maximum );
-                
+
             return true;
         }
 

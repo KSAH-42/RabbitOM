@@ -2,12 +2,20 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public enum RtspStatusCode
+    public enum RtspStatusCode : int
     {
         UN_DEFINED = 0,
         CONTINUE = 100,
         OK = 200,
         CREATED = 201,
+        ACCEPTED = 202,
+        NON_AUTHORITATIVE_INFORMATION = 203,
+        NO_CONTENT = 204,
+        RESET_CONTENT = 205,
+        PARTIAL_CONTENT = 206,
+        MULTI_STATUS = 207,
+        ALREADY_REPORTED = 208,
+        IMUSED = 226,
         LOW_ON_STORAGE_SPACE = 250,
         MULTIPLE_CHOICES = 300,
         MOVED_PERMANENTLY = 301,

@@ -67,8 +67,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 if ( headers.TryAddParse( header ) )
                 {
-                    // Detect protocols violation
-                    validator.ValidateHeader( header );
+                    validator.Validate( header );
                 }
             }
 
@@ -76,11 +75,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( headers.ContentLength.HasValue && headers.ContentLength > 0 )
             {
-                // Add a validator method if the validation of the body must be apply
-                // but if it is the case validate only the size
-                // if content validation must be done, it must apply using multiple threads and so in the upper level
-
-                body = new byte[ headers.ContentLength.Value ]; // TODO: use allocator
+                body = new byte[ headers.ContentLength.Value ];
 
                 var offset = 0;
 
@@ -97,13 +92,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 }
             }
 
-            // Response from the server ? Most of the times... 
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
             {
                 return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
             }
 
-            // Request from the server ? (see rfc) in rare cases
             if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
             {
                 return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };

@@ -3,8 +3,8 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels;
-    
-    public sealed class RtspClientContext 
+
+    public sealed class RtspClientContext
     {
         public int ReceiveBufferSize { get; }
 

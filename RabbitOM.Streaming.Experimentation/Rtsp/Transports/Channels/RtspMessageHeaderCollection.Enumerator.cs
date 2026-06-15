@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
     {
         public struct Enumerator : IEnumerator<KeyValuePair<string , string>>
         {
-            private IEnumerator<KeyValuePair<string,List<string>>> _enumerator;
+            private readonly IEnumerator<KeyValuePair<string,List<string>>> _enumerator;
             private IEnumerator<string> _valueEnumerator;
             private KeyValuePair<string , string> _value;
 

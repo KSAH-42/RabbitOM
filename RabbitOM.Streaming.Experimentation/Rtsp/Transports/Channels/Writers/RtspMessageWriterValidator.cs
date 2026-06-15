@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
             if ( bufferLength != message.Length )
             {
-                throw new ArgumentException( nameof( message ) , "invalid buffer size" );
+                throw new ArgumentException( "invalid buffer size" , nameof( message ) );
             }
         }
 
@@ -37,39 +37,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
             if ( requestLine == null )
             {
-                throw new ArgumentException( nameof( request ) , "no request line");
+                throw new ArgumentException( "no request line" , nameof( request ) );
             }
 
             if ( string.IsNullOrEmpty( requestLine.Method ) )
             {
-                throw new ArgumentException( nameof( request ) , "no method" );
+                throw new ArgumentException( "no method" , nameof( request ) );
             }
 
             if ( string.IsNullOrEmpty( requestLine.Uri ) )
             {
-                throw new ArgumentException( nameof( request ) , "no uri" );
+                throw new ArgumentException( "no uri" , nameof( request ) );
             }
 
             if ( string.IsNullOrEmpty( requestLine.Protocol ) )
             {
-                throw new ArgumentException( nameof( request ) , "no protocol name");
+                throw new ArgumentException( "no protocol name" , nameof( request ) );
             }
 
             if ( string.IsNullOrEmpty( requestLine.Version ) )
             {
-                throw new ArgumentException( nameof( request ) , "no version" );
+                throw new ArgumentException( "no version" , nameof( request ) );
             }
 
             var headers = request.Headers;
 
             if ( headers == null || headers.Count <= 0 )
             {
-                throw new ArgumentException( nameof( request ) , "no headers provided" );
+                throw new ArgumentException( "no headers provided" , nameof( request ) );
             }
 
             if ( ! headers.CSeq.HasValue || headers.CSeq.Value < 0 )
             {
-                throw new ArgumentException( nameof( request ) , "cseq header not found or it'has an negative value");
+                throw new ArgumentException( "cseq header not found or it'has an negative value" , nameof( request ) );
             }
 
             var contentLength = request.Headers.ContentLength.HasValue ? request.Headers.ContentLength.Value : 0;
@@ -77,7 +77,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
             if ( bodyLength != contentLength || bodyLength < 0 || contentLength < 0 )
             {
-                throw new ArgumentException( nameof( request ) , "invadid body size or content length is different from the size of body" );
+                throw new ArgumentException( "invadid body size or content length is different from the size of body" , nameof( request ) );
             }
         }
     }

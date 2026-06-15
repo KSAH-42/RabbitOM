@@ -1,56 +1,60 @@
 ﻿using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
     public sealed class LanguageWithQualityRtspHeaderValue
     {
-        private const string Pattern = "^[A-Za-z]{1,8}(-[A-Za-z0-9]{1,8})*$";
+        private static readonly Regex ValueRegularExpression = new Regex (@"^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
-
-
-
-        public LanguageWithQualityRtspHeaderValue( string name , string region )
-            : this ( name , region , null )
+        public LanguageWithQualityRtspHeaderValue( string value )
         {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            if ( ! ValueRegularExpression.IsMatch( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            Value = value;
         }
 
-        public LanguageWithQualityRtspHeaderValue( string name , string region , double quality )
-            : this ( name , region , (double?) quality )
+        public LanguageWithQualityRtspHeaderValue( string value , double quality )
         {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                throw new ArgumentNullException( nameof( value ) );
+            }
+
+            if ( ! ValueRegularExpression.IsMatch( value ) )
+            {
+                throw new ArgumentException( nameof( value ) );
+            }
+
+            Value = value;
+            Quality = quality;
         }
 
-        private LanguageWithQualityRtspHeaderValue( string name , string region , double? quality )
-        {
-            // RtspHeaderValueValidator.EnsureToken( )
-            // RtspHeaderValueValidator.EnsureToken( )
-            // RtspHeaderValueValidator.EnsureEquals( excepted , value );
-            
-            // FullName = $"{Name}-{Region}";
-            throw new NotImplementedException();
-        }
 
 
 
-
-
-        public string FullName { get; }
-
-        public string Name { get; }
-
-        public string Region { get; }
+        public string Value { get; }
 
         public double? Quality { get; }
 
 
 
 
-
-
         public static bool TryParse( string input , out LanguageWithQualityRtspHeaderValue result )
         {
+            result = null;
+
             throw new NotImplementedException();
         }
-
 
 
 
@@ -58,7 +62,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
         }
     }
 }

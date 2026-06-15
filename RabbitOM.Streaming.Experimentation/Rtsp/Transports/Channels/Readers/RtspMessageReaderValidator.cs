@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
-        public void ValidateHeader( string header )
+        public void Validate( string header )
         {
             if ( string.IsNullOrEmpty( header ) )
             {

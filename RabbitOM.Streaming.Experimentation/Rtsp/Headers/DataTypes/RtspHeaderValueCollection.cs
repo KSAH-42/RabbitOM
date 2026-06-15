@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return _collection.GetEnumerator();
         }
 
         public IEnumerator<TValue> GetEnumerator()
