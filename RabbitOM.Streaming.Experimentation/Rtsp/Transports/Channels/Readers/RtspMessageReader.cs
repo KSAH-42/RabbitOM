@@ -85,7 +85,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                     if ( bytesRead <= 0 )
                     {
-                        break;
+                        return null;
                     }
 
                     offset += bytesRead;
@@ -136,12 +136,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
 
             var length = (ushort) ( (lengthMsb << 8  + lengthLsb) & 0xFFFF );
-
-            if ( length <= 0 )
-            {
-                return null;
-            }
-
             var buffer = new byte[ length ];
             var offset = 0;
 

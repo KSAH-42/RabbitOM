@@ -40,12 +40,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 _cumulatedHeaderSize += header.Length;
             }
 
-            if ( _settings.LimitOfCumulatedHeadersSize.HasValue && _cumulatedHeaderSize < _settings.LimitOfCumulatedHeadersSize.Value )
+            if ( _settings.TotalHeadersSize.HasValue && _cumulatedHeaderSize < _settings.TotalHeadersSize.Value )
             {
                 throw new ProtocolViolationException( "the size has exceed" );
             }
 
-            if ( _settings.LimitOfHeadersCount.HasValue && _settings.LimitOfHeadersCount < _collection.Count )
+            if ( _settings.MaximumOfHeaders.HasValue && _settings.MaximumOfHeaders < _collection.Count )
             {
                 throw new ProtocolViolationException( $"too many headers {_collection.Count} that can cause security issues" );
             }
@@ -60,11 +60,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 throw new ProtocolViolationException( "the header Content-Length is present at multiple times" );
             }
 
-            if ( _settings.LimitOfContentLength.HasValue )
+            if ( _settings.ContentLengthLimit.HasValue )
             {
                 var contentLength = _collection.ContentLength;
 
-                if ( contentLength.HasValue && contentLength.Value > _settings.LimitOfContentLength.Value )
+                if ( contentLength.HasValue && contentLength.Value > _settings.ContentLengthLimit.Value )
                 {
                     throw new ProtocolViolationException( $"the Content-Length value ({contentLength.Value}) as exceed the limit" );
                 }

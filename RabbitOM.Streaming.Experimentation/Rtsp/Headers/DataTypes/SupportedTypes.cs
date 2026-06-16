@@ -5,8 +5,6 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
-    // TODO: include validation on Add methods ?
-
     public static class SupportedTypes
     {
         private static readonly object s_lock = new object();

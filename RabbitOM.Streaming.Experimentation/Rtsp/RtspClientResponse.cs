@@ -15,10 +15,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-        public bool IsSuccessStatusCode { get => StatusCode >= (RtspStatusCode) 200 && StatusCode <= (RtspStatusCode) 299; }
-
         public RtspStatusCode StatusCode { get; }
+
+        public bool IsSuccessStatusCode { get => RtspStatusCodeChecker.IsSuccessStatusCode( StatusCode ); }
 
         public string Reason { get; }
 
@@ -32,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public void EnsureSuccess()
         {
-            if ( ! IsSuccessStatusCode )
+            if ( ! RtspStatusCodeChecker.IsSuccessStatusCode( StatusCode ) )
             {
                 throw new InvalidOperationException();
             }
