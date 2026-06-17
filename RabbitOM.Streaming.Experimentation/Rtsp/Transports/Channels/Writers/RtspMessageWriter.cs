@@ -18,6 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
             _validator.ValidateMessage( message );
 
             _writer.WriteChar( '$' );
+            _writer.WriteByte( message.Channel );
             _writer.WriteByte( (byte) (message.Length >> 8 & 0xFF) );
             _writer.WriteByte( (byte) (message.Length      & 0xFF) );
             _writer.Write( message.Buffer , 0 , message.Buffer.Length );

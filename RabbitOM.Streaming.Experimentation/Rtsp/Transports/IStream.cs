@@ -58,8 +58,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         void Flush();
 
-        void Discard();
-
         void Close();
     }
 }

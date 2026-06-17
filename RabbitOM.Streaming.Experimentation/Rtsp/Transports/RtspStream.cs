@@ -8,11 +8,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;
-        private readonly MemoryStream _readCache;  // use a byte array instead ?
-        private readonly MemoryStream _writeCache; // for flushing
-        private readonly int _readBufferSize;      // the quantity of bytes to put on the read cache
-        private readonly int _writeBufferSize;     // the quantity of bytes to send to the transport layer, we can control the size of output chunch
-
+        private readonly MemoryStream _outputStream;
+        private readonly byte[] _writeBuffer;
+        private readonly byte[] _readBuffer;
+        private int _readPosition;
+        private int _readRemainingBytes;
 
 
 
@@ -40,8 +40,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             }
 
             _transport = transport;
-            _readCache = new MemoryStream();
-            _writeCache = new MemoryStream();
+            _outputStream = new MemoryStream();
+            _writeBuffer = new byte[ writeBufferSize ];
+            _readBuffer = new byte[ readBufferSize ];
         }
 
 
@@ -51,12 +52,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public int Peek()
         {
-            throw new NotImplementedException();
+            EnsureBuffering();
+
+            if ( _readRemainingBytes <= 0 || _readPosition < 0 || _readPosition >= _readBuffer.Length )
+            {
+                return -1;
+            }
+
+            return _readBuffer[ _readPosition ];
         }
 
         public int ReadByte()
         {
-            throw new NotImplementedException();
+            EnsureBuffering();
+
+            if ( _readRemainingBytes <= 0 || _readPosition < 0 || _readPosition >= _readBuffer.Length )
+            {
+                return -1;
+            }
+
+            _readRemainingBytes --;
+
+            return _readBuffer[ _readPosition ++ ];
         }
 
         public int Read( byte[] buffer , int offset , int count )
@@ -66,37 +83,56 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void WriteByte( byte value )
         {
-            throw new NotImplementedException();
+            _outputStream.WriteByte( value );
         }
 
         public void Write( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            _outputStream.Write( buffer , offset , count );
         }
 
         public void Flush()
         {
-            throw new NotImplementedException();
-        }
+            var offset = 0;
 
-        public void Discard()
-        {
-            throw new NotImplementedException();
+            while ( offset < _readBuffer.Length )
+            {
+                var bytesRead = _outputStream.Read( _readBuffer , offset , _readBuffer.Length );
+
+                if ( bytesRead <= 0 )
+                {
+                    break;
+                }
+
+                _transport.Send( _writeBuffer , offset , bytesRead );
+
+                offset += bytesRead;
+            }
+
+            _outputStream.Seek( 0 , SeekOrigin.Begin );
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            _readRemainingBytes = 0;
+            _outputStream.Close();
+            _transport.Close();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _readRemainingBytes = 0;
+            _outputStream.Dispose();
+            _transport.Dispose();
         }
 
-        private bool BufferingDataIfNeeded()
+        private void EnsureBuffering()
         {
-            throw new NotImplementedException();
+            if ( _readRemainingBytes <= 0 )
+            {
+                _readPosition = 0;
+                _readRemainingBytes = _transport.Receive( _readBuffer , 0 , _readBuffer.Length );
+            }
         }
     }
 }
