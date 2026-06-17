@@ -3,7 +3,8 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-    public sealed class MemoryRtspTransportBuilder
+    // Temp class for testing that will be moved to a testing assembly
+    internal sealed class MemoryRtspTransportBuilder
     {
         private readonly MemoryStream _stream = new MemoryStream();
 
