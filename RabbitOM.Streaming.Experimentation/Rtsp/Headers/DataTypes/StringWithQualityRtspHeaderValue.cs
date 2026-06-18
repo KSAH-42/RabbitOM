@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
@@ -30,14 +31,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         public string Value { get; }
 
         public double? Quality { get; }
-        
 
 
 
-        
+
+
         public static bool IsValidValue( string value )
         {
-            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value ) && RtspHeaderValueValidator.TryEnsureLettersOrDigits( value );
+            return RtspHeaderValueValidator.IsWellFormedToken( value ) && RtspHeaderValueValidator.Any( value , x => char.IsLetterOrDigit( x ) );
         }
 
         public static bool TryParse( string input , out StringWithQualityRtspHeaderValue result )
@@ -55,16 +56,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
                 foreach ( var token in tokens.Where( token => token.Contains( "=" ) ) )
                 {
-                    if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
+                    if ( ! RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
-                        if ( StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) )
-                        {
-                            if ( double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
-                            {
-                                result = new StringWithQualityRtspHeaderValue( name , quality );
-                                break;
-                            }
-                        }
+                        continue;
+                    }
+
+                    if ( ! StringComparer.OrdinalIgnoreCase.Equals( "q" , parameter.Key ) )
+                    {
+                        continue;
+                    }
+
+                    if ( double.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ).Replace( "," , "." ) , NumberStyles.Float , CultureInfo.InvariantCulture , out var quality ) )
+                    {
+                        result = new StringWithQualityRtspHeaderValue( name , quality );
+                        break;
                     }
                 }
 
@@ -76,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             return result != null;
         }
-        
+
 
 
 

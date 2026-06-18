@@ -72,12 +72,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( product ) )
+                if ( ! RtspHeaderValueValidator.IsWellFormedToken( product ) )
                 {
                     return false;
                 }
 
-                if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( version ) )
+                if ( ! RtspHeaderValueValidator.IsWellFormedToken( version ) )
                 {
                     return false;
                 }
@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     _product = product ,
                     _version = version ,
-                    _comment = RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( comment , x => x != '(' && x != ')' ) 
+                    _comment = RtspHeaderValueValidator.IsWellFormedTokenIfAll( comment , x => x != '(' && x != ')' ) 
                     ? comment 
                     : "",
                 };

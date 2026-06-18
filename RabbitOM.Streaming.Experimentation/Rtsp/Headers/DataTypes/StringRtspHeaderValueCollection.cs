@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
     {
         protected override bool OnValidate( string value )
         {
-            return RtspHeaderValueValidator.TryEnsureWellFormedToken( value );
+            return RtspHeaderValueValidator.IsWellFormedToken( value );
         }
     }
 }

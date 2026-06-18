@@ -39,6 +39,57 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             return (byte) prefix;
         }
 
+        public RtspInterleavedMessage ReadInterleavedMessage()
+        {
+            var magicByte = _reader.ReadByte();
+
+            if ( magicByte != '$' )
+            {
+                return null;
+            }
+
+            var channel = _reader.ReadByte();
+
+            if ( channel < 0 )
+            {
+                return null;
+            }
+
+            var lengthMsb = _reader.ReadByte();
+
+            if ( lengthMsb < 0 )
+            {
+                return null;
+            }
+
+            var lengthLsb = _reader.ReadByte();
+
+            if ( lengthLsb < 0 )
+            {
+                return null;
+            }
+
+            var length = (ushort) ( (lengthMsb << 8 + lengthLsb) & 0xFFFF );
+            var buffer = new byte[ length ];
+            var offset = 0;
+
+            while ( offset < buffer.Length )
+            {
+                var bytesRead = _reader.Read( buffer , offset , buffer.Length - offset );
+
+                if ( bytesRead <= 0 )
+                {
+                    return null;
+                }
+
+                offset += bytesRead;
+            }
+
+            return new RtspInterleavedMessage() { Channel = (byte) ( channel & 0xFF ) , Length = length , Buffer = buffer };
+        }
+
+        // a guard validator should be used here and not on the service class
+        // the validator must from during reveiving data and never after returning the message it can grow in memory size
         public RtspMessage ReadControlMessage()
         {
             var startLine = _reader.ReadLine();
@@ -103,55 +154,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
 
             return null;
-        }
-
-        public RtspInterleavedMessage ReadInterleavedMessage()
-        {
-            var magicByte = _reader.ReadByte();
-
-            if ( magicByte != '$' )
-            {
-                return null;
-            }
-
-            var channel = _reader.ReadByte();
-
-            if ( channel < 0 )
-            {
-                return null;
-            }
-
-            var lengthMsb = _reader.ReadByte();
-
-            if ( lengthMsb < 0 )
-            {
-                return null;
-            }
-
-            var lengthLsb = _reader.ReadByte();
-
-            if ( lengthLsb < 0 )
-            {
-                return null;
-            }
-
-            var length = (ushort) ( (lengthMsb << 8  + lengthLsb) & 0xFFFF );
-            var buffer = new byte[ length ];
-            var offset = 0;
-
-            while ( offset < buffer.Length )
-            {
-                var bytesRead = _reader.Read( buffer , offset , buffer.Length - offset );
-
-                if ( bytesRead <= 0 )
-                {
-                    return null;
-                }
-
-                offset += bytesRead;
-            }
-
-            return new RtspInterleavedMessage() { Channel = (byte) ( channel & 0xFF ) , Length = length , Buffer = buffer };
         }
     }
 }

@@ -177,7 +177,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( RtspHeaderValueValidator.TryEnsureWellFormedToken( header._scheme ) )
+                    if ( RtspHeaderValueValidator.IsWellFormedToken( header._scheme ) )
                     {
                         result = header;
                     }

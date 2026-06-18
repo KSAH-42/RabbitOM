@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 ;
         });
 
-        private static readonly Func<char,bool> s_charValidator = value => 
+        private static readonly Func<char,bool> s_charValidator = value =>
         {
             if ( value == ' ' )
             {
@@ -51,7 +51,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
         public string MethodName { get => _procedureName; }
 
         public static RtspMethod OPTIONS { get; } = new RtspMethod( "OPTIONS" );
@@ -75,7 +74,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         public static RtspMethod REDIRECT { get; } = new RtspMethod( "REDIRECT" );
 
         public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
-        
+
 
 
 
@@ -85,7 +84,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         {
             result = null;
 
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( input , s_charValidator ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormedTokenIfAll( input , s_charValidator ) )
             {
                 return false;
             }
@@ -97,7 +96,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
             return result != null;
         }
-        
+
 
 
 

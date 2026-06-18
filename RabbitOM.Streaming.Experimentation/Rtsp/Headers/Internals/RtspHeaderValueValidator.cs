@@ -4,11 +4,15 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    // TODO: find a way to reduce the number method
+
     internal static class RtspHeaderValueValidator
     {
         private static HashSet<char> Symbols      = " /\\{}[]()<>\"'`!#$%&*+-.^_|~".ToHashSet();
 
         private static HashSet<char> TokenSymbols = "!#$%&'*+-.^_|~".ToHashSet();
+
+
 
 
 
@@ -43,26 +47,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
         }
-
-        //public static string EnsureWellFormedToken( string value )
-        //{
-        //    if ( string.IsNullOrEmpty( value ) )
-        //    {
-        //        return string.Empty;
-        //    }
-
-        //    return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
-        //}
-
-        //public static string EnsureWellFormedTokenAndNotEmpty( string value )
-        //{
-        //    if ( string.IsNullOrWhiteSpace( value ) )
-        //    {
-        //        throw new ArgumentException( nameof( value ) );
-        //    }
-
-        //    return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) ) ? value : throw new FormatException();
-        //}
 
         public static string EnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
         {
@@ -135,7 +119,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        public static bool TryEnsureWellFormed( string value )
+        public static bool IsWellFormed( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -145,7 +129,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) );
         }
 
-        public static bool TryEnsureWellFormedOrEmpty( string value )
+        public static bool IsWellFormedOrEmpty( string value )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
@@ -155,7 +139,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || Symbols.Contains( character ) );
         }
 
-        public static bool TryEnsureWellFormedToken( string value )
+        public static bool IsWellFormedToken( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -165,7 +149,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) );
         }
 
-        public static bool TryEnsureWellFormedTokenIfAll( string value , Func<char,bool> predicate )
+        public static bool IsWellFormedTokenIfAll( string value , Func<char,bool> predicate )
         {
             if ( string.IsNullOrWhiteSpace( value ) || predicate == null )
             {
@@ -175,19 +159,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             return value.All( character => char.IsLetterOrDigit( character ) || TokenSymbols.Contains( character ) || predicate( character ) );
         }
 
-        public static bool TryEnsureAny( string value , Func<char , int, bool> predicate )
-        {
-            return ! string.IsNullOrEmpty( value ) && value.Where( predicate ).Any();
-        }
-
-        public static bool TryEnsureLettersOrDigits( string value )
+        public static bool Any( string value , Func<char , bool> predicate )
         {
             if ( string.IsNullOrEmpty( value ) )
             {
                 return false;
             }
 
-            return value.Any( character => char.IsLetterOrDigit( character ) );
+            return value.Any( predicate );
+        }
+
+        public static bool Any( string value , Func<char , int, bool> predicate )
+        {
+            if ( string.IsNullOrEmpty( value ) )
+            {
+                return false;
+            }
+
+            for ( var i = 0 ; i < value.Length ; ++ i )
+            {
+                if ( predicate( value[i] , i ) )
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

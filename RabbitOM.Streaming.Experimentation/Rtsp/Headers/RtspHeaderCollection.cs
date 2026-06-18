@@ -139,7 +139,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAdd( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( name ) || ! RtspHeaderValueValidator.TryEnsureWellFormedOrEmpty( value ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormedToken( name ) || ! RtspHeaderValueValidator.IsWellFormedOrEmpty( value ) )
             {
                 return false;
             }
@@ -149,7 +149,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAddParseHeader( string input )
         {
-            if ( ! RtspHeaderValueValidator.TryEnsureWellFormed( input ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( input ) )
             {
                 return false;
             }

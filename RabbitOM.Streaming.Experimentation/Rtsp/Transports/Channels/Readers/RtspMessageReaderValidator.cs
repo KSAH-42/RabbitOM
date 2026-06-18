@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
         private readonly RtspMessageHeaderCollection _collection;
 
-        private long _cumulatedHeaderSize;
+        private long _totalHeadersSize;
 
 
 
@@ -37,15 +37,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             checked
             {
-                _cumulatedHeaderSize += header.Length;
+                _totalHeadersSize += header.Length;
             }
 
-            if ( _settings.TotalHeadersSize.HasValue && _cumulatedHeaderSize < _settings.TotalHeadersSize.Value )
+            if ( _settings.TotalHeadersSizeLimit.HasValue && _totalHeadersSize < _settings.TotalHeadersSizeLimit.Value )
             {
                 throw new ProtocolViolationException( "the size has exceed" );
             }
 
-            if ( _settings.MaximumOfHeaders.HasValue && _settings.MaximumOfHeaders < _collection.Count )
+            if ( _settings.HeadersCountLimit.HasValue && _settings.HeadersCountLimit < _collection.Count )
             {
                 throw new ProtocolViolationException( $"too many headers {_collection.Count} that can cause security issues" );
             }

@@ -58,9 +58,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             {
                 var name = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault( token => ! token.Contains( "=" ) ) );
 
-                var boolIsValid =  RtspHeaderValueValidator.TryEnsureWellFormedTokenIfAll( name , x => x == '/' ) 
-                                && RtspHeaderValueValidator.TryEnsureLettersOrDigits( name )
-                                && RtspHeaderValueValidator.TryEnsureAny( name , (x,i) => x == '/' && i > 0 && i < name.Length )
+                var boolIsValid =  RtspHeaderValueValidator.IsWellFormedTokenIfAll( name , x => x == '/' ) 
+                                && RtspHeaderValueValidator.Any( name , x => char.IsLetterOrDigit( x ) )
+                                && RtspHeaderValueValidator.Any( name , (x,i) => x == '/' && i > 0 && i < name.Length )
                                 ;
 
                 if ( boolIsValid )

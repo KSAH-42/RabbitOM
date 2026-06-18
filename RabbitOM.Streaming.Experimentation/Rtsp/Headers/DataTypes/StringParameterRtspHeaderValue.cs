@@ -22,8 +22,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public static bool TryCreate( string name , string value , out StringParameterRtspHeaderValue result )
         {
-            result = RtspHeaderValueValidator.TryEnsureWellFormedToken( name )
-                  && RtspHeaderValueValidator.TryEnsureWellFormedToken( value )
+            result = RtspHeaderValueValidator.IsWellFormedToken( name )
+                  && RtspHeaderValueValidator.IsWellFormedToken( value )
                   ? new StringParameterRtspHeaderValue( name , value )
                   : null;
 
