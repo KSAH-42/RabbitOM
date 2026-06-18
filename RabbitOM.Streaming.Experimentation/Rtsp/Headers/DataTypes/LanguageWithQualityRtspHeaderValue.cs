@@ -1,50 +1,32 @@
 ﻿using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
     public sealed class LanguageWithQualityRtspHeaderValue
     {
-        private static readonly Regex ValueRegularExpression = new Regex (@"^[A-Za-z]{2,8}(-[A-Za-z0-9]{1,8})*$", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-
-        public LanguageWithQualityRtspHeaderValue( string value )
+        public LanguageWithQualityRtspHeaderValue( string language , string region )
         {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( ! ValueRegularExpression.IsMatch( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            Value = value;
+            throw new NotImplementedException();
         }
 
-        public LanguageWithQualityRtspHeaderValue( string value , double quality )
+        public LanguageWithQualityRtspHeaderValue( string language , string region , double quality )
         {
-            if ( string.IsNullOrEmpty( value ) )
-            {
-                throw new ArgumentNullException( nameof( value ) );
-            }
-
-            if ( ! ValueRegularExpression.IsMatch( value ) )
-            {
-                throw new ArgumentException( nameof( value ) );
-            }
-
-            Value = value;
-            Quality = quality;
+            throw new NotImplementedException();
         }
 
 
 
 
-        public string Value { get; }
+
+        public string Language { get; }
+
+        public string Region { get; }
 
         public double? Quality { get; }
+
+
+
 
 
 
@@ -60,9 +42,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
+
+
+
         public override string ToString()
         {
-            return Quality.HasValue ? $"{Value}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : Value;
+            var fullName = $"{Language}-{Region}";
+
+            return Quality.HasValue ? $"{fullName}; q={Quality.GetValueOrDefault().ToString("0.0##", NumberFormatInfo.InvariantInfo)}" : fullName;
         }
     }
 }
