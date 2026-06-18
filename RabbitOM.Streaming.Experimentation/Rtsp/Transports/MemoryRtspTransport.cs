@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Send( byte[] buffer , int offset , int count )
         {
-
+            // just do nothing
         }
     }
 }
