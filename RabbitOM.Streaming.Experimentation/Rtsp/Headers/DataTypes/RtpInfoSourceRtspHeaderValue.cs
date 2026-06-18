@@ -5,16 +5,14 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
     public sealed class RtpInfoSourceRtspHeaderValue
-    { 
+    {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
 
 
 
         private string _url = string.Empty;
         private string _ssrc = string.Empty;
-        private ushort? _sequence;
-        private ushort? _rtpTime;
 
 
 
@@ -30,17 +28,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             get => _ssrc;
             set => _ssrc = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public ushort? Sequence
         {
-            get => _sequence;
-            set => _sequence = value;
+            get;
+            set;
         }
-        
+
         public ushort? RtpTime
         {
-            get => _rtpTime;
-            set => _rtpTime = value;
+            get;
+            set;
         }
 
 
@@ -70,14 +68,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                         {
                             if ( ushort.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out var value ) )
                             {
-                                info._sequence = value;
+                                info.Sequence = value;
                             }
                         }
                         else if ( ValueComparer.Equals( "rtptime" , parameter.Key ) )
                         {
                             if ( ushort.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out var value ) )
                             {
-                                info._rtpTime = value;
+                                info.RtpTime = value;
                             }
                         }
                     }
@@ -121,7 +119,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             if ( ! string.IsNullOrWhiteSpace( SSRC ) )
             {
-                builder.AppendFormat( "ssrc={0};" );
+                builder.AppendFormat( "ssrc={0};" , SSRC );
             }
 
             return builder.ToString().Trim( ' ' , ';' );
