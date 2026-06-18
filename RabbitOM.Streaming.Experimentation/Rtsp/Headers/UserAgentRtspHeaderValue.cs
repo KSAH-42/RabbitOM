@@ -7,15 +7,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class UserAgentRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
-            
+
 
         private string _product = string.Empty;
         private string _version = string.Empty;
         private string _comment = string.Empty;
-                
+
 
 
 

@@ -6,17 +6,17 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-   
+
     public sealed class SessionRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
 
         private string _identifier = string.Empty;
         private long? _timeout;
         private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
 
-        
+
 
         public string Identifier
         {
@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-        
+
         public static bool TryParse( string input , out SessionRtspHeaderValue result )
         {
             result = null;
@@ -49,9 +49,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     return false;
                 }
-                
+
                 var header = new SessionRtspHeaderValue() { _identifier = RtspHeaderValueSanitizer.UnQuotesWithTrim( identifer ) };
-                
+
                 foreach( var token in tokens )
                 {
                     if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
@@ -87,8 +87,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
-        
-        
+
+
         public override string ToString()
         {
             var builder = new StringBuilder();

@@ -6,11 +6,11 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-    
+
     public sealed class WWWAuthenticateRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
 
 
         private string _scheme = string.Empty;        
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         private string _qualityOfProtection = string.Empty;
         private readonly StringParameterRtspHeaderValueCollection _extensions = new StringParameterRtspHeaderValueCollection();
 
-        
+
 
 
 
@@ -31,31 +31,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _scheme;
             set => _scheme = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Realm
         {
             get => _realm;
             set => _realm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Nonce
         {
             get => _nonce;
             set => _nonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Opaque
         {
             get => _opaque;
             set => _opaque = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Algorithm
         {
             get => _algorithm;
             set => _algorithm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public bool? Stale
         {
             get => _stale;
@@ -82,14 +82,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( RtspHeaderValueParser.TryParse( input , " " , out string[] tokens ) )
             {
                 var scheme = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault() );
-                
+
                 if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( scheme ) )
                 {
                     return false;
                 }
 
                 var header = new WWWAuthenticateRtspHeaderValue() { _scheme = scheme };
-                
+
                 if ( RtspHeaderValueParser.TryParse( string.Join( " " , tokens.Skip(1) ) , "," , out tokens ) )
                 {
                     foreach ( var token in tokens )
@@ -137,7 +137,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         return false;
                     }
-                    
+
                     if ( SupportedTypes.IsDigestAuthentication( header.Scheme ) )
                     {
                         if ( ! RtspHeaderValueValidator.TryEnsureWellFormedToken( header.Nonce ) )
@@ -155,7 +155,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        
+
         public override string ToString()
         {
             if ( string.IsNullOrWhiteSpace( Scheme ) )

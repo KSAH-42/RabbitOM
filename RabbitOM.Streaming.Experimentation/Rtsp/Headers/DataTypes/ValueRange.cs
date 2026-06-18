@@ -15,7 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         {
             if ( minimum > maximum )
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException( nameof( minimum ) );
             }
 
             Minimum = minimum;
@@ -75,9 +75,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
             int minimum = 0;
                 
-            if ( ! string.IsNullOrEmpty( tokens.ElementAt( 0 ) ) )
+            if ( ! string.IsNullOrEmpty( tokens[0] ) )
             {
-                if ( ! int.TryParse( tokens.ElementAt( 0 ) , out minimum ) )
+                if ( ! int.TryParse( tokens[0] , out minimum ) )
                 {
                     return false;
                 }

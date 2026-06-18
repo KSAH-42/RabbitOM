@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         private int _code;
         private string _agent = string.Empty;
         private string _comment = string.Empty;
-        
+
 
 
         public int Code
@@ -23,13 +23,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             get => _agent;
             set => _agent = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
         public string Comment
         {
             get => _comment;
             set => _comment = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
-        
+
 
 
         public static bool TryParse( string input , out WarningFieldRtspHeaderValue result )
@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                 {
                     return false;
                 }
-                
+
                 result = new WarningFieldRtspHeaderValue()
                 {
                     _code = code ,
@@ -50,7 +50,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                     _comment = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.ElementAtOrDefault( 2 ) ),
                 };
             }
-            
+
             return result != null;
         }
 

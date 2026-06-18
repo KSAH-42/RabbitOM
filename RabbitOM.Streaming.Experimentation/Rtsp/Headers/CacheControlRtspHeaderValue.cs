@@ -22,9 +22,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public bool NoStore { get; set; }
 
         public bool NoTransform { get; set; }
-        
+
         public bool MustRevalidate { get; set; }
-        
+
         public bool ProxyRevalidate { get; set; }
 
         public bool Public { get; set; }
@@ -48,7 +48,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public int? MinimumFresh { get; set; }
 
         public StringParameterRtspHeaderValueCollection Parameters { get; } = new StringParameterRtspHeaderValueCollection();
-        
+
 
 
 
@@ -62,7 +62,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
                 var header = new CacheControlRtspHeaderValue();
-                
+
                 foreach ( var token in tokens.Where( element => ! element.Contains( "=" ) ) )
                 {
                     if ( ValueComparer.Equals( "no-cache" , token ) )
@@ -168,7 +168,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        
+
 
 
         public override string ToString()

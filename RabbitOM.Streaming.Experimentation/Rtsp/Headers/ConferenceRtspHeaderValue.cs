@@ -6,11 +6,11 @@ using System.Text;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-   
+
     public sealed class ConferenceRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
 
         private string _conferenceId = string.Empty;
         private string _transport = string.Empty;
@@ -114,14 +114,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             get => _port;
             set => _port = value;
         }
-        
+
         public StringRtspHeaderValueCollection Extensions
         {
             get => _extensions;
         }
 
 
-        
+
 
 
         public static bool TryParse( string input , out ConferenceRtspHeaderValue result )
