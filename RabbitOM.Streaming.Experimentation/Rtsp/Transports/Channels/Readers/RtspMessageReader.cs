@@ -92,9 +92,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 }
             }
 
-            // TODO: refactoring: adding a startline data structure header here
-            // inject this data structure called RtspStartLine instead of the input string  and use it as data structure for parse methods
-
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
             {
                 return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
