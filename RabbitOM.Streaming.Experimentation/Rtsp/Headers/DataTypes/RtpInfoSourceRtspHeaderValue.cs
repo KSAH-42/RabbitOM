@@ -20,13 +20,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         public string Url
         {
             get => _url;
-            set => _url = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _url = RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string SSRC
         {
             get => _ssrc;
-            set => _ssrc = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _ssrc = RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public ushort? Sequence

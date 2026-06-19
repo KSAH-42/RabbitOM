@@ -18,21 +18,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 ;
         });
 
-        private static readonly Func<char,bool> s_charValidator = value =>
-        {
-            if ( value == ' ' )
-            {
-                return false;
-            }
-
-            return char.IsLetter( value ) && char.IsUpper( value )
-                || char.IsDigit( value )
-                || value == '_'
-                || value == '-'
-                || value == '.'
-                ;
-        };
-
         private readonly string _procedureName;
 
 
@@ -42,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RtspMethod( string procedureName )
         {
-            RtspHeaderValueValidator.EnsureWellFormedTokenAndAll( procedureName , s_charValidator );
+            RtspHeaderValueValidator.EnsureWellFormed( procedureName );
 
             _procedureName = procedureName;
         }
@@ -84,7 +69,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         {
             result = null;
 
-            if ( ! RtspHeaderValueValidator.IsWellFormedTokenIfAll( input , s_charValidator ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueCharSet.BasicToken ) )
             {
                 return false;
             }

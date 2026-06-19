@@ -32,73 +32,73 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Scheme
         {
             get => _scheme;
-            set => _scheme = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _scheme = EnsureValue( value );
         }
 
         public string UserName
         {
             get => _userName;
-            set => _userName = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _userName = EnsureValue( value );
         }
 
         public string Realm
         {
             get => _realm;
-            set => _realm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _realm = EnsureValue( value );
         }
 
         public string Nonce
         {
             get => _nonce;
-            set => _nonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _nonce = EnsureValue( value );
         }
 
         public string Domain
         {
             get => _domain;
-            set => _domain = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _domain = EnsureValue( value );
         }
 
         public string Uri
         {
             get => _uri;
-            set => _uri = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _uri = EnsureValue( value );
         }
 
         public string Opaque
         {
             get => _opaque;
-            set => _opaque = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _opaque = EnsureValue( value );
         }
 
         public string Response
         {
             get => _response;
-            set => _response = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _response = EnsureValue( value );
         }
 
         public string Algorithm
         {
             get => _algorithm;
-            set => _algorithm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _algorithm = EnsureValue( value );
         }
 
         public string NonceCount
         {
             get => _nonceCount;
-            set => _nonceCount = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _nonceCount = EnsureValue( value );
         }
 
         public string ClientNonce
         {
             get => _clientNonce;
-            set => _clientNonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _clientNonce = EnsureValue( value );
         }
 
         public string QualityOfProtection
         {
             get => _qualityOfProtection;
-            set => _qualityOfProtection = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _qualityOfProtection = EnsureValue( value );
         }
 
         public StringRtspHeaderValueCollection Extensions
@@ -108,6 +108,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+
+        private static string EnsureValue( string value )
+        {
+            return RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        private static bool IsWellFormedValue( string value )
+        {
+            return RtspHeaderValueValidator.IsWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
 
         public static bool TryParse( string input , out AuthorizationRtspHeaderValue result )
         {
@@ -177,7 +188,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                     }
 
-                    if ( RtspHeaderValueValidator.IsWellFormedToken( header._scheme ) )
+                    if ( IsWellFormedValue( header._scheme ) )
                     {
                         result = header;
                     }

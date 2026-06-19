@@ -29,31 +29,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Scheme
         {
             get => _scheme;
-            set => _scheme = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _scheme = EnsureValue( value );
         }
 
         public string Realm
         {
             get => _realm;
-            set => _realm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _realm = EnsureValue( value );
         }
 
         public string Nonce
         {
             get => _nonce;
-            set => _nonce = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _nonce = EnsureValue( value );
         }
 
         public string Opaque
         {
             get => _opaque;
-            set => _opaque = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _opaque = EnsureValue( value );
         }
 
         public string Algorithm
         {
             get => _algorithm;
-            set => _algorithm = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _algorithm = EnsureValue( value );
         }
 
         public bool? Stale
@@ -65,7 +65,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string QualityOfProtection
         {
             get => _qualityOfProtection;
-            set => _qualityOfProtection = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _qualityOfProtection = EnsureValue( value );
         }
 
         public StringParameterRtspHeaderValueCollection Extensions
@@ -75,15 +75,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+
+
+        private static string EnsureValue( string value )
+        {
+            return RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        private static bool IsWellFormedValue( string value )
+        {
+            return RtspHeaderValueValidator.IsWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        private static bool IsWellFormedValue( string value , out string result )
+        {
+            result = RtspHeaderValueSanitizer.UnQuotesWithTrim( value );
+
+            return RtspHeaderValueValidator.IsWellFormed( result );
+        }
+
         public static bool TryParse( string input , out WWWAuthenticateRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , " " , out string[] tokens ) )
             {
-                var scheme = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault() );
-
-                if ( ! RtspHeaderValueValidator.IsWellFormedToken( scheme ) )
+                if ( ! IsWellFormedValue( tokens.FirstOrDefault() , out var scheme ) )
                 {
                     return false;
                 }
@@ -96,51 +113,54 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     {
                         if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                         {
-                            if ( ValueComparer.Equals( "realm" , parameter.Key ) )
+                            if ( IsWellFormedValue( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out var parameterValue ) )
                             {
-                                header._realm = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
-                            }
-                            else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
-                            {
-                                header._nonce = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
-                            }
-                            else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
-                            {
-                                header._opaque = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
-                            }
-                            else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
-                            {
-                                header._algorithm = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
-                            }
-                            else if ( ValueComparer.Equals( "stale" , parameter.Key ) )
-                            {
-                                if ( bool.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value ) , out var value ) )
+                                if ( ValueComparer.Equals( "realm" , parameter.Key ) )
                                 {
-                                    header._stale = value;
+                                    header._realm = parameterValue;
                                 }
-                            }
-                            else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
-                            {
-                                header._qualityOfProtection = RtspHeaderValueSanitizer.UnQuotesWithTrim( parameter.Value );
-                            }
-                            else
-                            {
-                                if ( StringParameterRtspHeaderValue.TryCreate( parameter.Key , parameter.Value , out var extension ) )
+                                else if ( ValueComparer.Equals( "nonce" , parameter.Key ) )
                                 {
-                                    header._extensions.TryAdd( extension );
+                                    header._nonce = parameterValue;
+                                }
+                                else if ( ValueComparer.Equals( "opaque" , parameter.Key ) )
+                                {
+                                    header._opaque = parameterValue;
+                                }
+                                else if ( ValueComparer.Equals( "algorithm" , parameter.Key ) )
+                                {
+                                    header._algorithm = parameterValue;
+                                }
+                                else if ( ValueComparer.Equals( "stale" , parameter.Key ) )
+                                {
+                                    if ( bool.TryParse( parameterValue , out var value ) )
+                                    {
+                                        header._stale = value;
+                                    }
+                                }
+                                else if ( ValueComparer.Equals( "qop" , parameter.Key ) )
+                                {
+                                    header._qualityOfProtection = parameterValue;
+                                }
+                                else
+                                {
+                                    if ( StringParameterRtspHeaderValue.TryCreate( parameter.Key , parameter.Value , out var extension ) )
+                                    {
+                                        header._extensions.TryAdd( extension );
+                                    }
                                 }
                             }
                         }
                     }
 
-                    if ( ! RtspHeaderValueValidator.IsWellFormedToken( header.Scheme ) || ! RtspHeaderValueValidator.IsWellFormedToken( header.Realm ) )
+                    if ( ! IsWellFormedValue( header.Scheme ) || ! IsWellFormedValue( header.Realm ) )
                     {
                         return false;
                     }
 
                     if ( SupportedTypes.IsDigestAuthentication( header.Scheme ) )
                     {
-                        if ( ! RtspHeaderValueValidator.IsWellFormedToken( header.Nonce ) )
+                        if ( ! IsWellFormedValue( header.Nonce ) )
                         {
                             return false;
                         }

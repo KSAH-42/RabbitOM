@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Unit
         {
             get => _unit;
-            set => _unit = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _unit = EnsureValue( value );
         }
 
         public long? Start
@@ -43,7 +43,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        private static string EnsureValue( string value )
+        {
+            return RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
 
+        private static bool IsWellFormedValue( string value )
+        {
+            return RtspHeaderValueValidator.IsWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
         public static bool TryParse( string input , out ContentRangeRtspHeaderValue result )
         {
             result = null;
@@ -73,15 +81,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     if ( long.TryParse( RtspHeaderValueSanitizer.UnQuotesWithTrim( tokensRange.ElementAtOrDefault(1) ) , out long size ) )
                     {
                         header._size = size;
-                    }                    
+                    }
 
-                    if ( RtspHeaderValueValidator.IsWellFormedToken( header._unit ) )
+                    if ( IsWellFormedValue( header._unit ) )
                     {
                         if ( header._start.HasValue && header._end.HasValue )
                         {
                             result = header;
                         }
-                    
                         else if ( header._size.HasValue && ! header._start.HasValue && ! header._end.HasValue )
                         {
                             result = header;

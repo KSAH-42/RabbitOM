@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 {
@@ -10,18 +9,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
     {
         public StringWithQualityRtspHeaderValue( string value )
         {
-            RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
-
-            Value = value;
+            Value = RtspHeaderValueValidator.EnsureWellFormed( value );
         }
 
         public StringWithQualityRtspHeaderValue( string value , double quality )
         {
-            RtspHeaderValueValidator.EnsureWellFormedToken( value );
-            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
-
-            Value = value;
+            Value = RtspHeaderValueValidator.EnsureWellFormed( value );
             Quality = quality;
         }
 
@@ -36,11 +29,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
-        public static bool IsValidValue( string value )
-        {
-            return RtspHeaderValueValidator.IsWellFormedToken( value ) && RtspHeaderValueValidator.Any( value , x => char.IsLetterOrDigit( x ) );
-        }
-
         public static bool TryParse( string input , out StringWithQualityRtspHeaderValue result )
         {
             result = null;
@@ -49,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             {
                 var name = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault( token => ! token.Contains( "=" ) ) );
 
-                if ( ! IsValidValue( name ) )
+                if ( ! RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueCharSet.BasicToken ) )
                 {
                     return false;
                 }

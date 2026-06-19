@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Identifier
         {
             get => _identifier;
-            set => _identifier = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _identifier = RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public long? Timeout
@@ -36,6 +36,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         }
 
 
+        private static bool IsWellFormedValue( string value )
+        {
+            return RtspHeaderValueValidator.IsWellFormed( value );
+        }
 
         public static bool TryParse( string input , out SessionRtspHeaderValue result )
         {
@@ -43,7 +47,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             if ( RtspHeaderValueParser.TryParse( input , ";" , out string[] tokens ) )
             {
-                var identifer = tokens.FirstOrDefault( RtspHeaderValueValidator.IsWellFormedToken );
+                var identifer = tokens.FirstOrDefault( IsWellFormedValue );
 
                 if ( ! string.IsNullOrWhiteSpace( identifer ) )
                 {
@@ -77,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( RtspHeaderValueValidator.IsWellFormedToken( header.Identifier ) )
+                if ( IsWellFormedValue( header.Identifier ) )
                 {
                     result = header;
                 }

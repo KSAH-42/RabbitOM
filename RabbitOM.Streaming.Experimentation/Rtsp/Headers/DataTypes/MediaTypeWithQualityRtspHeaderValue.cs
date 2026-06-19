@@ -25,15 +25,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public MediaTypeWithQualityRtspHeaderValue( string value , double? quality , string charset , StringParameterRtspHeaderValueCollection parameters )
         {
-            RtspHeaderValueValidator.EnsureWellFormedTokenIfAll( value , x => x == '/' );
-            RtspHeaderValueValidator.EnsureLettersOrDigits( value );
-            RtspHeaderValueValidator.EnsureAny( value , (x,i) => x == '/' && i > 0 && i < value.Length );
-            RtspHeaderValueValidator.EnsureNotNull( parameters );
-
-            Value = value;
+            Value = RtspHeaderValueValidator.EnsureWellFormed( value );
+            CharSet = RtspHeaderValueValidator.EnsureWellFormed( charset );
             Quality = quality;
-            CharSet = string.IsNullOrEmpty( charset ) ? string.Empty : RtspHeaderValueValidator.EnsureWellFormedToken( charset );
-            Parameters = parameters;
+            Parameters = parameters ?? new StringParameterRtspHeaderValueCollection();
         }
 
 
@@ -58,12 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             {
                 var name = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault( token => ! token.Contains( "=" ) ) );
 
-                var boolIsValid =  RtspHeaderValueValidator.IsWellFormedTokenIfAll( name , x => x == '/' ) 
-                                && RtspHeaderValueValidator.Any( name , x => char.IsLetterOrDigit( x ) )
-                                && RtspHeaderValueValidator.Any( name , (x,i) => x == '/' && i > 0 && i < name.Length )
-                                ;
-
-                if ( boolIsValid )
+                if ( RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueCharSet.BasicToken ) )
                 {
                     var parameters = new StringParameterRtspHeaderValueCollection();
                     

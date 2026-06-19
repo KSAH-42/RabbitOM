@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Type
         {
             get => _type;
-            set => _type = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _type = RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public static bool TryParse( string input , out FramesRtspHeaderValue result )
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var value = RtspHeaderValueSanitizer.TrimWithRemoveAllQuotes( input );
 
-            if ( RtspHeaderValueValidator.IsWellFormedToken( value ) )
+            if ( RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueCharSet.BasicToken ) )
             {
                 result = new FramesRtspHeaderValue() { _type = value };
             }

@@ -21,13 +21,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         public string Agent
         {
             get => _agent;
-            set => _agent = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _agent = RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
         public string Comment
         {
             get => _comment;
-            set => _comment = RtspHeaderValueValidator.EnsureWellFormedTokenOrEmpty( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _comment = RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
         }
 
 

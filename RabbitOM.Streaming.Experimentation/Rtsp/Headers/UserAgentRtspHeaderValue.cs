@@ -6,8 +6,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class UserAgentRtspHeaderValue
     {
-        private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-
         private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
 
 
@@ -22,23 +20,32 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string Product
         {
             get => _product;
-            set => _product = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
+            set => _product = EnsureValue( value );
         }
 
         public string Version
         {
             get => _version;
-            set => _version = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) ); 
+            set => _version = EnsureValue( value );
         }
         
         public string Comment
         {
             get => _comment;
-            set => _comment = RtspHeaderValueValidator.EnsureWellFormedTokenIfAll( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) , x => x != '(' && x != ')' ); 
+            set => _comment = EnsureValue( value );
         }
         
 
 
+        private static string EnsureValue( string value )
+        {
+            return RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        private static bool IsWellFormedValue( string value )
+        {
+            return RtspHeaderValueValidator.IsWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
 
         public static bool TryParse( string input , out UserAgentRtspHeaderValue result )
         {
@@ -72,12 +79,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
 
-                if ( ! RtspHeaderValueValidator.IsWellFormedToken( product ) )
+                if ( ! IsWellFormedValue( product ) )
                 {
                     return false;
                 }
 
-                if ( ! RtspHeaderValueValidator.IsWellFormedToken( version ) )
+                if ( ! IsWellFormedValue( version ) )
                 {
                     return false;
                 }
@@ -86,9 +93,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 {
                     _product = product ,
                     _version = version ,
-                    _comment = RtspHeaderValueValidator.IsWellFormedTokenIfAll( comment , x => x != '(' && x != ')' ) 
-                    ? comment 
-                    : "",
+                    _comment = IsWellFormedValue( comment ) ? comment : "",
                 };
             }
 

@@ -17,13 +17,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         public static StringParameterRtspHeaderValue Create( string name , string value )
         {
-            return new StringParameterRtspHeaderValue( RtspHeaderValueValidator.EnsureWellFormedToken( name ) , RtspHeaderValueValidator.EnsureWellFormedToken( value ) );
+            return new StringParameterRtspHeaderValue( RtspHeaderValueValidator.EnsureWellFormed( name , RtspHeaderValueCharSet.BasicToken  ) , RtspHeaderValueValidator.EnsureWellFormed( value , RtspHeaderValueCharSet.BasicToken ) );
         }
 
         public static bool TryCreate( string name , string value , out StringParameterRtspHeaderValue result )
         {
-            result = RtspHeaderValueValidator.IsWellFormedToken( name )
-                  && RtspHeaderValueValidator.IsWellFormedToken( value )
+            result = RtspHeaderValueValidator.IsWellFormed( name  , RtspHeaderValueCharSet.BasicToken )
+                  && RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueCharSet.BasicToken )
                   ? new StringParameterRtspHeaderValue( name , value )
                   : null;
 

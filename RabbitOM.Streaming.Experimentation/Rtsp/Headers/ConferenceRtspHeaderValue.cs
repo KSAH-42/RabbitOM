@@ -34,73 +34,73 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public string ConferenceId
         {
             get => _conferenceId;
-            set => _conferenceId = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _conferenceId = EnsureValue( value );
         }
 
         public string Transport
         {
             get => _transport;
-            set => _transport = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _transport = EnsureValue( value );
         }
 
         public string Transmission
         {
             get => _transmission;
-            set => _transmission = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _transmission = EnsureValue( value );
         }
 
         public string Source
         {
             get => _source;
-            set => _source = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _source = EnsureValue( value );
         }
 
         public string Destination
         {
             get => _destination;
-            set => _destination = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _destination = EnsureValue( value );
         }
 
         public string Address
         {
             get => _address;
-            set => _address = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _address = EnsureValue( value );
         }
 
         public string Host
         {
             get => _host;
-            set => _host = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _host = EnsureValue( value );
         }
 
         public string Role
         {
             get => _role;
-            set => _role = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _role = EnsureValue( value );
         }
 
         public string Mode
         {
             get => _mode;
-            set => _mode = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _mode = EnsureValue( value );
         }
 
         public string Tag
         {
             get => _tag;
-            set => _tag = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _tag = EnsureValue( value );
         }
 
         public string Session
         {
             get => _session;
-            set => _session = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _session = EnsureValue( value );
         }
 
         public string Access
         {
             get => _access;
-            set => _access = RtspHeaderValueValidator.EnsureWellFormedToken( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+            set => _access = EnsureValue( value );
         }
 
         public byte? TTL
@@ -123,6 +123,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
+        private static string EnsureValue( string value )
+        {
+            return RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
+
+        private static bool IsWellFormedValue( string value )
+        {
+            return RtspHeaderValueValidator.IsWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
+        }
 
         public static bool TryParse( string input , out ConferenceRtspHeaderValue result )
         {
@@ -132,7 +141,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 var header = new ConferenceRtspHeaderValue();
 
-                foreach ( var token in tokens.Where( RtspHeaderValueValidator.IsWellFormedToken ) )
+                foreach ( var token in tokens.Where( IsWellFormedValue ) )
                 {                    
                     if ( RtspHeaderValueParser.TryParse( token , "=" , out KeyValuePair<string,string> parameter ) )
                     {
@@ -211,7 +220,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                         }
                         else    
                         {
-                            if ( RtspHeaderValueValidator.IsWellFormedToken( header._conferenceId ) )
+                            if ( IsWellFormedValue( header._conferenceId ) )
                             {
                                 header._extensions.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                             }
@@ -223,7 +232,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                     }
                 }
                 
-                if ( RtspHeaderValueValidator.IsWellFormedToken( header._conferenceId ) )
+                if ( IsWellFormedValue( header._conferenceId ) )
                 {
                     result = header;
                 }

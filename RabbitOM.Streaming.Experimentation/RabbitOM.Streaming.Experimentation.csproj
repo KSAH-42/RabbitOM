@@ -88,6 +88,7 @@
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderRegistry.Enumerator.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderRegistryBucket.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderRegistrySettings.cs" />
+    <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueCharSet.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueParser.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueSanitizer.cs" />
     <Compile Include="Rtsp\Headers\Internals\RtspHeaderValueValidator.cs" />
