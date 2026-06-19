@@ -29,12 +29,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-        public void EnsureSuccess()
+        public RtspClientResponse EnsureSuccess()
         {
             if ( ! RtspStatusCodeChecker.IsSuccessStatusCode( StatusCode ) )
             {
                 throw new InvalidOperationException();
             }
+
+            return this;
         }
     }
 }
