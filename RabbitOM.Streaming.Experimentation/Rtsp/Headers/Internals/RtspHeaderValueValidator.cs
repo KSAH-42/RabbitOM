@@ -12,15 +12,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static string EnsureNotNullOrEmpty( string value )
         {
-            return string.IsNullOrEmpty( value ) ? value : throw new ArgumentException( nameof( value ) );
+            return ! string.IsNullOrEmpty( value ) ? value : throw new ArgumentException( nameof( value ) );
         }
 
         public static string EnsureWellFormed( string value )
         {
-            return EnsureWellFormed( value , RtspHeaderValueCharSet.BasicToken );
+            return EnsureWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken );
         }
 
-        public static string EnsureWellFormed( string value , RtspHeaderValueCharSet allowedChars )
+        public static string EnsureWellFormed( string value , RtspHeaderValueValidatorCharSet allowedChars )
         {
             if ( allowedChars == null )
             {
@@ -45,10 +45,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static bool IsWellFormed( string value )
         {
-            return IsWellFormed( value , RtspHeaderValueCharSet.BasicToken );
+            return IsWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken );
         }
 
-        public static bool IsWellFormed( string value , RtspHeaderValueCharSet allowedChars )
+        public static bool IsWellFormed( string value , RtspHeaderValueValidatorCharSet allowedChars )
         {
             if ( allowedChars == null )
             {

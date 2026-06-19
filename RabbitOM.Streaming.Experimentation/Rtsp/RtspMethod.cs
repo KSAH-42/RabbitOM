@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         {
             result = null;
 
-            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueValidatorCharSet.BasicToken ) )
             {
                 return false;
             }

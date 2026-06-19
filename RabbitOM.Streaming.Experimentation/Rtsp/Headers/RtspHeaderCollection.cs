@@ -78,14 +78,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderValueValidator.EnsureNotNullOrEmpty( name );
 
             _registry.AddHeader(
-                RtspHeaderValueValidator.EnsureWellFormed( name  , RtspHeaderValueCharSet.BasicToken ) ,
-                RtspHeaderValueValidator.EnsureWellFormed( value , RtspHeaderValueCharSet.BasicToken ) )
+                RtspHeaderValueValidator.EnsureWellFormed( name  , RtspHeaderValueValidatorCharSet.BasicToken ) ,
+                RtspHeaderValueValidator.EnsureWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken ) )
                 ;
         }
 
         public void AddParse( string input )
         {
-            _registry.AddParseHeader( RtspHeaderValueValidator.EnsureWellFormed( input  , RtspHeaderValueCharSet.BasicToken ) );
+            _registry.AddParseHeader( RtspHeaderValueValidator.EnsureWellFormed( input  , RtspHeaderValueValidatorCharSet.BasicToken ) );
         }
 
         public bool Remove( string name )
@@ -140,12 +140,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAdd( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueValidatorCharSet.BasicToken ) )
             {
                 return false;
             }
 
-            if ( ! RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken ) )
             {
                 return false;
             }
@@ -155,7 +155,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAddParseHeader( string input )
         {
-            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueValidatorCharSet.BasicToken ) )
             {
                 return false;
             }

@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             {
                 var name = RtspHeaderValueSanitizer.UnQuotesWithTrim( tokens.FirstOrDefault( token => ! token.Contains( "=" ) ) );
 
-                if ( RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueCharSet.BasicToken ) )
+                if ( RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueValidatorCharSet.BasicToken ) )
                 {
                     var parameters = new StringParameterRtspHeaderValueCollection();
                     

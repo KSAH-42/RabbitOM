@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             var value = RtspHeaderValueSanitizer.TrimWithRemoveAllQuotes( input );
 
-            if ( RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueCharSet.BasicToken ) )
+            if ( RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken ) )
             {
                 result = new FramesRtspHeaderValue() { _type = value };
             }
