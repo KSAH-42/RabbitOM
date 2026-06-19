@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     public sealed class RequestsRtspHeaderCollection : RtspHeaderCollection
-    {        
+    {
         private static readonly RtspHeaderRegistrySettings s_settings = new RtspHeaderRegistrySettings( new List<RtspHeaderParser>()
         {
             RtspHeaderParser.NewParser<AcceptRtspHeaderValue>( RtspHeaderNames.Accept , AcceptRtspHeaderValue.TryParse ),
@@ -39,7 +39,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         } ,
         new []
         {
-            RtspHeaderNames.ContentLength,
             RtspHeaderNames.CSeq,
             RtspHeaderNames.Public,
             RtspHeaderNames.RtpInfo,
