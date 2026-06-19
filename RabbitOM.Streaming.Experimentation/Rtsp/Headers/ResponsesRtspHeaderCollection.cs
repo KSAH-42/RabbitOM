@@ -29,12 +29,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderParser.NewParser<ViaRtspHeaderValue>( RtspHeaderNames.Via , ViaRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<WarningRtspHeaderValue>( RtspHeaderNames.Warning , WarningRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<WWWAuthenticateRtspHeaderValue>( RtspHeaderNames.WWWAuthenticate , WWWAuthenticateRtspHeaderValue.TryParse ),
-        } , 
-        new [] 
-        { 
-            RtspHeaderNames.CSeq , 
-            RtspHeaderNames.ContentLength , 
-            RtspHeaderNames.Authorization 
+        } ,
+        new []
+        {
+            RtspHeaderNames.CSeq,
+            RtspHeaderNames.ContentLength,
+            RtspHeaderNames.Authorization
         });
 
         public ResponsesRtspHeaderCollection() : base( new RtspHeaderRegistry( s_settings ) )
