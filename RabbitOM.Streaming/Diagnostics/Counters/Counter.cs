@@ -17,10 +17,10 @@ namespace RabbitOM.Streaming.Diagnostics.Counters
             : this ( name , null )
         {
         }
-        
+
         protected Counter( string name , string description )
         {
-            ExceptionHelper.ThrowNotImplementedOnRelease("this is not finished");
+            throw new NotImplementedException();
         }
 
         ~Counter()

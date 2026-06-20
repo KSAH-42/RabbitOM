@@ -49,7 +49,6 @@
     <Compile Include="ArraySegmentExtensions.cs" />
     <Compile Include="Diagnostics\Counters\Counter.cs" />
     <Compile Include="Diagnostics\Counters\RtspClientCounter.cs" />
-    <Compile Include="ExceptionHelper.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
     <Compile Include="Net\Rtcp\RtcpApplicationPacket.cs" />
