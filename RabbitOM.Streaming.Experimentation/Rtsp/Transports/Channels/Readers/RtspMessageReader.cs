@@ -116,10 +116,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                     break;
                 }
 
-                if ( headers.TryAddParse( header ) )
-                {
-                    validator.Validate( header );
-                }
+                validator.Validate( header );
+
+                headers.TryAddParse( header );
             }
 
             byte[] body = null;

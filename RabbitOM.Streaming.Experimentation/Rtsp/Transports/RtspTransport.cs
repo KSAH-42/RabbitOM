@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Dispose()
         {
-            Close();
+            _socket.Dispose();
         }
     }
 }

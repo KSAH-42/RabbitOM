@@ -119,6 +119,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _transport.Close();
         }
 
+        // TODO: adding a parameter on the ctor to tell if dispose method must be called or just detach it (set as null)
+
         public void Dispose()
         {
             _readRemainingBytes = 0;
