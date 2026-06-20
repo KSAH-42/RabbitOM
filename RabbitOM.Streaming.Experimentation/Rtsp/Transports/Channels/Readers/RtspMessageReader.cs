@@ -89,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
         }
 
         // a guard validator should be used here and not on the service class
-        // the validator must from during reveiving data and never after returning the message it can grow in memory size
+        // the validator must be used here during receiving data and never after returning the message it can grow in terms of memory size
         public RtspMessage ReadControlMessage()
         {
             var startLine = _reader.ReadLine();

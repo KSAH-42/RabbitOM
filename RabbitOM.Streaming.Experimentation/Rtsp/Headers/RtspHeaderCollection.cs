@@ -78,14 +78,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             RtspHeaderValueValidator.EnsureNotNullOrEmpty( name );
 
             _registry.AddHeader(
-                RtspHeaderValueValidator.EnsureWellFormed( name  , RtspHeaderValueValidatorCharSet.BasicToken ) ,
-                RtspHeaderValueValidator.EnsureWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken ) )
+                RtspHeaderValueValidator.EnsureWellFormed( name  ) ,
+                RtspHeaderValueValidator.EnsureWellFormed( value ) )
                 ;
         }
 
         public void AddParse( string input )
         {
-            _registry.AddParseHeader( RtspHeaderValueValidator.EnsureWellFormed( input  , RtspHeaderValueValidatorCharSet.BasicToken ) );
+            _registry.AddParseHeader( RtspHeaderValueValidator.EnsureWellFormed( input ) );
         }
 
         public bool Remove( string name )
@@ -140,12 +140,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAdd( string name , string value )
         {
-            if ( ! RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueValidatorCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( name ) )
             {
                 return false;
             }
 
-            if ( ! RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( value ) )
             {
                 return false;
             }
@@ -155,7 +155,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public bool TryAddParseHeader( string input )
         {
-            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueValidatorCharSet.BasicToken ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( input ) )
             {
                 return false;
             }

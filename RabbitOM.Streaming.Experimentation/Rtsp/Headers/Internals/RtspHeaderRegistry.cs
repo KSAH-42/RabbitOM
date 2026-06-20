@@ -126,7 +126,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( name ) );
             }
 
-            return _headers[ name ].Values.First().ToString() ?? throw new InvalidOperationException() ;
+            return _headers[ name ].Values[0].ToString() ?? throw new InvalidOperationException() ;
         }
 
         public string GetHeaderValue( string name , int index )
@@ -136,9 +136,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 throw new ArgumentException( nameof( name ) );
             }
 
-            return _headers[ name ].Values.ElementAt( index ).ToString() ?? throw new InvalidOperationException();
+            return _headers[ name ].Values[ index ].ToString() ?? throw new InvalidOperationException();
         }
-        
+
         public IEnumerable<string> GetHeaderValues( string name )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
