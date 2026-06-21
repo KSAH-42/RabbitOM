@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
+namespace RabbitOM.Streaming.Experimentation.Tests.Rtsp.Transports
 {
-    // TODO: to be moved moved to the testing assembly
-    internal sealed class MemoryRtspTransport : ITransport
+    using RabbitOM.Streaming.Experimentation.Rtsp.Transports;
+
+    public sealed class MemoryRtspTransport : ITransport
     {
         private readonly MemoryStream _stream;
 

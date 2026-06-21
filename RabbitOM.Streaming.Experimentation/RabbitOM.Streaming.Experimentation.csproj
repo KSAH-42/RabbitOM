@@ -181,8 +181,6 @@
     <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageWriterValidator.cs" />
     <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
-    <Compile Include="Rtsp\Transports\MemoryRtspTransport.cs" />
-    <Compile Include="Rtsp\Transports\MemoryRtspTransportBuilder.cs" />
     <Compile Include="Rtsp\Transports\RtspsTransport.cs" />
     <Compile Include="Rtsp\Transports\RtspStream.cs" />
     <Compile Include="Rtsp\Transports\RtspStreamReader.cs" />

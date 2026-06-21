@@ -124,9 +124,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             byte[] body = null;
 
-            if ( headers.ContentLength.HasValue && headers.ContentLength > 0 )
+            var contentLength = headers.ContentLength;
+
+            if ( contentLength.HasValue && contentLength > 0 )
             {
-                body = new byte[ headers.ContentLength.Value ];
+                body = new byte[ contentLength.Value ];
 
                 var offset = 0;
 

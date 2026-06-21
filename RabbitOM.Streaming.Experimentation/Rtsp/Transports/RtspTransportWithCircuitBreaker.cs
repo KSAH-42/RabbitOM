@@ -1,16 +1,16 @@
-﻿using System;
+﻿// catch exception and returns null O-N-L-Y if the error counter has exceed at this moment exception must be THROW
+// let's it hidding errors during a period, and increase the error count and change and activate a state throw exceptions at all times
+// it will force the higher level implementation to close the channel and to reopen a new one and stop to continue to used a bad readers or making an unnecessary network operations
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
-    // catch exception and returns null O-N-L-Y if the error counter has now exceed at this moment exception must be RETHROW
-    // let's it hidding errors during a period, and increase the error count and change it's state in error and rethrow exceptions at all times
-    // and force the higher level to close the channel be cause the transport layer is in invalid state
-
     public sealed class RtspTransportWithCircuitBreaker : ITransport
     {
         private readonly ITransport _transport;
         private readonly int _maxFailures;
         private int _failureCount;
+        private bool _switchState;
 
 
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public int Receive( byte[] buffer , int offset , int count )
         {
-            if ( _failureCount >= _maxFailures )
+            if ( _switchState )
             {
                 throw new InvalidOperationException( "the transport layer is in invalid state" );
             }
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Send( byte[] buffer , int offset , int count )
         {
-            if ( _failureCount >= _maxFailures )
+            if ( _switchState )
             {
                 throw new InvalidOperationException( "the transport layer is in invalid state" );
             }
@@ -93,7 +93,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         private void OnException( Exception exception )
         {
-            if ( _failureCount >= _maxFailures )
+            _switchState = _failureCount >= _maxFailures;
+
+            if ( _switchState )
             {
                 throw new Exception( "Max error has been reachs" , exception );
             }
