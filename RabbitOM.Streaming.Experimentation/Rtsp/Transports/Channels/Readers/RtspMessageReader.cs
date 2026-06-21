@@ -4,9 +4,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspMessageReader : IMessageReader
     {
-        private readonly RtspStreamReader _reader;
-
         private readonly RtspMessageReaderGuardSettings _settings;
+
+        private readonly RtspStreamReader _reader;
 
 
 
@@ -14,13 +14,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
         public RtspMessageReader( IStream stream , RtspMessageReaderGuardSettings settings )
         {
-            if ( settings == null )
-            {
-                throw new ArgumentNullException( nameof( settings ) );
-            }
+            _settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
 
             _reader = new RtspStreamReader( stream );
-            _settings = settings;
         }
 
 
@@ -99,8 +95,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             var headers = new RtspMessageHeaderCollection();
 
-            // a guard validator should be used here and not on the service class
-            // the validator must be used here during receiving data and never after returning the message it can grow in terms of memory size
+            // a guard should be used here and not on the service class
+            // it must be used here during receiving data and never after returning the message it can grow in terms of memory size
 
             var guard = new RtspMessageReaderGuard( _settings , headers );
 
@@ -161,3 +157,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
         }
     }
 }
+
+

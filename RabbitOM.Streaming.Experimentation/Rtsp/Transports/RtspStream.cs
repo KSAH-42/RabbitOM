@@ -5,6 +5,9 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
+    // TODO: catch exception and returns null O-N-L-Y if the error counter has now exceed at this moment exception must be RETHROW
+    // let the stream hidding errors some times and, and move state of the stream in error and rethrow exceptions at all times
+
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;
