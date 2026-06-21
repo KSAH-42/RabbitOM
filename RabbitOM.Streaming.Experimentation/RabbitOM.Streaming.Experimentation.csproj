@@ -179,6 +179,7 @@
     <Compile Include="Rtsp\Transports\Channels\Writers\IMessageWriter.cs" />
     <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageWriter.cs" />
     <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageWriterValidator.cs" />
+    <Compile Include="Rtsp\Transports\CircuitBreakingRtspTransport.cs" />
     <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
     <Compile Include="Rtsp\Transports\MemoryRtspTransport.cs" />
