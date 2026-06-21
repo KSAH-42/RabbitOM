@@ -6,13 +6,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     {
         private readonly RtspStreamReader _reader;
 
-        private readonly RtspMessageReaderValidatorSettings _settings;
+        private readonly RtspMessageReaderGuardSettings _settings;
 
 
 
 
 
-        public RtspMessageReader( IStream stream , RtspMessageReaderValidatorSettings settings )
+        public RtspMessageReader( IStream stream , RtspMessageReaderGuardSettings settings )
         {
             if ( settings == null )
             {
@@ -88,8 +88,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             return new RtspInterleavedMessage() { Channel = (byte) ( channel & 0xFF ) , Length = length , Buffer = buffer };
         }
 
-        // a guard validator should be used here and not on the service class
-        // the validator must be used here during receiving data and never after returning the message it can grow in terms of memory size
         public RtspMessage ReadControlMessage()
         {
             var startLine = _reader.ReadLine();
@@ -100,7 +98,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
 
             var headers = new RtspMessageHeaderCollection();
-            var validator = new RtspMessageReaderValidator( _settings , headers );
+
+            // a guard validator should be used here and not on the service class
+            // the validator must be used here during receiving data and never after returning the message it can grow in terms of memory size
+
+            var guard = new RtspMessageReaderGuard( _settings , headers );
 
             while ( true )
             {
@@ -116,10 +118,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                     break;
                 }
 
-                validator.Validate( header );
-
                 headers.TryAddParse( header );
+                
+                guard.CheckForProtocolViolations( header );
             }
+
+            // Before to continue, we must check the existance of mandatory header and it's content
+            guard.EnsureCSeqHeader();
 
             byte[] body = null;
 

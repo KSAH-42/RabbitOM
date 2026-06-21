@@ -2,18 +2,18 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
-    public sealed class RtspMessageReaderValidatorSettings
+    public sealed class RtspMessageReaderGuardSettings
     {
-        public RtspMessageReaderValidatorSettings( long? headersCountLimit , long? totalHeadersSize , long? contentLengthLimit )
+        public RtspMessageReaderGuardSettings( long? headersCountLimit , long? totalHeaderLength , long? contentLengthLimit )
         {
             HeadersCountLimit = headersCountLimit;
-            TotalHeadersSizeLimit = totalHeadersSize;
+            TotalHeaderLength = totalHeaderLength;
             ContentLengthLimit = contentLengthLimit;
         }
 
         public long? HeadersCountLimit { get; }
 
-        public long? TotalHeadersSizeLimit { get; }
+        public long? TotalHeaderLength { get; }
 
         public long? ContentLengthLimit { get; }
     }

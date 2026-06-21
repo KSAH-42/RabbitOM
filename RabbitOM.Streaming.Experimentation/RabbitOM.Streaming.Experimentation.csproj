@@ -162,10 +162,11 @@
     <Compile Include="Rtsp\Transports\Channels\IClientChannelFactory.cs" />
     <Compile Include="Rtsp\Transports\Channels\Readers\IMessageReader.cs" />
     <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReader.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReaderGuard.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReaderGuardSettings.cs" />
     <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReaderService.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReaderValidator.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Readers\RtspMessageReaderValidatorSettings.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspClientChannel.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspClientChannelFactory.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspInterleavedMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageEventArgs.cs" />

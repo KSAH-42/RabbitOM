@@ -5,20 +5,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-    public sealed class RtspMessageReaderValidator
+    public sealed class RtspMessageReaderGuard
     {
-        private readonly RtspMessageReaderValidatorSettings _settings;
+        private readonly RtspMessageReaderGuardSettings _settings;
 
         private readonly RtspMessageHeaderCollection _collection;
 
-        private long _totalHeadersSize;
+        private long _totalHeadersLength;
 
 
 
 
 
 
-        public RtspMessageReaderValidator( RtspMessageReaderValidatorSettings settings , RtspMessageHeaderCollection collection )
+        public RtspMessageReaderGuard( RtspMessageReaderGuardSettings settings , RtspMessageHeaderCollection collection )
         {
             _settings   = settings   ?? throw new ArgumentNullException( nameof( settings ) );
             _collection = collection ?? throw new ArgumentNullException( nameof( collection ) );
@@ -28,7 +28,17 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
-        public void Validate( string header )
+        public void EnsureCSeqHeader()
+        {
+            var header = _collection.CSeq;
+
+            if ( ! header.HasValue || header.Value < 0 )
+            {
+                throw new ProtocolViolationException( "the cseq header is not present or contains incorrect value" );
+            }
+        }
+
+        public void CheckForProtocolViolations( string header )
         {
             if ( string.IsNullOrEmpty( header ) )
             {
@@ -37,12 +47,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             checked
             {
-                _totalHeadersSize += header.Length;
+                _totalHeadersLength += header.Length;
             }
 
-            if ( _settings.TotalHeadersSizeLimit.HasValue && _totalHeadersSize < _settings.TotalHeadersSizeLimit.Value )
+            if ( _settings.TotalHeaderLength.HasValue && _settings.TotalHeaderLength.Value < _totalHeadersLength )
             {
-                throw new ProtocolViolationException( "the size has exceed" );
+                throw new ProtocolViolationException( "the total allowed header length has exceed" );
             }
 
             if ( _settings.HeadersCountLimit.HasValue && _settings.HeadersCountLimit < _collection.Count )

@@ -64,8 +64,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             public void Reset()
             {
+                _enumerator.Reset();
                 _valueEnumerator = null;
-                _enumerator.Dispose();
                 _value = default;
             }
 
