@@ -3,6 +3,10 @@ using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
+    // we don't use PipeReader class, instead we used buffered mecanism
+    // we grab using a large buffer, and then the read position
+    // has been reach, we trigger a capture of incomming data
+
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;
@@ -112,7 +116,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Close()
         {
-            _readRemainingBytes = 0;
             _outputStream.Close();
             _transport.Close();
         }
@@ -121,7 +124,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Dispose()
         {
-            _readRemainingBytes = 0;
             _outputStream.Dispose();
             _transport.Dispose();
         }
