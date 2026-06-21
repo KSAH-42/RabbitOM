@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     // let's it hidding errors during a period, and increase the error count and change it's state in error and rethrow exceptions at all times
     // and force the higher level to close the channel be cause the transport layer is in invalid state
 
-    public sealed class CircuitBreakingRtspTransport : ITransport
+    public sealed class RtspTransportWithCircuitBreaker : ITransport
     {
         private readonly ITransport _transport;
         private readonly int _maxFailures;
@@ -16,12 +16,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
 
 
-        public CircuitBreakingRtspTransport( ITransport transport )
+        public RtspTransportWithCircuitBreaker( ITransport transport )
             : this ( transport , 4 )
         {
         }
 
-        public CircuitBreakingRtspTransport( ITransport transport , int maxErrors )
+        public RtspTransportWithCircuitBreaker( ITransport transport , int maxErrors )
         {
             _transport = transport ?? throw new ArgumentNullException( nameof( transport ) );
             _maxFailures = maxErrors > 0 ? maxErrors : throw new ArgumentException( nameof( maxErrors ) );
