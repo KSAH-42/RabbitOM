@@ -2,14 +2,16 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
-    public sealed class RtspMessageWriterValidator
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
+    public static class RtspMessageWriterValidator
     {
         // according to the rfc, the length field can be equal to zero
         // the following sequence are also valid:
         // 0x24 0x00 0x00 0x00
         // 0x24 0x00 0x00 0x01 0x01
         // 0x24 0x00 0x00 0x02 0x01 0x10
-        public void ValidateMessage( RtspInterleavedMessage message )
+        public static void ValidateMessage( RtspInterleavedMessage message )
         {
             if ( message == null )
             {
@@ -24,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
             }
         }
 
-        public void ValidateMessage( RtspRequestMessage request )
+        public static void ValidateMessage( RtspRequestMessage request )
         {
             if ( request == null )
             {
@@ -65,9 +67,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
                 throw new ArgumentException( "no headers provided" , nameof( request ) );
             }
 
-            if ( ! headers.CSeq.HasValue || headers.CSeq.Value < 0 )
+            if ( headers.CountValues( RtspHeaderNames.CSeq ) != 1 )
+            {
+                throw new ArgumentException( "headers must contains a single instance of cseq header" , nameof( request ) );
+            }
+
+            var cseq = headers.CSeq;
+
+            if ( ! cseq.HasValue || cseq.Value < 0 )
             {
                 throw new ArgumentException( "cseq header not found or it'has an negative value" , nameof( request ) );
+            }
+
+            if ( headers.CountValues( RtspHeaderNames.ContentLength ) > 1 )
+            {
+                throw new ArgumentException( "duplicated content-length headers found" , nameof( request ) );
             }
 
             var contentLength = request.Headers.ContentLength.HasValue ? request.Headers.ContentLength.Value : 0;
