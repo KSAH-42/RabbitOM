@@ -1,4 +1,7 @@
-﻿using System;
+﻿// a guard should be used here and not on the service class
+// it must be used here during receiving data and never after returning the message it can grow in terms of memory size
+// && must check the existance of mandatory header and it's content
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
@@ -94,10 +97,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
 
             var headers = new RtspMessageHeaderCollection();
-
-            // a guard should be used here and not on the service class
-            // it must be used here during receiving data and never after returning the message it can grow in terms of memory size
-
             var guard = new RtspMessageReaderGuard( _settings , headers );
 
             while ( true )
@@ -115,11 +114,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 }
 
                 headers.TryAddParse( header );
-                
+
                 guard.CheckForProtocolViolations( header );
             }
 
-            // Before to continue, we must check the existance of mandatory header and it's content
             guard.EnsureCSeqHeader();
 
             byte[] body = null;

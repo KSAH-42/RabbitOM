@@ -45,6 +45,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 throw new ProtocolViolationException( "empty value as header is not allowed" );
             }
 
+            // increase the size even if the header is not accepted
+            // we to need if the flow of data is too big
             checked
             {
                 _totalHeadersLength += header.Length;
