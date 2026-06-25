@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    public sealed class Binding
+    public class Binding
     {
         public Binding( int receiveRetries, int receiveBufferSize , int sendBufferSize , TimeSpan receiveTimeout , TimeSpan sendTimeout , TimeSpan openTimeout , TimeSpan closeTimeout )
         {
-            // TODO: at the end of the experimetation impl, don't forget to throw exceptions
+            // TODO: at the end of the experimetation impl, don't forget to throw args exceptions
             // TODO: in case if the number of properties goes up, think to use nested builder class and remove the constructor
 
             ReceiveRetries = receiveRetries;
@@ -30,6 +30,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public TimeSpan OpenTimeout { get; }
 
+        /// <summary>
+        /// Gets the timeout used to wait underlaying threads before to abort threads and closing the sockets at the end
+        /// </summary>
         public TimeSpan CloseTimeout { get; }
     }
 }
