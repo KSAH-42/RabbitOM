@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 
             for ( var i = 0 ; i < bytes.Length ; i++ )
             {
-                builder.Append( bytes[i].ToString( "x2" ) );
+                builder.AppendFormat( "{0:x2}" , bytes[i] );
             }
 
             return builder.ToString();
