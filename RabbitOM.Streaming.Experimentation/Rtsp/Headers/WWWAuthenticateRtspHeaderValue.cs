@@ -13,10 +13,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
 
 
-        private string _scheme = string.Empty;        
-        private string _realm = string.Empty;        
-        private string _nonce = string.Empty;        
-        private string _opaque = string.Empty;        
+        private string _scheme = string.Empty;
+        private string _realm = string.Empty;
+        private string _nonce = string.Empty;
+        private string _opaque = string.Empty;
         private string _algorithm = string.Empty;
         private bool? _stale;
         private string _qualityOfProtection = string.Empty;
