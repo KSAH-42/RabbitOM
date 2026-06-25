@@ -56,6 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
             EnsureBuffering();
 
+            // TODO: why this statement ? we are ensuring something before ! snap this code !
             if ( _readRemainingBytes <= 0 || _readPosition < 0 || _readPosition >= _readBuffer.Length )
             {
                 return -1;
