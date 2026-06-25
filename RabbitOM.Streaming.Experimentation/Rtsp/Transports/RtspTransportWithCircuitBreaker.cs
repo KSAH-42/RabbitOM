@@ -8,29 +8,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     public sealed class RtspTransportWithCircuitBreaker : ITransport
     {
         private readonly ITransport _transport;
-        private readonly int _maxFailures;
+        private readonly int _maximumOfFailures;
+        private readonly int _maximumOfRetries;
         private int _failureCount;
         private bool _switchState;
 
-
-
-
-
         public RtspTransportWithCircuitBreaker( ITransport transport )
-            : this ( transport , 4 )
+            : this ( transport , 3 , 3 )
         {
         }
 
-        public RtspTransportWithCircuitBreaker( ITransport transport , int maxErrors )
+        public RtspTransportWithCircuitBreaker( ITransport transport , int maximumOfFailures , int maximumOfRetries )
         {
             _transport = transport ?? throw new ArgumentNullException( nameof( transport ) );
-            _maxFailures = maxErrors > 0 ? maxErrors : throw new ArgumentException( nameof( maxErrors ) );
+            _maximumOfFailures = maximumOfFailures > 0 ? maximumOfFailures : throw new ArgumentException( nameof( maximumOfFailures ) );
+            _maximumOfRetries = maximumOfRetries > 0 ? maximumOfRetries : throw new ArgumentException( nameof( maximumOfRetries ) );
         }
-
-
-
-
-
 
         public int Receive( byte[] buffer , int offset , int count )
         {
@@ -39,21 +32,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
                 throw new InvalidOperationException( "the transport layer is in invalid state" );
             }
 
-            try
+            for ( var i = 0 ; i < _maximumOfRetries ; ++ i )
             {
-                var result = _transport.Receive( buffer , offset , count );
-
-                if ( result > 0 )
+                try
                 {
-                    _failureCount = 0;
-                }
+                    var result = _transport.Receive( buffer , offset , count );
 
-                return result;
+                    _failureCount = result < 0 ? ++ _failureCount : 0;
+
+                    return result;
+                }
+                catch ( Exception exception )
+                {
+                    OnException( exception );
+                }
             }
-            catch ( Exception exception )
-            {
-                OnException( exception );
-            }
+
+            _failureCount ++;
 
             return -1;
         }
@@ -72,6 +67,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             }
             catch ( Exception exception )
             {
+                _failureCount ++;
+
                 OnException( exception );
             }
         }
@@ -86,21 +83,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _transport.Dispose();
         }
 
-
-
-
-
-
         private void OnException( Exception exception )
         {
-            _switchState = _failureCount >= _maxFailures;
+            _switchState = _failureCount >= _maximumOfFailures;
 
             if ( _switchState )
             {
                 throw new Exception( "Max error has been reachs" , exception );
             }
-
-            _failureCount ++;
         }
     }
 }
