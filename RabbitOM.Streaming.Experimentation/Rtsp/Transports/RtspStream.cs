@@ -4,8 +4,9 @@ using System.IO;
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
     // we don't use PipeReader class, instead we used buffered mecanism
-    // we grab using a large buffer, and then the read position
-    // has been reach, we trigger a capture of incomming data
+    // we grab using a large buffer, and read the content until
+    // touching the limit, and then we trigger a new capture of incomming data
+    // and continue to read even if it's an incomplete receive
 
     public sealed class RtspStream : IStream
     {
@@ -56,7 +57,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         {
             EnsureBuffering();
 
-            // TODO: why this statement ? we are ensuring something before ! snipe this code !
+            // TODO: /!\ why using this statement here ?
+            // we are ensuring something before !
+            // this is bad, remove this code AND
+            // make somewhere a refactoring inside this class
+            // and never put this code in production
             if ( _readRemainingBytes <= 0 || _readPosition < 0 || _readPosition >= _readBuffer.Length )
             {
                 return -1;

@@ -59,11 +59,28 @@ internal class Program
                 
             optionsResponse.EnsureSuccess();
 
-            var describeResponse = client.Describe();
+            var describeRequest = new RequestBuilder()
+            .AddHeader( "X-A" , "a")
+            .AddHeader( "X-A" , "a")
+            .AddHeader( "X-A" , "a")
+            .AddHeader( "X-A" , "a")
+            .WriteBody()
+            .WriteBody("a")
+            .WriteBody("b")
+            .WriteBody("c")
+            ;
+
+            var describeResponse = client.Describe( describeRequest );
 
             describeResponse.EnsureSuccess();
 
-            var setupResponse = client.Setup();
+            var setupRequest = new RequestBuilder()
+            .SetMulticastAddress( "224.4.4.4" )
+            .SetMulticastPort( 1 )
+            .SetMulticastTTL( 11 )
+            ;
+
+            var setupResponse = client.Setup( setupRequest );
 
             setupResponse.EnsureSuccess();
                 
