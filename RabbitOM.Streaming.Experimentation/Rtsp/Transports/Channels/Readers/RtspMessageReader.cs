@@ -26,7 +26,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
-        public byte? Peek()
+        public byte? PeekValue()
         {
             var prefix = _reader.Peek();
 
@@ -101,7 +101,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             while ( true )
             {
-                var header = _reader.ReadLine();
+                var header = _reader.ReadLine( /* _settings.MaximumHeaderLength */ );
 
                 if ( header == null )
                 {
@@ -115,10 +115,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 headers.TryAddParse( header );
 
-                guard.CheckForProtocolViolations( header );
+                guard.CheckHeadersViolations( header );
             }
 
-            guard.EnsureCSeqHeader();
+            guard.EnsureCSeq();
 
             byte[] body = null;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
@@ -27,7 +28,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             return _stream.ReadByte();
         }
 
-        public string ReadLine()
+        // TODO: /!\ security refactoring here
+        public string ReadLine( /* int? headerLimit = null OR inject this parameter into the ctor */ )
         {
             var builder = new StringBuilder();
 

@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
         private readonly static HashSet<string> Md5Algorithms = new HashSet<string>(StringComparer.OrdinalIgnoreCase ) { "MD5" , "MD5-sess" };
 
-        private readonly static HashSet<string> Sha1Algorithms = new HashSet<string>(StringComparer.OrdinalIgnoreCase ) { "SHA1" , "SHA-1" , "SHA1-sess" , "SHA-1-sess" , "SHA_1" , "SHA_1-sess" , "SHA" , "SHA-sess" };
+        private readonly static HashSet<string> Sha1Algorithms = new HashSet<string>(StringComparer.OrdinalIgnoreCase ) { "SHA1" , "SHA-1" , "SHA1-sess" , "SHA-1-sess" , "SHA_1" , "SHA_1-sess" };
 
         private readonly static HashSet<string> Sha256Algorithms = new HashSet<string>(StringComparer.OrdinalIgnoreCase ) { "SHA256" , "SHA-256" , "SHA256-sess" , "SHA-256-sess" , "SHA_256" , "SHA_256-sess" , "SHA256" , "SHA256-sess" };
 
@@ -110,7 +110,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
 
 
 
-        
+
 
         public const string BasicAuthentication = "Basic";
 
@@ -147,7 +147,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
                 }
             }
         }
-        
+
         public static IReadOnlyCollection<string> Languages
         {
             get
@@ -219,7 +219,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
             return StringComparer.OrdinalIgnoreCase.Equals( value , NegotiateAuthentication );
         }
 
-        
+
 
 
 
@@ -231,7 +231,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         {
             return Md5Algorithms.Contains( value );
         }
-
 
         public static bool IsSha1Algorithm( string value )
         {

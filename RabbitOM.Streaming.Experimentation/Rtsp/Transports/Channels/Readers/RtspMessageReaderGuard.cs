@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
-        public void EnsureCSeqHeader()
+        public void EnsureCSeq()
         {
             var header = _collection.CSeq;
 
@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
         }
 
-        public void CheckForProtocolViolations( string header )
+        public void CheckHeadersViolations( string header )
         {
             if ( string.IsNullOrEmpty( header ) )
             {
@@ -72,14 +72,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 throw new ProtocolViolationException( "the header Content-Length is present at multiple times" );
             }
 
-            if ( _settings.ContentLengthLimit.HasValue )
-            {
-                var contentLength = _collection.ContentLength;
+            var contentLength = _collection.ContentLength;
 
-                if ( contentLength.HasValue && contentLength.Value > _settings.ContentLengthLimit.Value )
-                {
-                    throw new ProtocolViolationException( $"the Content-Length value ({contentLength.Value}) as exceed the limit" );
-                }
+            if (  contentLength.HasValue && contentLength.Value > _settings.ContentLengthLimit.Value )
+            {
+                throw new ProtocolViolationException( $"the Content-Length value ({contentLength.Value}) as exceed the limit" );
             }
         }
     }

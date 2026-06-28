@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
         public RtspMessage ReadMessage()
         {
-            var prefix = _reader.Peek();
+            var prefix = _reader.PeekValue();
 
             if ( ! prefix.HasValue )
             {

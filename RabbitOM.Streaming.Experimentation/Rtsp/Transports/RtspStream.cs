@@ -101,23 +101,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void Flush()
         {
-            var offset = 0;
-
-            while ( offset < _readBuffer.Length )
+            try
             {
-                var bytesRead = _outputStream.Read( _readBuffer , offset , _readBuffer.Length );
+                var offset = 0;
 
-                if ( bytesRead <= 0 )
+                while ( offset < _readBuffer.Length )
                 {
-                    break;
+                    var bytesRead = _outputStream.Read( _readBuffer , offset , _readBuffer.Length );
+
+                    if ( bytesRead <= 0 )
+                    {
+                        break;
+                    }
+
+                    _transport.Send( _writeBuffer , offset , bytesRead );
+
+                    offset += bytesRead;
                 }
-
-                _transport.Send( _writeBuffer , offset , bytesRead );
-
-                offset += bytesRead;
             }
-
-            _outputStream.Seek( 0 , SeekOrigin.Begin );
+            finally
+            {
+                _outputStream.Seek( 0 , SeekOrigin.Begin );
+            }
         }
 
         public void Close()

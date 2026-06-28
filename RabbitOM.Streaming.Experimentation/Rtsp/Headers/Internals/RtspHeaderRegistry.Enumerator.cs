@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     internal sealed partial class RtspHeaderRegistry
     {
-        public struct Enumerator : IEnumerator , IEnumerator<KeyValuePair<string,string>>
+        public struct Enumerator : IEnumerator<KeyValuePair<string,string>>
         {
             private readonly IEnumerator<KeyValuePair<string,RtspHeaderRegistryBucket>> _enumerator;
             private IEnumerator<object> _valuesEnumerator;
@@ -35,12 +34,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 get => _current ;
             }
 
-            
+
 
 
             public bool MoveNext()
             {
-                while ( true ) 
+                while ( true )
                 {
                     if ( _valuesEnumerator != null && _valuesEnumerator.MoveNext() )
                     {

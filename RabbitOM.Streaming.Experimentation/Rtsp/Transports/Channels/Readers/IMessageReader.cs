@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public interface IMessageReader
     {
-        byte? Peek();
+        byte? PeekValue();
 
         RtspMessage ReadControlMessage();
 
