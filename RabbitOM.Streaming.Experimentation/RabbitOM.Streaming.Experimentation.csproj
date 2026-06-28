@@ -118,15 +118,16 @@
     <Compile Include="Rtsp\IHandler.cs" />
     <Compile Include="Rtsp\IListener.cs" />
     <Compile Include="Rtsp\ILogger.cs" />
+    <Compile Include="Rtsp\IRequestPipeLine.cs" />
     <Compile Include="Rtsp\Packet.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspConnectedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspConnectionErrorEventArgs.cs" />
-    <Compile Include="Rtsp\Receivers\Events\RtspDataReceivedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspDisconnectedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspErrorEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspInternalErrorEventArgs.cs" />
+    <Compile Include="Rtsp\Receivers\Events\RtspStreamingDataReceivedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspStreamingStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspStreamingStartErrorEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspStreamingStatusChangedEventArgs.cs" />
