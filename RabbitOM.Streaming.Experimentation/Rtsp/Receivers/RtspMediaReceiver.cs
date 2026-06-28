@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         
         public event EventHandler<RtspStreamingStatusChangedEventArgs> StreamingStatusChanged;
         
-        public event EventHandler<RtspDataReceivedEventArgs> DataReceived;
+        public event EventHandler<RtspStreamingDataReceivedEventArgs> StreamingDataReceived;
         
         public event EventHandler<RtspErrorEventArgs> Error;
         
@@ -120,9 +120,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
             StreamingStatusChanged?.TryInvoke( this , e );
         }
 
-        protected virtual void OnDataReceived(RtspDataReceivedEventArgs e)
+        protected virtual void OnStreamingDataReceived(RtspStreamingDataReceivedEventArgs e)
         {
-            DataReceived?.TryInvoke( this , e );
+            StreamingDataReceived?.TryInvoke( this , e );
         }
 
         protected virtual void OnError(RtspErrorEventArgs e)

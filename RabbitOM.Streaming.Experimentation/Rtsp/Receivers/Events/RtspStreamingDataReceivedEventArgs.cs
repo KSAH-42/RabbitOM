@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
 {
-    public class RtspDataReceivedEventArgs : EventArgs
+    public class RtspStreamingDataReceivedEventArgs : EventArgs
     {
     }
 }

@@ -18,7 +18,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Receivers
         
         event EventHandler<RtspStreamingStatusChangedEventArgs> StreamingStatusChanged;
         
-        event EventHandler<RtspDataReceivedEventArgs> DataReceived;
+        event EventHandler<RtspStreamingDataReceivedEventArgs> StreamingDataReceived;
         
         event EventHandler<RtspErrorEventArgs> Error;
 
