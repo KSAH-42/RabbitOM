@@ -1,139 +1,41 @@
 ﻿using System;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
+
     public sealed class UserAgentRtspHeaderValue
     {
-        private static readonly string RegularExpression = @"(?:(?<product>[A-Za-z0-9\-\._]+)\s*(?:/\s*(?<version>[A-Za-z0-9\-\._]+))?)|\((?<comment>[^()]*)\)";
-
-
-
-        private string _product = string.Empty;
-        private string _version = string.Empty;
-        private string _comment = string.Empty;
-
-
-
-
-        public string Product
-        {
-            get => _product;
-            set => _product = EnsureValue( value );
-        }
-
-        public string Version
-        {
-            get => _version;
-            set => _version = EnsureValue( value );
-        }
-        
-        public string Comment
-        {
-            get => _comment;
-            set => _comment = EnsureValue( value );
-        }
-        
-
-
-        private static string EnsureValue( string value )
-        {
-            return RtspHeaderValueValidator.EnsureWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
-        }
-
-        private static bool IsWellFormedValue( string value )
-        {
-            return RtspHeaderValueValidator.IsWellFormed( RtspHeaderValueSanitizer.UnQuotesWithTrim( value ) );
-        }
+        public ProductInfoRtspHeaderValueCollection Values { get; } = new ProductInfoRtspHeaderValueCollection();
 
         public static bool TryParse( string input , out UserAgentRtspHeaderValue result )
         {
             result = null;
 
-            input = RtspHeaderValueSanitizer.UnQuotesWithTrim( input );
-
-            if ( string.IsNullOrWhiteSpace( input ) )
+            if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
-                return false;
-            }
+                var header = new UserAgentRtspHeaderValue();
 
-            var matches = new Regex( RegularExpression , RegexOptions.Compiled | RegexOptions.CultureInvariant ).Matches( input.Trim() );
-
-            if ( matches.Count > 0 )
-            {
-                var product = string.Empty;
-                var version = string.Empty;
-                var comment = string.Empty;
-
-                foreach ( Match match in matches )
+                foreach ( var token in tokens )
                 {
-                    if ( match.Groups["product"].Success )
+                    if ( ProductInfoRtspHeaderValue.TryParse( token , out var element ) )
                     {
-                        product = match.Groups["product"].Value;
-                        version = match.Groups["version"].Value;
-                    }
-                    else if ( match.Groups["comment"].Success )
-                    {
-                        comment = match.Groups["comment"].Value;
+                        header.Values.TryAdd( element );
                     }
                 }
 
-                if ( ! IsWellFormedValue( product ) )
+                if ( header.Values.Count > 0 )
                 {
-                    return false;
+                    result = header;
                 }
-
-                if ( ! IsWellFormedValue( version ) )
-                {
-                    return false;
-                }
-
-                result = new UserAgentRtspHeaderValue()
-                {
-                    _product = product ,
-                    _version = version ,
-                    _comment = IsWellFormedValue( comment ) ? comment : "",
-                };
             }
 
             return result != null;
         }
 
-
-
-
-
         public override string ToString()
         {
-            var builder = new StringBuilder();
-
-            if ( ! string.IsNullOrWhiteSpace( Product ) )
-            {
-                builder.Append( Product );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Version ) )
-            {
-                if ( builder.Length > 0 )
-                {
-                    builder.Append( '/' );
-                }
-
-                builder.Append( Version );
-            }
-
-            if ( ! string.IsNullOrWhiteSpace( Comment ) )
-            {
-                if ( builder.Length > 0 )
-                {
-                    builder.Append( ' ' );
-                }
-
-                builder.AppendFormat( "({0})" , Comment );
-            }
-
-            return builder.ToString();
+            return string.Join( ", " , Values );
         }
     }
 }

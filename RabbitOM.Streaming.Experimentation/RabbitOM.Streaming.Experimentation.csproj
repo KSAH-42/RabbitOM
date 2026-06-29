@@ -62,6 +62,8 @@
     <Compile Include="Rtsp\Headers\DataTypes\LanguageWithQualityRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\ProductInfoRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\ProductInfoRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ProxyRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ProxyRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\RtpInfoSourceRtspHeaderValue.cs" />
