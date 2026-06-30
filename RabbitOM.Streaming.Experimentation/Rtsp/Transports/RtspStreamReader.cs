@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 
@@ -56,6 +57,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             }
 
             return builder.ToString();
+        }
+
+        public Stream ReadStream( long value )
+        {
+            return _stream.ReadStream( value );
         }
     }
 }

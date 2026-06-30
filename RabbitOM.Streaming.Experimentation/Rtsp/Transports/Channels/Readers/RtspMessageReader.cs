@@ -2,6 +2,7 @@
 // it must be used here during receiving data and never after returning the message it can grow in terms of memory size
 // && must check the existance of mandatory header and it's content
 using System;
+using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
@@ -120,27 +121,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             guard.EnsureCSeq();
 
-            byte[] body = null;
+            Stream body = null;
 
             var contentLength = headers.ContentLength;
 
             if ( contentLength.HasValue && contentLength > 0 )
             {
-                body = new byte[ contentLength.Value ];
-
-                var offset = 0;
-
-                while ( offset < body.Length )
-                {
-                    var bytesRead = _reader.Read( body , offset , body.Length - offset );
-
-                    if ( bytesRead <= 0 )
-                    {
-                        return null;
-                    }
-
-                    offset += bytesRead;
-                }
+                body = _reader.ReadStream( contentLength.Value );
             }
 
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )

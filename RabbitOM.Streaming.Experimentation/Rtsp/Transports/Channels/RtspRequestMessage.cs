@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
@@ -8,6 +9,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public RtspMessageHeaderCollection Headers { get; set; }
 
-        public byte[] Body { get; set; }
+        public Stream Body { get; set; }
     }
 }

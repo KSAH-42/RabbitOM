@@ -89,6 +89,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             throw new NotImplementedException();
         }
 
+        public Stream ReadStream( long value )
+        {
+            throw new NotImplementedException();
+        }
+
         public void WriteByte( byte value )
         {
             _outputStream.WriteByte( value );
@@ -97,6 +102,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         public void Write( byte[] buffer , int offset , int count )
         {
             _outputStream.Write( buffer , offset , count );
+        }
+
+        public void Write( Stream stream )
+        {
+            stream.CopyTo( _outputStream );
         }
 
         public void Flush()

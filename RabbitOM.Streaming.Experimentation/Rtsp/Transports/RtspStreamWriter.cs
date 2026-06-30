@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 {
@@ -14,6 +15,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
         public void Write( byte[] buffer , int offset , int count )
         {
             _stream.Write( buffer , offset , count );
+        }
+
+        public void Write( Stream stream )
+        {
+            _stream.Write( stream );
         }
 
         public void WriteChar( in char value )
