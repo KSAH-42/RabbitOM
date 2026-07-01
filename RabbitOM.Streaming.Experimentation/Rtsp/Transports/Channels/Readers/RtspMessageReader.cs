@@ -121,13 +121,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             guard.EnsureCSeq();
 
-            Stream body = null;
+            MemoryStream body = null;
 
             var contentLength = headers.ContentLength;
 
             if ( contentLength.HasValue && contentLength > 0 )
             {
-                body = _reader.ReadStream( contentLength.Value );
+                var buffer = new byte[1024];
+
+                while( body.Length < contentLength.Value )
+                {
+                    var bytesRead = _reader.Read( buffer , 0 , buffer.Length );
+
+                    if ( bytesRead <= 0 )
+                    {
+                        return null;
+                    }
+
+                    (body = body ?? new MemoryStream()).Write( buffer , 0 , bytesRead );
+                }
             }
 
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )

@@ -17,11 +17,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _stream.Write( buffer , offset , count );
         }
 
-        public void Write( Stream stream )
-        {
-            _stream.Write( stream );
-        }
-
         public void WriteChar( in char value )
         {
             _stream.WriteByte( (byte) value );

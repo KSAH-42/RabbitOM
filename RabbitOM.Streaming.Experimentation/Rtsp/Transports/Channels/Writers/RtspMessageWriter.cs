@@ -35,7 +35,25 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
             }
 
             _writer.WriteLine();
-            _writer.Write( message.Body );
+
+            var body = message.Body;
+
+            if ( body?.Length > 0 )
+            {
+                var buffer = new byte[1024];
+
+                while ( true )
+                {
+                    var bytesRead = body.Read( buffer , 0 , buffer.Length );
+
+                    if ( bytesRead <= 0 )
+                    {
+                        break;
+                    }
+
+                    _writer.Write( buffer , 0 , bytesRead );
+                }
+            }
 
             _writer.Flush(); // this step is mandatory be design
         }

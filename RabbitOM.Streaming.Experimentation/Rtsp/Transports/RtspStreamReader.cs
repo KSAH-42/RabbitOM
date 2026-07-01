@@ -58,10 +58,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
             return builder.ToString();
         }
-
-        public Stream ReadStream( long value )
-        {
-            return _stream.ReadStream( value );
-        }
     }
 }
