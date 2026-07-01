@@ -121,7 +121,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             guard.EnsureCSeq();
 
-            MemoryStream body = null;
+            var body = new MemoryStream();
 
             var contentLength = headers.ContentLength;
 
@@ -138,7 +138,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                         return null;
                     }
 
-                    (body = body ?? new MemoryStream()).Write( buffer , 0 , bytesRead );
+                    body.Write( buffer , 0 , bytesRead );
                 }
             }
 

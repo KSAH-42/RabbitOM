@@ -62,6 +62,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _stream.WriteByte( (byte) '\n' );
         }
 
+        public void Write( Stream stream )
+        {
+            if ( stream == null || stream.Length <= 0 )
+            {
+                return;
+            }
+
+            var buffer = new byte[1024];
+
+            while ( true )
+            {
+                var bytesRead = stream.Read( buffer , 0 , buffer.Length );
+
+                if ( bytesRead <= 0 )
+                {
+                    break;
+                }
+
+                _stream.Write( buffer , 0 , bytesRead );
+            }
+        }
+
         public void Flush()
         {
             _stream.Flush();
