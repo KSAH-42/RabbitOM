@@ -9,23 +9,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly RtspMessageReaderGuardSettings _settings;
-
         private readonly RtspStreamReader _reader;
-
-
-
-
 
         public RtspMessageReader( IStream stream , RtspMessageReaderGuardSettings settings )
         {
             _settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
-
             _reader = new RtspStreamReader( stream );
         }
-
-
-
-
 
         public byte? PeekValue()
         {
@@ -102,7 +92,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             while ( true )
             {
-                var header = _reader.ReadLine( /* _settings.MaximumHeaderLength */ );
+                var header = _reader.ReadLine();
 
                 if ( header == null )
                 {
@@ -127,7 +117,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( contentLength.HasValue && contentLength > 0 )
             {
-                var buffer = new byte[1024];
+                var buffer = new byte[1024]; // don't move as private buffer because most of the time rtsp bodies are unused
 
                 while ( body.Length < contentLength.Value )
                 {

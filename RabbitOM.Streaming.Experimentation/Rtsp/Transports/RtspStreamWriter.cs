@@ -12,11 +12,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _stream = stream ?? throw new ArgumentNullException( nameof( stream ) );
         }
 
-        public void Write( byte[] buffer , int offset , int count )
-        {
-            _stream.Write( buffer , offset , count );
-        }
-
         public void WriteChar( in char value )
         {
             _stream.WriteByte( (byte) value );
@@ -62,6 +57,31 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             _stream.WriteByte( (byte) '\n' );
         }
 
+        public void Write( byte[] buffer )
+        {
+            if ( buffer == null || buffer.Length <= 0 )
+            {
+                return;
+            }
+
+            _stream.Write( buffer , 0 , buffer.Length );
+        }
+
+        public void Write( byte[] buffer , int offset , int count )
+        {
+            if ( buffer == null || buffer.Length <= 0 || offset < 0 || count < 0 )
+            {
+                return;
+            }
+
+            if ( buffer.Length - offset < count )
+            {
+                return;
+            }
+
+            _stream.Write( buffer , offset , count );
+        }
+
         public void Write( Stream stream )
         {
             if ( stream == null || stream.Length <= 0 )
@@ -69,7 +89,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
                 return;
             }
 
-            var buffer = new byte[1024];
+            var buffer = new byte[ 1024 ];
 
             while ( true )
             {

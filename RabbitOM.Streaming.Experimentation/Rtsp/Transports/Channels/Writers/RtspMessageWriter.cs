@@ -1,4 +1,5 @@
-﻿using System;
+﻿// don't remove the statement for flushing data, it's mandatory by desin that's one of the core concept
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
@@ -19,8 +20,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
             _writer.WriteByte( message.Channel );
             _writer.WriteByte( (byte) (message.Length >> 8 & 0xFF) );
             _writer.WriteByte( (byte) (message.Length      & 0xFF) );
-            _writer.Write( message.Buffer , 0 , message.Buffer.Length );
-            _writer.Flush(); // this step is mandatory be design
+            _writer.Write( message.Buffer );
+            _writer.Flush();
         }
 
         public void WriteMessage( RtspRequestMessage message )
@@ -36,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 
             _writer.WriteLine();
             _writer.Write( message.Body );
-            _writer.Flush(); // this step is mandatory be design
+            _writer.Flush();
         }
     }
 }
