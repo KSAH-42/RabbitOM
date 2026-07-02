@@ -129,7 +129,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             {
                 var buffer = new byte[1024];
 
-                while( body.Length < contentLength.Value )
+                while ( body.Length < contentLength.Value )
                 {
                     var bytesRead = _reader.Read( buffer , 0 , buffer.Length );
 
@@ -140,6 +140,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                     body.Write( buffer , 0 , bytesRead );
                 }
+
+                body.Seek( 0, SeekOrigin.Begin );
             }
 
             if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
