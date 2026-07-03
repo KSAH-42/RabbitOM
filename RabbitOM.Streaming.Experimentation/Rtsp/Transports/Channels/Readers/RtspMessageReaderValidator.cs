@@ -56,7 +56,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                     throw new ProtocolViolationException();
                 }
             }
-
         }
 
         public void Validate( RtspMessageHeaderCollection source , string header )
