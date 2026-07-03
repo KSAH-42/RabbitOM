@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
     {
         private readonly RtspStreamWriter _writer;
         private readonly IMessageWriterValidator<RtspRequestMessage> _validator;
-
+    
         public RtspMessageRequestWriter( IStream stream , IMessageWriterValidator<RtspRequestMessage> validator )
         {
             _validator = validator ?? throw new ArgumentNullException( nameof( validator ) );

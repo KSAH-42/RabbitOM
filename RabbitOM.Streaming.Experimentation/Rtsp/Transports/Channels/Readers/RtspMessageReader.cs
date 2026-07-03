@@ -6,13 +6,22 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly RtspStreamReader _reader;
+        
         private readonly IMessageReaderValidator _validator;
+
+
+
+
 
         public RtspMessageReader( IStream stream , IMessageReaderValidator validator )
         {
             _validator = validator ?? throw new ArgumentNullException( nameof( validator ) );
+
             _reader = new RtspStreamReader( stream );
         }
+
+
+
 
         public byte? PeekValue()
         {

@@ -30,19 +30,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( source.CountValues( RtspHeaderNames.CSeq ) != 1 )
             {
-                throw new ProtocolViolationException();
+                throw new ProtocolViolationException( "the collection must contains only one instance cseq header" );
             }
 
             if ( source.CountValues( RtspHeaderNames.ContentLength ) > 1 )
             {
-                throw new ProtocolViolationException();
+                throw new ProtocolViolationException( "the collection must contains zero or only one single content-length header" );
             }
 
             var cseq = source.CSeq;
 
             if ( ! cseq.HasValue || cseq.Value < 0 )
             {
-                throw new ProtocolViolationException();
+                throw new ProtocolViolationException( "cseq header is invalid" );
             }
 
             var maximumOfHeaderContentLength = MaximumOfHeaderContentLength;
@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
                 if ( contentLength.HasValue && contentLength.Value > maximumOfHeaderContentLength.Value )
                 {
-                    throw new ProtocolViolationException();
+                    throw new ProtocolViolationException( "content-length value is too big" );
                 }
             }
         }
@@ -76,21 +76,21 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( maximumOfHeaderTotalLength.HasValue && maximumOfHeaderTotalLength < ActualHeaderTotalLength )
             {
-                throw new ProtocolViolationException();
+                throw new ProtocolViolationException( "the total size of headers has exceed" );
             }
 
             var maximumOfHeaderLength = MaximumOfHeaderLength;
 
             if ( maximumOfHeaderLength.HasValue && maximumOfHeaderLength < headerLength )
             {
-                throw new ProtocolViolationException();
+                throw new ProtocolViolationException( "the header length is too big" );
             }
 
             var maximumOfHeaders = MaximumOfHeaders;
 
             if ( maximumOfHeaders.HasValue && maximumOfHeaders.Value < source.Count )
             {
-                throw new ProtocolViolationException();
+                throw new ProtocolViolationException( "too many headers present on the collection" );
             }
         }
 

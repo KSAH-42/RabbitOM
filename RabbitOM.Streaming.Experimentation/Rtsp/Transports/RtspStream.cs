@@ -7,6 +7,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     // we grab using a large buffer, and read the content until
     // touching the limit, and then we trigger a new capture of incomming data
     // and continue to read even if it's an incomplete receive
+    // using this approach readByte become fast and we can introduce peek method
 
     public sealed class RtspStream : IStream
     {

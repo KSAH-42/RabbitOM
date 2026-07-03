@@ -79,8 +79,8 @@
     <Compile Include="Rtsp\Headers\DataTypes\TransportInfoRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\TransportInfoRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DataTypes\ValueRange.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\WarningFieldRtspHeaderValue.cs" />
-    <Compile Include="Rtsp\Headers\DataTypes\WarningFieldRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\WarningInfoRtspHeaderValue.cs" />
+    <Compile Include="Rtsp\Headers\DataTypes\WarningInfoRtspHeaderValueCollection.cs" />
     <Compile Include="Rtsp\Headers\DateTimeRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\FramesRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\IfMatchRtspHeaderValue.cs" />
