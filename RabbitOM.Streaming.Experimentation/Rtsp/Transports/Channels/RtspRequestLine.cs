@@ -15,6 +15,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
+        // input: DESCRIBE rtsp://1.1.1.1/predestination RTSP/1.0
         // input: DESCRIBE    rtsp://1.1.1.1/predestination    RTSP / 1.0
 
         public static bool TryParse( string input , out RtspRequestLine result )
@@ -27,7 +28,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             }
 
             var requestLine = new RtspRequestLine();
-            var builder = new StringBuilder(100);
+            var builder = new StringBuilder( input.Length );
             var i = -1;
 
             while ( ++ i < input.Length )

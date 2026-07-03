@@ -31,7 +31,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
             }
 
             var statusLine = new RtspStatusLine();
-            var builder = new StringBuilder(200);
+            var builder = new StringBuilder( input.Length );
             var i = -1;
 
             while ( ++ i < input.Length )
