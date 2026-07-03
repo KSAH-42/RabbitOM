@@ -8,6 +8,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
         RtspMessage ReadControlMessage();
 
-        RtspInterleavedMessage ReadInterleavedMessage();
+        RtspMessage ReadInterleavedMessage();
     }
 }

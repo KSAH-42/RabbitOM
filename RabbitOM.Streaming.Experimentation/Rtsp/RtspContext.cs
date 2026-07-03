@@ -5,29 +5,39 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     public sealed class RtspContext
     {
-        private Dictionary<string,object> _parameters;
-
         public RtspContext( string method , string uri )
         {
+            if ( string.IsNullOrWhiteSpace( method ) )
+            {
+                throw new ArgumentNullException( nameof( method ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( uri ) )
+            {
+                throw new ArgumentNullException( nameof( uri ) );
+            }
+
             Method = method;
+
             Uri = uri;
+
+            Parameters = new Dictionary<string, object>( StringComparer.OrdinalIgnoreCase );
         }
+
+
 
         public string Method { get; }
 
         public string Uri { get; }
 
-        public Dictionary<string,object> Parameters
-        {
-            get
-            {
-                if ( _parameters == null )
-                {
-                    _parameters = new Dictionary<string, object>( StringComparer.OrdinalIgnoreCase );
-                }
+        public IDictionary<string,object> Parameters { get; }
 
-                return _parameters;
-            }
+
+
+
+        public void Abort( string message = "operation aborted" )
+        {
+            throw new OperationCanceledException( message );
         }
     }
 }

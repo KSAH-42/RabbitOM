@@ -1,19 +1,16 @@
-﻿// a guard should be used here and not on the service class
-// it must be used here during receiving data and never after returning the message it can grow in terms of memory size
-// && must check the existance of mandatory header and it's content
-using System;
+﻿using System;
 using System.IO;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspMessageReader : IMessageReader
     {
-        private readonly RtspMessageReaderGuardSettings _settings;
         private readonly RtspStreamReader _reader;
+        private readonly IMessageReaderValidator _validator;
 
-        public RtspMessageReader( IStream stream , RtspMessageReaderGuardSettings settings )
+        public RtspMessageReader( IStream stream , IMessageReaderValidator validator )
         {
-            _settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
+            _validator = validator ?? throw new ArgumentNullException( nameof( validator ) );
             _reader = new RtspStreamReader( stream );
         }
 
@@ -29,7 +26,77 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             return (byte) prefix;
         }
 
-        public RtspInterleavedMessage ReadInterleavedMessage()
+        public RtspMessage ReadControlMessage()
+        {
+            var startLine = _reader.ReadLine();
+
+            if ( startLine == null )
+            {
+                return null;
+            }
+
+            _validator.Reset();
+
+            var headers = new RtspMessageHeaderCollection();
+
+            while ( true )
+            {
+                var header = _reader.ReadLine();
+
+                if ( header == null )
+                {
+                    return null;
+                }
+
+                if ( header == "" )
+                {
+                    break;
+                }
+
+                _validator.Validate( headers , header );
+
+                headers.TryAddParse( header );
+            }
+
+            _validator.Validate( headers );
+
+            var body = new MemoryStream();
+
+            var contentLength = headers.ContentLength;
+
+            if ( contentLength.HasValue && contentLength > 0 )
+            {
+                var buffer = new byte[ 1024 ]; // don't move as private buffer because most of the time rtsp bodies are unused and lets the gc collect this buffer, instead to have this one always present and unsed and allocated each times the channel is created
+
+                while ( body.Length < contentLength.Value )
+                {
+                    var bytesRead = _reader.Read( buffer , 0 , buffer.Length );
+
+                    if ( bytesRead <= 0 )
+                    {
+                        return null;
+                    }
+
+                    body.Write( buffer , 0 , bytesRead );
+                }
+
+                body.Seek( 0 , SeekOrigin.Begin );
+            }
+
+            if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
+            {
+                return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
+            }
+
+            if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
+            {
+                return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };
+            }
+
+            return null;
+        }
+
+        public RtspMessage ReadInterleavedMessage()
         {
             var magicByte = _reader.ReadByte();
 
@@ -76,75 +143,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
 
             return new RtspInterleavedMessage() { Channel = (byte) ( channel & 0xFF ) , Length = length , Buffer = buffer };
-        }
-
-        public RtspMessage ReadControlMessage()
-        {
-            var startLine = _reader.ReadLine();
-
-            if ( startLine == null )
-            {
-                return null;
-            }
-
-            var headers = new RtspMessageHeaderCollection();
-            var guard = new RtspMessageReaderGuard( _settings , headers );
-
-            while ( true )
-            {
-                var header = _reader.ReadLine();
-
-                if ( header == null )
-                {
-                    return null;
-                }
-
-                if ( header == "" )
-                {
-                    break;
-                }
-
-                headers.TryAddParse( header );
-
-                guard.CheckHeadersViolations( header );
-            }
-
-            guard.EnsureCSeq();
-
-            var body = new MemoryStream();
-
-            var contentLength = headers.ContentLength;
-
-            if ( contentLength.HasValue && contentLength > 0 )
-            {
-                var buffer = new byte[1024]; // don't move as private buffer because most of the time rtsp bodies are unused
-
-                while ( body.Length < contentLength.Value )
-                {
-                    var bytesRead = _reader.Read( buffer , 0 , buffer.Length );
-
-                    if ( bytesRead <= 0 )
-                    {
-                        return null;
-                    }
-
-                    body.Write( buffer , 0 , bytesRead );
-                }
-
-                body.Seek( 0, SeekOrigin.Begin );
-            }
-
-            if ( RtspStatusLine.TryParse( startLine , out var statusLine ) )
-            {
-                return new RtspResponseMessage() { StatusLine = statusLine , Headers = headers , Body = body };
-            }
-
-            if ( RtspRequestLine.TryParse( startLine , out var requestLine ) )
-            {
-                return new RtspRequestMessage() { RequestLine = requestLine , Headers = headers , Body = body };
-            }
-
-            return null;
         }
     }
 }

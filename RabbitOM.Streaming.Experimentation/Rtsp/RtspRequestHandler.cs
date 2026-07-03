@@ -74,10 +74,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
             return this;
         }
-
-        protected void Abort( string message = null )
-        {
-            throw new OperationCanceledException( message );
-        }
     }
 }
