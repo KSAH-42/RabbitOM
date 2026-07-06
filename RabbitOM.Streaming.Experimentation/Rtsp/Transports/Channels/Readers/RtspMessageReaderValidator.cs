@@ -9,13 +9,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     {
         public long? MaximumOfHeaders { get; set; }
 
+        public long? MaximumOfHeadersTotalLength { get; set; }
+
         public long? MaximumOfHeaderLength { get; set; }
 
-        public long? MaximumOfHeaderTotalLength { get; set; }
+        public long? MaximumOfContentLengthValue { get; set; }
 
-        public long? MaximumOfHeaderContentLength { get; set; }
-
-        public long ActualHeaderTotalLength { get; private set; }
+        public long ActualTotalHeadersLength { get; private set; }
 
 
 
@@ -33,11 +33,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 throw new ProtocolViolationException( "the collection must contains only one instance cseq header" );
             }
 
-            if ( source.CountValues( RtspHeaderNames.ContentLength ) > 1 )
-            {
-                throw new ProtocolViolationException( "the collection must contains zero or only one single content-length header" );
-            }
-
             var cseq = source.CSeq;
 
             if ( ! cseq.HasValue || cseq.Value < 0 )
@@ -45,13 +40,23 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 throw new ProtocolViolationException( "cseq header is invalid" );
             }
 
-            var maximumOfHeaderContentLength = MaximumOfHeaderContentLength;
-
-            if ( maximumOfHeaderContentLength.HasValue )
+            if ( source.CountValues( RtspHeaderNames.ContentLength ) > 1 )
             {
-                var contentLength = source.ContentLength;
+                throw new ProtocolViolationException( "the collection must contains zero or only one single content-length header" );
+            }
 
-                if ( contentLength.HasValue && contentLength.Value > maximumOfHeaderContentLength.Value )
+            var contentLength = source.ContentLength;
+
+            if ( contentLength.HasValue )
+            {
+                if ( contentLength.Value < 0 )
+                {
+                    throw new ProtocolViolationException( "invalid content-length value" );
+                }
+
+                var maximumOfHeaderContentLength = MaximumOfContentLengthValue;
+
+                if ( maximumOfHeaderContentLength.HasValue && maximumOfHeaderContentLength.Value < contentLength.Value )
                 {
                     throw new ProtocolViolationException( "content-length value is too big" );
                 }
@@ -69,12 +74,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             checked
             {
-                ActualHeaderTotalLength += headerLength;
+                ActualTotalHeadersLength += headerLength;
             }
 
-            var maximumOfHeaderTotalLength = MaximumOfHeaderTotalLength;
+            var maximumOfHeaderTotalLength = MaximumOfHeadersTotalLength;
 
-            if ( maximumOfHeaderTotalLength.HasValue && maximumOfHeaderTotalLength < ActualHeaderTotalLength )
+            if ( maximumOfHeaderTotalLength.HasValue && maximumOfHeaderTotalLength < ActualTotalHeadersLength )
             {
                 throw new ProtocolViolationException( "the total size of headers has exceed" );
             }
@@ -94,9 +99,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             }
         }
 
-        public void Reset()
+        public void Setup()
         {
-            ActualHeaderTotalLength = 0;
+            ActualTotalHeadersLength = 0;
         }
     }
 }

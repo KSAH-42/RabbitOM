@@ -9,6 +9,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     // and continue to read even if it's an incomplete receive
     // using this approach readByte become fast and we can introduce peek method
 
+    // TODO: renaming as NetworkRtspStream
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;

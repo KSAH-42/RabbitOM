@@ -116,7 +116,6 @@
     <Compile Include="Rtsp\Headers\WarningRtspHeaderValue.cs" />
     <Compile Include="Rtsp\Headers\WWWAuthenticateRtspHeaderValue.cs" />
     <Compile Include="Rtsp\IAllocator.cs" />
-    <Compile Include="Rtsp\IClient.cs" />
     <Compile Include="Rtsp\IHandler.cs" />
     <Compile Include="Rtsp\IListener.cs" />
     <Compile Include="Rtsp\ILogger.cs" />
@@ -181,11 +180,8 @@
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspStatusLine.cs" />
     <Compile Include="Rtsp\Transports\Channels\Writers\IMessageWriter.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Writers\IMessageWriterValidator.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageInterleavedWriter.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageInterleavedWriterValidator.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageRequestWriter.cs" />
-    <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageRequestWriterValidator.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageWriter.cs" />
+    <Compile Include="Rtsp\Transports\Channels\Writers\RtspMessageWriterValidator.cs" />
     <Compile Include="Rtsp\Transports\IStream.cs" />
     <Compile Include="Rtsp\Transports\ITransport.cs" />
     <Compile Include="Rtsp\Transports\RtspsTransport.cs" />

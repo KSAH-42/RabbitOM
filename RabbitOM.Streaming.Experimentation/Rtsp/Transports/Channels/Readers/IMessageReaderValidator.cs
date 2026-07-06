@@ -2,13 +2,13 @@
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
-    // headers collection must not be own internal the validator in case of exception
+    // TODO: try to improve the design of the validator, the headers collection are actuallay passed as pararameter and never capture by the validator just in case if an exception occurs during the read
     public interface IMessageReaderValidator
     {
         void Validate( RtspMessageHeaderCollection source );
 
         void Validate( RtspMessageHeaderCollection source , string header );
 
-        void Reset();
+        void Setup();
     }
 }

@@ -4,9 +4,24 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-    public sealed class RtspMessageRequestWriterValidator : IMessageWriterValidator<RtspRequestMessage>
+    public static class RtspMessageWriterValidator
     {
-        public void ValidateMessage( RtspRequestMessage request )
+        public static void ValidateMessage( RtspInterleavedMessage message )
+        {
+            if ( message == null )
+            {
+                throw new ArgumentNullException( nameof( message ) );
+            }
+
+            var bufferLength = message.Buffer?.Length ?? 0; // according to the rfc, the length field can be equal to zero
+
+            if ( bufferLength != message.Length )
+            {
+                throw new ArgumentException( "invalid buffer size" , nameof( message ) );
+            }
+        }
+
+        public static void ValidateMessage( RtspRequestMessage request )
         {
             if ( request == null )
             {

@@ -74,10 +74,13 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public void Add( string name , string value )
         {
+            // TODO: remove this statement if the number of references stay the same, when we are closer to finish the implementation.
+            // but honestly, this code smell, it can be replaced just by throwing an exception here,
+            // and i don't think so that we can keep this code... the usage here of EnsureNotNullOrEmpty seems too much
             RtspHeaderValueValidator.EnsureNotNullOrEmpty( name );
 
             _registry.AddHeader(
-                RtspHeaderValueValidator.EnsureWellFormed( name  ) ,
+                RtspHeaderValueValidator.EnsureWellFormed( name  ) , // RtspHeaderValueValidator.EnsureStrictWellFormed( name  ) or RtspHeaderValueValidator.EnsureWellFormedAndNullOrEmpty( name  )
                 RtspHeaderValueValidator.EnsureWellFormed( value ) )
                 ;
         }

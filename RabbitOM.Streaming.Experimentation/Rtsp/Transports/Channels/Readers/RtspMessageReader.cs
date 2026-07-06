@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
     public sealed class RtspMessageReader : IMessageReader
     {
         private readonly RtspStreamReader _reader;
-        
+
         private readonly IMessageReaderValidator _validator;
 
 
@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 return null;
             }
 
-            _validator.Reset();
+            _validator.Setup();
 
             var headers = new RtspMessageHeaderCollection();
 
@@ -86,7 +86,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                         return null;
                     }
 
-                    body.Write( buffer , 0 , bytesRead );
+                    body.Write( buffer , 0 , bytesRead ); // don't move this code on the body.setter of the message class
                 }
 
                 body.Seek( 0 , SeekOrigin.Begin );

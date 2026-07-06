@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Net;
+using System.Threading.Tasks;
+
+#pragma warning disable CS1998
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+    using System.Threading;
 
     // removing connect and disconnect methods
     // and use a socket pool to retrieve the current active socket
@@ -13,14 +17,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     // don't add static socket pool class
     // and the end add async methods as partial class
 
-    public sealed class RtspClient : IClient , IDisposable
+    public sealed class RtspClient : IDisposable
     {
         private readonly RtspClientContext _context;
-        
-        
 
 
-        
+
+
+
         public RtspClient() : this ( new RtspClientContext() )
         { 
         }
@@ -33,7 +37,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-        
+
 
         public TimeSpan ReceiveTimeout { get; set; }
 
@@ -45,183 +49,194 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public NetworkCredential Credential { get; set; }
 
-        public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
+        public RequestsRtspHeaderCollection DefaultRequestHeaders { get; } = new RequestsRtspHeaderCollection();
 
         public bool IsDisposed { get; }
-        
-        
 
-        
 
 
 
 
 
-        public RtspClientResponse Options()
+
+
+
+        public async Task<RtspClientResponse> OptionsAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
 
-        public RtspClientResponse Options( RtspClientRequest request )
+        public async Task<RtspClientResponse> OptionsAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Options( string uri )
+
+        public async Task<RtspClientResponse> OptionsAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Options( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> OptionsAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Options( Uri uri )
+
+        public async Task<RtspClientResponse> OptionsAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Options( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> OptionsAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
+
 
 
 
 
-        public RtspClientResponse Describe()
+
+
+        public async Task<RtspClientResponse> DescribeAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Describe( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> DescribeAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Describe( string uri )
+
+        public async Task<RtspClientResponse> DescribeAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Describe( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> DescribeAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Describe( Uri uri )
+
+        public async Task<RtspClientResponse> DescribeAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Describe( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> DescribeAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
+
+
 
 
 
-        public RtspClientResponse Setup()
+
+
+
+        public async Task<RtspClientResponse> SetupAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Setup( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> SetupAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Setup( string uri )
+
+        public async Task<RtspClientResponse> SetupAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Setup( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> SetupAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Setup( Uri uri )
+
+        public async Task<RtspClientResponse> SetupAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Setup( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> SetupAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
+
+
+
 
 
 
 
-        public RtspClientResponse Play()
+
+        public async Task<RtspClientResponse> PlayAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Play( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> PlayAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Play( string uri )
+
+        public async Task<RtspClientResponse> PlayAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Play( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> PlayAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Play( Uri uri )
+
+        public async Task<RtspClientResponse> PlayAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Play( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> PlayAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
 
 
 
 
-        public RtspClientResponse Pause()
+
+
+
+
+        public async Task<RtspClientResponse> PauseAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Pause( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> PauseAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Pause( string uri )
+
+        public async Task<RtspClientResponse> PauseAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Pause( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> PauseAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Pause( Uri uri )
+
+        public async Task<RtspClientResponse> PauseAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Pause( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> PauseAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
 
 
 
@@ -229,36 +244,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-        public RtspClientResponse TearDown()
+        public async Task<RtspClientResponse> TearDownAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse TearDown( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> TearDownAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse TearDown( string uri )
-        { 
+
+        public async Task<RtspClientResponse> TearDownAsync( string uri , CancellationToken cancellationToken = default )
+        {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse TearDown( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> TearDownAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse TearDown( Uri uri )
+
+        public async Task<RtspClientResponse> TearDownAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse TearDown( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> TearDownAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
 
 
 
@@ -266,37 +280,35 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-        public RtspClientResponse GetParameter()
+        public async Task<RtspClientResponse> GetParameterAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse GetParameter( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> GetParameterAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse GetParameter( string uri )
+
+        public async Task<RtspClientResponse> GetParameterAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse GetParameter( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> GetParameterAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse GetParameter( Uri uri )
+
+        public async Task<RtspClientResponse> GetParameterAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse GetParameter( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> GetParameterAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
 
 
 
@@ -304,204 +316,172 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
-
-        public RtspClientResponse SetParameter()
+        public async Task<RtspClientResponse> SetParameterAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
 
-        public RtspClientResponse SetParameter( RtspClientRequest request )
+        public async Task<RtspClientResponse> SetParameterAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse SetParameter( string uri )
+
+        public async Task<RtspClientResponse> SetParameterAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse SetParameter( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> SetParameterAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse SetParameter( Uri uri )
+
+        public async Task<RtspClientResponse> SetParameterAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse SetParameter( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> SetParameterAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
 
 
 
 
 
 
-
-        public RtspClientResponse Announce()
+        public async Task<RtspClientResponse> AnnounceAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Announce( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> AnnounceAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Announce( string uri )
+
+        public async Task<RtspClientResponse> AnnounceAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Announce( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> AnnounceAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Announce( Uri uri )
+
+        public async Task<RtspClientResponse> AnnounceAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Announce( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> AnnounceAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-
-
-
 
 
 
 
 
-        public RtspClientResponse Redirect()
+        public async Task<RtspClientResponse> RedirectAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Redirect( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> RedirectAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Redirect( string uri )
+
+        public async Task<RtspClientResponse> RedirectAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Redirect( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> RedirectAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Redirect( Uri uri )
+
+        public async Task<RtspClientResponse> RedirectAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Redirect( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> RedirectAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
 
 
 
 
-
-
-
-
-        public RtspClientResponse Record()
+        public async Task<RtspClientResponse> RecordAsync( CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Record( RtspClientRequest request )
+
+        public async Task<RtspClientResponse> RecordAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Record( string uri )
+
+        public async Task<RtspClientResponse> RecordAsync( string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Record( string uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> RecordAsync( string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Record( Uri uri )
+
+        public async Task<RtspClientResponse> RecordAsync( Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-        public RtspClientResponse Record( Uri uri , RtspClientRequest request )
+
+        public async Task<RtspClientResponse> RecordAsync( Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-        
-
-
-
 
 
 
 
-
-        // for using custom methods
-
-        // GET_FRAME rtsp://1.2.3.4/channel/0 rtsp/1.0
-        // Accept: image/jpeg
-        // CSeq: 123
-
-        public RtspClientResponse Send( RtspMethod method , string uri  )
+        public async Task<RtspClientResponse> SendAsync( RtspMethod method , string uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
 
-        public RtspClientResponse Send( RtspMethod method , string uri , RtspClientRequest request )
+        public async Task<RtspClientResponse> SendAsync( RtspMethod method , string uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
 
-        public RtspClientResponse Send( RtspMethod method , Uri uri )
+        public async Task<RtspClientResponse> SendAsync( RtspMethod method , Uri uri , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
 
-        public RtspClientResponse Send( RtspMethod method , Uri uri , RtspClientRequest request )
+        public async Task<RtspClientResponse> SendAsync( RtspMethod method , Uri uri , RtspClientRequest request , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
         }
-
-
-
 
 
 
 
 
         // for pushing data to the server using interleaved, if the server support this feature
-        // the rfc allow that, but it's unsual
+        // the rfc allow that, but it's will unsual
         // normally it should be present in the interface because this feature is supported on the paper
         // for ip camera, it doesn't make sense to use this method, but for computer server, it make sense
         // for instance, an iot device or event a smartphone pushing data to a server, calling setup, then record and push interleaved packet, and then teardown when there is nothing to send
-
-        public void Send( in Packet packet )
+        public async Task SendAsync( Packet packet , CancellationToken cancellationToken = default )
         {
-            if ( Packet.IsNullOrEmpty( packet ) )
-            {
-                throw new ArgumentException( nameof( packet ) );
-            }
-            
             throw new NotImplementedException();
         }
 
@@ -519,3 +499,5 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         }
     }
 }
+
+#pragma warning restore CS1998

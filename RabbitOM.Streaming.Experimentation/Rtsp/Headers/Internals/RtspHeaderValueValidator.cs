@@ -59,7 +59,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
             {
                 return true;
             }
-
+            
             for ( var i = 0 ; i < value.Length ; ++ i )
             {
                 if ( ! allowedChars.Values.Contains( value[ i ] ) )

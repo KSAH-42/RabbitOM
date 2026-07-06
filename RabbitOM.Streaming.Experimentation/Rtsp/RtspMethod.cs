@@ -14,29 +14,29 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 .GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public )
                 .Select( property => property.GetValue( null ) as RtspMethod )
                 .Where( method => method != null )
-                .ToDictionary( method => method.MethodName )
+                .ToDictionary( method => method.Value )
                 ;
         });
 
-        private readonly string _procedureName;
+        private readonly string _value;
 
 
 
 
 
 
-        public RtspMethod( string procedureName )
+        public RtspMethod( string value )
         {
-            RtspHeaderValueValidator.EnsureWellFormed( procedureName );
+            RtspHeaderValueValidator.EnsureWellFormed( value );
 
-            _procedureName = procedureName;
+            _value = value;
         }
 
 
 
 
 
-        public string MethodName { get => _procedureName; }
+        public string Value { get => _value; }
 
         public static RtspMethod OPTIONS { get; } = new RtspMethod( "OPTIONS" );
 
@@ -60,6 +60,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public static RtspMethod RECORD { get; } = new RtspMethod( "RECORD" );
 
+
+
+
+
+        public static implicit operator string ( RtspMethod method )
+        {
+            return method.Value;
+        }
 
 
 
@@ -89,7 +97,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public override string ToString()
         {
-            return _procedureName;
+            return _value;
         }
     }
 }
