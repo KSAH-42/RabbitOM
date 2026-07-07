@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
@@ -12,20 +14,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         event EventHandler<RtspMessageEventArgs> MessageReceived;
 
-
-
         bool IsOpened { get; }
 
+        Task OpenAsync( CancellationTokenSource cancellationToken = default );
 
+        Task CloseAsync( CancellationTokenSource cancellationToken = default );
 
-        void Open();
+        Task AbortAsync( CancellationTokenSource cancellationToken = default );
 
-        void Close();
+        Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationTokenSource cancellationToken = default );
 
-        void Abort();
-
-        void SendMessage( RtspInterleavedMessage interleavedData );
-
-        RtspResponseMessage SendMessage( RtspRequestMessage request );
+        Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationTokenSource cancellationToken = default );
     }
 }

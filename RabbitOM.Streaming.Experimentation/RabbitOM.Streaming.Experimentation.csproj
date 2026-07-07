@@ -151,12 +151,14 @@
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverConfiguration.cs" />
     <Compile Include="Rtsp\Receivers\Udp\UdpMediaReceiverStreamingSession.cs" />
     <Compile Include="Rtsp\RtspClient.cs" />
-    <Compile Include="Rtsp\RtspClientContext.cs" />
+    <Compile Include="Rtsp\RtspClientEnvironment.cs" />
     <Compile Include="Rtsp\RtspClientRequest.cs" />
+    <Compile Include="Rtsp\RtspClientRequestOptions.cs" />
+    <Compile Include="Rtsp\RtspClientRequestOptionsBuilder.cs" />
     <Compile Include="Rtsp\RtspClientResponse.cs" />
-    <Compile Include="Rtsp\RtspContext.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />
     <Compile Include="Rtsp\RtspRequestHandler.cs" />
+    <Compile Include="Rtsp\RtspRequestHandlerContext.cs" />
     <Compile Include="Rtsp\RtspStatusCode.cs" />
     <Compile Include="Rtsp\RtspStatusCodeChecker.cs" />
     <Compile Include="Rtsp\Transports\Channels\Binding.cs" />

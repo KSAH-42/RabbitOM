@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
@@ -14,8 +16,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
-
         ~RtspClientChannel()
         {
             Dispose( false );
@@ -24,9 +24,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
         public abstract bool IsOpened { get; }
 
+        public bool IsDisposed { get; private set; }
 
 
 
@@ -34,15 +34,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public abstract void Open();
 
-        public abstract void Close();
+        public abstract Task OpenAsync( CancellationTokenSource cancellationToken = default );
 
-        public abstract void Abort();
+        public abstract Task CloseAsync( CancellationTokenSource cancellationToken = default );
 
-        public abstract void SendMessage( RtspInterleavedMessage interleavedData );
+        public abstract Task AbortAsync( CancellationTokenSource cancellationToken = default );
 
-        public abstract RtspResponseMessage SendMessage( RtspRequestMessage request );
+        public abstract Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationTokenSource cancellationToken = default );
+
+        public abstract Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationTokenSource cancellationToken = default );
 
         public void Dispose()
         {
@@ -52,12 +53,18 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         protected virtual void Dispose( bool disposing )
         {
+            if ( IsDisposed )
+            {
+                return;
+            }
+
             if ( disposing )
             {
-                Close();
+                CloseAsync().GetAwaiter().GetResult();
             }
-        }
 
+            IsDisposed = true;
+        }
 
 
 

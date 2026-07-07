@@ -1,151 +1,30 @@
-// TODO: adding compliances tests
-// TODO: think is some hidden header could be exposed as public in the public
-// RequestRtspHeaderValueCollection and for ResponseRtspHeaderValueCollection
-
-SOLID as: 
-  String as comment, forget single responsabilty, add feature on your washing machine for creating your coffee
-  Open carriage return standard, 
-  Large block of comments, 
-  Injection of strings : building injection framework to inject powerfull comments
-  Dependency of comments
-   the new solid principlesd
-
-as a roswellian engineer:
-  think and design on a garage from the 51 zone.
-
-internal class Program
+static class Program
 {
-    static void Main( string[] args )
+    private static async Task Main()
     {
-        var context = new RtspClientContext.Buider()
-            .SetPoolConnectionSize(12)
-            .SetBufferSize( 12 )
-            .SetMaximumOfRetries( 3 )
-            .UseMemoryPool()
-            .SetChannelFactory( new MyRtspChannelFactory() )
-            .Build()
-            ;
-            
-        using ( var client = new RtspClient( context ) )
+        using ( var client = new RtspClient() )
         {
-            client.BaseAddress = new Uri( "rtsp://127.0.0.1/channel/1?type=mpeg" );
-                
-            client.DefaultHeaders.Accept = new AcceptRtspHeader();
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-            client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/data") );
-   	        
-            client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("plain") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
-   	        client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("newWinZip") );
+            client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-city.mp4" );
             
-            var request = new RtspClientRequest();
-
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Accept.Mimes.Add( new StringWithQuality("rtsp/options/blabla") );
-            request.Headers.Add( "X-Sdp-Encryption" , "algorithm=abcde;public-key=123123z1zer213==" );
-
-            var optionsResponse = client.Options();
-                
-            optionsResponse.EnsureSuccess();
-
-            var describeRequest = new RequestBuilder()
-            .AddHeader( "X-A" , "a")
-            .AddHeader( "X-A" , "a")
-            .AddHeader( "X-A" , "a")
-            .AddHeader( "X-A" , "a")
-            .WriteBody()
-            .WriteBody("a")
-            .WriteBody("b")
-            .WriteBody("c")
-            ;
-
-            var describeResponse = client.Describe( describeRequest );
-
-            describeResponse.EnsureSuccess();
-
-            var setupRequest = new RequestBuilder()
-            .SetMulticastAddress( "224.4.4.4" )
-            .SetMulticastPort( 1 )
-            .SetMulticastTTL( 11 )
-            ;
-
-            var setupResponse = client.Setup( setupRequest );
-
-            setupResponse.EnsureSuccess();
-                
-            var playResponse = client.Play();
-
-            playResponse.EnsureSuccess();
-
-            var tearDownResponse = client.TearDown();
-
-            tearDownResponse.EnsureSuccess();
+            client.Headers.Accept = new AcceptRtspHeaderValue();
+            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
+            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/sdp") );
+                        
+            await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
+                .SetUri( "*" )
+                .AddHeader("A","1")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .WriteBody("parameter1=1\r\n")
+                .WriteBody("parameter2=2\r\n")
+                .WriteBody( new byte[] { 1,2,3 } )
+                .Build()
+                )
+                ;
         }
     }
 }
 
-public sealed class RtspClientTemporyTest
-{
-    public string Uri { get; set; }
-    public string TransportType { get; set; }
-    private bool UseTcpTranport { get => TransportType == "tcp" || TransportType == "interleaved"; }
-    private bool UseUdpTranport { get => TransportType == "udp"; }
-    private bool UseMulticastTranport { get => TransportType == "multicast"; }
-
-
-    public void Run()
-    {            
-        using var client = new RtspClient() );
-           
-        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/text") );
-            
-        using var optionsResponse = client.Options( "*" );
-
-        optionsResponse.EnsureSuccess();
-
-        using var describeResponse = client.Describe();
-    
-        describeResponse.EnsureSuccess();
-            
-        if ( ! RtspSessionDescriptor.TryParse( describeResponse.Body.ReadAsString() , out var sdp ) )
-        {
-            throw new InvalidOperationException("no sdp");
-        }
-            
-        SetupRtspRequestBuilder setupBuilder = UseMulticastTranport
-            ? new SetupMulticastRtspRequestBuilder()   { IpAddress = "224.0.0.1" , Port = 152 , TTL = 123 }
-            : UseUdpTranport
-            ? new SetupUnicastUdpRtspRequestBuilder()  { Port = 123 }
-            : new SetupInterleavedRtspRequestBuilder();
-            
-        using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildRequest() );
-            
-        var sessionHeader = SessionRtspHeader.Parse( setupResponse.Body.ReadAsString() );
-
-        var playBuilder = new PlayRtspRequestBuilder() { SessionId = sessionHeader.Id };
-
-        using var playResponse = client.Play( playBuilder.BuildRequest() );
-
-        playResponse.EnsureSuccess();
-
-        Console.WriteLine( "playing.." );
-        Console.WriteLine( "Press any keys to stop..." );
-
-        Console.ReadKey();
-
-        var tearDownBuilder = new TearDownRtspRequestBuilder() { SessionId = sessionHeader.Id };
-            
-        client.TearDown( tearDownBuilder.BuildRequest() );
-    }
-}

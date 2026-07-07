@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     {
         private RtspRequestHandler _next;
 
-        public virtual RtspClientResponse SendRequest( RtspContext context , RtspClientRequest request )
+        public virtual RtspClientResponse SendRequest( RtspRequestHandlerContext context , RtspClientRequest request )
         {
             if ( _next == null )
             {

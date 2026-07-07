@@ -5,11 +5,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-    public sealed class RtspClientRequest
+    public sealed class RtspClientRequestOptions
     {
-        public string Method { get; }
-
-        public string Uri { get; }
+        public Uri Uri { get; }
 
         public RequestsRtspHeaderCollection Headers { get; }
 
