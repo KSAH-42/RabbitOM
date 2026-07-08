@@ -265,77 +265,32 @@ The implementation will be VERY SIMILAR to this one
 
 ~~~~C#
 
-public sealed class RtspClientTemporyTest
+static class Program
 {
-    public string Uri { get; set; }
-    public string TransportType { get; set; }
-    private bool UseTcpTranport { get => TransportType == "tcp" || TransportType == "interleaved"; }
-    private bool UseUdpTranport { get => TransportType == "udp"; }
-    private bool UseMulticastTranport { get => TransportType == "multicast"; }
-
-
-    public void Run()
-    {            
-        var context = new RtspClientContext.Buider()
-            .SetPoolConnectionSize(12)
-            .SetBufferSize( 12 )
-            .SetMaximumOfRetries( 3 )
-            .UseMemoryPool()
-            .SetChannelFactory( new MyRtspChannelFactory() )
-            .Build()
-            ;
-
-        using var client = new RtspClient( context );
-                  
-        client.BaseAddress = new Uri( "rtsp://127.0.0.1/channel/1?type=mpeg" );
-        client.Credential = new NetworkCredential( "myuser" , "mypassord" );
-                
-        client.DefaultHeaders.Accept = new AcceptRtspHeader();
-        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("application/sdp") );
-        client.DefaultHeaders.Accept.Mimes.Add( new StringWithQuality("text/blabla") );
-            
-        client.DefaultHeaders.AcceptEncoding = new AcceptEncodingRtspHeader();
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("zip") );
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("tar") );
-   	    client.DefaultHeaders.AcceptEncoding.Formats.Add( new StringWithQuality("br") );
-   	    
-        using var optionsResponse = client.Options();
-           
-        optionsResponse.EnsureSuccess();
-            
-        using var describeResponse = client.Describe();
-    
-        describeResponse.EnsureSuccess();
-            
-        if ( ! RtspSessionDescriptor.TryParse( describeResponse.Body.ReadAsString() , out var sdp ) )
+    private static async Task Main()
+    {
+        using ( var client = new RtspClient() )
         {
-            throw new InvalidOperationException("no sdp");
+            client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-society.mp4" );
+            
+            client.Headers.Accept = new AcceptRtspHeaderValue();
+            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
+            
+            await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
+                .SetUri( "*" )
+                .AddHeader("A","1")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .AddHeader("B","2")
+                .WriteBody("parameter1=1\r\n")
+                .WriteBody("parameter2=2\r\n")
+                .WriteBody( new byte[] { 1,2,3 } )
+                .Build()
+                )
+                ;
         }
-            
-        SetupRtspContentBuilder setupBuilder = UseMulticastTranport
-            ? new SetupMulticastRtspContentBuilder()   { IpAddress = "224.0.0.1" , Port = 152 , TTL = 123 }
-            : UseUdpTranport
-            ? new SetupUnicastUdpRtspContentBuilder()  { Port = 123 }
-            : new SetupInterleavedRtspContentBuilder();
-            
-        using var setupResponse = client.Setup( sdp.TrackUri , setupBuilder.BuildRequest() );
-            
-        var sessionHeader = SessionRtspHeader.Parse( setupResponse.Body.ReadAsString() );
-
-        var playBuilder = new PlayRtspContentBuilder() { SessionId = sessionHeader.Id };
-
-        using var playResponse = client.Play( playBuilder.BuildRequest() );
-
-        playResponse.EnsureSuccess();
-
-        Console.WriteLine( "playing.." );
-        Console.WriteLine( "Press any keys to stop..." );
-
-        Console.ReadKey();
-
-        var tearDownBuilder = new TearDownRtspContentBuilder() { SessionId = sessionHeader.Id };
-            
-        client.TearDown( tearDownBuilder.BuildRequest() );
     }
 }
 
@@ -345,4 +300,4 @@ public sealed class RtspClientTemporyTest
 
 # Getting more details ?
 
-If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com"
+If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com" or "kader.sahnine11@gmail.com"
