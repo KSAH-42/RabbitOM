@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
@@ -6,9 +8,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     {
         private RtspRequestHandler _next;
 
-        public virtual RtspClientResponse SendRequest( RtspClientRequest request )
+        public virtual async Task<RtspClientResponse> SendRequestAsync( RtspClientRequest request , CancellationToken cancellation )
         {
-            return _next?.SendRequest( request );
+            return await _next?.SendRequestAsync( request , cancellation );
         }
 
         public RtspRequestHandler With( RtspRequestHandler next )
@@ -43,11 +45,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         protected virtual bool CanContinue()
         {
             return _next != null;
-        }
-
-        protected void CancelOperation( string message = null )
-        {
-            throw new OperationCanceledException( message );
         }
     }
 }

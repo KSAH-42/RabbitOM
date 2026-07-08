@@ -35,15 +35,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public abstract Task OpenAsync( CancellationTokenSource cancellationToken = default );
+        public abstract Task OpenAsync( CancellationToken cancellationToken = default );
 
-        public abstract Task CloseAsync( CancellationTokenSource cancellationToken = default );
+        public abstract Task CloseAsync( CancellationToken cancellationToken = default );
 
-        public abstract Task AbortAsync( CancellationTokenSource cancellationToken = default );
+        public abstract Task AbortAsync( CancellationToken cancellationToken = default );
 
-        public abstract Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationTokenSource cancellationToken = default );
+        public abstract Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationToken cancellationToken = default );
 
-        public abstract Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationTokenSource cancellationToken = default );
+        public abstract Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationToken cancellationToken = default );
 
         public void Dispose()
         {
