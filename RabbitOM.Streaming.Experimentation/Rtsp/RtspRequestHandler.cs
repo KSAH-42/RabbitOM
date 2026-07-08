@@ -10,7 +10,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public virtual async Task<RtspClientResponse> SendRequestAsync( RtspClientRequest request , CancellationToken cancellation )
         {
-            return await _next?.SendRequestAsync( request , cancellation );
+            if ( _next == null )
+            {
+                return await Task.FromResult<RtspClientResponse>( null );
+            }
+
+            return await _next.SendRequestAsync( request , cancellation ) ;
         }
 
         public RtspRequestHandler With( RtspRequestHandler next )
@@ -40,11 +45,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             last._next = next;
 
             return this;
-        }
-
-        protected virtual bool CanContinue()
-        {
-            return _next != null;
         }
     }
 }
