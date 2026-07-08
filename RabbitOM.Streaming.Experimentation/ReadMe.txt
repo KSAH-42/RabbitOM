@@ -4,7 +4,7 @@ static class Program
     {
         using ( var client = new RtspClient() )
         {
-            client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-city.mp4" );
+            client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-society.mp4" );
             
             client.Headers.Accept = new AcceptRtspHeaderValue();
             client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );

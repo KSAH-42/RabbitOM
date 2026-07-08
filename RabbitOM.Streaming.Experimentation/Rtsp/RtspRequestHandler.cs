@@ -1,54 +1,14 @@
-﻿/* The With method has been introduce for writing code like this,
-    * for creating a request pipeline, that can include 
-    * CSeq enricher, 
-    * Add Autorization header 
-    * Adding extra header
-    * Custom Header encryptions
-    * Custom body encryption
-
-    before the final stage 
-
-    var handler = new CustomRequestHandler() { Name = "Handler1" }
-    .With( new CustomRequestHandler() { Name = "Handler2"} )
-    .With( new CustomRequestHandler() { Name = "Handler3"} )
-    .With( new CustomRequestHandler() { Name = "Handler4"} )
-    .With( new CustomRequestHandler() { Name = "Handler5"} )
-    .With( new CustomRequestHandler() { Name = "Sending"} );
-
-    handler.SendRequest( new Request() );
-        
-Output:
-
-    Handler1
-    Handler2
-    Handler3
-    Handler4
-    Handler5
-    Sending
-
-    Sending
-    Handler5
-    Handler4
-    Handler3
-    Handler2
-    Handler1
-*/
-using System;
+﻿using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public abstract class RtspRequestHandler
+    public abstract class RtspRequestHandler : IRequestHandler
     {
         private RtspRequestHandler _next;
 
-        public virtual RtspClientResponse SendRequest( RtspRequestHandlerContext context , RtspClientRequest request )
+        public virtual RtspClientResponse SendRequest( RtspClientRequest request )
         {
-            if ( _next == null )
-            {
-                throw new InvalidOperationException( "the next next can not be null" );
-            }
-
-            return _next.SendRequest( context , request ) ?? throw new InvalidOperationException( "no response available" );
+            return _next?.SendRequest( request );
         }
 
         public RtspRequestHandler With( RtspRequestHandler next )
@@ -67,12 +27,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
             while ( last._next != null )
             {
+                if ( object.ReferenceEquals( last._next , next ) )
+                {
+                    throw new ArgumentException( "Circular dependency detected" , nameof( next ) );
+                }
+
                 last = last._next;
             }
 
             last._next = next;
 
             return this;
+        }
+
+        protected virtual bool CanContinue()
+        {
+            return _next != null;
+        }
+
+        protected void CancelOperation( string message = null )
+        {
+            throw new OperationCanceledException( message );
         }
     }
 }

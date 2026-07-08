@@ -23,7 +23,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RtspClient( RtspClientEnvironment environment )
         {
-            _environment = environment ?? throw new ArgumentNullException( nameof( _environment ) );
+            _environment = environment ?? throw new ArgumentNullException( nameof( environment ) );
         }
 
 
@@ -35,13 +35,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public TimeSpan SendTimeout { get; set; }
 
-        // should reset the the sockets pools or the comm pools
-        // when set, if user contains user name and password, update the Credentials property as well
         public Uri BaseAddress { get; set; }
 
         public NetworkCredential Credential { get; set; }
 
-        public Version Version { get; set; } // for changing protocol version
+        public Version Version { get; set; }
 
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 
@@ -50,6 +48,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
+
+
+
+        public void Dispose()
+        {
+        }
 
 
 
@@ -212,27 +216,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
 
-        // for pushing data to the server using interleaved, if the server support this feature
-        // the rfc allow that, but it's will unsual
-        // normally it should be present in the interface because this feature is supported on the paper
-        // for ip camera, it doesn't make sense to use this method, but for computer server, it make sense
-        // for instance, an iot device or event a smartphone pushing data to a server, calling setup, then record and push interleaved packet, and then teardown when there is nothing to send
         public async Task SendAsync( Packet packet , CancellationToken cancellationToken = default )
         {
             throw new NotImplementedException();
-        }
-
-
-
-
-
-
-
-
-
-        public void Dispose()
-        {
-            // TODO
         }
     }
 }
