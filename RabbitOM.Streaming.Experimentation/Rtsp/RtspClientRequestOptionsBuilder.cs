@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+using System;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
@@ -15,6 +16,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
         }
 
         public virtual RtspClientRequestOptionsBuilder AddHeader( string name , string value )
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual RtspClientRequestOptionsBuilder Headers( Action<RequestsRtspHeaderCollection> configurer )
         {
             throw new NotImplementedException();
         }

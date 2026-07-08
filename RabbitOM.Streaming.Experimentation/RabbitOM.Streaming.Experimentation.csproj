@@ -119,7 +119,6 @@
     <Compile Include="Rtsp\IHandler.cs" />
     <Compile Include="Rtsp\IListener.cs" />
     <Compile Include="Rtsp\ILogger.cs" />
-    <Compile Include="Rtsp\IRequestHandler.cs" />
     <Compile Include="Rtsp\Packet.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />

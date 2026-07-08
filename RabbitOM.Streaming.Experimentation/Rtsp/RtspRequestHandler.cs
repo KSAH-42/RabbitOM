@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public abstract class RtspRequestHandler : IRequestHandler
+    public abstract class RtspRequestHandler
     {
         private RtspRequestHandler _next;
 
-        public virtual async Task<RtspClientResponse> SendRequestAsync( RtspClientRequest request , CancellationToken cancellation )
+        public virtual async Task<RtspClientResponse> SendRequestAsync( RtspClientRequest request , CancellationToken cancellation = default )
         {
             if ( _next == null )
             {
