@@ -29,7 +29,7 @@ namespace RabbitOM.Streaming.Net.Rtsp
             builder.Append( " " );
             builder.Append( request.Uri );
             builder.Append( " " );
-            builder.AppendFormat( "Rtsp/{0}.{1}" , request.Version.MajorNumber , request.Version.MinorNumber );
+            builder.AppendFormat( "RTSP/{0}.{1}" , request.Version.MajorNumber , request.Version.MinorNumber );
             builder.AppendLine();
 
             foreach ( var header in request.Headers )
