@@ -8,10 +8,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
-        private RtspHashAlgorithm( HashAlgorithm hashAlgorithm )
-        {
-            _hashAlgorithm = hashAlgorithm ?? throw new ArgumentNullException( nameof( hashAlgorithm ) );
-        }
+        private RtspHashAlgorithm( HashAlgorithm hashAlgorithm ) => _hashAlgorithm = hashAlgorithm ?? throw new ArgumentNullException( nameof( hashAlgorithm ) );
 
         public static RtspHashAlgorithm CreateMD5() => new RtspHashAlgorithm( MD5.Create() );
 
@@ -30,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                 throw new ArgumentException( nameof( input ) );
             }
 
-            var bytes = _hashAlgorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) ) ?? Array.Empty<byte>();
+            var bytes = _hashAlgorithm.ComputeHash( Encoding.UTF8.GetBytes( input ) );
 
             var builder = new StringBuilder();
 

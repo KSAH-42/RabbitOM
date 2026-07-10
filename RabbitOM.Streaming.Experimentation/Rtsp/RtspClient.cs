@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 #pragma warning disable CS1998
 
@@ -12,6 +12,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     public sealed class RtspClient : IDisposable
     {
         private readonly RtspClientEnvironment _environment;
+
+
 
 
 
@@ -41,8 +43,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Version Version { get; set; }
 
-        // TODO: Remove it and use a readonly collection pass to the rtsp env class
-        public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
+        public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection(); // TODO: Remove it and use a readonly collection pass to the rtsp env class
 
 
 
@@ -339,12 +340,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
             throw new NotImplementedException();
         }
 
-        public async Task SendAsync( Packet packet )
+        public async Task SendAsync( RtspPacket packet )
         {
             throw new NotImplementedException();
         }
 
-        public async Task SendAsync( Packet packet , CancellationToken cancellationToken )
+        public async Task SendAsync( RtspPacket packet , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }

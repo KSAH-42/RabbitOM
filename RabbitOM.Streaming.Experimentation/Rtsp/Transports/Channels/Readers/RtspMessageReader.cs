@@ -5,6 +5,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspMessageReader : IMessageReader
     {
+        private const int ContentBufferSize = 256;
+
+
+
+
+
         private readonly RtspStreamReader _reader;
 
         private readonly IMessageReaderValidator _validator;
@@ -20,9 +26,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
             _reader = new RtspStreamReader( stream );
         }
 
-
-
-        public int ContentBufferSize { get; } = 1024;
 
 
 

@@ -8,17 +8,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
     public sealed class RtspMethod
     {
-        private static readonly Lazy<IReadOnlyDictionary<string,RtspMethod>> s_knowMethods = new Lazy<IReadOnlyDictionary<string, RtspMethod>>( () =>
-        {
-            return typeof( RtspMethod )
+        private readonly static IReadOnlyDictionary<string,RtspMethod> s_knowMethods = typeof( RtspMethod )
                 .GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public )
-                .Select( property => property.GetValue( null ) as RtspMethod )
-                .Where( method => method != null )
-                .ToDictionary( method => method.Value )
-                ;
-        });
+                    .Select( property => property.GetValue( null ) as RtspMethod )
+                        .Where( method => method != null )
+                            .ToDictionary( method => method.Value );
 
-        private readonly string _value;
 
 
 
@@ -27,16 +22,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public RtspMethod( string value )
         {
-            RtspHeaderValueValidator.EnsureWellFormed( value );
-
-            _value = value;
+            Value = RtspHeaderValueValidator.EnsureWellFormed( value );
         }
 
 
 
 
 
-        public string Value { get => _value; }
+
+
+        public string Value { get; }
 
         public static RtspMethod OPTIONS { get; } = new RtspMethod( "OPTIONS" );
 
@@ -64,10 +59,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
 
 
+
+
+
         public static implicit operator string ( RtspMethod method )
         {
             return method.Value;
         }
+
+
 
 
 
@@ -82,7 +82,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
                 return false;
             }
 
-            if ( ! s_knowMethods.Value.TryGetValue( input , out result ) )
+            if ( ! s_knowMethods.TryGetValue( input , out result ) )
             {
                 result = new RtspMethod( input );
             }
@@ -97,7 +97,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public override string ToString()
         {
-            return _value;
+            return Value;
         }
     }
 }

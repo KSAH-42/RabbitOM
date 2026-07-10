@@ -121,7 +121,6 @@
     <Compile Include="Rtsp\IHandler.cs" />
     <Compile Include="Rtsp\IListener.cs" />
     <Compile Include="Rtsp\ILogger.cs" />
-    <Compile Include="Rtsp\Packet.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />
     <Compile Include="Rtsp\Receivers\Events\RtspConnectedEventArgs.cs" />
@@ -157,6 +156,7 @@
     <Compile Include="Rtsp\RtspClientRequestOptions.cs" />
     <Compile Include="Rtsp\RtspClientRequestOptionsBuilder.cs" />
     <Compile Include="Rtsp\RtspMethod.cs" />
+    <Compile Include="Rtsp\RtspPacket.cs" />
     <Compile Include="Rtsp\RtspRequest.cs" />
     <Compile Include="Rtsp\RtspRequestHandler.cs" />
     <Compile Include="Rtsp\RtspResponse.cs" />

@@ -7,87 +7,27 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 
     public sealed class RtspAuthorizationResponseBuilder
     {
-        private string _method = string.Empty;
-        private string _scheme = string.Empty;
-        private string _algorithm = string.Empty;
-        private string _username = string.Empty;
-        private string _password = string.Empty;
-        private string _uri = string.Empty;
-        private string _realm = string.Empty;
-        private string _nonce = string.Empty;
-        private string _nonceCount = string.Empty;
-        private string _clientNonce = string.Empty;
-        private string _qualityOfProtection = string.Empty;
+        public string Method { get; set; }
 
+        public string Scheme { get; set; }
 
+        public string Algorithm { get; set; }
 
-        public string Method
-        {
-            get => _method;
-            set => _method = value ?? string.Empty;
-        }
+        public string UserName { get; set; }
 
-        public string Scheme
-        {
-            get => _scheme;
-            set => _scheme = value ?? string.Empty;
-        }
+        public string Password { get; set; }
 
-        public string Algorithm
-        {
-            get => _algorithm;
-            set => _algorithm = value ?? string.Empty;
-        }
+        public string Uri { get; set; }
 
-        public string UserName
-        {
-            get => _username;
-            set => _username = value ?? string.Empty;
-        }
+        public string Realm { get; set; }
 
-        public string Password
-        {
-            get => _password;
-            set => _password = value ?? string.Empty;
-        }
+        public string Nonce { get; set; }
 
-        public string Uri
-        {
-            get => _uri;
-            set => _uri = value ?? string.Empty;
-        }
+        public string NonceCount { get; set; }
 
-        public string Realm
-        {
-            get => _realm;
-            set => _realm = value ?? string.Empty;
-        }
+        public string ClientNonce { get; set; }
 
-        public string Nonce
-        {
-            get => _nonce;
-            set => _nonce = value ?? string.Empty;
-        }
-
-        public string NonceCount
-        {
-            get => _nonceCount;
-            set => _nonceCount = value ?? string.Empty;
-        }
-
-        public string ClientNonce
-        {
-            get => _clientNonce;
-            set => _clientNonce = value ?? string.Empty;
-        }
-
-        public string QualityOfProtection
-        {
-            get => _qualityOfProtection;
-            set => _qualityOfProtection = value ?? string.Empty;
-        }
-
-
+        public string QualityOfProtection { get; set; }
 
 
 
@@ -95,19 +35,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 
         public override string ToString()
         {
-            if ( string.IsNullOrWhiteSpace( _username ) || string.IsNullOrWhiteSpace( _password ) )
+            if ( string.IsNullOrWhiteSpace( UserName ) || string.IsNullOrWhiteSpace( Password ) )
             {
                 return string.Empty;
             }
 
-            if ( SupportedTypes.IsBasicAuthentication( _scheme ) )
+            if ( SupportedTypes.IsBasicAuthentication( Scheme ) )
             {
-                return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{_username}:{_password}" ) );
+                return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{UserName}:{Password}" ) );
             }
 
-            if ( SupportedTypes.IsDigestAuthentication( _scheme ) )
+            if ( SupportedTypes.IsDigestAuthentication( Scheme ) )
             {
-                if ( string.IsNullOrWhiteSpace( _method ) || string.IsNullOrWhiteSpace( _uri ) || string.IsNullOrWhiteSpace( _realm ) || string.IsNullOrWhiteSpace( _nonce ) )
+                if ( string.IsNullOrWhiteSpace( Method ) || string.IsNullOrWhiteSpace( Uri ) || string.IsNullOrWhiteSpace( Realm ) || string.IsNullOrWhiteSpace( Nonce ) )
                 {
                     return string.Empty;
                 }
@@ -116,36 +56,36 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                 {
                     using ( algorithm )
                     {
-                        var hash1 = algorithm.Compute( _username + ":" + _realm + ":" + _password );
-                        var hash2 = algorithm.Compute( _method + ":" + _uri  );
+                        var hash1 = algorithm.Compute( UserName + ":" + Realm + ":" + Password );
+                        var hash2 = algorithm.Compute( Method + ":" + Uri  );
 
-                        return string.IsNullOrWhiteSpace( _qualityOfProtection )
-                            ? algorithm.Compute( $"{hash1}:{_nonce}:{hash2}")
-                            : algorithm.Compute( $"{hash1}:{_nonce}:{_nonceCount}:{_clientNonce}:{_qualityOfProtection}:{hash2}");
+                        return string.IsNullOrWhiteSpace( QualityOfProtection )
+                            ? algorithm.Compute( $"{hash1}:{Nonce}:{hash2}")
+                            : algorithm.Compute( $"{hash1}:{Nonce}:{NonceCount}:{ClientNonce}:{QualityOfProtection}:{hash2}");
                     }
                 }
 
-                if ( SupportedTypes.IsMd5Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsMd5Algorithm( Algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateMD5() );
                 }
 
-                if ( SupportedTypes.IsSha1Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha1Algorithm( Algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA1() );
                 }
 
-                if ( SupportedTypes.IsSha256Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha256Algorithm( Algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA256() );
                 }
 
-                if ( SupportedTypes.IsSha384Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha384Algorithm( Algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA384() );
                 }
 
-                if ( SupportedTypes.IsSha512Algorithm( _algorithm ) )
+                if ( SupportedTypes.IsSha512Algorithm( Algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateSHA512() );
                 }
