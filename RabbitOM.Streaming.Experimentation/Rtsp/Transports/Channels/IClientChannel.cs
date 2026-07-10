@@ -16,14 +16,14 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         bool IsOpened { get; }
 
-        Task OpenAsync( CancellationToken cancellationToken = default );
+        Task OpenAsync();
 
-        Task CloseAsync( CancellationToken cancellationToken = default );
+        Task CloseAsync();
 
-        Task AbortAsync( CancellationToken cancellationToken = default );
+        Task AbortAsync();
 
-        Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationToken cancellationToken = default );
+        Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationToken cancellationToken );
 
-        Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationToken cancellationToken = default );
+        Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationToken cancellationToken );
     }
 }

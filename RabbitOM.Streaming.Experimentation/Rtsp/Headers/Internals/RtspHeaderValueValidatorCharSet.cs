@@ -23,6 +23,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
         public static RtspHeaderValueValidatorCharSet Letters { get; } = new RtspHeaderValueValidatorCharSet( DefaultLetters.ToHashSet<char>() );
 
+        public static RtspHeaderValueValidatorCharSet LettersAndDigits { get; } = new RtspHeaderValueValidatorCharSet( (DefaultLetters + DefaultDigits ).ToHashSet<char>() );
+
         public static RtspHeaderValueValidatorCharSet BasicToken { get; } = new RtspHeaderValueValidatorCharSet( (DefaultLetters + DefaultDigits + DefaultSymbols1).ToHashSet<char>() );
     }
 }

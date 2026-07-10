@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 {

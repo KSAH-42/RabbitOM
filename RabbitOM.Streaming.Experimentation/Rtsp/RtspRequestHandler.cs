@@ -8,11 +8,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
     {
         private RtspRequestHandler _next;
 
-        public virtual async Task<RtspClientResponse> SendRequestAsync( RtspClientRequest request , CancellationToken cancellation = default )
+        public virtual async Task<RtspResponse> SendRequestAsync( RtspRequest request , CancellationToken cancellation )
         {
             if ( _next == null )
             {
-                return await Task.FromResult<RtspClientResponse>( null );
+                return await Task.FromResult<RtspResponse>( null );
             }
 
             return await _next.SendRequestAsync( request , cancellation ) ;

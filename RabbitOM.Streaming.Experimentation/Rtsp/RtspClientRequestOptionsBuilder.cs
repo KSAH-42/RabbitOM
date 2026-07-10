@@ -1,47 +1,72 @@
-﻿using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
-using System;
+﻿using System;
+using System.Text;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
-    public class RtspClientRequestOptionsBuilder
+    using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
+
+    public sealed class RtspClientRequestOptionsBuilder
     {
-        public virtual RtspClientRequestOptionsBuilder UseGlobalUri()
+        private readonly Encoding _encoding;
+
+
+
+
+
+
+        public RtspClientRequestOptionsBuilder()
+            : this( Encoding.UTF8 )
+        {
+        }
+
+        public RtspClientRequestOptionsBuilder( Encoding encoding )
+        {
+            _encoding = encoding ?? throw new ArgumentNullException( nameof( encoding ) );
+        }
+
+
+
+
+
+
+
+
+        public RtspClientRequestOptionsBuilder UseGlobalUri()
         {
             return SetUri( "*" );
         }
 
-        public virtual RtspClientRequestOptionsBuilder SetUri( string value )
+        public RtspClientRequestOptionsBuilder SetUri( string value )
         {
             throw new NotImplementedException();
         }
 
-        public virtual RtspClientRequestOptionsBuilder AddHeader( string name , string value )
+        public RtspClientRequestOptionsBuilder AddHeader( string name , string value )
         {
             throw new NotImplementedException();
         }
 
-        public virtual RtspClientRequestOptionsBuilder Headers( Action<RequestsRtspHeaderCollection> configurer )
+        public RtspClientRequestOptionsBuilder Headers( Action<RequestsRtspHeaderCollection> configurer )
         {
             throw new NotImplementedException();
         }
 
-        public virtual RtspClientRequestOptionsBuilder WriteBody()
+        public RtspClientRequestOptionsBuilder WriteBody( string value )
         {
             throw new NotImplementedException();
         }
 
-        public virtual RtspClientRequestOptionsBuilder WriteBody( string value )
+        public RtspClientRequestOptionsBuilder WriteBody( string format , params object[] values )
         {
             throw new NotImplementedException();
         }
 
-        public virtual RtspClientRequestOptionsBuilder WriteBody( byte[] value )
+        public RtspClientRequestOptionsBuilder WriteBody( byte[] value )
         {
             throw new NotImplementedException();
         }
 
-
-        public virtual RtspClientRequestOptions Build()
+        public RtspClientRequestOptions Build()
         {
             throw new NotImplementedException();
         }

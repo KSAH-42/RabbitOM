@@ -22,6 +22,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
 
 
+        public int ContentBufferSize { get; } = 1024;
+
+
 
         public byte? PeekValue()
         {
@@ -75,7 +78,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( contentLength.HasValue && contentLength > 0 )
             {
-                var buffer = new byte[ 1024 ]; // don't move as private buffer because most of the time rtsp bodies are unused and lets the gc collect this buffer, instead to have this one always present and unsed and allocated each times the channel is created
+                var buffer = new byte[ ContentBufferSize ]; // don't move as private buffer because most of the time rtsp bodies are unused and lets the gc collect this buffer, instead to have this one always present and unsed and allocated each times the channel is created
 
                 while ( body.Length < contentLength.Value )
                 {

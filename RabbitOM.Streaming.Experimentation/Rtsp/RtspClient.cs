@@ -41,10 +41,313 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public Version Version { get; set; }
 
+        // TODO: Remove it and use a readonly collection pass to the rtsp env class
         public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection();
 
-        public bool IsDisposed { get; }
 
+
+
+
+
+
+        public async Task<RtspResponse> OptionsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> OptionsAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> OptionsAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> OptionsAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+        public async Task<RtspResponse> DescribeAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> DescribeAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> DescribeAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> DescribeAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+        public async Task<RtspResponse> SetupAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SetupAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SetupAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SetupAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+        public async Task<RtspResponse> PlayAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> PlayAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> PlayAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> PlayAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+        public async Task<RtspResponse> PauseAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> PauseAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> PauseAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> PauseAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+        public async Task<RtspResponse> TearDownAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> TearDownAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> TearDownAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> TearDownAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+        public async Task<RtspResponse> GetParameterAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> GetParameterAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> GetParameterAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> GetParameterAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+        public async Task<RtspResponse> SetParameterAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SetParameterAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SetParameterAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SetParameterAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+        public async Task<RtspResponse> AnnounceAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> AnnounceAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> AnnounceAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> AnnounceAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+        public async Task<RtspResponse> RedirectAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> RedirectAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> RedirectAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> RedirectAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+        public async Task<RtspResponse> RecordAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> RecordAsync( CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> RecordAsync( RtspClientRequestOptions requestOptions )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> RecordAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
+
+
+
+        public async Task<RtspResponse> SendAsync( RtspRequest request )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<RtspResponse> SendAsync( RtspRequest request , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SendAsync( Packet packet )
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task SendAsync( Packet packet , CancellationToken cancellationToken )
+        {
+            throw new NotImplementedException();
+        }
 
 
 
@@ -53,172 +356,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public void Dispose()
         {
-        }
-
-
-
-        public async Task<RtspClientResponse> OptionsAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> OptionsAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public async Task<RtspClientResponse> DescribeAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> DescribeAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public async Task<RtspClientResponse> SetupAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> SetupAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-
-
-        public async Task<RtspClientResponse> PlayAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> PlayAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-
-        public async Task<RtspClientResponse> PauseAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> PauseAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-        public async Task<RtspClientResponse> TearDownAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> TearDownAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public async Task<RtspClientResponse> GetParameterAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> GetParameterAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public async Task<RtspClientResponse> SetParameterAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> SetParameterAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public async Task<RtspClientResponse> AnnounceAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> AnnounceAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-        public async Task<RtspClientResponse> RedirectAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> RedirectAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-        public async Task<RtspClientResponse> RecordAsync( CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<RtspClientResponse> RecordAsync( RtspClientRequestOptions requestOptions , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-        public async Task<RtspClientResponse> SendAsync( RtspClientRequest request , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task SendAsync( Packet packet , CancellationToken cancellationToken = default )
-        {
-            throw new NotImplementedException();
         }
     }
 }

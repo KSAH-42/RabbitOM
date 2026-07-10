@@ -9,7 +9,7 @@ static class Program
             client.Headers.Accept = new AcceptRtspHeaderValue();
             client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
             client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/sdp") );
-                        
+                            
             await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
                 .SetUri( "rtsp://127.0.0.1:554/xyz.mp4" )
                 .AddHeader("A","1")
@@ -28,3 +28,43 @@ static class Program
     }
 }
 
+
+
+
+
+
+
+
+
+public class A
+{
+    public static async Task Foo()
+    {
+        var pipeline = new CustomRtspRequestHandler(1)
+            .With( new CustomRtspRequestHandler(2))
+            .With( new CustomRtspRequestHandler(3))
+            .With( new CustomRtspRequestHandler(4))
+            .With( new CustomRtspRequestHandler(5))
+            .With( new CustomRtspRequestHandler(6))
+            ;
+
+        await pipeline.SendRequestAsync( new RtspRequest() , default );
+    }
+}
+
+public sealed class CustomRtspRequestHandler : RtspRequestHandler
+{
+    public CustomRtspRequestHandler( int id ) => Id = id;
+
+    public int Id { get; }
+
+    public override async Task<RtspResponse> SendRequestAsync( RtspRequest request , CancellationToken cancellation )
+    {
+        Console.WriteLine( "Start" + Id );
+
+        var result = await base.SendRequestAsync( request , cancellation ) ;
+        Console.WriteLine( "Stop" + Id );
+
+        return result ?? new RtspResponse();
+    }
+}

@@ -15,6 +15,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
         private string _uri = string.Empty;
         private string _realm = string.Empty;
         private string _nonce = string.Empty;
+        private string _nonceCount = string.Empty;
+        private string _clientNonce = string.Empty;
+        private string _qualityOfProtection = string.Empty;
 
 
 
@@ -66,6 +69,28 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             set => _nonce = value ?? string.Empty;
         }
 
+        public string NonceCount
+        {
+            get => _nonceCount;
+            set => _nonceCount = value ?? string.Empty;
+        }
+
+        public string ClientNonce
+        {
+            get => _clientNonce;
+            set => _clientNonce = value ?? string.Empty;
+        }
+
+        public string QualityOfProtection
+        {
+            get => _qualityOfProtection;
+            set => _qualityOfProtection = value ?? string.Empty;
+        }
+
+
+
+
+
 
 
         public override string ToString()
@@ -94,7 +119,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                         var hash1 = algorithm.Compute( _username + ":" + _realm + ":" + _password );
                         var hash2 = algorithm.Compute( _method + ":" + _uri  );
 
-                        return algorithm.Compute( hash1 + ":" + _nonce + ":" + hash2 );
+                        return string.IsNullOrWhiteSpace( _qualityOfProtection )
+                            ? algorithm.Compute( $"{hash1}:{_nonce}:{hash2}")
+                            : algorithm.Compute( $"{hash1}:{_nonce}:{_nonceCount}:{_clientNonce}:{_qualityOfProtection}:{hash2}");
                     }
                 }
 

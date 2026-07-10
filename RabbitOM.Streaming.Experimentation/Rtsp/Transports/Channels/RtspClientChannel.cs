@@ -35,15 +35,15 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-        public abstract Task OpenAsync( CancellationToken cancellationToken = default );
+        public abstract Task OpenAsync();
 
-        public abstract Task CloseAsync( CancellationToken cancellationToken = default );
+        public abstract Task CloseAsync();
 
-        public abstract Task AbortAsync( CancellationToken cancellationToken = default );
+        public abstract Task AbortAsync();
 
-        public abstract Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationToken cancellationToken = default );
+        public abstract Task SendMessageAsync( RtspInterleavedMessage interleavedData , CancellationToken cancellationToken );
 
-        public abstract Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationToken cancellationToken = default );
+        public abstract Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationToken cancellationToken );
 
         public void Dispose()
         {
@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
             if ( disposing )
             {
-                CloseAsync().GetAwaiter().GetResult();
+                CloseAsync().GetAwaiter().GetResult(); // take care dispose should not throw exception
             }
 
             IsDisposed = true;

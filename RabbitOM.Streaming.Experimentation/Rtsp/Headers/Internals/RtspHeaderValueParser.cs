@@ -46,7 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
                 return false;
             }
 
-            // we don't used string.split here
+            // most of parser used string.split but here we do something different
             // because we need to ignore separators between quotes
             // and stop parse if we detect also none printable chars
             // like controls chars (DEL, tabs, CR, NLF), etc... 

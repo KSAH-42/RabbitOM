@@ -46,9 +46,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
 
         public void WriteLine( string format , params object[] args )
         {
-            var line = string.Format( format , args );
-
-            foreach ( var element in line )
+            foreach ( var element in string.Format( format , args ) )
             {
                 _stream.WriteByte( (byte) element );
             }
