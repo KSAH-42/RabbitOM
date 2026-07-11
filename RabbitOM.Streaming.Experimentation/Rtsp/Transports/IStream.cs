@@ -21,8 +21,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
     // so we don't use a pipereader class, or an nuget package
     // instead we will implement a special stream
     // with some custom read optimizations and additional methods
-    // the idea is buffering data before to call a read method and store them into a internal buffer
-    // and read, peek, etc.. methods will read ont this buffer
+    // the idea is buffering data before to call a read method and store them into an internal buffer
+    // and then we can peek, read, and so on.. theses methods will trigger a true read when the position on this buffer reach the number of bytes reads
 
     // stream:   [¤¤¤¤¤¤¤¤¤¤$*********¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******]
     // peek:     [¤¤¤¤¤¤¤¤¤¤$*****] trigger a read an save in memory

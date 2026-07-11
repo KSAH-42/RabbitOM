@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 {
     public sealed class RtspMessageReader : IMessageReader
     {
-        private const int ContentBufferSize = 256;
+        private const int ContentBufferSize = 512;
 
 
 
@@ -92,7 +92,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                         return null;
                     }
 
-                    body.Write( buffer , 0 , bytesRead ); // don't move this code on the body.setter of the message class
+                    body.Write( buffer , 0 , bytesRead );
                 }
 
                 body.Seek( 0 , SeekOrigin.Begin );

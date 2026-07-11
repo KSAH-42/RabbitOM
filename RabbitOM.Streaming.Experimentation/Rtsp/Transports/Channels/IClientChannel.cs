@@ -14,7 +14,20 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         event EventHandler<RtspMessageEventArgs> MessageReceived;
 
+
+
+
         bool IsOpened { get; }
+
+
+
+
+
+        void Open();
+
+        void Close();
+
+        void Abort();
 
         Task OpenAsync();
 
