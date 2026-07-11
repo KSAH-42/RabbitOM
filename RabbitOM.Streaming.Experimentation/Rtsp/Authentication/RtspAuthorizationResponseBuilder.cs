@@ -42,7 +42,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
 
             if ( SupportedTypes.IsBasicAuthentication( Scheme ) )
             {
-                return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{UserName}:{Password}" ) );
+                return BuildBasicResponse();
             }
 
             if ( SupportedTypes.IsDigestAuthentication( Scheme ) )
@@ -79,6 +79,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             }
 
             return string.Empty;
+        }
+
+        private string BuildBasicResponse()
+        {
+            return Convert.ToBase64String( Encoding.UTF8.GetBytes( $"{UserName}:{Password}" ) );
         }
 
         private string BuildDigestResponse( RtspHashAlgorithm algorithm )
