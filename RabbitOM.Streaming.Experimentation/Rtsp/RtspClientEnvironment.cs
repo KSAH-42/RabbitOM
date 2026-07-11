@@ -24,7 +24,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 
         public IHandler Handler { get; }
 
-        public IClientChannelFactory ChannelFactory { get; }
+        public IChannelFactory ChannelFactory { get; }
 
         public IAllocator Allocator { get; }
 

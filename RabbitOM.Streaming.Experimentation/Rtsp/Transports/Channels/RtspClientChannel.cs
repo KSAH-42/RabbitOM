@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
-    public abstract class RtspClientChannel : IClientChannel
+    public abstract class RtspClientChannel : IChannel
     {
         public event EventHandler Opened;
 
