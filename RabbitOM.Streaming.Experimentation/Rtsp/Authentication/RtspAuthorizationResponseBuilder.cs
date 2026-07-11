@@ -52,19 +52,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
                     return string.Empty;
                 }
 
-                string BuildDigestResponse( RtspHashAlgorithm algorithm )
-                {
-                    using ( algorithm )
-                    {
-                        var hash1 = algorithm.Compute( UserName + ":" + Realm + ":" + Password );
-                        var hash2 = algorithm.Compute( Method + ":" + Uri  );
-
-                        return string.IsNullOrWhiteSpace( QualityOfProtection )
-                            ? algorithm.Compute( $"{hash1}:{Nonce}:{hash2}")
-                            : algorithm.Compute( $"{hash1}:{Nonce}:{NonceCount}:{ClientNonce}:{QualityOfProtection}:{hash2}");
-                    }
-                }
-
                 if ( SupportedTypes.IsMd5Algorithm( Algorithm ) )
                 {
                     return BuildDigestResponse( RtspHashAlgorithm.CreateMD5() );
@@ -92,6 +79,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Authentication
             }
 
             return string.Empty;
+        }
+
+        private string BuildDigestResponse( RtspHashAlgorithm algorithm )
+        {
+            using ( algorithm )
+            {
+                var hash1 = algorithm.Compute( UserName + ":" + Realm + ":" + Password );
+                var hash2 = algorithm.Compute( Method + ":" + Uri  );
+
+                return string.IsNullOrWhiteSpace( QualityOfProtection )
+                    ? algorithm.Compute( $"{hash1}:{Nonce}:{hash2}")
+                    : algorithm.Compute( $"{hash1}:{Nonce}:{NonceCount}:{ClientNonce}:{QualityOfProtection}:{hash2}");
+            }
         }
     }
 }
