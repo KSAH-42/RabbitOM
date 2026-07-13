@@ -22,7 +22,6 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
 
-
         void Open();
 
         void Close();
