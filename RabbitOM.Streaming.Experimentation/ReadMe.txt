@@ -1,4 +1,4 @@
-// stupid person say that they prefer to be focus on efficient instead of tolerance
+// bad person say that they prefer to be focus on efficient instead of tolerance
 // it's sound like this person has lack of something
 // intorelance against attack
 // intorelance against case sensitive
