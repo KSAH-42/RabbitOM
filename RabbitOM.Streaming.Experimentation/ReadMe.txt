@@ -16,7 +16,7 @@
 // the inventor of C++, says good software make it hard to hide bugs. Defenitively it's true
 // Is like the size of the body of method that exceed the size of screen is a code smell.
 // the best is to combine the two worlds, it's so bad to a have a highly fast system where you cant' make it tolerant against failures or difficult to implement a protection layer or something else.
-// the complexity is to find the right balance. it's like a question of trinity: resilence, efficiency , easier for modifications. not something, focused only on efficiency. it's bad.
+// the complexity is to find the right balance. it's like a question of trinity: safe implementation, efficient implementation , simple implementation. not something, focused only on efficiency. it's bad.
 
 static class Program
 {
