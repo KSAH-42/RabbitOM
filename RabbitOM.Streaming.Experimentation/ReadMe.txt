@@ -1,3 +1,20 @@
+// stupid person say that they prefer to be focus on efficient instead of tolerance
+// it's sound like this person has lack of something
+// intorelance against attack
+// intorelance against case sensitive
+// all that things will produce a bad experience of the customers
+// many of these people try to exaggerated an aspect of an implementation to
+// put in front there skills and hide good things.
+// that toxic collegue that need to be to just fired from the compagny.
+// the definition of tolerance is : make it a system reliable againts failures, a device integration with retry ? can you just imagine of castrophic results ?
+// untolerant doesn't include retry mechanism, is absoltely dangerous for a security system, that the big stupidity , or the mindset of fools.
+// efficiency: means low allocation, fast connection and use multhreading 
+// the best is to combine the two words, it's stupid to a have a highly fast system where you cant' make it tolerant against failure.
+// the inventor of C++, says good software make it hard to hide bugs. Defenitively it's true
+// the other sign of quality, it to look on the output how many exceptions are throws during streaming ?
+// Untolerant parser is good things ?
+// device integretion without retry, wow.... 
+
 static class Program
 {
     private static async Task Main()
