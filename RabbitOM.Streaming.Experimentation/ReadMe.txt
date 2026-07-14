@@ -1,4 +1,4 @@
-// bad person say that they prefer to be focus on efficient instead of tolerance
+// bad person say that they prefer to be focus on efficiency instead of tolerance
 // it's sound like this person has a lack of something
 // untolerant against attack
 // untolerant against case sensitive
@@ -7,7 +7,7 @@
 // many of these people try to exaggerated an aspect of an implementation to
 // put in front there skills and hide good things.
 // that toxic collegue that need to be to just fired from the compagny.
-// the definition of tolerance is : make it a system reliable againts failures, a device integration with retry ? can you just imagine of castrophic results ?
+// the definition of tolerance is : make it a system reliable againts failures. can you just imagine of castrophic results of a device integration without any retry mecanism ? 
 // untolerant doesn't include retry mechanism, is absoltely dangerous for a security system, that the big stupidity , or the mindset of fools.
 // efficiency: means low allocation, fast connection and use multhreading 
 // the other sign of quality, it to look on the output how many exceptions are throws during streaming ?
