@@ -2,7 +2,7 @@
 // it's sound like this person has a lack of something
 // untolerant against attack
 // untolerant against case sensitive
-// untolerant will reduce the income of the compagny by spending debugging times, supports, etc... and finally a wast of money.
+// untolerant will reduce the income of the compagny by spending debugging times, supports, etc... and finally a wast of money. that's ineffiecient!
 // all that things will produce a bad experience of the customers
 // many of these people try to exaggerated an aspect of an implementation to
 // put in front there skills and hide good things.
@@ -15,8 +15,8 @@
 // device integretion without retry is a good thing ? no thats the basic of the security industry many years before the rise of cloud computing
 // the inventor of C++, says good software make it hard to hide bugs. Defenitively it's true
 // Is like the size of the body of method that exceed the size of screen is a code smell.
-// the best is to combine the two worlds, it's stupid to a have a highly fast system where you cant' make it tolerant against failure.
-// the complexity is to find the right balance. 
+// the best is to combine the two worlds, it's so bad to a have a highly fast system where you cant' make it tolerant against failures or difficult to implement a protection layer or something else.
+// the complexity is to find the right balance. it's like a question of trinity: resilence, efficiency , easier for modifications. not something, focused only on efficiency. it's bad.
 
 static class Program
 {
