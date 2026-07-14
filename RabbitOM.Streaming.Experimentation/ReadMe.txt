@@ -1,7 +1,8 @@
 // bad person say that they prefer to be focus on efficient instead of tolerance
-// it's sound like this person has lack of something
-// intorelance against attack
-// intorelance against case sensitive
+// it's sound like this person has a lack of something
+// untolerant against attack
+// untolerant against case sensitive
+// untolerant will reduce the income of the compagny by spending debugging times, supports, etc... and finally a wast of money.
 // all that things will produce a bad experience of the customers
 // many of these people try to exaggerated an aspect of an implementation to
 // put in front there skills and hide good things.
@@ -10,10 +11,11 @@
 // untolerant doesn't include retry mechanism, is absoltely dangerous for a security system, that the big stupidity , or the mindset of fools.
 // efficiency: means low allocation, fast connection and use multhreading 
 // the other sign of quality, it to look on the output how many exceptions are throws during streaming ?
-// Untolerant parser is good things ?
-// device integretion without retry, wow.... 
+// Untolerant parser is a good things ? no
+// device integretion without retry is a good thing ? no thats the basic of the security industry many years before the rise of cloud computing
 // the inventor of C++, says good software make it hard to hide bugs. Defenitively it's true
-// the best is to combine the two words, it's stupid to a have a highly fast system where you cant' make it tolerant against failure.
+// Is like the size of the body of method that exceed the size of screen is a code smell.
+// the best is to combine the two worlds, it's stupid to a have a highly fast system where you cant' make it tolerant against failure.
 // the complexity is to find the right balance. 
 
 static class Program
