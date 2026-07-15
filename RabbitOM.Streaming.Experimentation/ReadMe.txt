@@ -65,7 +65,7 @@ public class CameraController : RtspController
     }
 
     [RtspAction("SETUP")]
-    [RtspAuthorize] // Un attribut de sécurité personnalisé
+    [RtspAuthorize] 
     public RtspResult Setup()
     {
         return Ok();
