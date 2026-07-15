@@ -31,40 +31,46 @@ static class Program
 
 
 
+//////////////////////////////////////////////////////////////////
+// Server impl idea
+//////////////////////////////////////////////////////////////////
 
+using RabbitOM.Streaming.Net.Rtsp.Servers; // ??? => storing listeners, attrbutes, base controllers, etc...
 
-
-
-
-public class A
+[RtspRoute("AZERTY")]
+public class CameraController : RtspController
 {
-    public static async Task Foo()
-    {
-        var pipeline = new CustomRtspRequestHandler(1)
-            .With( new CustomRtspRequestHandler(2))
-            .With( new CustomRtspRequestHandler(3))
-            .With( new CustomRtspRequestHandler(4))
-            .With( new CustomRtspRequestHandler(5))
-            .With( new CustomRtspRequestHandler(6))
-            ;
+    private readonly ILogger<CameraController> _logger;
 
-        await pipeline.SendRequestAsync( new RtspRequest() , default );
+    public CameraController(ILogger<CameraController> logger)
+    {
+        _logger = logger;
+    }
+
+    [RtspAction("DESCRIBE")]
+    public RtspResult Describe()
+    {
+        _logger.LogInformation("Describing");
+        
+        var sdp = new StringBuilder();
+        
+        sdp.AppendLine( "v=0")
+        sdp.AppendLine( "a=0")
+        sdp.AppendLine( "a=0")
+        sdp.AppendLine( "a=0")
+        sdp.AppendLine( "a=0")
+        sdp.AppendLine( "a=0")
+
+        return Ok(sdp.ToString()); 
+    }
+
+    [RtspAction("SETUP")]
+    [RtspAuthorize] // Un attribut de sécurité personnalisé
+    public RtspResult Setup()
+    {
+        return Ok();
     }
 }
 
-public sealed class CustomRtspRequestHandler : RtspRequestHandler
-{
-    public CustomRtspRequestHandler( int id ) => Id = id;
 
-    public int Id { get; }
 
-    public override async Task<RtspResponse> SendRequestAsync( RtspRequest request , CancellationToken cancellation )
-    {
-        Console.WriteLine( "Start" + Id );
-
-        var result = await base.SendRequestAsync( request , cancellation ) ;
-        Console.WriteLine( "Stop" + Id );
-
-        return result ?? new RtspResponse();
-    }
-}
