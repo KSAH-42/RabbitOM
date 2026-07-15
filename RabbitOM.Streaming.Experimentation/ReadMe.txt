@@ -1,24 +1,3 @@
-// bad person say that they prefer to be focus on efficiency instead of tolerance
-// it's sound like this person has a lack of something
-// untolerant against attack
-// untolerant against case sensitive
-// untolerant will reduce the income of the compagny by spending debugging times, supports, etc... 
-// and finally a wast money. that's ineffiecient!
-// all that things will produce a bad experience of the customers
-// many of these people try to exaggerated an aspect of an implementation to
-// and hide the good things.
-// the definition of tolerance is : make it a system reliable againts failures. can you just imagine of castrophic results of a device integration without any retry mecanism ? 
-// efficiency: means low allocation, fast connection and use multhreading 
-// the other sign of quality, it to look on the output how many exceptions are throws during the run times ?
-// think about it: a software with less try catch that never crash.
-// Untolerant parser is a good things ?
-// device integretion without retry is a good thing ? no thats the basic of the security industry many years before the rise of cloud computing, the security has used same patterns used to day in cloud computing
-// the inventor of C++, says good software make it hard to hide bugs. Defenitively it's true
-// Is like the size of the body of method that exceed the size of screen is a code smell.
-// the best is to combine the two worlds, it's so bad to a have a highly fast system where you cant' make it tolerant against failures or difficult to implement a protection layer or something else.
-// it's like a question of trinity: safe implementation, efficient implementation , simple implementation. it can be reduce only into one thing like efficiency. that's wrong.
-// the complexity is to find the right balance. 
-
 static class Program
 {
     private static async Task Main()
