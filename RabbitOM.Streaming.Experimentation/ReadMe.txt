@@ -37,17 +37,24 @@ static class Program
 
 using RabbitOM.Streaming.Net.Rtsp.Servers; // ??? => storing listeners, attrbutes, base controllers, etc...
 
-[RtspRoute("AZERTY")]
-public class CameraController : RtspController
+[Controller("stream/main")]
+public sealed class MainStreamController : RtspController
 {
-    private readonly ILogger<CameraController> _logger;
+    private readonly ILogger<MainStreamController> _logger;
 
-    public CameraController(ILogger<CameraController> logger)
+    public MainStream(ILogger<MainStreamController> logger)
     {
         _logger = logger;
     }
 
-    [RtspAction("DESCRIBE")]
+    [RtspOptions()]
+    public RtspResult Options()
+    {
+        return Ok();
+    }
+
+    [RtspDescribe()]
+    [RtspAuthorize]
     public RtspResult Describe()
     {
         _logger.LogInformation("Describing");
@@ -64,13 +71,24 @@ public class CameraController : RtspController
         return Ok(sdp.ToString()); 
     }
 
-    [RtspAction("SETUP")]
+    [RtspSetup()]
     [RtspAuthorize] 
     public RtspResult Setup()
     {
         return Ok();
     }
+
+    [RtspPlay()]
+    [RtspAuthorize] 
+    public RtspResult Play()
+    {
+        return Ok();
+    }
+
+    [RtspTeardown()]
+    [RtspAuthorize] 
+    public RtspResult Teardown()
+    {
+        return Ok();
+    }
 }
-
-
-
