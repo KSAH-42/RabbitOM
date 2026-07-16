@@ -180,6 +180,7 @@
     <Compile Include="Rtsp\Transports\Channels\RtspMessageReaderValidator.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageWriter.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspMessageWriterValidator.cs" />
+    <Compile Include="Rtsp\Transports\Channels\RtspRequester.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspRequestLine.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspRequestMessage.cs" />
     <Compile Include="Rtsp\Transports\Channels\RtspResponseMessage.cs" />
