@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
+namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
