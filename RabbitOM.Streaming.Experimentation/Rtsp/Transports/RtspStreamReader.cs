@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
             return _stream.ReadByte();
         }
 
-        public string ReadLine()
+        public string ReadLine( int? maxLength = null )
         {
             var builder = new StringBuilder();
 
@@ -48,6 +48,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports
                 if ( byteValue == '\n' )
                 {
                     break;
+                }
+
+                if ( maxLength.HasValue && maxLength <= builder.Length )
+                {
+                    throw new InvalidOperationException( "the length is too big" );
                 }
 
                 builder.Append( (char) byteValue );

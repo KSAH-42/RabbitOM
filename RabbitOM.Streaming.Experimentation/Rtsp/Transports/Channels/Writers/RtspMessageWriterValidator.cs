@@ -4,9 +4,9 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
-    public static class RtspMessageWriterValidator
+    public sealed class RtspMessageWriterValidator
     {
-        public static void ValidateMessage( RtspInterleavedMessage message )
+        public void ValidateMessage( RtspInterleavedMessage message )
         {
             if ( message == null )
             {
@@ -21,7 +21,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Writers
             }
         }
 
-        public static void ValidateMessage( RtspRequestMessage request )
+        public void ValidateMessage( RtspRequestMessage request )
         {
             if ( request == null )
             {

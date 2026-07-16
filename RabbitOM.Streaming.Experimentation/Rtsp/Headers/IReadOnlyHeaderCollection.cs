@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
-    // TODO: refactor to allow a for each element include key, the value, and the index 
-
     public interface IReadOnlyHeaderCollection : IReadOnlyCollection<KeyValuePair<string,string>>
     {
         string this[ string name ] { get; }

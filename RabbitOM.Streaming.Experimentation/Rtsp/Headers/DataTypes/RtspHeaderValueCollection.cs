@@ -56,7 +56,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes
         {
             if ( ! OnValidate( item ) )
             {
-                throw new ArgumentNullException( nameof( item ) );
+                throw new ArgumentException( nameof( item ) );
             }
 
             _collection.Add( item );

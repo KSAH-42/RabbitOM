@@ -5,6 +5,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers;
 
+    /// TODO: this is not probably a good name for this class, because it's introduce confusion of other rtsp method which different from the <seealso cref="RtspClient.OptionsAsync(RtspClientRequestOptions)"/>, find a different where the option word will not be Params, Args, Metadata ... but it should be related to optional things, so how we can name the arg used by rtsp method ? RtspRequestXXX and then we getRtspRequestXXXBuilder
     public sealed class RtspClientRequestOptionsBuilder
     {
         private readonly Encoding _encoding;

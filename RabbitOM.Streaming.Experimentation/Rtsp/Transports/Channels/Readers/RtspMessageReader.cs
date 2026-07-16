@@ -13,18 +13,19 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
         private readonly RtspStreamReader _reader;
 
-        private readonly IMessageReaderValidator _validator;
+        private readonly RtspMessageReaderValidatorOptions _options;
 
 
 
 
 
-        public RtspMessageReader( IStream stream , IMessageReaderValidator validator )
+        public RtspMessageReader( IStream stream , RtspMessageReaderValidatorOptions options )
         {
-            _validator = validator ?? throw new ArgumentNullException( nameof( validator ) );
-
             _reader = new RtspStreamReader( stream );
+            _options = options ?? throw new ArgumentNullException( nameof( options ) );
         }
+
+
 
 
 
@@ -50,13 +51,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                 return null;
             }
 
-            _validator.Setup();
-
             var headers = new RtspMessageHeaderCollection();
+            var validator = new RtspMessageReaderValidator( headers , _options );
 
             while ( true )
             {
-                var header = _reader.ReadLine();
+                var header = _reader.ReadLine( _options.MaximumOfHeaderLength );
 
                 if ( header == null )
                 {
@@ -68,12 +68,12 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
                     break;
                 }
 
-                _validator.Validate( headers , header );
+                validator.Validate( header );
 
                 headers.TryAddParse( header );
             }
 
-            _validator.Validate( headers );
+            validator.Validate();
 
             var body = new MemoryStream();
 
@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels.Readers
 
             if ( contentLength.HasValue && contentLength > 0 )
             {
-                var buffer = new byte[ ContentBufferSize ]; // don't move as private buffer because most of the time rtsp bodies are unused and lets the gc collect this buffer, instead to have this one always present and unsed and allocated each times the channel is created
+                var buffer = new byte[ ContentBufferSize ]; // don't move as private member because most of the time rtsp bodies are unused, just lets the gc collect this buffer, instead to have this one always present all the time
 
                 while ( body.Length < contentLength.Value )
                 {

@@ -6,10 +6,10 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
     public sealed class AcceptRangesRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
 
         public bool Bytes { get; set; }
-       
+
         public bool Ntp { get; set; }
 
         public bool Smpte { get; set; }
@@ -17,7 +17,7 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
         public bool Clock { get; set; }
 
         public bool Utc { get; set; }
-        
+
 
         public static bool TryParse( string input , out AcceptRangesRtspHeaderValue result )
         {
@@ -59,8 +59,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 
             return result != null;
         }
-        
-        
+
+
         public override string ToString()
         {
             var builder = new StringBuilder();

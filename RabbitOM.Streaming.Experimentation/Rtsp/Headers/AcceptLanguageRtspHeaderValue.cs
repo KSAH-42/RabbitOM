@@ -3,11 +3,11 @@
 namespace RabbitOM.Streaming.Experimentation.Rtsp.Headers
 {
     using RabbitOM.Streaming.Experimentation.Rtsp.Headers.DataTypes;
-    
+
     public sealed class AcceptLanguageRtspHeaderValue
     {
         public LanguageWithQualityRtspHeaderValueCollection Values { get; } = new LanguageWithQualityRtspHeaderValueCollection();
-        
+
         public static bool TryParse( string input , out AcceptLanguageRtspHeaderValue result )
         {
             result = null;
