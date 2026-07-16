@@ -12,6 +12,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         public event EventHandler Aborted;
 
+        public event EventHandler Faulted;
+
         public event EventHandler<RtspMessageEventArgs> MessageReceived;
 
 
@@ -26,6 +28,8 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
 
         public abstract bool IsOpened { get; }
+
+        public abstract bool IsFaulted { get; }
 
         public bool IsDisposed { get; private set; }
 
@@ -92,6 +96,11 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
         protected virtual void OnAborted( EventArgs e )
         {
             Aborted?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnFaulted( EventArgs e )
+        {
+            Faulted?.TryInvoke( this , e );
         }
 
         protected virtual void OnMessageReceived( RtspMessageEventArgs e )

@@ -12,12 +12,16 @@ namespace RabbitOM.Streaming.Experimentation.Rtsp.Transports.Channels
 
         event EventHandler Aborted;
 
+        event EventHandler Faulted;
+
         event EventHandler<RtspMessageEventArgs> MessageReceived;
 
 
 
 
         bool IsOpened { get; }
+
+        bool IsFaulted { get; }
 
 
 
