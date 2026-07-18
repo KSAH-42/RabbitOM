@@ -112,23 +112,22 @@ public sealed class MainStreamController : RtspController
 // using RabbitOM.Codecs.FFMpeg { FFMpegH264Decoder , etc... } 
 // using RabbitOM.Codecs.DX11 { DX11H264Decoder , etc }
 // using RabbitOM.Codecs.Jpeg { JpegRender }
-// using RabbitOM.Net.Rtcp
-// using RabbitOM.Net.Rtcp.Serialization
-// using RabbitOM.Net.Rtp
-// using RabbitOM.Net.Rtp.H264
-// using RabbitOM.Net.Rtp.H265
-// using RabbitOM.Net.Rtp.H265
-// using RabbitOM.Net.Rtp.Jpeg
-// using RabbitOM.Net.Rtp.Pcm
-// using RabbitOM.Net.Rtsp
-// using RabbitOM.Net.Rtsp.Headers
-// using RabbitOM.Net.Rtsp.Receivers
-// using RabbitOM.Net.Rtsp.Receivers.Tcp
-// using RabbitOM.Net.Sdp
-// using RabbitOM.Net.Sdp.Serialization
+// using RabbitOM.Streaming.Rtcp
+// using RabbitOM.Streaming.Rtp
+// using RabbitOM.Streaming.Rtp.H264
+// using RabbitOM.Streaming.Rtp.H265
+// using RabbitOM.Streaming.Rtp.H265
+// using RabbitOM.Streaming.Rtp.Jpeg
+// using RabbitOM.Streaming.Rtp.Pcm
+// using RabbitOM.Streaming.Rtsp
+// using RabbitOM.Streaming.Rtsp.Headers
+// using RabbitOM.Streaming.Rtsp.Receivers
+// using RabbitOM.Streaming.Rtsp.Receivers.Tcp
+// using RabbitOM.Streaming.Sdp
+// using RabbitOM.Streaming.Sdp.Serialization
 // using RabbitOM.Threading
-// using RabbitOM.Windows
-// using RabbitOM.Windows.Controls
+// using RabbitOM.UI.Controls
+
 
 => release .net core libs
 => refactor used records classes
