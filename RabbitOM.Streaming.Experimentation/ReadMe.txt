@@ -4,26 +4,28 @@ static class Program
     {
         using ( var client = new RtspClient() )
         {
-            client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/building-toxic-society-with-controlling-disorder-factor.mp4" );
-            
-            client.Headers.Accept = new AcceptRtspHeaderValue();
-            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
-            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/sdp") );
-                            
-            await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
-                .SetUri( "rtsp://127.0.0.1:554/xyz.mp4" )
-                .AddHeader("A","1")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
+            var result = await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
+                .SetUri( "rtsp://127.0.0.1/xyz.mp4" )
+                .Headers( items =>
+                {
+                    items.Accept = new AcceptRtspHeaderValue();
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "a" ) );
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "b" ) );
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "c" ) );
+                    items.AcceptEncoding = new AcceptEncodingRtspHeaderValue();
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "br"  ) );
+                } )
                 .WriteBody("parameter1=1\r\n")
                 .WriteBody("parameter2=2\r\n")
+                .WriteBody("parameter3=3\r\n")
+                .WriteBody("parameter4=4\r\n")
+                .WriteBody("parameter5=5\r\n")
+                .WriteBody("parameter6=6\r\n")
                 .WriteBody( new byte[] { 1,2,3 } )
                 .Build()
-                )
-                ;
+                );
         }
     }
 }
@@ -107,6 +109,7 @@ public sealed class MainStreamController : RtspController
 // 11 => remove the legacy rtsp client
 // 12 => refactor the sdp 
 
+
 // using RabbitOM
 // using RabbitOM.Media
 // using RabbitOM.Media.FFMpeg
@@ -121,12 +124,13 @@ public sealed class MainStreamController : RtspController
 // using RabbitOM.Streaming.Rtsp.Headers
 // using RabbitOM.Streaming.Rtsp.Receivers
 // using RabbitOM.Streaming.Rtsp.Receivers.Tcp
+// using RabbitOM.Streaming.Rtsp.Transports
+// using RabbitOM.Streaming.Rtsp.Transports.Channels
 // using RabbitOM.Streaming.Sdp
 // using RabbitOM.Streaming.Sdp.Serialization
 // using RabbitOM.Streaming.Onvif
 // using RabbitOM.Threading
 // using RabbitOM.UI.Controls
-
 
 => release .net core libs
 => refactor used records classes
