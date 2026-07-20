@@ -61,6 +61,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Rendering\BitmapPixelsData.cs" />
+    <Compile Include="Rendering\JpegRenderer.cs" />
+    <Compile Include="Rendering\RenderingSizeInfo.cs" />
+    <Compile Include="Rendering\WritableBitmapLocker.cs" />
     <Page Include="Dialogs\ResolutionFallBackSettingsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,17 +114,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RabbitOM.Streaming.Windows.Presentation\RabbitOM.Streaming.Windows.Presentation.csproj">
-      <Project>{a968c4b7-8345-4836-b9ea-04428567811f}</Project>
-      <Name>RabbitOM.Streaming.Windows.Presentation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">
-      <Project>{09233582-17ed-40d4-bc6a-309ecfdb116b}</Project>
-      <Name>RabbitOM.Streaming</Name>
-    </ProjectReference>
+    <Resource Include="ReadMe-Before-To-Start.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ReadMe-Before-To-Start.txt" />
+    <ProjectReference Include="..\RabbitOM\RabbitOM.csproj">
+      <Project>{353a7a14-1085-4fd1-b0ef-02499276571d}</Project>
+      <Name>RabbitOM</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

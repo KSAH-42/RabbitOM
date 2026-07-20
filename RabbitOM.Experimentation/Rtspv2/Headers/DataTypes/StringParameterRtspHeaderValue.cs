@@ -1,0 +1,33 @@
+﻿using System;
+
+namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
+{
+    public sealed class StringParameterRtspHeaderValue
+    {
+        private StringParameterRtspHeaderValue( string name , string value )
+        {
+            Name = name;
+            Value = value;
+        }
+
+        public string Name { get; }
+
+        public string Value { get; }
+
+
+        public static StringParameterRtspHeaderValue Create( string name , string value )
+        {
+            return new StringParameterRtspHeaderValue( RtspHeaderValueValidator.EnsureWellFormed( name , RtspHeaderValueValidatorCharSet.BasicToken  ) , RtspHeaderValueValidator.EnsureWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken ) );
+        }
+
+        public static bool TryCreate( string name , string value , out StringParameterRtspHeaderValue result )
+        {
+            result = RtspHeaderValueValidator.IsWellFormed( name  , RtspHeaderValueValidatorCharSet.BasicToken )
+                  && RtspHeaderValueValidator.IsWellFormed( value , RtspHeaderValueValidatorCharSet.BasicToken )
+                  ? new StringParameterRtspHeaderValue( name , value )
+                  : null;
+
+            return result != null;
+        }
+    }
+}

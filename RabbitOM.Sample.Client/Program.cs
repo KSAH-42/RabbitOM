@@ -11,10 +11,10 @@ using RabbitOM.Sample.Client.Helpers;
 
 namespace RabbitOM.Sample.Client
 {
-    using RabbitOM.Streaming.Net.Rtsp;
-    using RabbitOM.Streaming.Net.Rtsp.Clients;
-    
-    class Program
+    using RabbitOM.Streaming.Rtsp;
+    using RabbitOM.Streaming.Rtsp.Clients;
+
+    static class Program
     {
         static void Main( string[] args )
         {

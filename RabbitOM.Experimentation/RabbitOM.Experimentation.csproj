@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{412F9423-532C-4517-8CED-BAD0F86D397D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RabbitOM.Experimentation</RootNamespace>
+    <AssemblyName>RabbitOM.Experimentation</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rtspv2\Authentication\ClientNonce.cs" />
+    <Compile Include="Rtspv2\Authentication\NonceCounter.cs" />
+    <Compile Include="Rtspv2\Authentication\RtspAuthorizationResponseBuilder.cs" />
+    <Compile Include="Rtspv2\Authentication\RtspHashAlgorithm.cs" />
+    <Compile Include="Rtspv2\Headers\AcceptEncodingRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\AcceptLanguageRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\AcceptRangesRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\AcceptRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\AllowRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\AuthorizationRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\BandwidthRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\BlockSizeRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\CacheControlRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\ConferenceRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\ConnectionRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\ContentRangeRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\ContentTypeRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\LanguageWithQualityRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\LanguageWithQualityRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\MediaTypeWithQualityRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\ProductInfoRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\ProductInfoRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\ProxyRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\ProxyRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\RtpInfoSourceRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\RtpInfoSourceRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\RtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\RtspMethodHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\StringParameterRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\StringParameterRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\StringRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\StringWithQualityRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\StringWithQualityRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\SupportedTypes.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\TransportInfoRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\TransportInfoRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\ValueRange.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\WarningInfoRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\DataTypes\WarningInfoRtspHeaderValueCollection.cs" />
+    <Compile Include="Rtspv2\Headers\DateTimeRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\FramesRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\IfMatchRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\IHeaderCollection.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderParser.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderRegistry.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderRegistry.Enumerator.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderRegistryBucket.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderRegistrySettings.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderValueParser.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderValueSanitizer.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderValueValidator.cs" />
+    <Compile Include="Rtspv2\Headers\Internals\RtspHeaderValueValidatorCharSet.cs" />
+    <Compile Include="Rtspv2\Headers\IReadOnlyHeaderCollection.cs" />
+    <Compile Include="Rtspv2\Headers\MaxForwardsRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\MediaDurationRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\PublicRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\RateControlRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\RequestsRtspHeaderCollection.cs" />
+    <Compile Include="Rtspv2\Headers\RequireRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\ResponsesRtspHeaderCollection.cs" />
+    <Compile Include="Rtspv2\Headers\RtpInfoRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\RtspHeaderCollection.cs" />
+    <Compile Include="Rtspv2\Headers\RtspHeaderNames.cs" />
+    <Compile Include="Rtspv2\Headers\ScaleRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\SessionRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\SpeedRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\TimeStampRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\TransportRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\UriRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\UserAgentRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\ViaRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\WarningRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\Headers\WWWAuthenticateRtspHeaderValue.cs" />
+    <Compile Include="Rtspv2\IAllocator.cs" />
+    <Compile Include="Rtspv2\IHandler.cs" />
+    <Compile Include="Rtspv2\ILogger.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspCommunicationStartedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspCommunicationStoppedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspConnectedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspConnectionErrorEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspDisconnectedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspErrorEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspInternalErrorEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspStreamingDataReceivedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspStreamingStartedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspStreamingStartErrorEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspStreamingStatusChangedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\Events\RtspStreamingStoppedEventArgs.cs" />
+    <Compile Include="Rtspv2\Receivers\IMediaReceiver.cs" />
+    <Compile Include="Rtspv2\Receivers\IMediaReceiverConfigurer.cs" />
+    <Compile Include="Rtspv2\Receivers\IMediaStreamingSession.cs" />
+    <Compile Include="Rtspv2\Receivers\MediaContentType.cs" />
+    <Compile Include="Rtspv2\Receivers\RtspMediaReceiver.cs" />
+    <Compile Include="Rtspv2\Receivers\RtspMediaReceiverConfiguration.cs" />
+    <Compile Include="Rtspv2\Receivers\RtspStateMachine.cs" />
+    <Compile Include="Rtspv2\Receivers\StreamingRtspStateMachine.cs" />
+    <Compile Include="Rtspv2\Receivers\StreamingStatus.cs" />
+    <Compile Include="Rtspv2\Receivers\Tcp\TcpMediaReceiver.cs" />
+    <Compile Include="Rtspv2\Receivers\Tcp\TcpMediaReceiverConfiguration.cs" />
+    <Compile Include="Rtspv2\Receivers\Tcp\TcpMediaReceiverStreamingSession.cs" />
+    <Compile Include="Rtspv2\Receivers\Udp\MulticastMediaReceiver.cs" />
+    <Compile Include="Rtspv2\Receivers\Udp\MulticastMediaReceiverConfiguration.cs" />
+    <Compile Include="Rtspv2\Receivers\Udp\MulticastMediaReceiverStreamingSession.cs" />
+    <Compile Include="Rtspv2\Receivers\Udp\UdpMediaReceiver.cs" />
+    <Compile Include="Rtspv2\Receivers\Udp\UdpMediaReceiverConfiguration.cs" />
+    <Compile Include="Rtspv2\Receivers\Udp\UdpMediaReceiverStreamingSession.cs" />
+    <Compile Include="Rtspv2\RtspClient.cs" />
+    <Compile Include="Rtspv2\RtspClientEnvironment.cs" />
+    <Compile Include="Rtspv2\RtspClientRequestOptions.cs" />
+    <Compile Include="Rtspv2\RtspClientRequestOptionsBuilder.cs" />
+    <Compile Include="Rtspv2\RtspMethod.cs" />
+    <Compile Include="Rtspv2\RtspPacket.cs" />
+    <Compile Include="Rtspv2\RtspRequest.cs" />
+    <Compile Include="Rtspv2\RtspRequestHandler.cs" />
+    <Compile Include="Rtspv2\RtspResponse.cs" />
+    <Compile Include="Rtspv2\RtspStatusCode.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Binding.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\EndPoint.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\IChannel.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\IChannelFactory.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Readers\IMessageReader.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Readers\RtspMessageReader.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Readers\RtspMessageReaderService.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Readers\RtspMessageReaderValidator.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Readers\RtspMessageReaderValidatorOptions.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspClientChannel.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspClientChannelFactory.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspInterleavedMessage.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspMessage.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspMessageCorrelation.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspMessageCorrelationCollection.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspMessageEventArgs.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspMessageHeaderCollection.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspMessageHeaderCollection.Enumerator.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspRequester.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspRequestLine.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspRequestMessage.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspResponseMessage.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\RtspStatusLine.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Writers\IMessageWriter.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Writers\RtspMessageWriter.cs" />
+    <Compile Include="Rtspv2\Transports\Channels\Writers\RtspMessageWriterValidator.cs" />
+    <Compile Include="Rtspv2\Transports\IStream.cs" />
+    <Compile Include="Rtspv2\Transports\ITransport.cs" />
+    <Compile Include="Rtspv2\Transports\RtspsTransport.cs" />
+    <Compile Include="Rtspv2\Transports\RtspStream.cs" />
+    <Compile Include="Rtspv2\Transports\RtspStreamReader.cs" />
+    <Compile Include="Rtspv2\Transports\RtspStreamWriter.cs" />
+    <Compile Include="Rtspv2\Transports\RtspTransport.cs" />
+    <Compile Include="Rtspv2\Transports\RtspTransportWithCircuitBreaker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RabbitOM\RabbitOM.csproj">
+      <Project>{353a7a14-1085-4fd1-b0ef-02499276571d}</Project>
+      <Name>RabbitOM</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

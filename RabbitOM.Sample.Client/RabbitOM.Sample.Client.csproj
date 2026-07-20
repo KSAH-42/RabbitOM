@@ -55,9 +55,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RabbitOM.Streaming\RabbitOM.Streaming.csproj">
-      <Project>{09233582-17ed-40d4-bc6a-309ecfdb116b}</Project>
-      <Name>RabbitOM.Streaming</Name>
+    <ProjectReference Include="..\RabbitOM\RabbitOM.csproj">
+      <Project>{353a7a14-1085-4fd1-b0ef-02499276571d}</Project>
+      <Name>RabbitOM</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,0 +1,90 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace RabbitOM.Streaming.Rtp
+{
+    public sealed class DefaultRtpPacketInspector : RtpPacketInspector
+    {
+        public const int DefaultMTU = 1500;
+
+        public const int DefaultMaximumOfPacketsSize = DefaultMTU * 4;
+
+
+
+
+        public uint? RecognizedSSRC { get; set; }
+
+        public int? MinimumPayloadSize { get; set; }
+
+        public int? MaximumPayloadSize { get; set; } = DefaultMaximumOfPacketsSize;
+
+        public ISet<RtpPacketType> PacketsTypes { get; } = new HashSet<RtpPacketType>();
+
+
+
+
+
+        public override void Inspect( RtpPacket packet )
+        {
+            if ( packet == null )
+            {
+                throw new ArgumentNullException( nameof( packet ) );
+            }
+
+            if ( ! packet.TryValidate() )
+            {
+                throw new ArgumentException( "the packet seems to be incorrect" , nameof( packet ) );
+            }
+
+            if ( MinimumPayloadSize.HasValue && MinimumPayloadSize > packet.Payload.Count )
+            {
+                throw new InvalidOperationException( $"UnAuthorize packet: invalid payload minimum size {packet.Payload.Count}" );
+            }
+
+            if ( MaximumPayloadSize.HasValue && MaximumPayloadSize < packet.Payload.Count )
+            {
+                throw new InvalidOperationException( $"UnAuthorize packet: invalid payload maximum size {packet.Payload.Count}" );
+            }
+
+            if ( RecognizedSSRC.HasValue && RecognizedSSRC != packet.SSRC )
+            {
+                throw new InvalidOperationException( $"UnAuthorize packet: unrecognized ssrc size {packet.SSRC}" );
+            }
+
+            if ( PacketsTypes.Count > 0 && ! PacketsTypes.Contains( packet.Type ) )
+            {
+                throw new InvalidOperationException( $"UnAuthorize packet : invalid type {packet.Type}" );
+            }
+        }
+
+        public override bool TryInspect( RtpPacket packet )
+        {
+            if ( packet == null || ! packet.TryValidate() )
+            {
+                return false;
+            }
+
+            if ( MinimumPayloadSize.HasValue && MinimumPayloadSize > packet.Payload.Count )
+            {
+                return false;
+            }
+
+            if ( MaximumPayloadSize.HasValue && MaximumPayloadSize < packet.Payload.Count )
+            {
+                return false;
+            }
+
+            if ( RecognizedSSRC.HasValue && RecognizedSSRC != packet.SSRC )
+            {
+                return false;
+            }
+
+            if ( PacketsTypes.Count > 0 && ! PacketsTypes.Contains( packet.Type ) )
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+}

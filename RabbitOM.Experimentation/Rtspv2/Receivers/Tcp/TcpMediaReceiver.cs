@@ -1,0 +1,72 @@
+﻿using System;
+
+namespace RabbitOM.Streaming.RtspV2.Receivers.Tcp
+{
+    public class TcpMediaReceiver : RtspMediaReceiver, IMediaReceiverConfigurer<TcpMediaReceiverConfiguration>
+    {
+        public override bool IsCommunicationStarted
+        {
+            get => throw new NotImplementedException();
+        }
+
+        public override bool IsCommunicationStopping
+        {
+            get => throw new NotImplementedException();
+        }
+
+        public override bool IsConnected
+        {
+            get => throw new NotImplementedException();
+        }
+
+        public override bool IsStreamingStarted
+        {
+            get => throw new NotImplementedException();
+        }
+
+        public override bool IsReceivingData
+        {
+            get => throw new NotImplementedException();
+        }
+
+        public TcpMediaReceiverConfiguration Configuration
+        {
+            get => throw new NotImplementedException();
+        }
+
+
+
+
+
+        public void Configure( TcpMediaReceiverConfiguration configuration )
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool StartCommunication()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void StopCommunication()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Shutdown()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool WaitForShutdown(TimeSpan timeout)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void Dispose( bool disposing )
+        {
+            
+            base.Dispose( disposing );
+        }
+    }
+}

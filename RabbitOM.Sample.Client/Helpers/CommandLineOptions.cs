@@ -4,10 +4,10 @@ using System.Reflection;
 
 namespace RabbitOM.Sample.Client.Helpers
 {
-    using RabbitOM.Streaming.Net.Rtsp;
+    using RabbitOM.Streaming.Rtsp;
 
     public sealed class CommandLineOptions
-    {        
+    {
         private CommandLineOptions() { }
 
 
@@ -19,17 +19,21 @@ namespace RabbitOM.Sample.Client.Helpers
 
 
         public bool TryValidate()
-        { 
+        {
             if ( string.IsNullOrWhiteSpace( Uri ) )
             {
                 return false;
             }
 
-            return ! string.IsNullOrWhiteSpace( Password ) ? 
-                   ! string.IsNullOrWhiteSpace( UserName ) : true;
+            if ( ! string.IsNullOrWhiteSpace( Password ) )
+            {
+                return ! string.IsNullOrWhiteSpace( UserName );
+            }
+
+            return true;
         }
 
-        
+
 
         public static bool TryParse( string[] args , out CommandLineOptions result )
         {

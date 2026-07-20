@@ -5,11 +5,11 @@ using System.Windows.Input;
 namespace RabbitOM.Sample.Client.Mjpeg
 {
     using RabbitOM.Streaming;
-    using RabbitOM.Streaming.Net.Rtp;
-    using RabbitOM.Streaming.Net.Rtp.Jpeg;
-    using RabbitOM.Streaming.Net.Rtsp;
-    using RabbitOM.Streaming.Net.Rtsp.Clients;
-    using RabbitOM.Streaming.Windows.Presentation.Renders;
+    using RabbitOM.Streaming.Rtp;
+    using RabbitOM.Streaming.Rtp.Jpeg;
+    using RabbitOM.Streaming.Rtsp;
+    using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Sample.Client.Mjpeg.Rendering;
     using RabbitOM.Sample.Client.Mjpeg.Extensions;
 
     public partial class MainWindow : Window
@@ -17,11 +17,11 @@ namespace RabbitOM.Sample.Client.Mjpeg
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
         public static readonly RoutedCommand UniformImageCommand = new RoutedCommand();
         public static readonly RoutedCommand ConfigureResolutionCommand = new RoutedCommand();
-        
+
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpFrameBuilder _frameBuilder = new JpegFrameBuilder();
-        private readonly Renderer _renderer = new JpegRenderer();
+        private readonly JpegRenderer _renderer = new JpegRenderer();
         private ResolutionInfo? _resolutionInfo;
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
@@ -31,8 +31,8 @@ namespace RabbitOM.Sample.Client.Mjpeg
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
-            
-            _frameBuilder.MediaBuilded += OnBuildFrame;            
+
+            _frameBuilder.MediaBuilded += OnBuildFrame;
         }
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
@@ -44,7 +44,7 @@ namespace RabbitOM.Sample.Client.Mjpeg
             _client.Disconnected -= OnDisconnected;
             _client.PacketReceived -= OnPacketReceived;
             _client.Dispose();
-            
+
             _frameBuilder.MediaBuilded -= OnBuildFrame;
             _frameBuilder.Dispose();
 
@@ -98,7 +98,7 @@ namespace RabbitOM.Sample.Client.Mjpeg
                 _textBlockInfo.Text = "Connecting";
             } ) );
         }
-        
+
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
@@ -129,12 +129,14 @@ namespace RabbitOM.Sample.Client.Mjpeg
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) )
+            if ( ! RtpPacket.TryParse( e.Packet.Data , out var packet ) )
             {
-                if ( _inspector.TryInspect( packet ) )
-                {
-                    _frameBuilder.AddPacket( packet );
-                }
+                return;
+            }
+
+            if ( _inspector.TryInspect( packet ) )
+            {
+                _frameBuilder.AddPacket( packet );
             }
         }
 

@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace RabbitOM.Streaming.Rtp.H266.Payloads
+{
+    public struct H266PayloadAggregation
+    {
+        public IReadOnlyCollection<ArraySegment<byte>> NalUnits { get; private set; }
+
+
+
+        public static H266PayloadAggregation Parse( ArraySegment<byte> buffer , bool donl )
+        {
+            var nalUnits = new List<ArraySegment<byte>>();
+
+            var index = buffer.Offset + 2;
+
+            while ( ( index += (donl ? 2 : 0 ) ) < buffer.Array.Length - 2 )
+            {
+                var size = buffer.Array[ index ++ ] * 0x100 | buffer.Array[ index ++ ];
+
+                if ( 0 < size && size <= (buffer.Array.Length - (buffer.Offset + index)) )
+                {
+                    nalUnits.Add( new ArraySegment<byte>( buffer.Array , index , size ) );
+                }
+
+                index += size;
+            }
+
+            return new H266PayloadAggregation() { NalUnits = nalUnits };
+        }
+    }
+}

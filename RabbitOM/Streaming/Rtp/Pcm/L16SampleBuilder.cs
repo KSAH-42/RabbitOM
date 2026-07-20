@@ -1,0 +1,14 @@
+﻿using System;
+
+namespace RabbitOM.Streaming.Rtp.Pcm
+{
+    public class L16SampleBuilder : RtpSampleBuilder
+    {
+        protected override void OnPacketAdding( RtpPacketAddingEventArgs e )
+        {
+            base.OnPacketAdding( e );
+
+            e.CanContinue &= e.Packet.Type == RtpPacketType.L16_A || e.Packet.Type == RtpPacketType.L16_B;
+        }
+    }
+}
