@@ -1,6 +1,6 @@
 ﻿// For multi view like like quadras, etc..
 // you must adapt this sample and create a usercontrol
-// that run an different thread to avoid to monopilize the mainthread event loop
+// that run an different thread to avoid to monopilize the mainthread MESSAGE LOOP 
 // in order to have an application that display video
 // but can't not respond to user clicks, etc... it will hangs because the main thread will be occupied to render the stream
 // so adapt this sample
@@ -30,10 +30,10 @@ namespace RabbitOM.Sample.Client.H264
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly H264FrameBuilder _frameBuilder = new H264FrameBuilder();
         private readonly H264Decoder _decoder = new H264FFMpegDecoder();
+        private readonly H264Render _render = new H264FFMpegRender();
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
-            // À exécuter une seule fois au démarrage de ton application (ex: dans ton Main ou Form_Load)
             _client.CommunicationStarted += OnCommunicationStarted;
             _client.CommunicationStopped += OnCommunicationStopped;
             _client.Connected += OnConnected;
@@ -41,14 +41,7 @@ namespace RabbitOM.Sample.Client.H264
             _client.PacketReceived += OnPacketReceived;
 
             _frameBuilder.MediaBuilded += OnBuildFrame;
-        }
-
-        private void OnFrameDecoded( System.Windows.Media.Imaging.BitmapSource newFrame )
-        {
-            _image.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                _image.Source = newFrame;
-            }));
+            _decoder.Decoded += OnFrameDecoded;
         }
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
@@ -63,6 +56,9 @@ namespace RabbitOM.Sample.Client.H264
 
             _frameBuilder.MediaBuilded -= OnBuildFrame;
             _frameBuilder.Dispose();
+
+            _decoder.Decoded -= OnFrameDecoded;
+            _render.Dispose();
             _decoder.Dispose();
         }
 
@@ -182,6 +178,14 @@ namespace RabbitOM.Sample.Client.H264
             {
                 _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS , H264MediaElement.CreateParamsBuffer( frame ) , _image ) );
             }
+        }
+
+        private void OnFrameDecoded( object sender , H264DecodedEventArgs e )
+        {
+            _image.Dispatcher.BeginInvoke( new Action(() =>
+            {
+                _render.Render( e.Surface );
+            }));
         }
 
         private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )
