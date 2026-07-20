@@ -44,11 +44,80 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 throw new InvalidOperationException();
             }
 
-            _codec = ffmpeg.avcodec_find_decoder( AVCodecID.AV_CODEC_ID_H264 );
-
-            if ( _codec == null )
+            try
             {
-                throw new InvalidOperationException();
+                _codec = ffmpeg.avcodec_find_decoder( AVCodecID.AV_CODEC_ID_H264 );
+
+                if ( _codec == null )
+                {
+                    throw new InvalidOperationException();
+                }
+
+                _context = ffmpeg.avcodec_alloc_context3( _codec );
+
+                if ( _context == null )
+                {
+                    throw new InvalidOperationException();
+                }
+
+                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
+	            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+
+	            _context->thread_count = 6;
+	            _context->thread_type  = ffmpeg.FF_THREAD_FRAME;
+
+                fixed( AVDictionary** opts = &_options )
+                {
+                    ffmpeg.av_dict_set(opts, "threads", "1", 0);
+	                ffmpeg.av_dict_set(opts, "tune", "zerolatency", 0);
+
+                    if ( _context->codec_id == AVCodecID.AV_CODEC_ID_H264 )
+	                {
+		                ffmpeg.av_dict_set( opts, "preset", "superfast"   , 0 );
+		                ffmpeg.av_dict_set( opts, "tune"  , "zerolatency" , 0 );
+		                ffmpeg.av_dict_set( opts, "tune"  , "fastdecode"  , 0 );
+	                }
+
+	                ffmpeg.av_dict_set( opts, "framerate", "30", 0 );
+
+                    AVRational framerate;
+
+	                framerate.den = 1;
+	                framerate.num = 30;
+
+	                _context->framerate = framerate;
+	                _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
+
+	                if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
+	                {
+		                return;
+	                }
+
+                    if ( _frame == null )
+                    {
+                        _frame = ffmpeg.av_frame_alloc();
+                    }
+
+                    if ( _swframe == null )
+                    {
+                        _swframe = ffmpeg.av_frame_alloc();
+                    }
+
+                    if ( _rawPacket == null )
+                    {
+                        _rawPacket = ffmpeg.av_packet_alloc();
+                    }
+
+                    if ( _rawPacket != null )
+                    {
+                        _rawPacket = ffmpeg.av_packet_alloc();
+                    }
+                }
+            }
+            catch( Exception )
+            {
+                Close();
+                throw;
             }
         }
 
