@@ -1,12 +1,10 @@
 ﻿// This decoder doesn't support hardware acceleration, you need to implement your own decoder using ffmpeg
 using System;
+using System.Linq;
 
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
-    using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Runtime.Remoting.Contexts;
 
     public unsafe sealed class H264FFMpegDecoder : H264Decoder
     {
