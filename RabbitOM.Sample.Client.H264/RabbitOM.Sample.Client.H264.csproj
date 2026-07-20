@@ -131,6 +131,9 @@
       <Name>RabbitOM</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ReadMe.txt" />
+  </ItemGroup>
   <!-- Copier les DLL natives FFmpeg en tenant compte du Pkg property si présente -->
   <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
     <!-- Remplacez PkgFFmpeg_Native_H264 par le nom exact trouvé dans obj/.../nuget.g.props si nécessaire -->
