@@ -2,6 +2,8 @@
 using System;
 using System.Linq;
 
+#pragma warning disable CS0618
+
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
@@ -66,25 +68,15 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     throw new InvalidOperationException();
                 }
 
-                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
-	            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
-
-	            _context->thread_count = 6;
-	            _context->thread_type  = ffmpeg.FF_THREAD_FRAME;
+	            _context->thread_count = 1;
+                _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
 
                 fixed( AVDictionary** opts = &_options )
                 {
-                    ffmpeg.av_dict_set(opts, "threads", "1", 0);
-	                ffmpeg.av_dict_set(opts, "tune", "zerolatency", 0);
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
-                    if ( _context->codec_id == AVCodecID.AV_CODEC_ID_H264 )
-	                {
-		                ffmpeg.av_dict_set( opts, "preset", "superfast"   , 0 );
-		                ffmpeg.av_dict_set( opts, "tune"  , "zerolatency" , 0 );
-		                ffmpeg.av_dict_set( opts, "tune"  , "fastdecode"  , 0 );
-	                }
-
-	                _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
+                    _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
 
 	                if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
 	                {
@@ -268,14 +260,14 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                 ffmpeg.avcodec_close( _context );
 
-                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
-	            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
-
-	            _context->thread_count = 6;
-	            _context->thread_type  = ffmpeg.FF_THREAD_FRAME;
+                _context->thread_count = 1;
+                _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
 
                 fixed ( AVDictionary** opts = &_options )
                 {
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
+
                     if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
                     {
                         return false;
@@ -292,3 +284,5 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         }
     }
 }
+
+#pragma warning restore CS0618
