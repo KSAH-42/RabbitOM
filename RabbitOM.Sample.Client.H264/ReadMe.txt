@@ -4,7 +4,7 @@
 
 
 you must adapt this sample and create a usercontrol that run an different thread 
-to avoid to monopilize the mainthread event loop
+to avoid to monopilize the mainthread MESSAGE LOOP
 
 if you do not respect that thing, you have an application that display video
 but that can't not respond to user clicks, etc... 
