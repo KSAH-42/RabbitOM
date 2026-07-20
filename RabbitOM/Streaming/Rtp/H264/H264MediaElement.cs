@@ -46,17 +46,17 @@ namespace RabbitOM.Streaming.Rtp.H264
 
 
 
-        public static byte[] CreateParamsBuffer( H264MediaElement frame )
+        public static byte[] CreateExtraParameters( H264MediaElement frame )
         {
             if ( frame == null )
             {
                 throw new ArgumentNullException( nameof( frame ) );
             }
 
-            return CreateParamsBuffer( frame.StartCodePrefix , frame.SPS , frame.PPS );
+            return CreateExtraParameters( frame.StartCodePrefix , frame.SPS , frame.PPS );
         }
 
-        public static byte[] CreateParamsBuffer( byte[] startCodePrefix , byte[] sps , byte[] pps )
+        public static byte[] CreateExtraParameters( byte[] startCodePrefix , byte[] sps , byte[] pps )
         {
             if ( startCodePrefix == null )
             {
