@@ -38,7 +38,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         {
             get
             {
-                return _codec != null;
+                return _codec != null && _context != null && _frame != null && _rawPacket != null;
             }
         }
 
