@@ -68,7 +68,7 @@ namespace RabbitOM.Streaming.Rtp.H264
                 throw new ArgumentException( nameof( startCodePrefix ) );
             }
 
-            var result = new List<byte>();
+            var result = new List<byte>( 50 );
 
             if ( sps?.Length > 0 )
             {

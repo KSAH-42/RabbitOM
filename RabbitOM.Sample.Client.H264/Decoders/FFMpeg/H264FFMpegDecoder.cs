@@ -4,6 +4,9 @@ using System;
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Remoting.Contexts;
 
     public unsafe sealed class H264FFMpegDecoder : H264Decoder
     {
@@ -22,6 +25,10 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         private AVFrame* _swframe = null;
         private AVPacket* _rawPacket = null;
         private AVDictionary* _options = null;
+        private byte[] _extraParameters = null;
+        private int _frameWidth;
+        private int _frameHeight;
+        private AVPixelFormat _pixelFomat;
 
 
 
@@ -157,12 +164,54 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 ffmpeg.avcodec_close( _context );
                 ffmpeg.av_free( _context );
 
-                _codec = null;
                 _context = null;
             }
+
+            _codec = null;
+            _extraParameters = null;
         }
 
-        public override void Decode( byte[] buffer , H264Surface surface ) { }
+        public unsafe override void Decode( byte[] buffer , H264Surface surface )
+        {
+            if ( buffer == null || buffer.Length <= 0 )
+            {
+                return;
+            }
+
+            fixed ( byte* rawBuffer = &buffer[0] )
+            {
+                if ( _extraParameters == null || ! _extraParameters.SequenceEqual( surface.ExtraParameters ) )
+                {
+                    if ( ! OnSetupExtraParameters( ref surface ) )
+                    {
+                        return;
+                    }
+                }
+
+                int got_frame = 0;
+
+	            _rawPacket->data = rawBuffer;
+	            _rawPacket->size = buffer.Length;
+
+                int length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
+
+	            if ( length != buffer.Length )
+	            {
+		            return;
+	            }
+
+                if ( got_frame == 0 )
+                {
+                    return;
+                }
+
+                _frameWidth  = _context->width;
+	            _frameHeight = _context->height;
+	            _pixelFomat  = _context->pix_fmt;
+
+                OnDecoded( new H264DecodedEventArgs( surface ) );
+            }
+        }
 
         protected unsafe override void Dispose( bool disposing )
         {
@@ -172,6 +221,76 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             }
 
             base.Dispose( disposing );
+        }
+
+        private unsafe bool OnSetupExtraParameters( ref H264Surface surface )
+        {
+            _extraParameters = new byte[ surface.ExtraParameters.Length ];
+
+            Buffer.BlockCopy( surface.ExtraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
+
+            fixed ( byte* pExtraData = _extraParameters )
+            {
+                if ( _context->extradata != null || _context->extradata_size != _extraParameters.Length )
+	            {
+                    if ( _context->extradata != null )
+                    {
+		                ffmpeg.av_free( _context->extradata );
+                    }
+
+		            _context->extradata      = null;
+		            _context->extradata_size = 0;
+	            }
+
+                var size = ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE + (ulong)_extraParameters.Length;
+
+                if ( _context->extradata == null )
+	            {
+		            _context->extradata = (byte*) ffmpeg.av_malloc( size );
+	            }
+
+                if ( _context->extradata == null )
+	            {
+		            return false;
+	            }
+
+                _context->extradata_size = _extraParameters.Length;
+
+                var pBuffer = _context->extradata;
+
+                Buffer.MemoryCopy( pExtraData , pBuffer , _extraParameters.Length , _extraParameters.Length );
+                byte* ptr = _context->extradata + _extraParameters.Length;
+
+                ulong zero = 0;
+
+                ((ulong*)ptr)[0] = zero;
+                ((ulong*)ptr)[1] = zero;
+                ((ulong*)ptr)[2] = zero;
+                ((ulong*)ptr)[3] = zero;
+
+                ffmpeg.avcodec_close( _context );
+
+                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
+	            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+
+	            _context->thread_count = 6;
+	            _context->thread_type  = ffmpeg.FF_THREAD_FRAME;
+
+                fixed ( AVDictionary** opts = &_options )
+                {
+                    if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
+                    {
+                        return false;
+                    }
+                
+                    if (ffmpeg.avcodec_open2( _context, _context->codec, opts ) < 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace RabbitOM.Sample.Client.H264
     using RabbitOM.Sample.Client.H264.Codecs;
     using RabbitOM.Sample.Client.H264.Codecs.FFMpeg;
     using RabbitOM.Sample.Client.H264.Extensions;
-    
+
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
@@ -178,7 +178,10 @@ namespace RabbitOM.Sample.Client.H264
                 return;
             }
 
-            _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS , _image ) );
+            if ( _decoder.IsOpened )
+            {
+                _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS , H264MediaElement.CreateParamsBuffer( frame ) , _image ) );
+            }
         }
 
         private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )
