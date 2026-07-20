@@ -4,6 +4,7 @@
 // in order to have an application that display video
 // but can't not respond to user clicks, etc... it will hangs because the main thread will be occupied to render the stream
 // so adapt this sample
+// optimization will comes after especially about eventargs usage and allocations, this is not actually important, and then but it can be signicatively improved but i need to take measures to see it's really important and i expect to create distinct microservice (using rtsp server based on controllers) for decoding a unique format and to take advantage of using docker for fast deployement and continuous delevery until .net core version will be released. but I need to restore unittest before. if i go in this way bring optimization for reducing a little bit will become an invisible optimization if we bring into this kind of microservice architecture.
 
 using System;
 using System.Windows;
@@ -176,13 +177,13 @@ namespace RabbitOM.Sample.Client.H264
 
             if ( _decoder.IsOpened )
             {
-                _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS , H264MediaElement.CreateParamsBuffer( frame ) , _image ) );
+                _decoder.Decode( frame.Buffer , new H264Surface( frame.StartCodePrefix , frame.PPS , frame.SPS , H264MediaElement.CreateExtraParameters( frame ) , _image ) );
             }
         }
 
         private void OnFrameDecoded( object sender , H264DecodedEventArgs e )
         {
-            _image.Dispatcher.BeginInvoke( new Action(() =>
+            _image.Dispatcher.BeginInvoke( new Action( () =>
             {
                 _render.Render( e.Surface );
             }));
