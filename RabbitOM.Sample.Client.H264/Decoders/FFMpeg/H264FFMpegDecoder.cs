@@ -118,38 +118,51 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
             if ( _swframe != null )
             {
-                ffmpeg.av_free( _swframe );
+                fixed ( AVFrame** ppFrame = &_swframe )
+                {
+                    ffmpeg.av_frame_free( ppFrame );
+                }
+
                 _swframe = null;
             }
 
             if ( _frame != null )
             {
-                ffmpeg.av_free( _frame );
+                fixed ( AVFrame** ppFrame = &_frame )
+                {
+                    ffmpeg.av_frame_free( ppFrame );
+                }
+
                 _frame = null;
             }
 
-            fixed ( AVDictionary** opts = &_options )
+            if ( _options != null )
             {
-                if ( opts != null )
-	            {
-		            ffmpeg.av_dict_free(opts);
-	            }
+                fixed ( AVDictionary** ppOptions = &_options )
+                {
+                    ffmpeg.av_dict_free( ppOptions );
+                }
+
+                _options = null;
             }
 
-            _options = null;
+
 
             if ( _context != null )
             {
-                if ( _context->extradata != null )
-		        {
-			        ffmpeg.av_free( _context->extradata );
+                fixed ( AVCodecContext** ppContext = &_context )
+                {
+                    if ( _context->extradata != null )
+		            {
+			            ffmpeg.av_free( _context->extradata );
 
-			        _context->extradata = null;
-			        _context->extradata_size = 0;
-		        }
+			            _context->extradata = null;
+			            _context->extradata_size = 0;
+		            }
 
-                ffmpeg.avcodec_close( _context );
-                ffmpeg.av_free( _context );
+                    ffmpeg.avcodec_close( _context );
+                    ffmpeg.avcodec_free_context( ppContext );
+                }
 
                 _context = null;
             }
@@ -252,6 +265,18 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 ((ulong*)ptr)[3] = zero;
 
                 ffmpeg.avcodec_close( _context );
+
+                fixed ( AVCodecContext** ppContext = &_context )
+                {
+                    ffmpeg.avcodec_free_context( ppContext );
+                }
+
+                _context = ffmpeg.avcodec_alloc_context3( _codec );
+
+                if ( _context == null )
+                {
+                    return false;
+                }
 
                 _context->thread_count = 1;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
