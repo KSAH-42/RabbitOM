@@ -5,9 +5,7 @@ namespace RabbitOM.Streaming.RtspV2.Authentication
 {
     using RabbitOM.Streaming.RtspV2.Headers.DataTypes;
 
-    /// <summary>
-    /// Generate value to put into <see cref="Headers.AuthorizationRtspHeaderValue.Response"/> property
-    /// </summary>
+    // use this class to generate value for the <see cref="Headers.AuthorizationRtspHeaderValue.Response"/> property
     public sealed class RtspAuthorizationResponseBuilder
     {
         public string Method { get; set; }
