@@ -8,18 +8,18 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Linq;
 
 namespace RabbitOM.Sample.Client.H264
 {
-    using RabbitOM.Sample.Client.H264.Codecs;
-    using RabbitOM.Sample.Client.H264.Extensions;
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-
+    using RabbitOM.Sample.Client.H264.Codecs;
+    using RabbitOM.Sample.Client.H264.Codecs.FFMpeg;
+    using RabbitOM.Sample.Client.H264.Extensions;
+    
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
@@ -29,13 +29,11 @@ namespace RabbitOM.Sample.Client.H264
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly H264FrameBuilder _frameBuilder = new H264FrameBuilder();
-        private H264Decoder _decoder;
+        private readonly H264Decoder _decoder = new H264FFMpegDecoder();
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
             // À exécuter une seule fois au démarrage de ton application (ex: dans ton Main ou Form_Load)
-            _decoder = new H264Decoder();
-
             _client.CommunicationStarted += OnCommunicationStarted;
             _client.CommunicationStopped += OnCommunicationStopped;
             _client.Connected += OnConnected;
@@ -65,8 +63,7 @@ namespace RabbitOM.Sample.Client.H264
 
             _frameBuilder.MediaBuilded -= OnBuildFrame;
             _frameBuilder.Dispose();
-            _decoder?.Dispose();
-            _decoder = null;
+            _decoder.Dispose();
         }
 
         private void OnButtonControlClick( object sender , RoutedEventArgs e )
@@ -116,7 +113,7 @@ namespace RabbitOM.Sample.Client.H264
                 _textBlockInfo.Text = "Connecting";
             } ) );
         }
-        
+
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
@@ -138,8 +135,8 @@ namespace RabbitOM.Sample.Client.H264
                     _frameBuilder.SPS = Convert.FromBase64String(e.TrackInfo.SPS);
                     _frameBuilder.PPS = Convert.FromBase64String(e.TrackInfo.PPS);
                     _image.Stretch = System.Windows.Media.Stretch.Uniform;
-                
-                    _decoder.InitializeDecoder();
+
+                    _decoder.Open();
 
                     _textBlockInfo.Text = "No yet finished, the implementation will coming soon: this week";
                 }
@@ -157,7 +154,7 @@ namespace RabbitOM.Sample.Client.H264
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
                 _textBlockInfo.Text = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
-                _decoder.Dispose();
+                _decoder.Close();
             } ));
         }
 
@@ -174,14 +171,6 @@ namespace RabbitOM.Sample.Client.H264
 
         private void OnBuildFrame( object sender , RtpMediaBuildedEventArgs e )
         {
-            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
-            {
-                OnRenderFrame( sender , e );
-            } ));
-        }
-        
-        private void OnRenderFrame( object sender , RtpMediaBuildedEventArgs e )
-        {
             var frame = e.MediaElement as RabbitOM.Streaming.Rtp.H264.H264MediaElement;
 
             if ( frame == null )
@@ -189,17 +178,7 @@ namespace RabbitOM.Sample.Client.H264
                 return;
             }
 
-            _decoder.StartCodePrefix = frame.StartCodePrefix;
-            _decoder.PPS = frame.PPS;
-            _decoder.SPS = frame.SPS;            
-
-            var spspps = RabbitOM.Streaming.Rtp.H264.H264MediaElement.CreateParamsBuffer( frame );
-
-            if ( _decoder.Decode( frame.Buffer , spspps.ToArray() ) )
-            {
-                _decoder.TargetControl = _image;
-                _decoder.Render();
-            }
+            _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS ) );
         }
 
         private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )

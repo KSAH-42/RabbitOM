@@ -1,70 +1,37 @@
-﻿using FFmpeg.AutoGen;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-
-#pragma warning disable CS0169
-#pragma warning disable CS0414
+﻿using System;
 
 namespace RabbitOM.Sample.Client.H264.Codecs
 {
-    public sealed unsafe class H264Decoder : IDisposable
+    public abstract class H264Decoder : IDisposable
     {
-        private AVCodec* _codec = null;
-        private AVCodecContext* _context = null;
-        private AVFrame* _frame = null;
-        private AVFrame* _swframe = null;
-        private AVPacket* _rawPacket = null;
-        private AVDictionary* _options = null;
-        private int _frameWidth;
-        private int _frameHeight;
-        private AVPixelFormat _pixelFomat = AVPixelFormat.AV_PIX_FMT_NONE;
-        private WriteableBitmap _picture;
-        private Int32Rect _dirtyRect;
-        private byte[] _extraData = new byte[0];
+        public event EventHandler<H264DecodedEventArgs> Decoded;
 
-
-
-
-        static H264Decoder()
+        ~H264Decoder()
         {
-            ffmpeg.RootPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory);
+            Dispose( false );
         }
 
+        public abstract bool IsOpened { get; }
 
-        public byte[] PPS { get; set; }
+        public abstract void Open();
 
-        public byte[] SPS { get; set; }
+        public abstract void Close();
 
-        public byte[] StartCodePrefix { get; set; }
-
-        public FrameworkElement TargetControl { get; set; }
-
-
-        public unsafe void InitializeDecoder()
-        {
-        }
+        public abstract void Decode( byte[] buffer , H264Surface surface );
 
         public void Dispose()
         {
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
 
-        public bool Decode(byte[] buffer , byte[] spsPpsSegment )
+        protected virtual void Dispose( bool disposing )
         {
-            return false;
         }
 
-        public unsafe void Render()
+        protected virtual void OnDecoded( H264DecodedEventArgs e )
         {
-
+            Decoded?.Invoke( this , e );
         }
     }
 }
-
-
-#pragma warning restore CS0414
-#pragma warning restore CS0169
