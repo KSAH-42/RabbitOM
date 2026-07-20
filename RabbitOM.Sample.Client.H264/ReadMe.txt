@@ -19,3 +19,13 @@ SO ADAPT THIS SAMPLE
 
 please take care the port defined in the combox are not using 554 
 but used 556 instead
+
+
+//////////////////////////////////////////////////////////////////////////
+// About namespace
+//////////////////////////////////////////////////////////////////////////
+
+RabbitOM.Sample.Client.H264.Codecs
+RabbitOM.Sample.Client.H264.Codecs.FFmpeg
+RabbitOM.Sample.Client.H264.Codecs.DirectX11
+RabbitOM.Sample.Client.H264.Codecs.Cuda
