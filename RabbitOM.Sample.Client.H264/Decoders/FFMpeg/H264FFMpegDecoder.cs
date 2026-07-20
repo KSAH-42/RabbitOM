@@ -1,4 +1,5 @@
-﻿using System;
+﻿// This decoder doesn't support hardware acceleration, you need to implement your own decoder using ffmpeg
+using System;
 
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
