@@ -26,9 +26,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         private AVPacket* _rawPacket = null;
         private AVDictionary* _options = null;
         private byte[] _extraParameters = null;
-        private int _frameWidth;
-        private int _frameHeight;
-        private AVPixelFormat _pixelFomat;
 
 
 
@@ -195,11 +192,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     return;
                 }
 
-                _frameWidth  = _context->width;
-	            _frameHeight = _context->height;
-	            _pixelFomat  = _context->pix_fmt;
-
-                OnDecoded( new H264DecodedEventArgs( surface ) );
+                OnDecoded( new H264DecodedEventArgs( surface , _context->width , _context->height ) );
             }
         }
 
