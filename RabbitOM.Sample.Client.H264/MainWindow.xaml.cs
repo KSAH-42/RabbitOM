@@ -178,7 +178,7 @@ namespace RabbitOM.Sample.Client.H264
                 return;
             }
 
-            _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS ) );
+            _decoder.Decode( frame.Buffer , new H264Surface( frame.PPS , frame.SPS , frame.PPS , _image ) );
         }
 
         private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )

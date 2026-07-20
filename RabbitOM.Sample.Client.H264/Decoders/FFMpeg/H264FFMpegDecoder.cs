@@ -78,14 +78,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 		                ffmpeg.av_dict_set( opts, "tune"  , "fastdecode"  , 0 );
 	                }
 
-	                ffmpeg.av_dict_set( opts, "framerate", "30", 0 );
-
-                    AVRational framerate;
-
-	                framerate.den = 1;
-	                framerate.num = 30;
-
-	                _context->framerate = framerate;
 	                _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
 
 	                if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
