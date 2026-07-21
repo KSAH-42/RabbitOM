@@ -56,17 +56,22 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             }
         }
 
+        public void Close()
+        {
+            if ( _sws_context != null )
+            {
+                ffmpeg.sws_freeContext( _sws_context );
+	            _sws_context = null;
+            }
+
+            _bitmap = null;
+        }
+
         protected override void Dispose( bool disposing )
         {
             if ( disposing )
             {
-                if ( _sws_context != null )
-                {
-                    ffmpeg.sws_freeContext( _sws_context );
-	                _sws_context = null;
-                }
-
-                _bitmap = null;
+                Close();
             }
 
             base.Dispose( disposing );
