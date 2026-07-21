@@ -273,7 +273,7 @@ This sample demonstrate how to create h264 decoder using FFMpeg.AutoGen dependen
 
 The actual rtsp client will be replace by receivers class, and the new rtsp client will be also the replacement of the actual RtspConnection class with new features.
 
-The implementation will be VERY SIMILAR to this one
+The implementation will be very similar to the following piece of code:
 
 ~~~~C#
 
