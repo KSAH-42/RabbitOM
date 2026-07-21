@@ -258,7 +258,7 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 # MJpeg Player used to decode RTP RFC 2435
 
-This sample demonstrate how to MJPeg player without any externals dependencies.
+This sample demonstrate how to MJpeg player without any externals dependencies.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
 
