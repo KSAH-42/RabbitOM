@@ -182,7 +182,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             {
                 if ( _extraParameters == null || ! _extraParameters.SequenceEqual( options.ExtraParameters ) )
                 {
-                    if ( ! OnSetupExtraParameters( ref options ) )
+                    if ( ! OnReConfiguringCodec( ref options ) )
                     {
                         return;
                     }
@@ -219,7 +219,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             base.Dispose( disposing );
         }
 
-        private unsafe bool OnSetupExtraParameters( ref H264Options options )
+        private unsafe bool OnReConfiguringCodec( ref H264Options options )
         {
             _extraParameters = new byte[ options.ExtraParameters.Length ];
 
@@ -287,11 +287,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
                     if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
-                    {
-                        return false;
-                    }
-
-                    if (ffmpeg.avcodec_open2( _context, _context->codec, opts ) < 0)
                     {
                         return false;
                     }
