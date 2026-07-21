@@ -3,16 +3,8 @@ using System.Threading;
 
 namespace RabbitOM.Threading
 {
-    /// <summary>
-    /// Represent an extension class
-    /// </summary>
     public static partial class WaitHandleExtensions
     {
-        /// <summary>
-        /// Try to set
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TrySet( this EventWaitHandle handle )
         {
             try
@@ -27,11 +19,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try to reset
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryReset( this EventWaitHandle handle )
         {
             try
@@ -46,11 +33,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try to wait the activation
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryWait( this WaitHandle handle )
         {
             try
@@ -65,11 +47,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try to wait the activation
-        /// </summary>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryWait( this WaitHandle handle , WaitHandle cancellationHandle )
         {
             if ( handle == null || cancellationHandle == null )
@@ -94,12 +71,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try to wait the activation
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryWait( this WaitHandle handle , int timeout )
         {
             try
@@ -114,12 +85,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try to wait the activation
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryWait( this WaitHandle handle , TimeSpan timeout )
         {
             try
@@ -134,13 +99,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="handle">the handle</param>
-        /// <param name="timeout">the timeout</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
         public static bool TryWait( this WaitHandle handle , int timeout , WaitHandle cancellationHandle )
         {
             if ( handle == null || cancellationHandle == null )
@@ -165,12 +123,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        /// <summary>
-        /// Try wait until an element has been push to the queue
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <param name="cancellationHandle">the cancellation handle</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
         public static bool TryWait( this WaitHandle handle , TimeSpan timeout , WaitHandle cancellationHandle )
         {
             if ( handle == null || cancellationHandle == null )
@@ -199,10 +151,6 @@ namespace RabbitOM.Threading
 
 
 
-        /// <summary>
-        /// Fired when an exception occurs
-        /// </summary>
-        /// <param name="ex">the exception</param>
         private static void OnException( Exception ex )
         {
             System.Diagnostics.Debug.WriteLine( ex );

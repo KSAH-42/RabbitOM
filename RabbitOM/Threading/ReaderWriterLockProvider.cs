@@ -3,16 +3,10 @@ using System.Threading;
 
 namespace RabbitOM.Threading
 {
-    /// <summary>
-    /// Represent a provider class to deliver customs lock for protection regions during concurrent calls on read or write operation on regions
-    /// </summary>
     public sealed class ReaderWriterLockProvider : IDisposable
     {
         private readonly ReaderWriterLockSlim _lock = new ReaderWriterLockSlim( LockRecursionPolicy.SupportsRecursion );
 
-        /// <summary>
-        /// Gets the reader lock
-        /// </summary>
         public IDisposable ReaderLock
         {
             get
@@ -23,9 +17,6 @@ namespace RabbitOM.Threading
             }
         }
 
-        /// <summary>
-        /// Gets the writer lock
-        /// </summary>
         public IDisposable WriterLock
         {
             get
@@ -36,9 +27,6 @@ namespace RabbitOM.Threading
             }
         }
 
-        /// <summary>
-        /// Release resources
-        /// </summary>
         public void Dispose()
         {
             _lock.Dispose();
