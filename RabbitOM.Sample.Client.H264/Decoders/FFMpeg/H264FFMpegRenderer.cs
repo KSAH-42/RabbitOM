@@ -18,12 +18,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         {
             AVFrame* pFrame = (AVFrame*) surface.DecodedFrame;
 
-            if ( pFrame == null )
-            {
-                return;
-            }
-
-            if ( ! OnPrepare( ref surface ) )
+            if ( pFrame == null || ! OnPrepare( ref surface ) )
             {
                 return;
             }
@@ -36,11 +31,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             if ( _sws_context == null )
             {
                 _sws_context = ffmpeg.sws_getContext( sourceWidth , sourceHeight,  AVPixelFormat.AV_PIX_FMT_YUV420P , scaledWidth , scaledHeight , AVPixelFormat.AV_PIX_FMT_RGB24 , ffmpeg.SWS_BILINEAR , null , null , null );
-            }
 
-            if ( _sws_context == null )
-            {
-                return;
+                if ( _sws_context == null )
+                {
+                    return;
+                }
             }
 
             using ( var locker = new WritableBitmapLocker( _bitmap ) )
