@@ -63,7 +63,7 @@ the new implementation is located temporaly in a different assembly (streaming.e
 
 this librarie made validation for both side, data sended and data received. For data sended, there is validation made before sending. Because, sending incorrect data can crash the remote backend, and if logs are present on backend, it may possible to that you are in correct position. There is plainty of tests here to avoid this kind of situation, even if you think there are too many. This lib avoid many case of sending incorrect data, and avoid situation where the compagny who receive incorrect value can crash, are in position to say your are send bad data and all consequences with them. That's why validation are also made for sending.
 
-# About thread safety:
+# About thread safety
 
 As mentioned below, most of classes are thread safe except sdp classes and rtp classes. 
 For instance Rtp frame builder are not thread safe, some class are immutable but not rtp builder and rtsp headers.
@@ -254,27 +254,24 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 ~~~~
 
-# Test player
+# About Player samples
 
-This project contains also multiple samples that demonstrate how to create a video player:
+# MJpeg Player used to decode RTP RFC 2435
 
-* MPJpeg Player that decode rtp-jpeg
+This sample demonstrate how to MJPeg player without any externals dependencies.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
 
-* H264 Player used to decode rtp-h264
+# H264 Player used to decode RTP RFC 6184
 
-About this sample, please take care about uris where the port number are set at 556 and not 554
-
-This sample demonstrate how to create h264 decoder.
+This sample demonstrate how to create h264 decoder using FFMpeg.AutoGen dependencies.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.Hik.png)
 
 
 # About the next rtsp client (experimental)
 
-
-the actual rtsp client will be replace by a receiver class and the rtsp client will replace the actual RtspConnection class.
+The actual rtsp client will be replace by receivers class, and the new rtsp client will be also the replacement of the actual RtspConnection class with new features.
 
 The implementation will be VERY SIMILAR to this one
 
