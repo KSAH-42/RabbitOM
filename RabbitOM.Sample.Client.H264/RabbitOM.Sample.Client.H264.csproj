@@ -73,10 +73,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Decoders\FFMpeg\H264FFMpegDecoder.cs" />
-    <Compile Include="Decoders\FFMpeg\H264FFMpegRender.cs" />
+    <Compile Include="Decoders\FFMpeg\H264FFMpegRenderer.cs" />
     <Compile Include="Decoders\H264DecodedEventArgs.cs" />
     <Compile Include="Decoders\H264Context.cs" />
-    <Compile Include="Decoders\H264Render.cs" />
+    <Compile Include="Decoders\H264Renderer.cs" />
     <Compile Include="Decoders\H264Surface.cs" />
     <Compile Include="Decoders\H264Decoder.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
-    public sealed class H264FFMpegRender : H264Render
+    public sealed class H264FFMpegRenderer : H264Renderer
     {
         public override void Render( H264Surface surface ) { }
 

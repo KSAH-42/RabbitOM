@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Sample.Client.H264.Codecs
 {
-    public abstract class H264Render : IDisposable
+    public abstract class H264Renderer : IDisposable
     {
-        ~H264Render()
+        ~H264Renderer()
         {
             Dispose( false );
         }

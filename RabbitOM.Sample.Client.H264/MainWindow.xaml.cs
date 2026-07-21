@@ -31,7 +31,7 @@ namespace RabbitOM.Sample.Client.H264
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly H264FrameBuilder _frameBuilder = new H264FrameBuilder();
         private readonly H264Decoder _decoder = new H264FFMpegDecoder();
-        private readonly H264Render _render = new H264FFMpegRender();
+        private readonly H264Renderer _renderer = new H264FFMpegRenderer();
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -59,7 +59,7 @@ namespace RabbitOM.Sample.Client.H264
             _frameBuilder.Dispose();
 
             _decoder.Decoded -= OnFrameDecoded;
-            _render.Dispose();
+            _renderer.Dispose();
             _decoder.Dispose();
         }
 
@@ -185,7 +185,7 @@ namespace RabbitOM.Sample.Client.H264
         {
             _image.Dispatcher.BeginInvoke( new Action( () =>
             {
-                _render.Render( e.Surface );
+                _renderer.Render( e.Surface );
             }));
         }
 
