@@ -1,10 +1,8 @@
-﻿// For multi view like like quadras, etc..
-// you must adapt this sample and create a usercontrol
-// that run an different thread to avoid to monopilize the mainthread MESSAGE LOOP 
-// in order to have an application that display video
-// but can't not respond to user clicks, etc... it will hangs because the main thread will be occupied to render the stream
-// so adapt this sample
-// optimization will comes after especially about eventargs usage and allocations, this is not actually important, and then but it can be signicatively improved but i need to take measures to see it's really important and i expect to create distinct microservice (using HTTP for controlling streaming over IPC, and shared memory) for decoding a unique format and to take advantage of using docker for fast deployement and continuous delevery for reduce pertubation during and update of IT software component, until .net core version will be released. but I need to restore unittest before. if i go in this way bring optimization for reducing a little bit will become an invisible optimization if we bring into this kind of microservice architecture for asking to render a surface, or asking for a snapshot, etc... 
+﻿// For multi views like quadras, etc..
+// you must adapt this sample and create a usercontrol that run on different thread
+// avoid to make the mainthread to consume cpu power because wpf main implement a MESSAGE LOOP a dispatcher run and redirect events
+// for having an application responsible that display video
+// Otherwise your UI can't not respond to users clicks, etc... your UI will hangs
 
 using System;
 using System.Windows;
