@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Rtcp
 {
     public sealed class RtcpReportBlock
     {
-        private const int Size = 24;
+        public const int Size = 24;
 
 
 
