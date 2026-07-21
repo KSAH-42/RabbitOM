@@ -72,6 +72,12 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             base.Dispose( disposing );
         }
 
+
+
+
+
+
+
         private bool OnPrepare( ref H264Surface surface )
         {
             var image = surface.Options.TargetControl as System.Windows.Controls.Image;
@@ -102,7 +108,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     image.Source = bitmap;
 
                     RenderOptions.SetCachingHint( image , CachingHint.Cache );
-                    RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.LowQuality );
+                    RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.NearestNeighbor );
                     RenderOptions.SetEdgeMode( image , EdgeMode.Aliased );
 
                     image.EndInit();
