@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Rtcp.Serialization
                 }
             }
 
-            throw new FormatException( "the message can not be parsed" );
+            throw new FormatException( "The message can not be parsed" );
         }
     }
 }
