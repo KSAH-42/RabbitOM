@@ -43,6 +43,10 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
 
+➡️ Breaking changes since the version 2.0.0.4:
+* namespace reoragnization
+* add H264 player 
+
 ➡️ Next arrivals:
 
 * Adding H266
@@ -251,9 +255,17 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 # Test player
 
-This project contains also a sample that demonstrate how to create a video player from a mjpeg rtsp source. 
+This project contains also multiple samples that demonstrate how to create a video player:
+
+* MPJpeg Player that decode rtp-jpeg
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
+
+* H264 Player used to decode rtp-h264
+
+About this sample, please take care about uris where the port number are set at 556 and not 554
+
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.Hik.png)
 
 
 # About the next rtsp client (experimental)
