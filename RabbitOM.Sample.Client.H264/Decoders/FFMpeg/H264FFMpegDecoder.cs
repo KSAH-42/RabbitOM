@@ -204,9 +204,9 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 {
                     return;
                 }
-
-                OnDecoded( new H264DecodedEventArgs( new H264Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
             }
+
+            OnDecoded( new H264DecodedEventArgs( new H264Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
         }
 
         protected unsafe override void Dispose( bool disposing )
