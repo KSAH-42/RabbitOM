@@ -61,7 +61,7 @@ the new implementation is located temporaly in a different assembly (streaming.e
 
 # About validation
 
-this librarie made validation for both side, data sended and data received. For data sended, there is validation made before sending. Because, sending incorrect data can crash the remote backend, and if logs are present on backend, it may possible to that you are in correct position. There is plainty of tests here to avoid this kind of situation, even if you think there are too many. This lib avoid many case of sending incorrect data, and avoid situation where the compagny who receive incorrect value can crash, are in position to say your are send bad data and all consequences with them. That's why validation are also made for sending.
+This library made validation for both side, data sended and data received. For data sended, there is validation made before sending. Because, sending incorrect data can crash the remote backend, and if logs are present on backend, it may possible to that you are in correct position. There is plainty of tests here to avoid this kind of situation, even if you think there are too many. This lib avoid many case of sending incorrect data, and avoid situation where the compagny who receive incorrect value can crash, are in position to say your are send bad data and all consequences with them. That's why validation are also made for sending.
 
 # About thread safety
 
