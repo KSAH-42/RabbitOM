@@ -44,17 +44,17 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 * Improve cpu an memory consumption during rending
 
 ➡️ Breaking changes since the version 2.0.0.4:
-* namespace reoragnization
+* namespace reorganization
 * add H264 player 
 
 ➡️ Next arrivals:
 
 * Adding H265 player
-* Adding H266
-* Adding new RTSP Client implementation with TLS Support
+* Adding next RTSP Client 
+* Adding RTSP receivers
 * Adding RTCP layer 
+* Onvif
 * Adding support video decoder for rendering MPEG using C++ WRL or COM/ATL
-* Onvif integration will comes with deep integration events support, ptz, io, config, discovery, etc..
 
 * ⚠️ COMING REFACTORY: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
 the new implementation is located temporaly in a different assembly (streaming.experimentation)
