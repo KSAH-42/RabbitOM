@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Rtcp
 
 
         public uint SynchronizationSourceId { get; private set; }
-        
+
         public IReadOnlyList<RtcpReportBlock> Reports { get => _reports; }
 
 
