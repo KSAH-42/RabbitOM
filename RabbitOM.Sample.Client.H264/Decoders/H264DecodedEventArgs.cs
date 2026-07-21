@@ -10,7 +10,5 @@ namespace RabbitOM.Sample.Client.H264.Codecs
         }
 
         public H264Surface Surface { get ; }
-
-        internal H264Context Context { get; }
     }
 }
