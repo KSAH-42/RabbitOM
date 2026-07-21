@@ -5,10 +5,10 @@ namespace RabbitOM.Streaming.Rtcp
 {
     public sealed class RtcpSenderReportPacket : RtcpPacket
     {
-        public const int Type = 200;
+        internal const int Type = 200;
 
-        public const int MimimunSize = 24;
-        
+        internal const int MimimunSize = 24;
+
 
 
 
@@ -23,15 +23,15 @@ namespace RabbitOM.Streaming.Rtcp
 
 
         public uint SynchronizationSourceId { get; private set; }
-        
+
         public ulong NtpTimeStamp { get; private set; }
-        
+
         public uint RtpTimeStamp { get; private set; }
-        
+
         public uint NumberOfPackets { get; private set; }
-        
+
         public uint NumberOfBytes { get; private set; }
-        
+
         public IReadOnlyList<RtcpReportBlock> Reports { get => _reports; }
 
 
@@ -54,7 +54,7 @@ namespace RabbitOM.Streaming.Rtcp
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 16 );
             result.SynchronizationSourceId |= (uint) ( message.Payload.Array[ offset ++ ] << 8  );
             result.SynchronizationSourceId |=          message.Payload.Array[ offset ++ ];
-            
+
             result.NtpTimeStamp  = (ulong) message.Payload.Array[ offset ++ ] << 56;
             result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 48;
             result.NtpTimeStamp |= (ulong) message.Payload.Array[ offset ++ ] << 40;
