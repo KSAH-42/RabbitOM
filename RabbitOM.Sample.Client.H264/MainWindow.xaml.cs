@@ -127,7 +127,7 @@ namespace RabbitOM.Sample.Client.H264
 
                 _frameBuilder.Clear();
 
-                if ( StringComparer.OrdinalIgnoreCase.Equals( e.TrackInfo.Encoder , "H264" ) )
+                if ( e.TrackInfo.Encoder?.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.SPS = Convert.FromBase64String(e.TrackInfo.SPS);
                     _frameBuilder.PPS = Convert.FromBase64String(e.TrackInfo.PPS);

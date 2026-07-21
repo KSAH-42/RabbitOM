@@ -118,8 +118,15 @@ namespace RabbitOM.Sample.Client.Mjpeg
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                _textBlockInfo.Text = e.TrackInfo.Encoder.ToUpper().Contains( "JPEG" ) ? "" : "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
-                _renderer.TargetControl = _image;
+                if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+                {
+                    _renderer.TargetControl = _image;
+                    _textBlockInfo.Text = "";
+                }
+                else
+                {
+                    _textBlockInfo.Text = "Format not supported ( " + e.TrackInfo.Encoder + " )" ;
+                }
             } ) );
         }
 
