@@ -2,6 +2,7 @@
 
 namespace RabbitOM.Streaming.RtspV2.Authentication
 {
+    // Apply the output of this class to <seealso cref="RtspAuthorizationResponseBuilder.NonceCount"/> property
     public sealed class NonceCounter
     {
         public uint Value { get; set; }
