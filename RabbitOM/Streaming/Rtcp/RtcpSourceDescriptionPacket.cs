@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtcp
 {
     public sealed class RtcpSourceDescriptionPacket : RtcpPacket
     {
-        public const int Type = 202;
+        internal const int Type = 202;
 
 
 
@@ -18,10 +18,8 @@ namespace RabbitOM.Streaming.Rtcp
 
 
         public uint SynchronizationSourceId { get; private set; }
-        
+
         public IReadOnlyList<RtcpSourceDescriptionItem> Items { get => _items; }
-
-
 
 
 

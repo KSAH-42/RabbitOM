@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtcp
     {
         public const int Type = 201;
 
-        public const int MinimumSize = 4;
+        internal const int MinimumSize = 4;
 
 
 

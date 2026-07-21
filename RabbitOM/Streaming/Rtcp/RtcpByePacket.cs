@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtcp
 {
     public sealed class RtcpByePacket : RtcpPacket
     {
-        public const int Type = 203;
+        internal const int Type = 203;
 
 
 

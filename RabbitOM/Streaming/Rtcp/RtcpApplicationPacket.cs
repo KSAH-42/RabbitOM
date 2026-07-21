@@ -5,9 +5,9 @@ namespace RabbitOM.Streaming.Rtcp
 {
     public sealed class RtcpApplicationPacket : RtcpPacket
     {
-        public const int Type = 204;
+        internal const int Type = 204;
 
-        public const int MinimumSize = 8;
+        internal const int MinimumSize = 8;
 
 
         public RtcpApplicationPacket( byte version ) : base ( version ) { }
