@@ -15,9 +15,9 @@ namespace RabbitOM.Streaming.Rtcp
 
 
         public uint SynchronizationSourceId { get; private set; }
-        
+
         public string Name { get; private set; }
-        
+
         public string Data { get; private set; }
 
 

@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Rtcp
 
 
         public string Reason { get; private set; }
-        
+
         public IReadOnlyList<uint>SynchronizationSourcesIds { get => _sscrIds; }
 
 
@@ -28,7 +28,7 @@ namespace RabbitOM.Streaming.Rtcp
         public static bool TryCreateFrom( RtcpMessage message , out RtcpByePacket result )
         {
             result = null;
-            
+
             if ( message == null || message.Payload.Count == 0 )
             {
                 return false;
