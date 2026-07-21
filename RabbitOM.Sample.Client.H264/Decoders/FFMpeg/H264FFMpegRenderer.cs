@@ -81,8 +81,14 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 return false;
             }
 
-            if ( _bitmap == null )
+            if ( _bitmap == null || _bitmap.Width != surface.FrameWidth || _bitmap.Height != surface.FrameHeight )
             {
+                if ( _sws_context != null )
+                {
+                    ffmpeg.sws_freeContext( _sws_context );
+	                _sws_context = null;
+                }
+
                 var dpi = VisualTreeHelper.GetDpi( image );
 
                 var bitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );

@@ -49,6 +49,7 @@ A [RTSP](https://www.rfc-editor.org/rfc/rfc2326) .net library for receiving raw 
 
 ➡️ Next arrivals:
 
+* Adding H265 player
 * Adding H266
 * Adding new RTSP Client implementation with TLS Support
 * Adding RTCP layer 
