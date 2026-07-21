@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H264.Codecs
 {
