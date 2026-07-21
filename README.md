@@ -266,7 +266,7 @@ This project contains also multiple samples that demonstrate how to create a vid
 
 About this sample, please take care about uris where the port number are set at 556 and not 554
 
-This sample demonstrate how to builder h264 decoder. This sample does not support hardware acceleration, but you can create an follow the same maner.
+This sample demonstrate how to create h264 decoder.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.Hik.png)
 
