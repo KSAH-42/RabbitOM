@@ -293,12 +293,17 @@ static class Program
             
             await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
                 .SetUri( "*" )
-                .AddHeader("A","1")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
-                .AddHeader("B","2")
+                .Headers( items =>
+                {
+                    items.Accept = new AcceptRtspHeaderValue();
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "a" ) );
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "b" ) );
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "c" ) );
+                    items.AcceptEncoding = new AcceptEncodingRtspHeaderValue();
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "br"  ) );
+                } )
                 .WriteBody("parameter1=1\r\n")
                 .WriteBody("parameter2=2\r\n")
                 .WriteBody( new byte[] { 1,2,3 } )
