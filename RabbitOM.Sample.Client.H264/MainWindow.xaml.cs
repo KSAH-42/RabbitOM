@@ -30,8 +30,8 @@ namespace RabbitOM.Sample.Client.H264
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly H264FrameBuilder _frameBuilder = new H264FrameBuilder();
-        private readonly H264Decoder _decoder = new H264FFMpegDecoder();
-        private readonly H264Renderer _renderer = new H264FFMpegRenderer();
+        private readonly H264FFMpegDecoder _decoder = new H264FFMpegDecoder();
+        private readonly H264FFMpegRenderer _renderer = new H264FFMpegRenderer();
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -134,8 +134,6 @@ namespace RabbitOM.Sample.Client.H264
                     _image.Stretch = System.Windows.Media.Stretch.Uniform;
 
                     _decoder.Open();
-
-                    _textBlockInfo.Text = "No yet finished, the implementation will coming soon: this week";
                 }
                 else
                 {
@@ -151,6 +149,7 @@ namespace RabbitOM.Sample.Client.H264
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
                 _textBlockInfo.Text = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
+                _renderer.Dispose();
                 _decoder.Close();
             } ));
         }
@@ -177,7 +176,7 @@ namespace RabbitOM.Sample.Client.H264
 
             if ( _decoder.IsOpened )
             {
-                _decoder.Decode( frame.Buffer , new H264Surface( frame.StartCodePrefix , frame.PPS , frame.SPS , H264MediaElement.CreateExtraParameters( frame ) , _image ) );
+                _decoder.Decode( frame.Buffer , new RabbitOM.Sample.Client.H264.Codecs.H264Options( frame.StartCodePrefix , frame.PPS , frame.SPS , H264MediaElement.CreateExtraParameters( frame ) , _image ) );
             }
         }
 

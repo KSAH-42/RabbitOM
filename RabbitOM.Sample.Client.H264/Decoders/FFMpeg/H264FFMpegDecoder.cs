@@ -171,7 +171,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             _extraParameters = null;
         }
 
-        public unsafe override void Decode( byte[] buffer , H264Surface surface )
+        public unsafe override void Decode( byte[] buffer , H264Options options )
         {
             if ( buffer == null || buffer.Length <= 0 )
             {
@@ -180,9 +180,9 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
             fixed ( byte* rawBuffer = &buffer[0] )
             {
-                if ( _extraParameters == null || ! _extraParameters.SequenceEqual( surface.ExtraParameters ) )
+                if ( _extraParameters == null || ! _extraParameters.SequenceEqual( options.ExtraParameters ) )
                 {
-                    if ( ! OnSetupExtraParameters( ref surface ) )
+                    if ( ! OnSetupExtraParameters( ref options ) )
                     {
                         return;
                     }
@@ -205,7 +205,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     return;
                 }
 
-                OnDecoded( new H264DecodedEventArgs( surface , _context->width , _context->height ) );
+                OnDecoded( new H264DecodedEventArgs( new H264Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
             }
         }
 
@@ -219,11 +219,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             base.Dispose( disposing );
         }
 
-        private unsafe bool OnSetupExtraParameters( ref H264Surface surface )
+        private unsafe bool OnSetupExtraParameters( ref H264Options options )
         {
-            _extraParameters = new byte[ surface.ExtraParameters.Length ];
+            _extraParameters = new byte[ options.ExtraParameters.Length ];
 
-            Buffer.BlockCopy( surface.ExtraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
+            Buffer.BlockCopy( options.ExtraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
 
             fixed ( byte* pExtraData = _extraParameters )
             {

@@ -17,7 +17,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
         public abstract void Close();
 
-        public abstract void Decode( byte[] buffer , H264Surface surface );
+        public abstract void Decode( byte[] buffer , H264Options options );
 
         public void Dispose()
         {

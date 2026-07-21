@@ -4,48 +4,20 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 {
     public struct H264Surface
     {
-        public H264Surface( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] extraParameters , object targetControl )
+        public H264Surface( H264Options options , int frameWidth , int frameHeight , IntPtr decodeFrame )
         {
-            if ( startCodePrefix == null || startCodePrefix.Length <= 0 )
-            {
-                throw new ArgumentException( nameof( startCodePrefix ) );
-            }
-
-            if ( pps == null || pps.Length <= 0 )
-            {
-                throw new ArgumentException( nameof( pps ) );
-            }
-
-            if ( sps == null || sps.Length <= 0 )
-            {
-                throw new ArgumentException( nameof( sps ) );
-            }
-
-            if ( extraParameters == null || extraParameters.Length <= 0 )
-            {
-                throw new ArgumentException( nameof( extraParameters ) );
-            }
-
-            if ( targetControl == null )
-            {
-                throw new ArgumentException( nameof( targetControl ) );
-            }
-
-            StartCodePrefix = startCodePrefix;
-            PPS = pps;
-            SPS = sps;
-            ExtraParameters = extraParameters;
-            TargetControl = targetControl;
+            Options = options;
+            FrameWidth = frameWidth;
+            FrameHeight = frameHeight;
+            DecodedFrame = decodeFrame;
         }
 
-        public byte[] StartCodePrefix { get; }
+        public H264Options Options { get; }
 
-        public byte[] PPS { get; }
+        public int FrameWidth { get; }
 
-        public byte[] SPS { get; }
+        public int FrameHeight { get; }
 
-        public byte[] ExtraParameters { get; }
-
-        public object TargetControl { get; }
+        internal IntPtr DecodedFrame { get; }
     }
 }

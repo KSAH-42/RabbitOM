@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable CS0162
+
 namespace RabbitOM.Streaming.Rtcp
 {
     public abstract class RtcpPacket
@@ -21,3 +23,5 @@ namespace RabbitOM.Streaming.Rtcp
         public byte Version { get; }
     }
 }
+
+#pragma warning restore CS0162

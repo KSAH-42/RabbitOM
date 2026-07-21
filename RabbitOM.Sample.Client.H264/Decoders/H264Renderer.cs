@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H264.Codecs
 {
@@ -10,8 +11,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs
         }
 
         public abstract void Render( H264Surface surface );
-
-        public abstract void Invalidate();
 
         public void Dispose()
         {
