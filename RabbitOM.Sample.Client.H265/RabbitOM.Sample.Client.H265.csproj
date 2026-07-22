@@ -14,12 +14,15 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <RuntimeIdentifiers>win;win-x64</RuntimeIdentifiers>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -28,7 +31,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -39,17 +42,11 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FFmpeg.AutoGen, Version=4.4.1.1, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
-      <HintPath>..\packages\FFmpeg.AutoGen.4.4.1.1\lib\net472\FFmpeg.AutoGen.dll</HintPath>
-    </Reference>
-    <Reference Include="FFmpeg.Native, Version=4.4.0.2627, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FFmpeg.Native.H264.4.4.0.2627\lib\netstandard2.0\FFmpeg.Native.dll</HintPath>
+    <Reference Include="FFmpeg.Native, Version=4.4.0.2386, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFmpeg.Native.4.4.0.2386\lib\netstandard2.0\FFmpeg.Native.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.IO.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Abstractions.10.0.1\lib\net461\System.IO.Abstractions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,6 +59,12 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="FFmpeg.AutoGen, Version=4.4.1.1, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFmpeg.AutoGen.4.4.1.1\lib\net472\FFmpeg.AutoGen.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Abstractions.10.0.1\lib\net461\System.IO.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -81,7 +84,7 @@
     <Compile Include="Decoders\H265DecodedEventArgs.cs" />
     <Compile Include="Decoders\H265Decoder.cs" />
     <Compile Include="Decoders\H265Options.cs" />
-    <Compile Include="Decoders\H264Renderer.cs" />
+    <Compile Include="Decoders\H265Renderer.cs" />
     <Compile Include="Decoders\H265Surface.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
@@ -126,5 +129,23 @@
       <Name>RabbitOM</Name>
     </ProjectReference>
   </ItemGroup>
+  <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
+    <PropertyGroup>
+      <NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>
+      <FFmpegPkg>$(PkgFFmpeg_Native_H265)</FFmpegPkg>
+      <FFmpegFallback>$(NuGetPackageRoot)ffmpeg.native.*\</FFmpegFallback>
+      <FFmpegRidPattern>win*-x64</FFmpegRidPattern>
+    </PropertyGroup>
+    <ItemGroup>
+      <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+      <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+    </ItemGroup>
+	<Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot	)" Importance="High" />
+	<Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
+	<Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
+    <Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
+    <Copy SourceFiles="@(FFmpegNativeFiles)" DestinationFiles="@(FFmpegDestinationFiles)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition=" '@(FFmpegNativeFiles)' != '' " />
+    <Message Text="FFmpeg output folder: $(OutDir)" Importance="High" />
+  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

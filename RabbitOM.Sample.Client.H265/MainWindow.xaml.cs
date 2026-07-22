@@ -1,28 +1,213 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// For multi views like quadras, etc..
+// you must adapt this sample and create a usercontrol that run on different thread
+// avoid to make the mainthread to consume cpu power because wpf main implement a MESSAGE LOOP a dispatcher run and redirect events
+// for having an application responsible that display video
+// Otherwise your UI can't not respond to users clicks, etc... your UI will hangs
+
+using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RabbitOM.Sample.Client.H265
 {
-    /// <summary>
-    /// Logique d'interaction pour MainWindow.xaml
-    /// </summary>
+    using RabbitOM.Streaming;
+    using RabbitOM.Streaming.Rtp;
+    using RabbitOM.Streaming.Rtp.H265;
+    using RabbitOM.Streaming.Rtsp;
+    using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Sample.Client.H265.Codecs;
+    using RabbitOM.Sample.Client.H265.Codecs.FFMpeg;
+    using RabbitOM.Sample.Client.H265.Extensions;
+    
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
+        public static readonly RoutedCommand UniformImageCommand = new RoutedCommand();
+        public static readonly RoutedCommand ConfigureResolutionCommand = new RoutedCommand();
+
+        private readonly RtspClient _client = new RtspClient();
+        private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
+        private readonly H265FrameBuilder _frameBuilder = new H265FrameBuilder();
+        private readonly H265FFMpegDecoder _decoder = new H265FFMpegDecoder();
+        private readonly H265FFMpegRenderer _renderer = new H265FFMpegRenderer();
+
+        private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
-            InitializeComponent();
+            _client.CommunicationStarted += OnCommunicationStarted;
+            _client.CommunicationStopped += OnCommunicationStopped;
+            _client.Connected += OnConnected;
+            _client.Disconnected += OnDisconnected;
+            _client.PacketReceived += OnPacketReceived;
+
+            _frameBuilder.MediaBuilded += OnBuildFrame;
+            _decoder.Decoded += OnFrameDecoded;
+        }
+
+        private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
+        {
+            _client.StopCommunication();
+            _client.CommunicationStarted -= OnCommunicationStarted;
+            _client.CommunicationStopped -= OnCommunicationStopped;
+            _client.Connected -= OnConnected;
+            _client.Disconnected -= OnDisconnected;
+            _client.PacketReceived -= OnPacketReceived;
+            _client.Dispose();
+
+            _frameBuilder.MediaBuilded -= OnBuildFrame;
+            _frameBuilder.Dispose();
+
+            _decoder.Decoded -= OnFrameDecoded;
+            _renderer.Dispose();
+            _decoder.Dispose();
+        }
+
+        private void OnButtonControlClick( object sender , RoutedEventArgs e )
+        {
+            try
+            {
+                if ( _client.IsCommunicationStarted )
+                {
+                    _client.StopCommunication( TimeSpan.FromSeconds(2) );
+                    _image.Source = null;
+                    return;
+                }
+
+                if ( ! RtspUri.TryParse( _uris.Text , out RtspUri uri ) )
+                {
+                    MessageBox.Show( "Invalid uri" );
+                    return;
+                }
+
+                if ( ! _uris.Items.Any( _uris.Text ) )
+                {
+                    _uris.Items.Add( _uris.Text );
+                }
+
+                _client.Configuration.Uri = uri.ToString( true );
+                _client.Configuration.UserName = uri.UserName;
+                _client.Configuration.Password = uri.Password;
+                _client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
+                _client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
+                _client.Configuration.RetriesInterval = TimeSpan.FromSeconds( 5 );
+                _client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
+                _client.Configuration.MediaFormat = RtspMediaFormat.Video;
+                _client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
+
+                _client.StartCommunication();
+            }
+            finally
+            {
+                _controlButton.Content = _client.IsCommunicationStarted ? "Stop" : "Play";
+            }
+        }
+
+        private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
+        {
+            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            {
+                _textBlockInfo.Text = "Connecting";
+            } ) );
+        }
+
+        private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
+        {
+            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            {
+                _textBlockInfo.Text = "";
+            } ) );
+        }
+
+        private void OnConnected( object sender , RtspClientConnectedEventArgs e )
+        {
+            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            {
+                _textBlockInfo.Text = "";
+
+                _frameBuilder.Clear();
+
+                if ( e.TrackInfo.Encoder?.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+                {
+                    _frameBuilder.SPS = Convert.FromBase64String(e.TrackInfo.SPS);
+                    _frameBuilder.PPS = Convert.FromBase64String(e.TrackInfo.PPS);
+
+                    _decoder.Open();
+                }
+                else
+                {
+                    _textBlockInfo.Text = "Format not supported ( " + e.TrackInfo.Encoder + " )";
+                }
+            } ) );
+        }
+
+        private void OnDisconnected( object sender , RtspClientDisconnectedEventArgs e )
+        {
+            _frameBuilder.Clear();
+
+            _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            {
+                _textBlockInfo.Text = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
+                _renderer.Close();
+                _decoder.Close();
+            } ));
+        }
+
+        private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
+        {
+            if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) )
+            {
+                if ( _inspector.TryInspect( packet ) )
+                {
+                    _frameBuilder.AddPacket( packet );
+                }
+            }
+        }
+
+        private void OnBuildFrame( object sender , RtpMediaBuildedEventArgs e )
+        {
+            var frame = e.MediaElement as RabbitOM.Streaming.Rtp.H265.H265MediaElement;
+
+            if ( frame == null )
+            {
+                return;
+            }
+
+            if ( _decoder.IsOpened )
+            {
+                _decoder.Decode( frame.Buffer , new H265Options( frame.StartCodePrefix , frame.PPS , frame.SPS , frame.VPS , H265MediaElement.CreateParamsBuffer( frame ) , _image ) );
+            }
+        }
+
+        private void OnFrameDecoded( object sender , H265DecodedEventArgs e )
+        {
+            _image.Dispatcher.BeginInvoke( new Action( () =>
+            {
+                _renderer.Render( e.Surface );
+            }));
+        }
+
+        private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsCommunicationStarted;
+        }
+
+        private void OnExecuteFillImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Fill;
+        }
+
+        private void OnCanExecuteUniformImage( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsCommunicationStarted;
+        }
+
+        private void OnExecuteUniformImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Uniform;
+        }
+
+        private void OnCanExecuteConfigureResolution( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = ! _client.IsCommunicationStarted;
         }
     }
 }
