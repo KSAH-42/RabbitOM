@@ -4,16 +4,8 @@ using System.Text;
 
 namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
 {
-    /// <summary>
-    /// Represent a class used to format and parse data
-    /// </summary>
     public static class OriginFieldFormatter
     {
-        /// <summary>
-        /// Format to string the field
-        /// </summary>
-        /// <param name="field">the field</param>
-        /// <returns>returns a string</returns>
         public static string Format(OriginField field)
         {
             if (field == null)
@@ -35,12 +27,6 @@ namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
             return builder.ToString();
         }
 
-        /// <summary>
-        /// Try to parse
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <param name="result">the field result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public static bool TryParse(string value, out OriginField result)
         {
             result = null;
