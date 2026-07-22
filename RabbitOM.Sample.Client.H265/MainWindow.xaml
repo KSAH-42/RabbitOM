@@ -33,19 +33,19 @@
         <TextBlock Margin="7,5,0,0"
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Top" 
-                   Width="94" 
-                   TextAlignment="Right"
+                   Width="65" 
+                   TextAlignment="Left"
                    TextWrapping="Wrap" 
-                   Text="H265 RTSP URI :" 
+                   Text="RTSP URI :" 
                    />
 
         <ComboBox x:Name="_uris" 
-                  Margin="108,3,79,0" 
+                  Margin="65,3,79,0" 
                   VerticalAlignment="Top" 
                   SelectedIndex="0" 
                   Height="22" 
                   IsEditable="True" 
-                  >
+                  > 
 
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city1.mp4"/>
