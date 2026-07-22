@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace RabbitOM.Sample.Client.H264.Decoders
+namespace RabbitOM.Sample.Client.H264.Codecs
 {
     public static class ImageExtensions
     {

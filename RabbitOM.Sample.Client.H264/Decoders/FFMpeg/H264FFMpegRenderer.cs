@@ -7,8 +7,6 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
-    using RabbitOM.Sample.Client.H264.Decoders;
-
     public sealed unsafe class H264FFMpegRenderer : H264Renderer
     {
         private SwsContext* _sws_context = null;

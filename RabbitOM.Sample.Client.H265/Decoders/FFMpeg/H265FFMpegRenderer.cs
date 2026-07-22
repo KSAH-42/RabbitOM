@@ -7,8 +7,6 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 {
-    using RabbitOM.Sample.Client.H265.Decoders;
-
     public sealed unsafe class H265FFMpegRenderer : H265Renderer
     {
         private SwsContext* _sws_context = null;
