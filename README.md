@@ -52,7 +52,6 @@
 * Adding RTSP receivers
 * Adding RTCP layer 
 * Onvif
-* Adding support video decoder for rendering MPEG using C++ WRL or COM/ATL
 
 ⚠️ Next recfactoring: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
 the new implementation is located temporaly in a different assembly (streaming.experimentation)
