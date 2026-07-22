@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Rtp.H266
         public H266FrameBuilder()
         {
 #if !DEBUG
-            throw new NotSupportedException("the implementation is not tested with multiple products and server, and it can not be used until this code will be tested with compliant server");
+            throw new NotSupportedException("I need a camera that support H266, so I break it");
 #endif
         }
 
