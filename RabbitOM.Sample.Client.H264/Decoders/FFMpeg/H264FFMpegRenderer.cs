@@ -14,7 +14,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
         private WriteableBitmap _writableBitmap;
 
-        private Int32Rect _dirtyRect;
+        private Int32Rect _updateRegion;
 
         private readonly int[] _stride = new int[1];
 
@@ -99,12 +99,12 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                 using ( var locker = new WritableBitmapLocker( writableBitmap ) )
                 {
-                    var dirtyRect = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
+                    var updateRegion = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
 
-                    writableBitmap.AddDirtyRect( dirtyRect );
+                    writableBitmap.AddDirtyRect( updateRegion );
 
                     _writableBitmap = writableBitmap;
-                    _dirtyRect = dirtyRect;
+                    _updateRegion = updateRegion;
                 }
 
                 image.ConfigureSource( _writableBitmap );
@@ -124,7 +124,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                 ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
 
-                _writableBitmap.AddDirtyRect( _dirtyRect );
+                _writableBitmap.AddDirtyRect( _updateRegion );
             }
         }
     }
