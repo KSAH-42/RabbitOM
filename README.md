@@ -253,23 +253,23 @@ if ( SessionDescriptor.TryParse( sessionDescriptor.ToString() , out SessionDescr
 
 # About Player samples
 
-# MJpeg Player used to decode RTP RFC 2435
+# MJpeg Player used to decode RTP packets ( RFC 2435 )
 
 This sample demonstrate how to create MJpeg player without any externals dependencies.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.Hik.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.2.png)
 
-# H264 Player used to decode RTP RFC 6184
+# H264 Player used to decode RTP packets ( RFC 6184 )
 
 This sample demonstrate how to create h264 decoder using FFMpeg.AutoGen dependencies.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.Hik.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.png)
 
-# H265/HVEC Player used to decode RTP RFC 7798
+# H265/HVEC Player used to decode RTP packets ( RFC 7798 )
 
 This sample demonstrate how to create h265 decoder using FFMpeg.AutoGen dependencies.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H265.Hik.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H265.png)
 
 
 # About the next rtsp client (experimental)
