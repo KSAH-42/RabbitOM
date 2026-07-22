@@ -43,11 +43,11 @@
 
 ➡️ Breaking changes since the version 2.0.0.4:
 * namespace reorganization
-* add H264 player 
+* adding H264 player 
+* adding H265 player 
 
 ➡️ Next arrivals:
 
-* Adding H265 player
 * Adding next RTSP Client 
 * Adding RTSP receivers
 * Adding RTCP layer 
@@ -265,6 +265,12 @@ This sample demonstrate how to create MJpeg player without any externals depende
 This sample demonstrate how to create h264 decoder using FFMpeg.AutoGen dependencies.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.Hik.png)
+
+# H265/HVEC Player used to decode RTP RFC 7798
+
+This sample demonstrate how to create h265 decoder using FFMpeg.AutoGen dependencies.
+
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H265.Hik.png)
 
 
 # About the next rtsp client (experimental)
