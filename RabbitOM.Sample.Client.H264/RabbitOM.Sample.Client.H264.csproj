@@ -141,19 +141,14 @@
   <ItemGroup>
     <Resource Include="ReadMe.txt" />
   </ItemGroup>
-  <!-- Copier les DLL natives FFmpeg en tenant compte du Pkg property si présente -->
   <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
-    <!-- Remplacez PkgFFmpeg_Native_H264 par le nom exact trouvé dans obj/.../nuget.g.props si nécessaire -->
     <PropertyGroup>
       <FFmpegPkg>$(PkgFFmpeg_Native_H264)</FFmpegPkg>
       <FFmpegFallback>$(NuGetPackageRoot)ffmpeg.native.h264\</FFmpegFallback>
-      <!-- Choisissez l'architecture cible : win-x64 ou win-x86 -->
       <FFmpegRidPattern>win*-x64</FFmpegRidPattern>
     </PropertyGroup>
     <ItemGroup>
-      <!-- si la propriété Pkg existe, on l'utilise -->
       <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
-      <!-- sinon on tente le fallback via NuGetPackageRoot -->
       <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
     </ItemGroup>
     <Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
