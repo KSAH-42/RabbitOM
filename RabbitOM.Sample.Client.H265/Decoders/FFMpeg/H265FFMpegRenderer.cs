@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
+    using RabbitOM.Sample.Client.H265.Decoders;
 
     public sealed unsafe class H265FFMpegRenderer : H265Renderer
     {
@@ -102,18 +103,11 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
                     bitmap.AddDirtyRect( dirtyRect );
 
-                    image.BeginInit();
-                    image.Source = bitmap;
-
-                    RenderOptions.SetCachingHint( image , CachingHint.Cache );
-                    RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.NearestNeighbor );
-                    RenderOptions.SetEdgeMode( image , EdgeMode.Aliased );
-
-                    image.EndInit();
-
                     _bitmap = bitmap;
                     _dirtyRect = dirtyRect;
                 }
+
+                image.ConfigureSource( _bitmap );
             }
 
             return true;

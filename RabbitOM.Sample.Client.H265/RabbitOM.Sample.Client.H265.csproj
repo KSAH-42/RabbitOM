@@ -86,6 +86,7 @@
     <Compile Include="Decoders\H265Options.cs" />
     <Compile Include="Decoders\H265Renderer.cs" />
     <Compile Include="Decoders\H265Surface.cs" />
+    <Compile Include="Decoders\ImageExtensions.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -140,9 +141,9 @@
       <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
       <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
     </ItemGroup>
-	<Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot	)" Importance="High" />
-	<Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
-	<Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
+    <Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot	)" Importance="High" />
+    <Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
+    <Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
     <Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
     <Copy SourceFiles="@(FFmpegNativeFiles)" DestinationFiles="@(FFmpegDestinationFiles)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition=" '@(FFmpegNativeFiles)' != '' " />
     <Message Text="FFmpeg output folder: $(OutDir)" Importance="High" />

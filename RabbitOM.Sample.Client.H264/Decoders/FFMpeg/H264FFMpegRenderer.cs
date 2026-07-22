@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FFmpeg.AutoGen;
+using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
-    using FFmpeg.AutoGen;
+    using RabbitOM.Sample.Client.H264.Decoders;
 
     public sealed unsafe class H264FFMpegRenderer : H264Renderer
     {
@@ -102,18 +103,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                     bitmap.AddDirtyRect( dirtyRect );
 
-                    image.BeginInit();
-                    image.Source = bitmap;
-
-                    RenderOptions.SetCachingHint( image , CachingHint.Cache );
-                    RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.NearestNeighbor );
-                    RenderOptions.SetEdgeMode( image , EdgeMode.Aliased );
-
-                    image.EndInit();
-
                     _bitmap = bitmap;
                     _dirtyRect = dirtyRect;
                 }
+
+                image.ConfigureSource( _bitmap );
             }
 
             return true;
