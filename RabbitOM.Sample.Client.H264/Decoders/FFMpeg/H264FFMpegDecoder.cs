@@ -19,13 +19,21 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
 
 
+
+
         private AVCodec* _codec = null;
+
         private AVCodecContext* _context = null;
+
         private AVFrame* _frame = null;
+
         private AVFrame* _swframe = null;
+
         private AVPacket* _rawPacket = null;
+
         private AVDictionary* _options = null;
-        private byte[] _extraParameters = null;
+
+        private byte[] _extraParameters;
 
 
 
@@ -55,14 +63,14 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                 if ( _codec == null )
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException( "no codec found" );
                 }
 
                 _context = ffmpeg.avcodec_alloc_context3( _codec );
 
                 if ( _context == null )
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException( "can not allocate a codec context" );
                 }
 
 	            _context->thread_count = 1;

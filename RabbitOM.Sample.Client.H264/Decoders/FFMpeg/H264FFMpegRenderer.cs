@@ -10,9 +10,16 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
     public sealed unsafe class H264FFMpegRenderer : H264Renderer
     {
         private SwsContext* _sws_context = null;
-	    private WriteableBitmap _bitmap;
+
+        private WriteableBitmap _bitmap;
+
         private Int32Rect _dirtyRect;
+
         private readonly int[] _stride = new int[1];
+
+
+
+
 
         public unsafe override void Render( H264Surface surface )
         {
