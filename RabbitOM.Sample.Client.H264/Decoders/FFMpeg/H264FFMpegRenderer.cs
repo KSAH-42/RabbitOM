@@ -12,7 +12,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
     {
         private SwsContext* _sws_context = null;
 
-        private WriteableBitmap _bitmap;
+        private WriteableBitmap _writableBitmap;
 
         private Int32Rect _dirtyRect;
 
@@ -57,7 +57,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 	            _sws_context = null;
             }
 
-            _bitmap = null;
+            _writableBitmap = null;
         }
 
         protected override void Dispose( bool disposing )
@@ -85,7 +85,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 return false;
             }
 
-            if ( _bitmap == null || _bitmap.Width != surface.FrameWidth || _bitmap.Height != surface.FrameHeight )
+            if ( _writableBitmap == null || _writableBitmap.Width != surface.FrameWidth || _writableBitmap.Height != surface.FrameHeight )
             {
                 if ( _sws_context != null )
                 {
@@ -95,19 +95,19 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                 var dpi = VisualTreeHelper.GetDpi( image );
 
-                var bitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );
+                var writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );
 
-                using ( var locker = new WritableBitmapLocker( bitmap ) )
+                using ( var locker = new WritableBitmapLocker( writableBitmap ) )
                 {
                     var dirtyRect = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
 
-                    bitmap.AddDirtyRect( dirtyRect );
+                    writableBitmap.AddDirtyRect( dirtyRect );
 
-                    _bitmap = bitmap;
+                    _writableBitmap = writableBitmap;
                     _dirtyRect = dirtyRect;
                 }
 
-                image.ConfigureSource( _bitmap );
+                image.ConfigureSource( _writableBitmap );
             }
 
             return true;
@@ -115,16 +115,16 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
         private void OnRender( ref H264Surface surface , AVFrame* pFrame )
         {
-            using ( var locker = new WritableBitmapLocker( _bitmap ) )
+            using ( var locker = new WritableBitmapLocker( _writableBitmap ) )
             {
-                _stride[ 0 ] = _bitmap.BackBufferStride;
+                _stride[ 0 ] = _writableBitmap.BackBufferStride;
 
                 var dstData = new byte_ptrArray8();
-                dstData[0] = (byte*)_bitmap.BackBuffer;
+                dstData[0] = (byte*)_writableBitmap.BackBuffer;
 
                 ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
 
-                _bitmap.AddDirtyRect( _dirtyRect );
+                _writableBitmap.AddDirtyRect( _dirtyRect );
             }
         }
     }
