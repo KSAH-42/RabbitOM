@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Sample.Client.H265"
         mc:Ignorable="d"
-        Title="H265 TEST SAMPLE"
+        Title="H265/HEVC TEST SAMPLE"
 		Height="450" 
 		Width="600" 
 		Loaded="OnWindowLoaded" 
