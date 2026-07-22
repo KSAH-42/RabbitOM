@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.RtspV2
 
         public RtspClient( RtspClientEnvironment environment )
         {
-            // throwing exceptions are the best friend against hacking something, it just break the path of someone who are trying to digging
+            // throwing exceptions are the best friend against hacking something, it just break the path of someone who are trying to digging or access to something
             _environment = environment ?? throw new ArgumentNullException( nameof( environment ) );
         }
 
