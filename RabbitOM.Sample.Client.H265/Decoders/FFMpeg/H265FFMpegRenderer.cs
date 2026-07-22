@@ -1,6 +1,7 @@
 ﻿using FFmpeg.AutoGen;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -15,6 +16,8 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
         private WriteableBitmap _writableBitmap;
 
         private Int32Rect _updateRegion;
+
+        private Image _image;
 
         private readonly int[] _stride = new int[1];
 
@@ -52,13 +55,19 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
         public void Close()
         {
+            if ( _image != null )
+            {
+                _image.Source = null;
+                _image = null;
+            }
+
+            _writableBitmap = null;
+
             if ( _sws_context != null )
             {
                 ffmpeg.sws_freeContext( _sws_context );
 	            _sws_context = null;
             }
-
-            _writableBitmap = null;
         }
 
         protected override void Dispose( bool disposing )
@@ -79,9 +88,9 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
         private bool OnRendering( ref H265Surface surface )
         {
-            var image = surface.Options.TargetControl as System.Windows.Controls.Image;
+            _image = surface.Options.TargetControl as Image;
 
-            if ( image == null )
+            if ( _image == null )
             {
                 return false;
             }
@@ -94,7 +103,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 	                _sws_context = null;
                 }
 
-                var dpi = VisualTreeHelper.GetDpi( image );
+                var dpi = VisualTreeHelper.GetDpi( _image );
 
                 var writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );
 
@@ -108,7 +117,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                     _updateRegion = updateRegion;
                 }
 
-                image.ConfigureSource( _writableBitmap );
+                _image.ConfigureSource( _writableBitmap );
             }
 
             return true;

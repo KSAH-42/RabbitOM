@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -90,6 +91,12 @@ namespace RabbitOM.Sample.Client.Mjpeg.Rendering
         {
             _pixelsData = BitmapPixelsData.Empty;
             _writableBitmap = null;
+
+            if ( _targetControl is Image image )
+            {
+                image.Source = null;
+            }
+
             _targetControl = null;
         }
 
