@@ -49,6 +49,11 @@ namespace RabbitOM.Streaming.Sdp
             get => false;
         }
 
+        public bool IsEmpty
+        {
+            get => _collection.Count <= 0;
+        }
+
         public int Count
         {
             get => _collection.Count;
@@ -89,6 +94,11 @@ namespace RabbitOM.Streaming.Sdp
             {
                 Add( item );
             }
+        }
+
+        public bool Any()
+        {
+            return _collection.Count > 0;
         }
 
         public void Clear()
