@@ -1,18 +1,7 @@
 ﻿namespace RabbitOM.Streaming.Sdp.Serialization
 {
-    /// <summary>
-    /// Represent a tolerant sdp serializer
-    /// </summary>
-    /// <remarks>
-    ///    <para>It seems that there is a mandatory rule about the serialization order: please follow this link to get more details <see href="https://tools.ietf.org/html/rfc4566#page-39"/></para>
-    /// </remarks>
     public static class SessionDescriptionSerializer
     {
-        /// <summary>
-        /// Serialize
-        /// </summary>
-        /// <param name="sdp">the sdp</param>
-        /// <returns>returns string</returns>
         public static string Serialize(SessionDescription sdp)
         {
             if (sdp == null)
@@ -49,11 +38,6 @@
             return writer.ToString();
         }
 
-        /// <summary>
-        /// Deserialize
-        /// </summary>
-        /// <param name="input">the input value</param>
-        /// <returns>returns an instance</returns>
         public static SessionDescription Deserialize(string input)
         {
             using ( var reader = new SessionDescriptionReader( input ) )
