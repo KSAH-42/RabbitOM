@@ -108,7 +108,7 @@ namespace RabbitOM.Sample.Client.Mjpeg.Rendering
                 _pixelsData = BitmapPixelsData.Empty;
             }
 
-            var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData ) 
+            var succeed = BitmapPixelsData.IsNullOrEmpty( _pixelsData )
                 ? BitmapPixelsData.TryCreate( frame, out _pixelsData )
                 : BitmapPixelsData.TryCopy( frame, ref _pixelsData );
 
