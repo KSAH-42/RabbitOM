@@ -6,9 +6,7 @@ using System.Windows.Media.Imaging;
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
-    using System.Windows.Controls;
-    using System.Windows.Media.Animation;
-
+    
     public sealed unsafe class H264FFMpegRenderer : H264Renderer
     {
         private SwsContext* _sws_context = null;
