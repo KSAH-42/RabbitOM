@@ -25,6 +25,7 @@ namespace RabbitOM.Streaming.RtspV2
 
         public RtspClient( RtspClientEnvironment environment )
         {
+            // throwing exceptions are the best friend against hacking something
             _environment = environment ?? throw new ArgumentNullException( nameof( environment ) );
         }
 
