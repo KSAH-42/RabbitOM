@@ -13,7 +13,7 @@ namespace RabbitOM.Streaming.RtspV2.Transports.Channels
             throw new NotImplementedException();
         }
 
-        // TODO: returns and let the higher level to raise an event handler for the receiving message otherwise lets bubble the failure 
+        // TODO: returns and let the higher level to raise an event handler for the receiving message otherwise lets any exception to bubble and decided that we have to do 
 
         public Task<RtspResponseMessage> SendMessageAsync( RtspRequestMessage request , CancellationToken cancellationToken )
         {
