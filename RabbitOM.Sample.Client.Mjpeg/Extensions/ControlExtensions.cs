@@ -26,7 +26,7 @@ namespace RabbitOM.Sample.Client.Mjpeg.Extensions
                     element = (item as ComboBoxItem).Content as string;
                 }
 
-                if ( string.Compare( element as string ?? string.Empty , text ?? string.Empty , true ) == 0 )
+                if ( string.Compare( element ?? string.Empty , text ?? string.Empty , true ) == 0 )
                 {
                     return true;
                 }
