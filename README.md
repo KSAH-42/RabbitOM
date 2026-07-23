@@ -135,6 +135,8 @@ static class Program
         {
             client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-society.mp4" );
             
+            client.Credentials = new NetworkCredential( "admin" , "myPassword" )
+
             client.Headers.Accept = new AcceptRtspHeaderValue();
             client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
             
@@ -142,17 +144,17 @@ static class Program
                 .SetUri( "*" )
                 .Headers( items =>
                 {
-                    items.Accept = new AcceptRtspHeaderValue();
-                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "a" ) );
-                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "b" ) );
-                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue( "c" ) );
+                    items.Headers.Accept = new AcceptRtspHeaderValue();
+                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/abc") );
+                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/xyz") );
                     items.AcceptEncoding = new AcceptEncodingRtspHeaderValue();
-                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" ) );
-                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" , 1.0 ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" , 0.4 ) );
                     items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "br"  ) );
                 } )
                 .WriteBody("parameter1=1\r\n")
                 .WriteBody("parameter2=2\r\n")
+                .WriteBody("parameter3={0}\r\n" , DateTime.Now )
                 .WriteBody( new byte[] { 1,2,3 } )
                 .Build()
                 )
