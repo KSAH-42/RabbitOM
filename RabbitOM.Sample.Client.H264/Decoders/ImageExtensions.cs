@@ -13,9 +13,10 @@ namespace RabbitOM.Sample.Client.H264.Codecs
                 throw new ArgumentNullException( nameof( image ) );
             }
 
+            image.BeginInit();
+
             try
             {
-                image.BeginInit();
                 image.Source = source;
 
                 RenderOptions.SetCachingHint( image , CachingHint.Cache );
