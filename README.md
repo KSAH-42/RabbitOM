@@ -48,8 +48,7 @@
 * Adding RTCP layer 
 * Onvif
 
-⚠️ Next recfactoring: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
-the new implementation is located temporaly in a different assembly (streaming.experimentation)
+The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
 
 # About the actual rtsp client and how to receive packets ?
 
