@@ -148,9 +148,9 @@ static class Program
                     items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/b") );
                     items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/c") );
                     items.AcceptEncoding = new AcceptEncodingRtspHeaderValue();
-                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" , 1.0 ) );
-                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" , 0.4 ) );
-                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "br"  ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" ) );
+                    items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "br" ) );
                 } )
                 .WriteBody("parameter1=1\r\n")
                 .WriteBody("parameter2=2\r\n")
