@@ -16,32 +16,27 @@
 * Support audio format RTP - L24
 * Support audio format RTP - L16
 * Support audio format RTP - L8
-* Support multiple types of authentications: basic and digest ( MD5, SHA1, SHA256, SHA512 )
+* Support multiple authentication schemes as: basic and digest ( MD5, SHA1, SHA256, SHA512 )
 * Support RTP packets reordering
 * Support RTSP messages reordering when multiple requests are sended and responses arrive in a different order
 * Support Unicast TCP (interleaved mode) transport
 * Support Unicast UDP transport 
 * Support Multicast transport
-* Support request / response handshake when receiving video streams on the same tcp channel used for sending requests and receiving responses
 * Support auto reconnection in case of network failures
 * Support events Handlers for connection loss, receiving packet, etc...
-* Provide classes to access to the SDP informations
-* Thread safe, except the sdp classes and some rtp classes
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
-* Handle large streams with a high bitrate like 50 MBits per second
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
 ➡️ Breaking changes since the version 2.0.0.2:
 
-* for H264,H265, args passed as parameters set passed to the builder configuration ctor has changed.
 * Refactorization of rtp layers as (H264,H265,H266)
 * Namespace reorganization
 * Rtp layer refactorization and adding add packet inspection, adding support of H264, H265, G711, and so on.
-* Moving and renaming classes to different namespace
 * Add new class libray for rending jpeg using wpf
 * Improve cpu an memory consumption during rending
 
 ➡️ Breaking changes since the version 2.0.0.4:
+
 * namespace reorganization
 * adding H264 player 
 * adding H265 player 
@@ -144,7 +139,7 @@ static class Program
             client.Headers.Accept = new AcceptRtspHeaderValue();
             client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
             
-            await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
+            var response = await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
                 .SetUri( "*" )
                 .Headers( items =>
                 {
@@ -163,6 +158,8 @@ static class Program
                 .Build()
                 )
                 ;
+
+            response.EnsureSuccess();
         }
     }
 }
