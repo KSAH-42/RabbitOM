@@ -54,7 +54,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         {
             if ( _codec != null )
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException( "the codec is already opened" );
             }
 
             try
