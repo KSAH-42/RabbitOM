@@ -134,7 +134,6 @@ static class Program
         using ( var client = new RtspClient() )
         {
             client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-society.mp4" );
-            
             client.Credentials = new NetworkCredential( "admin" , "myPassword" )
 
             client.Headers.Accept = new AcceptRtspHeaderValue();
