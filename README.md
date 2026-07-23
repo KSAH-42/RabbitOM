@@ -56,17 +56,6 @@
 ⚠️ Next recfactoring: the RtspClient class WILL BE REMOVED totally and willbe REPLACED by a better implementation with immutable types and builder, and other nices things
 the new implementation is located temporaly in a different assembly (streaming.experimentation)
 
-# About validation
-
-This library made validation for both side, data sended and data received. For data sended, there is validation made before sending. Because, sending incorrect data can crash the remote backend, and if logs are present on backend, it may possible to that you are in correct position. There is plainty of tests here to avoid this kind of situation, even if you think there are too many. This lib avoid many case of sending incorrect data, and avoid situation where the compagny who receive incorrect value can crash, are in position to say your are send bad data and all consequences with them. That's why validation are also made for sending.
-
-# About thread safety
-
-As mentioned below, most of classes are thread safe except sdp classes and rtp classes. 
-For instance Rtp frame builder are not thread safe, some class are immutable but not rtp builder and rtsp headers.
-For Rtp Frame Builder, theses classe are design to be incorporated as a single member on a media pipeline that run a seperate thread or you must garanties that any called comes from the same thread that the cases for event handler exposed by the RtspClient class. 
-In others words theses rtp classes are design to be used only inside a thread. Any interactions with that, must used marshalling calls instead. Synchronized class will be introduce by using something similar to the proxy pattern that take in the ctor a base class and used internaly a lock with a queue that receive event from subscibption handlers hook on the receive object passed into the ctor. Tests are successfull, but it may be possible that these class will not be added for the future. So at this moment, and for inheritance refactoring reasons theses classes are not present. So at this times, nothing of that will be added but it will be added if it it becomes a necessity.
-
 # About the actual rtsp client and how to receive packets ?
 
 Like this :
@@ -182,11 +171,6 @@ var bodyResult =
         .GetBody()
         ;
 ~~~~
-
-You will be able to decorate each request by adding customs headers, because some cameras can not reply to a request that just contains only standard headers or if there any messages contains incomplete headers. If you want to invoke a method on a particular server, you MUST read the server documentation especially the SETUP method. For instance, the SETUP are used to ask to the camera to create (not to start) a streaming session that just relies on a specific transport layers.
-
-⚠️ The only thing to known about the connection class is that the current implementation does not support SSL/TLS. But not yet.
-
 
 # About Session Description Protocol layer
 
