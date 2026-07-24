@@ -134,19 +134,18 @@ static class Program
         using ( var client = new RtspClient() )
         {
             client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-society.mp4" );
-            client.Credentials = new NetworkCredential( "admin" , "myPassword" )
 
             client.Headers.Accept = new AcceptRtspHeaderValue();
-            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("application/text") );
+            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a") );
             
             var response = await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
                 .SetUri( "*" )
                 .Headers( items =>
                 {
                     items.Headers.Accept = new AcceptRtspHeaderValue();
-                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a") );
-                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/b") );
-                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/c") );
+                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a1") );
+                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/b1") );
+                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/c1") );
                     items.AcceptEncoding = new AcceptEncodingRtspHeaderValue();
                     items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" ) );
                     items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" ) );
