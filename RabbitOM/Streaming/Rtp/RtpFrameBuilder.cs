@@ -1,9 +1,8 @@
-﻿using System;
+﻿// TODO: /!\ in this class, remove SequenceSorting and SequenceSorted events and add them into the jitter class. When it will be ready don't mark as with the obsolete attribute now, and dont remove the aggregator. Just removed only the sorts and that's it
+using System;
 
 namespace RabbitOM.Streaming.Rtp
 {
-    // TODO: /!\ remove SequenceSorting and SequenceSorted events and add it into the jitter class when it will be ready don't mark as with the obsolete attribute now and dont remove aggregator just removed only the sorts and that's it
-
     public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
