@@ -1,5 +1,4 @@
-﻿using FFmpeg.AutoGen;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -7,6 +6,8 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
+    using FFmpeg.AutoGen;
+
     public sealed unsafe class H264FFMpegRenderer : H264Renderer
     {
         private SwsContext* _sws_context = null;
