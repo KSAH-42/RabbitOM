@@ -92,6 +92,8 @@ namespace RabbitOM.Sample.Client.H264
                 _client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
                 _client.Configuration.MediaFormat = RtspMediaFormat.Video;
                 _client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
+                _client.Configuration.RtpPort = 1595;
+                _client.Configuration.TimeToLive = 12;
 
                 _client.StartCommunication();
             }

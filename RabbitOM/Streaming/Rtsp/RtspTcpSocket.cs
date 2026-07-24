@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp
 {
@@ -8,18 +9,18 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     internal sealed class RtspTcpSocket : IDisposable
     {
-        private readonly Action<Exception>  _errorHandler = null;
+        private readonly Action<Exception>  _errorHandler;
 
-        private  Socket                     _socket       = null;
+        private readonly EventWaitHandle _receiveEventHandle;
+
+        private readonly SocketAsyncEventArgs _receiveEventArgs;
+
+        private Socket _socket;
+
+        private bool _isDisposed;
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspTcpSocket()
-        {
-        }
 
         /// <summary>
         /// Constructor
@@ -29,6 +30,9 @@ namespace RabbitOM.Streaming.Rtsp
         public RtspTcpSocket( Action<Exception> errorHandler )
         {
             _errorHandler = errorHandler ?? throw new ArgumentNullException( nameof( errorHandler ) );
+            _receiveEventHandle = new EventWaitHandle( false , EventResetMode.ManualReset );
+            _receiveEventArgs = new SocketAsyncEventArgs();
+            _receiveEventArgs.Completed += ReceiveHandler;
         }
 
 
@@ -86,12 +90,17 @@ namespace RabbitOM.Streaming.Rtsp
                 return false;
             }
 
+            if ( _isDisposed )
+            {
+                throw new ObjectDisposedException( nameof(RtspTcpSocket) );
+            }
+
             try
             {
                 _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
-                
+
                 _socket.Connect(ipAddress, port);
-                _socket.ReceiveBufferSize = 500000;
+                _socket.ReceiveBufferSize = 1024;
 
                 return true;
             }
@@ -121,6 +130,14 @@ namespace RabbitOM.Streaming.Rtsp
         public void Dispose()
         {
             Close();
+
+            if ( ! _isDisposed )
+            {
+                _receiveEventArgs.Completed -= ReceiveHandler;
+                _receiveEventHandle.Dispose();
+            }
+
+            _isDisposed = true;
         }
 
         /// <summary>
@@ -217,10 +234,25 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 return 0;
             }
-            
+
+            var socket = _socket;
+
+            if ( socket == null )
+            {
+                return 0;
+            }
+
+            _receiveEventHandle.Reset();
+            _receiveEventArgs.SetBuffer( buffer , offset , count );
+
             try
             {
-                return _socket?.Receive(buffer, offset , buffer.Length , SocketFlags.None ) ?? 0 ;
+                if ( socket.ReceiveAsync( _receiveEventArgs ) )
+                {
+                    _receiveEventHandle.WaitOne( socket.ReceiveTimeout );
+                }
+
+                return _receiveEventArgs.BytesTransferred ;
             }
             catch ( Exception ex )
             {
@@ -228,6 +260,11 @@ namespace RabbitOM.Streaming.Rtsp
             }
 
             return -1;
+        }
+
+        private void ReceiveHandler( object sender, SocketAsyncEventArgs e )
+        {
+            _receiveEventHandle.Set();
         }
 
         /// <summary>
@@ -239,10 +276,14 @@ namespace RabbitOM.Streaming.Rtsp
         {
             var socket = _socket;
 
+            if ( socket == null )
+            {
+                return false;
+            }
+
             try
             {
-                // TODO: to be refactored
-                if ( socket != null && socket.Poll( (int) timeout.Ticks , SelectMode.SelectRead ) )
+                if ( socket.Poll( (int) timeout.Ticks , SelectMode.SelectRead ) )
                 {
                     return socket.Available > 0;
                 }
