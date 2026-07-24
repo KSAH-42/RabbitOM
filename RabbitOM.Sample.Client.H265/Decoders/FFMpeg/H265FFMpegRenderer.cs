@@ -125,10 +125,10 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
         {
             using ( var locker = new WritableBitmapLocker( _writableBitmap ) )
             {
-                _stride[ 0 ] = _writableBitmap.BackBufferStride;
-
                 var dstData = new byte_ptrArray8();
                 dstData[0] = (byte*)_writableBitmap.BackBuffer;
+
+                _stride[0] = _writableBitmap.BackBufferStride;
 
                 ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
 
