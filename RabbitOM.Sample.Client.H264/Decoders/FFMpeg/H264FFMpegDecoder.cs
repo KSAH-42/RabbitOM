@@ -154,8 +154,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 _options = null;
             }
 
-
-
             if ( _context != null )
             {
                 fixed ( AVCodecContext** ppContext = &_context )
