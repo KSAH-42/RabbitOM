@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Streaming.Rtp
 {
+    // TODO: /!\ remove SequenceSorting and SequenceSorted events and add it into the jitter class when it will be ready don't mark as with the obsolete attribute now
+
     public abstract class RtpFrameBuilder : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
