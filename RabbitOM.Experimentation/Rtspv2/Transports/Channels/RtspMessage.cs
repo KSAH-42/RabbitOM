@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.RtspV2.Transports.Channels
     ///     <para> where Q: query</para>
     ///     <para> where I: interleaved</para>
     /// </remarks>
-    public abstract class RtspMessage
+    public abstract class RtspMessage // it could be refactor as marker interface and all the rest can turn as struct (rtspinterleavedmessage, etc...) if we need to tune perf maybe for the gc
     {
     }
 }

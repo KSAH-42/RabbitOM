@@ -38,7 +38,7 @@ namespace RabbitOM.Streaming.RtspV2.Transports.Channels.Writers
 
             _writer.WriteLine();
             _writer.Write( message.Body );
-            _writer.Flush(); // mandatory by design: here we push every thing data outside the nic adapter
+            _writer.Flush(); // mandatory by design: here we push every thing outside the nic adapter
         }
     }
 }
