@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private readonly Action<Exception>  _errorHandler;
 
-        private readonly EventWaitHandle _receiveEventHandle;
+        private readonly ManualResetEventSlim _receiveEventHandle;
 
         private readonly SocketAsyncEventArgs _receiveEventArgs;
 
@@ -30,7 +30,7 @@ namespace RabbitOM.Streaming.Rtsp
         public RtspTcpSocket( Action<Exception> errorHandler )
         {
             _errorHandler = errorHandler ?? throw new ArgumentNullException( nameof( errorHandler ) );
-            _receiveEventHandle = new EventWaitHandle( false , EventResetMode.ManualReset );
+            _receiveEventHandle = new ManualResetEventSlim( false );
             _receiveEventArgs = new SocketAsyncEventArgs();
             _receiveEventArgs.Completed += ReceiveHandler;
         }
@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Rtsp
                 _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
 
                 _socket.Connect(ipAddress, port);
-                _socket.ReceiveBufferSize = 1024;
+                _socket.ReceiveBufferSize = 8192*3;
 
                 return true;
             }
@@ -247,12 +247,12 @@ namespace RabbitOM.Streaming.Rtsp
 
             try
             {
-                if ( socket.ReceiveAsync( _receiveEventArgs ) )
+                if ( socket.ReceiveAsync( _receiveEventArgs ) && ! _receiveEventHandle.Wait( socket.ReceiveTimeout ) )
                 {
-                    _receiveEventHandle.WaitOne( socket.ReceiveTimeout );
+                    return -1;
                 }
 
-                return _receiveEventArgs.BytesTransferred ;
+                return _receiveEventArgs.BytesTransferred;
             }
             catch ( Exception ex )
             {
