@@ -11,13 +11,14 @@ rabbitom.onvif.web.ptz
 rabbitom.onvif.web.events
 rabbitom.onvif.web.media
 rabbitom.onvif.clients
- sealed class deviceClient {}
- sealed class ptzClient {}
- sealed class ioClient {}
- sealed class mediaClient {}
- sealed class eventClient {}
- sealed class analyticClient {}
- sealed class hybridClient {}
+ // where each client has start/stop methods and commstatus event handlers
+ sealed class DeviceClient {}
+ sealed class PtzClient {}
+ sealed class IoClient {}
+ sealed class MediaClient {}
+ sealed class EventClient {}
+ sealed class AnalyticClient {}
+ sealed class HybridClient {}
 rabbitom.onvif.clients.discovery
 rabbitom.onvif.clients.events
  
