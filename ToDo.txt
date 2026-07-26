@@ -11,7 +11,7 @@ rabbitom.onvif.web.ptz
 rabbitom.onvif.web.events
 rabbitom.onvif.web.media
 rabbitom.onvif.clients
- // where each client has start/stop methods and commstatus event handlers
+ // avec chaque client a au moins les méthodes start/stop + event handlers sur le status de la comm 
  sealed class DeviceClient {}
  sealed class PtzClient {}
  sealed class IoClient {}
