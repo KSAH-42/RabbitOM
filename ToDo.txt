@@ -16,7 +16,7 @@ rabbitom.onvif.clients
  sealed class PtzClient {}
  sealed class IoClient {}
  sealed class MediaClient {}
- sealed class EventClient {}
+ sealed class EventPullClient {}
  sealed class AnalyticClient {}
  sealed class HybridClient {}
 rabbitom.onvif.clients.discovery
