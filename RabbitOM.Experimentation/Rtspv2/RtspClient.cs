@@ -62,12 +62,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> OptionsAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> OptionsAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> OptionsAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> OptionsAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -86,12 +86,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> DescribeAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> DescribeAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> DescribeAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> DescribeAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -110,12 +110,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> SetupAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> SetupAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> SetupAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> SetupAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -135,12 +135,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> PlayAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> PlayAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> PlayAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> PlayAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -159,12 +159,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> PauseAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> PauseAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> PauseAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> PauseAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -184,12 +184,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> TearDownAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> TearDownAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> TearDownAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> TearDownAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -210,12 +210,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> GetParameterAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> GetParameterAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> GetParameterAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> GetParameterAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -236,12 +236,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> SetParameterAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> SetParameterAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> SetParameterAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> SetParameterAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -262,12 +262,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> AnnounceAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> AnnounceAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> AnnounceAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> AnnounceAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -288,12 +288,12 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> RedirectAsync( RtspClientRequestInfo requestOptions )
+        public async Task<RtspResponse> RedirectAsync( RtspClientRequestInfo requestInfo )
         {
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> RedirectAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> RedirectAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
@@ -319,7 +319,7 @@ namespace RabbitOM.Streaming.RtspV2
             throw new NotImplementedException();
         }
 
-        public async Task<RtspResponse> RecordAsync( RtspClientRequestInfo requestOptions , CancellationToken cancellationToken )
+        public async Task<RtspResponse> RecordAsync( RtspClientRequestInfo requestInfo , CancellationToken cancellationToken )
         {
             throw new NotImplementedException();
         }
