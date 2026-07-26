@@ -2,7 +2,7 @@ finir, l'implementation des headers rtsp
 essayer de trouver une url rtsp pour h266 et implementer le décoder
 
 
-// créer un nouveau repo pour l'onvif ?
+// créer un nouveau repo pour l'onvif ou rajouter un nouveau projet dans la solution ?
 
 rabbitom.onvif.web
 rabbitom.onvif.web.deviceMgmt
