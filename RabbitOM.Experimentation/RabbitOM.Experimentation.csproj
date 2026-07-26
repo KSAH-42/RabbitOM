@@ -151,8 +151,8 @@
     <Compile Include="Rtspv2\Receivers\Udp\UdpMediaReceiverStreamingSession.cs" />
     <Compile Include="Rtspv2\RtspClient.cs" />
     <Compile Include="Rtspv2\RtspClientEnvironment.cs" />
-    <Compile Include="Rtspv2\RtspClientRequestOptions.cs" />
-    <Compile Include="Rtspv2\RtspClientRequestOptionsBuilder.cs" />
+    <Compile Include="Rtspv2\RtspClientRequestInfo.cs" />
+    <Compile Include="Rtspv2\RtspClientRequestInfoBuilder.cs" />
     <Compile Include="Rtspv2\RtspMethod.cs" />
     <Compile Include="Rtspv2\RtspPacket.cs" />
     <Compile Include="Rtspv2\RtspRequest.cs" />

@@ -138,7 +138,7 @@ static class Program
             client.Headers.Accept = new AcceptRtspHeaderValue();
             client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a") );
             
-            var response = await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
+            var response = await client.OptionsAsync( new RtspClientRequestInfoBuilder()
                 .SetUri( "*" )
                 .Headers( items =>
                 {

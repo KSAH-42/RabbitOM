@@ -4,7 +4,7 @@ static class Program
     {
         using ( var client = new RtspClient() )
         {
-            var result = await client.OptionsAsync( new RtspClientRequestOptionsBuilder()
+            var result = await client.OptionsAsync( new RtspClientRequestInfoBuilder()
                 .SetUri( "rtsp://127.0.0.1/xyz.mp4" )
                 .Headers( items =>
                 {
