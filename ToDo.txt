@@ -11,7 +11,7 @@ rabbitom.onvif.web.ptz
 rabbitom.onvif.web.events
 rabbitom.onvif.web.media
 rabbitom.onvif.clients
- // avec chaque client a au moins les méthodes start/stop + event handlers sur le status de la comm 
+ // avec chaque client a au moins les méthodes start/stop + event handlers sur le status de la comm -> ajouter une interface de base
  // et ne pas exposer les dto des wsdl
  sealed class DeviceClient {}
  sealed class PtzClient {}
