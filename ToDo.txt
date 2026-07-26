@@ -12,6 +12,7 @@ rabbitom.onvif.web.events
 rabbitom.onvif.web.media
 rabbitom.onvif.clients
  // avec chaque client a au moins les méthodes start/stop + event handlers sur le status de la comm 
+ // et ne pas exposer les dto des wsdl
  sealed class DeviceClient {}
  sealed class PtzClient {}
  sealed class IoClient {}
