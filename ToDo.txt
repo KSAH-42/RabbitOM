@@ -10,10 +10,11 @@ rabbitom.onvif.web.events
 rabbitom.onvif.web.media
 rabbitom.onvif.clients
  sealed class deviceClient {}
- sealed class devicePtzClient {}
- sealed class deviceIOClient {}
+ sealed class ptzClient {}
+ sealed class ioClient {}
  sealed class mediaClient {}
  sealed class eventClient {}
+ sealed class analyticClient {}
 rabbitom.onvif.clients.discovery
 rabbitom.onvif.clients.events
  
