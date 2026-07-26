@@ -3,16 +3,17 @@ implémenter le décoder mpeg
 
 
 onvif.web
-onvif.web.device
+onvif.web.deviceMgmt
 onvif.web.io
 onvif.web.ptz
 onvif.web.events
 onvif.web.media
 onvif.clients
-onvif.clients.discovery
-onvif.clients.events
  sealed class deviceClient {}
  sealed class devicePtzClient {}
  sealed class deviceIOClient {}
  sealed class mediaClient {}
  sealed class eventClient {}
+onvif.clients.discovery
+onvif.clients.events
+ 
