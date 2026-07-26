@@ -11,15 +11,13 @@ rabbitom.onvif.web.ptz
 rabbitom.onvif.web.events
 rabbitom.onvif.web.media
 rabbitom.onvif.clients
- // avec chaque client a au moins les méthodes start/stop + event handlers sur le status de la comm -> ajouter une interface de base
- // et ne pas exposer les dto des wsdl
+ // créer des clients distinct avec au moins les méthodes start/stop + event handlers sur le status de la comm -> ajouter une interface de base
+ // ne pas exposer les dto des wsdl mais des sortes d'entités
  sealed class DeviceClient {}
  sealed class PtzClient {}
  sealed class IoClient {}
  sealed class MediaClient {}
  sealed class EventPullClient {}
  sealed class AnalyticClient {}
- sealed class HybridClient {}
 rabbitom.onvif.clients.discovery
-rabbitom.onvif.clients.events
- 
+rabbitom.onvif.clients.events 
