@@ -1,5 +1,5 @@
 finir, l'implementation des headers rtsp
-implémenter le décoder mpeg
+essayer de trouver une url rtsp pour h266 et implementer le décoder
 
 
 rabbitom.onvif.web
