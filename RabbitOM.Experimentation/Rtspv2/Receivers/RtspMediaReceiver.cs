@@ -64,7 +64,7 @@ namespace RabbitOM.Streaming.RtspV2.Receivers
 
         public abstract void Shutdown();
 
-        public abstract bool WaitForShutdown(TimeSpan timeout);
+        public abstract bool EndStopCommunication(TimeSpan timeout);
 
 
         public void Dispose()

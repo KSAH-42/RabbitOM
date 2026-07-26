@@ -47,6 +47,6 @@ namespace RabbitOM.Streaming.RtspV2.Receivers
 
         void Shutdown();
 
-        bool WaitForShutdown(TimeSpan timeout);
+        bool EndStopCommunication(TimeSpan timeout);
     }
 }
