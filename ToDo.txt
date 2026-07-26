@@ -17,6 +17,7 @@ rabbitom.onvif.clients
  sealed class mediaClient {}
  sealed class eventClient {}
  sealed class analyticClient {}
+ sealed class hybridClient {}
 rabbitom.onvif.clients.discovery
 rabbitom.onvif.clients.events
  
