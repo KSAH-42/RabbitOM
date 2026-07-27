@@ -102,11 +102,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     {
                         _rawPacket = ffmpeg.av_packet_alloc();
                     }
-
-                    if ( _rawPacket != null )
-                    {
-                        _rawPacket = ffmpeg.av_packet_alloc();
-                    }
                 }
             }
             catch( Exception )
