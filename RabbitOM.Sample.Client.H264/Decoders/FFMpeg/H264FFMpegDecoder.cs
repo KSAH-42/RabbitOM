@@ -33,6 +33,8 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
         private AVDictionary* _options = null;
 
+        private SwsContext* _sws_context = null;
+
         private byte[] _extraParameters;
 
 
@@ -183,7 +185,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             {
                 if ( _extraParameters == null || ! _extraParameters.SequenceEqual( options.ExtraParameters ) )
                 {
-                    if ( ! OnReConfiguringCodec( ref options ) )
+                    if ( ! OnConfigureCodec( ref options ) )
                     {
                         return;
                     }
@@ -210,17 +212,17 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             OnDecoded( new H264DecodedEventArgs( new H264Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
         }
 
-        protected unsafe override void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                Close();
-            }
 
-            base.Dispose( disposing );
-        }
 
-        private unsafe bool OnReConfiguringCodec( ref H264Options options )
+
+
+
+
+
+
+
+
+        private unsafe bool OnConfigureCodec( ref H264Options options )
         {
             _extraParameters = new byte[ options.ExtraParameters.Length ];
 

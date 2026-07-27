@@ -50,6 +50,13 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             }
         }
 
+
+
+
+
+
+
+
         public override void Open()
         {
             if ( _codec != null )
@@ -211,15 +218,13 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             OnDecoded( new H265DecodedEventArgs( new H265Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
         }
 
-        protected unsafe override void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                Close();
-            }
 
-            base.Dispose( disposing );
-        }
+
+
+
+
+
+
 
         private unsafe bool OnReConfiguringCodec( ref H265Options options )
         {

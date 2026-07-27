@@ -25,6 +25,8 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
 
 
+
+
         public unsafe override void Render( H265Surface surface )
         {
             AVFrame* pFrame = surface.DecodedFrame != IntPtr.Zero ? (AVFrame*) surface.DecodedFrame : null;
@@ -52,7 +54,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             OnRender( ref surface , pFrame );
         }
 
-        public void Close()
+        public override void Close()
         {
             if ( _image != null )
             {
@@ -67,16 +69,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 ffmpeg.sws_freeContext( _sws_context );
 	            _sws_context = null;
             }
-        }
-
-        protected override void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                Close();
-            }
-
-            base.Dispose( disposing );
         }
 
 

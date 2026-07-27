@@ -6,12 +6,24 @@ namespace RabbitOM.Sample.Client.H264.Codecs
     {
         public event EventHandler<H264DecodedEventArgs> Decoded;
 
+
+
+
+
         ~H264Decoder()
         {
             Dispose( false );
         }
 
+
+
+
+
         public abstract bool IsOpened { get; }
+
+
+
+
 
         public abstract void Open();
 
@@ -27,7 +39,17 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
         protected virtual void Dispose( bool disposing )
         {
+            if ( disposing )
+            {
+                Close();
+            }
         }
+
+
+
+
+
+
 
         protected virtual void OnDecoded( H264DecodedEventArgs e )
         {

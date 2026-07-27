@@ -11,6 +11,8 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
         public abstract void Render( H264Surface surface );
 
+        public abstract void Close();
+
         public void Dispose()
         {
             Dispose( true );
@@ -19,6 +21,10 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
         protected virtual void Dispose( bool disposing )
         {
+            if ( disposing )
+            {
+                Close();
+            }
         }
     }
 }

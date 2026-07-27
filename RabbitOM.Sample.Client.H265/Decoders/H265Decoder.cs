@@ -27,6 +27,10 @@ namespace RabbitOM.Sample.Client.H265.Codecs
 
         protected virtual void Dispose( bool disposing )
         {
+            if ( disposing )
+            {
+                Close();
+            }
         }
 
         protected virtual void OnDecoded( H265DecodedEventArgs e )
