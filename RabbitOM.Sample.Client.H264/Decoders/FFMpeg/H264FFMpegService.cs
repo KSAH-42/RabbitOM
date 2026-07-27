@@ -20,10 +20,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
 
 
-
-
-
-
         private AVCodec* _codec = null;
 
         private AVCodecContext* _context = null;
@@ -117,33 +113,32 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
 
 
-
-
-        public void AllocateImageBuffer()
+        public bool IsDecoderOpened()
         {
-            _imageBuffer = new byte[ _actualWidth * _actualHeigth * 4];
+            return _codec != null && _context != null;
         }
-
-        public void FreeImageBuffer()
-        {
-            _imageBuffer = null;
-        }
-
-
-
-
-
-
-
-
-
-
 
         public void AllocateFrame()
         {
             if ( _frame == null )
             {
                 _frame = ffmpeg.av_frame_alloc();
+            }
+        }
+
+        public void AllocateSwFrame()
+        {
+            if ( _swFrame == null )
+            {
+                _swFrame = ffmpeg.av_frame_alloc();
+            }
+        }
+
+        public void AllocatePacket()
+        {
+            if ( _packet == null )
+            {
+                _packet = ffmpeg.av_packet_alloc();
             }
         }
 
@@ -160,23 +155,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public void AllocateSwFrame()
-        {
-            if ( _swFrame == null )
-            {
-                _swFrame = ffmpeg.av_frame_alloc();
-            }
-        }
-
         public void FreeSwFrame()
         {
             if ( _swFrame != null )
@@ -190,23 +168,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public void AllocatePacket()
-        {
-            if ( _packet == null )
-            {
-                _packet = ffmpeg.av_packet_alloc();
-            }
-        }
-
         public void FreePacket()
         {
             if ( _packet != null )
@@ -216,18 +177,18 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public bool IsDecoderOpened()
+        public void FreeImageBuffer()
         {
-            return _codec != null && _context != null;
+            _imageBuffer = null;
+        }
+
+        public void FreeScaler()
+        {
+            if ( _sws_context != null )
+            {
+                ffmpeg.sws_freeContext( _sws_context );
+	            _sws_context = null;
+            }
         }
 
         public void OpenDecoder()
@@ -329,8 +290,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             _extraParameters = null;
         }
 
-        // TODO: use unsafe code and iterate using pointer to compare buffers for a fast iteration
-
         public bool CanConfigureDecoder( byte[] extraParameters )
         {
             if ( extraParameters == null || extraParameters.Length == 0 )
@@ -419,23 +378,13 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             return true;
         }
 
-        public bool CanDecode( byte[] buffer , ref H264Options options )
-        {
-            if ( buffer == null || buffer.Length <= 0 )
-            {
-                return false;
-            }
-
-            if ( _context == null || _frame == null )
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public unsafe bool Decode( byte[] buffer , ref H264Options options )
         {
+            if ( buffer == null || buffer.Length == 0 || _context == null || _frame == null )
+            {
+                return false;
+            }
+
             fixed ( byte* rawBuffer = &buffer[0] )
             {
                 _packet->data = rawBuffer;
@@ -452,7 +401,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         {
             if ( _context == null )
             {
-                throw new InvalidOperationException( "the decoder must be opened before" );
+                return false;
             }
 
             if ( _actualWidth != _context->width || _actualHeigth != _context->height )
@@ -461,11 +410,22 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
                 _actualWidth = _context->width;
                 _actualHeigth = _context->height;
+                _imageBuffer = null;
             }
 
             if ( _sws_context == null )
             {
                 _sws_context = ffmpeg.sws_getContext( _actualWidth , _actualHeigth ,  AVPixelFormat.AV_PIX_FMT_YUV420P , _actualWidth , _actualHeigth , AVPixelFormat.AV_PIX_FMT_RGB24 , ffmpeg.SWS_BILINEAR , null , null , null );
+            }
+
+            if ( _sws_context == null )
+            {
+                return false;
+            }
+
+            if ( _imageBuffer == null )
+            {
+                _imageBuffer = new byte[ _actualHeigth * _actualWidth * 4 ];
             }
 
             fixed ( byte* buffer = _imageBuffer )
@@ -476,15 +436,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 _stride[0] = _actualWidth * 4;
 
                 return ffmpeg.sws_scale( _sws_context , _frame->data , _frame->linesize , 0 , _actualHeigth , dstData , _stride ) >= 0;
-            }
-        }
-
-        public void FreeScaler()
-        {
-            if ( _sws_context != null )
-            {
-                ffmpeg.sws_freeContext( _sws_context );
-	            _sws_context = null;
             }
         }
     }
