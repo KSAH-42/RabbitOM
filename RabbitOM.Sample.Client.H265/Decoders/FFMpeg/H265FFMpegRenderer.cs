@@ -29,7 +29,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
         {
             AVFrame* pFrame = surface.DecodedFrame != IntPtr.Zero ? (AVFrame*) surface.DecodedFrame : null;
 
-            if ( pFrame == null )
+            if ( pFrame == null || pFrame->data[0] == null )
             {
                 return;
             }

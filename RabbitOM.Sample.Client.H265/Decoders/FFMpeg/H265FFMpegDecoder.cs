@@ -74,6 +74,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
 
 	            _context->thread_count = 1;
+                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
 
                 fixed( AVDictionary** opts = &_options )
@@ -118,12 +119,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
         public override void Close()
         {
-            if ( _rawPacket != null )
-            {
-                ffmpeg.av_packet_unref( _rawPacket );
-                _rawPacket = null;
-            }
-
             if ( _swframe != null )
             {
                 fixed ( AVFrame** ppFrame = &_swframe )
@@ -144,6 +139,12 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 _frame = null;
             }
 
+            if ( _rawPacket != null )
+            {
+                ffmpeg.av_packet_unref( _rawPacket );
+                _rawPacket = null;
+            }
+
             if ( _options != null )
             {
                 fixed ( AVDictionary** ppOptions = &_options )
@@ -153,8 +154,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
                 _options = null;
             }
-
-
 
             if ( _context != null )
             {
