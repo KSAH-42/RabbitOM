@@ -52,41 +52,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
 
 
-        public IntPtr AVCodecPointer
-        {
-            get => (IntPtr) _codec;
-        }
-
-        public IntPtr AVContextPointer
-        {
-            get => (IntPtr) _context;
-        }
-
-        public IntPtr AVFramePointer
-        {
-            get => (IntPtr) _frame;
-        }
-
-        public IntPtr AVSwFramePonter
-        {
-            get => (IntPtr) _swFrame;
-        }
-
-        public IntPtr AVPacketPointer
-        {
-            get => (IntPtr) _packet;
-        }
-
-        public IntPtr AVOptionsPointer
-        {
-            get => (IntPtr) _options;
-        }
-
-        public IntPtr AVScalerContextPointer
-        {
-            get => (IntPtr) _sws_context;
-        }
-
         public byte[] ExtraParameters
         {
             get => _extraParameters;
@@ -113,123 +78,76 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
 
 
-        public bool IsDecoderOpened()
+        public bool IsOpened
         {
-            return _codec != null && _context != null;
-        }
-
-        public void AllocateFrame()
-        {
-            if ( _frame == null )
+            get
             {
-                _frame = ffmpeg.av_frame_alloc();
+                return _codec != null && _context != null && _frame != null && _packet != null;
             }
         }
 
-        public void AllocateSwFrame()
-        {
-            if ( _swFrame == null )
-            {
-                _swFrame = ffmpeg.av_frame_alloc();
-            }
-        }
-
-        public void AllocatePacket()
-        {
-            if ( _packet == null )
-            {
-                _packet = ffmpeg.av_packet_alloc();
-            }
-        }
-
-        public void FreeFrame()
-        {
-            if ( _frame != null )
-            {
-                fixed ( AVFrame** ppFrame = &_frame )
-                {
-                    ffmpeg.av_frame_free( ppFrame );
-                }
-
-                _frame = null;
-            }
-        }
-
-        public void FreeSwFrame()
-        {
-            if ( _swFrame != null )
-            {
-                fixed ( AVFrame** ppFrame = &_swFrame )
-                {
-                    ffmpeg.av_frame_free( ppFrame );
-                }
-
-                _swFrame = null;
-            }
-        }
-
-        public void FreePacket()
-        {
-            if ( _packet != null )
-            {
-                ffmpeg.av_packet_unref( _packet );
-                _packet = null;
-            }
-        }
-
-        public void FreeImageBuffer()
-        {
-            _imageBuffer = null;
-        }
-
-        public void FreeScaler()
-        {
-            if ( _sws_context != null )
-            {
-                ffmpeg.sws_freeContext( _sws_context );
-	            _sws_context = null;
-            }
-        }
-
-        public void OpenDecoder()
+        public void Open()
         {
             if ( _codec != null )
             {
                 throw new InvalidOperationException( "the codec is already opened" );
             }
 
-            _codec = ffmpeg.avcodec_find_decoder( AVCodecID.AV_CODEC_ID_H264 );
-
-            if ( _codec == null )
+            try
             {
-                throw new InvalidOperationException( "codec found" );
+                _codec = ffmpeg.avcodec_find_decoder( AVCodecID.AV_CODEC_ID_H264 );
+
+                if ( _codec == null )
+                {
+                    throw new InvalidOperationException( "no codec found" );
+                }
+
+                _context = ffmpeg.avcodec_alloc_context3( _codec );
+
+                if ( _context == null )
+                {
+                    throw new InvalidOperationException( "can not allocate a codec context" );
+                }
+
+	            _context->thread_count = 1;
+                _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+
+                fixed( AVDictionary** opts = &_options )
+                {
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
+
+                    _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
+
+	                if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
+	                {
+		                return;
+	                }
+
+                    if ( _frame == null )
+                    {
+                        _frame = ffmpeg.av_frame_alloc();
+                    }
+
+                    if ( _swFrame == null )
+                    {
+                        _swFrame = ffmpeg.av_frame_alloc();
+                    }
+
+                    if ( _packet == null )
+                    {
+                        _packet = ffmpeg.av_packet_alloc();
+                    }
+                }
             }
-
-            _context = ffmpeg.avcodec_alloc_context3( _codec );
-
-            if ( _context == null )
+            catch( Exception )
             {
-                throw new InvalidOperationException( "can not allocate a codec context" );
-            }
-
-	        _context->thread_count = 1;
-            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
-
-            fixed( AVDictionary** opts = &_options )
-            {
-                ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
-                ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
-
-                _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
-
-	            if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
-	            {
-		            throw new InvalidOperationException( "can not open the codec" );
-	            }
+                Close();
+                throw;
             }
         }
 
-        public void CloseDecoder()
+        public void Close()
         {
             if ( _swFrame != null )
             {
@@ -249,6 +167,12 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 }
 
                 _frame = null;
+            }
+
+            if ( _sws_context != null )
+            {
+                ffmpeg.sws_freeContext( _sws_context );
+	            _sws_context = null;
             }
 
             if ( _packet != null )
@@ -300,7 +224,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             return _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters );
         }
 
-        public unsafe bool ConfigureDecoder( byte[] extraParameters )
+        public unsafe bool BeginConfigureDecoder( byte[] extraParameters )
         {
             _extraParameters = new byte[ extraParameters.Length ];
 
@@ -345,40 +269,40 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 ((ulong*)ptr)[2] = zero;
                 ((ulong*)ptr)[3] = zero;
 
-                ffmpeg.avcodec_close( _context );
-
-                fixed ( AVCodecContext** ppContext = &_context )
-                {
-                    ffmpeg.avcodec_free_context( ppContext );
-                }
-
-                _context = ffmpeg.avcodec_alloc_context3( _codec );
-
-                if ( _context == null )
-                {
-                    return false;
-                }
-
-                _context->thread_count = 1;
-                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
-                _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
-
-                fixed ( AVDictionary** opts = &_options )
-                {
-                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
-                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
-
-                    if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
-                    {
-                        return false;
-                    }
-                }
+                return true;
             }
-
-            return true;
         }
 
-        public unsafe bool Decode( byte[] buffer , ref H264Options options )
+        public unsafe bool EndConfigureDecoder()
+        {
+            ffmpeg.avcodec_close( _context );
+
+            fixed ( AVCodecContext** ppContext = &_context )
+            {
+                ffmpeg.avcodec_free_context( ppContext );
+            }
+
+            _context = ffmpeg.avcodec_alloc_context3( _codec );
+
+            if ( _context == null )
+            {
+                return false;
+            }
+
+            _context->thread_count = 1;
+            _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
+            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+
+            fixed ( AVDictionary** opts = &_options )
+            {
+                ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
+
+                return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
+            }
+        }
+
+        public unsafe bool Decode( byte[] buffer )
         {
             if ( buffer == null || buffer.Length == 0 || _context == null || _frame == null )
             {
@@ -393,11 +317,16 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 var got_frame = 0;
 	            var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _packet );
 
-	            return length == buffer.Length && got_frame != 0;
+                if ( length != buffer.Length )
+                {
+                    return false;
+                }
+
+	            return got_frame != 0;
             }
         }
 
-        public bool Render()
+        public bool ScaleImage()
         {
             if ( _context == null )
             {
@@ -406,7 +335,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
             if ( _actualWidth != _context->width || _actualHeigth != _context->height )
             {
-                FreeScaler();
+                if ( _sws_context != null )
+                {
+                    ffmpeg.sws_freeContext( _sws_context );
+	                _sws_context = null;
+                }
 
                 _actualWidth = _context->width;
                 _actualHeigth = _context->height;
