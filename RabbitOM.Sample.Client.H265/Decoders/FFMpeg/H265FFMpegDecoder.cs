@@ -33,6 +33,8 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
         private AVDictionary* _options = null;
 
+        private SwsContext* _sws_context = null;
+
         private byte[] _extraParameters;
 
 
@@ -139,6 +141,12 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
 
                 _frame = null;
+            }
+
+            if ( _sws_context != null )
+            {
+                ffmpeg.sws_freeContext( _sws_context );
+	            _sws_context = null;
             }
 
             if ( _rawPacket != null )

@@ -7,7 +7,7 @@ using System.Linq;
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
-
+    
     public unsafe sealed class H264FFMpegDecoder : H264Decoder
     {
         static H264FFMpegDecoder()
@@ -135,6 +135,12 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 _frame = null;
             }
 
+            if ( _sws_context != null )
+            {
+                ffmpeg.sws_freeContext( _sws_context );
+	            _sws_context = null;
+            }
+
             if ( _rawPacket != null )
             {
                 ffmpeg.av_packet_unref( _rawPacket );
@@ -211,9 +217,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
             OnDecoded( new H264DecodedEventArgs( new H264Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
         }
-
-
-
 
 
 
