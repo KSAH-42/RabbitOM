@@ -7,9 +7,9 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    internal unsafe sealed class H264FFMpegService
+    internal unsafe sealed class InternalH264FFMpegDecoder
     {
-        static H264FFMpegService()
+        static InternalH264FFMpegDecoder()
         {
             ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
@@ -214,7 +214,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             _extraParameters = null;
         }
 
-        public bool CanConfigureDecoder( byte[] extraParameters )
+        public bool CanConfigure( byte[] extraParameters )
         {
             if ( extraParameters == null || extraParameters.Length == 0 )
             {
@@ -224,7 +224,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             return _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters );
         }
 
-        public unsafe bool BeginConfigureDecoder( byte[] extraParameters )
+        public unsafe bool Configure( byte[] extraParameters )
         {
             _extraParameters = new byte[ extraParameters.Length ];
 
@@ -273,7 +273,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             }
         }
 
-        public unsafe bool EndConfigureDecoder()
+        public unsafe bool EndConfigure()
         {
             ffmpeg.avcodec_close( _context );
 
