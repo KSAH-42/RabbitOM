@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Decoders\FFMpeg\H264FFMpegDecoder.cs" />
     <Compile Include="Decoders\FFMpeg\H264FFMpegRenderer.cs" />
+    <Compile Include="Decoders\FFMpeg\H264FFMpegService.cs" />
     <Compile Include="Decoders\H264DecodedEventArgs.cs" />
     <Compile Include="Decoders\H264Renderer.cs" />
     <Compile Include="Decoders\H264Options.cs" />
