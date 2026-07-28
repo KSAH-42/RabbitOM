@@ -11,16 +11,10 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
     public sealed unsafe class H264FFMpegRenderer : H264Renderer
     {
         private SwsContext* _sws_context = null;
-
         private WriteableBitmap _writableBitmap;
-
-        private Int32Rect _updateRegion;
-
         private Image _image;
-
+        private Int32Rect _updateRegion;
         private readonly int[] _stride = new int[1];
-
-
 
 
 
@@ -29,7 +23,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         {
             get => _image != null;
         }
-
 
 
 
@@ -65,7 +58,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 return;
             }
 
-            if ( _writableBitmap == null || _writableBitmap.Width != surface.FrameWidth || _writableBitmap.Height != surface.FrameHeight )
+            if ( _writableBitmap == null || surface.FrameWidth != _writableBitmap.PixelWidth || surface.FrameHeight != _writableBitmap.PixelHeight )
             {
                 if ( _sws_context != null )
                 {
@@ -107,13 +100,13 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
         public override void Close()
         {
+            _writableBitmap = null;
+
             if ( _image != null )
             {
                 _image.Source = null;
                 _image = null;
             }
-
-            _writableBitmap = null;
 
             if ( _sws_context != null )
             {
