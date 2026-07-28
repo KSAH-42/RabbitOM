@@ -51,8 +51,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             _image = image;
         }
 
-
-
         public unsafe override void Render( H265Surface surface )
         {
             if ( _image == null )

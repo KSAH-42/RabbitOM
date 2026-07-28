@@ -51,8 +51,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             _image = image;
         }
 
-
-
         public unsafe override void Render( H264Surface surface )
         {
             if ( _image == null )
