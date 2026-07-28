@@ -10,36 +10,21 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
     public unsafe sealed class H265FFMpegDecoder : H265Decoder
     {
-        static H265FFMpegDecoder()
-        {
-            ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
-        }
-
-
-
-
-
-
-
         private AVCodec* _codec = null;
-
         private AVCodecContext* _context = null;
-
         private AVFrame* _frame = null;
-
         private AVFrame* _swframe = null;
-
         private AVPacket* _rawPacket = null;
-
         private AVDictionary* _options = null;
-
-        private SwsContext* _sws_context = null;
-
         private byte[] _extraParameters;
 
 
 
 
+        static H265FFMpegDecoder()
+        {
+            ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
+        }
 
 
 
@@ -51,6 +36,9 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 return _codec != null && _context != null && _frame != null && _rawPacket != null;
             }
         }
+
+
+
 
         public override void Open()
         {
@@ -80,12 +68,12 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
                 fixed( AVDictionary** opts = &_options )
                 {
-                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
-                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none" , 0 );
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video" , 0 );
 
                     _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_YUV420P;
 
-	                if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
+	                if ( ffmpeg.avcodec_open2( _context , _codec , opts ) < 0 )
 	                {
 		                return;
 	                }
@@ -135,12 +123,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 _frame = null;
             }
 
-            if ( _sws_context != null )
-            {
-                ffmpeg.sws_freeContext( _sws_context );
-	            _sws_context = null;
-            }
-
             if ( _rawPacket != null )
             {
                 ffmpeg.av_packet_unref( _rawPacket );
@@ -182,12 +164,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
         public override bool CanConfigure( byte[] extraParameters )
         {
-            if ( extraParameters == null )
-            {
-                return false;
-            }
-
-            return _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters );
+            return extraParameters != null && ( _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters ) );
         }
 
         public unsafe override bool Configure( byte[] extraParameters )
@@ -223,17 +200,14 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
                 _context->extradata_size = _extraParameters.Length;
 
-                var pBuffer = _context->extradata;
+                Buffer.MemoryCopy( pExtraData , _context->extradata , _extraParameters.Length , _extraParameters.Length );
 
-                Buffer.MemoryCopy( pExtraData , pBuffer , _extraParameters.Length , _extraParameters.Length );
                 byte* ptr = _context->extradata + _extraParameters.Length;
 
-                ulong zero = 0;
-
-                ((ulong*)ptr)[0] = zero;
-                ((ulong*)ptr)[1] = zero;
-                ((ulong*)ptr)[2] = zero;
-                ((ulong*)ptr)[3] = zero;
+                ((ulong*)ptr)[0] = 0;
+                ((ulong*)ptr)[1] = 0;
+                ((ulong*)ptr)[2] = 0;
+                ((ulong*)ptr)[3] = 0;
 
                 ffmpeg.avcodec_close( _context );
 
@@ -255,8 +229,8 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
                 fixed ( AVDictionary** opts = &_options )
                 {
-                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
-                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
+                    ffmpeg.av_dict_set( opts , "rtsp_transport" , "none" , 0 );
+                    ffmpeg.av_dict_set( opts , "allowed_media_types" , "video" , 0 );
 
                     return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
                 }
