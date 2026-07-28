@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Rtp.H266
 
         public H266FrameBuilder()
         {
-            throw new NotSupportedException("I need a camera that support H266, so I break it");
+            throw new NotSupportedException("I need a camera that support H266 to test it, so I break it");
         }
 
         public byte[] SPS
