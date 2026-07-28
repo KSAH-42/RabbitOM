@@ -63,7 +63,7 @@ namespace RabbitOM.Streaming.Rtp.H265
             return CreateParamsBuffer( frame.StartCodePrefix , frame.VPS , frame.SPS , frame.PPS );
         }
 
-        public static byte[] CreateParamsBuffer( byte[] startCodePrefix , byte[] vps , byte[] sps , byte[] pps )
+        public static byte[] CreateExtraParameters( byte[] startCodePrefix , byte[] vps , byte[] sps , byte[] pps )
         {
             if ( startCodePrefix == null )
             {
@@ -75,7 +75,7 @@ namespace RabbitOM.Streaming.Rtp.H265
                 throw new ArgumentException( nameof( startCodePrefix ) );
             }
 
-            var result = new List<byte>();
+            var result = new List<byte>( 50 );
 
             if ( vps?.Length > 0 )
             {
