@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Rtp.H265.Payloads
+namespace RabbitOM.Streaming.Rtp.H265
 {
     public struct H265PayloadAggregation
     {

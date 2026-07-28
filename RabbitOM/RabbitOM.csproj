@@ -77,11 +77,11 @@
     <Compile Include="Streaming\Rtp\H265\H265MediaElement.cs" />
     <Compile Include="Streaming\Rtp\H265\H265StreamWriter.cs" />
     <Compile Include="Streaming\Rtp\H265\H265StreamWriterSettings.cs" />
-    <Compile Include="Streaming\Rtp\H265\Payloads\H265Payload.cs" />
-    <Compile Include="Streaming\Rtp\H265\Payloads\H265PayloadAggregation.cs" />
-    <Compile Include="Streaming\Rtp\H265\Payloads\H265PayloadType.cs" />
-    <Compile Include="Streaming\Rtp\H265\Payloads\Types\H265NalUnit.cs" />
-    <Compile Include="Streaming\Rtp\H265\Payloads\Types\H265NalUnitFragment.cs" />
+    <Compile Include="Streaming\Rtp\H265\H265Payload.cs" />
+    <Compile Include="Streaming\Rtp\H265\H265PayloadAggregation.cs" />
+    <Compile Include="Streaming\Rtp\H265\H265PayloadType.cs" />
+    <Compile Include="Streaming\Rtp\H265\H265NalUnit.cs" />
+    <Compile Include="Streaming\Rtp\H265\H265NalUnitFragment.cs" />
     <Compile Include="Streaming\Rtp\H266\H266FrameBuilder.cs" />
     <Compile Include="Streaming\Rtp\H266\H266FrameFactory.cs" />
     <Compile Include="Streaming\Rtp\H266\H266MediaElement.cs" />
