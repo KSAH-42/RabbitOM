@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    using RabbitOM.Streaming.Rtsp.Clients.Connections;
-    using RabbitOM.Streaming.Rtsp.Clients.Connections.Invokers;
-
     /// <summary>
     /// Represent a Rtsp session
     /// </summary>
