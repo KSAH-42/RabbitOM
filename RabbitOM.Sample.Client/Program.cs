@@ -19,7 +19,7 @@ namespace RabbitOM.Sample.Client
         static void Main( string[] args )
         {
             try
-            {              
+            {
                 if ( CommandLineOptions.TryParse( args , out var options ) && options.TryValidate() )
                 {
                     Run( options );
@@ -55,7 +55,7 @@ namespace RabbitOM.Sample.Client
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine( "Communication stopped - " + DateTime.Now );
                 };
-              
+
                 client.Connected += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -106,8 +106,8 @@ namespace RabbitOM.Sample.Client
                 // client.Configuration.MulticastAddress = "229.0.0.1";
                 // client.Configuration.RtpPort = 55000;
                 // client.Configuration.TimeToLive = 15;
-                
-                client.StartCommunication();    
+
+                client.StartCommunication();
 
                 Console.CancelKeyPress += ( sender , e ) => Console.ForegroundColor = ConsoleColor.White;
 
