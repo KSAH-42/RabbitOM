@@ -60,7 +60,7 @@ namespace RabbitOM.Streaming.Rtp.H265
                 throw new ArgumentNullException( nameof( frame ) );
             }
 
-            return CreateParamsBuffer( frame.StartCodePrefix , frame.VPS , frame.SPS , frame.PPS );
+            return CreateExtraParameters( frame.StartCodePrefix , frame.VPS , frame.SPS , frame.PPS );
         }
 
         public static byte[] CreateExtraParameters( byte[] startCodePrefix , byte[] vps , byte[] sps , byte[] pps )
