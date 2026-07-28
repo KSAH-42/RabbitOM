@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp.H266.Payloads.Types
+namespace RabbitOM.Streaming.Rtp.H266
 {
     public struct H266NalUnit
     {

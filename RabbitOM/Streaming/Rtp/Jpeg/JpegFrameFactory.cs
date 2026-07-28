@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.Jpeg
 {
-    using RabbitOM.Streaming.Rtp.Jpeg.Imaging;
-
     public sealed class JpegFrameFactory : IDisposable
     {
         private readonly JpegImageBuilder _imageBuilder = new JpegImageBuilder();

@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Rtp.H266
 {
-    using RabbitOM.Streaming.Rtp.H266.Payloads;
-    using RabbitOM.Streaming.Rtp.H266.Payloads.Types;
-
     public sealed class H266StreamWriter : IDisposable
     {
         private readonly H266StreamWriterSettings _settings = new H266StreamWriterSettings();

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.H266
 {
-    using RabbitOM.Streaming.Rtp.H266.Payloads;
-
     public sealed class H266FrameFactory : IDisposable
     {
         private readonly H266StreamWriter _writer = new H266StreamWriter();

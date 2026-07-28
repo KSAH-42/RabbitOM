@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp.H266.Payloads
+namespace RabbitOM.Streaming.Rtp.H266
 {
     public enum H266PayloadType : byte
     {

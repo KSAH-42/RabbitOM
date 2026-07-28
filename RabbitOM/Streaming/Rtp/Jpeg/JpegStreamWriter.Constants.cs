@@ -1,6 +1,6 @@
 using System;
 
-namespace RabbitOM.Streaming.Rtp.Jpeg.Imaging
+namespace RabbitOM.Streaming.Rtp.Jpeg
 {
     public sealed partial class JpegStreamWriter
     {

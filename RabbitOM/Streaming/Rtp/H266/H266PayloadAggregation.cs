@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.Rtp.H266.Payloads
+namespace RabbitOM.Streaming.Rtp.H266
 {
     public struct H266PayloadAggregation
     {
