@@ -25,10 +25,41 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
 
 
+        public override bool IsOpened
+        {
+            get => _image != null;
+        }
+
+
+
+
+
+        public override void Open( FrameworkElement targetControl )
+        {
+            if ( _image != null )
+            {
+                throw new InvalidOperationException( "the render is already opened" );
+            }
+
+            var image = targetControl as Image;
+
+            if ( image == null )
+            {
+                throw new ArgumentException( "the target control must be an image control" );
+            }
+
+            _image = image;
+        }
+
 
 
         public unsafe override void Render( H265Surface surface )
         {
+            if ( _image == null )
+            {
+                return;
+            }
+
             AVFrame* pFrame = surface.DecodedFrame != IntPtr.Zero ? (AVFrame*) surface.DecodedFrame : null;
 
             if ( pFrame == null || pFrame->data[0] == null )
@@ -36,9 +67,21 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 return;
             }
 
-            if ( ! OnRendering( ref surface ) )
+            if ( _writableBitmap == null || _writableBitmap.Width != surface.FrameWidth || _writableBitmap.Height != surface.FrameHeight )
             {
-                return;
+                if ( _sws_context != null )
+                {
+                    ffmpeg.sws_freeContext( _sws_context );
+	                _sws_context = null;
+                }
+
+                var dpi = VisualTreeHelper.GetDpi( _image );
+
+                _writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );
+
+                _updateRegion = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
+
+                _image.ConfigureSource( _writableBitmap );
             }
 
             if ( _sws_context == null )
@@ -51,7 +94,17 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
             }
 
-            OnRender( ref surface , pFrame );
+            using ( var locker = new WritableBitmapLocker( _writableBitmap ) )
+            {
+                var dstData = new byte_ptrArray8();
+                dstData[0] = (byte*)_writableBitmap.BackBuffer;
+
+                _stride[0] = _writableBitmap.BackBufferStride;
+
+                ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
+
+                _writableBitmap.AddDirtyRect( _updateRegion );
+            }
         }
 
         public override void Close()
@@ -68,64 +121,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             {
                 ffmpeg.sws_freeContext( _sws_context );
 	            _sws_context = null;
-            }
-        }
-
-
-
-
-
-
-
-        private bool OnRendering( ref H265Surface surface )
-        {
-            _image = surface.Options.TargetControl as Image;
-
-            if ( _image == null )
-            {
-                return false;
-            }
-
-            if ( _writableBitmap == null || _writableBitmap.Width != surface.FrameWidth || _writableBitmap.Height != surface.FrameHeight )
-            {
-                if ( _sws_context != null )
-                {
-                    ffmpeg.sws_freeContext( _sws_context );
-	                _sws_context = null;
-                }
-
-                var dpi = VisualTreeHelper.GetDpi( _image );
-
-                var writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );
-
-                using ( var locker = new WritableBitmapLocker( writableBitmap ) )
-                {
-                    var updateRegion = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
-
-                    writableBitmap.AddDirtyRect( updateRegion );
-
-                    _writableBitmap = writableBitmap;
-                    _updateRegion = updateRegion;
-                }
-
-                _image.ConfigureSource( _writableBitmap );
-            }
-
-            return true;
-        }
-
-        private void OnRender( ref H265Surface surface , AVFrame* pFrame )
-        {
-            using ( var locker = new WritableBitmapLocker( _writableBitmap ) )
-            {
-                var dstData = new byte_ptrArray8();
-                dstData[0] = (byte*)_writableBitmap.BackBuffer;
-
-                _stride[0] = _writableBitmap.BackBufferStride;
-
-                ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
-
-                _writableBitmap.AddDirtyRect( _updateRegion );
             }
         }
     }

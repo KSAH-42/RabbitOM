@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 namespace RabbitOM.Sample.Client.H264.Codecs
 {
@@ -8,6 +9,10 @@ namespace RabbitOM.Sample.Client.H264.Codecs
         {
             Dispose( false );
         }
+
+        public abstract bool IsOpened { get; }
+
+        public abstract void Open( FrameworkElement targetControl );
 
         public abstract void Render( H264Surface surface );
 

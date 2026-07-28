@@ -131,6 +131,7 @@ namespace RabbitOM.Sample.Client.H265
                     _frameBuilder.PPS = Convert.FromBase64String(e.TrackInfo.PPS);
 
                     _decoder.Open();
+                    _renderer.Open( _image );
                 }
                 else
                 {
@@ -173,7 +174,7 @@ namespace RabbitOM.Sample.Client.H265
 
             if ( _decoder.IsOpened )
             {
-                _decoder.Decode( frame.Buffer , new H265Options( frame.StartCodePrefix , frame.PPS , frame.SPS , frame.VPS , H265MediaElement.CreateParamsBuffer( frame ) , _image ) );
+                _decoder.Decode( frame.Buffer , new H265Options( frame.StartCodePrefix , frame.PPS , frame.SPS , frame.VPS , H265MediaElement.CreateParamsBuffer( frame ) ) );
             }
         }
 

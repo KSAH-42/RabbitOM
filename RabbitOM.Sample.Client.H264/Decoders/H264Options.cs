@@ -4,7 +4,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 {
     public struct H264Options
     {
-        public H264Options( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] extraParameters , object targetControl )
+        public H264Options( byte[] startCodePrefix , byte[] pps , byte[] sps , byte[] extraParameters )
         {
             if ( startCodePrefix == null || startCodePrefix.Length <= 0 )
             {
@@ -26,16 +26,10 @@ namespace RabbitOM.Sample.Client.H264.Codecs
                 throw new ArgumentException( nameof( extraParameters ) );
             }
 
-            if ( targetControl == null )
-            {
-                throw new ArgumentException( nameof( targetControl ) );
-            }
-
             StartCodePrefix = startCodePrefix;
             PPS = pps;
             SPS = sps;
             ExtraParameters = extraParameters;
-            TargetControl = targetControl;
         }
 
         public byte[] StartCodePrefix { get; }
@@ -45,7 +39,5 @@ namespace RabbitOM.Sample.Client.H264.Codecs
         public byte[] SPS { get; }
 
         public byte[] ExtraParameters { get; }
-
-        public object TargetControl { get; }
     }
 }
