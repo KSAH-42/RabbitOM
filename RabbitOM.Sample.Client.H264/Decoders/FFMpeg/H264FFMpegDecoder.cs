@@ -215,7 +215,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 }
             }
 
-            OnDecoded( new H264DecodedEventArgs( new H264Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
+            OnDecoded( new H264DecodedEventArgs( new H264Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
         }
 
 

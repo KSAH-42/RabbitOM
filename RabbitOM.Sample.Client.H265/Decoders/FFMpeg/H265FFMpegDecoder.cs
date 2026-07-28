@@ -215,7 +215,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
             }
 
-            OnDecoded( new H265DecodedEventArgs( new H265Surface( options , _context->width , _context->height , (IntPtr) _frame ) ) );
+            OnDecoded( new H265DecodedEventArgs( new H265Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
         }
 
 
