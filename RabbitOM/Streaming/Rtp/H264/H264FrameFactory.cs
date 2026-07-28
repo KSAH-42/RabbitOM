@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.H264
 {
-    using RabbitOM.Streaming.Rtp.H264.Payloads;
-
     public sealed class H264FrameFactory : IDisposable
     {
         private readonly H264StreamWriter _writer = new H264StreamWriter();

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtp.H264.Payloads
+namespace RabbitOM.Streaming.Rtp.H264
 {
     public struct H264Payload
     {

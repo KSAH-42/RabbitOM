@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Rtp.H264
 {
-    using RabbitOM.Streaming.Rtp.H264.Payloads;
-    using RabbitOM.Streaming.Rtp.H264.Payloads.Types;
-
     public sealed class H264StreamWriter : IDisposable
     {
         private readonly H264StreamWriterSettings _settings = new H264StreamWriterSettings();
