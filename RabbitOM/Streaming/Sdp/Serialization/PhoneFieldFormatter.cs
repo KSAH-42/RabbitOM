@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
+namespace RabbitOM.Streaming.Sdp.Serialization
 {
     public static class PhoneFieldFormatter
     {

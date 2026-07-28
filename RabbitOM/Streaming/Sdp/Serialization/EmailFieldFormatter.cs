@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
+namespace RabbitOM.Streaming.Sdp.Serialization
 {
     public static class EmailFieldFormatter
     {

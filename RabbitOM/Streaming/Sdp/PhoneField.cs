@@ -1,4 +1,4 @@
-﻿using RabbitOM.Streaming.Sdp.Serialization.Formatters;
+﻿using RabbitOM.Streaming.Sdp.Serialization;
 using System;
 
 namespace RabbitOM.Streaming.Sdp

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace RabbitOM.Streaming.Sdp.Serialization.Formatters
+namespace RabbitOM.Streaming.Sdp.Serialization
 {
     public static class RepeatFieldFormatter
     {

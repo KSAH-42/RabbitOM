@@ -1,9 +1,8 @@
-﻿using System;
+﻿using RabbitOM.Streaming.Sdp.Serialization;
+using System;
 
 namespace RabbitOM.Streaming.Sdp
 {
-    using RabbitOM.Streaming.Sdp.Serialization.Formatters;
-
     public sealed class AttributeField : BaseField , ICopyable<AttributeField>
     {
         public const string TypeNameValue = "a";

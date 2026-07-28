@@ -322,18 +322,18 @@
     <Compile Include="Streaming\Sdp\RepeatField.cs" />
     <Compile Include="Streaming\Sdp\RepeatFieldCollection.cs" />
     <Compile Include="Streaming\Sdp\RtpMapAttributeValue.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\AttributeFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\BandwithFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\ConnectionFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\EmailFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\EncryptionFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\FormatAttributeValueFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\MediaDescriptionFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\OriginFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\PhoneFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\RepeatFieldFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\RtpMapAttributeValueFormatter.cs" />
-    <Compile Include="Streaming\Sdp\Serialization\Formatters\TimeFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\AttributeFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\BandwithFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\ConnectionFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\EmailFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\EncryptionFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\FormatAttributeValueFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\MediaDescriptionFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\OriginFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\PhoneFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\RepeatFieldFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\RtpMapAttributeValueFormatter.cs" />
+    <Compile Include="Streaming\Sdp\Serialization\TimeFieldFormatter.cs" />
     <Compile Include="Streaming\Sdp\Serialization\SessionDescriptionBuilder.cs" />
     <Compile Include="Streaming\Sdp\Serialization\SessionDescriptionReader.cs" />
     <Compile Include="Streaming\Sdp\Serialization\SessionDescriptionSerializer.cs" />
@@ -361,5 +361,6 @@
   <ItemGroup>
     <Content Include="Streaming\Rtp\ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
