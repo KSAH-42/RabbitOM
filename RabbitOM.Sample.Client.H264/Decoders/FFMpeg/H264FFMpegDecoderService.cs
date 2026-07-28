@@ -7,9 +7,9 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    internal unsafe sealed class InternalH264FFMpegDecoder
+    internal unsafe sealed class H264FFMpegDecoderService
     {
-        static InternalH264FFMpegDecoder()
+        static H264FFMpegDecoderService()
         {
             ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
@@ -70,6 +70,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
         public int ActualHeigth
         {
             get => _actualHeigth;
+        }
+
+        public IntPtr AVFramePointer
+        {
+            get => (IntPtr) _frame;
         }
 
 
@@ -214,94 +219,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             _extraParameters = null;
         }
 
-        public bool CanConfigure( byte[] extraParameters )
-        {
-            if ( extraParameters == null || extraParameters.Length == 0 )
-            {
-                return false;
-            }
-
-            return _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters );
-        }
-
-        public unsafe bool Configure( byte[] extraParameters )
-        {
-            _extraParameters = new byte[ extraParameters.Length ];
-
-            Buffer.BlockCopy( extraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
-
-            fixed ( byte* pExtraData = _extraParameters )
-            {
-                if ( _context->extradata != null || _context->extradata_size != _extraParameters.Length )
-	            {
-                    if ( _context->extradata != null )
-                    {
-		                ffmpeg.av_free( _context->extradata );
-                    }
-
-		            _context->extradata      = null;
-		            _context->extradata_size = 0;
-	            }
-
-                var size = ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE + (ulong)_extraParameters.Length;
-
-                if ( _context->extradata == null )
-	            {
-		            _context->extradata = (byte*) ffmpeg.av_malloc( size );
-	            }
-
-                if ( _context->extradata == null )
-	            {
-		            return false;
-	            }
-
-                _context->extradata_size = _extraParameters.Length;
-
-                var pBuffer = _context->extradata;
-
-                Buffer.MemoryCopy( pExtraData , pBuffer , _extraParameters.Length , _extraParameters.Length );
-                byte* ptr = _context->extradata + _extraParameters.Length;
-
-                ulong zero = 0;
-
-                ((ulong*)ptr)[0] = zero;
-                ((ulong*)ptr)[1] = zero;
-                ((ulong*)ptr)[2] = zero;
-                ((ulong*)ptr)[3] = zero;
-
-                return true;
-            }
-        }
-
-        public unsafe bool EndConfigure()
-        {
-            ffmpeg.avcodec_close( _context );
-
-            fixed ( AVCodecContext** ppContext = &_context )
-            {
-                ffmpeg.avcodec_free_context( ppContext );
-            }
-
-            _context = ffmpeg.avcodec_alloc_context3( _codec );
-
-            if ( _context == null )
-            {
-                return false;
-            }
-
-            _context->thread_count = 1;
-            _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
-            _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
-
-            fixed ( AVDictionary** opts = &_options )
-            {
-                ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
-                ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
-
-                return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
-            }
-        }
-
         public unsafe bool Decode( byte[] buffer )
         {
             if ( buffer == null || buffer.Length == 0 || _context == null || _frame == null )
@@ -369,6 +286,89 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 _stride[0] = _actualWidth * 4;
 
                 return ffmpeg.sws_scale( _sws_context , _frame->data , _frame->linesize , 0 , _actualHeigth , dstData , _stride ) >= 0;
+            }
+        }
+
+        public bool CanConfigure( byte[] extraParameters )
+        {
+            if ( extraParameters == null || extraParameters.Length == 0 )
+            {
+                return false;
+            }
+
+            return _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters );
+        }
+
+        public unsafe bool Configure( byte[] extraParameters )
+        {
+            _extraParameters = new byte[ extraParameters.Length ];
+
+            Buffer.BlockCopy( extraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
+
+            fixed ( byte* pExtraData = _extraParameters )
+            {
+                if ( _context->extradata != null || _context->extradata_size != _extraParameters.Length )
+	            {
+                    if ( _context->extradata != null )
+                    {
+		                ffmpeg.av_free( _context->extradata );
+                    }
+
+		            _context->extradata      = null;
+		            _context->extradata_size = 0;
+	            }
+
+                var size = ffmpeg.AV_INPUT_BUFFER_PADDING_SIZE + (ulong)_extraParameters.Length;
+
+                if ( _context->extradata == null )
+	            {
+		            _context->extradata = (byte*) ffmpeg.av_malloc( size );
+	            }
+
+                if ( _context->extradata == null )
+	            {
+		            return false;
+	            }
+
+                _context->extradata_size = _extraParameters.Length;
+
+                var pBuffer = _context->extradata;
+
+                Buffer.MemoryCopy( pExtraData , pBuffer , _extraParameters.Length , _extraParameters.Length );
+                byte* ptr = _context->extradata + _extraParameters.Length;
+
+                ulong zero = 0;
+
+                ((ulong*)ptr)[0] = zero;
+                ((ulong*)ptr)[1] = zero;
+                ((ulong*)ptr)[2] = zero;
+                ((ulong*)ptr)[3] = zero;
+
+                ffmpeg.avcodec_close( _context );
+
+                fixed ( AVCodecContext** ppContext = &_context )
+                {
+                    ffmpeg.avcodec_free_context( ppContext );
+                }
+
+                _context = ffmpeg.avcodec_alloc_context3( _codec );
+
+                if ( _context == null )
+                {
+                    return false;
+                }
+
+                _context->thread_count = 1;
+                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
+                _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+
+                fixed ( AVDictionary** opts = &_options )
+                {
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
+
+                    return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
+                }
             }
         }
     }

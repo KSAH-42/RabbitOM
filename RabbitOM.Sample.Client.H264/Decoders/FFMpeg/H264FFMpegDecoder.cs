@@ -7,7 +7,7 @@ using System.Linq;
 namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
-    
+
     public unsafe sealed class H264FFMpegDecoder : H264Decoder
     {
         static H264FFMpegDecoder()
@@ -191,7 +191,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             {
                 if ( _extraParameters == null || ! _extraParameters.SequenceEqual( options.ExtraParameters ) )
                 {
-                    if ( ! OnConfigureCodec( ref options ) )
+                    if ( ! OnConfigure( ref options ) )
                     {
                         return;
                     }
@@ -225,7 +225,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
 
 
-        private unsafe bool OnConfigureCodec( ref H264Options options )
+        private unsafe bool OnConfigure( ref H264Options options )
         {
             _extraParameters = new byte[ options.ExtraParameters.Length ];
 
@@ -293,14 +293,9 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
-                    if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
-                    {
-                        return false;
-                    }
+                    return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
                 }
             }
-
-            return true;
         }
     }
 }
