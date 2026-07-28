@@ -53,7 +53,7 @@ namespace RabbitOM.Streaming.Rtp.H265
 
 
 
-        public static byte[] CreateParamsBuffer( H265MediaElement frame )
+        public static byte[] CreateExtraParameters( H265MediaElement frame )
         {
             if ( frame == null )
             {

@@ -10,15 +10,16 @@ using System.Windows.Input;
 
 namespace RabbitOM.Sample.Client.H265
 {
-    using RabbitOM.Streaming;
-    using RabbitOM.Streaming.Rtp;
-    using RabbitOM.Streaming.Rtp.H265;
-    using RabbitOM.Streaming.Rtsp;
-    using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Sample.Client.H265.Codecs;
     using RabbitOM.Sample.Client.H265.Codecs.FFMpeg;
     using RabbitOM.Sample.Client.H265.Extensions;
-    
+    using RabbitOM.Streaming;
+    using RabbitOM.Streaming.Rtp;
+    using RabbitOM.Streaming.Rtp.H264;
+    using RabbitOM.Streaming.Rtp.H265;
+    using RabbitOM.Streaming.Rtsp;
+    using RabbitOM.Streaming.Rtsp.Clients;
+
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
@@ -167,15 +168,19 @@ namespace RabbitOM.Sample.Client.H265
         {
             var frame = e.MediaElement as RabbitOM.Streaming.Rtp.H265.H265MediaElement;
 
-            if ( frame == null )
+            if ( frame == null || ! _decoder.IsOpened )
             {
                 return;
             }
 
-            if ( _decoder.IsOpened )
+            var extraParameters = H265MediaElement.CreateExtraParameters( frame );
+
+            if ( _decoder.CanConfigure( extraParameters ) && ! _decoder.Configure( extraParameters ) )
             {
-                _decoder.Decode( frame.Buffer , new H265Options( frame.StartCodePrefix , frame.PPS , frame.SPS , frame.VPS , H265MediaElement.CreateParamsBuffer( frame ) ) );
+                return;
             }
+
+            _decoder.Decode( frame.Buffer );
         }
 
         private void OnFrameDecoded( object sender , H265DecodedEventArgs e )

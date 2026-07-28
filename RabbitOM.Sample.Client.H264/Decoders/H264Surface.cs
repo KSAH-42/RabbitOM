@@ -15,6 +15,6 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
         public int FrameHeight { get; }
 
-        internal IntPtr DecodedFrame { get; }
+        public IntPtr DecodedFrame { get; }
     }
 }

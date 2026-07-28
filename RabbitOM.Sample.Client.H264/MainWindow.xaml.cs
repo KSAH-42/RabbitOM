@@ -169,15 +169,19 @@ namespace RabbitOM.Sample.Client.H264
         {
             var frame = e.MediaElement as RabbitOM.Streaming.Rtp.H264.H264MediaElement;
 
-            if ( frame == null )
+            if ( frame == null || ! _decoder.IsOpened )
             {
                 return;
             }
 
-            if ( _decoder.IsOpened )
+            var extraParameters = H264MediaElement.CreateExtraParameters( frame );
+
+            if ( _decoder.CanConfigure( extraParameters ) && ! _decoder.Configure( extraParameters ) )
             {
-                _decoder.Decode( frame.Buffer , new H264Options( frame.StartCodePrefix , frame.PPS , frame.SPS , H264MediaElement.CreateExtraParameters( frame ) ) );
+                return;
             }
+
+            _decoder.Decode( frame.Buffer );
         }
 
         private void OnFrameDecoded( object sender , H264DecodedEventArgs e )

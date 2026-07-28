@@ -10,6 +10,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
 
 
+
         ~H264Decoder()
         {
             Dispose( false );
@@ -29,7 +30,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs
 
         public abstract void Close();
 
-        public abstract void Decode( byte[] buffer , H264Options options );
+        public abstract bool CanConfigure( byte[] extraParameters );
+
+        public abstract bool Configure( byte[] extraParameters );
+
+        public abstract void Decode( byte[] buffer );
 
         public void Dispose()
         {

@@ -180,56 +180,21 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             _extraParameters = null;
         }
 
-        public unsafe override void Decode( byte[] buffer , H264Options options )
+        public override bool CanConfigure( byte[] extraParameters )
         {
-            if ( buffer == null || buffer.Length <= 0 )
+            if ( extraParameters == null )
             {
-                return;
+                return false;
             }
 
-            fixed ( byte* rawBuffer = &buffer[0] )
-            {
-                if ( _extraParameters == null || ! _extraParameters.SequenceEqual( options.ExtraParameters ) )
-                {
-                    if ( ! OnConfigure( ref options ) )
-                    {
-                        return;
-                    }
-                }
-
-                var got_frame = 0;
-
-	            _rawPacket->data = rawBuffer;
-	            _rawPacket->size = buffer.Length;
-
-                var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
-
-	            if ( length != buffer.Length )
-	            {
-		            return;
-	            }
-
-                if ( got_frame == 0 )
-                {
-                    return;
-                }
-            }
-
-            OnDecoded( new H264DecodedEventArgs( new H264Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
+            return _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters );
         }
 
-
-
-
-
-
-
-
-        private unsafe bool OnConfigure( ref H264Options options )
+        public unsafe override bool Configure( byte[] extraParameters )
         {
-            _extraParameters = new byte[ options.ExtraParameters.Length ];
+            _extraParameters = new byte[ extraParameters.Length ];
 
-            Buffer.BlockCopy( options.ExtraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
+            Buffer.BlockCopy( extraParameters , 0 , _extraParameters , 0 , _extraParameters.Length );
 
             fixed ( byte* pExtraData = _extraParameters )
             {
@@ -296,6 +261,31 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
                 }
             }
+        }
+
+        public unsafe override void Decode( byte[] buffer )
+        {
+            if ( buffer == null || buffer.Length == 0 || _context == null )
+            {
+                return;
+            }
+
+            fixed ( byte* rawBuffer = &buffer[0] )
+            {
+                var got_frame = 0;
+
+	            _rawPacket->data = rawBuffer;
+	            _rawPacket->size = buffer.Length;
+
+                var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
+
+	            if ( length != buffer.Length || got_frame == 0 )
+	            {
+		            return;
+	            }
+            }
+
+            OnDecoded( new H264DecodedEventArgs( new H264Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
         }
     }
 }

@@ -91,7 +91,6 @@
     <Compile Include="Decoders\FFMpeg\H264FFMpegRenderer.cs" />
     <Compile Include="Decoders\H264DecodedEventArgs.cs" />
     <Compile Include="Decoders\H264Renderer.cs" />
-    <Compile Include="Decoders\H264Options.cs" />
     <Compile Include="Decoders\ImageExtensions.cs" />
     <Compile Include="Decoders\H264Surface.cs" />
     <Compile Include="Decoders\H264Decoder.cs" />
