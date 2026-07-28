@@ -52,18 +52,11 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             }
         }
 
-
-
-
-
-
-
-
         public override void Open()
         {
             if ( _codec != null )
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException( "the codec is already opened" );
             }
 
             try
@@ -83,7 +76,6 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
 
 	            _context->thread_count = 1;
-                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
 
                 fixed( AVDictionary** opts = &_options )
@@ -199,7 +191,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             {
                 if ( _extraParameters == null || ! _extraParameters.SequenceEqual( options.ExtraParameters ) )
                 {
-                    if ( ! OnReConfiguringCodec( ref options ) )
+                    if ( ! OnConfigure( ref options ) )
                     {
                         return;
                     }
@@ -233,8 +225,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
 
 
-
-        private unsafe bool OnReConfiguringCodec( ref H265Options options )
+        private unsafe bool OnConfigure( ref H265Options options )
         {
             _extraParameters = new byte[ options.ExtraParameters.Length ];
 
@@ -294,6 +285,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
 
                 _context->thread_count = 1;
+                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
 
                 fixed ( AVDictionary** opts = &_options )
@@ -301,14 +293,9 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
-                    if (ffmpeg.avcodec_open2( _context , _codec , opts ) < 0)
-                    {
-                        return false;
-                    }
+                    return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
                 }
             }
-
-            return true;
         }
     }
 }
