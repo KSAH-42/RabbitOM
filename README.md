@@ -189,10 +189,10 @@ static class Program
                 .SetUri( "*" )
                 .Headers( items =>
                 {
-                    items.Headers.Accept = new AcceptRtspHeaderValue();
-                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a1") );
-                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/b1") );
-                    items.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/c1") );
+                    items.Accept = new AcceptRtspHeaderValue();
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a1") );
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/b1") );
+                    items.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/c1") );
                     items.AcceptEncoding = new AcceptEncodingRtspHeaderValue();
                     items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "zip" ) );
                     items.AcceptEncoding.Values.Add( new StringWithQualityRtspHeaderValue( "tar" ) );
