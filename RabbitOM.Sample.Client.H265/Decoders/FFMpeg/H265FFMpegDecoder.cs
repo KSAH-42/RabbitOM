@@ -68,8 +68,8 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
 
                 fixed( AVDictionary** opts = &_options )
                 {
-                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none" , 0 );
-                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video" , 0 );
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
                     _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_RGB24;
 
@@ -266,7 +266,14 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
                 }
             }
 
-            OnDecoded( new H265DecodedEventArgs( new H265Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
+            var clonedFrame = ffmpeg.av_frame_clone( _frame );
+
+            if ( clonedFrame == null )
+            {
+                return;
+            }
+
+            OnDecoded( new H265DecodedEventArgs( new H265FFMpegSurface( _context->width , _context->height , clonedFrame ) ) );
         }
     }
 }

@@ -2,19 +2,28 @@
 
 namespace RabbitOM.Sample.Client.H264.Codecs
 {
-    public struct H264Surface
+    public abstract class H264Surface : IDisposable
     {
-        public H264Surface( int frameWidth , int frameHeight , IntPtr frame )
+        ~H264Surface()
         {
-            FrameWidth = frameWidth;
-            FrameHeight = frameHeight;
-            Frame = frame;
+            Dispose( false );
         }
 
-        public int FrameWidth { get; }
+        public abstract int FrameWidth { get; }
 
-        public int FrameHeight { get; }
+        public abstract int FrameHeight { get; }
 
-        public IntPtr Frame { get; }
+        public abstract IntPtr Frame { get; }
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+
+        }
     }
 }

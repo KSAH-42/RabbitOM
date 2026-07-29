@@ -2,19 +2,28 @@
 
 namespace RabbitOM.Sample.Client.H265.Codecs
 {
-    public struct H265Surface
+    public abstract class H265Surface : IDisposable
     {
-        public H265Surface( int frameWidth , int frameHeight , IntPtr frame )
+        ~H265Surface()
         {
-            FrameWidth = frameWidth;
-            FrameHeight = frameHeight;
-            Frame = frame;
+            Dispose( false );
         }
 
-        public int FrameWidth { get; }
+        public abstract int FrameWidth { get; }
 
-        public int FrameHeight { get; }
+        public abstract int FrameHeight { get; }
 
-        public IntPtr Frame { get; }
+        public abstract IntPtr Frame { get; }
+
+        public void Dispose()
+        {
+            Dispose( true );
+            GC.SuppressFinalize( this );
+        }
+
+        protected virtual void Dispose( bool disposing )
+        {
+
+        }
     }
 }

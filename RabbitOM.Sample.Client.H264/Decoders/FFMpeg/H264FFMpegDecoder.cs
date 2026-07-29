@@ -266,7 +266,14 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 }
             }
 
-            OnDecoded( new H264DecodedEventArgs( new H264Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
+            var clonedFrame = ffmpeg.av_frame_clone( _frame );
+
+            if ( clonedFrame == null )
+            {
+                return;
+            }
+
+            OnDecoded( new H264DecodedEventArgs( new H264FFMpegSurface( _context->width , _context->height , clonedFrame ) ) );
         }
     }
 }

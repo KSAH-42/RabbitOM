@@ -81,10 +81,11 @@
     </Compile>
     <Compile Include="Decoders\FFMpeg\H265FFMpegDecoder.cs" />
     <Compile Include="Decoders\FFMpeg\H265FFMpegRenderer.cs" />
+    <Compile Include="Decoders\FFMpeg\H265FFMpegSurface.cs" />
+    <Compile Include="Decoders\H265Surface.cs" />
     <Compile Include="Decoders\H265DecodedEventArgs.cs" />
     <Compile Include="Decoders\H265Decoder.cs" />
     <Compile Include="Decoders\H265Renderer.cs" />
-    <Compile Include="Decoders\H265Surface.cs" />
     <Compile Include="Decoders\ImageExtensions.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />

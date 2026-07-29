@@ -87,8 +87,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decoders\FFMpeg\H264FFMpegDecoder.cs" />
-    <Compile Include="Decoders\FFMpeg\H264FFMpegRenderer.cs" />
+    <Compile Include="Decoders\FFmpeg\H264FFMpegDecoder.cs" />
+    <Compile Include="Decoders\FFmpeg\H264FFMpegRenderer.cs" />
+    <Compile Include="Decoders\FFmpeg\H264FFMpegSurface.cs" />
     <Compile Include="Decoders\H264DecodedEventArgs.cs" />
     <Compile Include="Decoders\H264Renderer.cs" />
     <Compile Include="Decoders\ImageExtensions.cs" />

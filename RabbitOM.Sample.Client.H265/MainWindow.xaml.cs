@@ -187,7 +187,10 @@ namespace RabbitOM.Sample.Client.H265
         {
             _image.Dispatcher.BeginInvoke( new Action( () =>
             {
-                _renderer.Render( e.Surface );
+                using ( e.Surface ) // that's mandatory to unmanaged memory
+                {
+                    _renderer.Render( e.Surface );
+                }
             }));
         }
 

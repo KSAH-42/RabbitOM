@@ -46,7 +46,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
         public unsafe override void Render( H264Surface surface )
         {
-            if ( _image == null )
+            if ( _image == null || surface == null )
             {
                 return;
             }
@@ -63,12 +63,12 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                 if ( _sws_context != null )
                 {
                     ffmpeg.sws_freeContext( _sws_context );
-	                _sws_context = null;
+                    _sws_context = null;
                 }
 
                 var dpi = VisualTreeHelper.GetDpi( _image );
 
-                _writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24  , null );
+                _writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24 , null );
 
                 _updateRegion = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
 
@@ -77,7 +77,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
             if ( _sws_context == null )
             {
-                _sws_context = ffmpeg.sws_getContext( surface.FrameWidth , surface.FrameHeight,  AVPixelFormat.AV_PIX_FMT_YUV420P , surface.FrameWidth , surface.FrameHeight , AVPixelFormat.AV_PIX_FMT_RGB24 , ffmpeg.SWS_BILINEAR , null , null , null );
+                _sws_context = ffmpeg.sws_getContext( surface.FrameWidth , surface.FrameHeight , AVPixelFormat.AV_PIX_FMT_YUV420P , surface.FrameWidth , surface.FrameHeight , AVPixelFormat.AV_PIX_FMT_RGB24 , ffmpeg.SWS_BILINEAR , null , null , null );
 
                 if ( _sws_context == null )
                 {
@@ -89,7 +89,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
             {
                 var dstData = new byte_ptrArray8();
 
-                dstData[0] = (byte*)_writableBitmap.BackBuffer;
+                dstData[0] = (byte*) _writableBitmap.BackBuffer;
                 _stride[0] = _writableBitmap.BackBufferStride;
 
                 ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
