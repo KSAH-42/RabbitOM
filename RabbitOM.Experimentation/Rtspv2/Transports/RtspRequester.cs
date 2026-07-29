@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Streaming.RtspV2.Transports
 {
-    // TODO: used correlator classes, readers and writers
+    // TODO: used correlator classes, readers and writers here
 
     public sealed class RtspRequester
     {
