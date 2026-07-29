@@ -125,7 +125,14 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 
             if ( _rawPacket != null )
             {
-                ffmpeg.av_packet_unref( _rawPacket );
+                _rawPacket->data = null;
+                _rawPacket->size = 0;
+
+                fixed( AVPacket** ppPacket = &_rawPacket )
+                {
+                    ffmpeg.av_packet_free( ppPacket );
+                }
+
                 _rawPacket = null;
             }
 
@@ -251,19 +258,11 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 	            _rawPacket->data = rawBuffer;
 	            _rawPacket->size = buffer.Length;
 
-                try
-                {
-                    var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
+                var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
 
-                    if ( length != buffer.Length || got_frame == 0 )
-                    {
-                        return;
-                    }
-                }
-                finally
+                if ( length != buffer.Length || got_frame == 0 )
                 {
-                    _rawPacket->data = null;
-                    _rawPacket->size = 0;
+                    return;
                 }
             }
 
