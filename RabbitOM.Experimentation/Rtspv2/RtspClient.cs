@@ -44,7 +44,7 @@ namespace RabbitOM.Streaming.RtspV2
 
         public Version Version { get; set; }
 
-        public RequestsRtspHeaderCollection Headers { get; } = new RequestsRtspHeaderCollection(); // TODO: Remove it and use a readonly collection pass to the rtsp env class
+        public RequestsRtspHeaderCollection DefaultHeaders { get; } = new RequestsRtspHeaderCollection(); // TODO: Remove it and use a readonly collection pass to the rtsp env class
 
 
 

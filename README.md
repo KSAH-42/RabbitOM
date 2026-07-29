@@ -182,8 +182,8 @@ static class Program
         {
             client.BaseAddress = new Uri( "rtsp://127.0.0.1:554/toxic-society.mp4" );
 
-            client.Headers.Accept = new AcceptRtspHeaderValue();
-            client.Headers.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a") );
+            client.DefaultHeaders.Accept = new AcceptRtspHeaderValue();
+            client.DefaultHeaders.Accept.Values.Add( new MediaTypeWithQualityRtspHeaderValue("a/a") );
             
             var response = await client.OptionsAsync( new RtspClientRequestInfoBuilder()
                 .SetUri( "*" )
