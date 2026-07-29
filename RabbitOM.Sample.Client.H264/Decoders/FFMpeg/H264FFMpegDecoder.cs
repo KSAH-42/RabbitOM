@@ -251,12 +251,20 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
 	            _rawPacket->data = rawBuffer;
 	            _rawPacket->size = buffer.Length;
 
-                var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
+                try
+                {
+                    var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
 
-	            if ( length != buffer.Length || got_frame == 0 )
-	            {
-		            return;
-	            }
+                    if ( length != buffer.Length || got_frame == 0 )
+                    {
+                        return;
+                    }
+                }
+                finally
+                {
+                    _rawPacket->data = null;
+                    _rawPacket->size = 0;
+                }
             }
 
             OnDecoded( new H264DecodedEventArgs( new H264Surface( _context->width , _context->height , (IntPtr) _frame ) ) );
