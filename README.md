@@ -106,18 +106,30 @@ The RtspClient used the RtspConnection. This class gives a full access rtsp prot
 
 using ( var connection = new RtspConnection() )
 {
-    connection.Opened               += (sender, e) => Console.WriteLine("Connected");
-    
-    connection.Closed               += (sender, e) => Console.WriteLine("Connection closed");
-    
-    connection.AuthenticationFailed += (sender, e) => Console.WriteLine("Authentication failed");
-    
-    connection.MessageReceived      += (sender, e) => Console.WriteLine("Message received");
-    
-    connection.DataReceived         += (sender, e) => Console.WriteLine("Interleaved data received");
-    
+    connection.Opened += (sender, e) => 
+    {
+        Console.WriteLine("Connected");
+    };
 
+    connection.Closed += (sender, e) =>
+    {
+        Console.WriteLine("Connection closed");
+    };
 
+    connection.AuthenticationFailed += (sender, e) =>
+    {
+        Console.WriteLine("Authentication failed");
+    };
+
+    connection.MessageReceived += (sender, e) =>
+    {
+        Console.WriteLine("Message received");
+    };
+
+    connection.DataReceived += (sender, e) =>
+    {
+        Console.WriteLine("Interleaved data received");
+    };
 
     connection.Open("rtsp://192.168.1.11/city1.mp4");
      
