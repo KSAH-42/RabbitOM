@@ -41,7 +41,7 @@ namespace RabbitOM.Streaming.RtspV2.Transports
 
             if ( _headers.CountValues( RtspHeaderNames.ContentLength ) > 1 )
             {
-                throw new ProtocolViolationException( "the collection must contains zero or only one single content-length header" );
+                throw new ProtocolViolationException( "the collection must contains no or only one single content-length header" );
             }
 
             var contentLength = _headers.ContentLength;
