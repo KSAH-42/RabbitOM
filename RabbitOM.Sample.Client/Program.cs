@@ -1,12 +1,4 @@
-﻿// If you want to get more features, used the RtspConnection class instead to get more control of the protocol messaging layer
-// Make sure that the ports are not blocked
-// Use the vendor configuration tool to activate the Rtsp protocol especially the port
-// AND create a user account for the Rtsp connection
-// You can try to find a online security camera F R O M  a manufacturer, but ...
-// I strongly recommend to BUY a camera, it is better, and don't waste your time to find a security camera online from any manufacturers
-// Otherwise you can use HappyRtspServer software but it does not reflect an ip security camera
-
-using System;
+﻿using System;
 using RabbitOM.Sample.Client.Helpers;
 
 namespace RabbitOM.Sample.Client
