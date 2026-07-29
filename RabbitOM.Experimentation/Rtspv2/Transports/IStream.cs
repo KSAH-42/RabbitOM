@@ -8,16 +8,16 @@ namespace RabbitOM.Streaming.RtspV2.Transports
     // the idea is buffering data before to call a read method and store them into an internal buffer
     // and then we can peek, read, and so on.. theses methods will trigger a true read when the position on this buffer reach the number of bytes reads
 
-    // stream:   [¤¤¤¤¤¤¤¤¤¤$*********¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******]
+    // network:  [¤¤¤¤¤¤¤¤¤¤$*********¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******]
     // peek:     [¤¤¤¤¤¤¤¤¤¤$*****] trigger a read an save in memory
     // peek:     [¤¤¤¤¤¤¤¤¤¤$*****] returns ¤
-    // readByte: [¤¤¤¤¤¤¤¤¤$*****] no trigger a read returns ¤
-    // readByte: [¤¤¤¤¤¤¤¤$*****] no trigger a read returns ¤
-    // readByte: [¤¤¤¤¤¤¤$*****] no trigger a read returns ¤
-    // readByte: [¤¤¤¤¤¤$*****] no trigger a read returns ¤
-    // read:     [] no trigger a read and take all remaining returns ¤¤¤¤¤$*****
-    // read:     [***¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******] trigger a read returns all
-    // read:     [¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******] trigger a read returns all
+    // readByte: [¤¤¤¤¤¤¤¤¤$*****] no trigger on read and returns ¤
+    // readByte: [¤¤¤¤¤¤¤¤$*****] no trigger on read and returns ¤
+    // readByte: [¤¤¤¤¤¤¤$*****] no trigger on read and returns ¤
+    // readByte: [¤¤¤¤¤¤$*****] no trigger on read and returns ¤
+    // read:     [] no trigger on read and take all remaining bytes and returns ¤¤¤¤¤$*****
+    // read:     [***¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******] the internal readbuffer is empty so trigger a new read and returns bytes
+    // read:     [¤¤¤¤¤¤¤¤¤¤¤¤¤¤$******] trigger on read and returns bytes
 
     public interface IStream : IDisposable
     {
