@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.RtspV2
 {
-    using RabbitOM.Streaming.RtspV2.Transports.Channels;
+    using RabbitOM.Streaming.RtspV2.Transports;
 
     public sealed class RtspClientEnvironment
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.RtspV2.Transports.Channels
+namespace RabbitOM.Streaming.RtspV2.Transports
 {
     public partial class RtspMessageHeaderCollection
     {

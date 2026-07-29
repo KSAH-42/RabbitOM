@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports.Channels
+namespace RabbitOM.Streaming.RtspV2.Transports
 {
     /// <summary>
     /// Represent the base class of an element contains in a stream

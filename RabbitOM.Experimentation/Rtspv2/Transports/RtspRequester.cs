@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RabbitOM.Streaming.RtspV2.Transports.Channels
+namespace RabbitOM.Streaming.RtspV2.Transports
 {
     // TODO: used correlator classes, readers and writers
 

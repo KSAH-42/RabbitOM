@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports.Channels
+namespace RabbitOM.Streaming.RtspV2.Transports
 {
     public class Binding
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Streaming.RtspV2.Transports.Channels
+namespace RabbitOM.Streaming.RtspV2.Transports
 {
     public sealed class RtspMessageCorrelationCollection : ICollection<RtspMessageCorrelation> , IReadOnlyCollection<RtspMessageCorrelation>
     {

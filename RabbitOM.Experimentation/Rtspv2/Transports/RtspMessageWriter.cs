@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports.Channels.Writers
+namespace RabbitOM.Streaming.RtspV2.Transports
 {
     public sealed class RtspMessageWriter : IMessageWriter<RtspInterleavedMessage> , IMessageWriter<RtspRequestMessage>
     {
