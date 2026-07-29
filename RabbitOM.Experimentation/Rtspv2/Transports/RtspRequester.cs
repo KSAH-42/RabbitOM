@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+#pragma warning disable CS1998
+
 namespace RabbitOM.Streaming.RtspV2.Transports
 {
     // TODO: used correlator classes, readers and writers here
@@ -21,3 +23,5 @@ namespace RabbitOM.Streaming.RtspV2.Transports
         }
     }
 }
+
+#pragma warning restore CS1998
