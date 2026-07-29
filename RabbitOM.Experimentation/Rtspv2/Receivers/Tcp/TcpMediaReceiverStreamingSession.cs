@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Receivers.Tcp
+namespace RabbitOM.Streaming.RtspV2.Receivers
 {
     public sealed class TcpMediaReceiverStreamingSession : IMediaStreamingSession
     {
