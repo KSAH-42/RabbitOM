@@ -29,7 +29,7 @@
 
 ➡️ Breaking changes since the version 2.0.0.2:
 
-* Refactorization of rtp layers as (H264,H265,H266)
+* Refactorization of rtp layers (H264,H265,H266)
 * Namespace reorganization
 * Rtp layer refactorization and adding add packet inspection, adding support of H264, H265, G711, and so on.
 * Add new class libray for rending jpeg using wpf
