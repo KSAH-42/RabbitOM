@@ -1,10 +1,10 @@
 ﻿using System;
-using RabbitOM.Sample.Client.Helpers;
 
 namespace RabbitOM.Sample.Client
 {
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Sample.Client.Helpers;
 
     static class Program
     {
