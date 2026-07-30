@@ -24,10 +24,10 @@ namespace RabbitOM.Sample.Client.Player
     using RabbitOM.Sample.Client.Player.Extensions;
 
     // This is not a clean code here if we respect wpf, and others things, it's juste a demo, refactorization must be done
-    // There is a base line here, but the right direction for writing a correct architecture is to write a graph and setup it using a builder
+    // There is a base line here, but the right direction for writing a correct architecture is probably to write a graph and setup it using a builder
     // just something similar to dsf using a modern approachs
-    // or something different than a multi thread graph
-    // a micro service using a simple configurable pipeline shoud be enough, and having different microservice per graph type
+    // or something like a micro service capable to configure just a simple pipeline shoud be enough
+    // and may be having different microservice per graph type could be nice
 
     public partial class MainWindow : Window
     {
