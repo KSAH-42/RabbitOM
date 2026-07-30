@@ -174,7 +174,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             return extraParameters != null && ( _extraParameters == null || ! _extraParameters.SequenceEqual( extraParameters ) );
         }
 
-        public unsafe override bool Configure( byte[] extraParameters )
+        public override bool Configure( byte[] extraParameters )
         {
             _extraParameters = new byte[ extraParameters.Length ];
 
@@ -244,7 +244,7 @@ namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
             }
         }
 
-        public unsafe override void Decode( byte[] buffer )
+        public override void Decode( byte[] buffer )
         {
             if ( buffer == null || buffer.Length == 0 || _context == null )
             {
