@@ -170,7 +170,7 @@ This sample demonstrate how to create h265 decoder using FFMpeg.AutoGen dependen
 
 # Player image snapshotter
 
-Just by right click on the image
+Just by making a right click on the image control
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Snapshotter.png)
 
