@@ -26,6 +26,11 @@
                         Executed="OnExecuteUniformImage"
                         />
 
+        <CommandBinding Command="{x:Static local:MainWindow.SaveImageCommand}" 
+                        CanExecute="OnCanExecuteSaveImage"
+                        Executed="OnExecuteSaveImage"
+                        />
+
     </Window.CommandBindings>
 
     <Grid Margin="1,1,1,1" Background="White" >
@@ -102,6 +107,10 @@
 
                     <MenuItem Header="Normal" 
                               Command="{x:Static local:MainWindow.UniformImageCommand}" 
+                              />
+
+                    <MenuItem Header="Save Image" 
+                              Command="{x:Static local:MainWindow.SaveImageCommand}" 
                               />
 
                 </ContextMenu>

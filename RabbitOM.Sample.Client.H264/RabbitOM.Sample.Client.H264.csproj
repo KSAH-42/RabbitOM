@@ -79,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Dialogs\SaveImageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,6 +100,9 @@
     <Compile Include="Decoders\H264Surface.cs" />
     <Compile Include="Decoders\H264Decoder.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
+    <Compile Include="Dialogs\SaveImageDialog.xaml.cs">
+      <DependentUpon>SaveImageDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

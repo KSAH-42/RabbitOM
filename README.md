@@ -168,6 +168,13 @@ This sample demonstrate how to create h265 decoder using FFMpeg.AutoGen dependen
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H265.png)
 
 
+# H265/HVEC image snapshotter
+
+Just by right click on the image
+
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Snapshotter.png)
+
+
 # About the next rtsp client (experimental)
 
 The actual rtsp client will be replace by receivers class, and the new rtsp client will be also the replacement of the actual RtspConnection class with new features.

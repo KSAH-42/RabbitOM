@@ -7,15 +7,16 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H265
 {
     using RabbitOM.Sample.Client.H265.Codecs;
     using RabbitOM.Sample.Client.H265.Codecs.FFMpeg;
+    using RabbitOM.Sample.Client.H265.Dialogs;
     using RabbitOM.Sample.Client.H265.Extensions;
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
-    using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
@@ -24,7 +25,7 @@ namespace RabbitOM.Sample.Client.H265
     {
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
         public static readonly RoutedCommand UniformImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand ConfigureResolutionCommand = new RoutedCommand();
+        public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
@@ -217,6 +218,28 @@ namespace RabbitOM.Sample.Client.H265
         private void OnCanExecuteConfigureResolution( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = ! _client.IsCommunicationStarted;
+        }
+
+        private void OnCanExecuteSaveImage( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsConnected && _image.Source is BitmapSource;
+        }
+
+        private void OnExecuteSaveImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            var bitmap = _image.Source as BitmapSource;
+
+            if ( bitmap == null )
+            {
+                return;
+            }
+
+            var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.Image = bitmap.Clone();
+            dialog.BitmapSource = _image.Source as WriteableBitmap;
+
+            dialog.ShowDialog();
         }
     }
 }
