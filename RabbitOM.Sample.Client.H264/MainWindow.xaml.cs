@@ -11,15 +11,15 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Client.H264
 {
-    using RabbitOM.Sample.Client.H264.Codecs;
-    using RabbitOM.Sample.Client.H264.Codecs.FFMpeg;
-    using RabbitOM.Sample.Client.H264.Dialogs;
-    using RabbitOM.Sample.Client.H264.Extensions;
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Sample.Client.H264.Codecs;
+    using RabbitOM.Sample.Client.H264.Codecs.FFMpeg;
+    using RabbitOM.Sample.Client.H264.Dialogs;
+    using RabbitOM.Sample.Client.H264.Extensions;
 
     public partial class MainWindow : Window
     {

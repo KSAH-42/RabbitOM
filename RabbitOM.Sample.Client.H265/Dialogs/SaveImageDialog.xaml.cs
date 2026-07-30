@@ -9,6 +9,8 @@ namespace RabbitOM.Sample.Client.H265.Dialogs
 {
     public partial class SaveImageDialog : Window
     {
+        public static readonly RoutedCommand SelectFileCommand = new RoutedCommand();
+
         public static readonly RoutedCommand TakeSnapshotCommand = new RoutedCommand();
 
         public static readonly RoutedCommand SaveButtonCommand = new RoutedCommand();
@@ -29,6 +31,11 @@ namespace RabbitOM.Sample.Client.H265.Dialogs
                 "Image", typeof(BitmapSource) ,
                     typeof(SaveImageDialog) );
 
+        public static readonly DependencyProperty FileNameProperty
+            = DependencyProperty.Register(
+                "FileName", typeof(string) ,
+                    typeof(SaveImageDialog) );
+
 
 
 
@@ -39,11 +46,18 @@ namespace RabbitOM.Sample.Client.H265.Dialogs
             set => SetValue( ImageProperty , value );
         }
 
+        public string FileName
+        {
+            get => (string) GetValue( FileNameProperty );
+            set => SetValue( FileNameProperty , value );
+        }
+
         public BitmapSource Source
         {
             get;
             set;
         }
+
 
 
 
@@ -56,6 +70,31 @@ namespace RabbitOM.Sample.Client.H265.Dialogs
 
 
 
+
+        private void OnCanSelectFile( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = Image != null;
+        }
+
+        private void OnSelectFile( object sender , ExecutedRoutedEventArgs e )
+        {
+            try
+            {
+                var dialog = new OpenFileDialog()
+                {
+                    Filter = "Image file (*.bmp)|*.bmp", CheckFileExists = false 
+                };
+
+                if ( dialog.ShowDialog() == true )
+                {
+                    FileName = dialog.FileName;
+                }
+            }
+            catch( Exception ex )
+            {
+                MessageBox.Show( ex.ToString() );
+            }
+        }
 
         private void OnCanTakeSnapshot( object sender , CanExecuteRoutedEventArgs e )
         {
@@ -70,26 +109,19 @@ namespace RabbitOM.Sample.Client.H265.Dialogs
 
         private void OnCanSave( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = true;
+            e.CanExecute = ! string.IsNullOrWhiteSpace( FileName );
         }
 
         private void OnSave( object sender , ExecutedRoutedEventArgs e )
         {
+            if ( MessageBox.Show( "Would you like to save ?" , "Informations"  , MessageBoxButton.YesNo , MessageBoxImage.Question ) != MessageBoxResult.Yes )
+            {
+                return;
+            }
+                
             try
             {
-                var dialog = new SaveFileDialog()
-                {
-                    Filter = "Image file (*.bmp)|*.bmp"
-                };
-
-                var result = dialog.ShowDialog();
-
-                if ( ! result.HasValue || ! result.Value )
-                {
-                    return;
-                }
-
-                using ( var stream = File.Create( dialog.FileName ) )
+                using ( var stream = File.Create( FileName ) )
                 {
                     BitmapEncoder encoder = new BmpBitmapEncoder();
 

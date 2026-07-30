@@ -14,56 +14,97 @@
 
     <Window.CommandBindings>
 
+        <CommandBinding Command="{x:Static local:SaveImageDialog.SelectFileCommand}" 
+                        CanExecute="OnCanSelectFile" 
+                        Executed="OnSelectFile" 
+                        />
+
         <CommandBinding Command="{x:Static local:SaveImageDialog.TakeSnapshotCommand}" 
                         CanExecute="OnCanTakeSnapshot" 
                         Executed="OnTakeSnapshot" 
                         />
 
         <CommandBinding Command="{x:Static local:SaveImageDialog.SaveButtonCommand}" 
-                CanExecute="OnCanSave" 
-                Executed="OnSave" 
-                />
+                        CanExecute="OnCanSave" 
+                        Executed="OnSave" 
+                        />
 
     </Window.CommandBindings>
 
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="37" />
             <RowDefinition Height="*" />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="Black" Margin="2,10,2,10">
-       
+        <Grid Grid.Row="0" Margin="0,12,0,0" >
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+
+                    <TextBlock Margin="10,0,0,0" Text="File :" />
+
+                </Grid>
+
+                <Grid Grid.Column="1">
+
+                    <TextBox Margin="0,0,0,0" Text="{Binding FileName, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged , RelativeSource={RelativeSource AncestorType=Window} }" />
+
+                </Grid>
+
+                <Grid Grid.Column="2">
+
+                    <Button Margin="5,0,5,0"
+                            Content="..."
+                            VerticalAlignment="Bottom" 
+                            HorizontalAlignment="Left"
+                            Width="35"
+                            Height="25"
+                            Command="{x:Static local:SaveImageDialog.SelectFileCommand}"
+                            />
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="Black" Margin="2,10,2,10">
+
             <Image Margin="0,0,0,0" 
                    Stretch="Uniform" 
                    SnapsToDevicePixels="True" 
                    UseLayoutRounding="True"
                    Source="{Binding Image,RelativeSource={RelativeSource AncestorType=Window}}"
                    />
-            
+
         </Grid>
-        
-        <Grid Grid.Row="1">
 
-            <Button Margin="8,0,95,10" 
-                    VerticalAlignment="Bottom" 
-                    HorizontalAlignment="Left"
-                    Width="90"
-                    Height="25"
-                    IsCancel="True" 
-                    Content="Take Snasphot"
-                    Command="{x:Static local:SaveImageDialog.TakeSnapshotCommand}"
-                    />
+        <Grid Grid.Row="2">
 
-            <Button Margin="102,0,95,10" 
+            <Button Margin="5,0,5,10" 
+                    Content="Snapshot"
                     VerticalAlignment="Bottom" 
                     HorizontalAlignment="Left"
                     Width="80"
                     Height="25"
-                    IsCancel="False"
-                    IsDefault="True"
+                    Command="{x:Static local:SaveImageDialog.TakeSnapshotCommand}"
+                    />
+
+            <Button Margin="95,0,5,10" 
                     Content="Save"
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Left"
+                    Width="80"
+                    Height="25"
                     Command="{x:Static local:SaveImageDialog.SaveButtonCommand}"
                     />
 
@@ -75,9 +116,9 @@
                     IsCancel="True" 
                     Content="Close"
                     />
-            
+
         </Grid>
-        
+
     </Grid>
-    
+
 </Window>
