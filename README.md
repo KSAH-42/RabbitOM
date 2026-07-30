@@ -71,13 +71,8 @@ using ( var client = new RtspClient() )
     // Raised when a raw media data has been received 
     client.PacketReceived += (sender, e) =>
     {
-        var interleavedPacket = e.Packet as RtspInterleavedPacket;
-
-		if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
-	    	return;
-	
-		if ( RTPPacket.TryParse( e.Packet.Data , out RTPPacket packet ) )
-            Console.WriteLine( "DataReceived {0}" , packet.Payload.Length );
+        if ( RTPPacket.TryParse( e.Packet.Data , out var packet ) )
+            Console.WriteLine( "rtp packet received: {0}" , packet.Payload.Length );
     };
 
     client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
@@ -155,13 +150,13 @@ This sample demonstrate how to create MJpeg player to reconstruct a complete fra
 
 # H264 Player used to decode RTP packets ( RFC 6184 )
 
-This sample demonstrate how to create h264 decoder using FFMpeg.AutoGen dependencies.
+This sample demonstrate how to create h264 decoder using FFMpeg.AutoGen dependencies and show how to build a player with a decoder and a render running in seperate threads.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.png)
 
 # H265/HVEC Player used to decode RTP packets ( RFC 7798 )
 
-This sample demonstrate how to create h265 decoder using FFMpeg.AutoGen dependencies.
+This sample demonstrate how to create h265 decoder using FFMpeg.AutoGen dependencies and show how to build a player with a decoder and a render running in seperate threads.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H265.png)
 
