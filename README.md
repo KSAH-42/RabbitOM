@@ -38,8 +38,8 @@
 ➡️ Breaking changes since the version 2.0.0.4:
 
 * namespace reorganization
-* adding H264 player 
-* adding H265 player 
+* adding H264 player with decoder and render capable to run a separate threads by cloning decoded frame
+* adding H265 player with decoder and render capable to run a separate threads by cloning decoded frame
 
 ➡️ Next arrivals:
 
