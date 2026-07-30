@@ -155,7 +155,7 @@ This sample demonstrate how to create MJpeg player to reconstruct a complete fra
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.Mjpeg.png)
 
-# Media Player used to decode RTP packets ( JPEG/RFC:2435 - H264/RFC:6184 - HEVC/RFC:7798 )
+# Media Player used to decode RTP packets (JPEG/H264/HEVC)
 
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
 This sample include an example of how to build a player using decoder and render running in seperate threads.
