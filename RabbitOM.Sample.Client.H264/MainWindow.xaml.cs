@@ -188,7 +188,7 @@ namespace RabbitOM.Sample.Client.H264
         {
             _image.Dispatcher.BeginInvoke( new Action( () =>
             {
-                using ( e.Surface ) // that's mandatory to free unmanaged memory
+                using ( e.Surface ) // Mandatory for freeing unmanaged memory
                 {
                     _renderer.Render( e.Surface );
                 }
