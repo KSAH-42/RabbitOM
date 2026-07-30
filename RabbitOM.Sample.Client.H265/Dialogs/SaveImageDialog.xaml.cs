@@ -8,9 +8,9 @@ namespace RabbitOM.Sample.Client.H265.Dialogs
 {
     public partial class SaveImageDialog : Window
     {
-        public static RoutedCommand TakeSnapshotCommand = new RoutedCommand();
+        public static readonly RoutedCommand TakeSnapshotCommand = new RoutedCommand();
 
-        public static RoutedCommand SaveButtonCommand = new RoutedCommand();
+        public static readonly RoutedCommand SaveButtonCommand = new RoutedCommand();
 
 
 

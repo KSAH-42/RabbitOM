@@ -8,9 +8,9 @@ namespace RabbitOM.Sample.Client.H264.Dialogs
 {
     public partial class SaveImageDialog : Window
     {
-        public static RoutedCommand TakeSnapshotCommand = new RoutedCommand();
+        public static readonly RoutedCommand TakeSnapshotCommand = new RoutedCommand();
 
-        public static RoutedCommand SaveButtonCommand = new RoutedCommand();
+        public static readonly RoutedCommand SaveButtonCommand = new RoutedCommand();
 
 
 
@@ -83,7 +83,7 @@ namespace RabbitOM.Sample.Client.H264.Dialogs
 
                 var result = dialog.ShowDialog();
 
-                if ( ! result.HasValue || ! result.Value )
+                if ( result.HasValue && result.Value )
                 {
                     return;
                 }

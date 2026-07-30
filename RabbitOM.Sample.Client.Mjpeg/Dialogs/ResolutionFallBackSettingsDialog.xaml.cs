@@ -6,8 +6,8 @@ namespace RabbitOM.Sample.Client.Mjpeg.Dialogs
 {
     public partial class ResolutionFallBackSettingsDialog : Window
     {
-        public static RoutedCommand AcceptButtonCommand = new RoutedCommand();
-        
+        public static readonly RoutedCommand AcceptButtonCommand = new RoutedCommand();
+
 
 
 
