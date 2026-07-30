@@ -68,16 +68,6 @@ namespace RabbitOM.Sample.Client
 
                 client.PacketReceived += ( sender , e ) =>
                 {
-                    var interleavedPacket = e.Packet as RtspInterleavedPacket;
-
-                    if ( interleavedPacket != null && interleavedPacket.Channel > 0 )
-                    {
-                        // In most of case, avoid this packet
-                        Console.ForegroundColor = ConsoleColor.DarkCyan;
-                        Console.WriteLine( "Skipping some data : size {0}" , e.Packet.Data.Length );
-                        return;
-                    }
-
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
                 };
