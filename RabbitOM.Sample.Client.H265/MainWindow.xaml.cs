@@ -229,8 +229,8 @@ namespace RabbitOM.Sample.Client.H265
         {
             var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.Source = _image.Source as WriteableBitmap;
-            
+            dialog.Source = _image.Source as BitmapSource;
+
             dialog.TakeSnasphot();
             dialog.ShowDialog();
         }

@@ -38,7 +38,7 @@ namespace RabbitOM.Sample.Client.H264.Dialogs
             set => SetValue( ImageProperty , value );
         }
 
-        public WriteableBitmap Source
+        public BitmapSource Source
         {
             get;
             set;
