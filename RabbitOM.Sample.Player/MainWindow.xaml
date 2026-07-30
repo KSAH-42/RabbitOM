@@ -198,7 +198,7 @@
             <TextBlock x:Name="_textBoxCodecInfo" 
                        VerticalAlignment="Bottom" 
                        HorizontalAlignment="Center" 
-                       FontSize="20" 
+                       FontSize="15" 
                        Foreground="White" 
                        Background="Black"
                        />
