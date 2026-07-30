@@ -229,18 +229,11 @@ namespace RabbitOM.Sample.Client.H264
 
         private void OnExecuteSaveImage( object sender , ExecutedRoutedEventArgs e )
         {
-            var bitmap = _image.Source as BitmapSource;
-
-            if ( bitmap == null )
-            {
-                return;
-            }
-
             var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.Image = bitmap.Clone();
-            dialog.BitmapSource = _image.Source as WriteableBitmap;
-
+            dialog.Source = _image.Source as WriteableBitmap;
+            
+            dialog.TakeSnasphot();
             dialog.ShowDialog();
         }
     }

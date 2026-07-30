@@ -38,21 +38,32 @@ namespace RabbitOM.Sample.Client.H264.Dialogs
             set => SetValue( ImageProperty , value );
         }
 
-        public WriteableBitmap BitmapSource
+        public WriteableBitmap Source
         {
             get;
             set;
         }
 
 
+
+
+        public void TakeSnasphot()
+        {
+            Image = Source?.Clone();
+        }
+
+
+
+
+
         private void OnCanTakeSnapshot( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = BitmapSource != null;
+            e.CanExecute = Source != null;
         }
 
         private void OnTakeSnapshot( object sender , ExecutedRoutedEventArgs e )
         {
-            Image = BitmapSource.Clone();
+            Image = Source.Clone();
         }
 
 
