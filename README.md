@@ -56,23 +56,30 @@ The actual RtspClient class WILL BE REMOVED (see streaming.experimentation proje
 
 using ( var client = new RtspClient() )
 {
-    // Raised when a successfull connection or when the communication has been recovered after a lost
+    client.CommunicationStarted += ( sender , e ) =>
+    {
+        Console.WriteLine( "Communication started - " + DateTime.Now );
+    };
+
+    client.CommunicationStopped += ( sender , e ) =>
+    {
+        Console.WriteLine( "Communication stopped - " + DateTime.Now );
+    };
+    
     client.Connected += (sender, e) =>
     {
         Console.WriteLine("Client connected - " + client.Configuration.Uri);
     };
 
-    // Raised when the communication has been lost
     client.Disconnected += (sender, e) =>
     {
-        Console.WriteLine("Client disconnected - " + DateTime.Now);
+        Console.WriteLine("Client disconnected - " + DateTime.Now + " - trying to reconnect..." );
     };
 
-    // Raised when a raw media data has been received 
     client.PacketReceived += (sender, e) =>
     {
-        if ( RTPPacket.TryParse( e.Packet.Data , out var packet ) )
-            Console.WriteLine( "rtp packet received: {0}" , packet.Payload.Length );
+        if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) )
+            Console.WriteLine( "rtp packet received - payload length: {0}" , packet.Payload.Length );
     };
 
     client.Configuration.Uri = "rtsp://127.0.0.1/toy.mp4";
