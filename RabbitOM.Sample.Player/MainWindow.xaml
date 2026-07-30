@@ -196,10 +196,11 @@
                    />
 
             <TextBlock x:Name="_textBoxCodecInfo" 
-                       VerticalAlignment="Top" 
+                       VerticalAlignment="Bottom" 
                        HorizontalAlignment="Center" 
                        FontSize="20" 
                        Foreground="White" 
+                       Background="Black"
                        />
 
 
