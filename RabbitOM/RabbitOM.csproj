@@ -358,9 +358,6 @@
     <Compile Include="Threading\WaitHandleExtensions.cs" />
     <Compile Include="Threading\WaitHandleExtensions.EventSlim.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Streaming\Rtp\ReadMe.txt" />
-  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
