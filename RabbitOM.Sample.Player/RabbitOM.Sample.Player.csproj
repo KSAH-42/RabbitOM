@@ -1,22 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FAE346A3-9229-4ADA-A0F0-EBC2A56F3681}</ProjectGuid>
+    <ProjectGuid>{7EAC1801-0B1C-423C-9BC9-7A0140172A04}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>RabbitOM.Tests.Client.Mjpeg</RootNamespace>
-    <AssemblyName>RabbitOM.Tests.Client.Mjpeg</AssemblyName>
+    <RootNamespace>RabbitOM.Sample.Player</RootNamespace>
+    <AssemblyName>RabbitOM.Sample.Player</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <RuntimeIdentifiers>win;win-x64</RuntimeIdentifiers>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,12 +27,11 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -37,12 +39,17 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <PreferNativeArm64>false</PreferNativeArm64>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FFmpeg.AutoGen, Version=4.4.1.0, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFmpeg.AutoGen.4.4.1\lib\net472\FFmpeg.AutoGen.dll</HintPath>
+    </Reference>
+    <Reference Include="FFmpeg.Native, Version=4.4.0.2386, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FFmpeg.Native.4.4.0.2386\lib\netstandard2.0\FFmpeg.Native.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,19 +62,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.IO.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Abstractions.10.0.1\lib\net461\System.IO.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Rendering\BitmapPixelsData.cs" />
-    <Compile Include="Rendering\JpegRenderer.cs" />
-    <Compile Include="Rendering\RenderingSizeInfo.cs" />
-    <Compile Include="Rendering\WritableBitmapLocker.cs" />
-    <Page Include="Dialogs\ResolutionFallBackSettingsDialog.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Dialogs\SaveImageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -77,9 +83,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\IntValueConverter.cs" />
-    <Compile Include="Dialogs\ResolutionFallBackSettingsDialog.xaml.cs">
-      <DependentUpon>ResolutionFallBackSettingsDialog.xaml</DependentUpon>
+    <Compile Include="Decoders\FFMpeg\H265DecoderTypeConverter.cs" />
+    <Compile Include="Decoders\FFMpeg\H265FFMpegDecoder.cs" />
+    <Compile Include="Decoders\FFMpeg\H265FFMpegRenderer.cs" />
+    <Compile Include="Decoders\FFMpeg\H265FFMpegSurface.cs" />
+    <Compile Include="Decoders\H265DecoderType.cs" />
+    <Compile Include="Decoders\H265Surface.cs" />
+    <Compile Include="Decoders\H265DecodedEventArgs.cs" />
+    <Compile Include="Decoders\H265Decoder.cs" />
+    <Compile Include="Decoders\H265Renderer.cs" />
+    <Compile Include="Decoders\ImageExtensions.cs" />
+    <Compile Include="Decoders\WritableBitmapLocker.cs" />
+    <Compile Include="Dialogs\SaveImageDialog.xaml.cs">
+      <DependentUpon>SaveImageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -105,6 +121,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -122,5 +139,25 @@
       <Name>RabbitOM</Name>
     </ProjectReference>
   </ItemGroup>
+  <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
+    <PropertyGroup>
+      <NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>
+      <FFmpegPkg>
+      </FFmpegPkg>
+      <FFmpegFallback>$(NuGetPackageRoot)ffmpeg.native.*\</FFmpegFallback>
+      <FFmpegRidPattern>win*-x64</FFmpegRidPattern>
+    </PropertyGroup>
+    <ItemGroup>
+      <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+      <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+    </ItemGroup>
+    <Message Text="Copying PkgFFmpeg_Native_H265: @(PkgFFmpeg_Native_H265)" Importance="High" />
+    <Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot)" Importance="High" />
+    <Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
+    <Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
+    <Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
+    <Copy SourceFiles="@(FFmpegNativeFiles)" DestinationFiles="@(FFmpegDestinationFiles)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition=" '@(FFmpegNativeFiles)' != '' " />
+    <Message Text="FFmpeg output folder: $(OutDir)" Importance="High" />
+  </Target>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace RabbitOM.Sample.Client.Mjpeg.Extensions
+namespace RabbitOM.Sample.Client.Player.MJpeg.Extensions
 {
     public static class ControlExtensions
     {

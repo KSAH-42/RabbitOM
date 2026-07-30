@@ -7,12 +7,12 @@ using System.Windows;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle( "RabbitOM.Sample.Client.Player" )]
+[assembly: AssemblyTitle( "RabbitOM.Sample.Player.MJpeg" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyConfiguration( "" )]
-[assembly: AssemblyCompany( "" )]
-[assembly: AssemblyProduct( "RabbitOM.Sample.Client.Player" )]
-[assembly: AssemblyCopyright( "Copyright ©  2026" )]
+[assembly: AssemblyCompany( "Rabbit Corp" )]
+[assembly: AssemblyProduct( "RabbitOM.Sample.Player.MJpeg" )]
+[assembly: AssemblyCopyright( "Copyright © Rabbit Corp. 2025" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
@@ -32,12 +32,12 @@ using System.Windows;
 
 
 [assembly: ThemeInfo(
-    ResourceDictionaryLocation.None , //où se trouvent les dictionnaires de ressources spécifiques à un thème
-                                      //(utilisé si une ressource est introuvable dans la page,
-                                      // ou dictionnaires de ressources de l'application)
-    ResourceDictionaryLocation.SourceAssembly //où se trouve le dictionnaire de ressources générique
-                                              //(utilisé si une ressource est introuvable dans la page,
-                                              // dans l'application ou dans l'un des dictionnaires de ressources spécifiques à un thème)
+	ResourceDictionaryLocation.None , //où se trouvent les dictionnaires de ressources spécifiques à un thème
+									  //(utilisé si une ressource est introuvable dans la page,
+									  // ou dictionnaires de ressources de l'application)
+	ResourceDictionaryLocation.SourceAssembly //où se trouve le dictionnaire de ressources générique
+											  //(utilisé si une ressource est introuvable dans la page,
+											  // dans l'application ou dans l'un des dictionnaires de ressources spécifiques à un thème)
 )]
 
 
@@ -48,5 +48,8 @@ using System.Windows;
 //      Numéro de build
 //      Révision
 //
-[assembly: AssemblyVersion( "1.0.0.0" )]
-[assembly: AssemblyFileVersion( "1.0.0.0" )]
+// Vous pouvez spécifier toutes les valeurs ou indiquer les numéros de build et de révision par défaut
+// en utilisant '*', comme indiqué ci-dessous :
+// [assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion( "2.0.0.4" )]
+[assembly: AssemblyFileVersion( "2.0.0.4" )]
