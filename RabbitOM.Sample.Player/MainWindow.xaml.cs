@@ -27,7 +27,7 @@ namespace RabbitOM.Sample.Client.Player
     // There is a base line here, but the right direction for writing a correct architecture is probably to write a graph and setup it using a builder
     // just something similar to dsf using a modern approachs
     // or something like a micro service capable to configure just a simple pipeline shoud be enough
-    // and may be having different microservice per graph type could be nice
+    // and may be having different microservice per graph type could be enough
 
     public partial class MainWindow : Window
     {
