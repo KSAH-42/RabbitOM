@@ -89,7 +89,6 @@
             <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>
             
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/screenlive"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city1.mp4"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city2.mp4"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city3.mp4"/>
@@ -113,7 +112,6 @@
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/video.mp4" />
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/video4K.mp4" />
 
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city1.mp4"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city2.mp4"/>
