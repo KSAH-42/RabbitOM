@@ -26,7 +26,7 @@ namespace RabbitOM.Sample.Client.Player
     // This is not a clean code here if we respect wpf, and others things, it's juste a demo, refactorization must be done
     // There is a base line here, but the right direction for writing a correct architecture is to write a graph and setup it using a builder
     // just something similar to dsf using a modern approachs
-    // or something different than a multi thread graphs
+    // or something different than a multi thread graph
 
     public partial class MainWindow : Window
     {
