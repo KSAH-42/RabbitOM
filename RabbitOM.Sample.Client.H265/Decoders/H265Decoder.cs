@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Client.H265.Codecs.FFMpeg
+namespace RabbitOM.Sample.Client.H265.Codecs
 {
     public abstract class H265Decoder : IDisposable
     {
