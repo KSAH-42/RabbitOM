@@ -23,7 +23,7 @@ namespace RabbitOM.Sample.Client.Player
     using RabbitOM.Sample.Client.Player.Dialogs;
     using RabbitOM.Sample.Client.Player.Extensions;
 
-    // This is not a clean code here if we respect wpf, and others things, it's juste a demo, refactorization must be done
+    // This is not a clean code here if we respect wpf, and others things, it's juste a demo, a refactorization must be done
     // There is a base line here, but the right direction for writing a correct architecture is probably to write a graph and setup it using a builder
     // just something similar to dsf using a modern approachs
     // or something like a micro service capable to configure just a simple pipeline shoud be enough
