@@ -23,7 +23,7 @@ namespace RabbitOM.Sample.Client.Player
     using RabbitOM.Sample.Client.Player.Dialogs;
     using RabbitOM.Sample.Client.Player.Extensions;
 
-    // This is not a clean code here if we respect wpf, and others things, it must refactored
+    // This is not a clean code here if we respect wpf, and others things, it must be refactored
     // there is a base line, the rigth architecture is use a graph and graph builder
 
     public partial class MainWindow : Window
