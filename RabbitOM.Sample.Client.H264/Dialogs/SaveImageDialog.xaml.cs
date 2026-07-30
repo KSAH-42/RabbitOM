@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -88,7 +89,7 @@ namespace RabbitOM.Sample.Client.H264.Dialogs
                     return;
                 }
 
-                using ( var stream = System.IO.File.Create( dialog.FileName ) )
+                using ( var stream = File.Create( dialog.FileName ) )
                 {
                     BitmapEncoder encoder = new BmpBitmapEncoder();
 
