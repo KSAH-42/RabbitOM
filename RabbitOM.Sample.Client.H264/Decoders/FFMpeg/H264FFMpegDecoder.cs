@@ -239,7 +239,7 @@ namespace RabbitOM.Sample.Client.H264.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "rtsp_transport" , "none" , 0 );
                     ffmpeg.av_dict_set( opts , "allowed_media_types" , "video" , 0 );
 
-                    return ffmpeg.avcodec_open2( _context , _codec , opts ) >= 0;
+                    return ffmpeg.avcodec_open2( _context , _codec , opts ) == 0;
                 }
             }
         }
