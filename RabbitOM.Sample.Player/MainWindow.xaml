@@ -61,6 +61,9 @@
                   >
 
             <ComboBoxItem Content="rtsp://stream.strba.sk:1935/strba/VYHLAD_JAZERO.stream"/>
+            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101"/>
+            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102"/>
+            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city1.mp4"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city2.mp4"/>
@@ -84,9 +87,6 @@
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/water.mpg" />
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/video.mp4" />
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/video4K.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>
             
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/screenlive"/>
             <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city1.mp4"/>
