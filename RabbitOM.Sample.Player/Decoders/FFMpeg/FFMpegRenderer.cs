@@ -8,7 +8,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    public sealed unsafe class H265FFMpegRenderer : H265Renderer
+    public sealed unsafe class FFMpegRenderer : Renderer
     {
         private SwsContext* _sws_context = null;
         private WriteableBitmap _writableBitmap;
@@ -44,7 +44,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
             _image = image;
         }
 
-        public unsafe override void Render( H265Surface surface )
+        public unsafe override void Render( Surface surface )
         {
             if ( _image == null || surface == null )
             {

@@ -4,7 +4,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs
 {
     public abstract class H265Decoder : IDisposable
     {
-        public event EventHandler<H265DecodedEventArgs> Decoded;
+        public event EventHandler<DecodedEventArgs> Decoded;
 
 
 
@@ -56,7 +56,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs
 
 
 
-        protected virtual void OnDecoded( H265DecodedEventArgs e )
+        protected virtual void OnDecoded( DecodedEventArgs e )
         {
             Decoded?.Invoke( this , e );
         }

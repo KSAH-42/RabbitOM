@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Sample.Client.Player.Codecs
 {
-    public abstract class H265Surface : IDisposable
+    public abstract class Surface : IDisposable
     {
-        ~H265Surface()
+        ~Surface()
         {
             Dispose( false );
         }

@@ -4,11 +4,11 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    public sealed unsafe class H265FFMpegSurface : H265Surface
+    public sealed unsafe class FFMpegSurface : Surface
     {
         private AVFrame* _frame;
 
-        public H265FFMpegSurface( int frameWidth , int frameHeight , AVFrame* frame )
+        public FFMpegSurface( int frameWidth , int frameHeight , AVFrame* frame )
         {
             if ( frame == null )
             {

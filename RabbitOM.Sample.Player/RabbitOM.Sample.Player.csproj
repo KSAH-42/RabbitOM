@@ -83,15 +83,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Decoders\FFMpeg\H265DecoderTypeConverter.cs" />
-    <Compile Include="Decoders\FFMpeg\H265FFMpegDecoder.cs" />
-    <Compile Include="Decoders\FFMpeg\H265FFMpegRenderer.cs" />
-    <Compile Include="Decoders\FFMpeg\H265FFMpegSurface.cs" />
-    <Compile Include="Decoders\H265DecoderType.cs" />
-    <Compile Include="Decoders\H265Surface.cs" />
-    <Compile Include="Decoders\H265DecodedEventArgs.cs" />
-    <Compile Include="Decoders\H265Decoder.cs" />
-    <Compile Include="Decoders\H265Renderer.cs" />
+    <Compile Include="Decoders\FFMpeg\FFMpegCodecTypeConverter.cs" />
+    <Compile Include="Decoders\FFMpeg\FFMpegDecoder.cs" />
+    <Compile Include="Decoders\FFMpeg\FFMpegRenderer.cs" />
+    <Compile Include="Decoders\FFMpeg\FFMpegSurface.cs" />
+    <Compile Include="Decoders\CodecType.cs" />
+    <Compile Include="Decoders\Surface.cs" />
+    <Compile Include="Decoders\DecodedEventArgs.cs" />
+    <Compile Include="Decoders\Decoder.cs" />
+    <Compile Include="Decoders\Renderer.cs" />
     <Compile Include="Decoders\ImageExtensions.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
     <Compile Include="Dialogs\SaveImageDialog.xaml.cs">

@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace RabbitOM.Sample.Client.Player.Codecs
 {
-    public abstract class H265Renderer : IDisposable
+    public abstract class Renderer : IDisposable
     {
-        ~H265Renderer()
+        ~Renderer()
         {
             Dispose( false );
         }
@@ -14,7 +14,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs
 
         public abstract void Open( FrameworkElement targetControl );
 
-        public abstract void Render( H265Surface surface );
+        public abstract void Render( Surface surface );
 
         public abstract void Close();
 

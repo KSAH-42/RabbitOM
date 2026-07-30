@@ -34,8 +34,8 @@ namespace RabbitOM.Sample.Client.Player
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpMediaBuilderAdapter _frameBuilder = new RtpMediaBuilderAdapter();
-        private readonly H265FFMpegDecoder _decoder = new H265FFMpegDecoder();
-        private readonly H265FFMpegRenderer _renderer = new H265FFMpegRenderer();
+        private readonly FFMpegDecoder _decoder = new FFMpegDecoder();
+        private readonly FFMpegRenderer _renderer = new FFMpegRenderer();
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -230,7 +230,7 @@ namespace RabbitOM.Sample.Client.Player
             _decoder.Decode( e.MediaElement.Buffer );
         }
 
-        private void OnFrameDecoded( object sender , H265DecodedEventArgs e )
+        private void OnFrameDecoded( object sender , DecodedEventArgs e )
         {
             _image.Dispatcher.BeginInvoke( new Action( () =>
             {

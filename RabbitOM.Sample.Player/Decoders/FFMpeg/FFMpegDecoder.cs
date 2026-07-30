@@ -8,7 +8,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    public unsafe sealed class H265FFMpegDecoder : H265Decoder
+    public unsafe sealed class FFMpegDecoder : H265Decoder
     {
         private AVCodec* _codec = null;
         private AVCodecContext* _context = null;
@@ -21,7 +21,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 
 
 
-        static H265FFMpegDecoder()
+        static FFMpegDecoder()
         {
             ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
@@ -49,7 +49,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 
             try
             {
-                _codec = ffmpeg.avcodec_find_decoder( H265DecoderTypeConverter.ConvertTo( type ) );
+                _codec = ffmpeg.avcodec_find_decoder( FFMpegCodecTypeConverter.ConvertTo( type ) );
 
                 if ( _codec == null )
                 {
@@ -273,7 +273,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
                 return;
             }
 
-            OnDecoded( new H265DecodedEventArgs( new H265FFMpegSurface( _context->width , _context->height , clonedFrame ) ) );
+            OnDecoded( new DecodedEventArgs( new FFMpegSurface( _context->width , _context->height , clonedFrame ) ) );
         }
     }
 }

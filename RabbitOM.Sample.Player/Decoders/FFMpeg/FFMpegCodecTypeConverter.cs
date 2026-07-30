@@ -4,7 +4,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    public static class H265DecoderTypeConverter
+    public static class FFMpegCodecTypeConverter
     {
         public static AVCodecID ConvertTo( H265DecoderType type )
         {
