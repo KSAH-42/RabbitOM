@@ -34,50 +34,11 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="37" />
             <RowDefinition Height="*" />
             <RowDefinition Height="35" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Margin="0,12,0,0" >
-
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="45"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0">
-
-                    <TextBlock Margin="10,0,0,0" Text="File :" />
-
-                </Grid>
-
-                <Grid Grid.Column="1">
-
-                    <TextBox Margin="0,0,0,0" Text="{Binding FileName, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged , RelativeSource={RelativeSource AncestorType=Window} }" />
-
-                </Grid>
-
-                <Grid Grid.Column="2">
-
-                    <Button Margin="5,0,5,0"
-                            Content="..."
-                            VerticalAlignment="Bottom" 
-                            HorizontalAlignment="Left"
-                            Width="35"
-                            Height="25"
-                            Command="{x:Static local:SaveImageDialog.SelectFileCommand}"
-                            />
-
-                </Grid>
-
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="1" Background="Black" Margin="2,10,2,10">
+        <Grid Grid.Row="0" Background="Black" Margin="2,10,2,10">
 
             <Image Margin="0,0,0,0" 
                    Stretch="Uniform" 
@@ -86,9 +47,16 @@
                    Source="{Binding Image,RelativeSource={RelativeSource AncestorType=Window}}"
                    />
 
+            <TextBlock Margin="0,0,0,5"
+                       VerticalAlignment="Bottom"
+                       HorizontalAlignment="Center"
+                       Foreground="White"
+                       Text="{Binding Path=FileName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,  RelativeSource={RelativeSource AncestorType=Window} }"
+                       />
+
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1">
 
             <Button Margin="5,0,5,10" 
                     Content="Snapshot"
@@ -106,6 +74,15 @@
                     Width="80"
                     Height="25"
                     Command="{x:Static local:SaveImageDialog.SaveButtonCommand}"
+                    />
+
+            <Button Margin="185,0,5,10" 
+                    Content="..."
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Left"
+                    Width="35"
+                    Height="25"
+                    Command="{x:Static local:SaveImageDialog.SelectFileCommand}"
                     />
 
             <Button Margin="60,0,5,10" 
