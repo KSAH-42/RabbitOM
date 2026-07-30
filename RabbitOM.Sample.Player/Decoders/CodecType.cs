@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Sample.Client.Player.Codecs
 {
-    public enum H265DecoderType
+    public enum CodecType
     {
         MJPEG ,
         H264 ,

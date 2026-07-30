@@ -6,19 +6,19 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 
     public static class FFMpegCodecTypeConverter
     {
-        public static AVCodecID ConvertTo( H265DecoderType type )
+        public static AVCodecID ConvertTo( CodecType type )
         {
-            if ( type == H265DecoderType.MJPEG )
+            if ( type == CodecType.MJPEG )
             {
                 return AVCodecID.AV_CODEC_ID_MJPEG;
             }
 
-            if ( type == H265DecoderType.H264 )
+            if ( type == CodecType.H264 )
             {
                 return AVCodecID.AV_CODEC_ID_H264;
             }
 
-            if ( type == H265DecoderType.H265 )
+            if ( type == CodecType.H265 )
             {
                 return AVCodecID.AV_CODEC_ID_HEVC;
             }

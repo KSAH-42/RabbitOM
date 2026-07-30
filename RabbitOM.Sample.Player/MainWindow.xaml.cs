@@ -143,7 +143,7 @@ namespace RabbitOM.Sample.Client.Player
                         };
                     } );
 
-                    _decoder.Open( H265DecoderType.H264 );
+                    _decoder.Open( CodecType.H264 );
                     _renderer.Open( _image );
                 }
                 else if ( e.TrackInfo.Encoder?.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
@@ -158,7 +158,7 @@ namespace RabbitOM.Sample.Client.Player
                         };
                     } );
 
-                    _decoder.Open( H265DecoderType.H265 );
+                    _decoder.Open( CodecType.H265 );
                     _renderer.Open( _image );
                 }
                 else if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
@@ -168,7 +168,7 @@ namespace RabbitOM.Sample.Client.Player
                         return new JpegFrameBuilder();
                     } );
 
-                    _decoder.Open( H265DecoderType.MJPEG );
+                    _decoder.Open( CodecType.MJPEG );
                     _renderer.Open( _image );
                 }
                 else

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Sample.Client.Player.Codecs
 {
-    public abstract class H265Decoder : IDisposable
+    public abstract class Decoder : IDisposable
     {
         public event EventHandler<DecodedEventArgs> Decoded;
 
@@ -11,7 +11,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs
 
 
 
-        ~H265Decoder()
+        ~Decoder()
         {
             Dispose( false );
         }
@@ -26,7 +26,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs
 
 
 
-        public abstract void Open( H265DecoderType type );
+        public abstract void Open( CodecType type );
 
         public abstract void Close();
 

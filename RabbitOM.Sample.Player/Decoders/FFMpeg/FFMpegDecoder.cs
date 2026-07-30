@@ -8,7 +8,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    public unsafe sealed class FFMpegDecoder : H265Decoder
+    public unsafe sealed class FFMpegDecoder : Decoder
     {
         private AVCodec* _codec = null;
         private AVCodecContext* _context = null;
@@ -40,7 +40,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 
 
 
-        public override void Open( H265DecoderType type )
+        public override void Open( CodecType type )
         {
             if ( _codec != null )
             {
