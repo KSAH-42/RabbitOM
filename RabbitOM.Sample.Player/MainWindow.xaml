@@ -52,99 +52,21 @@
                    Text="RTSP URI :" 
                    />
 
-        <ComboBox x:Name="_uris" 
-                  Margin="65,3,79,0" 
+        <ComboBox Margin="65,3,79,0" 
                   VerticalAlignment="Top" 
                   SelectedIndex="0" 
                   Height="22" 
                   IsEditable="True" 
-                  >
+                  Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                  ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                  />
 
-            <ComboBoxItem Content="rtsp://stream.strba.sk:1935/strba/VYHLAD_JAZERO.stream"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/screenlive"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city1.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city2.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city3.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city4.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city5.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city6.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/city7.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/toy.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/movie.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/earth.avi"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/test2.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/fruit.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/butterfly.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/park.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/park2.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/forest.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/freeway.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/valentin.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/lake.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/water.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/video.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:554/video4K.mp4" />
-            
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/screenlive"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city1.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city2.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city3.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city4.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city5.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city6.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/city7.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/toy.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/movie.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/earth.avi"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/test2.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/fruit.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/butterfly.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/park.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/park2.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/forest.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/freeway.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/valentin.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/lake.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/water.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/video.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:555/video4K.mp4" />
-
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/screenlive"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city1.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city2.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city3.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city4.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city5.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city6.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/city7.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/toy.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/movie.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/earth.avi"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/test2.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/fruit.mp4"/>
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/butterfly.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/park.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/park2.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/forest.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/freeway.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/valentin.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/lake.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/water.mpg" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/video.mp4" />
-            <ComboBoxItem Content="rtsp://admin:camera123@127.0.0.1:556/video4K.mp4" />
-
-        </ComboBox>
-
-        <Button x:Name="_controlButton" 
-                Margin="0,3,2,0" 
+        <Button Margin="0,3,2,0" 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top" 
                 Width="74" 
                 Height="22"
-                Content="Play" 
+                Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                 Click="OnButtonControlClick" 
                 />
 
@@ -181,28 +103,29 @@
 
             </Grid.ContextMenu>
 
-            <TextBlock x:Name="_textBlockInfo" 
-                       VerticalAlignment="Center" 
+            <TextBlock VerticalAlignment="Center" 
                        HorizontalAlignment="Center" 
                        FontSize="20" 
                        Foreground="White" 
+                       Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                        />
 
             <Image x:Name="_image"  
                    Margin="0,0,0,0" 
-                   Stretch="Uniform" 
                    SnapsToDevicePixels="True" 
                    UseLayoutRounding="True" 
+                   Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                   Stretch="{Binding ImageStretch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                    />
 
-            <TextBlock x:Name="_textBoxCodecInfo" 
-                       VerticalAlignment="Bottom" 
+            <TextBlock VerticalAlignment="Bottom" 
                        HorizontalAlignment="Center" 
                        FontSize="15" 
                        Foreground="White" 
                        Background="Black"
+                       Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                       Visibility="{Binding CodecInfoVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                        />
-
 
         </Grid>
 

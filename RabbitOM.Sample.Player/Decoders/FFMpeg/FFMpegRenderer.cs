@@ -1,4 +1,4 @@
-﻿using FFmpeg.AutoGen;
+﻿
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +7,7 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 {
-    using RabbitOM.Sample.Player.Extensions;
+    using FFmpeg.AutoGen;
 
     public sealed unsafe class FFMpegRenderer : Renderer
     {

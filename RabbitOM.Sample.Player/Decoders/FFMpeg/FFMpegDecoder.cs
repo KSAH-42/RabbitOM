@@ -1,5 +1,4 @@
-﻿// This decoder doesn't support hardware acceleration, you need to implement your own decoder using ffmpeg
-using System;
+﻿using System;
 using System.Linq;
 
 #pragma warning disable CS0618
@@ -17,6 +16,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
         private AVPacket* _rawPacket = null;
         private AVDictionary* _options = null;
         private byte[] _extraParameters;
+
 
 
 

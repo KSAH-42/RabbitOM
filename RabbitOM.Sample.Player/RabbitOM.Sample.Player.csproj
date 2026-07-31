@@ -83,6 +83,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Decoders\FFMpeg\FFMpegCodecTypeConverter.cs" />
     <Compile Include="Decoders\FFMpeg\FFMpegDecoder.cs" />
     <Compile Include="Decoders\FFMpeg\FFMpegRenderer.cs" />
@@ -92,12 +93,11 @@
     <Compile Include="Decoders\DecodedEventArgs.cs" />
     <Compile Include="Decoders\Decoder.cs" />
     <Compile Include="Decoders\Renderer.cs" />
-    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Decoders\ImageExtensions.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
     <Compile Include="Dialogs\SaveImageDialog.xaml.cs">
       <DependentUpon>SaveImageDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
