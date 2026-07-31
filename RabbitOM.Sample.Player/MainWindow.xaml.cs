@@ -54,12 +54,14 @@ namespace RabbitOM.Sample.Player
         private readonly FFMpegDecoder _decoder = new FFMpegDecoder();
         private readonly FFMpegRenderer _renderer = new FFMpegRenderer();
 
+        // TODO: to be remove and replace by converter
         public Stretch ImageStretch
         {
             get => (Stretch) GetValue( ImageStretchProperty );
             set => SetValue( ImageStretchProperty , value );
         }
 
+        // TODO: to be remove and replace by converter
         public Visibility CodecInfoVisibility
         {
             get => (Visibility) GetValue( CodecInfoVisibilityProperty );
