@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace RabbitOM.Sample.Player
 {
@@ -30,7 +31,7 @@ namespace RabbitOM.Sample.Player
     using RabbitOM.Sample.Player.Codecs.FFMpeg;
     using RabbitOM.Sample.Player.Configuration;
     using RabbitOM.Sample.Player.Dialogs;
-    
+
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
@@ -212,7 +213,7 @@ namespace RabbitOM.Sample.Player
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
-            Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 StatusInfo = "Connecting";
             } ) );
@@ -220,7 +221,7 @@ namespace RabbitOM.Sample.Player
 
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
-            Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 StatusInfo = "";
             } ) );
@@ -228,7 +229,7 @@ namespace RabbitOM.Sample.Player
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
         {
-            Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 _frameBuilder.Dispose();
 
@@ -276,7 +277,7 @@ namespace RabbitOM.Sample.Player
         {
             _frameBuilder.Clear();
 
-            Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 StatusInfo = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
                 CodecInfo = "";
@@ -320,7 +321,7 @@ namespace RabbitOM.Sample.Player
 
         private void OnFrameDecoded( object sender , DecodedEventArgs e )
         {
-            Dispatcher.BeginInvoke( new Action( () =>
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 using ( e.Surface ) // Mandatory for freeing unmanaged memory
                 {
