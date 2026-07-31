@@ -135,7 +135,7 @@ namespace RabbitOM.Sample.Player.MJpeg
 
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                _textBlockInfo.Text = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
+                _textBlockInfo.Text = "Connecting - Communication Lost";
                 _renderer.Clear();
             } ));
         }
