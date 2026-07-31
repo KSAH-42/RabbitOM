@@ -84,6 +84,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
+    <Compile Include="Converters\BooleanStretchValueConverter.cs" />
+    <Compile Include="Converters\BooleanVisibilityValueConverter.cs" />
     <Compile Include="Decoders\FFMpeg\FFMpegCodecTypeConverter.cs" />
     <Compile Include="Decoders\FFMpeg\FFMpegDecoder.cs" />
     <Compile Include="Decoders\FFMpeg\FFMpegRenderer.cs" />

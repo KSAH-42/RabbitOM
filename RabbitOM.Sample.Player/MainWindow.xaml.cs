@@ -54,16 +54,22 @@ namespace RabbitOM.Sample.Player
         private readonly FFMpegDecoder _decoder = new FFMpegDecoder();
         private readonly FFMpegRenderer _renderer = new FFMpegRenderer();
 
-        public ImageSource Image
-        {
-            get => GetValue( ImageProperty ) as ImageSource;
-            set => SetValue( ImageProperty , value );
-        }
-
         public Stretch ImageStretch
         {
             get => (Stretch) GetValue( ImageStretchProperty );
             set => SetValue( ImageStretchProperty , value );
+        }
+
+        public Visibility CodecInfoVisibility
+        {
+            get => (Visibility) GetValue( CodecInfoVisibilityProperty );
+            set => SetValue( CodecInfoVisibilityProperty , value );
+        }
+
+        public ImageSource Image
+        {
+            get => GetValue( ImageProperty ) as ImageSource;
+            set => SetValue( ImageProperty , value );
         }
 
         public string StatusInfo
@@ -76,12 +82,6 @@ namespace RabbitOM.Sample.Player
         {
             get => GetValue( CodecInfoProperty ) as string;
             set => SetValue( CodecInfoProperty , value );
-        }
-
-        public Visibility CodecInfoVisibility
-        {
-            get => (Visibility) GetValue( CodecInfoVisibilityProperty );
-            set => SetValue( CodecInfoVisibilityProperty , value );
         }
 
         public string ButtonStatus
