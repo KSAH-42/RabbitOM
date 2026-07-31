@@ -139,6 +139,7 @@ namespace RabbitOM.Sample.Client.Player
                 _frameBuilder.Dispose();
 
                 CodecType? codec = null;
+                
                 if ( e.TrackInfo.Encoder?.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<H264FrameBuilder>( () =>
