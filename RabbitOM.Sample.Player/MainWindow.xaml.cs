@@ -81,7 +81,6 @@ namespace RabbitOM.Sample.Player
 
         public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( ApplicationConfiguration.CreateDefaultUris() );
 
-
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
             _client.CommunicationStarted += OnCommunicationStarted;
