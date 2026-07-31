@@ -128,7 +128,7 @@ namespace RabbitOM.Sample.Player.Dialogs
             {
                 using ( var stream = File.Create( FileName ) )
                 {
-                    BitmapEncoder encoder = new BmpBitmapEncoder();
+                    var encoder = new BmpBitmapEncoder();
 
                     encoder.Frames.Add( BitmapFrame.Create( Image ) );
                     encoder.Save( stream );
