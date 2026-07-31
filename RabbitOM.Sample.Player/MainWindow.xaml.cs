@@ -151,8 +151,10 @@ namespace RabbitOM.Sample.Client.Player
 
                     _decoder.Open( CodecType.H264 );
                     _renderer.Open( _image );
+                    return;
                 }
-                else if ( e.TrackInfo.Encoder?.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+
+                if ( e.TrackInfo.Encoder?.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<H265FrameBuilder>( () =>
                     {
@@ -166,8 +168,10 @@ namespace RabbitOM.Sample.Client.Player
 
                     _decoder.Open( CodecType.H265 );
                     _renderer.Open( _image );
+                    return;
                 }
-                else if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+
+                if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<JpegFrameBuilder>( () =>
                     {
@@ -176,11 +180,10 @@ namespace RabbitOM.Sample.Client.Player
 
                     _decoder.Open( CodecType.MJPEG );
                     _renderer.Open( _image );
+                    return;
                 }
-                else
-                {
-                    _textBlockInfo.Text = "Format not supported ( " + e.TrackInfo.Encoder + " )";
-                }
+
+                _textBlockInfo.Text = "Format not supported ( " + e.TrackInfo.Encoder + " )";
             } ) );
         }
 
