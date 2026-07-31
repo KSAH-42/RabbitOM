@@ -28,30 +28,32 @@ namespace RabbitOM.Sample.Player.Dialogs
 
 
 
-        public static readonly DependencyProperty ImageProperty
-            = DependencyProperty.Register(
-                "Image", typeof(BitmapSource) ,
-                    typeof(SaveImageDialog) );
-
         public static readonly DependencyProperty FileNameProperty
             = DependencyProperty.Register(
                 "FileName", typeof(string) ,
                     typeof(SaveImageDialog) );
 
 
+        public static readonly DependencyProperty ImageProperty
+            = DependencyProperty.Register(
+                "Image", typeof(BitmapSource) ,
+                    typeof(SaveImageDialog) );
 
 
 
-        public BitmapSource Image
-        {
-            get => (BitmapSource) GetValue( ImageProperty );
-            set => SetValue( ImageProperty , value );
-        }
+
+
 
         public string FileName
         {
             get => (string) GetValue( FileNameProperty );
             set => SetValue( FileNameProperty , value );
+        }
+
+        public BitmapSource Image
+        {
+            get => (BitmapSource) GetValue( ImageProperty );
+            set => SetValue( ImageProperty , value );
         }
 
         public BitmapSource Source
@@ -74,6 +76,7 @@ namespace RabbitOM.Sample.Player.Dialogs
 
 
 
+
         private void OnCanSelectFile( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = Image != null;
@@ -85,7 +88,7 @@ namespace RabbitOM.Sample.Player.Dialogs
             {
                 var dialog = new OpenFileDialog()
                 {
-                    Filter = "Image file (*.bmp)|*.bmp", CheckFileExists = false 
+                    Filter = "Image file (*.bmp)|*.bmp", CheckFileExists = false
                 };
 
                 if ( dialog.ShowDialog() == true )
@@ -120,7 +123,7 @@ namespace RabbitOM.Sample.Player.Dialogs
             {
                 return;
             }
-                
+
             try
             {
                 using ( var stream = File.Create( FileName ) )

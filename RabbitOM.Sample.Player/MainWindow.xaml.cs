@@ -215,18 +215,12 @@ namespace RabbitOM.Sample.Player
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
-            {
-                StatusInfo = "Connecting";
-            } ) );
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () => StatusInfo = "Connecting" ) );
         }
 
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
-            {
-                StatusInfo = "";
-            } ) );
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () => StatusInfo = "" ) );
         }
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
