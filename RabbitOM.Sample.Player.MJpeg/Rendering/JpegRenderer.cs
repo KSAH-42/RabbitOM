@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Client.Player.MJpeg.Rendering
+namespace RabbitOM.Sample.Player.MJpeg.Rendering
 {
     public sealed class JpegRenderer : IDisposable
     {
