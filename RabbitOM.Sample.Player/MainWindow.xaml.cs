@@ -113,7 +113,6 @@ namespace RabbitOM.Sample.Client.Player
             }
         }
 
-        
         private void OnCanStrechImageAsFill( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = _client.IsCommunicationStarted;
@@ -259,18 +258,15 @@ namespace RabbitOM.Sample.Client.Player
                 extraParameters = H265MediaElement.CreateExtraParameters( h265Frame );
             }
 
-            if ( e.MediaElement is H264MediaElement h264Frame )
+            else if ( e.MediaElement is H264MediaElement h264Frame )
             {
                 extraParameters = H264MediaElement.CreateExtraParameters( h264Frame );
             }
-                         
 
-            if ( _decoder.CanConfigure( extraParameters ) && ! _decoder.Configure( extraParameters ) )
+            if ( ! _decoder.CanConfigure( extraParameters ) || _decoder.Configure( extraParameters ) )
             {
-                return;
+                _decoder.Decode( e.MediaElement.Buffer );
             }
-
-            _decoder.Decode( e.MediaElement.Buffer );
         }
 
         private void OnFrameDecoded( object sender , DecodedEventArgs e )
