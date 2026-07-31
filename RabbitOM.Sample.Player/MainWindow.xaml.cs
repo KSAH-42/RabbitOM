@@ -23,7 +23,7 @@ namespace RabbitOM.Sample.Client.Player
     using RabbitOM.Sample.Client.Player.Dialogs;
     using RabbitOM.Sample.Client.Player.Extensions;
 
-    // This is not a clean code here if we respect wpf, and others things, it's just a demo, a refactorization must be done
+    // This is not the best code here if we respect wpf, and others things, it's just a demo, a refactorization must be done
     // There is a base line here, but the right direction for writing a correct architecture is probably to write a graph and setup it using a builder
     // just something similar to dsf using a modern approachs
     // or something like a micro service capable to configure just a simple pipeline shoud be enough
@@ -133,9 +133,6 @@ namespace RabbitOM.Sample.Client.Player
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
             {
-                _textBlockInfo.Text = "";
-                _textBoxCodecInfo.Text = "Codec - " + e.TrackInfo.Encoder;
-
                 _frameBuilder.Dispose();
 
                 CodecType? codec = null;
@@ -180,6 +177,9 @@ namespace RabbitOM.Sample.Client.Player
                 {
                     _decoder.Open( codec.Value );
                     _renderer.Open( _image );
+
+                    _textBoxCodecInfo.Text = "Codec - " + e.TrackInfo.Encoder;
+                    _textBlockInfo.Text = "";
                     return;
                 }
 
