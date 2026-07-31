@@ -183,7 +183,6 @@ namespace RabbitOM.Sample.Client.Player
 
                 CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
 
-
                 if ( codec == CodecType.H265 )
                 {
                     _frameBuilder.Setup( () => new H265FrameBuilder()
