@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 
 namespace RabbitOM.Streaming.Rtp
 {
@@ -20,7 +21,7 @@ namespace RabbitOM.Streaming.Rtp
 
         private readonly object _lock = new object();
 
-        private IMediaBuilder _builder;
+        private volatile IMediaBuilder _builder;
 
 
 
@@ -29,18 +30,16 @@ namespace RabbitOM.Streaming.Rtp
 
         public void AddPacket( RtpPacket packet )
         {
-            lock ( _lock )
-            {
-                _builder?.AddPacket( packet );
-            }
+            var builder = _builder;
+
+            builder?.AddPacket( packet );
         }
 
         public void Clear()
         {
-            lock ( _lock )
-            {
-                _builder?.Clear();
-            }
+            var builder = _builder;
+
+            builder?.Clear();
         }
 
         public void Setup( Func<IMediaBuilder> factory )
