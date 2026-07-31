@@ -34,17 +34,12 @@ namespace RabbitOM.Sample.Player
 
     public partial class MainWindow : Window
     {
-        public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand UniformImageCommand = new RoutedCommand();
+        public static readonly RoutedCommand ControlCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowCodecInfoImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand HideCodecInfoImageCommand = new RoutedCommand();
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( "Image", typeof(ImageSource) , typeof(MainWindow) );
-        public static readonly DependencyProperty ImageStretchProperty = DependencyProperty.Register( "ImageStretch", typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata( Stretch.Uniform ) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty CodecInfoProperty = DependencyProperty.Register( "CodecInfo", typeof(string) , typeof(MainWindow) );
-        public static readonly DependencyProperty CodecInfoVisibilityProperty = DependencyProperty.Register( "CodecInfoVisibility", typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata( Visibility.Visible ) );
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedUri", typeof(string) , typeof(MainWindow) );
 
@@ -53,20 +48,6 @@ namespace RabbitOM.Sample.Player
         private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
         private readonly FFMpegDecoder _decoder = new FFMpegDecoder();
         private readonly FFMpegRenderer _renderer = new FFMpegRenderer();
-
-        // TODO: to be remove and replace by converter
-        public Stretch ImageStretch
-        {
-            get => (Stretch) GetValue( ImageStretchProperty );
-            set => SetValue( ImageStretchProperty , value );
-        }
-
-        // TODO: to be remove and replace by converter
-        public Visibility CodecInfoVisibility
-        {
-            get => (Visibility) GetValue( CodecInfoVisibilityProperty );
-            set => SetValue( CodecInfoVisibilityProperty , value );
-        }
 
         public ImageSource Image
         {
@@ -128,7 +109,7 @@ namespace RabbitOM.Sample.Player
             _decoder.Dispose();
         }
 
-        private void OnButtonControlClick( object sender , RoutedEventArgs e )
+        private void OnControl( object sender , ExecutedRoutedEventArgs e )
         {
             try
             {
@@ -145,7 +126,7 @@ namespace RabbitOM.Sample.Player
                     return;
                 }
 
-                if ( ! Uris.Any( x => StringComparer.OrdinalIgnoreCase.Equals( x ?? string.Empty , SelectedUri ?? string.Empty ) ) )
+                if ( ! Uris.Any( uriValue => StringComparer.OrdinalIgnoreCase.Equals( uriValue ?? string.Empty , SelectedUri ?? string.Empty ) ) )
                 {
                     Uris.Add( SelectedUri );
                 }
@@ -166,36 +147,6 @@ namespace RabbitOM.Sample.Player
             {
                 ButtonStatus = _client.IsCommunicationStarted ? "Stop" : "Play";
             }
-        }
-
-        private void OnCanStrechImageAsFill( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = _client.IsCommunicationStarted;
-        }
-
-        private void OnStrechImageAsFill( object sender , ExecutedRoutedEventArgs e )
-        {
-            ImageStretch = Stretch.Fill;
-        }
-
-        private void OnCanStretchImageAsUniform( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = _client.IsCommunicationStarted;
-        }
-
-        private void OnStrechImageAsUniform( object sender , ExecutedRoutedEventArgs e )
-        {
-            ImageStretch = Stretch.Uniform;
-        }
-
-        private void OnShowCodecInfo( object sender , ExecutedRoutedEventArgs e )
-        {
-            CodecInfoVisibility = Visibility.Visible;
-        }
-
-        private void OnHideCodecInfo( object sender , ExecutedRoutedEventArgs e )
-        {
-            CodecInfoVisibility = Visibility.Collapsed;
         }
 
         private void OnSaveImage( object sender , CanExecuteRoutedEventArgs e )

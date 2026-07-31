@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Sample.Player"
+        xmlns:converters="clr-namespace:RabbitOM.Sample.Player.Converters"
         mc:Ignorable="d"
         Title="MEDIA Player SAMPLE - HEVC/H264/MJPEG"
 		Height="650" 
@@ -14,29 +15,20 @@
         FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
 		>
 
+    <Window.Resources>
+        <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
+        <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
+    </Window.Resources>
+    
     <Window.CommandBindings>
 
-        <CommandBinding Command="{x:Static local:MainWindow.FillImageCommand}" 
-                        CanExecute="OnCanStrechImageAsFill"
-                        Executed="OnStrechImageAsFill"
+        <CommandBinding Command="{x:Static local:MainWindow.ControlCommand}" 
+                        Executed="OnControl"
                         />
-
-        <CommandBinding Command="{x:Static local:MainWindow.UniformImageCommand}" 
-                        CanExecute="OnCanStretchImageAsUniform"
-                        Executed="OnStrechImageAsUniform"
-                        />
-
+        
         <CommandBinding Command="{x:Static local:MainWindow.SaveImageCommand}" 
                         CanExecute="OnSaveImage"
                         Executed="OnSaveImage"
-                        />
-
-        <CommandBinding Command="{x:Static local:MainWindow.ShowCodecInfoImageCommand}" 
-                        Executed="OnShowCodecInfo"
-                        />
-
-        <CommandBinding Command="{x:Static local:MainWindow.HideCodecInfoImageCommand}" 
-                        Executed="OnHideCodecInfo"
                         />
 
     </Window.CommandBindings>
@@ -67,7 +59,7 @@
                 Width="74" 
                 Height="22"
                 Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                Click="OnButtonControlClick" 
+                Command="{x:Static local:MainWindow.ControlCommand}" 
                 />
 
         <Grid x:Name="ImageGrid"
@@ -79,24 +71,21 @@
 
                 <ContextMenu>
 
-                    <MenuItem Header="Stretch"  
-                              Command="{x:Static local:MainWindow.FillImageCommand}" 
+                    <MenuItem x:Name="menuItemStretch"
+                              Header="Stretch"
+                              IsCheckable="True"
                               />
 
-                    <MenuItem Header="Normal" 
-                              Command="{x:Static local:MainWindow.UniformImageCommand}" 
+                    <MenuItem x:Name="menuItemShowCodecInfo"
+                              Header="Show Codec infos" 
+                              IsCheckable="True"
+                              IsChecked="True"
                               />
+
+                    <Separator />
 
                     <MenuItem Header="Save Image" 
                               Command="{x:Static local:MainWindow.SaveImageCommand}" 
-                              />
-
-                    <MenuItem Header="Show Codec infos" 
-                              Command="{x:Static local:MainWindow.ShowCodecInfoImageCommand}" 
-                              />
-
-                    <MenuItem Header="Hide Codec infos" 
-                              Command="{x:Static local:MainWindow.HideCodecInfoImageCommand}" 
                               />
 
                 </ContextMenu>
@@ -115,7 +104,7 @@
                    SnapsToDevicePixels="True" 
                    UseLayoutRounding="True" 
                    Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                   Stretch="{Binding ImageStretch,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                   Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
                    />
 
             <TextBlock VerticalAlignment="Bottom" 
@@ -124,7 +113,7 @@
                        Foreground="White" 
                        Background="Black"
                        Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                       Visibility="{Binding CodecInfoVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                       Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                        />
 
         </Grid>
