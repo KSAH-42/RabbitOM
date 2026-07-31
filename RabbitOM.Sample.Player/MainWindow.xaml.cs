@@ -139,7 +139,7 @@ namespace RabbitOM.Sample.Client.Player
                 _frameBuilder.Dispose();
 
                 CodecType? codec = null;
-                
+
                 if ( e.TrackInfo.Encoder?.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<H264FrameBuilder>( () =>
@@ -165,16 +165,13 @@ namespace RabbitOM.Sample.Client.Player
                             VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
                         };
                     } );
-                    
+
                     codec = CodecType.H265;
                 }
 
                 if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
-                    _frameBuilder.Setup<JpegFrameBuilder>( () =>
-                    {
-                        return new JpegFrameBuilder();
-                    } );
+                    _frameBuilder.Setup<JpegFrameBuilder>( () => new JpegFrameBuilder() );
 
                     codec = CodecType.MJPEG;
                 }
