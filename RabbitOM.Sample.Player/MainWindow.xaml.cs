@@ -220,10 +220,10 @@ namespace RabbitOM.Sample.Player
 
         private void OnDisconnected( object sender , RtspClientDisconnectedEventArgs e )
         {
-            _frameBuilder.Clear();
-
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                _frameBuilder.Clear();
+
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
                 _renderer.Close();
