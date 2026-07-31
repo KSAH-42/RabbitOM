@@ -222,10 +222,10 @@ namespace RabbitOM.Sample.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                _frameBuilder.Clear();
-
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
+
+                _frameBuilder.Clear();
                 _renderer.Close();
                 _decoder.Close();
             } ));
@@ -268,7 +268,7 @@ namespace RabbitOM.Sample.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                using ( e.Surface ) // That's absolutely mandatory for freeing unmanaged memory 
+                using ( e.Surface ) // Here, that's absolutely mandatory for freeing unmanaged memory 
                 {
                     _renderer.Render( e.Surface );
                 }
