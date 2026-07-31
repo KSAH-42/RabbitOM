@@ -19,10 +19,6 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Sample.Player
 {
-    using RabbitOM.Sample.Player.Codecs;
-    using RabbitOM.Sample.Player.Codecs.FFMpeg;
-    using RabbitOM.Sample.Player.Configuration;
-    using RabbitOM.Sample.Player.Dialogs;
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
@@ -30,7 +26,11 @@ namespace RabbitOM.Sample.Player
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-
+    using RabbitOM.Sample.Player.Codecs;
+    using RabbitOM.Sample.Player.Codecs.FFMpeg;
+    using RabbitOM.Sample.Player.Configuration;
+    using RabbitOM.Sample.Player.Dialogs;
+    
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand FillImageCommand = new RoutedCommand();
