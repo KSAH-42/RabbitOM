@@ -6,7 +6,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 
     public static class FFMpegCodecTypeConverter
     {
-        public static AVCodecID ConvertTo( CodecType type )
+        public static AVCodecID Convert( CodecType type )
         {
             if ( type == CodecType.MJPEG )
             {
@@ -24,6 +24,31 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
             }
 
             throw new NotSupportedException();
+        }
+
+        public static CodecType Convert( string value )
+        {
+            if ( string.IsNullOrWhiteSpace( value ) )
+            {
+                return CodecType.Unknown;
+            }
+
+            if ( value.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+            {
+                return CodecType.H265;
+            }
+
+            if ( value.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+            {
+                return CodecType.H264;
+            }
+
+            if ( value.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+            {
+                return CodecType.MJPEG;
+            }
+
+            return CodecType.Unknown;
         }
     }
 }

@@ -92,7 +92,7 @@
     <Compile Include="Streaming\Rtp\H266\H266PayloadType.cs" />
     <Compile Include="Streaming\Rtp\H266\H266NalUnit.cs" />
     <Compile Include="Streaming\Rtp\H266\H266NalUnitFragment.cs" />
-    <Compile Include="Streaming\Rtp\RtpMediaBuilderAdapter.cs" />
+    <Compile Include="Streaming\Rtp\RtpMediaBuilderProxy.cs" />
     <Compile Include="Streaming\Rtp\IMediaBuilder.cs" />
     <Compile Include="Streaming\Rtp\Jpeg\JpegFragment.cs" />
     <Compile Include="Streaming\Rtp\Jpeg\JpegFragmentQueue.cs" />

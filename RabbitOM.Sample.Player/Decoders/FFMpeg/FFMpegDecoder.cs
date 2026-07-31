@@ -49,7 +49,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
 
             try
             {
-                _codec = ffmpeg.avcodec_find_decoder( FFMpegCodecTypeConverter.ConvertTo( type ) );
+                _codec = ffmpeg.avcodec_find_decoder( FFMpegCodecTypeConverter.Convert( type ) );
 
                 if ( _codec == null )
                 {

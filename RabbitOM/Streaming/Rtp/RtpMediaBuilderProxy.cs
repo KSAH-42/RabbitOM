@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtp
 {
-    public sealed class RtpMediaBuilderAdapter : IMediaBuilder , IDisposable
+    public sealed class RtpMediaBuilderProxy : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
@@ -16,6 +16,8 @@ namespace RabbitOM.Streaming.Rtp
 
 
 
+        private readonly object _lock = new object();
+
         private IMediaBuilder _builder;
 
 
@@ -25,52 +27,64 @@ namespace RabbitOM.Streaming.Rtp
 
         public void AddPacket( RtpPacket packet )
         {
-            _builder?.AddPacket( packet );
+            lock ( _lock )
+            {
+                _builder?.AddPacket( packet );
+            }
         }
 
         public void Clear()
         {
-            _builder?.Clear();
+            lock ( _lock )
+            {
+                _builder?.Clear();
+            }
         }
 
-        public void Setup<TBuilder>( Func<TBuilder> factory ) where TBuilder : class , IMediaBuilder
+        public void Setup( Func<IMediaBuilder> factory )
         {
             if ( factory == null )
             {
                 throw new ArgumentNullException( nameof( factory ) );
             }
 
-            if ( _builder != null )
+            lock ( _lock )
             {
-                throw new InvalidOperationException( "the builder must be disposed first" );
+                if ( _builder != null )
+                {
+                    throw new InvalidOperationException( "the builder must be disposed first" );
+                }
+
+                _builder = factory();
+
+                _builder.PacketAdded += Builder_PacketAdded;
+                _builder.PacketAdding += Builder_PacketAdding;
+                _builder.MediaBuilded += Builder_MediaBuilded;
+                _builder.Cleared += Builder_Cleared;
             }
-
-            _builder = factory();
-
-            _builder.PacketAdded += Builder_PacketAdded;
-            _builder.PacketAdding += Builder_PacketAdding;
-            _builder.MediaBuilded += Builder_MediaBuilded;
-            _builder.Cleared += Builder_Cleared;
         }
 
         public void Dispose()
         {
-            if ( _builder == null )
+            lock ( _lock )
             {
-                return;
+                if ( _builder == null )
+                {
+                    return;
+                }
+
+                _builder.PacketAdded -= Builder_PacketAdded;
+                _builder.PacketAdding -= Builder_PacketAdding;
+                _builder.MediaBuilded -= Builder_MediaBuilded;
+                _builder.Cleared -= Builder_Cleared;
+
+                if ( _builder is IDisposable disposable )
+                {
+                    disposable.Dispose();
+                }
+
+                _builder = null;
             }
-
-            _builder.PacketAdded -= Builder_PacketAdded;
-            _builder.PacketAdding -= Builder_PacketAdding;
-            _builder.MediaBuilded -= Builder_MediaBuilded;
-            _builder.Cleared -= Builder_Cleared;
-
-            if ( _builder is IDisposable disposable )
-            {
-                disposable.Dispose();
-            }
-
-            _builder = null;
         }
 
 

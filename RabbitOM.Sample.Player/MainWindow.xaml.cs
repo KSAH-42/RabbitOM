@@ -39,7 +39,7 @@ namespace RabbitOM.Sample.Client.Player
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
-        private readonly RtpMediaBuilderAdapter _frameBuilder = new RtpMediaBuilderAdapter();
+        private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
         private readonly FFMpegDecoder _decoder = new FFMpegDecoder();
         private readonly FFMpegRenderer _renderer = new FFMpegRenderer();
 
@@ -181,47 +181,36 @@ namespace RabbitOM.Sample.Client.Player
             {
                 _frameBuilder.Dispose();
 
-                CodecType? codec = null;
+                CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
 
-                if ( e.TrackInfo.Encoder?.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+
+                if ( codec == CodecType.H265 )
                 {
-                    _frameBuilder.Setup<H264FrameBuilder>( () =>
+                    _frameBuilder.Setup( () => new H265FrameBuilder()
                     {
-                        return new H264FrameBuilder()
-                        {
-                            SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                            PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                        };
+                        SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
+                        PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
+                        VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
                     } );
-
-                    codec = CodecType.H264;
                 }
 
-                if ( e.TrackInfo.Encoder?.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+                if ( codec == CodecType.H264 )
                 {
-                    _frameBuilder.Setup<H265FrameBuilder>( () =>
+                    _frameBuilder.Setup( () => new H264FrameBuilder()
                     {
-                        return new H265FrameBuilder()
-                        {
-                            SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                            PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                            VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
-                        };
+                        SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
+                        PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
                     } );
-
-                    codec = CodecType.H265;
                 }
 
-                if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+                if ( codec == CodecType.MJPEG )
                 {
-                    _frameBuilder.Setup<JpegFrameBuilder>( () => new JpegFrameBuilder() );
-
-                    codec = CodecType.MJPEG;
+                    _frameBuilder.Setup( () => new JpegFrameBuilder() );
                 }
 
-                if ( codec.HasValue )
+                if ( codec != CodecType.Unknown )
                 {
-                    _decoder.Open( codec.Value );
+                    _decoder.Open( codec );
                     _renderer.Open( _image );
 
                     _textBoxCodecInfo.Text = "Codec - " + e.TrackInfo.Encoder;
@@ -230,7 +219,6 @@ namespace RabbitOM.Sample.Client.Player
                 }
 
                 _textBlockInfo.Text = "Format not supported ( " + e.TrackInfo.Encoder + " )";
-
             } ) );
         }
 
