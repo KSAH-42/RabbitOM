@@ -113,6 +113,52 @@ namespace RabbitOM.Sample.Client.Player
             }
         }
 
+        
+        private void OnCanStrechImageAsFill( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsCommunicationStarted;
+        }
+
+        private void OnStrechImageAsFill( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Fill;
+        }
+
+        private void OnCanStretchImageAsUniform( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsCommunicationStarted;
+        }
+
+        private void OnStrechImageAsUniform( object sender , ExecutedRoutedEventArgs e )
+        {
+            _image.Stretch = System.Windows.Media.Stretch.Uniform;
+        }
+
+        private void OnShowCodecInfo( object sender , ExecutedRoutedEventArgs e )
+        {
+            _textBoxCodecInfo.Visibility = Visibility.Visible;
+        }
+
+        private void OnHideCodecInfo( object sender , ExecutedRoutedEventArgs e )
+        {
+            _textBoxCodecInfo.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnSaveImage( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _client.IsConnected && _image.Source is BitmapSource;
+        }
+
+        private void OnSaveImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.Source = _image.Source as BitmapSource;
+
+            dialog.TakeSnasphot();
+            dialog.ShowDialog();
+        }
+
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
             _image.Dispatcher.BeginInvoke( System.Windows.Threading.DispatcherPriority.Render , new Action( () =>
@@ -249,51 +295,6 @@ namespace RabbitOM.Sample.Client.Player
                     _renderer.Render( e.Surface );
                 }
             }));
-        }
-
-        private void OnCanExecuteFillImage( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = _client.IsCommunicationStarted;
-        }
-
-        private void OnExecuteFillImage( object sender , ExecutedRoutedEventArgs e )
-        {
-            _image.Stretch = System.Windows.Media.Stretch.Fill;
-        }
-
-        private void OnCanExecuteUniformImage( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = _client.IsCommunicationStarted;
-        }
-
-        private void OnExecuteUniformImage( object sender , ExecutedRoutedEventArgs e )
-        {
-            _image.Stretch = System.Windows.Media.Stretch.Uniform;
-        }
-
-        private void OnExecuteShowCodecInfo( object sender , ExecutedRoutedEventArgs e )
-        {
-            _textBoxCodecInfo.Visibility = Visibility.Visible;
-        }
-
-        private void OnExecuteHideCodecInfo( object sender , ExecutedRoutedEventArgs e )
-        {
-            _textBoxCodecInfo.Visibility = Visibility.Collapsed;
-        }
-
-        private void OnCanExecuteSaveImage( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = _client.IsConnected && _image.Source is BitmapSource;
-        }
-
-        private void OnExecuteSaveImage( object sender , ExecutedRoutedEventArgs e )
-        {
-            var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
-
-            dialog.Source = _image.Source as BitmapSource;
-
-            dialog.TakeSnasphot();
-            dialog.ShowDialog();
         }
     }
 }

@@ -17,26 +17,26 @@
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:MainWindow.FillImageCommand}" 
-                        CanExecute="OnCanExecuteFillImage"
-                        Executed="OnExecuteFillImage"
+                        CanExecute="OnCanStrechImageAsFill"
+                        Executed="OnStrechImageAsFill"
                         />
 
         <CommandBinding Command="{x:Static local:MainWindow.UniformImageCommand}" 
-                        CanExecute="OnCanExecuteUniformImage"
-                        Executed="OnExecuteUniformImage"
+                        CanExecute="OnCanStretchImageAsUniform"
+                        Executed="OnStrechImageAsUniform"
                         />
 
         <CommandBinding Command="{x:Static local:MainWindow.SaveImageCommand}" 
-                        CanExecute="OnCanExecuteSaveImage"
-                        Executed="OnExecuteSaveImage"
+                        CanExecute="OnSaveImage"
+                        Executed="OnSaveImage"
                         />
 
         <CommandBinding Command="{x:Static local:MainWindow.ShowCodecInfoImageCommand}" 
-                        Executed="OnExecuteShowCodecInfo"
+                        Executed="OnShowCodecInfo"
                         />
 
         <CommandBinding Command="{x:Static local:MainWindow.HideCodecInfoImageCommand}" 
-                        Executed="OnExecuteHideCodecInfo"
+                        Executed="OnHideCodecInfo"
                         />
 
     </Window.CommandBindings>
