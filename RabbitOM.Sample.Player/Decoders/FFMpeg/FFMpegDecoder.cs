@@ -261,7 +261,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 
                 var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
 
-                if ( length != buffer.Length || got_frame == 0 )
+                if ( length < 0 || got_frame == 0 )
                 {
                     return;
                 }
