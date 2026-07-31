@@ -224,7 +224,7 @@ namespace RabbitOM.Sample.Player
 
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                StatusInfo = _client.IsCommunicationStopping ? "" : "Connecting - Communication Lost";
+                StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
                 _renderer.Close();
                 _decoder.Close();
