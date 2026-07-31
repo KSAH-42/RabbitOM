@@ -138,26 +138,25 @@ namespace RabbitOM.Sample.Client.Player
 
                 _frameBuilder.Dispose();
 
+                CodecType? codec = null;
                 if ( e.TrackInfo.Encoder?.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<H264FrameBuilder>( () =>
                     {
+                        codec = CodecType.H264;
                         return new H264FrameBuilder()
                         {
                             SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
                             PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
                         };
                     } );
-
-                    _decoder.Open( CodecType.H264 );
-                    _renderer.Open( _image );
-                    return;
                 }
 
                 if ( e.TrackInfo.Encoder?.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<H265FrameBuilder>( () =>
                     {
+                        codec = CodecType.H265;
                         return new H265FrameBuilder()
                         {
                             SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
@@ -165,25 +164,27 @@ namespace RabbitOM.Sample.Client.Player
                             VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
                         };
                     } );
-
-                    _decoder.Open( CodecType.H265 );
-                    _renderer.Open( _image );
-                    return;
                 }
 
                 if ( e.TrackInfo.Encoder?.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
                 {
                     _frameBuilder.Setup<JpegFrameBuilder>( () =>
                     {
+                        codec = CodecType.MJPEG;
                         return new JpegFrameBuilder();
                     } );
 
-                    _decoder.Open( CodecType.MJPEG );
+                }
+
+                if ( codec.HasValue )
+                {
+                    _decoder.Open( codec.Value );
                     _renderer.Open( _image );
                     return;
                 }
 
                 _textBlockInfo.Text = "Format not supported ( " + e.TrackInfo.Encoder + " )";
+
             } ) );
         }
 
