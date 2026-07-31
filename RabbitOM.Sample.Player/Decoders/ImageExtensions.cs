@@ -20,7 +20,7 @@ namespace RabbitOM.Sample.Client.Player.Codecs
                 image.Source = source;
 
                 RenderOptions.SetCachingHint( image , CachingHint.Cache );
-                RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.NearestNeighbor );
+                RenderOptions.SetBitmapScalingMode( image , BitmapScalingMode.HighQuality );
                 RenderOptions.SetEdgeMode( image , EdgeMode.Aliased );
             }
             finally
