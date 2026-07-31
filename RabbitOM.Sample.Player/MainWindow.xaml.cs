@@ -20,7 +20,6 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Sample.Player
 {
-    using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;
