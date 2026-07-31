@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Client.Player.Codecs
+namespace RabbitOM.Sample.Player.Codecs
 {
     public enum CodecType
     {

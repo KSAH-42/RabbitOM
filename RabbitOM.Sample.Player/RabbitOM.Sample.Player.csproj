@@ -92,7 +92,7 @@
     <Compile Include="Decoders\DecodedEventArgs.cs" />
     <Compile Include="Decoders\Decoder.cs" />
     <Compile Include="Decoders\Renderer.cs" />
-    <Compile Include="Decoders\ImageExtensions.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Decoders\WritableBitmapLocker.cs" />
     <Compile Include="Dialogs\SaveImageDialog.xaml.cs">
       <DependentUpon>SaveImageDialog.xaml</DependentUpon>

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Client.Player.Dialogs
+namespace RabbitOM.Sample.Player.Dialogs
 {
     public partial class SaveImageDialog : Window
     {
@@ -18,10 +18,12 @@ namespace RabbitOM.Sample.Client.Player.Dialogs
 
 
 
+
         public SaveImageDialog()
         {
             InitializeComponent();
         }
+
 
 
 
@@ -57,6 +59,7 @@ namespace RabbitOM.Sample.Client.Player.Dialogs
             get;
             set;
         }
+
 
 
 
@@ -105,7 +108,6 @@ namespace RabbitOM.Sample.Client.Player.Dialogs
         {
             Image = Source.Clone();
         }
-
 
         private void OnCanSave( object sender , CanExecuteRoutedEventArgs e )
         {

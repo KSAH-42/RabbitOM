@@ -4,7 +4,7 @@ using System.Linq;
 
 #pragma warning disable CS0618
 
-namespace RabbitOM.Sample.Client.Player.Codecs.FFMpeg
+namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 

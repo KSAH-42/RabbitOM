@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Client.Player.Codecs
+namespace RabbitOM.Sample.Player.Codecs
 {
     public struct WritableBitmapLocker : IDisposable
     {

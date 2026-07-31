@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Client.Player
+namespace RabbitOM.Sample.Player
 {
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
@@ -18,10 +18,10 @@ namespace RabbitOM.Sample.Client.Player
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-    using RabbitOM.Sample.Client.Player.Codecs;
-    using RabbitOM.Sample.Client.Player.Codecs.FFMpeg;
-    using RabbitOM.Sample.Client.Player.Dialogs;
-    using RabbitOM.Sample.Client.Player.Extensions;
+    using RabbitOM.Sample.Player.Codecs;
+    using RabbitOM.Sample.Player.Codecs.FFMpeg;
+    using RabbitOM.Sample.Player.Dialogs;
+    using RabbitOM.Sample.Player.Extensions;
 
     // This is not the best code here if we respect wpf, and others things, it's just a demo, a refactorization must be done
     // There is a base line here, but the right direction for writing a correct architecture is probably to write a graph and setup it using a builder

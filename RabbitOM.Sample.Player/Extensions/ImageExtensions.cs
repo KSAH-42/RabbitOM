@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Controls;
 
-namespace RabbitOM.Sample.Client.Player.Codecs
+namespace RabbitOM.Sample.Player.Extensions
 {
     public static class ImageExtensions
     {

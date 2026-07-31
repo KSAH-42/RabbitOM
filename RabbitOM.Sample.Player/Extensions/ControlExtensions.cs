@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 
-namespace RabbitOM.Sample.Client.Player.Extensions
+namespace RabbitOM.Sample.Player.Extensions
 {
     public static class ControlExtensions
     {
