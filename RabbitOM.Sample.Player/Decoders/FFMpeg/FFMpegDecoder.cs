@@ -256,9 +256,8 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
             {
                 var got_frame = 0;
 
-                // normally, in this case, it's highly recommended to set to default _rawPacket->data
-                // after pin buffer adress, the compactor on the GC can change address of the raw buffer
-                // that's why _rawPacket->data = null, at the end is recommended. here i don't do it. the packet is only used in this place.
+                // normally, in this case, it's highly recommended to set to default _rawPacket->data after pin buffer adress, the compactor on the GC can change address of the raw buffer
+                // that's why setting _rawPacket->data = null, at the end is recommended. here i don't do it. the packet is only used in this place.
 	            _rawPacket->data = rawBuffer;
 	            _rawPacket->size = buffer.Length;
 
