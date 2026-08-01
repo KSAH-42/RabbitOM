@@ -149,7 +149,7 @@ namespace RabbitOM.Sample.Player
 
         private void OnSaveImage( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = _client.IsConnected && Image is BitmapSource;
+            e.CanExecute = Image is BitmapSource;
         }
 
         private void OnSaveImage( object sender , ExecutedRoutedEventArgs e )
@@ -224,6 +224,7 @@ namespace RabbitOM.Sample.Player
             {
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
+                Image = null;
 
                 _frameBuilder.Clear();
                 _renderer.Close();
