@@ -65,6 +65,7 @@
                           IsEditable="True" 
                           Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                           ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                          MaxDropDownHeight="350"
                           />
             </Grid>
 
@@ -94,6 +95,7 @@
                     <MenuItem x:Name="menuItemStretch"
                               Header="Stretch"
                               IsCheckable="True"
+                              IsChecked="True"
                               />
 
                     <MenuItem x:Name="menuItemShowCodecInfo"
