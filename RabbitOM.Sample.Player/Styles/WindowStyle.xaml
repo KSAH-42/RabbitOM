@@ -1,0 +1,299 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:RabbitOM.Sample.Player.Styles"
+                    x:Class="RabbitOM.Sample.Player.Styles.WindowStyle"
+                    >
+    
+    <Style x:Key="MetroWindowButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="#FF707070"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            SnapsToDevicePixels="True"
+                            >
+                        <ContentPresenter x:Name="contentPresenter" 
+                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                          Content="{TemplateBinding Content}" 
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Focusable="False" 
+                                          RecognizesAccessKey="True" 
+                                          />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MetroWindowCloseButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style>
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{x:Null}"/>
+        <Setter Property="BorderBrush" Value="#FF707070"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDefaulted" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="Red"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style  x:Key="WindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="Foreground"               Value="Black"/>
+        <Setter Property="OverridesDefaultStyle"    Value="true" />
+        <Setter Property="WindowStyle"              Value="None" />
+        <Setter Property="ResizeMode"               Value="CanResize" />
+        <Setter Property="Background"               Value="Black"/>
+        <Setter Property="BorderThickness"          Value="4" />
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome ResizeBorderThickness="6" CaptionHeight="30" GlassFrameThickness="0" CornerRadius="0" />
+            </Setter.Value>
+        </Setter>
+
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                 
+                    <Border x:Name="MainBorder" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
+                            Background="{TemplateBinding Background}" 
+                            VerticalAlignment="Stretch" 
+                            MouseLeftButtonDown="MainBorder_MouseLeftButtonDown" >
+                    
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" >
+                                
+                                <Border x:Name="TileBar" 
+                                        Margin="0,0,0,0" 
+                                        Height="33" 
+                                        Background="{TemplateBinding Background}"
+                                        MouseLeftButtonDown="TileBar_MouseLeftButtonDown" 
+                                        >
+
+                                    <Grid>
+                                        
+                                        <TextBlock Margin="7,0,0,4" 
+                                                   VerticalAlignment="Center" 
+                                                   Foreground="White" 
+                                                   TextWrapping="NoWrap" 
+                                                   Text="{TemplateBinding Title}" 
+                                                   FontSize="{TemplateBinding FontSize}" 
+                                                   />
+
+                                        <StackPanel HorizontalAlignment="Right" 
+                                                    VerticalAlignment="Stretch"
+                                                    WindowChrome.IsHitTestVisibleInChrome="True"
+                                                    Orientation="Horizontal"
+                                                    >
+
+                                            <Button x:Name="ButtonMinimize" 
+                                                    Focusable="False" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center" 
+                                                    Height="28" 
+                                                    Width="33" 
+                                                    Style="{DynamicResource MetroWindowButtonStyle}" 
+                                                    Click="ButtonMinimize_Click"
+                                                    >
+                                                
+                                                <Grid>
+
+                                                    <Rectangle Fill="Transparent" Stroke="Transparent" Width="20" Height="20" />
+
+                                                    <Path Data="M0,20L53.333,20 53.333,8.888 0,8.888z" VerticalAlignment="Bottom" Stretch="Uniform" Fill="#FFAAAAAA" Width="10" Margin="0,0,0,8"/>
+
+                                                </Grid>
+                                                
+                                            </Button>
+
+                                            <Button x:Name="ButtonMaximize" 
+                                                    Focusable="False" 
+                                                    HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center" 
+                                                    Height="28" 
+                                                    Width="33" 
+                                                    Style="{DynamicResource MetroWindowButtonStyle}" 
+                                                    Click="ButtonMaximize_Click"
+                                                    >
+                                                
+                                                <Grid>
+                                                    
+                                                    <Rectangle Fill="Transparent" Stroke="Transparent" Width="20" Height="20" />
+                                                    
+                                                    <Path Data="M4.3685131,23.127279L4.3685131,47.283243 47.117023,47.283243 47.117023,23.127279z M0,10.684L53.755001,10.684 53.755001,51.668001 0,51.668001z M8.5679998,0L58.668022,0 64,0 64,5.6864691 64,45.317999 58.668022,45.317999 58.668022,5.6864691 8.5679998,5.6864691z" Stretch="Uniform" Fill="#FFAAAAAA" Width="10" Margin="0,0,0,0" />
+                                                    
+                                                </Grid>
+                                                
+                                            </Button>
+
+                                            <Button x:Name="ButtonClose" 
+                                                    Focusable="False" 
+                                                    VerticalAlignment="Center" 
+                                                    Height="28" 
+                                                    Width="33" 
+                                                    Style="{DynamicResource MetroWindowCloseButtonStyle}" 
+                                                    Click="ButtonClose_Click"
+                                                    >
+                                                
+                                                <Grid>
+                                                
+                                                    <Rectangle Fill="Transparent" Stroke="Transparent" Width="20" Height="20" />
+                                                    
+                                                    <Path Stroke="White" Data="F1M54.0573,47.8776L38.1771,31.9974 54.0547,16.1198C55.7604,14.4141 55.7604,11.6511 54.0573,9.94531 52.3516,8.23962 49.5859,8.23962 47.8802,9.94531L32.0026,25.8229 16.1224,9.94531C14.4167,8.23962 11.6511,8.23962 9.94794,9.94531 8.24219,11.6511 8.24219,14.4141 9.94794,16.1198L25.8255,32 9.94794,47.8776C8.24219,49.5834 8.24219,52.3477 9.94794,54.0534 11.6511,55.7572 14.4167,55.7585 16.1224,54.0534L32.0026,38.1745 47.8802,54.0534C49.5859,55.7585 52.3516,55.7572 54.0573,54.0534 55.7604,52.3477 55.763,49.5834 54.0573,47.8776z" Stretch="Uniform" Fill="#FFAAAAAA" Width="10" Margin="0,0,0,0" />
+                                                
+                                                </Grid>
+                                                
+                                            </Button>
+
+                                        </StackPanel>
+                                        
+                                    </Grid>
+                                    
+                                </Border>
+                                
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                
+                                <AdornerDecorator DockPanel.Dock="Bottom">
+                                    
+                                    <Grid Background="#FF424242">
+                                        
+                                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                          Content="{TemplateBinding Content}" 
+                                                          ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                                          >
+                                        </ContentPresenter>
+                                        
+                                    </Grid>
+                                    
+                                </AdornerDecorator>
+                                
+                            </Grid>
+                            
+                        </Grid>
+
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Window}">
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    Background="{TemplateBinding Background}"
+                                    >
+                                <Grid>
+                                    <AdornerDecorator>
+                                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                          Content="{TemplateBinding Content}"
+                                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                          />
+                                    </AdornerDecorator>
+                                    <ResizeGrip x:Name="WindowResizeGrip" 
+                                                Background="Black"
+                                                HorizontalAlignment="Stretch" 
+                                                IsTabStop="False" 
+                                                Visibility="Collapsed" 
+                                                VerticalAlignment="Stretch" 
+                                                />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
+                                        <Condition Property="WindowState" Value="Normal"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:RabbitOM.Sample.Player"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/WindowStyle.xaml" />
+                <ResourceDictionary Source="/Styles/ComboBoxStyle.xaml" />
+                <ResourceDictionary Source="/Styles/ContextualMenuStyle.xaml" />
+                <ResourceDictionary Source="/Styles/ButtonStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

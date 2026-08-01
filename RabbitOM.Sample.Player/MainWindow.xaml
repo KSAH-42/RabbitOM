@@ -11,8 +11,8 @@
 		Width="750" 
 		Loaded="OnWindowLoaded" 
 		Closing="OnWindowClosing"
-		Background="Azure" 
-        FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
+		FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
+        Style="{DynamicResource WindowStyle}"
 		>
 
     <Window.Resources>
@@ -33,37 +33,57 @@
 
     </Window.CommandBindings>
 
-    <Grid Margin="1,1,1,1" Background="White" >
+    <Grid Margin="1,1,1,1" >
 
-        <TextBlock Margin="7,5,0,0"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Top" 
-                   Width="65" 
-                   TextAlignment="Left"
-                   TextWrapping="Wrap" 
-                   Text="RTSP URI :" 
-                   />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="39" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-        <ComboBox Margin="65,3,79,0" 
-                  VerticalAlignment="Top" 
-                  SelectedIndex="0" 
-                  Height="22" 
-                  IsEditable="True" 
-                  Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                  ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                  />
+        <Grid Grid.Row="0" Margin="0,10,0,0" >
 
-        <Button Margin="0,3,2,0" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Top" 
-                Width="74" 
-                Height="22"
-                Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                Command="{x:Static local:MainWindow.ControlCommand}" 
-                />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
 
+            <Grid Grid.Column="0">
+                <TextBlock Margin="5,5,1,1"
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           Foreground="White"
+                           TextAlignment="Right"
+                           Text="RTSP URI :" 
+                           />
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <ComboBox VerticalAlignment="Top" 
+                          SelectedIndex="0" 
+                          Height="29" 
+                          IsEditable="True" 
+                          Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                          ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                          />
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Button Margin="0,0,3,0"
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Top" 
+                        Width="90" 
+                        Height="29"
+                        Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                        Command="{x:Static local:MainWindow.ControlCommand}" 
+                        />
+            </Grid>
+
+        </Grid>
+        
         <Grid x:Name="ImageGrid"
-              Margin="1,29,1,1" 
+              Grid.Row="1"
+              Margin="1,10,1,1" 
               Background="Black" 
               >
 
