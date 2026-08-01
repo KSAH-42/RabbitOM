@@ -59,8 +59,8 @@
                             </ColorAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Border x:Name="Root" CornerRadius="7.5" BorderThickness="0" BorderBrush="Black">
-                        <Border x:Name="Border" CornerRadius="8.5" Padding="1" BorderThickness="1" Background="Transparent" >
+                    <Border x:Name="Root" CornerRadius="9.5" BorderThickness="0" BorderBrush="Black">
+                        <Border x:Name="Border" CornerRadius="9.5" Padding="1" BorderThickness="1" Background="Transparent" >
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="#55888888" />
                             </Border.BorderBrush>
