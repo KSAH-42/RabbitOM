@@ -355,7 +355,7 @@
         </Setter>
     </Style>
 
-    <Style                                                            TargetType  ="{x:Type ComboBox}">
+    <Style TargetType  ="{x:Type ComboBox}">
         <Setter Property="Foreground"                                 Value       ="White"/>
         <Setter Property="SnapsToDevicePixels"                        Value       ="true" />
         <Setter Property="OverridesDefaultStyle"                      Value       ="true" />
@@ -380,7 +380,7 @@
                                 <VisualState x:Name="MouseOver" />
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="TextBoxEdition"
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox"
                                               Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
                                             <EasingColorKeyFrame KeyTime="0"
                                        Value="Gray" />
@@ -391,7 +391,7 @@
                             <VisualStateGroup x:Name="EditStates">
                                 <VisualState x:Name="Editable">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="TextBoxEdition">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="PART_EditableTextBox">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ContentSite">
@@ -417,9 +417,6 @@
                             </Border.BorderBrush>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup   x:Name="States"     >
-                                    <VisualState    x:Name="Normal"    />
-                                    <VisualState    x:Name="MouseOver" />
-                                    <VisualState    x:Name="Disabled" />
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
                         </Border>
@@ -429,12 +426,13 @@
                             Background="{TemplateBinding Background}"
                             Foreground="{TemplateBinding Foreground}"
                             Template="{StaticResource ComboBoxToggleButton}"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
                             Focusable="false"
+                            ClickMode="Press"
                             Width="21"
                             Grid.Column="0"
-                            HorizontalAlignment     ="Right"
-                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                            ClickMode="Press">
+                            HorizontalAlignment="Right"
+                            >
                         </ToggleButton>
 
                         <ContentPresenter   x:Name                  ="ContentSite"
@@ -448,7 +446,7 @@
                                         Focusable               ="True"
                                         />
 
-                        <TextBox        x:Name                  ="TextBoxEdition" 
+                        <TextBox        x:Name                  ="PART_EditableTextBox" 
                                         Margin                  ="7,3,23,3" 
                                         Background              ="Transparent"
                                         BorderBrush             ="Transparent"
@@ -488,7 +486,7 @@
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
 
-                        <Trigger Property="IsFocused" SourceName="TextBoxEdition" Value="True">
+                        <Trigger Property="IsFocused" SourceName="PART_EditableTextBox" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
 
@@ -504,20 +502,20 @@
 
                         <Trigger Property="IsEditable" Value="true">
                             <Setter Property="IsTabStop" Value="false"/>
-                            <Setter TargetName="TextBoxEdition" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
                         </Trigger>
 
                         <Trigger Property="IsEditable" Value="false">
                             <Setter Property="IsTabStop" Value="true"/>
-                            <Setter TargetName="TextBoxEdition" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Hidden"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Visible"/>
                         </Trigger>
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="True" />
-                                <Condition Property="IsFocused" Value="False" SourceName="TextBoxEdition" />
+                                <Condition Property="IsFocused" Value="False" SourceName="PART_EditableTextBox" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
                                 <BeginStoryboard>
@@ -531,7 +529,7 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver" Value="False" />
-                                <Condition Property="IsFocused" Value="False" SourceName="TextBoxEdition" />
+                                <Condition Property="IsFocused" Value="False" SourceName="PART_EditableTextBox" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
                                 <Setter Property="BorderBrush" TargetName="Border" Value="#FF888888"/>
