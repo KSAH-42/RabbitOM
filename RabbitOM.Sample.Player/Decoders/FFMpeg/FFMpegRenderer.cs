@@ -17,16 +17,10 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
         private Int32Rect _updateRegion;
         private readonly int[] _stride = new int[1];
 
-
-
-
         public override bool IsOpened
         {
             get => _image != null;
         }
-
-
-
 
         public override void Open( FrameworkElement targetControl )
         {
