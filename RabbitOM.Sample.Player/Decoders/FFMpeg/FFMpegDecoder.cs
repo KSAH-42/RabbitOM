@@ -256,7 +256,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
             {
                 var got_frame = 0;
 
-                // normally, in this case, it's highly recommended to set to default _rawPacket->data after pin buffer adress, the compactor on the GC can change address of the raw buffer
+                // normally, in this case, it's highly recommended to set to default _rawPacket->data as null after pin buffer adress and calling ffmpeg.decode func using a try finally bloc, the compactor on the GC can change address of the raw buffer
                 // that's why setting _rawPacket->data = null, at the end is highly recommended. Here i don't do it. the reason comes frame that the packet is only used here, only in this place.
 	            _rawPacket->data = rawBuffer;
 	            _rawPacket->size = buffer.Length;
