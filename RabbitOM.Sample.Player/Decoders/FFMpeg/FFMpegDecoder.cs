@@ -66,13 +66,12 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 	            _context->thread_count = 1;
                 _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+                _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_RGB24;
 
                 fixed( AVDictionary** opts = &_options )
                 {
                     ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
-
-                    _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_RGB24;
 
 	                if ( ffmpeg.avcodec_open2( _context , _codec , opts ) < 0 )
 	                {
@@ -234,11 +233,12 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                 _context->thread_count = 1;
                 _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
+                _context->pix_fmt = AVPixelFormat.AV_PIX_FMT_RGB24;
 
                 fixed ( AVDictionary** opts = &_options )
                 {
-                    ffmpeg.av_dict_set( opts , "rtsp_transport" , "none" , 0 );
-                    ffmpeg.av_dict_set( opts , "allowed_media_types" , "video" , 0 );
+                    ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
+                    ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
                     return ffmpeg.avcodec_open2( _context , _codec , opts ) == 0;
                 }
