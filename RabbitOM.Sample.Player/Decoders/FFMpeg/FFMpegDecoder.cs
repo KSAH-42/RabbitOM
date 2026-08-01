@@ -63,8 +63,8 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                     throw new InvalidOperationException( "can not allocate a codec context" );
                 }
 
-	            _context->thread_count = Environment.ProcessorCount;
-                _context->thread_type = ffmpeg.FF_THREAD_FRAME | ffmpeg.FF_THREAD_SLICE;
+	            _context->thread_count = 1;
+                _context->flags  |= ffmpeg.AV_CODEC_FLAG_TRUNCATED;
                 _context->flags2 |= ffmpeg.AV_CODEC_FLAG2_FAST;
 
                 fixed( AVDictionary** opts = &_options )
