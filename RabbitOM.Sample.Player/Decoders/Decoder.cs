@@ -58,7 +58,7 @@ namespace RabbitOM.Sample.Player.Codecs
 
         protected virtual void OnDecoded( DecodedEventArgs e )
         {
-            Decoded?.Invoke( this , e );
+            Decoded?.TryInvoke( this , e );
         }
     }
 }
