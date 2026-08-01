@@ -81,7 +81,7 @@ namespace RabbitOM.Sample.Player.Styles
 
 		public void ButtonMaximize_Click(object sender, RoutedEventArgs e)
         {
-			var element = sender  as FrameworkElement;
+			var element = sender as FrameworkElement;
 
 			if ( element == null )
 			{
