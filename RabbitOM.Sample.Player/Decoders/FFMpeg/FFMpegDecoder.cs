@@ -17,16 +17,10 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
         private AVDictionary* _options = null;
         private byte[] _extraParameters;
 
-
-
-
-
         static FFMpegDecoder()
         {
             ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
-
-
 
 
         public override bool IsOpened
@@ -36,9 +30,6 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                 return _codec != null && _context != null && _frame != null && _rawPacket != null;
             }
         }
-
-
-
 
         public override void Open( CodecType type )
         {
