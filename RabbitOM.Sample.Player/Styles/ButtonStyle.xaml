@@ -60,10 +60,7 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Border x:Name="Root" CornerRadius="9.5" BorderThickness="0" BorderBrush="Black">
-                        <Border x:Name="Border" CornerRadius="9.5" Padding="1" BorderThickness="1" Background="Transparent" >
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="#55888888" />
-                            </Border.BorderBrush>
+                        <Border x:Name="Border" CornerRadius="9.5" Padding="0" BorderThickness="1.1" BorderBrush="White" Background="Transparent" >
                             <Grid>
                                 <ContentPresenter Name="PART_ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"  >
                                     <ContentPresenter.Effect>
@@ -150,7 +147,7 @@
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="BorderThickness" TargetName="Border" Value="0.5"/>
+                            <Setter Property="BorderThickness" TargetName="Border" Value="1.1"/>
                             <Setter Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect  BlurRadius="0" ShadowDepth="0"  RenderingBias="Quality" Color="White" Opacity="0"/>
@@ -181,7 +178,7 @@
                                 <Condition Property="IsFocused" Value="False" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="BorderBrush" TargetName="Border" Value="#55888888"/>
+                                <Setter Property="BorderBrush" TargetName="Border" Value="#FF888888"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -190,7 +187,7 @@
                                 <Condition Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="BorderThickness" TargetName="Border" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="Border" Value="1.1"/>
                                 <Setter Property="BorderBrush"     TargetName="Border" Value="LightBlue" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
@@ -200,12 +197,12 @@
                                 <Condition Property="IsPressed" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter Property="BorderThickness" TargetName="Border" Value="0.5"/>
+                                <Setter Property="BorderThickness" TargetName="Border" Value="1.1"/>
                                 <Setter Property="BorderBrush"     TargetName="Border" Value="LightBlue" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <Trigger Property="IsDefault" Value="True">
-                            <Setter Property="BorderThickness" TargetName="Border" Value="3.5"/>
+                            <Setter Property="BorderThickness" TargetName="Border" Value="2.5"/>
                             <Setter Property="BorderBrush"     TargetName="Border" Value="LightBlue" />
                         </Trigger>
 
