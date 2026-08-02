@@ -19,7 +19,7 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Codecs.FFMpeg;
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Dialogs;
-    
+
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
