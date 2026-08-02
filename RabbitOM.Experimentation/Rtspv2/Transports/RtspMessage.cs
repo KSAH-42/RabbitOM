@@ -3,7 +3,7 @@
 namespace RabbitOM.Streaming.RtspV2.Transports
 {
     /// <summary>
-    /// Represent the base class of an element contains in a stream
+    /// Represent the base class of an element contained into a stream
     /// </summary>
     /// <remarks>
     ///     <para> can be RIIRIRIIIRIQIRIIIIIIIIIIIQIIIIRIIIIIIIII</para>
