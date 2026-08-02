@@ -193,17 +193,18 @@ namespace RabbitOM.Sample.Player
                     _frameBuilder.Setup( () => new JpegFrameBuilder() );
                 }
 
-                if ( codec != CodecType.Unknown )
+                if ( codec == CodecType.Unknown )
                 {
-                    _decoder.Open( codec );
-                    _renderer.Open( _image );
-
-                    CodecInfo = "Codec - " + e.TrackInfo.Encoder;
-                    StatusInfo = "";
+                    StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
                     return;
                 }
 
-                StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
+                _decoder.Open( codec );
+                _renderer.Open( _image );
+
+                CodecInfo = "Codec - " + e.TrackInfo.Encoder;
+                StatusInfo = "";
+
             } ) );
         }
 
