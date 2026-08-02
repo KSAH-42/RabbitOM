@@ -232,8 +232,7 @@
                                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
                                                       Content="{TemplateBinding Content}" 
                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}" 
-                                                      >
-                                        </ContentPresenter>
+                                                      />
 
                                     </Grid>
 
