@@ -168,9 +168,19 @@
 
                                                 <Grid>
 
-                                                    <Rectangle Fill="Transparent" Stroke="Transparent" Width="20" Height="20" />
+                                                    <Rectangle Fill="Transparent" 
+                                                               Stroke="Transparent" 
+                                                               Width="20" 
+                                                               Height="20" 
+                                                               />
 
-                                                    <Path Data="M0,20L53.333,20 53.333,8.888 0,8.888z" VerticalAlignment="Bottom" Stretch="Uniform" Fill="#FFAAAAAA" Width="10" Margin="0,0,0,8"/>
+                                                    <Path Margin="0,0,0,8"
+                                                          Stretch="Uniform" 
+                                                          VerticalAlignment="Bottom" 
+                                                          Width="10" 
+                                                          Fill="#FFAAAAAA" 
+                                                          Data="M0,20L53.333,20 53.333,8.888 0,8.888z" 
+                                                          />
 
                                                 </Grid>
 
@@ -188,9 +198,18 @@
 
                                                 <Grid>
 
-                                                    <Rectangle Fill="Transparent" Stroke="Transparent" Width="20" Height="20" />
+                                                    <Rectangle Fill="Transparent" 
+                                                               Stroke="Transparent" 
+                                                               Width="20" 
+                                                               Height="20" 
+                                                               />
 
-                                                    <Path Data="M4.3685131,23.127279L4.3685131,47.283243 47.117023,47.283243 47.117023,23.127279z M0,10.684L53.755001,10.684 53.755001,51.668001 0,51.668001z M8.5679998,0L58.668022,0 64,0 64,5.6864691 64,45.317999 58.668022,45.317999 58.668022,5.6864691 8.5679998,5.6864691z" Stretch="Uniform" Fill="#FFAAAAAA" Width="10" Margin="0,0,0,0" />
+                                                    <Path Margin="0,0,0,0" 
+                                                          Width="10" 
+                                                          Stretch="Uniform" 
+                                                          Fill="#FFAAAAAA" 
+                                                          Data="M4.3685131,23.127279L4.3685131,47.283243 47.117023,47.283243 47.117023,23.127279z M0,10.684L53.755001,10.684 53.755001,51.668001 0,51.668001z M8.5679998,0L58.668022,0 64,0 64,5.6864691 64,45.317999 58.668022,45.317999 58.668022,5.6864691 8.5679998,5.6864691z" 
+                                                          />
 
                                                 </Grid>
 
@@ -207,9 +226,19 @@
 
                                                 <Grid>
 
-                                                    <Rectangle Fill="Transparent" Stroke="Transparent" Width="20" Height="20" />
+                                                    <Rectangle Fill="Transparent" 
+                                                               Stroke="Transparent" 
+                                                               Width="20" 
+                                                               Height="20" 
+                                                               />
 
-                                                    <Path Stroke="White" Data="F1M54.0573,47.8776L38.1771,31.9974 54.0547,16.1198C55.7604,14.4141 55.7604,11.6511 54.0573,9.94531 52.3516,8.23962 49.5859,8.23962 47.8802,9.94531L32.0026,25.8229 16.1224,9.94531C14.4167,8.23962 11.6511,8.23962 9.94794,9.94531 8.24219,11.6511 8.24219,14.4141 9.94794,16.1198L25.8255,32 9.94794,47.8776C8.24219,49.5834 8.24219,52.3477 9.94794,54.0534 11.6511,55.7572 14.4167,55.7585 16.1224,54.0534L32.0026,38.1745 47.8802,54.0534C49.5859,55.7585 52.3516,55.7572 54.0573,54.0534 55.7604,52.3477 55.763,49.5834 54.0573,47.8776z" Stretch="Uniform" Fill="#FFAAAAAA" Width="10" Margin="0,0,0,0" />
+                                                    <Path Margin="0,0,0,0" 
+                                                          Width="10" 
+                                                          Stretch="Uniform" 
+                                                          Stroke="White" 
+                                                          Fill="#FFAAAAAA" 
+                                                          Data="F1M54.0573,47.8776L38.1771,31.9974 54.0547,16.1198C55.7604,14.4141 55.7604,11.6511 54.0573,9.94531 52.3516,8.23962 49.5859,8.23962 47.8802,9.94531L32.0026,25.8229 16.1224,9.94531C14.4167,8.23962 11.6511,8.23962 9.94794,9.94531 8.24219,11.6511 8.24219,14.4141 9.94794,16.1198L25.8255,32 9.94794,47.8776C8.24219,49.5834 8.24219,52.3477 9.94794,54.0534 11.6511,55.7572 14.4167,55.7585 16.1224,54.0534L32.0026,38.1745 47.8802,54.0534C49.5859,55.7585 52.3516,55.7572 54.0573,54.0534 55.7604,52.3477 55.763,49.5834 54.0573,47.8776z" 
+                                                          />
 
                                                 </Grid>
 
@@ -230,9 +259,9 @@
                                     <Grid Background="#FF424242">
 
                                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                      Content="{TemplateBinding Content}" 
-                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}" 
-                                                      />
+                                                          Content="{TemplateBinding Content}" 
+                                                          ContentStringFormat="{TemplateBinding ContentStringFormat}" 
+                                                          />
 
                                     </Grid>
 
@@ -257,23 +286,23 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Window}">
                             <Border BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                Background="{TemplateBinding Background}"
-                                >
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    Background="{TemplateBinding Background}"
+                                    >
                                 <Grid>
                                     <AdornerDecorator>
                                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                      />
+                                                          Content="{TemplateBinding Content}"
+                                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                          />
                                     </AdornerDecorator>
                                     <ResizeGrip x:Name="WindowResizeGrip" 
-                                            Background="Black"
-                                            HorizontalAlignment="Stretch" 
-                                            IsTabStop="False" 
-                                            Visibility="Collapsed" 
-                                            VerticalAlignment="Stretch" 
-                                            />
+                                                Background="Black"
+                                                HorizontalAlignment="Stretch" 
+                                                IsTabStop="False" 
+                                                Visibility="Collapsed" 
+                                                VerticalAlignment="Stretch" 
+                                                />
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
