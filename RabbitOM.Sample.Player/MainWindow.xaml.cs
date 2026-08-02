@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -9,16 +9,17 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Sample.Player
 {
+    using RabbitOM.Sample.Player.Codecs;
+    using RabbitOM.Sample.Player.Codecs.FFMpeg;
+    using RabbitOM.Sample.Player.Configuration;
+    using RabbitOM.Sample.Player.Dialogs;
+    using RabbitOM.Sample.Player.Extensions;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-    using RabbitOM.Sample.Player.Codecs;
-    using RabbitOM.Sample.Player.Codecs.FFMpeg;
-    using RabbitOM.Sample.Player.Configuration;
-    using RabbitOM.Sample.Player.Dialogs;
 
     public partial class MainWindow : Window
     {
@@ -163,7 +164,7 @@ namespace RabbitOM.Sample.Player
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
         {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
+            Dispatcher.BeginSafeInvoke( DispatcherPriority.Render , () =>
             {
                 _frameBuilder.Dispose();
 
@@ -205,7 +206,7 @@ namespace RabbitOM.Sample.Player
                 CodecInfo = "Codec - " + e.TrackInfo.Encoder;
                 StatusInfo = "";
 
-            } ) );
+            } );
         }
 
         private void OnDisconnected( object sender , RtspClientDisconnectedEventArgs e )
