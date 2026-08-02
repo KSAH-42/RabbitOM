@@ -244,8 +244,6 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 
             fixed ( byte* rawBuffer = &buffer[0] )
             {
-                var got_frame = 0;
-
                 // normally, in this case, it's highly recommended to set to default _rawPacket->data as null after pin buffer adress and calling ffmpeg.decode func using a try finally bloc, the reason come from that the compactor on the GC can change the address of the raw buffer
                 // and ffmpeg lib can manipulate a wrong buffer, dangled pointer
                 // so the right approach is to force a clear on these members
@@ -254,6 +252,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 	            _rawPacket->data = rawBuffer;
 	            _rawPacket->size = buffer.Length;
 
+                var got_frame = 0;
                 var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
 
                 if ( length < 0 || got_frame == 0 )
