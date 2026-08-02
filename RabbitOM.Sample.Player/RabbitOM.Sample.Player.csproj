@@ -71,7 +71,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Extensions\DispatcherExtensions.cs" />
     <Compile Include="Styles\WindowStyle.cs" />
     <Page Include="Dialogs\SaveImageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

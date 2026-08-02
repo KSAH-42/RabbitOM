@@ -9,18 +9,17 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Sample.Player
 {
-    using RabbitOM.Sample.Player.Codecs;
-    using RabbitOM.Sample.Player.Codecs.FFMpeg;
-    using RabbitOM.Sample.Player.Configuration;
-    using RabbitOM.Sample.Player.Dialogs;
-    using RabbitOM.Sample.Player.Extensions;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-
+    using RabbitOM.Sample.Player.Codecs;
+    using RabbitOM.Sample.Player.Codecs.FFMpeg;
+    using RabbitOM.Sample.Player.Configuration;
+    using RabbitOM.Sample.Player.Dialogs;
+    
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
@@ -164,49 +163,55 @@ namespace RabbitOM.Sample.Player
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
         {
-            Dispatcher.BeginSafeInvoke( DispatcherPriority.Render , () =>
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 _frameBuilder.Dispose();
 
-                CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
-
-                if ( codec == CodecType.Unknown )
+                try
                 {
-                    StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
-                    return;
-                }
-
-                if ( codec == CodecType.H265 )
-                {
-                    _frameBuilder.Setup( () => new H265FrameBuilder()
+                    CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
+                    
+                    if ( codec == CodecType.Unknown )
                     {
-                        SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                        PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                        VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
-                    } );
-                }
+                        StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
+                        return;
+                    }
 
-                if ( codec == CodecType.H264 )
-                {
-                    _frameBuilder.Setup( () => new H264FrameBuilder()
+                    if ( codec == CodecType.H265 )
                     {
-                        SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                        PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                    } );
-                }
+                        _frameBuilder.Setup( () => new H265FrameBuilder()
+                        {
+                            SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
+                            PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
+                            VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
+                        } );
+                    }
 
-                if ( codec == CodecType.MJPEG )
+                    if ( codec == CodecType.H264 )
+                    {
+                        _frameBuilder.Setup( () => new H264FrameBuilder()
+                        {
+                            SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
+                            PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
+                        } );
+                    }
+
+                    if ( codec == CodecType.MJPEG )
+                    {
+                        _frameBuilder.Setup( () => new JpegFrameBuilder() );
+                    }
+
+                    _decoder.Open( codec );
+                    _renderer.Open( _image );
+
+                    CodecInfo = "Codec - " + e.TrackInfo.Encoder;
+                    StatusInfo = "";
+                }
+                catch( Exception ex )
                 {
-                    _frameBuilder.Setup( () => new JpegFrameBuilder() );
+                    StatusInfo = "Exception Error: " + ex.Message;
                 }
-
-                _decoder.Open( codec );
-                _renderer.Open( _image );
-
-                CodecInfo = "Codec - " + e.TrackInfo.Encoder;
-                StatusInfo = "";
-
-            } );
+            } ) );
         }
 
         private void OnDisconnected( object sender , RtspClientDisconnectedEventArgs e )
