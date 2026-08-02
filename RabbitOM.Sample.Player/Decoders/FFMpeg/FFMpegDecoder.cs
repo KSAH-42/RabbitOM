@@ -22,7 +22,6 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
             ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
 
-
         public override bool IsOpened
         {
             get
