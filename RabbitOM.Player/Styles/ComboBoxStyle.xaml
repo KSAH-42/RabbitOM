@@ -10,7 +10,10 @@
     </LinearGradientBrush>
 
     <ControlTemplate  x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
-        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding  Background}" />
+        <ScrollViewer x:Name="PART_ContentHost" 
+                      Focusable="False" 
+                      Background="{TemplateBinding Background}" 
+                      />
     </ControlTemplate>
 
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
@@ -36,27 +39,57 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
 
-            <Border  x:Name="Border" Grid.ColumnSpan="2" CornerRadius="3" BorderThickness="1" Background="Transparent" >
-            </Border>
-            <Border Grid.Column="0" CornerRadius="2,0,0,2"  Margin="2" BorderThickness="0,0,1,0" />
+            <Border  x:Name="Border" 
+                     Grid.ColumnSpan="2" 
+                     CornerRadius="3" 
+                     BorderThickness="1" 
+                     Background="Transparent" 
+                     />
 
-            <Path x:Name="ArrowDown" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 8 0 Z">
+            <Border Grid.Column="0" 
+                    Margin="2" 
+                    CornerRadius="2,0,0,2" 
+                    BorderThickness="0,0,1,0" 
+                    />
+
+            <Path x:Name="ArrowDown" 
+                  Grid.Column="1" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" 
+                  Data="M 0 0 L 4 4 L 8 0 Z"
+                  >
+                
                 <Path.Fill>
                     <SolidColorBrush Color="White"/>
                 </Path.Fill>
+                
             </Path>
-            <Path x:Name="ArrowUp" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Data="M 0 4 L 4 0 L 8 4 Z">
+            
+            <Path x:Name="ArrowUp" 
+                  Grid.Column="1" 
+                  HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" 
+                  Visibility="Collapsed" 
+                  Data="M 0 4 L 4 0 L 8 4 Z"
+                  >
+                
                 <Path.Fill>
                     <SolidColorBrush Color="White" />
                 </Path.Fill>
+                
             </Path>
+            
         </Grid>
+        
         <ControlTemplate.Triggers>
+        
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="Border" Property="Background" Value="Transparent" />
                 <Setter TargetName="ArrowDown" Property="Fill" Value="DarkGray" />
             </Trigger>
+            
         </ControlTemplate.Triggers>
+        
     </ControlTemplate>
 
     <Style TargetType="{x:Type ComboBoxItem}">
@@ -68,14 +101,23 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Grid>
-                        <Border x:Name="PART_ComboBoxItemBorder" CornerRadius="2" BorderBrush="Transparent" BorderThickness="0">
+                        
+                        <Border x:Name="PART_ComboBoxItemBorder" 
+                                CornerRadius="2" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0"
+                                >
+                            
                             <TextBlock Margin="4,0,0,0" >
                                      <ContentPresenter />
                             </TextBlock>
+                            
                         </Border>
 
                     </Grid>
+                    
                     <ControlTemplate.Triggers>
+                    
                         <Trigger SourceName="PART_ComboBoxItemBorder" Property="IsMouseOver" Value="true">
                             <Setter TargetName="PART_ComboBoxItemBorder" Property="Background" >
                                 <Setter.Value>
@@ -96,10 +138,14 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
+                
             </Setter.Value>
+            
         </Setter>
+        
     </Style>
 
     <Style x:Key="ComboxItemStyle" TargetType="{x:Type ComboBoxItem}">
@@ -108,14 +154,23 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBoxItem}">
                     <Grid>
-                        <Border x:Name="PART_ComboBoxItemBorder" CornerRadius="2" BorderBrush="Transparent" BorderThickness="0">
+        
+                        <Border x:Name="PART_ComboBoxItemBorder" 
+                                CornerRadius="2" 
+                                BorderBrush="Transparent" 
+                                BorderThickness="0"
+                                >
+                            
                             <TextBlock Margin="4,0,0,0" >
                                      <ContentPresenter />
                             </TextBlock>
+                            
                         </Border>
 
                     </Grid>
+                    
                     <ControlTemplate.Triggers>
+                    
                         <Trigger SourceName="PART_ComboBoxItemBorder" Property="IsMouseOver" Value="true">
                             <Setter TargetName="PART_ComboBoxItemBorder" Property="Background" >
                                 <Setter.Value>
@@ -139,10 +194,15 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
+                    
                 </ControlTemplate>
+                
             </Setter.Value>
+            
         </Setter>
+        
     </Style>
 
     <Style TargetType="{x:Type ComboBox}">
@@ -159,63 +219,110 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
+        
                     <Grid>
+                    
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="0"/>
                         </Grid.ColumnDefinitions>
+                        
                         <VisualStateManager.VisualStateGroups>
+                        
                             <VisualStateGroup x:Name="CommonStates">
+                            
                                 <VisualState x:Name="Normal" />
+                                
                                 <VisualState x:Name="MouseOver" />
+                                
                                 <VisualState x:Name="Disabled">
+                                
                                     <Storyboard>
+                                        
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_EditableTextBox"
-                                              Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                       Value="Gray" />
+                                                                      Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
+                                                                      >
+                                            <EasingColorKeyFrame KeyTime="0" 
+                                                                 Value="Gray" 
+                                                                 />
+                                            
                                         </ColorAnimationUsingKeyFrames>
+                                        
                                     </Storyboard>
+                                    
                                 </VisualState>
+                                
                             </VisualStateGroup>
+                            
                             <VisualStateGroup x:Name="EditStates">
+                           
                                 <VisualState x:Name="Editable">
+                                
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="PART_EditableTextBox">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                    
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                                                       Storyboard.TargetName="PART_EditableTextBox"
+                                                                       >
+                                            
+                                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                                    Value="{x:Static Visibility.Visible}" 
+                                                                    />
+                                            
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ContentSite">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
+                                        
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" 
+                                                                       Storyboard.TargetName="ContentSite"
+                                                                       >
+                                            
+                                            <DiscreteObjectKeyFrame KeyTime="0" 
+                                                                    Value="{x:Static Visibility.Hidden}" 
+                                                                    />
+                                            
                                         </ObjectAnimationUsingKeyFrames>
+                                        
                                     </Storyboard>
+                                    
                                 </VisualState>
+                                
                                 <VisualState x:Name="Uneditable" />
+                                
                             </VisualStateGroup>
+                            
                         </VisualStateManager.VisualStateGroups>
 
-                        <Border x:Name="Border" CornerRadius="3" Padding="4" BorderThickness="1" Background="{TemplateBinding Background}" >
+                        <Border x:Name="Border" 
+                                CornerRadius="3" 
+                                Padding="4" 
+                                BorderThickness="1" 
+                                Background="{TemplateBinding Background}" 
+                                >
+                            
                             <Border.BorderBrush>
+                            
                                 <SolidColorBrush Color="#FF888888" />
+                            
                             </Border.BorderBrush>
+                            
                             <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup   x:Name="States"     >
-                                </VisualStateGroup>
+                                
+                                <VisualStateGroup x:Name="States"/>
+
                             </VisualStateManager.VisualStateGroups>
+                            
                         </Border>
-                        <ToggleButton
-                            Name="ToggleButton"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            Background="{TemplateBinding Background}"
-                            Foreground="{TemplateBinding Foreground}"
-                            Template="{StaticResource ComboBoxToggleButton}"
-                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                            Focusable="false"
-                            ClickMode="Press"
-                            Width="21"
-                            Grid.Column="0"
-                            HorizontalAlignment="Right"
-                            >
-                        </ToggleButton>
+
+                        <ToggleButton Name="ToggleButton"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      Background="{TemplateBinding Background}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      Template="{StaticResource ComboBoxToggleButton}"
+                                      IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                      Focusable="false"
+                                      ClickMode="Press"
+                                      Width="21"
+                                      Grid.Column="0"
+                                      HorizontalAlignment="Right"
+                                     />
 
                         <ContentPresenter   x:Name="ContentSite"
                                             Margin="3,3,23,3"
@@ -269,7 +376,9 @@
                                         CornerRadius="3" 
                                         />
                                 
-                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True" >
+                                <ScrollViewer Margin="4,6,4,6" 
+                                              SnapsToDevicePixels="True" 
+                                              >
                                 
                                     <StackPanel KeyboardNavigation.DirectionalNavigation="Contained" 
                                                 IsItemsHost="True" 
@@ -288,7 +397,6 @@
                     
                     <ControlTemplate.Triggers>
 
-
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
@@ -296,7 +404,6 @@
                         <Trigger Property="IsFocused" SourceName="PART_EditableTextBox" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
-
 
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="LightGray"/>
@@ -342,7 +449,6 @@
                                 <Setter Property="BorderBrush" TargetName="Border" Value="#FF888888"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
-
 
                     </ControlTemplate.Triggers>
                     
