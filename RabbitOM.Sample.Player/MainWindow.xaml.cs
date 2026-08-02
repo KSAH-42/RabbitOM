@@ -170,7 +170,7 @@ namespace RabbitOM.Sample.Player
                 try
                 {
                     CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
-                    
+
                     if ( codec == CodecType.Unknown )
                     {
                         StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
