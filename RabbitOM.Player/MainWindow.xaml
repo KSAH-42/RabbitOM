@@ -43,13 +43,13 @@
         <Grid Grid.Row="0" Margin="0,10,0,0" >
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
+                <ColumnDefinition Width="82" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <TextBlock Margin="5,5,1,1"
+                <TextBlock Margin="10,5,1,1"
                            HorizontalAlignment="Left" 
                            VerticalAlignment="Top" 
                            Foreground="White"
