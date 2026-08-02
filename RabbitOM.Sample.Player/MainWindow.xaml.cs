@@ -223,8 +223,8 @@ namespace RabbitOM.Sample.Player
                 Image = null;
 
                 _frameBuilder.Clear();
-                _renderer.Close();
                 _decoder.Close();
+                _renderer.Close();
             } ));
         }
 
