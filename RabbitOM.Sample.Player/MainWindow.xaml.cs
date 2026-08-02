@@ -169,6 +169,12 @@ namespace RabbitOM.Sample.Player
 
                 CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
 
+                if ( codec == CodecType.Unknown )
+                {
+                    StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
+                    return;
+                }
+
                 if ( codec == CodecType.H265 )
                 {
                     _frameBuilder.Setup( () => new H265FrameBuilder()
@@ -191,12 +197,6 @@ namespace RabbitOM.Sample.Player
                 if ( codec == CodecType.MJPEG )
                 {
                     _frameBuilder.Setup( () => new JpegFrameBuilder() );
-                }
-
-                if ( codec == CodecType.Unknown )
-                {
-                    StatusInfo = "Format not supported ( " + e.TrackInfo.Encoder + " )";
-                    return;
                 }
 
                 _decoder.Open( codec );
