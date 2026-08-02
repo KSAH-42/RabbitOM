@@ -63,7 +63,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
-	                if ( ffmpeg.avcodec_open2( _context , _decoder , opts ) < 0 )
+	                if ( ffmpeg.avcodec_open2( _context , _decoder , opts ) != 0 )
 	                {
 		                return;
 	                }
