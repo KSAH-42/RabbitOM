@@ -3,12 +3,6 @@ using System.IO;
 
 namespace RabbitOM.Streaming.RtspV2.Transports
 {
-    // we don't use PipeReader class, instead we used buffered mecanism
-    // we grab using a large buffer, and read the content until
-    // touching the limit, and then we trigger a new capture of incomming data
-    // and continue to read even if it's an incomplete receive
-    // using this approach readByte become fast and we can introduce peek method
-
     public sealed class RtspStream : IStream
     {
         private readonly ITransport _transport;

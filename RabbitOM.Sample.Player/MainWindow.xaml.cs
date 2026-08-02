@@ -1,15 +1,4 @@
-﻿// For multi views like quadras, etc..
-// you must adapt this sample and create a usercontrol that run on different thread
-// avoid to make the mainthread to consume cpu power because wpf main implement a MESSAGE LOOP a dispatcher run and redirect events
-// for having an application responsible that display video
-// Otherwise your UI can't not respond to users clicks, etc... your UI will hangs
-
-// There is a base line here, but the right direction for writing a correct architecture is probably to write a graph and setup it using a builder
-// just something similar to dsf using a modern approachs
-// or something like a micro service capable to configure just a simple pipeline shoud be enough
-// and may be having different microservice per graph type could be enough
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows;
