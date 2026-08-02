@@ -22,23 +22,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="CheckStates">
-                    <VisualState x:Name="Checked">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ArrowDown">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ArrowUp">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState x:Name="Unchecked" />
-                    <VisualState x:Name="Indeterminate" />
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
-
+            
             <Border  x:Name="Border" 
                      Grid.ColumnSpan="2" 
                      CornerRadius="3" 
@@ -52,42 +36,72 @@
                     BorderThickness="0,0,1,0" 
                     />
 
-            <Path x:Name="ArrowDown" 
+            <Path x:Name="Part_Arrow" 
                   Grid.Column="1" 
                   HorizontalAlignment="Center" 
                   VerticalAlignment="Center" 
                   Data="M 0 0 L 4 4 L 8 0 Z"
                   >
-                
+
                 <Path.Fill>
                     <SolidColorBrush Color="White"/>
                 </Path.Fill>
-                
+
+                <Path.RenderTransform>
+                    <RotateTransform x:Name="Part_PathAngle" Angle="0" />
+                </Path.RenderTransform>
+
             </Path>
-            
-            <Path x:Name="ArrowUp" 
-                  Grid.Column="1" 
-                  HorizontalAlignment="Center" 
-                  VerticalAlignment="Center" 
-                  Visibility="Collapsed" 
-                  Data="M 0 4 L 4 0 L 8 4 Z"
-                  >
-                
-                <Path.Fill>
-                    <SolidColorBrush Color="White" />
-                </Path.Fill>
-                
-            </Path>
-            
+
         </Grid>
         
         <ControlTemplate.Triggers>
         
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="Border" Property="Background" Value="Transparent" />
-                <Setter TargetName="ArrowDown" Property="Fill" Value="DarkGray" />
+                <Setter TargetName="Part_Arrow" Property="Fill" Value="DarkGray" />
             </Trigger>
-            
+
+            <EventTrigger RoutedEvent="ToggleButton.Checked">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
+                                         Storyboard.TargetProperty="(RotateTransform.Angle)"
+                                         From="0.0" 
+                                         To="180.0" 
+                                         Duration="0:0:0.25"
+                                         />
+
+                        <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
+                                         Storyboard.TargetProperty="(RotateTransform.CenterX)"
+                                         From="0.0" 
+                                         To="3.0" 
+                                         Duration="0:0:0.25"
+                                         />
+                        
+                        <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
+                                         Storyboard.TargetProperty="(RotateTransform.CenterY)"
+                                         From="0.0" 
+                                         To="2.0" 
+                                         Duration="0:0:0.25"
+                                         />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
+            <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
+                             Storyboard.TargetProperty="(RotateTransform.Angle)"
+                             From="180.0" 
+                             To="0.0" 
+                             Duration="0:0:0.25"
+                             />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+
         </ControlTemplate.Triggers>
         
     </ControlTemplate>
