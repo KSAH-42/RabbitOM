@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Sample.Player.Configuration
+namespace RabbitOM.Player.Configuration
 {
     public static class ApplicationConfiguration
     {

@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows.Controls;
 
-namespace RabbitOM.Sample.Player.Codecs
+namespace RabbitOM.Player.Codecs
 {
     public static class ImageExtensions
     {

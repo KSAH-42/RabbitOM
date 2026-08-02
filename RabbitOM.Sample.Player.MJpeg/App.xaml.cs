@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace RabbitOM.Sample.Player.MJpeg
+namespace RabbitOM.Player.MJpeg
 {
 	public partial class App : Application
 	{

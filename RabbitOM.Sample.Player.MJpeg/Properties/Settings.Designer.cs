@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RabbitOM.Sample.Player.MJpeg.Properties {
+namespace RabbitOM.Player.MJpeg.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

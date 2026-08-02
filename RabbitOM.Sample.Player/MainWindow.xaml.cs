@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
-namespace RabbitOM.Sample.Player
+namespace RabbitOM.Player
 {
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
@@ -15,10 +15,10 @@ namespace RabbitOM.Sample.Player
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-    using RabbitOM.Sample.Player.Codecs;
-    using RabbitOM.Sample.Player.Codecs.FFMpeg;
-    using RabbitOM.Sample.Player.Configuration;
-    using RabbitOM.Sample.Player.Dialogs;
+    using RabbitOM.Player.Codecs;
+    using RabbitOM.Player.Codecs.FFMpeg;
+    using RabbitOM.Player.Configuration;
+    using RabbitOM.Player.Dialogs;
     
     public partial class MainWindow : Window
     {

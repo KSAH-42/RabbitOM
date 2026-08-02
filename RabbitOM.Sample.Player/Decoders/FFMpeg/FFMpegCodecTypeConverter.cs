@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Player.Codecs.FFMpeg
+namespace RabbitOM.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 

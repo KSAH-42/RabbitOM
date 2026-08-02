@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Player.MJpeg.Rendering
+namespace RabbitOM.Player.MJpeg.Rendering
 {
     public struct WritableBitmapLocker : IDisposable
     {

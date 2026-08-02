@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace RabbitOM.Sample.Player.Codecs
+namespace RabbitOM.Player.Codecs
 {
     public abstract class Renderer : IDisposable
     {

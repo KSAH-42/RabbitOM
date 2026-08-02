@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Player.Dialogs
+namespace RabbitOM.Player.Dialogs
 {
     public partial class SaveImageDialog : Window
     {

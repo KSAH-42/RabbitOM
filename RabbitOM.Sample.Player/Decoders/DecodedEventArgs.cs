@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Player.Codecs
+namespace RabbitOM.Player.Codecs
 {
     public class DecodedEventArgs : EventArgs
     {

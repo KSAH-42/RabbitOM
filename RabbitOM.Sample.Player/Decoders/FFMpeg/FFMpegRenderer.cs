@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Sample.Player.Codecs.FFMpeg
+namespace RabbitOM.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 

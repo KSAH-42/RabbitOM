@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace RabbitOM.Sample.Player.Converters
+namespace RabbitOM.Player.Converters
 {
     [ValueConversion(typeof(bool),typeof(Stretch))]
     public sealed class BooleanStretchValueConverter : IValueConverter

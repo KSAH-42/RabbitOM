@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace RabbitOM.Sample.Player.Styles
+namespace RabbitOM.Player.Styles
 {
 	public partial class WindowStyle : ResourceDictionary
 	{

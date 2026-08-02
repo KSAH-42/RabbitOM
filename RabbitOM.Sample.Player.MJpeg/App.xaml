@@ -1,7 +1,7 @@
-﻿<Application x:Class="RabbitOM.Sample.Player.MJpeg.App"
+﻿<Application x:Class="RabbitOM.Player.MJpeg.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:RabbitOM.Sample.Player.MJpeg"
+             xmlns:local="clr-namespace:RabbitOM.Player.MJpeg"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

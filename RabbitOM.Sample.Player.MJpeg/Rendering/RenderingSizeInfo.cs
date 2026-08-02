@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Player.MJpeg.Rendering
+namespace RabbitOM.Player.MJpeg.Rendering
 {
     public sealed class RenderingSizeInfo
     {

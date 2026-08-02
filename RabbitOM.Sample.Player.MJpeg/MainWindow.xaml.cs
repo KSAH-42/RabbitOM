@@ -8,15 +8,15 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace RabbitOM.Sample.Player.MJpeg
+namespace RabbitOM.Player.MJpeg
 {
     using RabbitOM.Streaming;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-    using RabbitOM.Sample.Player.MJpeg.Rendering;
-    using RabbitOM.Sample.Player.MJpeg.Extensions;
+    using RabbitOM.Player.MJpeg.Rendering;
+    using RabbitOM.Player.MJpeg.Extensions;
 
     public partial class MainWindow : Window
     {
