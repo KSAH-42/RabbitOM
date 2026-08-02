@@ -7,22 +7,22 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Border>
-                        <Rectangle Margin="2" StrokeThickness="1"  Stroke="#60000000" StrokeDashArray="1 2" />
+                        <Rectangle Margin="2" StrokeThickness="1" Stroke="#60000000" StrokeDashArray="1 2" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style                                                  TargetType  ="{x:Type Button}">
-        <Setter Property="Foreground"                       Value       ="White"/>
-        <Setter Property="SnapsToDevicePixels"              Value       ="true" />
-        <Setter Property="OverridesDefaultStyle"            Value       ="true" />
-        <Setter Property="KeyboardNavigation.TabNavigation" Value       ="Continue" />
-        <Setter Property="FontSize"                         Value       ="11"/>
-        <Setter Property="Height"                           Value       ="30"/>
-        <Setter Property="FocusVisualStyle"                 Value       ="{StaticResource ButtonFocusVisual}" />
-        <Setter Property="Effect"                           >
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue" />
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}" />
+        <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect  BlurRadius="0" ShadowDepth="0"  RenderingBias="Quality" Color="White" Opacity="0"/>
             </Setter.Value>
@@ -58,8 +58,8 @@
                             </ColorAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Border x:Name="Root" CornerRadius="9.5" BorderThickness="0" BorderBrush="Black">
-                        <Border x:Name="Border" CornerRadius="9.5" Padding="0" BorderThickness="1.1" BorderBrush="White" Background="Transparent" >
+                    <Border x:Name="Root" CornerRadius="11" BorderThickness="0" BorderBrush="Black">
+                        <Border x:Name="Border" CornerRadius="11" Padding="0" BorderThickness="1.1" BorderBrush="White" Background="Transparent" >
                             <Grid>
                                 <ContentPresenter Name="PART_ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"  >
                                     <ContentPresenter.Effect>
@@ -107,7 +107,6 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
-
 
                         </Trigger>
 
