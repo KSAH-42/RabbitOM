@@ -87,17 +87,17 @@
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Converters\BooleanStretchValueConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityValueConverter.cs" />
-    <Compile Include="Decoders\FFMpeg\FFMpegCodecTypeConverter.cs" />
-    <Compile Include="Decoders\FFMpeg\FFMpegDecoder.cs" />
-    <Compile Include="Decoders\FFMpeg\FFMpegRenderer.cs" />
-    <Compile Include="Decoders\FFMpeg\FFMpegSurface.cs" />
-    <Compile Include="Decoders\CodecType.cs" />
-    <Compile Include="Decoders\Surface.cs" />
-    <Compile Include="Decoders\DecodedEventArgs.cs" />
-    <Compile Include="Decoders\Decoder.cs" />
-    <Compile Include="Decoders\Renderer.cs" />
-    <Compile Include="Decoders\ImageExtensions.cs" />
-    <Compile Include="Decoders\WritableBitmapLocker.cs" />
+    <Compile Include="Codecs\FFMpeg\FFMpegCodecTypeConverter.cs" />
+    <Compile Include="Codecs\FFMpeg\FFMpegDecoder.cs" />
+    <Compile Include="Codecs\FFMpeg\FFMpegRenderer.cs" />
+    <Compile Include="Codecs\FFMpeg\FFMpegSurface.cs" />
+    <Compile Include="Codecs\CodecType.cs" />
+    <Compile Include="Codecs\Surface.cs" />
+    <Compile Include="Codecs\DecodedEventArgs.cs" />
+    <Compile Include="Codecs\Decoder.cs" />
+    <Compile Include="Codecs\Renderer.cs" />
+    <Compile Include="Codecs\ImageExtensions.cs" />
+    <Compile Include="Codecs\WritableBitmapLocker.cs" />
     <Compile Include="Dialogs\SaveImageDialog.xaml.cs">
       <DependentUpon>SaveImageDialog.xaml</DependentUpon>
     </Compile>
@@ -156,9 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RabbitOM\RabbitOM.csproj">

@@ -34,8 +34,8 @@ namespace RabbitOM.Player
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
-        private readonly FFMpegDecoder _decoder = new FFMpegDecoder();
-        private readonly FFMpegRenderer _renderer = new FFMpegRenderer();
+        private readonly Decoder _decoder = new FFMpegDecoder();
+        private readonly Renderer _renderer = new FFMpegRenderer();
 
         public ImageSource Image
         {

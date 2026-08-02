@@ -114,9 +114,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\RabbitOM\RabbitOM.csproj">
       <Project>{353a7a14-1085-4fd1-b0ef-02499276571d}</Project>
       <Name>RabbitOM</Name>

@@ -58,8 +58,8 @@
                             </ColorAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Border x:Name="Root" CornerRadius="11" BorderThickness="0" BorderBrush="Black">
-                        <Border x:Name="Border" CornerRadius="11" Padding="0" BorderThickness="1.1" BorderBrush="White" Background="Transparent" >
+                    <Border x:Name="Root" CornerRadius="12" BorderThickness="0" BorderBrush="Black">
+                        <Border x:Name="Border" CornerRadius="12" Padding="0" BorderThickness="1.1" BorderBrush="White" Background="Transparent" >
                             <Grid>
                                 <ContentPresenter Name="PART_ContentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"  >
                                     <ContentPresenter.Effect>

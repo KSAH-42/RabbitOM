@@ -1,10 +1,4 @@
-﻿// For multi views like quadras, etc..
-// you must adapt this sample and create a usercontrol that run on different thread
-// avoid to make the mainthread to consume cpu power because wpf main implement a MESSAGE LOOP a dispatcher run and redirect events
-// for having an application responsible that display video
-// Otherwise your UI can't not respond to users clicks, etc... your UI will hangs
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 
