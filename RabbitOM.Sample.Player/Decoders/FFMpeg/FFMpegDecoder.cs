@@ -9,7 +9,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
 
     public unsafe sealed class FFMpegDecoder : Decoder
     {
-        private AVCodec* _codec = null;
+        private AVCodec* _decoder = null;
         private AVCodecContext* _context = null;
         private AVFrame* _frame = null;
         private AVFrame* _swframe = null;
@@ -26,27 +26,27 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
         {
             get
             {
-                return _codec != null && _context != null && _frame != null && _rawPacket != null;
+                return _decoder != null && _context != null && _frame != null && _rawPacket != null;
             }
         }
 
         public override void Open( CodecType type )
         {
-            if ( _codec != null )
+            if ( _decoder != null )
             {
                 throw new InvalidOperationException( "the codec is already opened" );
             }
 
             try
             {
-                _codec = ffmpeg.avcodec_find_decoder( FFMpegCodecTypeConverter.Convert( type ) );
+                _decoder = ffmpeg.avcodec_find_decoder( FFMpegCodecTypeConverter.Convert( type ) );
 
-                if ( _codec == null )
+                if ( _decoder == null )
                 {
-                    throw new InvalidOperationException( "no codec found" );
+                    throw new InvalidOperationException( "no decoder found" );
                 }
 
-                _context = ffmpeg.avcodec_alloc_context3( _codec );
+                _context = ffmpeg.avcodec_alloc_context3( _decoder );
 
                 if ( _context == null )
                 {
@@ -63,7 +63,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
-	                if ( ffmpeg.avcodec_open2( _context , _codec , opts ) < 0 )
+	                if ( ffmpeg.avcodec_open2( _context , _decoder , opts ) < 0 )
 	                {
 		                return;
 	                }
@@ -155,7 +155,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                 _context = null;
             }
 
-            _codec = null;
+            _decoder = null;
             _extraParameters = null;
         }
 
@@ -213,7 +213,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                     ffmpeg.avcodec_free_context( ppContext );
                 }
 
-                _context = ffmpeg.avcodec_alloc_context3( _codec );
+                _context = ffmpeg.avcodec_alloc_context3( _decoder );
 
                 if ( _context == null )
                 {
@@ -230,7 +230,7 @@ namespace RabbitOM.Sample.Player.Codecs.FFMpeg
                     ffmpeg.av_dict_set( opts , "rtsp_transport", "none", 0);
                     ffmpeg.av_dict_set( opts , "allowed_media_types", "video", 0);
 
-                    return ffmpeg.avcodec_open2( _context , _codec , opts ) == 0;
+                    return ffmpeg.avcodec_open2( _context , _decoder , opts ) == 0;
                 }
             }
         }
