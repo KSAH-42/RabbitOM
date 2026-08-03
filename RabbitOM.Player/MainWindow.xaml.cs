@@ -20,6 +20,7 @@ namespace RabbitOM.Player
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
+    using System.Diagnostics;
 
     public partial class MainWindow : Window
     {
@@ -31,7 +32,6 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty CodecInfoProperty = DependencyProperty.Register( "CodecInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedUri", typeof(string) , typeof(MainWindow) );
-        private static readonly DependencyProperty StatisticsDataSourceProperty = DependencyProperty.Register( "StatisticsDataSource", typeof(NetworkStatisticsDataSource) , typeof(MainWindow) , new PropertyMetadata( new NetworkStatisticsDataSource() ) );
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
@@ -40,10 +40,6 @@ namespace RabbitOM.Player
         private readonly Renderer _renderer = new FFMpegRenderer();
 
 
-        private NetworkStatisticsDataSource StatisticsDataSource
-        {
-            get => GetValue( StatisticsDataSourceProperty ) as NetworkStatisticsDataSource;
-        }
 
         public ImageSource Image
         {
@@ -76,6 +72,9 @@ namespace RabbitOM.Player
         }
 
         public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( ApplicationConfiguration.CreateDefaultUris() );
+
+        public NetworkStatisticsDataSource StatisticsDataSource { get; } = new NetworkStatisticsDataSource();
+
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {

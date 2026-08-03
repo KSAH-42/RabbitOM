@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Player"
+        xmlns:controls="clr-namespace:RabbitOM.Player.Controls"
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
         mc:Ignorable="d"
         Title="MEDIA Player SAMPLE - HEVC/H264/MJPEG"
@@ -137,6 +138,14 @@
                        Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                        Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                        />
+
+            <controls:NetworkStatistics Margin="10,10,0,0" 
+                                        Width="350"
+                                        Height="130"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Visibility="Collapsed"
+                                        />
 
         </Grid>
 
