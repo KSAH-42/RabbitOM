@@ -5,12 +5,12 @@ namespace RabbitOM.Player.Controls
 {
     public sealed class NetworkStatisticsDataSource : IDataSource
     {
-        private long _ticks;
+        private volatile string _codec;
         private long _connectionStatus;
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
         private long _frameCount;
-        private volatile string _codec;
+        private long _ticks;
 
         public string GetCodec()
         {
