@@ -10,6 +10,8 @@ namespace RabbitOM.Player.Controls
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
         private long _frameCount;
+        private long _frameHeigth;
+        private long _frameWidth;
         private long _ticks;
 
         public string GetCodec()
@@ -37,6 +39,16 @@ namespace RabbitOM.Player.Controls
             return GetAverageValue( ref _frameCount );
         }
 
+        public long GetFrameHeight()
+        {
+            return Volatile.Read( ref _frameHeigth );
+        }
+
+        public long GetFrameWidth()
+        {
+            return Volatile.Read( ref _frameWidth );
+        }
+
         public void SetCodec( string value )
         {
             _codec = value;
@@ -44,12 +56,18 @@ namespace RabbitOM.Player.Controls
 
         public void SetConnectionStatusOn()
         {
-            SetValue( ref _connectionStatus , 1 );
+            Interlocked.Exchange( ref _connectionStatus , 1 );
         }
 
         public void SetConnectionStatusOff()
         {
-            SetValue( ref _connectionStatus , 0 );
+            Interlocked.Exchange( ref _connectionStatus , 0 );
+        }
+
+        public void SetFrameSize( long height , long width )
+        {
+            Interlocked.Exchange( ref _frameHeigth , height );
+            Interlocked.Exchange( ref _frameWidth , width );
         }
 
         public void AddBytesReceived( long value )
@@ -76,6 +94,8 @@ namespace RabbitOM.Player.Controls
             Interlocked.Exchange( ref _frameCount , 0 );
             Interlocked.Exchange( ref _bytesReceivedCount , 0 );
             Interlocked.Exchange( ref _packetReceivedCount , 0 );
+            Interlocked.Exchange( ref _frameHeigth , 0 );
+            Interlocked.Exchange( ref _frameWidth , 0 );
         }
 
         private void IncrementValue( ref long valueMember )

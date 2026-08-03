@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="150" 
+             d:DesignHeight="200" 
              d:DesignWidth="350"
              Loaded="OnUserControlLoaded"
              Unloaded="OnUserControlUnloaded"
@@ -65,7 +65,40 @@
                                    />
                         
                     </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal">
 
+                        <TextBlock Text="Width : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="{Binding FrameWidth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Height : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="{Binding FrameHeight,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
 
                         <TextBlock  Text="Frame rate : " 

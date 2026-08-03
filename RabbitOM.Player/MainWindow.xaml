@@ -148,7 +148,7 @@
             <controls:NetworkStatistics x:Name="_statistics" 
                                         Margin="10,20,0,0" 
                                         Width="350"
-                                        Height="130"
+                                        Height="180"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         DataSource="{Binding StatisticsDataSource,Mode=OneTime,RelativeSource={RelativeSource AncestorType=Window}}"

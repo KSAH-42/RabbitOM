@@ -46,9 +46,14 @@ namespace RabbitOM.Player.Controls
 				"Codec", typeof(string) ,
 					typeof(NetworkStatistics) );
 
-		public static readonly DependencyProperty ConnectionsCountProperty
+		public static readonly DependencyProperty FrameHeightProperty
 			= DependencyProperty.Register(
-				"ConnectionsCount", typeof(long) ,
+				"FrameHeight", typeof(long) ,
+					typeof(NetworkStatistics) );
+
+		public static readonly DependencyProperty FrameWidthProperty
+			= DependencyProperty.Register(
+				"FrameWidth", typeof(long) ,
 					typeof(NetworkStatistics) );
 
 		public static readonly DependencyProperty BytesReceivedPerSecondProperty
@@ -89,10 +94,16 @@ namespace RabbitOM.Player.Controls
 			set => SetValue( CodecProperty , value );
 		}
 
-		public long ConnectionsCount
+		public long FrameHeight
 		{
-			get => (long) GetValue( ConnectionsCountProperty );
-			set => SetValue( ConnectionsCountProperty , value );
+			get => (long) GetValue( FrameHeightProperty );
+			set => SetValue( FrameHeightProperty , value );
+		}
+
+		public long FrameWidth
+		{
+			get => (long) GetValue( FrameWidthProperty );
+			set => SetValue( FrameWidthProperty , value );
 		}
 
 		public long BytesReceivedPerSecond
@@ -152,6 +163,8 @@ namespace RabbitOM.Player.Controls
 			BytesReceivedPerSecond = source.GetBytesReceivedPerSecond();
 			PacketReceivedPerSecond = source.GetPacketReceivedPerSecond();
 			FrameCountPerSecond = source.GetFrameCountPerSecond();
+			FrameHeight = source.GetFrameHeight();
+			FrameWidth = source.GetFrameWidth();
 		}
 
 

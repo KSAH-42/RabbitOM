@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 namespace RabbitOM.Player.Controls
 {
@@ -13,6 +14,10 @@ namespace RabbitOM.Player.Controls
         long GetPacketReceivedPerSecond();
 
         long GetFrameCountPerSecond();
+
+        long GetFrameWidth();
+
+        long GetFrameHeight();
 
         void Clear();
     }

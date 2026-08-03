@@ -293,6 +293,7 @@ namespace RabbitOM.Player
                     _renderer.Render( e.Surface );
 
                     _datasource.IncreaseFrameCount();
+                    _datasource.SetFrameSize( e.Surface.FrameHeight , e.Surface.FrameWidth );
                 }
             }));
         }
