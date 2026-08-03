@@ -135,8 +135,25 @@ namespace RabbitOM.Player.Controls
 			}
 
 			DataSource?.Clear();
+			Update();
 		}
 
+		public void Update()
+		{
+			var source = DataSource;
+
+			if ( source == null )
+			{
+				return;
+			}
+
+			Codec = source.Codec;
+			ConnectionStatus = source.ConnectionStatus;
+			ConnectionsCount = source.ConnectionsCount;
+			BytesReceivedPerSecond = source.BytesReceivedPerSecond;
+			PacketReceivedPerSecond = source.PacketReceivedPerSecond;
+			FrameCountPerSecond = source.FrameCountPerSecond;
+		}
 
 
 
@@ -155,19 +172,7 @@ namespace RabbitOM.Player.Controls
 
 		private void OnTimerTick( object sender , System.EventArgs e )
         {
-            var source = DataSource;
-
-			if ( source == null )
-			{
-				return;
-			}
-
-			Codec = source.Codec;
-			ConnectionStatus = source.ConnectionStatus;
-			ConnectionsCount = source.ConnectionsCount;
-			BytesReceivedPerSecond = source.BytesReceivedPerSecond;
-			PacketReceivedPerSecond = source.PacketReceivedPerSecond;
-			FrameCountPerSecond = source.FrameCountPerSecond;
+            Update();
         }
     }
 }

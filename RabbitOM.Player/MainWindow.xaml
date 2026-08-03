@@ -146,7 +146,7 @@
                        />
 
             <controls:NetworkStatistics x:Name="_statistics" 
-                                        Margin="10,10,0,0" 
+                                        Margin="10,20,0,0" 
                                         Width="350"
                                         Height="130"
                                         HorizontalAlignment="Left"
