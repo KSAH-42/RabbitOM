@@ -4,15 +4,15 @@ namespace RabbitOM.Player.Controls
 {
     public interface IDataSource
     {
-        string Codec { get; }
+        string GetCodec();
 
-        bool ConnectionStatus{ get; }
+        bool GetConnectionStatus();
 
-        long BytesReceivedPerSecond { get; }
+        long GetBytesReceivedPerSecond();
 
-        long PacketReceivedPerSecond { get; }
+        long GetPacketReceivedPerSecond();
 
-        long FrameCountPerSecond { get; }
+        long GetFrameCountPerSecond();
 
         void Clear();
     }

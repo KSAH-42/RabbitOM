@@ -12,46 +12,29 @@ namespace RabbitOM.Player.Controls
         private long _frameCount;
         private volatile string _codec;
 
-
-
-
-        public string Codec
+        public string GetCodec()
         {
-            get => _codec;
+            return _codec;
         }
 
-        public bool ConnectionStatus
+        public bool GetConnectionStatus()
         {
-            get => Volatile.Read( ref _connectionStatus ) != 0;
+            return Volatile.Read( ref _connectionStatus ) != 0;
         }
 
-        public long BytesReceivedPerSecond
+        public long GetBytesReceivedPerSecond()
         {
-            get => GetAverageValue( ref _bytesReceivedCount );
+            return GetAverageValue( ref _bytesReceivedCount );
         }
 
-        public long PacketReceivedPerSecond
+        public long GetPacketReceivedPerSecond()
         {
-            get => GetAverageValue( ref _packetReceivedCount );
+            return GetAverageValue( ref _packetReceivedCount );
         }
 
-        public long FrameCountPerSecond
+        public long GetFrameCountPerSecond()
         {
-            get => GetAverageValue( ref _frameCount );
-        }
-
-
-
-
-        public void Clear()
-        {
-            _codec = null;
-
-            Interlocked.Exchange( ref _ticks , 0 );
-            Interlocked.Exchange( ref _connectionStatus , 0 );
-            Interlocked.Exchange( ref _frameCount , 0 );
-            Interlocked.Exchange( ref _bytesReceivedCount , 0 );
-            Interlocked.Exchange( ref _packetReceivedCount , 0 );
+            return GetAverageValue( ref _frameCount );
         }
 
         public void SetCodec( string value )
@@ -69,19 +52,30 @@ namespace RabbitOM.Player.Controls
             SetValue( ref _connectionStatus , 0 );
         }
 
-        public void IncreasePacketReceived()
-        {
-            IncrementValue( ref _packetReceivedCount );
-        }
-
         public void AddBytesReceived( long value )
         {
             IncrementValue( ref _bytesReceivedCount , value );
         }
 
+        public void IncreasePacketReceived()
+        {
+            IncrementValue( ref _packetReceivedCount );
+        }
+
         public void IncreaseFrameCount()
         {
             IncrementValue( ref _frameCount );
+        }
+
+        public void Clear()
+        {
+            _codec = null;
+
+            Interlocked.Exchange( ref _ticks , 0 );
+            Interlocked.Exchange( ref _connectionStatus , 0 );
+            Interlocked.Exchange( ref _frameCount , 0 );
+            Interlocked.Exchange( ref _bytesReceivedCount , 0 );
+            Interlocked.Exchange( ref _packetReceivedCount , 0 );
         }
 
         private void IncrementValue( ref long valueMember )
