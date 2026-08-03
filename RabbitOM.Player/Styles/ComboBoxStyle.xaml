@@ -77,8 +77,8 @@
 
                         <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
                                          Storyboard.TargetProperty="(RotateTransform.CenterX)"
-                                         From="-3.0" 
-                                         To="3.0" 
+                                         From="0.0" 
+                                         To="3.3" 
                                          Duration="0:0:0.25"
                                          />
                         
