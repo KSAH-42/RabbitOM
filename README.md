@@ -159,6 +159,7 @@ This sample demonstrate how to create MJpeg player to reconstruct a complete fra
 
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
 This sample include an example of how to build a player using decoder and render running in seperate threads.
+This sample include statitics component to display the framerate, the network bandwidth just making a right click.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.png)
 

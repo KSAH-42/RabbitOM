@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -13,7 +14,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-		private readonly DispatcherTimer _timer = new DispatcherTimer();
+		private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds( 1000 ) };
 
 
 
@@ -118,7 +119,7 @@ namespace RabbitOM.Player.Controls
 
 		public void StartMonitoring()
 		{
-			if ( DataSource == null || ! _timer.IsEnabled )
+			if ( DataSource == null || _timer.IsEnabled )
 			{
 				return;
 			}
@@ -152,26 +153,6 @@ namespace RabbitOM.Player.Controls
 			_timer.Tick -= OnTimerTick;
         }
 
-		private void OnCanStartMonitoring( object sender , CanExecuteRoutedEventArgs e )
-        {
-			e.CanExecute = ! _timer.IsEnabled && DataSource != null;
-        }
-
-		private void OnStartMonitoring( object sender , ExecutedRoutedEventArgs e )
-        {
-			StartMonitoring();
-        }
-
-		private void OnCanStopMonitoring( object sender , CanExecuteRoutedEventArgs e )
-        {
-			e.CanExecute = _timer.IsEnabled;
-        }
-
-		private void OnStopMonitoring( object sender , ExecutedRoutedEventArgs e )
-        {
-			StopMonitoring();
-        }
-
 		private void OnTimerTick( object sender , System.EventArgs e )
         {
             var source = DataSource;
@@ -181,6 +162,7 @@ namespace RabbitOM.Player.Controls
 				return;
 			}
 
+			Codec = source.Codec;
 			ConnectionStatus = source.ConnectionStatus;
 			ConnectionsCount = source.ConnectionsCount;
 			BytesReceivedPerSecond = source.BytesReceivedPerSecond;

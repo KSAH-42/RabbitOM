@@ -68,7 +68,7 @@ namespace RabbitOM.Player.Controls
 
         public void SetConnectionStatusOn()
         {
-            SetValue( ref _connectionsCount , 1 );
+            SetValue( ref _connectionStatus , 1 );
         }
 
         public void SetConnectionStatusOff()

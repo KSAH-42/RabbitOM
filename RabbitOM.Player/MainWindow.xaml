@@ -104,6 +104,12 @@
                               IsChecked="True"
                               />
 
+                    <MenuItem x:Name="menuItemShowStatistics"
+                              Header="Show statistics" 
+                              IsCheckable="True"
+                              IsChecked="False"
+                              />
+
                     <Separator />
 
                     <MenuItem Header="Save Image" 
@@ -136,15 +142,17 @@
                        Foreground="White" 
                        Background="Black"
                        Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                       Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                       Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                        />
 
-            <controls:NetworkStatistics Margin="10,10,0,0" 
+            <controls:NetworkStatistics x:Name="_statistics" 
+                                        Margin="10,10,0,0" 
                                         Width="350"
                                         Height="130"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
-                                        Visibility="Collapsed"
+                                        DataSource="{Binding StatisticsDataSource,Mode=OneTime,RelativeSource={RelativeSource AncestorType=Window}}"
+                                        Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                                         />
 
         </Grid>

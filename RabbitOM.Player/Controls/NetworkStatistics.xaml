@@ -20,20 +20,6 @@
         
     </UserControl.Resources>
     
-    <UserControl.CommandBindings>
-
-        <CommandBinding Command="{x:Static local:NetworkStatistics.StartMonitoringCommand}" 
-                        CanExecute="OnCanStartMonitoring" 
-                        Executed="OnStartMonitoring" 
-                        />
-
-        <CommandBinding Command="{x:Static local:NetworkStatistics.StopMonitoringCommand}" 
-                        CanExecute="OnCanStopMonitoring" 
-                        Executed="OnStopMonitoring" 
-                        />
-
-    </UserControl.CommandBindings>
-    
     <Grid>
         
         <Border Background="#BF212124" 
@@ -56,7 +42,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="Connected" 
+                        <TextBlock Text="{Binding ConnectionStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanStringConverter},RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
@@ -73,7 +59,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="" 
+                        <TextBlock Text="{Binding Codec,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
@@ -82,7 +68,7 @@
 
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock Text="Frame rate : " 
+                        <TextBlock  Text="Frame rate : " 
                                     FontSize="18" 
                                     Width="175" 
                                     TextAlignment="Right" 
@@ -90,7 +76,7 @@
                                     Foreground="White" 
                                     />
 
-                        <TextBlock Text="0" 
+                        <TextBlock Text="{Binding FrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
@@ -112,7 +98,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="0" 
+                        <TextBlock Text="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource MemorySizeConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
@@ -134,7 +120,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="0" 
+                        <TextBlock Text="{Binding PacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
