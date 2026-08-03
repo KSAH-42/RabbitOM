@@ -12,8 +12,8 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
     using RabbitOM.Player.Configuration;
-    using RabbitOM.Player.Dialogs;
     using RabbitOM.Player.Controls;
+    using RabbitOM.Player.Dialogs;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;
@@ -31,6 +31,8 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty CodecInfoProperty = DependencyProperty.Register( "CodecInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedUri", typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( "Footer", typeof(string) , typeof(MainWindow) );
+
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
@@ -68,6 +70,12 @@ namespace RabbitOM.Player
         {
             get => GetValue( SelectedUriProperty ) as string;
             set => SetValue( SelectedUriProperty , value );
+        }
+
+        public string Footer
+        {
+            get => GetValue( FooterProperty ) as string;
+            set => SetValue( FooterProperty , value );
         }
 
         public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( ApplicationConfiguration.CreateDefaultUris() );
@@ -221,7 +229,8 @@ namespace RabbitOM.Player
                     _decoder.Open( codec );
                     _renderer.Open( _image );
 
-                    CodecInfo = "Codec - " + e.TrackInfo.Encoder;
+                    CodecInfo = $"Codec : {e.TrackInfo.Encoder} | Clock : {e.TrackInfo.ClockRate} Hz";
+                    Footer = _client.Configuration.Uri;
                     StatusInfo = "";
                 }
                 catch( Exception ex )
@@ -239,6 +248,7 @@ namespace RabbitOM.Player
 
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
+                Footer = "";
                 Image = null;
 
                 _frameBuilder.Clear();

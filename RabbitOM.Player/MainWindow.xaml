@@ -98,10 +98,18 @@
                               IsCheckable="True"
                               />
 
+                    <Separator />
+
                     <MenuItem x:Name="menuItemShowCodecInfo"
                               Header="Show Codec infos" 
                               IsCheckable="True"
                               IsChecked="True"
+                              />
+
+                    <MenuItem x:Name="menuItemShowFooter"
+                              Header="Show footer info" 
+                              IsCheckable="True"
+                              IsChecked="False"
                               />
 
                     <MenuItem x:Name="menuItemShowStatistics"
@@ -136,14 +144,25 @@
                    Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
                    />
 
-            <TextBlock VerticalAlignment="Bottom" 
-                       HorizontalAlignment="Center" 
-                       FontSize="15" 
-                       Foreground="White" 
-                       Background="Black"
-                       Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                       Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                       />
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                
+                <TextBlock FontSize="15" 
+                           HorizontalAlignment="Center"
+                           Foreground="White" 
+                           Background="Black"
+                           Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                           Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                           />
+                
+                <TextBlock FontSize="15" 
+                           HorizontalAlignment="Center"
+                           Foreground="White" 
+                           Background="Black"
+                           Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                           Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                           />
+
+            </StackPanel>
 
             <controls:NetworkStatistics x:Name="_statistics" 
                                         Margin="10,20,0,0" 
