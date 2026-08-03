@@ -255,7 +255,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
                 var got_frame = 0;
                 var length = ffmpeg.avcodec_decode_video2( _context , _frame , &got_frame, _rawPacket );
 
-                // please take carte that it's allowed that length can be equal to zero
+                // please take care, it's allowed that the returns value called length can be equal to zero
                 if ( length < 0 || got_frame == 0 )
                 {
                     return;
