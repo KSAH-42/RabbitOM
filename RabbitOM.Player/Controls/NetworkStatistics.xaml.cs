@@ -42,6 +42,11 @@ namespace RabbitOM.Player.Controls
 				"ConnectionStatus", typeof(bool) ,
 					typeof(NetworkStatistics) );
 
+		public static readonly DependencyProperty CodecProperty
+			= DependencyProperty.Register(
+				"Codec", typeof(string) ,
+					typeof(NetworkStatistics) );
+
 		public static readonly DependencyProperty ConnectionsCountProperty
 			= DependencyProperty.Register(
 				"ConnectionsCount", typeof(long) ,
@@ -77,6 +82,12 @@ namespace RabbitOM.Player.Controls
 		{
 			get => (bool) GetValue( ConnectionStatusProperty );
 			set => SetValue( ConnectionStatusProperty , value );
+		}
+
+		public string Codec
+		{
+			get => (string) GetValue( CodecProperty );
+			set => SetValue( CodecProperty , value );
 		}
 
 		public long ConnectionsCount

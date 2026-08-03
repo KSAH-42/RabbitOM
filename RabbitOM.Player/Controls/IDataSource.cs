@@ -4,6 +4,8 @@ namespace RabbitOM.Player.Controls
 {
     public interface IDataSource
     {
+        string Codec { get; }
+
         bool ConnectionStatus{ get; }
 
         long ConnectionsCount{ get; }

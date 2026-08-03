@@ -4,27 +4,154 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
+             xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" 
-             d:DesignWidth="800"
+             d:DesignHeight="150" 
+             d:DesignWidth="350"
              Loaded="OnUserControlLoaded"
              Unloaded="OnUserControlUnloaded"
              >
+
+    <UserControl.Resources>
+
+        <converters:BooleanStringConverter x:Key="BooleanStringConverter" TrueString="Connected" FalseString="Disconnected" />
+
+        <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
+        
+    </UserControl.Resources>
+    
     <UserControl.CommandBindings>
 
         <CommandBinding Command="{x:Static local:NetworkStatistics.StartMonitoringCommand}" 
-                CanExecute="OnCanStartMonitoring" 
-                Executed="OnStartMonitoring" 
-                />
+                        CanExecute="OnCanStartMonitoring" 
+                        Executed="OnStartMonitoring" 
+                        />
 
         <CommandBinding Command="{x:Static local:NetworkStatistics.StopMonitoringCommand}" 
-                CanExecute="OnCanStopMonitoring" 
-                Executed="OnStopMonitoring" 
-                />
+                        CanExecute="OnCanStopMonitoring" 
+                        Executed="OnStopMonitoring" 
+                        />
 
     </UserControl.CommandBindings>
     
     <Grid>
+        
+        <Border Background="#BF212124" 
+                CornerRadius="8" 
+                Width="Auto" 
+                Height="auto" 
+                >
+
+            <Grid>
+
+                <StackPanel Orientation="Vertical" >
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Connection status : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="Connected" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+                        
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Codec : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+                        
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Frame rate : " 
+                                    FontSize="18" 
+                                    Width="175" 
+                                    TextAlignment="Right" 
+                                    HorizontalAlignment="Left"
+                                    Foreground="White" 
+                                    />
+
+                        <TextBlock Text="0" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                        <TextBlock Text=" / sec" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Bandwidth : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="0" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+                        
+                        <TextBlock Text=" / sec" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+                        
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Packet received : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="0" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                        <TextBlock Text=" / sec" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+        
     </Grid>
     
 </UserControl>

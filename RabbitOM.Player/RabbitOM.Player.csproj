@@ -76,6 +76,8 @@
     </Compile>
     <Compile Include="Controls\IDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsDataSource.cs" />
+    <Compile Include="Converters\MemorySizeConverter.cs" />
+    <Compile Include="Converters\BooleanStringConverter.cs" />
     <Compile Include="Styles\WindowStyle.cs" />
     <Page Include="Controls\NetworkStatistics.xaml">
       <SubType>Designer</SubType>

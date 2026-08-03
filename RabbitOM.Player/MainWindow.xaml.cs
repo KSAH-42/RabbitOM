@@ -165,8 +165,9 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                StatusInfo = "";
                 _statisticsDataSource.Clear();
+
+                StatusInfo = "";
             } ) );
         }
 
@@ -175,6 +176,7 @@ namespace RabbitOM.Player
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 _statisticsDataSource.SetConnectionStatusOn();
+                _statisticsDataSource.SetCodec( e.TrackInfo.Encoder );
 
                 _frameBuilder.Dispose();
 

@@ -11,9 +11,15 @@ namespace RabbitOM.Player.Controls
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
         private long _frameCount;
+        private volatile string _codec;
 
 
 
+
+        public string Codec
+        {
+            get => _codec;
+        }
 
         public bool ConnectionStatus
         {
@@ -45,12 +51,19 @@ namespace RabbitOM.Player.Controls
 
         public void Clear()
         {
+            _codec = null;
+
             Interlocked.Exchange( ref _ticks , 0 );
             Interlocked.Exchange( ref _connectionStatus , 0 );
             Interlocked.Exchange( ref _connectionsCount , 0 );
             Interlocked.Exchange( ref _frameCount , 0 );
             Interlocked.Exchange( ref _bytesReceivedCount , 0 );
             Interlocked.Exchange( ref _packetReceivedCount , 0 );
+        }
+
+        public void SetCodec( string value )
+        {
+            _codec = value;
         }
 
         public void SetConnectionStatusOn()
