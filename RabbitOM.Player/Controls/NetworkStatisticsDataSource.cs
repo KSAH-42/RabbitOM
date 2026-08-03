@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Threading;
 
 namespace RabbitOM.Player.Controls
@@ -120,7 +121,7 @@ namespace RabbitOM.Player.Controls
 
             var result = totalSeconds > 0 ? valueMember / totalSeconds : valueMember ;
 
-            valueMember = 0;
+            Interlocked.Exchange( ref valueMember , 0 );
 
             return result;
         }
