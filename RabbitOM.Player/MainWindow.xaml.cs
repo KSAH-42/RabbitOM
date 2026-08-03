@@ -9,16 +9,17 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player
 {
+    using RabbitOM.Player.Codecs;
+    using RabbitOM.Player.Codecs.FFMpeg;
+    using RabbitOM.Player.Configuration;
+    using RabbitOM.Player.Dialogs;
+    using RabbitOM.Player.UserControls;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;
     using RabbitOM.Streaming.Rtp.Jpeg;
     using RabbitOM.Streaming.Rtsp;
     using RabbitOM.Streaming.Rtsp.Clients;
-    using RabbitOM.Player.Codecs;
-    using RabbitOM.Player.Codecs.FFMpeg;
-    using RabbitOM.Player.Configuration;
-    using RabbitOM.Player.Dialogs;
 
     public partial class MainWindow : Window
     {
@@ -36,6 +37,7 @@ namespace RabbitOM.Player
         private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
         private readonly Decoder _decoder = new FFMpegDecoder();
         private readonly Renderer _renderer = new FFMpegRenderer();
+        private readonly NetworkStatisticsDataSource _statisticsDataSource = new NetworkStatisticsDataSource();
 
         public ImageSource Image
         {
@@ -153,18 +155,27 @@ namespace RabbitOM.Player
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () => StatusInfo = "Connecting" ) );
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
+            {
+                StatusInfo = "Connecting";
+            } ) );
         }
 
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () => StatusInfo = "" ) );
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
+            {
+                StatusInfo = "";
+                _statisticsDataSource.Clear();
+            } ) );
         }
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                _statisticsDataSource.SetConnectionStatusOn();
+
                 _frameBuilder.Dispose();
 
                 try
@@ -218,6 +229,8 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                _statisticsDataSource.SetConnectionStatusOff();
+
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
                 Image = null;
@@ -230,9 +243,13 @@ namespace RabbitOM.Player
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
+            _statisticsDataSource.AddBytesReceived( e.Packet.Data.Length );
+
             if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
             {
                 _frameBuilder.AddPacket( packet );
+
+                _statisticsDataSource.IncreasePacketReceived();
             }
         }
 
@@ -268,6 +285,8 @@ namespace RabbitOM.Player
                 using ( e.Surface ) // Here, that's absolutely mandatory for freeing unmanaged memory 
                 {
                     _renderer.Render( e.Surface );
+
+                    _statisticsDataSource.IncreaseFrameCount();
                 }
             }));
         }

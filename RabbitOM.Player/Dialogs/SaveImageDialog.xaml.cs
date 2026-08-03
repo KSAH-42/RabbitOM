@@ -46,13 +46,13 @@ namespace RabbitOM.Player.Dialogs
 
         public string FileName
         {
-            get => (string) GetValue( FileNameProperty );
+            get => GetValue( FileNameProperty ) as string;
             set => SetValue( FileNameProperty , value );
         }
 
         public BitmapSource Image
         {
-            get => (BitmapSource) GetValue( ImageProperty );
+            get => GetValue( ImageProperty ) as BitmapSource;
             set => SetValue( ImageProperty , value );
         }
 

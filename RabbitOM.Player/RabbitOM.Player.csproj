@@ -71,7 +71,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\NetworkStatistics.xaml.cs">
+      <DependentUpon>NetworkStatistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\IDataSource.cs" />
+    <Compile Include="Controls\NetworkStatisticsDataSource.cs" />
     <Compile Include="Styles\WindowStyle.cs" />
+    <Page Include="Controls\NetworkStatistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dialogs\SaveImageDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
