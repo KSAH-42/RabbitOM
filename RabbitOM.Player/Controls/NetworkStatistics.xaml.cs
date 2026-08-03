@@ -189,6 +189,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnUserControlUnloaded( object sender , RoutedEventArgs e )
         {
+			_timer.Stop();
 			_timer.Tick -= OnTimerTick;
         }
 
