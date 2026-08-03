@@ -20,7 +20,7 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
-    
+
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
@@ -33,14 +33,12 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedUri", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( "Footer", typeof(string) , typeof(MainWindow) );
 
-
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
         private readonly Decoder _decoder = new FFMpegDecoder();
         private readonly Renderer _renderer = new FFMpegRenderer();
         private readonly NetworkStatisticsDataSource _datasource = new NetworkStatisticsDataSource();
-
 
         public ImageSource Image
         {
@@ -79,7 +77,6 @@ namespace RabbitOM.Player
         }
 
         public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( ApplicationConfiguration.CreateDefaultUris() );
-
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
