@@ -114,12 +114,6 @@ namespace RabbitOM.Player.Controls
             Interlocked.Exchange( ref _ticks , Environment.TickCount );
         }
 
-        private void SetValue( ref long valueMember , long value )
-        {
-            Interlocked.Exchange( ref valueMember , value );
-            Interlocked.Exchange( ref _ticks , Environment.TickCount );
-        }
-
         private long GetAverageValue( ref long valueMember )
         {
             var totalSeconds = (long) TimeSpan.FromTicks( Environment.TickCount - _ticks ).TotalSeconds;
