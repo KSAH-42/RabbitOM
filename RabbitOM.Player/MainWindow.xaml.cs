@@ -13,7 +13,7 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Codecs.FFMpeg;
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Dialogs;
-    using RabbitOM.Player.UserControls;
+    using RabbitOM.Player.Controls;
     using RabbitOM.Streaming.Rtp;
     using RabbitOM.Streaming.Rtp.H264;
     using RabbitOM.Streaming.Rtp.H265;

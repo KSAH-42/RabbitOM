@@ -5,7 +5,7 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
 {
-	using RabbitOM.Player.UserControls;
+	using RabbitOM.Player.Controls;
 
     public partial class NetworkStatistics : UserControl
     {

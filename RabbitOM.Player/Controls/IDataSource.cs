@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Player.UserControls
+namespace RabbitOM.Player.Controls
 {
     public interface IDataSource
     {

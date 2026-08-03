@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace RabbitOM.Player.UserControls
+namespace RabbitOM.Player.Controls
 {
     public sealed class NetworkStatisticsDataSource : IDataSource
     {
