@@ -5,9 +5,7 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
 {
-	using RabbitOM.Player.Controls;
-
-    public partial class NetworkStatistics : UserControl
+	public partial class NetworkStatistics : UserControl
     {
 		public static readonly RoutedCommand StartMonitoringCommand = new RoutedCommand();
 		public static readonly RoutedCommand StopMonitoringCommand = new RoutedCommand();

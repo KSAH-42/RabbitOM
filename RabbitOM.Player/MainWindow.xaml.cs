@@ -31,13 +31,20 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty CodecInfoProperty = DependencyProperty.Register( "CodecInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedUri", typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty StatisticsDataSourceProperty = DependencyProperty.Register( "StatisticsDataSource", typeof(NetworkStatisticsDataSource) , typeof(MainWindow) , new PropertyMetadata( new NetworkStatisticsDataSource() ) );
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
         private readonly Decoder _decoder = new FFMpegDecoder();
         private readonly Renderer _renderer = new FFMpegRenderer();
-        private readonly NetworkStatisticsDataSource _statisticsDataSource = new NetworkStatisticsDataSource();
+
+
+        public NetworkStatisticsDataSource StatisticsDataSource
+        {
+            get => GetValue( StatisticsDataSourceProperty ) as NetworkStatisticsDataSource;
+            set => SetValue( StatisticsDataSourceProperty , value ?? throw new ArgumentNullException( nameof( value ) ) );
+        }
 
         public ImageSource Image
         {
@@ -165,7 +172,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                _statisticsDataSource.Clear();
+                StatisticsDataSource.Clear();
 
                 StatusInfo = "";
             } ) );
@@ -175,8 +182,8 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                _statisticsDataSource.SetConnectionStatusOn();
-                _statisticsDataSource.SetCodec( e.TrackInfo.Encoder );
+                StatisticsDataSource.SetConnectionStatusOn();
+                StatisticsDataSource.SetCodec( e.TrackInfo.Encoder );
 
                 _frameBuilder.Dispose();
 
@@ -231,7 +238,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                _statisticsDataSource.SetConnectionStatusOff();
+                StatisticsDataSource.SetConnectionStatusOff();
 
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
@@ -245,13 +252,13 @@ namespace RabbitOM.Player
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            _statisticsDataSource.AddBytesReceived( e.Packet.Data.Length );
+            StatisticsDataSource.AddBytesReceived( e.Packet.Data.Length );
 
             if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
             {
                 _frameBuilder.AddPacket( packet );
 
-                _statisticsDataSource.IncreasePacketReceived();
+                StatisticsDataSource.IncreasePacketReceived();
             }
         }
 
@@ -288,7 +295,7 @@ namespace RabbitOM.Player
                 {
                     _renderer.Render( e.Surface );
 
-                    _statisticsDataSource.IncreaseFrameCount();
+                    StatisticsDataSource.IncreaseFrameCount();
                 }
             }));
         }
