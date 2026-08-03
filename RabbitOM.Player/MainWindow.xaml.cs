@@ -171,7 +171,6 @@ namespace RabbitOM.Player
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 _datasource.Clear();
-
                 StatusInfo = "";
             } ) );
         }
