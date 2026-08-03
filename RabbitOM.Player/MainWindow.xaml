@@ -142,7 +142,7 @@
                        Foreground="White" 
                        Background="Black"
                        Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                       Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                       Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                        />
 
             <controls:NetworkStatistics x:Name="_statistics" 
