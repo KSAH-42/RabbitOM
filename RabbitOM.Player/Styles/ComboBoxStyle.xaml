@@ -77,14 +77,14 @@
 
                         <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
                                          Storyboard.TargetProperty="(RotateTransform.CenterX)"
-                                         From="0.0" 
+                                         From="-3.0" 
                                          To="3.0" 
                                          Duration="0:0:0.25"
                                          />
                         
                         <DoubleAnimation Storyboard.TargetName="Part_PathAngle"
                                          Storyboard.TargetProperty="(RotateTransform.CenterY)"
-                                         From="0.0" 
+                                         From="-2.0" 
                                          To="2.0" 
                                          Duration="0:0:0.25"
                                          />
