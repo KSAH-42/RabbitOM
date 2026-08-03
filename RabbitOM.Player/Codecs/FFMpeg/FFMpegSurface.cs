@@ -8,21 +8,16 @@ namespace RabbitOM.Player.Codecs.FFMpeg
     {
         private AVFrame* _frame;
 
-        public FFMpegSurface( int frameWidth , int frameHeight , AVFrame* frame )
+        public FFMpegSurface( int width , int height , AVFrame* frame )
+            : base( width , height )
         {
             if ( frame == null )
             {
                 throw new ArgumentNullException( nameof( frame ) );
             }
 
-            FrameWidth = frameWidth;
-            FrameHeight = frameHeight;
             _frame = frame;
         }
-
-        public override int FrameWidth { get; }
-
-        public override int FrameHeight { get; }
 
         public override IntPtr Frame
         {

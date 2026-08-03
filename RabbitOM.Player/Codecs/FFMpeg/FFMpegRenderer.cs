@@ -53,7 +53,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
                 return;
             }
 
-            if ( _writableBitmap == null || surface.FrameWidth != _writableBitmap.PixelWidth || surface.FrameHeight != _writableBitmap.PixelHeight )
+            if ( _writableBitmap == null || surface.Width != _writableBitmap.PixelWidth || surface.Height != _writableBitmap.PixelHeight )
             {
                 if ( _sws_context != null )
                 {
@@ -63,16 +63,16 @@ namespace RabbitOM.Player.Codecs.FFMpeg
 
                 var dpi = VisualTreeHelper.GetDpi( _image );
 
-                _writableBitmap = new WriteableBitmap( surface.FrameWidth , surface.FrameHeight , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24 , null );
+                _writableBitmap = new WriteableBitmap( surface.Width , surface.Height , dpi.PixelsPerInchX , dpi.PixelsPerInchY , PixelFormats.Rgb24 , null );
 
-                _updateRegion = new Int32Rect( 0 , 0 , surface.FrameWidth , surface.FrameHeight );
+                _updateRegion = new Int32Rect( 0 , 0 , surface.Width , surface.Height );
 
                 _image.ConfigureSource( _writableBitmap );
             }
 
             if ( _sws_context == null )
             {
-                _sws_context = ffmpeg.sws_getContext( surface.FrameWidth , surface.FrameHeight , AVPixelFormat.AV_PIX_FMT_YUV420P , surface.FrameWidth , surface.FrameHeight , AVPixelFormat.AV_PIX_FMT_RGB24 , ffmpeg.SWS_BILINEAR , null , null , null );
+                _sws_context = ffmpeg.sws_getContext( surface.Width , surface.Height , AVPixelFormat.AV_PIX_FMT_YUV420P , surface.Width , surface.Height , AVPixelFormat.AV_PIX_FMT_RGB24 , ffmpeg.SWS_BILINEAR , null , null , null );
 
                 if ( _sws_context == null )
                 {
@@ -87,7 +87,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
                 dstData[0] = (byte*) _writableBitmap.BackBuffer;
                 _stride[0] = _writableBitmap.BackBufferStride;
 
-                ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.FrameHeight , dstData , _stride );
+                ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.Height , dstData , _stride );
 
                 _writableBitmap.AddDirtyRect( _updateRegion );
             }
