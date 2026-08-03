@@ -149,7 +149,6 @@ namespace RabbitOM.Player.Controls
 
 			Codec = source.Codec;
 			ConnectionStatus = source.ConnectionStatus;
-			ConnectionsCount = source.ConnectionsCount;
 			BytesReceivedPerSecond = source.BytesReceivedPerSecond;
 			PacketReceivedPerSecond = source.PacketReceivedPerSecond;
 			FrameCountPerSecond = source.FrameCountPerSecond;

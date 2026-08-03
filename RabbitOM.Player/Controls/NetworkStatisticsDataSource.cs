@@ -7,7 +7,6 @@ namespace RabbitOM.Player.Controls
     {
         private long _ticks;
         private long _connectionStatus;
-        private long _connectionsCount;
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
         private long _frameCount;
@@ -24,11 +23,6 @@ namespace RabbitOM.Player.Controls
         public bool ConnectionStatus
         {
             get => Volatile.Read( ref _connectionStatus ) != 0;
-        }
-
-        public long ConnectionsCount
-        {
-            get => Volatile.Read( ref _connectionsCount );
         }
 
         public long BytesReceivedPerSecond
@@ -55,7 +49,6 @@ namespace RabbitOM.Player.Controls
 
             Interlocked.Exchange( ref _ticks , 0 );
             Interlocked.Exchange( ref _connectionStatus , 0 );
-            Interlocked.Exchange( ref _connectionsCount , 0 );
             Interlocked.Exchange( ref _frameCount , 0 );
             Interlocked.Exchange( ref _bytesReceivedCount , 0 );
             Interlocked.Exchange( ref _packetReceivedCount , 0 );
@@ -73,12 +66,7 @@ namespace RabbitOM.Player.Controls
 
         public void SetConnectionStatusOff()
         {
-            SetValue( ref _connectionsCount , 0 );
-        }
-
-        public void IncreaseConnectionsSucceed()
-        {
-            IncrementValue( ref _connectionsCount );
+            SetValue( ref _connectionStatus , 0 );
         }
 
         public void IncreasePacketReceived()

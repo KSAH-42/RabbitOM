@@ -8,8 +8,6 @@ namespace RabbitOM.Player.Controls
 
         bool ConnectionStatus{ get; }
 
-        long ConnectionsCount{ get; }
-
         long BytesReceivedPerSecond { get; }
 
         long PacketReceivedPerSecond { get; }
