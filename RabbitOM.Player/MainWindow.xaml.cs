@@ -43,7 +43,6 @@ namespace RabbitOM.Player
         private NetworkStatisticsDataSource StatisticsDataSource
         {
             get => GetValue( StatisticsDataSourceProperty ) as NetworkStatisticsDataSource;
-            set => SetValue( StatisticsDataSourceProperty , value ?? throw new ArgumentNullException( nameof( value ) ) );
         }
 
         public ImageSource Image
