@@ -49,42 +49,6 @@ namespace RabbitOM.Player.Controls
             return Volatile.Read( ref _frameWidth );
         }
 
-        public void SetCodec( string value )
-        {
-            _codec = value;
-        }
-
-        public void SetConnectionStatusOn()
-        {
-            Interlocked.Exchange( ref _connectionStatus , 1 );
-        }
-
-        public void SetConnectionStatusOff()
-        {
-            Interlocked.Exchange( ref _connectionStatus , 0 );
-        }
-
-        public void SetFrameSize( long height , long width )
-        {
-            Interlocked.Exchange( ref _frameHeigth , height );
-            Interlocked.Exchange( ref _frameWidth , width );
-        }
-
-        public void AddBytesReceived( long value )
-        {
-            IncrementValue( ref _bytesReceivedCount , value );
-        }
-
-        public void IncreasePacketReceived()
-        {
-            IncrementValue( ref _packetReceivedCount );
-        }
-
-        public void IncreaseFrameCount()
-        {
-            IncrementValue( ref _frameCount );
-        }
-
         public void Clear()
         {
             _codec = null;
@@ -96,6 +60,42 @@ namespace RabbitOM.Player.Controls
             Interlocked.Exchange( ref _packetReceivedCount , 0 );
             Interlocked.Exchange( ref _frameHeigth , 0 );
             Interlocked.Exchange( ref _frameWidth , 0 );
+        }
+
+        internal void SetCodec( string value )
+        {
+            _codec = value;
+        }
+
+        internal void SetConnectionStatusOn()
+        {
+            Interlocked.Exchange( ref _connectionStatus , 1 );
+        }
+
+        internal void SetConnectionStatusOff()
+        {
+            Interlocked.Exchange( ref _connectionStatus , 0 );
+        }
+
+        internal void SetFrameSize( long height , long width )
+        {
+            Interlocked.Exchange( ref _frameHeigth , height );
+            Interlocked.Exchange( ref _frameWidth , width );
+        }
+
+        internal void AddBytesReceived( long value )
+        {
+            IncrementValue( ref _bytesReceivedCount , value );
+        }
+
+        internal void IncreasePacketReceived()
+        {
+            IncrementValue( ref _packetReceivedCount );
+        }
+
+        internal void IncreaseFrameCount()
+        {
+            IncrementValue( ref _frameCount );
         }
 
         private void IncrementValue( ref long valueMember )
