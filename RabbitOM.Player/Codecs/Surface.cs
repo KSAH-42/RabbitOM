@@ -20,7 +20,6 @@ namespace RabbitOM.Player.Codecs
 
         public int Height { get; }
 
-
         public abstract IntPtr Frame { get; }
 
         public void Dispose()
