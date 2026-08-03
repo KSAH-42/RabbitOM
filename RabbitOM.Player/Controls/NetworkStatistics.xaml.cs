@@ -8,12 +8,6 @@ namespace RabbitOM.Player.Controls
 {
 	public partial class NetworkStatistics : UserControl
     {
-		public static readonly RoutedCommand StartMonitoringCommand = new RoutedCommand();
-		public static readonly RoutedCommand StopMonitoringCommand = new RoutedCommand();
-
-
-
-
 		private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds( 1000 ) };
 
 
