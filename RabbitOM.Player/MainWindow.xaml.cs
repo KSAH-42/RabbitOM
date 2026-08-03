@@ -229,7 +229,7 @@ namespace RabbitOM.Player
                     _decoder.Open( codec );
                     _renderer.Open( _image );
 
-                    CodecInfo = $"Codec : {e.TrackInfo.Encoder} | Clock : {e.TrackInfo.ClockRate} Hz";
+                    CodecInfo = $"Codec : {e.TrackInfo.Encoder} | Clock : {e.TrackInfo.ClockRate}Hz";
                     Footer = _client.Configuration.Uri;
                     StatusInfo = "";
                 }
