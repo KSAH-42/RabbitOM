@@ -76,6 +76,8 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+
 		public IDataSource DataSource
 		{
 			get => (IDataSource) GetValue( DataSourceProperty );
@@ -128,6 +130,9 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+
+
 		public void StartMonitoring()
 		{
 			if ( DataSource == null || _timer.IsEnabled )
@@ -145,8 +150,13 @@ namespace RabbitOM.Player.Controls
 				_timer.Stop();
 			}
 
-			DataSource?.Clear();
-			Update();
+			var datasource = DataSource;
+
+			if ( datasource != null )
+			{
+				datasource.Clear();
+				Update();
+			}
 		}
 
 		public void Update()
