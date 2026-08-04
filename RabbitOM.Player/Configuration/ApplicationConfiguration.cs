@@ -19,6 +19,9 @@ namespace RabbitOM.Player.Configuration
             yield return "rtsp://admin:camera123@127.0.0.1:554/city5.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:554/city6.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:554/city7.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:554/city8.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:554/city9.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:554/city10.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:554/toy.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:554/movie.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:554/earth.avi";
@@ -43,6 +46,9 @@ namespace RabbitOM.Player.Configuration
             yield return "rtsp://admin:camera123@127.0.0.1:555/city5.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:555/city6.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:555/city7.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:555/city8.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:555/city9.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:555/city10.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:555/toy.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:555/movie.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:555/earth.avi";
@@ -67,6 +73,9 @@ namespace RabbitOM.Player.Configuration
             yield return "rtsp://admin:camera123@127.0.0.1:556/city5.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:556/city6.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:556/city7.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:556/city8.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:556/city9.mp4";
+            yield return "rtsp://admin:camera123@127.0.0.1:556/city10.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:556/toy.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:556/movie.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:556/earth.avi";
