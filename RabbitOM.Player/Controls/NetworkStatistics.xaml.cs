@@ -138,10 +138,7 @@ namespace RabbitOM.Player.Controls
 
 		public void StopMonitoring()
 		{
-			if ( _timer.IsEnabled )
-			{
-				_timer.Stop();
-			}
+			_timer.Stop();
 
 			var datasource = DataSource;
 
