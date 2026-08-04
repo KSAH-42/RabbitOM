@@ -8,6 +8,8 @@
         Title="About" 
         Height="490" 
         Width="480"
+        MinWidth="380"
+        MinHeight="250"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         >
