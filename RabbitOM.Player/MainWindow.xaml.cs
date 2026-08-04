@@ -25,6 +25,7 @@ namespace RabbitOM.Player
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowAboutBoxCommand = new RoutedCommand();
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( "Image", typeof(ImageSource) , typeof(MainWindow) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
@@ -157,7 +158,7 @@ namespace RabbitOM.Player
             }
         }
 
-        private void OnSaveImage( object sender , CanExecuteRoutedEventArgs e )
+        private void OnCanSaveImage( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = Image is BitmapSource;
         }
@@ -170,6 +171,18 @@ namespace RabbitOM.Player
 
             dialog.TakeSnasphot();
             dialog.ShowDialog();
+        }
+
+        private void OnCanShowAboutBox( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = true;
+        }
+
+        private void OnShowAboutBox( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new AboutDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.Show();
         }
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )

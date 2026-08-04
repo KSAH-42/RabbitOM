@@ -1,0 +1,129 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="BorderBrush" Value="#FF888888" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value ="Continue" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="FontFamily" Value="Tahoma" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="CaretBrush" Value="White" />
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border BorderBrush="Red"
+                            CornerRadius="3" 
+                            BorderThickness="2"
+                            >
+                        <AdornedElementPlaceholder />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                
+                <ControlTemplate TargetType="{x:Type TextBox}">
+
+                    <Border x:Name="Border" 
+                            CornerRadius="3" 
+                            Padding="4" 
+                            BorderThickness="1" 
+                            Background="Transparent"
+                            >
+
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{TemplateBinding BorderBrush}" />
+                        </Border.BorderBrush>
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="States" >
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="MouseOver" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+
+                        <ScrollViewer x:Name="PART_ContentHost" />
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="Border" Value="White" />
+                        </Trigger>
+
+                        <Trigger Property="IsReadOnly" Value="True" >
+                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF888888"/>
+                            <Setter Property="Background" TargetName="Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#32696967" Offset="0.147" />
+                                        <GradientStop Color="#32696967" Offset="0.8" />
+                                        <GradientStop Color="#32525151" Offset="0" />
+                                        <GradientStop Color="#32525151" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                                <Condition Property="IsReadOnly" Value="False" />
+                                <Condition Property="Validation.HasError" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="LightBlue" Duration="0:0:0.15"  />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsFocused" Value="False" />
+                                <Condition Property="IsReadOnly" Value="False" />
+                                <Condition Property="Validation.HasError" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="BorderBrush" TargetName="Border" Value="#FF888888"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+
+                        <Trigger Property="IsEnabled" Value="False" >
+                            <Setter Property="BorderBrush" TargetName="Border" Value="#F0888888"/>
+                            <Setter Property="Background" TargetName="Border">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#32696967" Offset="0.147" />
+                                        <GradientStop Color="#32696967" Offset="0.8" />
+                                        <GradientStop Color="#32525151" Offset="0" />
+                                        <GradientStop Color="#32525151" Offset="1" />
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="BorderBrush" TargetName="Border" Value="Transparent"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+                
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>

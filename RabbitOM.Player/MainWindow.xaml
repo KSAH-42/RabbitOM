@@ -30,8 +30,13 @@
                         />
         
         <CommandBinding Command="{x:Static local:MainWindow.SaveImageCommand}" 
-                        CanExecute="OnSaveImage"
+                        CanExecute="OnCanSaveImage"
                         Executed="OnSaveImage"
+                        />
+
+        <CommandBinding Command="{x:Static local:MainWindow.ShowAboutBoxCommand}" 
+                        CanExecute="OnCanShowAboutBox"
+                        Executed="OnShowAboutBox"
                         />
 
         <CommandBinding Command="{x:Static ApplicationCommands.Close}"
@@ -45,11 +50,11 @@
         <Menu DockPanel.Dock="Top">
 
             <MenuItem Header="Application">
+                <MenuItem Header="Close" Command="{x:Static ApplicationCommands.Close}" />
+            </MenuItem>
 
-                <MenuItem Header="Close" 
-                          Command="{x:Static ApplicationCommands.Close}" 
-                          />
-                
+            <MenuItem Header="Help">
+                <MenuItem Header="Version" Command="{x:Static local:MainWindow.ShowAboutBoxCommand}" />
             </MenuItem>
 
         </Menu>
