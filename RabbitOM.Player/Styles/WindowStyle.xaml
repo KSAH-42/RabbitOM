@@ -92,7 +92,7 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                            <Setter Property="Background" TargetName="border" Value="#FF800000"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="#FFADB2B5"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
