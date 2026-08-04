@@ -201,7 +201,6 @@
                                             Height="180"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
-                                            DataSource="{Binding StatisticsDataSource,Mode=OneTime,RelativeSource={RelativeSource AncestorType=Window}}"
                                             Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                                             />
 
