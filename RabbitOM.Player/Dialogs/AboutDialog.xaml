@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         mc:Ignorable="d"
         Title="About" 
-        Height="450" 
+        Height="490" 
         Width="480"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
