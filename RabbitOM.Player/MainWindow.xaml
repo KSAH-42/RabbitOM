@@ -34,129 +34,153 @@
                         Executed="OnSaveImage"
                         />
 
-    </Window.CommandBindings>
-
-    <Grid Margin="1,1,1,1" >
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="39" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Margin="0,10,0,0" >
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="82" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="105" />
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0">
-                <TextBlock Margin="10,5,1,1"
-                           HorizontalAlignment="Left" 
-                           VerticalAlignment="Top" 
-                           Foreground="White"
-                           TextAlignment="Right"
-                           Text="RTSP URI :" 
-                           />
-            </Grid>
-
-            <Grid Grid.Column="1">
-                <ComboBox VerticalAlignment="Top" 
-                          SelectedIndex="0" 
-                          Height="29" 
-                          IsEditable="True" 
-                          Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                          ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                          MaxDropDownHeight="350"
-                          />
-            </Grid>
-
-            <Grid Grid.Column="2">
-                <Button Margin="0,0,7,0"
-                        HorizontalAlignment="Right" 
-                        VerticalAlignment="Top" 
-                        Width="90" 
-                        Height="29"
-                        Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                        Command="{x:Static local:MainWindow.ControlCommand}" 
+        <CommandBinding Command="{x:Static ApplicationCommands.Close}"
+                        Executed="OnCloseApplication" 
                         />
+
+    </Window.CommandBindings>
+    
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+
+            <MenuItem Header="Application">
+
+                <MenuItem Header="Close" 
+                          Command="{x:Static ApplicationCommands.Close}" 
+                          />
+                
+            </MenuItem>
+
+        </Menu>
+
+        <Grid Margin="1,1,1,1" >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,2,0,0" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="82" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="105" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    
+                    <TextBlock Margin="10,5,1,1"
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Top" 
+                               Foreground="White"
+                               TextAlignment="Right"
+                               Text="RTSP URI :" 
+                               />
+                    
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    
+                    <ComboBox VerticalAlignment="Top" 
+                              SelectedIndex="0" 
+                              Height="29" 
+                              IsEditable="True" 
+                              Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                              ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                              MaxDropDownHeight="350"
+                              />
+                    
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    
+                    <Button Margin="0,0,7,0"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" 
+                            Width="90" 
+                            Height="29"
+                            Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Command="{x:Static local:MainWindow.ControlCommand}" 
+                            />
+                    
+                </Grid>
+
             </Grid>
 
-        </Grid>
-        
-        <Grid x:Name="ImageGrid"
-              Grid.Row="1"
-              Margin="1,10,1,1" 
-              Background="Black" 
-              >
+            <Grid x:Name="ImageGrid"
+                  Grid.Row="1"
+                  Margin="1,0,1,1" 
+                  Background="Black" 
+                  >
 
-            <Grid.ContextMenu>
+                <Grid.ContextMenu>
 
-                <ContextMenu>
+                    <ContextMenu>
 
-                    <MenuItem x:Name="menuItemStretch"
-                              Header="Stretch"
-                              IsCheckable="True"
-                              />
+                        <MenuItem x:Name="menuItemStretch"
+                                  Header="Stretch"
+                                  IsCheckable="True"
+                                  />
 
-                    <Separator />
+                        <Separator />
 
-                    <MenuItem x:Name="menuItemShowCodecInfo"
-                              Header="Show Codec infos" 
-                              IsCheckable="True"
-                              IsChecked="True"
-                              />
+                        <MenuItem x:Name="menuItemShowCodecInfo"
+                                  Header="Show Codec infos" 
+                                  IsCheckable="True"
+                                  IsChecked="True"
+                                  />
 
-                    <MenuItem x:Name="menuItemShowFooter"
-                              Header="Show footer info" 
-                              IsCheckable="True"
-                              IsChecked="False"
-                              />
+                        <MenuItem x:Name="menuItemShowFooter"
+                                  Header="Show footer info" 
+                                  IsCheckable="True"
+                                  IsChecked="False"
+                                  />
 
-                    <MenuItem x:Name="menuItemShowStatistics"
-                              Header="Show statistics" 
-                              IsCheckable="True"
-                              IsChecked="False"
-                              />
+                        <MenuItem x:Name="menuItemShowStatistics"
+                                  Header="Show statistics" 
+                                  IsCheckable="True"
+                                  IsChecked="False"
+                                  />
 
-                    <Separator />
+                        <Separator />
 
-                    <MenuItem Header="Save Image" 
-                              Command="{x:Static local:MainWindow.SaveImageCommand}" 
-                              />
+                        <MenuItem Header="Save Image" 
+                                  Command="{x:Static local:MainWindow.SaveImageCommand}" 
+                                  />
 
-                </ContextMenu>
+                    </ContextMenu>
 
-            </Grid.ContextMenu>
+                </Grid.ContextMenu>
 
-            <TextBlock VerticalAlignment="Center" 
-                       HorizontalAlignment="Center" 
-                       FontSize="20" 
-                       Foreground="White" 
-                       Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                <TextBlock VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" 
+                           FontSize="20" 
+                           Foreground="White" 
+                           Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                           />
+
+                <Image x:Name="_image"  
+                       Margin="0,0,0,0" 
+                       SnapsToDevicePixels="True" 
+                       UseLayoutRounding="True" 
+                       Focusable="True"
+                       Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                       Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
                        />
 
-            <Image x:Name="_image"  
-                   Margin="0,0,0,0" 
-                   SnapsToDevicePixels="True" 
-                   UseLayoutRounding="True" 
-                   Focusable="True"
-                   Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                   Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
-                   />
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
 
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                
-                <TextBlock FontSize="15" 
+                    <TextBlock FontSize="15" 
                            HorizontalAlignment="Center"
                            Foreground="White" 
                            Background="Black"
                            Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                            Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
-                
-                <TextBlock FontSize="15" 
+
+                    <TextBlock FontSize="15" 
                            HorizontalAlignment="Center"
                            Foreground="White" 
                            Background="Black"
@@ -164,20 +188,22 @@
                            Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
 
-            </StackPanel>
+                </StackPanel>
 
-            <controls:NetworkStatistics x:Name="_statistics" 
-                                        Margin="10,20,0,0" 
-                                        Width="350"
-                                        Height="180"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top"
-                                        DataSource="{Binding StatisticsDataSource,Mode=OneTime,RelativeSource={RelativeSource AncestorType=Window}}"
-                                        Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                        />
+                <controls:NetworkStatistics x:Name="_statistics" 
+                                            Margin="10,20,0,0" 
+                                            Width="350"
+                                            Height="180"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            DataSource="{Binding StatisticsDataSource,Mode=OneTime,RelativeSource={RelativeSource AncestorType=Window}}"
+                                            Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                            />
+
+            </Grid>
 
         </Grid>
-
-    </Grid>
-
+        
+    </DockPanel>
+    
 </Window>

@@ -149,6 +149,14 @@ namespace RabbitOM.Player
             }
         }
 
+        private void OnCloseApplication( object sender , ExecutedRoutedEventArgs e )
+        {
+            if ( MessageBox.Show( "Would you like to close the application ?" , "Closing Application" , MessageBoxButton.YesNo , MessageBoxImage.Question) == MessageBoxResult.Yes )
+            {
+                this.Close();
+            }
+        }
+
         private void OnSaveImage( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = Image is BitmapSource;
