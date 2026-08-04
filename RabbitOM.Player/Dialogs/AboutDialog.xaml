@@ -71,6 +71,7 @@
                     VerticalAlignment="Bottom"
                     Width="80"
                     Margin="0,0,10,10"
+                    IsCancel="True"
                     Command="{x:Static local:AboutDialog.CloseCommand}"
                     />
         </Grid>
