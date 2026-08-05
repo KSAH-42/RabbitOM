@@ -96,7 +96,6 @@
                     VerticalAlignment="Bottom"
                     Width="30"
                     Margin="10,0,10,10"
-                    IsCancel="True"
                     Command="{x:Static local:UrisDialog.MoveUpCommand}"
                     />
 
@@ -105,7 +104,6 @@
                     VerticalAlignment="Bottom"
                     Width="30"
                     Margin="48,0,10,10"
-                    IsCancel="True"
                     Command="{x:Static local:UrisDialog.MoveDownCommand}"
                     />
 
@@ -114,7 +112,6 @@
                     VerticalAlignment="Bottom"
                     Width="30"
                     Margin="86,0,10,10"
-                    IsCancel="True"
                     Command="{x:Static local:UrisDialog.RemoveCommand}"
                     />
 
