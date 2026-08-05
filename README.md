@@ -1,4 +1,4 @@
-# A resilent RTSP client based written in C#
+# A resilent RTSP client using the .NET Framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
