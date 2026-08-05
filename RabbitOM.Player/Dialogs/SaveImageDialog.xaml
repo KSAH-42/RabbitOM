@@ -9,6 +9,8 @@
         Title="Saving picture" 
         Height="490" 
         Width="330"
+        MinHeight="250"
+        MinWidth="320"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         >
