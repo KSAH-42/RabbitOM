@@ -43,7 +43,7 @@
 
 ➡️ Next arrivals:
 
-* Adding next RTSP Client 
+* Adding the New RTSP Client 
 * Adding RTSP receivers
 * Adding RTCP layer 
 * Onvif
