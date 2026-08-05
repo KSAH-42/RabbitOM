@@ -5,7 +5,8 @@ namespace RabbitOM.Player.Configuration
 {
     public static class ApplicationConfiguration
     {
-        public static IEnumerable<string> CreateDefaultUris()
+        // TODO: load from the appsettings
+        public static IEnumerable<string> GetUris()
         {
             yield return "rtsp://stream.strba.sk:1935/strba/VYHLAD_JAZERO.stream";
             yield return "rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101";
