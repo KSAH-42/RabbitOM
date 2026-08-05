@@ -137,7 +137,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-		public void StartMonitoring()
+		public void StartCollect()
 		{
 			if ( DataSource == null || _timer.IsEnabled )
 			{
@@ -147,7 +147,7 @@ namespace RabbitOM.Player.Controls
 			_timer.Start();
 		}
 
-		public void StopMonitoring()
+		public void StopCollect()
 		{
 			_timer.Stop();
 

@@ -92,12 +92,12 @@ namespace RabbitOM.Player
             _frameBuilder.MediaBuilded += OnBuildFrame;
             _decoder.Decoded += OnFrameDecoded;
             _statistics.DataSource = _datasource;
-            _statistics.StartMonitoring();
+            _statistics.StartCollect();
         }
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
         {
-            _statistics.StopMonitoring();
+            _statistics.StopCollect();
             _statistics.DataSource = null;
             _client.StopCommunication();
             _client.CommunicationStarted -= OnCommunicationStarted;
