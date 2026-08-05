@@ -71,6 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\NetworkSettingsDialog.xaml.cs">
+      <DependentUpon>NetworkSettingsDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\UriInfo.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Controls\NetworkStatistics.xaml.cs">
@@ -92,6 +95,10 @@
     <Page Include="Controls\NetworkStatistics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\NetworkSettingsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Dialogs\UrisDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

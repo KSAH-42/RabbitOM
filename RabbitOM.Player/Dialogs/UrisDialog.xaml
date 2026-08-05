@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         mc:Ignorable="d"
-        Title="About" 
+        Title="Sources" 
         Height="490" 
         Width="480"
         MinWidth="380"

@@ -42,6 +42,10 @@
                         Executed="OnShowUrisDialog"
                         />
 
+        <CommandBinding Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" 
+                        Executed="OnShowNetworkSettingsDialog"
+                        />
+
         <CommandBinding Command="{x:Static ApplicationCommands.Close}"
                         Executed="OnCloseApplication" 
                         />
@@ -56,6 +60,10 @@
                 <MenuItem Header="Close" Command="{x:Static ApplicationCommands.Close}" />
             </MenuItem>
 
+            <MenuItem Header="Configuration">
+                <MenuItem Header="Network settings" Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" />
+            </MenuItem>
+            
             <MenuItem Header="Help">
                 <MenuItem Header="Version" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />
             </MenuItem>

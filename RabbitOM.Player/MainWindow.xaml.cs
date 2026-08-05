@@ -28,6 +28,7 @@ namespace RabbitOM.Player
         public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowAboutDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( "Image", typeof(ImageSource) , typeof(MainWindow) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
@@ -196,6 +197,13 @@ namespace RabbitOM.Player
                 Uris.AddRange( dialog.Uris.Select( uri => uri.Value ) );
                 SelectedUri = Uris.Contains( selectedUri ) ? selectedUri : Uris.FirstOrDefault();
             }
+        }
+
+        private void OnShowNetworkSettingsDialog( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new NetworkSettingsDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.ShowDialog();
         }
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )

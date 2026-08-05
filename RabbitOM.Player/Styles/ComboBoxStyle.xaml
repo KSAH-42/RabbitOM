@@ -10,10 +10,12 @@
     </LinearGradientBrush>
 
     <ControlTemplate  x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+
         <ScrollViewer x:Name="PART_ContentHost" 
                       Focusable="False" 
                       Background="{TemplateBinding Background}" 
                       />
+        
     </ControlTemplate>
 
     <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
@@ -120,6 +122,7 @@
                              To="0.0" 
                              Duration="0:0:0.25"
                              />
+                        
                     </Storyboard>
 
                 </BeginStoryboard>
@@ -366,6 +369,11 @@
                     
                     <ControlTemplate.Triggers>
 
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter TargetName="ToggleButton" Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter TargetName="ToggleButton" Property="Width" Value="Auto" />
+                        </Trigger>
+                        
                         <Trigger Property="IsFocused" Value="True">
                             <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
                         </Trigger>
