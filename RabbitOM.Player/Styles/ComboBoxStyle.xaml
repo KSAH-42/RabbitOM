@@ -372,20 +372,9 @@
                         <Trigger Property="IsReadOnly" Value="True">
                             <Setter TargetName="ToggleButton" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="ToggleButton" Property="Width" Value="Auto" />
+                            <Setter Property="BorderBrush" TargetName="Border" Value="Blue"/>
                         </Trigger>
                         
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
-                        </Trigger>
-
-                        <Trigger Property="IsFocused" SourceName="PART_EditableTextBox" Value="True">
-                            <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
-                        </Trigger>
-
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="LightGray"/>
-                        </Trigger>
-
                         <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
                             <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0,0,4,4"/>
                             <Setter TargetName="DropDownBorder" Property="Margin" Value="0"/>
@@ -426,6 +415,18 @@
                                 <Setter Property="BorderBrush" TargetName="Border" Value="#FF888888"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
+
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
+                        </Trigger>
+
+                        <Trigger Property="IsFocused" SourceName="PART_EditableTextBox" Value="True">
+                            <Setter Property="BorderBrush" TargetName="Border" Value="White"/>
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="LightGray"/>
+                        </Trigger>
 
                     </ControlTemplate.Triggers>
                     
