@@ -231,6 +231,7 @@ namespace RabbitOM.Player
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 _datasource.SetConnectionStatusOn();
+                _datasource.SetTransport( _client.Configuration.DeliveryMode.ToString() );
                 _datasource.SetCodec( e.TrackInfo.Encoder );
 
                 _frameBuilder.Dispose();

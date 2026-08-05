@@ -7,6 +7,7 @@ namespace RabbitOM.Player.Controls
     public sealed class NetworkStatisticsDataSource : IDataSource
     {
         private volatile string _codec;
+        private volatile string _transport;
         private long _connectionStatus;
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
@@ -18,6 +19,11 @@ namespace RabbitOM.Player.Controls
         public string GetCodec()
         {
             return _codec;
+        }
+
+        public string GetTransport()
+        {
+            return _transport;
         }
 
         public bool GetConnectionStatus()
@@ -53,7 +59,7 @@ namespace RabbitOM.Player.Controls
         public void Clear()
         {
             _codec = null;
-
+            _transport = null;
             Interlocked.Exchange( ref _ticks , 0 );
             Interlocked.Exchange( ref _connectionStatus , 0 );
             Interlocked.Exchange( ref _frameCount , 0 );
@@ -66,6 +72,11 @@ namespace RabbitOM.Player.Controls
         internal void SetCodec( string value )
         {
             _codec = value;
+        }
+
+        internal void SetTransport( string value )
+        {
+            _transport = value;
         }
 
         internal void SetConnectionStatusOn()

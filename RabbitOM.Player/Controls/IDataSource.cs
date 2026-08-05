@@ -6,6 +6,8 @@ namespace RabbitOM.Player.Controls
     {
         string GetCodec();
 
+        string GetTransport();
+
         bool GetConnectionStatus();
 
         long GetBytesReceivedPerSecond();

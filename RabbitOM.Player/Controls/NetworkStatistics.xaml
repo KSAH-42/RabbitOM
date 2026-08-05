@@ -51,6 +51,23 @@
 
                     <StackPanel Orientation="Horizontal">
 
+                        <TextBlock Text="Transport : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="{Binding Transport,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
                         <TextBlock Text="Codec : " 
                                    FontSize="18" 
                                    Width="175" 
@@ -65,7 +82,7 @@
                                    />
                         
                     </StackPanel>
-                    
+
                     <StackPanel Orientation="Horizontal">
 
                         <TextBlock Text="Width : " 
