@@ -20,12 +20,14 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
+    using RabbitOM.Player.Extensions;
 
     public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowAboutBoxCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowAboutDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( "Image", typeof(ImageSource) , typeof(MainWindow) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
@@ -173,16 +175,27 @@ namespace RabbitOM.Player
             dialog.ShowDialog();
         }
 
-        private void OnCanShowAboutBox( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
-
-        private void OnShowAboutBox( object sender , ExecutedRoutedEventArgs e )
+        private void OnShowAboutDialog( object sender , ExecutedRoutedEventArgs e )
         {
             var dialog = new AboutDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.Show();
+            dialog.ShowDialog();
+        }
+
+        private void OnShowUrisDialog( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new UrisDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.Uris.AddRange( Uris.Select( uri => new UriInfo() { Value = uri } ) );
+
+            if (dialog.ShowDialog() == true )
+            {
+                var selectedUri = SelectedUri;
+
+                Uris.Clear();
+                Uris.AddRange( dialog.Uris.Select( uri => uri.Value ) );
+                SelectedUri = Uris.Contains( selectedUri ) ? selectedUri : Uris.FirstOrDefault();
+            }
         }
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
