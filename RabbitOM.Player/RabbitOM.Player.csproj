@@ -81,8 +81,8 @@
     </Compile>
     <Compile Include="Controls\IDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsDataSource.cs" />
-    <Compile Include="Converters\MemorySizeConverter.cs" />
-    <Compile Include="Converters\BooleanStringConverter.cs" />
+    <Compile Include="Converters\MemorySizeValueConverter.cs" />
+    <Compile Include="Converters\BooleanStringValueConverter.cs" />
     <Compile Include="Dialogs\UrisDialog.xaml.cs">
       <DependentUpon>UrisDialog.xaml</DependentUpon>
     </Compile>

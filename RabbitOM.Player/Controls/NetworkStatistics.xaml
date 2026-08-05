@@ -14,9 +14,9 @@
 
     <UserControl.Resources>
 
-        <converters:BooleanStringConverter x:Key="BooleanStringConverter" TrueString="Connected" FalseString="Disconnected" />
+        <converters:BooleanStringValueConverter x:Key="BooleanStringValueConverter" TrueString="Connected" FalseString="Disconnected" />
 
-        <converters:MemorySizeConverter x:Key="MemorySizeConverter" />
+        <converters:MemorySizeValueConverter x:Key="MemorySizeValueConverter" />
         
     </UserControl.Resources>
     
@@ -42,7 +42,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="{Binding ConnectionStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanStringConverter},RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        <TextBlock Text="{Binding ConnectionStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanStringValueConverter},RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
@@ -148,7 +148,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource MemorySizeConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        <TextBlock Text="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource MemorySizeValueConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
