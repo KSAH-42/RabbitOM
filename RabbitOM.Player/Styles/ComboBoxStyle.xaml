@@ -372,7 +372,6 @@
                         <Trigger Property="IsReadOnly" Value="True">
                             <Setter TargetName="ToggleButton" Property="HorizontalAlignment" Value="Stretch" />
                             <Setter TargetName="ToggleButton" Property="Width" Value="Auto" />
-                            <Setter Property="BorderBrush" TargetName="Border" Value="Blue"/>
                         </Trigger>
                         
                         <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
