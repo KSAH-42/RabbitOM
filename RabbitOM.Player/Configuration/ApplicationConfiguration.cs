@@ -5,7 +5,7 @@ namespace RabbitOM.Player.Configuration
 {
     public static class ApplicationConfiguration
     {
-        // TODO: load from the appsettings
+        // TODO: load from the appsettings maybe used ConfigurationSection class of the .net framework and include create collection and used configuration manager of .net for loaded and saving it's should be enougth
         public static IEnumerable<string> GetUris()
         {
             yield return "rtsp://stream.strba.sk:1935/strba/VYHLAD_JAZERO.stream";
