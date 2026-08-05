@@ -16,7 +16,13 @@
 
     <Window.CommandBindings>
 
-        <CommandBinding Command="{x:Static local:AboutDialog.CloseCommand}" Executed="OnClose" />
+        <CommandBinding Command="{x:Static local:NetworkSettingsDialog.CloseCommand}" 
+                        Executed="OnClose" 
+                        />
+
+        <CommandBinding Command="{x:Static local:NetworkSettingsDialog.CancelCommand}" 
+                        Executed="OnCancel" 
+                        />
 
     </Window.CommandBindings>
 
@@ -75,13 +81,22 @@
 
         <Grid Grid.Row="1">
 
+            <Button Content="Cancel"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Width="80"
+                    Margin="0,0,102,10"
+                    IsCancel="True"
+                    Command="{x:Static local:NetworkSettingsDialog.CancelCommand}"
+                    />
+
             <Button Content="Ok"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Width="80"
                     Margin="0,0,10,10"
                     IsCancel="True"
-                    Command="{x:Static local:AboutDialog.CloseCommand}"
+                    Command="{x:Static local:NetworkSettingsDialog.CloseCommand}"
                     />
         </Grid>
         

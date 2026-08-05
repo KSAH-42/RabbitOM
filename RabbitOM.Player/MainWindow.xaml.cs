@@ -203,7 +203,10 @@ namespace RabbitOM.Player
         {
             var dialog = new NetworkSettingsDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.ShowDialog();
+            if ( dialog.ShowDialog() == true )
+            {
+                MessageBox.Show( "this feature will be implemented soon" );
+            }
         }
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )

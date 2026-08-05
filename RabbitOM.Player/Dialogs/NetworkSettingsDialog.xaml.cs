@@ -8,6 +8,7 @@ namespace RabbitOM.Player.Dialogs
     public partial class NetworkSettingsDialog : Window
     {
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
+        public static readonly RoutedCommand CancelCommand = new RoutedCommand();
 
         public NetworkSettingsDialog()
         {
@@ -19,9 +20,14 @@ namespace RabbitOM.Player.Dialogs
             "TCP" , "UDP" , "MULTICAST"
         };
 
-        private void OnClose( object sender , ExecutedRoutedEventArgs e )
+        private void OnCancel( object sender , ExecutedRoutedEventArgs e )
         {
             Close();
+        }
+
+        private void OnClose( object sender , ExecutedRoutedEventArgs e )
+        {
+            DialogResult = true;
         }
     }
 }
