@@ -75,7 +75,7 @@
                     <ColumnDefinition Width="82" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="39" />
-                    <ColumnDefinition Width="104" />
+                    <ColumnDefinition Width="102" />
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
@@ -121,7 +121,7 @@
                     <Button Margin="0,0,7,0"
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Top" 
-                            Width="90" 
+                            Width="89" 
                             Height="29"
                             Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                             Command="{x:Static local:MainWindow.ControlCommand}" 
