@@ -55,7 +55,6 @@
                       BorderThickness="0" 
                       TabIndex="0" 
                       SelectionMode="Extended" 
-                      IsSynchronizedWithCurrentItem="True" 
                       VerticalAlignment="Stretch"
                       SelectedValue="{Binding SelectedUri,RelativeSource={RelativeSource AncestorType=Window}}"
                       ItemsSource="{Binding Uris,RelativeSource={RelativeSource AncestorType=Window}}"
