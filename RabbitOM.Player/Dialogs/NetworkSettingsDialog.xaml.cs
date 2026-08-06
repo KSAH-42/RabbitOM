@@ -12,7 +12,7 @@ namespace RabbitOM.Player.Dialogs
 
         public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport , null ));
         public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , null );
-        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , null );
+        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , new PropertyMetadata( "224.0.0.1" , null ) );
 
         public const string TcpTransport = "TCP";
         public const string UdpTransport = "UDP";
