@@ -1,4 +1,4 @@
-# A resilent RTSP client using the .NET Framework
+# A RTSP client streaming library based on the .NET Framework
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
