@@ -89,6 +89,7 @@ namespace RabbitOM.Player
             _client.Connected += OnConnected;
             _client.Disconnected += OnDisconnected;
             _client.PacketReceived += OnPacketReceived;
+            _frameBuilder.PacketsLost += OnPacketsLost;
             _frameBuilder.MediaBuilded += OnBuildFrame;
             _decoder.Decoded += OnFrameDecoded;
             _statistics.DataSource = _datasource;
@@ -106,6 +107,7 @@ namespace RabbitOM.Player
             _client.Disconnected -= OnDisconnected;
             _client.PacketReceived -= OnPacketReceived;
             _client.Dispose();
+            _frameBuilder.PacketsLost -= OnPacketsLost;
             _frameBuilder.MediaBuilded -= OnBuildFrame;
             _frameBuilder.Dispose();
             _decoder.Decoded -= OnFrameDecoded;
@@ -311,6 +313,11 @@ namespace RabbitOM.Player
 
                 _datasource.IncreasePacketReceived();
             }
+        }
+
+        private void OnPacketsLost( object sender , RtpPacketsLostEventArgs e )
+        {
+            _datasource.AddPacketsLost( e.NumberOfPacketLost );
         }
 
         private void OnBuildFrame( object sender , RtpMediaBuildedEventArgs e )

@@ -7,8 +7,6 @@ namespace RabbitOM.Streaming.Rtp
     {
         int MaximumNumberOfPackets { get; set; }
 
-        int NumberOfPacketsLost { get; }
-
         bool IsSequenceTooLong { get; }
 
         bool HasCompleteSequence { get; }

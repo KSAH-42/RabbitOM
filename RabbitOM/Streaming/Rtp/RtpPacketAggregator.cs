@@ -16,8 +16,6 @@ namespace RabbitOM.Streaming.Rtp
 
         private int _maximumNumberOfPackets;
 
-        private int _numberOfPacketsLost;
-
         private IReadOnlyCollection<RtpPacket> _sequence;
 
 
@@ -29,11 +27,6 @@ namespace RabbitOM.Streaming.Rtp
         {
             get => _maximumNumberOfPackets;
             set => _maximumNumberOfPackets = value;
-        }
-
-        public int NumberOfPacketsLost
-        {
-            get => _numberOfPacketsLost;
         }
 
         public bool IsSequenceTooLong
@@ -101,7 +94,6 @@ namespace RabbitOM.Streaming.Rtp
             RemovePackets();
 
             _currentSequenceNumber = null;
-            _numberOfPacketsLost = 0;
         }
 
         public void SortSequence()
@@ -130,11 +122,10 @@ namespace RabbitOM.Streaming.Rtp
             {
                 var diff = Math.Abs( packet.SequenceNumber - _currentSequenceNumber.Value );
 
-                if ( diff != 1 && packet.SequenceNumber > 1 )
+                if ( diff > 1 && packet.SequenceNumber > 1 )
                 {
                     _isUnOrdered = true;
-                    _numberOfPacketsLost = Math.Max( -- diff + _numberOfPacketsLost , _numberOfPacketsLost );
-                    result = diff;
+                    result = diff - 1;
                 }
             }
 

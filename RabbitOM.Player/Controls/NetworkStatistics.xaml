@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="200" 
+             d:DesignHeight="220" 
              d:DesignWidth="350"
              Loaded="OnUserControlLoaded"
              Unloaded="OnUserControlUnloaded"
@@ -176,6 +176,23 @@
                                    />
 
                         <TextBlock Text=" / sec" 
+                                   FontSize="18" 
+                                   Foreground="Beige" 
+                                   />
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <TextBlock Text="Packets lost : " 
+                                   FontSize="18" 
+                                   Width="175" 
+                                   TextAlignment="Right" 
+                                   HorizontalAlignment="Left"
+                                   Foreground="White" 
+                                   />
+
+                        <TextBlock Text="{Binding PacketsLostCount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />

@@ -14,6 +14,7 @@ namespace RabbitOM.Player.Controls
         private long _frameCount;
         private long _frameHeigth;
         private long _frameWidth;
+        private long _packetsLostCount;
         private long _ticks;
 
         public string GetCodec()
@@ -56,6 +57,11 @@ namespace RabbitOM.Player.Controls
             return Volatile.Read( ref _frameWidth );
         }
 
+        public long GetPacketsLostCount()
+        {
+            return Volatile.Read( ref _packetsLostCount );
+        }
+
         public void Clear()
         {
             _codec = null;
@@ -67,6 +73,7 @@ namespace RabbitOM.Player.Controls
             Interlocked.Exchange( ref _packetReceivedCount , 0 );
             Interlocked.Exchange( ref _frameHeigth , 0 );
             Interlocked.Exchange( ref _frameWidth , 0 );
+            Interlocked.Exchange( ref _packetsLostCount , 0 );
         }
 
         internal void SetCodec( string value )
@@ -93,6 +100,11 @@ namespace RabbitOM.Player.Controls
         {
             Interlocked.Exchange( ref _frameHeigth , height );
             Interlocked.Exchange( ref _frameWidth , width );
+        }
+
+        internal void AddPacketsLost( long value )
+        {
+            IncrementValue( ref _packetsLostCount , value );
         }
 
         internal void AddBytesReceived( long value )
@@ -122,7 +134,9 @@ namespace RabbitOM.Player.Controls
                 throw new ArgumentException( nameof( value ) );
             }
 
-            Interlocked.Add( ref valueMember , value );
+            var sum = valueMember + value; // if the sum is negative, there is an overflow we need to set the max value
+
+            Interlocked.Exchange( ref valueMember , sum >= valueMember ? sum : int.MaxValue );
             Interlocked.Exchange( ref _ticks , Environment.TickCount );
         }
 

@@ -74,7 +74,7 @@ namespace RabbitOM.Streaming.Rtp
 
                 if ( lostResult > 0 )
                 {
-                    OnPacketsLost( new RtpPacketsLostEventArgs( _aggregator.MaximumNumberOfPackets ) );
+                    OnPacketsLost( new RtpPacketsLostEventArgs( lostResult ) );
                 }
 
                 if ( _aggregator.IsSequenceTooLong )

@@ -69,6 +69,11 @@ namespace RabbitOM.Player.Controls
 				"FrameCountPerSecond", typeof(long) ,
 					typeof(NetworkStatistics) );
 
+		public static readonly DependencyProperty PacketsLostCountPerSecondProperty
+			= DependencyProperty.Register(
+				"PacketsLostCount", typeof(long) ,
+					typeof(NetworkStatistics) );
+
 
 
 
@@ -130,6 +135,12 @@ namespace RabbitOM.Player.Controls
 			set => SetValue( FrameCountPerSecondProperty , value );
 		}
 
+		public long PacketsLostCount
+		{
+			get => (long) GetValue( PacketsLostCountPerSecondProperty );
+			set => SetValue( PacketsLostCountPerSecondProperty , value );
+		}
+
 
 
 
@@ -177,6 +188,7 @@ namespace RabbitOM.Player.Controls
 			FrameCountPerSecond = source.GetFrameCountPerSecond();
 			FrameHeight = source.GetFrameHeight();
 			FrameWidth = source.GetFrameWidth();
+			PacketsLostCount = source.GetPacketsLostCount();
 		}
 
 

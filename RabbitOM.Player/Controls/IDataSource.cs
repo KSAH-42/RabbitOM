@@ -20,6 +20,8 @@ namespace RabbitOM.Player.Controls
 
         long GetFrameHeight();
 
+        long GetPacketsLostCount();
+
         void Clear();
     }
 }
