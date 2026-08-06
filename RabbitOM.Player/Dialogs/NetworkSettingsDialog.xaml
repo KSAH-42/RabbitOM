@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
+        xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
         mc:Ignorable="d"
         Title="Network settings" 
-        Height="100" 
+        Height="220" 
         Width="330"
         MinWidth="330"
         MinHeight="150"
@@ -14,6 +15,18 @@
         Style="{DynamicResource WindowStyle}"
         >
 
+    <Window.Resources>
+
+        <converters:StringVisibilityValueConverter x:Key="UdpStringVisibilityValueConverter" 
+                                                   Text="{x:Static local:NetworkSettingsDialog.UdpTransport}"
+                                                   />
+
+        <converters:StringVisibilityValueConverter x:Key="MulticastStringVisibilityValueConverter" 
+                                                   Text="{x:Static local:NetworkSettingsDialog.MulticastTransport}"
+                                                   />
+
+    </Window.Resources>
+    
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:NetworkSettingsDialog.CloseCommand}" 
@@ -31,7 +44,7 @@
 
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="*" />
+            <RowDefinition MinHeight="100" Height="*" />
             <RowDefinition Height="50" />
             
         </Grid.RowDefinitions>
@@ -52,6 +65,28 @@
                     <TextBlock Text="Transport :"
                                Foreground="White"
                                HorizontalAlignment="Right"
+                               Margin="0,0,0,0"
+                               />
+
+                    <TextBlock Text="Port :"
+                               Foreground="White"
+                               HorizontalAlignment="Right"
+                               Margin="0,35,0,0"
+                               Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                               />
+
+                    <TextBlock Text="Port :"
+                               Foreground="White"
+                               HorizontalAlignment="Right"
+                               Margin="0,35,0,0"
+                               Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                               />
+
+                    <TextBlock Text="Address :"
+                               Foreground="White"
+                               HorizontalAlignment="Right"
+                               Margin="0,65,0,0"
+                               Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
                 </Grid>
@@ -60,8 +95,7 @@
                       Margin="10,0,0,0"
                       >
 
-                    <ComboBox  Text=""
-                               Foreground="White"
+                    <ComboBox  Foreground="White"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                IsEditable="False"
@@ -70,7 +104,35 @@
                                Width="200"
                                Margin="0,-1,0,0"
                                SelectedIndex="0"
+                               SelectedItem="{Binding SelectedTransport,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
                                ItemsSource="{Binding Transports,RelativeSource={RelativeSource AncestorType=Window}}"
+                               />
+
+                    <TextBox   Text="0"
+                               Width="100"
+                               Margin="0,35,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="25"
+                               Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                               />
+
+                    <TextBox   Text="0"
+                               Width="100"
+                               Margin="0,35,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="25"
+                               Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                               />
+
+                    <TextBox   Text="0"
+                               Width="100"
+                               Margin="0,65,0,0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Height="25"
+                               Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
                 </Grid>

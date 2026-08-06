@@ -10,14 +10,26 @@ namespace RabbitOM.Player.Dialogs
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
         public static readonly RoutedCommand CancelCommand = new RoutedCommand();
 
+        public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport , null ));
+
+        public const string TcpTransport = "TCP";
+        public const string UdpTransport = "UDP";
+        public const string MulticastTransport = "MULTICAST";
+
         public NetworkSettingsDialog()
         {
             InitializeComponent();
         }
 
+        public string SelectedTransport
+        {
+            get => GetValue( SelectedTransportProperty ) as string;
+            set => SetValue( SelectedTransportProperty , value );
+        }
+
         public ObservableCollection<string> Transports { get; } = new ObservableCollection<string>()
         {
-            "TCP" , "UDP" , "MULTICAST"
+            TcpTransport , UdpTransport , MulticastTransport
         };
 
         private void OnCancel( object sender , ExecutedRoutedEventArgs e )
