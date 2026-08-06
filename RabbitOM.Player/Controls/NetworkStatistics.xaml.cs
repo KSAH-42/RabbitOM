@@ -147,7 +147,7 @@ namespace RabbitOM.Player.Controls
 			_timer.Start();
 		}
 
-		public void StopCollect()
+		public void StopMonitoring()
 		{
 			_timer.Stop();
 

@@ -97,7 +97,7 @@ namespace RabbitOM.Player
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
         {
-            _statistics.StopCollect();
+            _statistics.StopMonitoring();
             _statistics.DataSource = null;
             _client.StopCommunication();
             _client.CommunicationStarted -= OnCommunicationStarted;
