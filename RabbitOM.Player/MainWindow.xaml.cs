@@ -143,7 +143,7 @@ namespace RabbitOM.Player
                 _client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
                 _client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
                 _client.Configuration.RetriesInterval = TimeSpan.FromSeconds( 5 );
-                _client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
+                _client.Configuration.KeepAliveType = RtspKeepAliveType.Options; // for heart beat, please read the camera vendor documentations, sometimes it just change.
                 _client.Configuration.MediaFormat = RtspMediaFormat.Video;
                 _client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
 
