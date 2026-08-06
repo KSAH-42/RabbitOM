@@ -149,10 +149,6 @@ using ( var connection = new RtspConnection() )
 
 # About Player samples
 
-# RabbitOM.Player.MJpeg is used to decode RTP packets ( RFC 2435 )
-
-This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
-
 # RabbitOM.Player is used to decode RTP packets (HEVC/H264/JPEG)
 
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
@@ -161,12 +157,15 @@ This sample include statitics component to display the framerate, the network ba
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.png)
 
-# Media Player image snapshotter
+# RabbitOM.Player snapshotter
 
 Just by making a right click on the image control
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Snapshotter.png)
 
+# RabbitOM.Player.MJpeg is used to decode RTP packets ( RFC 2435 )
+
+This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
 
 # About the next rtsp client (experimental)
 
