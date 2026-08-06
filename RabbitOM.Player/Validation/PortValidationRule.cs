@@ -13,9 +13,10 @@ namespace RabbitOM.Player.Validation
                 return new ValidationResult( false , "Bad format" );
             }
 
-            if ( port < 0 )
+            // please note that a socket bind to a port equal to zero is valid but here for ux reason we just reject this value
+            if ( port <= 0 || port > ushort.MaxValue )
             {
-                return new ValidationResult( false , "Negative value is not allowed" );
+                return new ValidationResult( false , "Bad value" );
             }
 
             return ValidationResult.ValidResult;
