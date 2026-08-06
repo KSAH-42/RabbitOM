@@ -66,7 +66,7 @@ namespace RabbitOM.Player.Extensions
 
                 if ( index <= 0 )
                 {
-                    continue;
+                    break;
                 }
 
                 source.RemoveAt( index );
@@ -97,7 +97,7 @@ namespace RabbitOM.Player.Extensions
 
                 if ( index < 0 || source.Count - 1 <= index )
                 {
-                    continue;
+                    break;
                 }
 
                 source.RemoveAt( index );
