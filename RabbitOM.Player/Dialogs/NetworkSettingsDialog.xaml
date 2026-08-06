@@ -9,7 +9,6 @@
         Title="NETWORK SETTINGS" 
         Height="230"
         Width="330"
-        
         MinWidth="330"
         MinHeight="230"
         WindowStartupLocation="CenterOwner"
