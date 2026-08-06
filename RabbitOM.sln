@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36121.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Client", "RabbitOM.Client\RabbitOM.Client.csproj", "{14469407-333C-403D-9F72-1F8C6DB39928}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player", "RabbitOM.Player\RabbitOM.Player.csproj", "{7EAC1801-0B1C-423C-9BC9-7A0140172A04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}"
 	ProjectSection(SolutionItems) = preProject
@@ -38,7 +38,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM", "RabbitOM\Rabbit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Experimentation", "RabbitOM.Experimentation\RabbitOM.Experimentation.csproj", "{412F9423-532C-4517-8CED-BAD0F86D397D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player", "RabbitOM.Player\RabbitOM.Player.csproj", "{7EAC1801-0B1C-423C-9BC9-7A0140172A04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Client", "RabbitOM.Client\RabbitOM.Client.csproj", "{14469407-333C-403D-9F72-1F8C6DB39928}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
