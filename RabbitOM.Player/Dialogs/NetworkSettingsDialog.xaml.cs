@@ -11,6 +11,9 @@ namespace RabbitOM.Player.Dialogs
         public static readonly RoutedCommand CancelCommand = new RoutedCommand();
 
         public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport , null ));
+        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , null );
+        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , null );
+
 
         public const string TcpTransport = "TCP";
         public const string UdpTransport = "UDP";
@@ -19,6 +22,18 @@ namespace RabbitOM.Player.Dialogs
         public NetworkSettingsDialog()
         {
             InitializeComponent();
+        }
+
+        public int Port
+        {
+            get => (int) GetValue( PortProperty );
+            set => SetValue( PortProperty , value );
+        }
+
+        public string IPAddress
+        {
+            get => GetValue( IPAddressProperty ) as string;
+            set => SetValue( IPAddressProperty , value );
         }
 
         public string SelectedTransport

@@ -72,6 +72,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
+    <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
+    <Compile Include="Validation\PortValidationRule.cs" />
     <Compile Include="Dialogs\NetworkSettingsDialog.xaml.cs">
       <DependentUpon>NetworkSettingsDialog.xaml</DependentUpon>
     </Compile>

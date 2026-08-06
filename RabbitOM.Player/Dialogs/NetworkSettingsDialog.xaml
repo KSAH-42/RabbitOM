@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
+        xmlns:validation="clr-namespace:RabbitOM.Player.Validation"
         mc:Ignorable="d"
         Title="NETWORK SETTINGS" 
         Height="230"
@@ -82,7 +83,7 @@
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
-                    <TextBlock Text="Address :"
+                    <TextBlock Text="IP Address :"
                                Foreground="White"
                                HorizontalAlignment="Right"
                                Margin="0,75,0,0"
@@ -91,9 +92,7 @@
 
                 </Grid>
 
-                <Grid Grid.Column="1" 
-                      Margin="10,0,0,0"
-                      >
+                <Grid Grid.Column="1" Margin="10,0,0,0">
 
                     <ComboBox  Foreground="White"
                                HorizontalAlignment="Left"
@@ -108,32 +107,80 @@
                                ItemsSource="{Binding Transports,RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
-                    <TextBox   Text="0"
-                               Width="200"
+                    <TextBox   Width="200"
                                Margin="0,37,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Height="27"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
-                               />
+                               >
+                        <TextBox.Text>
 
-                    <TextBox   Text="0"
-                               Width="200"
+                            <Binding Path="Port"
+                                     Mode="TwoWay" 
+                                     UpdateSourceTrigger="PropertyChanged" 
+                                     RelativeSource="{RelativeSource AncestorType=Window}"
+                                     >
+
+                                <Binding.ValidationRules>
+                                    <validation:PortValidationRule/>
+                                </Binding.ValidationRules>
+
+                            </Binding>
+
+                        </TextBox.Text>
+                        
+                    </TextBox>
+
+                    <TextBox   Width="200"
                                Margin="0,37,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Height="27"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
-                               />
+                               >
+                        
+                        <TextBox.Text>
 
-                    <TextBox   Text="0"
-                               Width="200"
+                            <Binding Path="Port"
+                                     Mode="TwoWay" 
+                                     UpdateSourceTrigger="PropertyChanged" 
+                                     RelativeSource="{RelativeSource AncestorType=Window}"
+                                     >
+
+                                <Binding.ValidationRules>
+                                    <validation:PortValidationRule/>
+                                </Binding.ValidationRules>
+
+                            </Binding>
+
+                        </TextBox.Text>
+                        
+                    </TextBox>
+
+                    <TextBox   Width="200"
                                Margin="0,75,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Height="27"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
-                               />
+                               >
+                        <TextBox.Text>
+
+                            <Binding Path="IPAddress"
+                                     Mode="TwoWay" 
+                                     UpdateSourceTrigger="PropertyChanged" 
+                                     RelativeSource="{RelativeSource AncestorType=Window}"
+                                     >
+
+                                <Binding.ValidationRules>
+                                    <validation:MulticastIPAddressValidationRule/>
+                                </Binding.ValidationRules>
+
+                            </Binding>
+
+                        </TextBox.Text>
+                    </TextBox>
 
                 </Grid>
 
