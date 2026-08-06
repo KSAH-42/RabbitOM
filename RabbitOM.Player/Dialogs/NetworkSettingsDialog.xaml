@@ -7,9 +7,11 @@
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
         mc:Ignorable="d"
         Title="Network settings" 
+        Height="220"
+        Width="330"
+        
         MinWidth="330"
         MinHeight="220"
-        Height="220"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         >
