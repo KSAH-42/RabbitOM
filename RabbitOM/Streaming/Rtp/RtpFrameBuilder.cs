@@ -9,6 +9,8 @@ namespace RabbitOM.Streaming.Rtp
 
         public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
 
+        public event EventHandler<RtpPacketsLostEventArgs> PacketsLost;
+
         public event EventHandler<RtpSequenceEventArgs> SequenceSorting;
 
         public event EventHandler<RtpSequenceEventArgs> SequenceSorted;
@@ -66,9 +68,14 @@ namespace RabbitOM.Streaming.Rtp
                     return;
                 }
 
-                _aggregator.AddPacket( packet );
+                var lostResult = _aggregator.AddPacket( packet );
 
                 OnPacketAdded( new RtpPacketAddedEventArgs( packet ) );
+
+                if ( lostResult > 0 )
+                {
+                    OnPacketsLost( new RtpPacketsLostEventArgs( _aggregator.MaximumNumberOfPackets ) );
+                }
 
                 if ( _aggregator.IsSequenceTooLong )
                 {
@@ -129,6 +136,11 @@ namespace RabbitOM.Streaming.Rtp
         protected virtual void OnPacketAdded( RtpPacketAddedEventArgs e )
         {
             PacketAdded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnPacketsLost( RtpPacketsLostEventArgs e )
+        {
+            PacketsLost?.TryInvoke( this , e );
         }
 
         protected virtual void OnSequenceSorting( RtpSequenceEventArgs e )

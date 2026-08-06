@@ -2,11 +2,14 @@
 
 namespace RabbitOM.Streaming.Rtp
 {
+    // TODO: add lose packet dectection 
     public abstract class RtpSampleBuilder : IMediaBuilder , IDisposable
     {
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
         public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
+
+        public event EventHandler<RtpPacketsLostEventArgs> PacketsLost;
 
         public event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
@@ -90,6 +93,11 @@ namespace RabbitOM.Streaming.Rtp
         protected virtual void OnPacketAdded( RtpPacketAddedEventArgs e )
         {
             PacketAdded?.TryInvoke( this , e );
+        }
+
+        protected virtual void OnPacketsLost( RtpPacketsLostEventArgs e )
+        {
+            PacketsLost?.TryInvoke( this , e );
         }
 
         protected virtual void OnMediaBuilded( RtpMediaBuildedEventArgs e )

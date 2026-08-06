@@ -8,6 +8,8 @@ namespace RabbitOM.Streaming.Rtp
 
         event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
 
+        event EventHandler<RtpPacketsLostEventArgs> PacketsLost;
+
         event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
         event EventHandler<RtpClearedEventArgs> Cleared;

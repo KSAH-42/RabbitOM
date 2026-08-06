@@ -12,9 +12,11 @@ namespace RabbitOM.Streaming.Rtp
 
         private bool _isUnOrdered;
 
-        private uint? _currentSequenceNumber;
+        private ushort? _currentSequenceNumber;
 
         private int _maximumNumberOfPackets;
+
+        private int _numberOfPacketsLost;
 
         private IReadOnlyCollection<RtpPacket> _sequence;
 
@@ -27,6 +29,11 @@ namespace RabbitOM.Streaming.Rtp
         {
             get => _maximumNumberOfPackets;
             set => _maximumNumberOfPackets = value;
+        }
+
+        public int NumberOfPacketsLost
+        {
+            get => _numberOfPacketsLost;
         }
 
         public bool IsSequenceTooLong
@@ -49,14 +56,14 @@ namespace RabbitOM.Streaming.Rtp
             get => _packets;
         }
 
-        
 
 
 
 
 
 
-        public void AddPacket( RtpPacket packet )
+
+        public int AddPacket( RtpPacket packet )
         {
             if ( packet == null )
             {
@@ -70,12 +77,14 @@ namespace RabbitOM.Streaming.Rtp
 
             _packets.Enqueue( packet );
 
-            OnPacketAdded( packet );
+            var numberOfPacketLost = OnPacketAdded( packet );
 
             if ( packet.Marker )
             {
                 _isCompleted = true;
             }
+
+            return numberOfPacketLost;
         }
 
         public void RemovePackets()
@@ -92,6 +101,7 @@ namespace RabbitOM.Streaming.Rtp
             RemovePackets();
 
             _currentSequenceNumber = null;
+            _numberOfPacketsLost = 0;
         }
 
         public void SortSequence()
@@ -112,16 +122,25 @@ namespace RabbitOM.Streaming.Rtp
 
 
 
-        private void OnPacketAdded( RtpPacket packet )
+        private int OnPacketAdded( RtpPacket packet )
         {
+            int result = 0;
+
             if ( _currentSequenceNumber.HasValue )
             {
-                var diff = packet.SequenceNumber - _currentSequenceNumber;
+                var diff = Math.Abs( packet.SequenceNumber - _currentSequenceNumber.Value );
 
-                _isUnOrdered |= diff != 1 && packet.SequenceNumber > 1;
+                if ( diff != 1 && packet.SequenceNumber > 1 )
+                {
+                    _isUnOrdered = true;
+                    _numberOfPacketsLost = Math.Max( -- diff + _numberOfPacketsLost , _numberOfPacketsLost );
+                    result = diff;
+                }
             }
 
             _currentSequenceNumber = packet.SequenceNumber;
+
+            return result;
         }
     }
 }

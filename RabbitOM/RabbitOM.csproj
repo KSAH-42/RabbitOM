@@ -60,6 +60,7 @@
     <Compile Include="Streaming\Rtcp\RtcpSourceDescriptionItem.cs" />
     <Compile Include="Streaming\Rtcp\RtcpSourceDescriptionPacket.cs" />
     <Compile Include="Streaming\Rtcp\Serialization\RtcpDeserializer.cs" />
+    <Compile Include="Streaming\Rtp\RtpPacketsLostEventArgs.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketAggregator.cs" />
     <Compile Include="Streaming\Rtp\DefaultRtpPacketInspector.cs" />
     <Compile Include="Streaming\Rtp\H264\H264FrameBuilder.cs" />

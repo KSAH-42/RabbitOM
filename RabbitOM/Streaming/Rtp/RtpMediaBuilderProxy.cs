@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.Sockets;
 
 namespace RabbitOM.Streaming.Rtp
 {
@@ -8,6 +7,8 @@ namespace RabbitOM.Streaming.Rtp
         public event EventHandler<RtpPacketAddingEventArgs> PacketAdding;
 
         public event EventHandler<RtpPacketAddedEventArgs> PacketAdded;
+
+        public event EventHandler<RtpPacketsLostEventArgs> PacketsLost;
 
         public event EventHandler<RtpMediaBuildedEventArgs> MediaBuilded;
 
@@ -60,6 +61,7 @@ namespace RabbitOM.Streaming.Rtp
 
                 _builder.PacketAdded += Builder_PacketAdded;
                 _builder.PacketAdding += Builder_PacketAdding;
+                _builder.PacketsLost += Builder_PacketsLost;
                 _builder.MediaBuilded += Builder_MediaBuilded;
                 _builder.Cleared += Builder_Cleared;
             }
@@ -76,6 +78,7 @@ namespace RabbitOM.Streaming.Rtp
 
                 _builder.PacketAdded -= Builder_PacketAdded;
                 _builder.PacketAdding -= Builder_PacketAdding;
+                _builder.PacketsLost -= Builder_PacketsLost;
                 _builder.MediaBuilded -= Builder_MediaBuilded;
                 _builder.Cleared -= Builder_Cleared;
 
@@ -103,6 +106,11 @@ namespace RabbitOM.Streaming.Rtp
         private void Builder_PacketAdded( object sender , RtpPacketAddedEventArgs e )
         {
             PacketAdded?.TryInvoke( this , e );
+        }
+
+        private void Builder_PacketsLost( object sender , RtpPacketsLostEventArgs e )
+        {
+            PacketsLost?.TryInvoke( this , e );
         }
 
         private void Builder_MediaBuilded( object sender , RtpMediaBuildedEventArgs e )
