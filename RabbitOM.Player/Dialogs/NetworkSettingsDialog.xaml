@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
         mc:Ignorable="d"
-        Title="Network settings" 
+        Title="NETWORK SETTINGS" 
         Height="220"
         Width="330"
         

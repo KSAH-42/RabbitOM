@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Saving picture" 
+        Title="SAVING PICTURE" 
         Height="490" 
         Width="330"
         MinHeight="250"
