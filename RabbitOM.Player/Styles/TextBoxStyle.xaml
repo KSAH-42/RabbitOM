@@ -10,7 +10,7 @@
         <Setter Property="KeyboardNavigation.TabNavigation" Value ="Continue" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontFamily" Value="Tahoma" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="15"   />
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="CaretBrush" Value="White" />
         <Setter Property="Validation.ErrorTemplate">
