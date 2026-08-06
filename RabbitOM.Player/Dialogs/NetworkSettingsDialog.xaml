@@ -7,10 +7,9 @@
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
         mc:Ignorable="d"
         Title="Network settings" 
-        Height="220" 
-        Width="330"
         MinWidth="330"
-        MinHeight="150"
+        MinHeight="220"
+        Height="220"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         >
@@ -109,7 +108,7 @@
                                />
 
                     <TextBox   Text="0"
-                               Width="100"
+                               Width="120"
                                Margin="0,35,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
@@ -118,7 +117,7 @@
                                />
 
                     <TextBox   Text="0"
-                               Width="100"
+                               Width="120"
                                Margin="0,35,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
@@ -127,7 +126,7 @@
                                />
 
                     <TextBox   Text="0"
-                               Width="100"
+                               Width="120"
                                Margin="0,65,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
