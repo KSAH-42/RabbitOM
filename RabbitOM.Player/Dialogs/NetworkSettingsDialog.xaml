@@ -7,11 +7,11 @@
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
         mc:Ignorable="d"
         Title="NETWORK SETTINGS" 
-        Height="220"
+        Height="230"
         Width="330"
         
         MinWidth="330"
-        MinHeight="220"
+        MinHeight="230"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         >
@@ -72,21 +72,21 @@
                     <TextBlock Text="Port :"
                                Foreground="White"
                                HorizontalAlignment="Right"
-                               Margin="0,35,0,0"
+                               Margin="0,39,0,0"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
                     <TextBlock Text="Port :"
                                Foreground="White"
                                HorizontalAlignment="Right"
-                               Margin="0,35,0,0"
+                               Margin="0,39,0,0"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
                     <TextBlock Text="Address :"
                                Foreground="White"
                                HorizontalAlignment="Right"
-                               Margin="0,65,0,0"
+                               Margin="0,75,0,0"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
@@ -111,28 +111,28 @@
 
                     <TextBox   Text="0"
                                Width="200"
-                               Margin="0,35,0,0"
+                               Margin="0,37,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Height="25"
+                               Height="27"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
                     <TextBox   Text="0"
                                Width="200"
-                               Margin="0,35,0,0"
+                               Margin="0,37,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Height="25"
+                               Height="27"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
                     <TextBox   Text="0"
                                Width="200"
-                               Margin="0,65,0,0"
+                               Margin="0,75,0,0"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
-                               Height="25"
+                               Height="27"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
 
