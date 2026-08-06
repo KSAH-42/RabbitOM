@@ -32,7 +32,7 @@ namespace RabbitOM.Streaming.Rtp
 
 
 
-        private readonly RtpPacketAggregator _aggregator = new DefaultRtpPacketAggregator() { MaximumNumberOfPackets = 1000 };
+        private readonly IPacketAggregator _aggregator = new RtpPacketAggregator() { MaximumNumberOfPackets = 1000 };
 
 
 

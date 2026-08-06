@@ -60,7 +60,7 @@
     <Compile Include="Streaming\Rtcp\RtcpSourceDescriptionItem.cs" />
     <Compile Include="Streaming\Rtcp\RtcpSourceDescriptionPacket.cs" />
     <Compile Include="Streaming\Rtcp\Serialization\RtcpDeserializer.cs" />
-    <Compile Include="Streaming\Rtp\DefaultRtpPacketAggregator.cs" />
+    <Compile Include="Streaming\Rtp\RtpPacketAggregator.cs" />
     <Compile Include="Streaming\Rtp\DefaultRtpPacketInspector.cs" />
     <Compile Include="Streaming\Rtp\H264\H264FrameBuilder.cs" />
     <Compile Include="Streaming\Rtp\H264\H264FrameFactory.cs" />
@@ -118,7 +118,7 @@
     <Compile Include="Streaming\Rtp\RtpPacket.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketAddedEventArgs.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketAddingEventArgs.cs" />
-    <Compile Include="Streaming\Rtp\RtpPacketAggregator.cs" />
+    <Compile Include="Streaming\Rtp\IPacketAggregator.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketInspector.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketType.cs" />
     <Compile Include="Streaming\Rtp\RtpSampleBuilder.cs" />
