@@ -14,7 +14,6 @@ namespace RabbitOM.Player.Dialogs
         public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , null );
         public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , null );
 
-
         public const string TcpTransport = "TCP";
         public const string UdpTransport = "UDP";
         public const string MulticastTransport = "MULTICAST";
