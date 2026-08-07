@@ -100,7 +100,7 @@ namespace RabbitOM.Streaming.Rtsp
                 _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
 
                 _socket.Connect(ipAddress, port);
-                _socket.ReceiveBufferSize = 8192*3;
+                _socket.ReceiveBufferSize = 8 * 1024 * 1024;
 
                 return true;
             }
