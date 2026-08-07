@@ -169,6 +169,14 @@ Just by making a right click on the image control
 
 This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
 
+# RabbitOM.Player streaming over different transport types
+
+You can receive media content using TCP / UDP or even mulitcast
+
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.MediaPlayer.Udp.png)
+
+if you camera is located on internet it's strongly recommended to used TCP. Otherwise if you used UDP with camera behind a router, or firewall contact your IT administrator, and discuss with him.
+
 # About the next rtsp client (experimental)
 
 The actual rtsp client will be replace by receivers class, and the new rtsp client will be also the replacement of the actual RtspConnection class with new features.
