@@ -171,11 +171,11 @@ This sample demonstrate how to create MJpeg player to reconstruct a complete fra
 
 # RabbitOM.Player streaming over different transport types
 
-You can receive media content using TCP / UDP or even mulitcast
+You can receive media content using TCP / UDP or Multicast
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.MediaPlayer.Udp.png)
 
-if you camera is located on internet it's strongly recommended to used TCP. Otherwise if you used UDP with camera behind a router, or firewall contact your IT administrator, and discuss with him.
+if your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
 
 # About the next rtsp client (experimental)
 
