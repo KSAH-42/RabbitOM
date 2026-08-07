@@ -145,8 +145,7 @@ namespace RabbitOM.Player
                 _client.Configuration.RetriesInterval = TimeSpan.FromSeconds( 5 );
                 _client.Configuration.KeepAliveType = RtspKeepAliveType.Options; // for heart beat, please read the camera vendor documentations, sometimes it just change.
                 _client.Configuration.MediaFormat = RtspMediaFormat.Video;
-                _client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
-
+                
                 _client.StartCommunication();
             }
             finally
@@ -207,7 +206,23 @@ namespace RabbitOM.Player
 
             if ( dialog.ShowDialog() == true )
             {
-                MessageBox.Show( "this feature will be implemented soon" );
+                if ( dialog.UseUdpTransport )
+                {
+                    _client.Configuration.DeliveryMode = RtspDeliveryMode.Udp;
+                    _client.Configuration.RtpPort = dialog.Port;
+                }
+
+                else if ( dialog.UseMulticastTransport )
+                {
+                    _client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast; // if we see red colord on wireshark even the video is displayed, please contact your adminstrator to fix the issue or change the multicast settings of device who packet, here the client doesn't send multicast cast
+                    _client.Configuration.RtpPort = dialog.Port;
+                    _client.Configuration.MulticastAddress = dialog.IPAddress;
+                    _client.Configuration.TimeToLive = 0;
+                }
+                else
+                {
+                    _client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp; // use tcp if rtsp source is located on internet
+                }
             }
         }
 

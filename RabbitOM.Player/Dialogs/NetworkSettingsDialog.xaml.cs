@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Dialogs
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
 
         public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport ) , null );
-        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , new PropertyMetadata( 30000 ) , null );
+        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , new PropertyMetadata( 5004 ) , null );
         public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , new PropertyMetadata( "224.0.0.1" ) , null );
 
         public const string TcpTransport = "TCP";
@@ -44,6 +44,21 @@ namespace RabbitOM.Player.Dialogs
         {
             TcpTransport , UdpTransport , MulticastTransport
         };
+
+        public bool UseTcpTransport
+        {
+            get => SelectedTransport == TcpTransport;
+        }
+
+        public bool UseUdpTransport
+        {
+            get => SelectedTransport == UdpTransport;
+        }
+
+        public bool UseMulticastTransport
+        {
+            get => SelectedTransport == MulticastTransport;
+        }
 
         private void OnCancel( object sender , ExecutedRoutedEventArgs e )
         {

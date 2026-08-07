@@ -8,10 +8,10 @@
         xmlns:validation="clr-namespace:RabbitOM.Player.Validation"
         mc:Ignorable="d"
         Title="NETWORK SETTINGS" 
-        Height="230"
+        Height="237"
         Width="330"
         MinWidth="330"
-        MinHeight="230"
+        MinHeight="237"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         >
@@ -43,14 +43,24 @@
 
         <Grid.RowDefinitions>
 
+            <RowDefinition Height="35" />
             <RowDefinition MinHeight="100" Height="*" />
             <RowDefinition Height="50" />
             
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
-              Margin="0,30,0,0"
-              >
+        <Grid Grid.Row="0">
+
+            <TextBlock Text="Please restart the communication after the changes"
+                       Foreground="White"
+                       FontSize="10"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
+                       />
+
+        </Grid>
+        
+        <Grid Grid.Row="1">
 
             <Grid>
 
@@ -190,7 +200,7 @@
 
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
 
             <Button Content="Cancel"
                     HorizontalAlignment="Right"
