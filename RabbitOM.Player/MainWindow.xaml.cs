@@ -217,7 +217,7 @@ namespace RabbitOM.Player
                     _client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast; // if we see red colord on wireshark even the video is displayed, please contact your adminstrator to fix the issue or change the multicast settings of device who packet, here the client doesn't send multicast cast
                     _client.Configuration.RtpPort = dialog.Port;
                     _client.Configuration.MulticastAddress = dialog.IPAddress;
-                    _client.Configuration.TimeToLive = 0;
+                    _client.Configuration.TimeToLive = 1;
                 }
                 else
                 {
