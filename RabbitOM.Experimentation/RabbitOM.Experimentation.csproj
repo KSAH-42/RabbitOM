@@ -163,9 +163,9 @@
     <Compile Include="Rtspv2\Transports\EndPoint.cs" />
     <Compile Include="Rtspv2\Transports\IChannel.cs" />
     <Compile Include="Rtspv2\Transports\IChannelFactory.cs" />
-    <Compile Include="Rtspv2\Transports\DataReceiverService.cs" />
+    <Compile Include="Rtspv2\Transports\RtspReceiverService.cs" />
     <Compile Include="Rtspv2\Transports\IMessageReader.cs" />
-    <Compile Include="Rtspv2\Transports\IDataReceiver.cs" />
+    <Compile Include="Rtspv2\Transports\IReceiver.cs" />
     <Compile Include="Rtspv2\Transports\RtspMessageReader.cs" />
     <Compile Include="Rtspv2\Transports\RtspMessageReaderService.cs" />
     <Compile Include="Rtspv2\Transports\RtspMessageReaderValidator.cs" />
