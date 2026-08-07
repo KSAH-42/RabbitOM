@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// <summary>
         /// Represent the default TTL
         /// </summary>
-        public readonly static byte       DefaultTTL                = 5;
+        public readonly static byte       DefaultTTL                = 1;
 
 
 
