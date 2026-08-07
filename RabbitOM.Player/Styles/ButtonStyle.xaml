@@ -120,7 +120,7 @@
                     </Border>
                     
                     <ControlTemplate.Triggers>
-
+                        
                         <Trigger Property="IsDefault" Value="true">
                             <Setter TargetName="Root"   Property="BorderThickness" Value="0" />
                             <Setter Property="Foreground" Value="White" />
@@ -200,8 +200,8 @@
                         </Trigger>
 
                         <Trigger Property="IsEnabled"   Value="False">
-                            <Setter TargetName="Border" Property="BorderBrush"      Value="DarkGray"     />
-                            <Setter TargetName="Border" Property="Background"       Value="Transparent"  />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF323131" />
+                            <Setter TargetName="Border" Property="Background"  Value="Transparent" />
                         </Trigger>
 
                     </ControlTemplate.Triggers>
