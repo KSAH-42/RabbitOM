@@ -124,18 +124,7 @@
                         <Trigger Property="IsDefault" Value="true">
                             <Setter TargetName="Root"   Property="BorderThickness" Value="0" />
                             <Setter Property="Foreground" Value="White" />
-                            <Setter TargetName="Border" Property="BorderBrush">
-                                <Setter.Value>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientBrush.GradientStops>
-                                            <GradientStopCollection>
-                                                <GradientStop Color="White" Offset="0.0" />
-                                                <GradientStop Color="Blue"  Offset="1.0" />
-                                            </GradientStopCollection>
-                                        </GradientBrush.GradientStops>
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="Border" Property="Background" Value="#E6225252" />
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">

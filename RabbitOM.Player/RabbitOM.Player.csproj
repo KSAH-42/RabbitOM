@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BooleanMultiValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
     <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
     <Compile Include="Validation\PortValidationRule.cs" />

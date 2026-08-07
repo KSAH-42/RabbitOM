@@ -290,13 +290,12 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                _datasource.SetConnectionStatusOff();
-
                 StatusInfo = "Connecting - Communication Lost";
                 CodecInfo = "";
                 Footer = "";
                 Image = null;
 
+                _datasource.SetConnectionStatusOff();
                 _frameBuilder.Clear();
                 _decoder.Close();
                 _renderer.Close();

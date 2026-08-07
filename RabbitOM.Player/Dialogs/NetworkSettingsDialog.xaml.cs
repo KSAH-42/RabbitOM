@@ -8,11 +8,10 @@ namespace RabbitOM.Player.Dialogs
     public partial class NetworkSettingsDialog : Window
     {
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
-        public static readonly RoutedCommand CancelCommand = new RoutedCommand();
 
-        public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport , null ));
-        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , null );
-        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , new PropertyMetadata( "224.0.0.1" , null ) );
+        public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport ) , null );
+        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , new PropertyMetadata( 30000 ) , null );
+        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , new PropertyMetadata( "224.0.0.1" ) , null );
 
         public const string TcpTransport = "TCP";
         public const string UdpTransport = "UDP";
