@@ -9,7 +9,7 @@ namespace RabbitOM.Streaming.Rtsp
     /// </summary>
     internal sealed class RtspUdpSocket : IDisposable
     {
-        private const int DefaultReceiveBufferSize = ushort.MaxValue;
+        private const int DefaultReceiveBufferSize = 8 * 1024 * 1024;
 
 
 
