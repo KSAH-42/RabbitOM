@@ -2,17 +2,17 @@
 
 namespace RabbitOM.Streaming.RtspV2.Transports
 {
-    public class DataReceiverService : IDisposable
+    public class RtspDataReceiverService : IDisposable
     {
         private readonly IDataReceiver _receiver;
 
 
-        public DataReceiverService( IDataReceiver receiver )
+        public RtspDataReceiverService( IDataReceiver receiver )
         {
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
         }
 
-        ~DataReceiverService()
+        ~RtspDataReceiverService()
         {
             Dispose( false );
         }
