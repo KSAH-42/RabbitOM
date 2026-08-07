@@ -149,6 +149,8 @@ using ( var connection = new RtspConnection() )
 
 # About Player samples
 
+All theses GUI are written using WPF.
+
 # RabbitOM.Player is used to decode RTP packets (HEVC/H264/JPEG)
 
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
