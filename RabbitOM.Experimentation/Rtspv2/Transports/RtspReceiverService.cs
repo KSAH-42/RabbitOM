@@ -7,7 +7,6 @@ namespace RabbitOM.Streaming.RtspV2.Transports
     {
         private readonly IReceiver _receiver;
 
-
         public RtspReceiverService( IReceiver receiver )
         {
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
