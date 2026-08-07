@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.RtspV2.Transports
 {
-    // this interface will be used to receive data from UDP or Multicast
+    // this interface will be used to receive data from UDP or Multicast, etc... but not interleaved data interleaved is attached to a tcp connection or a channel socket connection
     public interface IDataReceiver : IDisposable
     {
         bool IsOpened { get; }
