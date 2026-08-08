@@ -162,13 +162,8 @@ namespace RabbitOM.Player.Controls
 		{
 			_timer.Stop();
 
-			var datasource = DataSource;
-
-			if ( datasource != null )
-			{
-				datasource.Clear();
-				Update();
-			}
+			DataSource?.Clear();
+			Update();
 		}
 
 		public void Update()
