@@ -43,6 +43,7 @@
 
 ➡️ Next arrivals:
 
+* Adding the SRTP support 
 * Adding the New RTSP Client 
 * Adding RTSP receivers
 * Adding RTCP layer 
