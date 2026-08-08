@@ -134,6 +134,7 @@ namespace RabbitOM.Player.Controls
                 throw new ArgumentException( nameof( value ) );
             }
 
+            // TODO: refactor 
             var sum = valueMember + value; // if the sum is negative, there is an overflow we need to set the max value
 
             Interlocked.Exchange( ref valueMember , sum >= valueMember ? sum : int.MaxValue );
@@ -142,6 +143,7 @@ namespace RabbitOM.Player.Controls
 
         private long GetAverageValue( ref long valueMember )
         {
+            // TODO: refactor 
             var totalSeconds = (long) TimeSpan.FromTicks( Environment.TickCount - _ticks ).TotalSeconds;
 
             var result = totalSeconds > 0 ? valueMember / totalSeconds : valueMember ;
