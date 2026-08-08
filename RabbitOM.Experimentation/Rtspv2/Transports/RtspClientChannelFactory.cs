@@ -6,12 +6,12 @@ namespace RabbitOM.Streaming.RtspV2.Transports
     {
         public IChannel CreateChannel( EndPoint endpoint )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public IChannel CreateChannel( EndPoint endpoint , Binding binding )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
     }
 }

@@ -4,15 +4,15 @@ namespace RabbitOM.Streaming.RtspV2.Receivers
 {
     public sealed class MulticastMediaReceiverStreamingSession : IMediaStreamingSession
     {
-        public bool IsOpened => throw new NotImplementedException();
+        public bool IsOpened => throw new NotImplementedException( "To be implemented" );
 
-        public bool IsStreamingStarted => throw new NotImplementedException();
+        public bool IsStreamingStarted => throw new NotImplementedException( "To be implemented" );
 
-        public bool IsReceivingData => throw new NotImplementedException();
+        public bool IsReceivingData => throw new NotImplementedException( "To be implemented" );
 
-        public TimeSpan PingInteral => throw new NotImplementedException();
+        public TimeSpan PingInteral => throw new NotImplementedException( "To be implemented" );
 
-        public TimeSpan RetryInterval => throw new NotImplementedException();
+        public TimeSpan RetryInterval => throw new NotImplementedException( "To be implemented" );
 
 
 
@@ -20,32 +20,32 @@ namespace RabbitOM.Streaming.RtspV2.Receivers
 
         public bool Open()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public void Close()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public bool SendHeartBeat()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public bool StartStreaming()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public void StopStreaming()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
     }
 }

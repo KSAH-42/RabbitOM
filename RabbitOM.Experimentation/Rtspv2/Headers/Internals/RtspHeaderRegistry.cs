@@ -69,7 +69,7 @@ namespace RabbitOM.Streaming.RtspV2.Headers
 
         public void AddParseHeader( string input )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public bool RemoveHeader( string name )
@@ -209,7 +209,7 @@ namespace RabbitOM.Streaming.RtspV2.Headers
         public bool TryAddParseHeader( string input )
         {
             // TODO: don't forget to implement this method
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public bool TryGetHeaderValues( string name , out IEnumerable<string> result )

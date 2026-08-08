@@ -7,12 +7,12 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
     {
         public LanguageWithQualityRtspHeaderValue( string language , string region )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public LanguageWithQualityRtspHeaderValue( string language , string region , double quality )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
 
@@ -35,7 +35,7 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
         {
             result = null;
 
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
 

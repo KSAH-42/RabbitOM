@@ -81,7 +81,7 @@ namespace RabbitOM.Streaming.RtspV2.Transports
 
         public int Read( byte[] buffer , int offset , int count )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public void WriteByte( byte value )

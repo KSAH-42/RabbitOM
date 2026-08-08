@@ -15,32 +15,32 @@ namespace RabbitOM.Streaming.RtspV2
 
         public RtspClientRequestInfoBuilder SetUri( string value )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public RtspClientRequestInfoBuilder Headers( Action<RequestsRtspHeaderCollection> configurer )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public RtspClientRequestInfoBuilder WriteBody( string value )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public RtspClientRequestInfoBuilder WriteBody( string format , params object[] values )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public RtspClientRequestInfoBuilder WriteBody( byte[] value )
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
 
         public RtspClientRequestInfo Build()
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException( "To be implemented" );
         }
     }
 }
