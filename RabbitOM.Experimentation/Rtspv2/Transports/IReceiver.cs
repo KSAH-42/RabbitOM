@@ -7,7 +7,6 @@ namespace RabbitOM.Streaming.RtspV2.Transports
     {
         bool IsOpened { get; }
 
-
         void Open();
 
         void Close();
