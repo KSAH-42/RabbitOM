@@ -145,7 +145,7 @@ namespace RabbitOM.Player
                 _client.Configuration.RetriesInterval = TimeSpan.FromSeconds( 5 );
                 _client.Configuration.KeepAliveType = RtspKeepAliveType.Options; // for heart beat, please read the camera vendor documentations, sometimes it just change.
                 _client.Configuration.MediaFormat = RtspMediaFormat.Video;
-                
+
                 _client.StartCommunication();
             }
             finally
