@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace RabbitOM.Player.MJpeg.Rendering
+namespace RabbitOM.MJpegPlayer.Rendering
 {
     public struct BitmapPixelsData
     {

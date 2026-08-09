@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace RabbitOM.Player.MJpeg.Dialogs
+namespace RabbitOM.MJpegPlayer.Dialogs
 {
     public partial class ResolutionFallBackSettingsDialog : Window
     {

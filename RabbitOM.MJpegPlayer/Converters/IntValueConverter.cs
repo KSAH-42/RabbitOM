@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace RabbitOM.Player.MJpeg.Converters
+namespace RabbitOM.MJpegPlayer.Converters
 {
     [ValueConversion(typeof(int),typeof(string))]
     public sealed class IntValueConverter : IValueConverter
