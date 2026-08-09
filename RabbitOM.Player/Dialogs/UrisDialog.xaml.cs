@@ -33,7 +33,7 @@ namespace RabbitOM.Player.Dialogs
 
         private void OnMoveUp( object sender , ExecutedRoutedEventArgs e )
         {
-            var selectedUris = Uris.Where( uri => uri.IsSelected ).ToHashSet();
+            var selectedUris = Uris.Where( uri => uri.IsSelected ).ToList();
 
             Uris.MoveUp( selectedUris );
             Uris.ForEach( x => x.IsSelected = selectedUris.Contains( x ) );
@@ -42,7 +42,7 @@ namespace RabbitOM.Player.Dialogs
 
         private void OnMoveDown( object sender , ExecutedRoutedEventArgs e )
         {
-            var selectedUris = Uris.Where( uri => uri.IsSelected ).ToHashSet();
+            var selectedUris = Uris.Where( uri => uri.IsSelected ).ToList();
 
             Uris.MoveDown( selectedUris );
             Uris.ForEach( x => x.IsSelected = selectedUris.Contains( x ) );
