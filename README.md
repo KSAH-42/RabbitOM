@@ -166,10 +166,6 @@ Just by making a right click on the image control
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Snapshotter.png)
 
-# RabbitOM.Player.MJpeg is used to decode RTP packets ( RFC 2435 )
-
-This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
-
 # RabbitOM.Player streaming over different transport types
 
 You can receive media content using TCP / UDP or Multicast
@@ -177,6 +173,10 @@ You can receive media content using TCP / UDP or Multicast
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.MediaPlayer.Udp.png)
 
 if your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
+
+# RabbitOM.MJpegPlayer is used to decode RTP packets ( RFC 2435 )
+
+This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
 
 # About the next rtsp client (experimental)
 
