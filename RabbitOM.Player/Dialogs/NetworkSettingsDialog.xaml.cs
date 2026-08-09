@@ -22,6 +22,21 @@ namespace RabbitOM.Player.Dialogs
             InitializeComponent();
         }
 
+        public bool UseTcpTransport
+        {
+            get => SelectedTransport == TcpTransport;
+        }
+
+        public bool UseUdpTransport
+        {
+            get => SelectedTransport == UdpTransport;
+        }
+
+        public bool UseMulticastTransport
+        {
+            get => SelectedTransport == MulticastTransport;
+        }
+
         public int Port
         {
             get => (int) GetValue( PortProperty );
@@ -40,25 +55,7 @@ namespace RabbitOM.Player.Dialogs
             set => SetValue( SelectedTransportProperty , value );
         }
 
-        public ObservableCollection<string> Transports { get; } = new ObservableCollection<string>()
-        {
-            TcpTransport , UdpTransport , MulticastTransport
-        };
-
-        public bool UseTcpTransport
-        {
-            get => SelectedTransport == TcpTransport;
-        }
-
-        public bool UseUdpTransport
-        {
-            get => SelectedTransport == UdpTransport;
-        }
-
-        public bool UseMulticastTransport
-        {
-            get => SelectedTransport == MulticastTransport;
-        }
+        public ObservableCollection<string> Transports { get; } = new ObservableCollection<string>() { TcpTransport , UdpTransport , MulticastTransport };
 
         private void OnCancel( object sender , ExecutedRoutedEventArgs e )
         {
