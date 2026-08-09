@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.Rtcp.Serialization
+namespace RabbitOM.Streaming.Rtcp
 {
     public static class RtcpDeserializer
     {
