@@ -49,6 +49,7 @@
       <HintPath>..\packages\FFmpeg.Native.4.4.0.2386\lib\netstandard2.0\FFmpeg.Native.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,6 +72,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Configuration\ApplicationConfiguration.cs" />
+    <Compile Include="Configuration\IConfiguration.cs" />
+    <Compile Include="Configuration\RtspConfigurationSection.cs" />
+    <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
+    <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
+    <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Converters\BooleanMultiValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
     <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
@@ -124,7 +131,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Converters\BooleanStretchValueConverter.cs" />
     <Compile Include="Converters\BooleanVisibilityValueConverter.cs" />
     <Compile Include="Codecs\FFMpeg\FFMpegCodecTypeConverter.cs" />
