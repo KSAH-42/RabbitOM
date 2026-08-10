@@ -72,7 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configuration\ApplicationConfiguration.cs" />
+    <Compile Include="Configuration\Configuration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />

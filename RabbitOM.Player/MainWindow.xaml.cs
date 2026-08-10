@@ -80,7 +80,7 @@ namespace RabbitOM.Player
             set => SetValue( FooterProperty , value );
         }
 
-        public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( ApplicationConfiguration.Load().GetSourcesOrDefault().Select( element => element.Uri ) );
+        public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( Configuration.Configuration.Load().GetSourcesOrDefault().Select( element => element.Uri ) );
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {

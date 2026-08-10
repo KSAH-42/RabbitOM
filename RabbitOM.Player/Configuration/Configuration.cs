@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Player.Configuration
 {
-    public sealed class ApplicationConfiguration : IConfiguration
+    public sealed class Configuration : IConfiguration
     {
         private readonly RtspConfigurationSection _rtspSection;
 
-        public ApplicationConfiguration( RtspConfigurationSection rtspSection )
+        public Configuration( RtspConfigurationSection rtspSection )
         {
             _rtspSection = rtspSection ?? throw new ArgumentNullException( nameof( rtspSection ) );
         }
 
-        public static ApplicationConfiguration Load()
+        public static Configuration Load()
         {
             var configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
 
-            return new ApplicationConfiguration( configuration.GetSection( "rtsp" ) as RtspConfigurationSection ?? new RtspConfigurationSection() );
+            return new Configuration( configuration.GetSection( "rtsp" ) as RtspConfigurationSection ?? new RtspConfigurationSection() );
         }
 
         public IReadOnlyCollection<RtspSourceConfigurationElement> GetSources()
