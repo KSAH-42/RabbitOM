@@ -9,16 +9,10 @@ namespace RabbitOM.Player.Configuration
     {
         private readonly RtspConfigurationSection _rtspSection;
 
-
-
         public ApplicationConfiguration( RtspConfigurationSection rtspSection )
         {
             _rtspSection = rtspSection ?? throw new ArgumentNullException( nameof( rtspSection ) );
         }
-
-
-
-
 
         public static ApplicationConfiguration Load()
         {
@@ -26,10 +20,6 @@ namespace RabbitOM.Player.Configuration
 
             return new ApplicationConfiguration( configuration.GetSection( "rtsp" ) as RtspConfigurationSection ?? new RtspConfigurationSection() );
         }
-
-
-
-
 
         public IReadOnlyCollection<RtspSourceConfigurationElement> GetSources()
         {
