@@ -22,7 +22,7 @@ namespace RabbitOM.Player.Configuration
 
             foreach ( var element in elements )
             {
-                BaseAdd( element ?? throw new ArgumentNullException( nameof( element ) ) );
+                Add( element );
             }
         }
 
