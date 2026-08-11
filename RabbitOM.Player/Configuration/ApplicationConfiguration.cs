@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Configuration
     public sealed class ApplicationConfiguration : IConfiguration
     {
         private readonly SystemConfiguration _configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
-
+        
         public IReadOnlyCollection<RtspSourceConfigurationElement> GetSources()
         {
             var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
@@ -24,7 +24,7 @@ namespace RabbitOM.Player.Configuration
             var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
             var sources = section.EnsureSourcesExists();
 
-            if ( sources.Count == 0 && section.CreateSourcesIfEmpty )
+            if ( section.CreateSourcesIfEmpty && sources.Count == 0 )
             {
                 sources.AddRange( RtspSourceConfigurationElementFactory.CreateDefaultSources() );
             }
