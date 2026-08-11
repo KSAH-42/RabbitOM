@@ -7,7 +7,7 @@ namespace RabbitOM.Player.Configuration
     public sealed class RtspConfigurationSection : ConfigurationSection
     {
         [ConfigurationProperty("create_sources_if_empty" , DefaultValue = true)]
-        public bool CreateSourceIfEmpty
+        public bool CreateSourcesIfEmpty
         {
             get => (bool) this[ "create_sources_if_empty" ];
             set => this[ "create_sources_if_empty" ] = value;

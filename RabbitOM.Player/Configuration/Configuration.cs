@@ -32,7 +32,7 @@ namespace RabbitOM.Player.Configuration
         {
             var sources = _rtspSection.Sources ?? new RtspSourceConfigurationElementCollection();
 
-            if ( sources.Count == 0 && _rtspSection.CreateSourceIfEmpty )
+            if ( sources.Count == 0 && _rtspSection.CreateSourcesIfEmpty )
             {
                 sources.AddRange( RtspSourceConfigurationElementFactory.CreateDefaultSources() );
             }
