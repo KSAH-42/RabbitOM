@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace RabbitOM.Player.Configuration
 {
-    public static class ConfigurationExtensions
+    internal static class ConfigurationExtensions
     {
         public static TConfigurationSection GetSectionOrDefault<TConfigurationSection>( this System.Configuration.Configuration configuration , string name ) where TConfigurationSection : ConfigurationSection , new ()
         {
