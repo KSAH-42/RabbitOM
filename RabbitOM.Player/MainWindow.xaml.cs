@@ -17,6 +17,7 @@ namespace RabbitOM.Player
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
+    using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
 
@@ -78,7 +79,7 @@ namespace RabbitOM.Player
             set => SetValue( FooterProperty , value );
         }
 
-        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new Configuration.ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
+        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
