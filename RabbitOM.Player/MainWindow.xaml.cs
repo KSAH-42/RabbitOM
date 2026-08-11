@@ -33,7 +33,7 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty CodecInfoProperty = DependencyProperty.Register( "CodecInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
-        public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedUri", typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( "SelectedSource", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( "Footer", typeof(string) , typeof(MainWindow) );
 
         private readonly RtspClient _client = new RtspClient();
@@ -67,10 +67,10 @@ namespace RabbitOM.Player
             set => SetValue( ButtonStatusProperty , value );
         }
 
-        public string SelectedUri
+        public string SelectedSource
         {
-            get => GetValue( SelectedUriProperty ) as string;
-            set => SetValue( SelectedUriProperty , value );
+            get => GetValue( SelectedSourceProperty ) as string;
+            set => SetValue( SelectedSourceProperty , value );
         }
 
         public string Footer
@@ -79,7 +79,7 @@ namespace RabbitOM.Player
             set => SetValue( FooterProperty , value );
         }
 
-        public ObservableCollection<string> Uris { get; } = new ObservableCollection<string>( Configuration.Configuration.Load().GetSourcesOrDefault().Select( element => element.Uri ) );
+        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( Configuration.Configuration.Load().GetSourcesOrDefault().Select( element => element.Uri ) );
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
@@ -125,15 +125,15 @@ namespace RabbitOM.Player
                     return;
                 }
 
-                if ( ! RtspUri.TryParse( SelectedUri , out RtspUri uri ) )
+                if ( ! RtspUri.TryParse( SelectedSource , out RtspUri uri ) )
                 {
                     MessageBox.Show( "Invalid uri" );
                     return;
                 }
 
-                if ( ! Uris.Any( uriValue => StringComparer.OrdinalIgnoreCase.Equals( uriValue ?? string.Empty , SelectedUri ?? string.Empty ) ) )
+                if ( ! Sources.Any( uriValue => StringComparer.OrdinalIgnoreCase.Equals( uriValue ?? string.Empty , SelectedSource ?? string.Empty ) ) )
                 {
-                    Uris.Add( SelectedUri );
+                    Sources.Add( SelectedSource );
                 }
 
                 _client.Configuration.Uri = uri.ToString( true );
@@ -187,15 +187,15 @@ namespace RabbitOM.Player
         {
             var dialog = new UrisDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.Uris.AddRange( Uris.Select( uri => new UriInfo() { Value = uri } ) );
+            dialog.Uris.AddRange( Sources.Select( uri => new UriInfo() { Value = uri } ) );
 
             if (dialog.ShowDialog() == true )
             {
-                var selectedUri = SelectedUri;
+                var selectedUri = SelectedSource;
 
-                Uris.Clear();
-                Uris.AddRange( dialog.Uris.Select( uri => uri.Value ) );
-                SelectedUri = Uris.Contains( selectedUri ) ? selectedUri : Uris.FirstOrDefault();
+                Sources.Clear();
+                Sources.AddRange( dialog.Uris.Select( uri => uri.Value ) );
+                SelectedSource = Sources.Contains( selectedUri ) ? selectedUri : Sources.FirstOrDefault();
             }
         }
 

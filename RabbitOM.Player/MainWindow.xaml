@@ -104,8 +104,8 @@
                               SelectedIndex="0" 
                               Height="29" 
                               IsEditable="True" 
-                              Text="{Binding SelectedUri,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                              ItemsSource="{Binding Uris,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                              Text="{Binding SelectedSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                              ItemsSource="{Binding Sources,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                               MaxDropDownHeight="350"
                               />
                     

@@ -12,7 +12,6 @@ namespace RabbitOM.Player.Configuration
             set => this[ "create_sources_if_empty" ] = value;
         }
 
-
         [ConfigurationProperty("sources")]
         public RtspSourceConfigurationElementCollection Sources
         {
