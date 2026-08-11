@@ -331,7 +331,7 @@ namespace RabbitOM.Player
             {
                 return;
             }
-
+            
             byte[] extraParameters = null;
 
             if ( e.MediaElement is H265MediaElement h265Frame )
