@@ -17,7 +17,6 @@ namespace RabbitOM.Player
     using RabbitOM.Streaming.Rtsp.Clients;
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
-    using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
     using RabbitOM.Player.Extensions;
