@@ -16,6 +16,17 @@ namespace RabbitOM.Player.Configuration
         public RtspSourceConfigurationElementCollection Sources
         {
             get => this[ "sources" ] as RtspSourceConfigurationElementCollection;
+            set => this[ "sources" ] = value;
+        }
+
+        public RtspSourceConfigurationElementCollection EnsureSourcesExists()
+        {
+            if ( Sources == null )
+            {
+                Sources = new RtspSourceConfigurationElementCollection();
+            }
+
+            return Sources;
         }
     }
 }

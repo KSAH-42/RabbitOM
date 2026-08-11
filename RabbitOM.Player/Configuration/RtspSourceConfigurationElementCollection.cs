@@ -46,5 +46,10 @@ namespace RabbitOM.Player.Configuration
 
             return rtspSourceConfig.Uri;
         }
+
+        public void Clear()
+        {
+            BaseClear();
+        }
     }
 }

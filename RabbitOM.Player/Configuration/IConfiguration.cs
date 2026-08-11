@@ -8,5 +8,7 @@ namespace RabbitOM.Player.Configuration
         IReadOnlyCollection<RtspSourceConfigurationElement> GetSources();
 
         IReadOnlyCollection<RtspSourceConfigurationElement> GetSourcesOrDefault();
+
+        void SaveSources( IEnumerable<RtspSourceConfigurationElement> elements );
     }
 }

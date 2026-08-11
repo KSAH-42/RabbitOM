@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace RabbitOM.Player.Extensions
+namespace RabbitOM.Player.Dialogs
 {
     public static class ObservableCollectionExtensions
     {

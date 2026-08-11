@@ -72,7 +72,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configuration\Configuration.cs" />
+    <Compile Include="Configuration\ConfigurationExtensions.cs" />
+    <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
@@ -86,7 +87,7 @@
       <DependentUpon>NetworkSettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\UriInfo.cs" />
-    <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
+    <Compile Include="Dialogs\ObservableCollectionExtensions.cs" />
     <Compile Include="Controls\NetworkStatistics.xaml.cs">
       <DependentUpon>NetworkStatistics.xaml</DependentUpon>
     </Compile>
@@ -218,6 +219,9 @@
       <Project>{353a7a14-1085-4fd1-b0ef-02499276571d}</Project>
       <Name>RabbitOM</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
     <PropertyGroup>

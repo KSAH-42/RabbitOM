@@ -19,7 +19,6 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Codecs.FFMpeg;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
-    using RabbitOM.Player.Extensions;
 
     public partial class MainWindow : Window
     {
@@ -79,7 +78,7 @@ namespace RabbitOM.Player
             set => SetValue( FooterProperty , value );
         }
 
-        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( Configuration.Configuration.Load().GetSourcesOrDefault().Select( element => element.Uri ) );
+        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new Configuration.ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
 
         private void OnWindowLoaded( object sender , RoutedEventArgs e )
         {
