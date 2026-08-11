@@ -45,6 +45,7 @@ Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/r
 
 ➡️ Next arrivals:
 
+* Adding the playser as usercontrol
 * Adding a CLI on the media player in order to pass the uri at the startup, strect or no the image, etc...
 * Adding the SRTP support 
 * Adding the New RTSP Client 
