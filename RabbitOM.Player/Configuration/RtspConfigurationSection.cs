@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 
 namespace RabbitOM.Player.Configuration
 {
