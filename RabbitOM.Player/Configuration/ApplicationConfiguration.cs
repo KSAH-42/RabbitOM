@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Configuration
     public sealed class ApplicationConfiguration : IConfiguration
     {
         private readonly SystemConfiguration _configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
-        
+
         public IReadOnlyCollection<RtspSourceConfigurationElement> GetSources()
         {
             var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
