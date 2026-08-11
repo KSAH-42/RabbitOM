@@ -152,6 +152,7 @@
                         <MenuItem x:Name="menuItemStretch"
                                   Header="Stretch"
                                   IsCheckable="True"
+                                  IsChecked="True"
                                   />
 
                         <Separator />
