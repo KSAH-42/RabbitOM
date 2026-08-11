@@ -5,7 +5,7 @@ using System.Configuration;
 
 namespace RabbitOM.Player.Configuration
 {
-    [ConfigurationCollection(typeof( RtspSourceConfigurationElement ) , AddItemName = "add" )]
+    [ConfigurationCollection(typeof( RtspSourceConfigurationElement ) , AddItemName = "source" )]
     public sealed class RtspSourceConfigurationElementCollection : ConfigurationElementCollection
     {
         public void Add( RtspSourceConfigurationElement element )
