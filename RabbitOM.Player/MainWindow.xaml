@@ -172,7 +172,7 @@
                         <MenuItem x:Name="menuItemShowStatistics"
                                   Header="Show statistics" 
                                   IsCheckable="True"
-                                  IsChecked="False"
+                                  IsChecked="True"
                                   />
 
                         <Separator />
