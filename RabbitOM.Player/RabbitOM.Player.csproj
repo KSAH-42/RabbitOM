@@ -74,7 +74,6 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
-    <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />

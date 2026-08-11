@@ -7,7 +7,7 @@ namespace RabbitOM.Player.Configuration
 {
     using SystemConfiguration = System.Configuration.Configuration;
 
-    public sealed class ApplicationConfiguration : IConfiguration
+    public sealed class ApplicationConfiguration
     {
         private readonly SystemConfiguration _configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
 
