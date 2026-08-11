@@ -28,7 +28,6 @@ namespace RabbitOM.Player.Controls
 				"DataSource", typeof(IDataSource) ,
 					typeof(NetworkStatistics) );
 
-
 		public static readonly DependencyProperty ConnectionStatusProperty
 			= DependencyProperty.Register(
 				"ConnectionStatus", typeof(bool) ,
@@ -42,6 +41,11 @@ namespace RabbitOM.Player.Controls
 		public static readonly DependencyProperty TransportProperty
 			= DependencyProperty.Register(
 				"Transport", typeof(string) ,
+					typeof(NetworkStatistics) );
+
+		public static readonly DependencyProperty ClockProperty
+			= DependencyProperty.Register(
+				"Clock", typeof(long) ,
 					typeof(NetworkStatistics) );
 
 		public static readonly DependencyProperty FrameHeightProperty
@@ -103,6 +107,12 @@ namespace RabbitOM.Player.Controls
 		{
 			get => (string) GetValue( TransportProperty );
 			set => SetValue( TransportProperty , value );
+		}
+
+		public long Clock
+		{
+			get => (long) GetValue( ClockProperty );
+			set => SetValue( ClockProperty , value );
 		}
 
 		public long FrameHeight
@@ -176,6 +186,7 @@ namespace RabbitOM.Player.Controls
 			}
 
 			Codec = source.GetCodec();
+			Clock = source.GetClock();
 			Transport = source.GetTransport();
 			ConnectionStatus = source.GetConnectionStatus();
 			BytesReceivedPerSecond = source.GetBytesReceivedPerSecond();

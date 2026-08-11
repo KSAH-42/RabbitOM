@@ -31,7 +31,6 @@ namespace RabbitOM.Player
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( "Image", typeof(ImageSource) , typeof(MainWindow) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
-        public static readonly DependencyProperty CodecInfoProperty = DependencyProperty.Register( "CodecInfo", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( "SelectedSource", typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( "Footer", typeof(string) , typeof(MainWindow) );
@@ -53,12 +52,6 @@ namespace RabbitOM.Player
         {
             get => GetValue( StatusInfoProperty ) as string;
             set => SetValue( StatusInfoProperty , value );
-        }
-
-        public string CodecInfo
-        {
-            get => GetValue( CodecInfoProperty ) as string;
-            set => SetValue( CodecInfoProperty , value );
         }
 
         public string ButtonStatus
@@ -249,6 +242,7 @@ namespace RabbitOM.Player
                 _datasource.SetConnectionStatusOn();
                 _datasource.SetTransport( _client.Configuration.DeliveryMode.ToString() );
                 _datasource.SetCodec( e.TrackInfo.Encoder );
+                _datasource.SetClock( e.TrackInfo.ClockRate );
 
                 _frameBuilder.Dispose();
 
@@ -289,7 +283,6 @@ namespace RabbitOM.Player
                     _decoder.Open( codec );
                     _renderer.Open( _image );
 
-                    CodecInfo = $"Codec : {e.TrackInfo.Encoder} | Clock : {e.TrackInfo.ClockRate}Hz";
                     Footer = _client.Configuration.Uri;
                     StatusInfo = "";
                 }
@@ -305,7 +298,6 @@ namespace RabbitOM.Player
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 StatusInfo = "Connecting - Communication Lost";
-                CodecInfo = "";
                 Footer = "";
                 Image = null;
 

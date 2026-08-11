@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Threading;
 
 namespace RabbitOM.Player.Controls
@@ -9,6 +8,7 @@ namespace RabbitOM.Player.Controls
         private volatile string _codec;
         private volatile string _transport;
         private long _connectionStatus;
+        private long _clock;
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
         private long _frameCount;
@@ -25,6 +25,11 @@ namespace RabbitOM.Player.Controls
         public string GetTransport()
         {
             return _transport;
+        }
+
+        public long GetClock()
+        {
+            return Volatile.Read( ref _clock );
         }
 
         public bool GetConnectionStatus()
@@ -68,6 +73,7 @@ namespace RabbitOM.Player.Controls
             _transport = null;
             Interlocked.Exchange( ref _ticks , 0 );
             Interlocked.Exchange( ref _connectionStatus , 0 );
+            Interlocked.Exchange( ref _clock , 0 );
             Interlocked.Exchange( ref _frameCount , 0 );
             Interlocked.Exchange( ref _bytesReceivedCount , 0 );
             Interlocked.Exchange( ref _packetReceivedCount , 0 );
@@ -94,6 +100,11 @@ namespace RabbitOM.Player.Controls
         internal void SetConnectionStatusOff()
         {
             Interlocked.Exchange( ref _connectionStatus , 0 );
+        }
+
+        internal void SetClock( long value )
+        {
+            Interlocked.Exchange( ref _clock , value );
         }
 
         internal void SetFrameSize( long height , long width )

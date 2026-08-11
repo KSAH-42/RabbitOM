@@ -157,12 +157,6 @@
 
                         <Separator />
 
-                        <MenuItem x:Name="menuItemShowCodecInfo"
-                                  Header="Show Codec infos" 
-                                  IsCheckable="True"
-                                  IsChecked="True"
-                                  />
-
                         <MenuItem x:Name="menuItemShowFooter"
                                   Header="Show footer info" 
                                   IsCheckable="True"
@@ -207,14 +201,6 @@
                            HorizontalAlignment="Center"
                            Foreground="White" 
                            Background="Black"
-                           Text="{Binding CodecInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                           Visibility="{Binding ElementName=menuItemShowCodecInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                           />
-
-                    <TextBlock FontSize="15" 
-                           HorizontalAlignment="Center"
-                           Foreground="White" 
-                           Background="Black"
                            Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                            Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
@@ -223,8 +209,6 @@
 
                 <controls:NetworkStatistics x:Name="_statistics" 
                                             Margin="10,20,0,0" 
-                                            Width="350"
-                                            Height="220"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Top"
                                             Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"

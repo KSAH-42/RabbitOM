@@ -9,6 +9,8 @@ namespace RabbitOM.Player.Controls
         string GetTransport();
 
         bool GetConnectionStatus();
+        
+        long GetClock();
 
         long GetBytesReceivedPerSecond();
 
