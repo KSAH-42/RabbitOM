@@ -5,10 +5,14 @@ namespace RabbitOM.Player.Configuration
 {
     public interface IConfiguration
     {
+        void AddSources( IEnumerable<RtspSourceConfigurationElement> elements );
+
         IReadOnlyCollection<RtspSourceConfigurationElement> GetSources();
 
         IReadOnlyCollection<RtspSourceConfigurationElement> GetSourcesOrDefault();
 
-        void SaveSources( IEnumerable<RtspSourceConfigurationElement> elements );
+        void ClearSources();
+
+        void Save();
     }
 }

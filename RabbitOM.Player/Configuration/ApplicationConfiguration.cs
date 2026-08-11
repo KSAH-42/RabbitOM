@@ -11,6 +11,19 @@ namespace RabbitOM.Player.Configuration
     {
         private readonly SystemConfiguration _configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
 
+        public void AddSources( IEnumerable<RtspSourceConfigurationElement> elements )
+        {
+            if ( elements == null )
+            {
+                throw new ArgumentNullException( nameof( elements ) );
+            }
+
+            var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
+            var sources = section.EnsureSourcesExists();
+
+            sources.AddRange( elements );
+        }
+
         public IReadOnlyCollection<RtspSourceConfigurationElement> GetSources()
         {
             var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
@@ -32,19 +45,16 @@ namespace RabbitOM.Player.Configuration
             return sources.Cast<RtspSourceConfigurationElement>().ToList();
         }
 
-        public void SaveSources( IEnumerable<RtspSourceConfigurationElement> elements )
+        public void ClearSources()
         {
-            if ( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
-
             var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
             var sources = section.EnsureSourcesExists();
 
             sources.Clear();
-            sources.AddRange( elements );
+        }
 
+        public void Save()
+        {
             _configuration.Save();
         }
     }
