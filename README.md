@@ -108,7 +108,7 @@ using ( var client = new RtspClient() )
 
 # About the connection class
 
-The RtspClient used the RtspConnection. This class gives a full access rtsp protocols messaging layer.
+The RtspClient used the RtspConnection. This class gives a full access rtsp protocols messaging layer but it will be remove by something better, just go at the end of this page.
 
 ~~~~C#
 
