@@ -65,7 +65,7 @@
             </MenuItem>
             
             <MenuItem Header="Help">
-                <MenuItem Header="Version" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />
+                <MenuItem Header="About" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />
             </MenuItem>
 
         </Menu>
