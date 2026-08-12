@@ -1,11 +1,16 @@
-﻿using System;
+﻿// this component is used to display live stream based on rtsp uri
+// and... it does not used the state gof pattern, so why ?
+// normally a player has different states like: playing, paused, stopped, etc...
+// but here we have 2 states only: started and stopped. That's all. O vms application
+// it doesn"t really make sense to make a pause during a live
+// but not for replay yes. And this component is design live streaming
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
-    // to the replacement of the actual implementation located on the MainWindow class
     public partial class MediaControl : UserControl
     {
         public MediaControl()
