@@ -179,8 +179,8 @@ You can receive media content using TCP / UDP or Multicast
 
 if your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
 
-if your are using HIK camera and you use VLC for test, you may observed that the media.player will display the stream and VLC fail to display.
-First of all, it it's not due to the HIK cam. VLC used an external open source rtsp library, and this library doesn't support all authentication schemes/algs provided by this camera.
+if your are using HIK camera and you use VLC for testing, you may observed that VLC fail to display BUT the media.player will display the stream.
+First of all, the issue it's not due to the HIK cam. And not really from VLC, because VLC used an external open source rtsp library, and this library doesn't support all authentication schemes/algs provided by this camera.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.png)
 
