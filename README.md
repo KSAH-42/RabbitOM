@@ -179,6 +179,11 @@ You can receive media content using TCP / UDP or Multicast
 
 if your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
 
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.cam1.png)
+
+if your are using HIK camera and you use VLC for test, you may observed that the media display the stream and VLC fail to display.
+First of all, it it's not due to the HIK cam. VLC used an external open source rtsp library, and this library doesn't support all authentication schemes/algs provided by the camera.
+
 # RabbitOM.MJpegPlayer is used to decode RTP packets ( RFC 2435 )
 
 This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
@@ -229,7 +234,6 @@ static class Program
 }
 
 ~~~~
-
 
 
 # Getting more details ?
