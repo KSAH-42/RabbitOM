@@ -181,7 +181,7 @@ if your camera is located I strongly recommended to used TCP. Otherwise if you u
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.png)
 
-if your are using HIK camera and you use VLC for test, you may observed that the media display the stream and VLC fail to display.
+if your are using HIK camera and you use VLC for test, you may observed that the media.player will display the stream and VLC fail to display.
 First of all, it it's not due to the HIK cam. VLC used an external open source rtsp library, and this library doesn't support all authentication schemes/algs provided by the camera.
 
 # RabbitOM.MJpegPlayer is used to decode RTP packets ( RFC 2435 )
