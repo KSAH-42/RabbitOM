@@ -177,9 +177,11 @@ You can receive media content using TCP / UDP or Multicast
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.MediaPlayer.Udp.png)
 
-if your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
+If your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
 
-if your are using HIK camera and you use VLC for testing, you may observed that VLC fail to display BUT the media.player will display the stream.
+# If you test first with VLC
+
+If your are using HIK camera or probably other camera and you may use first VLC for testing, you may observed that VLC fail to display BUT the Media.Player will display the stream.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.png)
 
