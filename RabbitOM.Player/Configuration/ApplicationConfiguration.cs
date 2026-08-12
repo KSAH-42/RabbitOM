@@ -7,6 +7,7 @@ namespace RabbitOM.Player.Configuration
 {
     using SystemConfiguration = System.Configuration.Configuration;
 
+    // IConfiguration has been remove due to the coupling of the ABCBlablaConfigurationElement, is not poco class, if it's need IConfiguration should be added but at the higher level not at this level
     public sealed class ApplicationConfiguration
     {
         private readonly SystemConfiguration _configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
