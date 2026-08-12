@@ -78,6 +78,11 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
+    <Compile Include="Controls\MediaControl.xaml.cs">
+      <DependentUpon>MediaControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\VisualTargetPresentationSource.cs" />
+    <Compile Include="Controls\VisualWrapper.cs" />
     <Compile Include="Converters\BooleanMultiValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
     <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
@@ -103,6 +108,10 @@
     <Compile Include="Dialogs\ModuleInfoFactory.cs" />
     <Compile Include="Dialogs\ModuleInfo.cs" />
     <Compile Include="Styles\WindowStyle.cs" />
+    <Page Include="Controls\MediaControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\NetworkStatistics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
