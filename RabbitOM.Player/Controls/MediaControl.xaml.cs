@@ -27,6 +27,8 @@ namespace RabbitOM.Player.Controls
 
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
 
+        public static readonly RoutedEvent FrameReceivedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
+
 
 
 
@@ -58,6 +60,12 @@ namespace RabbitOM.Player.Controls
         {
             add    => AddHandler( DisconnectedEvent , value );
             remove => RemoveHandler( DisconnectedEvent , value );
+        }
+
+        public event RoutedEventHandler FrameReceived
+        {
+            add    => AddHandler( FrameReceivedEvent , value );
+            remove => RemoveHandler( FrameReceivedEvent , value );
         }
 
 
@@ -127,24 +135,29 @@ namespace RabbitOM.Player.Controls
 
 
 
-        protected virtual void OnCommunicationStarted( RoutedEventArgs e )
+        protected virtual void OnCommunicationStarted()
         {
             RaiseEvent( new RoutedEventArgs( CommunicationStartedEvent , this ) );
         }
 
-        protected virtual void OnCommunicationStopped( RoutedEventArgs e )
+        protected virtual void OnCommunicationStopped()
         {
             RaiseEvent( new RoutedEventArgs( CommunicationStoppedEvent , this ) );
         }
 
-        protected virtual void OnConnected( RoutedEventArgs e )
+        protected virtual void OnConnected()
         {
             RaiseEvent( new RoutedEventArgs( ConnectedEvent , this ) );
         }
 
-        protected virtual void OnDisconnected( RoutedEventArgs e )
+        protected virtual void OnDisconnected()
         {
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent , this ) );
+        }
+
+        protected virtual void OnFrameReceived()
+        {
+            RaiseEvent( new RoutedEventArgs( FrameReceivedEvent , this ) );
         }
     }
 }
