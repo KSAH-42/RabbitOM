@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace RabbitOM.Player.Dialogs
 {
@@ -36,7 +37,7 @@ namespace RabbitOM.Player.Dialogs
                 }
             }
 
-            return modules.Values;
+            return modules.Values.OrderBy( element => element.Name );
         }
     }
 }
