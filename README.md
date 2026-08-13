@@ -185,9 +185,9 @@ If your are using some cameras and you may use first VLC for testing, you may ob
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.png)
 
-First of all, here I use a HIK camera, and the issue does not come from HIK camera. And this device just works as expected.
+First of all, here I use a HIK camera, and HIK camera just works as expected and works well.
 
-And the issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this third party library doesn't support all authentication schemes/algs provided by the camera.
+The issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this third party library doesn't support all authentication schemes/algs provided by the camera.
 VLC (3.0.23 and previous versions) will continue normally to ask to you to enter the credentials. And according to the rtsp headers it's something like JesusLive-666.dll. It's not VLC that fails.
 Take a look on the network traffic captures and you will understand.
 
