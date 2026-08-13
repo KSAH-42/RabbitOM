@@ -188,8 +188,8 @@ If your are using some cameras and you may use first VLC for testing, you may ob
 First of all, here I use a HIK camera, and HIK camera just works as expected and works well.
 
 The issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this third party library doesn't support all authentication schemes/algs provided by the camera.
-VLC (3.0.23 and previous versions) will continue normally to ask to you to enter the credentials. And according to the rtsp headers it's something like JesusLive-666.dll. It's not VLC that fails.
-Take a look on the network traffic captures and you will understand.
+VLC (3.0.23 and probably previous versions) will enter in a loop and will normally ask to you to enter the credentials until the authentication succeed or ... ? And according to the rtsp headers there is a JesusLive-666.dll used here.
+Take a look on the network traffic captures and you will understand. And most of C++ forked repo doesn't highligh the Authenticator capable to computeDigestResponse, MD5 only and even on the RTSPClient::createAuthenticatorString 
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.Settings.png)
 
