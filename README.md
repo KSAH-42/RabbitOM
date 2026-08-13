@@ -189,7 +189,7 @@ First of all, here I use a HIK camera, and HIK camera just works as expected and
 
 The issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this library doesn't support all digest algs supported by the camera.
 VLC (3.0.23 and probably previous versions) will enter in a loop and will normally ask to you to enter the credentials until the authentication succeed. And according to the rtsp headers there is a JesusLive-666.dll used here.
-And most of C++ forked repo use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms, and for instance hitachie/thalezed products with their great picatchou recorder just fails. I hope that one day some sales engineer will not pushed some security camera to trigger a vms product replacement silently.
+And most of C++ forked repo use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms, and for instance hitachie/thalezed products with their great picatchou recorder that embedded this dll just fails. I hope that one day some sales engineer will not pushed some security camera to trigger a vms product replacement silently.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.Settings.png)
 
