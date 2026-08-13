@@ -78,6 +78,16 @@ namespace RabbitOM.Player.Controls
 
 
 
+        private void OnLoaded( object sender , RoutedEventArgs e )
+        {
+        }
+
+        private void OnUnloaded( object sender , RoutedEventArgs e )
+        {
+        }
+
+
+
 
 
 
@@ -109,34 +119,12 @@ namespace RabbitOM.Player.Controls
 
         public void StopCommunication()
         {
-            throw new NotImplementedException();
         }
 
         public ImageSource GetImage()
         {
             throw new NotImplementedException();
         }
-
-
-
-
-
-
-
-
-        private void OnLoaded( object sender , RoutedEventArgs e )
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnUnloaded( object sender , RoutedEventArgs e )
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
 
 
 

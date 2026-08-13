@@ -142,19 +142,28 @@
 
                                     <Grid>
 
-                                        <TextBlock Margin="7,0,0,4" 
-                                               VerticalAlignment="Center" 
-                                               Foreground="White" 
-                                               TextWrapping="NoWrap" 
-                                               Text="{TemplateBinding Title}" 
-                                               FontSize="{TemplateBinding FontSize}" 
-                                               />
+                                        <StackPanel Margin="7,0,0,4"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Stretch"
+                                                    Orientation="Horizontal">
+
+                                            <Image Source="{TemplateBinding Icon}" />
+
+                                            <TextBlock Margin="5,0,0,0"
+                                                       VerticalAlignment="Center" 
+                                                       Foreground="White" 
+                                                       TextWrapping="NoWrap" 
+                                                       Text="{TemplateBinding Title}" 
+                                                       FontSize="{TemplateBinding FontSize}" 
+                                                       />
+                                            
+                                        </StackPanel>
 
                                         <StackPanel HorizontalAlignment="Right" 
-                                                VerticalAlignment="Stretch"
-                                                WindowChrome.IsHitTestVisibleInChrome="True"
-                                                Orientation="Horizontal"
-                                                >
+                                                    VerticalAlignment="Stretch"
+                                                    WindowChrome.IsHitTestVisibleInChrome="True"
+                                                    Orientation="Horizontal"
+                                                    >
 
                                             <Button x:Name="ButtonMinimize" 
                                                 Focusable="False" 
