@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace RabbitOM.Player.Converters
 {
     [ValueConversion( typeof(bool) , typeof( string ) ) ]
-    public class BooleanStringValueConverter : IValueConverter
+    public sealed class BooleanStringValueConverter : IValueConverter
     {
         public string TrueString { get; set; } = "True";
 

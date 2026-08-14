@@ -7,7 +7,7 @@ using System.Linq;
 namespace RabbitOM.Player.Converters
 {
     [ValueConversion(typeof(byte), typeof(string))]
-    public class MemorySizeValueConverter : IValueConverter
+    public sealed class MemorySizeValueConverter : IValueConverter
     {
         private readonly IReadOnlyList<string> FormatUnits = new List<string>()
         {
