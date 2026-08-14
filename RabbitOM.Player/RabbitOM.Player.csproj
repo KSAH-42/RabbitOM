@@ -103,7 +103,7 @@
     <Compile Include="Controls\NetworkStatistics.xaml.cs">
       <DependentUpon>NetworkStatistics.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\IDataSource.cs" />
+    <Compile Include="Controls\IStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsDataSource.cs" />
     <Compile Include="Converters\MemoryUnitValueConverter.cs" />
     <Compile Include="Converters\BooleanStringValueConverter.cs" />

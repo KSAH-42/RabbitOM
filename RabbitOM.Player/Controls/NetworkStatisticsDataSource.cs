@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace RabbitOM.Player.Controls
 {
-    public sealed class NetworkStatisticsDataSource : IDataSource
+    public sealed class NetworkStatisticsDataSource : IStatisticsDataSource
     {
         private volatile string _codec;
         private volatile string _transport;

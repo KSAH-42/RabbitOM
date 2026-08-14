@@ -25,7 +25,7 @@ namespace RabbitOM.Player.Controls
 
 		public static readonly DependencyProperty DataSourceProperty
 			= DependencyProperty.Register(
-				"DataSource", typeof(IDataSource) ,
+				"DataSource", typeof(IStatisticsDataSource) ,
 					typeof(NetworkStatistics) );
 
 		public static readonly DependencyProperty ConnectionStatusProperty
@@ -85,9 +85,9 @@ namespace RabbitOM.Player.Controls
 
 
 
-		public IDataSource DataSource
+		public IStatisticsDataSource DataSource
 		{
-			get => (IDataSource) GetValue( DataSourceProperty );
+			get => (IStatisticsDataSource) GetValue( DataSourceProperty );
 			set => SetValue( DataSourceProperty , value );
 		}
 

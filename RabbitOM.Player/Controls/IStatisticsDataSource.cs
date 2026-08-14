@@ -2,14 +2,14 @@
 
 namespace RabbitOM.Player.Controls
 {
-    public interface IDataSource
+    public interface IStatisticsDataSource
     {
         string GetCodec();
 
         string GetTransport();
 
         bool GetConnectionStatus();
-        
+
         long GetClock();
 
         long GetBytesReceivedPerSecond();
