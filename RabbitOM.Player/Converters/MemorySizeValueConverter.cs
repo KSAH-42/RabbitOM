@@ -1,45 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
+using System.Linq;
 
 namespace RabbitOM.Player.Converters
 {
     [ValueConversion(typeof(byte), typeof(string))]
     public class MemorySizeValueConverter : IValueConverter
     {
-        private const long UnitKb = 1024;
-
-        private const long UnitMb = UnitKb * 1024;
-
-        private const long UnitGb = UnitMb * 1024;
-
-        private const long UnitTb = UnitGb * 1024;
+        private readonly IReadOnlyList<string> FormatUnits = new List<string>()
+        {
+            "{0:0.##} bytes",
+            "{0:0.##} Kbits",
+            "{0:0.##} Mbits",
+            "{0:0.##} Gbits",
+            "{0:0.##} Tbits"
+        };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var size = System.Convert.ToDouble( value ) * 8;
+            var temp = (long) size;
+            var index = 0;
 
-            if ( 0 <= size && size < MemorySizeValueConverter.UnitKb )
+            while ( (temp /= 1024) > 0 )
             {
-                return string.Format("{0:0} bytes", size );
+                index ++;
             }
 
-            if ( MemorySizeValueConverter.UnitKb <= size && size < MemorySizeValueConverter.UnitMb )
-            {
-                return string.Format( "{0:0.##} Kbits" , size / MemorySizeValueConverter.UnitKb );
-            }
+            var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();
 
-            if ( MemorySizeValueConverter.UnitMb <= size && size < MemorySizeValueConverter.UnitGb )
-            {
-                return string.Format("{0:0.##} Mbits", size / MemorySizeValueConverter.UnitMb );
-            }
-
-            if ( MemorySizeValueConverter.UnitGb <= size && size < MemorySizeValueConverter.UnitTb )
-            {
-                return string.Format("{0:0.##} Gbits", size / MemorySizeValueConverter.UnitGb );
-            }
-
-            return string.Format("{0:0.##} Tbits", size / MemorySizeValueConverter.UnitTb );
+            return string.Format( format , size / Math.Pow( 1024 , index ) );
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
