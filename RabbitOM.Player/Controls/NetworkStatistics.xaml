@@ -15,9 +15,9 @@
     <UserControl.Resources>
 
         <converters:BooleanStringValueConverter x:Key="BooleanStringValueConverter" TrueString="Connected" FalseString="Disconnected" />
+        <converters:MemoryUnitValueConverter x:Key="MemoryUnitValueConverter" />
+        <converters:HertzUnitValueConverter x:Key="HertzUnitValueConverter" />
 
-        <converters:MemorySizeValueConverter x:Key="MemorySizeValueConverter" />
-        
     </UserControl.Resources>
     
     <Grid>
@@ -93,16 +93,11 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="{Binding Clock,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        <TextBlock Text="{Binding Clock,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource HertzUnitValueConverter}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
-
-                        <TextBlock Text=" Hz" 
-                                   FontSize="18" 
-                                   Foreground="Beige" 
-                                   />
-
+                        
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
@@ -170,7 +165,7 @@
                                    Foreground="White" 
                                    />
 
-                        <TextBlock Text="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource MemorySizeValueConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        <TextBlock Text="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource MemoryUnitValueConverter}, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                    FontSize="18" 
                                    Foreground="Beige" 
                                    />
