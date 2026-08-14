@@ -20,13 +20,16 @@ namespace RabbitOM.Player.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var size = System.Convert.ToDouble( value ) * 8;
-            var temp = (long) size;
             var index = 0;
 
-            while ( (temp /= 1024) > 0 )
+            if ( double.TryParse( value?.ToString() , out var size ) && (size *= 8) > 0 )
             {
-                index ++;
+                var temp = (long) size;
+
+                while ( (temp /= 1024) > 0 )
+                {
+                    index ++;
+                }
             }
 
             var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();

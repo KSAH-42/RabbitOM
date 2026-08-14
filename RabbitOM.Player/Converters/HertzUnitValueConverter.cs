@@ -19,13 +19,16 @@ namespace RabbitOM.Player.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var size = System.Convert.ToUInt64( value );
-            var temp = size;
             var index = 0;
 
-            while ( (temp /= 1000) > 0 )
+            if ( long.TryParse( value?.ToString() , out var size ) )
             {
-                index ++;
+                var temp = size;
+
+                while ( (temp /= 1000) > 0 )
+                {
+                    index ++;
+                }
             }
 
             var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();
