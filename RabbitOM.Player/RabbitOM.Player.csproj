@@ -81,6 +81,10 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
+    <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
+    <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
+    <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
+    <Compile Include="Controls\MediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaControl.xaml.cs">
       <DependentUpon>MediaControl.xaml</DependentUpon>
     </Compile>

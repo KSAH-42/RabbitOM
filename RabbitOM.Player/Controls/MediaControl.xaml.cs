@@ -78,6 +78,55 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+        public static readonly DependencyProperty UriProperty = DependencyProperty.Register( "Uri", typeof(string) , typeof(MediaControl) );
+
+        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( "UserName", typeof(string) , typeof(MediaControl) );
+
+        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( "Password", typeof(string) , typeof(MediaControl) );
+
+        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( "Transport", typeof(MediaPlayerTransport) , typeof(MediaControl) );
+
+
+
+
+
+
+
+
+        public string Uri
+        {
+            get => GetValue( UriProperty ) as string;
+            set => SetValue( UriProperty , value );
+        }
+
+        public string UserName
+        {
+            get => GetValue( UserNameProperty ) as string;
+            set => SetValue( UserNameProperty , value );
+        }
+
+        public string Password
+        {
+            get => GetValue( PasswordProperty ) as string;
+            set => SetValue( PasswordProperty , value );
+        }
+
+        public MediaPlayerTransport Transport
+        {
+            get => GetValue( TransportProperty ) as MediaPlayerTransport;
+            set => SetValue( TransportProperty , value );
+        }
+
+
+
+
+
+
+
+
+
+
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
         }
@@ -85,6 +134,10 @@ namespace RabbitOM.Player.Controls
         private void OnUnloaded( object sender , RoutedEventArgs e )
         {
         }
+
+
+
+
 
 
 
