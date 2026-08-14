@@ -5,12 +5,12 @@ namespace RabbitOM.Player.Controls
 {
     public sealed class UdpMediaPlayerTransport : MediaPlayerTransport
     {
-        public static readonly DependencyProperty RtpPortProperty = DependencyProperty.Register( "RtpPort", typeof(int) , typeof(UdpMediaPlayerTransport) );
+        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(UdpMediaPlayerTransport) );
 
-        public int RtpPort
+        public int Port
         {
-            get => (int) GetValue( RtpPortProperty );
-            set => SetValue( RtpPortProperty , value );
+            get => (int) GetValue( PortProperty );
+            set => SetValue( PortProperty , value );
         }
     }
 }

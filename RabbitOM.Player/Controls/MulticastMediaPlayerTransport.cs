@@ -6,7 +6,7 @@ namespace RabbitOM.Player.Controls
     public sealed class MulticastMediaPlayerTransport : MediaPlayerTransport
     {
         public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(MulticastMediaPlayerTransport) );
-        public static readonly DependencyProperty RtpPortProperty = DependencyProperty.Register( "RtpPort", typeof(int) , typeof(MulticastMediaPlayerTransport) );
+        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(MulticastMediaPlayerTransport) );
         public static readonly DependencyProperty TTLProperty = DependencyProperty.Register( "TTL", typeof(byte) , typeof(MulticastMediaPlayerTransport) , new PropertyMetadata( 1 ) );
 
         public string IPAddress
@@ -15,10 +15,10 @@ namespace RabbitOM.Player.Controls
             set => SetValue( IPAddressProperty , value );
         }
 
-        public int RtpPort
+        public int Port
         {
-            get => (int) GetValue( RtpPortProperty );
-            set => SetValue( RtpPortProperty , value );
+            get => (int) GetValue( PortProperty );
+            set => SetValue( PortProperty , value );
         }
 
         public byte TTL
