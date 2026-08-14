@@ -28,15 +28,12 @@ namespace RabbitOM.Player.Converters
 
                 var temp = size;
 
-                while ( (temp /= 1000) > 0 )
-                {
-                    index ++;
-                }
+                while ( (temp /= 1000) > 0 && ++ index < FormatUnits.Count - 1 );
             }
 
             var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();
 
-            return string.Format( format , size / Math.Pow( 1000 , Math.Min( index , FormatUnits.Count - 1 ) ) );
+            return string.Format( format , size / Math.Pow( 1000 , index ) );
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

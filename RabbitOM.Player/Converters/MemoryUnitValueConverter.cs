@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Windows.Data;
 using System.Linq;
+using System.Windows.Data;
 
 namespace RabbitOM.Player.Converters
 {
@@ -28,15 +29,12 @@ namespace RabbitOM.Player.Converters
 
                 var temp = (long) size;
 
-                while ( (temp /= 1024) > 0 )
-                {
-                    index ++;
-                }
+                while ( (temp /= 1024) > 0 && ++ index < FormatUnits.Count - 1 );
             }
 
             var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();
 
-            return string.Format( format , size / Math.Pow( 1024 , Math.Min( index , FormatUnits.Count - 1 ) ) );
+            return string.Format( format , size / Math.Pow( 1024 , index ) );
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
