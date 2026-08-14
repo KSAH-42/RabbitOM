@@ -23,6 +23,8 @@ namespace RabbitOM.Player.Converters
 
             if ( long.TryParse( value?.ToString() , out var size ) )
             {
+                size = size > 0 ? size : 0;
+
                 var temp = size;
 
                 while ( (temp /= 1000) > 0 )

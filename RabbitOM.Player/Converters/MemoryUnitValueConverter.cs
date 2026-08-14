@@ -24,7 +24,9 @@ namespace RabbitOM.Player.Converters
 
             if ( double.TryParse( value?.ToString() , out var size ) && (size *= 8) > 0 )
             {
-                var temp = (long) ( ! double.IsInfinity( size ) && ! double.IsNaN( size ) ? size : 0 );
+                size = double.IsInfinity( size ) || double.IsNaN( size ) ? 0 : size;
+
+                var temp = (long) size;
 
                 while ( (temp /= 1024) > 0 )
                 {
