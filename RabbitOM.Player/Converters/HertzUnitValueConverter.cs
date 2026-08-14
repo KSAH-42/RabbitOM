@@ -9,7 +9,7 @@ namespace RabbitOM.Player.Converters
     [ValueConversion(typeof(byte), typeof(string))]
     public sealed class HertzUnitValueConverter : IValueConverter
     {
-        private readonly IReadOnlyList<string> FormatUnits = new List<string>()
+        private readonly IReadOnlyList<string> FormatUnits = new string[]
         {
             "{0} Hz",
             "{0} KHz",
