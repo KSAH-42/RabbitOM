@@ -36,7 +36,7 @@ namespace RabbitOM.Player.Converters
 
             var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();
 
-            return string.Format( format , size / Math.Pow( 1024 , index ) );
+            return string.Format( format , size / Math.Pow( 1024 , Math.Min( index , FormatUnits.Count - 1 ) ) );
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
