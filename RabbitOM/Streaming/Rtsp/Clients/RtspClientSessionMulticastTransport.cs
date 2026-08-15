@@ -2,124 +2,60 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the client transport layer used to receive packet from the network
-    /// </summary>
     internal sealed class RtspClientSessionMulticastTransport : RtspClientSessionTransport
     {
-        private readonly RtspMulticastSocket _socket    = null;
-        
-        private readonly string                      _address   = string.Empty;
-
-        private readonly int                         _port      = 0;
-
-        private readonly byte                        _ttl       = 0;
-
-        private readonly TimeSpan                    _timeout   = TimeSpan.Zero;
-        
+        private readonly RtspMulticastSocket _socket;
 
 
 
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="addresss">the address</param>
-        /// <param name="port">the port</param>
-        /// <param name="ttl">the ttl</param>
-        /// <param name="timeout">the timeout</param>
-        public RtspClientSessionMulticastTransport( string addresss , int port , byte ttl , TimeSpan timeout )
+        public RtspClientSessionMulticastTransport( RtspClientSession session )
+            : base( session )
         {
             _socket  = new RtspMulticastSocket();
-            _address = addresss ?? string.Empty;
-            _port    = port;
-            _ttl     = ttl;
-            _timeout = timeout;
-        }
-        
 
-
-
-
-
-
-        /// <summary>
-        /// Gets the multicast ip address
-        /// </summary>
-        public string Address
-        {
-            get => _address;
+            Address = session.Configuration.MulticastAddress;
+            Port = session.Configuration.RtpPort;
+            TTL = session.Configuration.TimeToLive;
+            Timeout = session.Configuration.ReceiveTimeout;
         }
 
-        /// <summary>
-        /// Gets the port
-        /// </summary>
-        public int Port
-        {
-            get => _port;
-        }
 
-        /// <summary>
-        /// Gets the ttl value
-        /// </summary>
-        public byte TTL
-        {
-            get => _ttl;
-        }
 
-        /// <summary>
-        /// Gets the timeout
-        /// </summary>
-        public TimeSpan Timeout
-        {
-            get => _timeout;
-        }
-        
+        public string Address  { get; }
+
+        public int Port { get; }
+
+        public byte TTL { get; }
+
+        public TimeSpan Timeout { get; }
 
 
 
-
-
-
-        /// <summary>
-        /// Thread function
-        /// </summary>
         protected override void Run()
         {
             if ( ! _socket.IsOpened )
             {
                 IdleTimeout = TimeSpan.FromSeconds( 5 );
 
-                if ( ! _socket.Open( _address , _port , _ttl , _timeout ) )
+                if ( _socket.Open( Address , Port , TTL , Timeout ) )
                 {
-                    return;
+                    IdleTimeout = TimeSpan.Zero;
                 }
-
-                IdleTimeout = TimeSpan.Zero;
             }
             else
             {
-                if ( ! _socket.PollReceive( _timeout ) )
+                if ( _socket.PollReceive( Timeout ) )
                 {
-                    return;
+                    var buffer = _socket.Receive();
+
+                    if ( buffer?.Length > 0 )
+                    {
+                        OnDataReceived( buffer );
+                    }
                 }
-
-                var buffer = _socket.Receive();
-
-                if ( null == buffer || buffer.Length <= 0 )
-                {
-                    return;
-                }
-
-                OnDataReceived( buffer );
             }
         }
 
-        /// <summary>
-        /// Release resource
-        /// </summary>
         protected override void Shutdown()
         {
             _socket.Close();

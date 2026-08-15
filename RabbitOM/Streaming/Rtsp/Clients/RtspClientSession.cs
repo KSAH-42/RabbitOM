@@ -227,8 +227,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                     case RtspDeliveryMode.Udp:
 
-                        _transport = new RtspClientSessionUdpTransport( _configuration.RtpPort , _configuration.ReceiveTimeout );
-                        _transport.SetSession( this );
+                        _transport = new RtspClientSessionUdpTransport( this );
 
                         setupResult = _connection.Setup()
                             .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Udp )
@@ -240,8 +239,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                     case RtspDeliveryMode.Multicast:
 
-                        _transport = new RtspClientSessionMulticastTransport( _configuration.MulticastAddress , _configuration.RtpPort , _configuration.TimeToLive , _configuration.ReceiveTimeout );
-                        _transport.SetSession( this );
+                        _transport = new RtspClientSessionMulticastTransport( this );
 
                         setupResult = _connection.Setup()
                             .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Multicast )

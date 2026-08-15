@@ -4,71 +4,32 @@ using System.Net.Sockets;
 
 namespace RabbitOM.Streaming.Rtsp
 {
-    /// <summary>
-    /// Represent an multicast socket
-    /// </summary>
     internal sealed class RtspMulticastSocket : IDisposable
     {
         private const int DefaultReceiveBufferSize = 8 * 1024 * 1024;
 
+        private IPAddress _ipAddress;
+        private IPEndPoint _groupEP;
+        private Socket _socket;
+        private byte[] _buffer;
 
-
-
-        private IPAddress   _ipAddress       = null;
-
-        private IPEndPoint  _groupEP         = null;
-
-        private Socket      _socket          = null;
-
-        private byte[]      _buffer          = null;
-
-
-
-
-        /// <summary>
-        /// Check if the socket has been opened
-        /// </summary>
         public bool IsOpened
         {
             get => _socket != null;
         }
 
-
-
-
-
-        /// <summary>
-        /// Open the socket
-        /// </summary>
-        /// <param name="ipAddress">the ip address</param>
-        /// <param name="port">the port</param>
-        /// <param name="ttl">the ttl</param>
-        /// <param name="receiveTimeout">the receive timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Open( string ipAddress , int port , int ttl , TimeSpan receiveTimeout )
+        // TODO: remove the try catch and bool return value
+        public bool Open( string ipAddress , int port , byte ttl , TimeSpan receiveTimeout )
         {
-            if ( string.IsNullOrWhiteSpace( ipAddress ) || port < 0 || ttl < 0 )
-            {
-                return false;
-            }
-
-            if ( _socket != null )
-            {
-                return false;
-            }
-
-            if ( !IPAddress.TryParse( ipAddress , out _ipAddress ) || _ipAddress == null )
+            if ( _socket != null || port < 0 || ! IPAddress.TryParse( ipAddress , out _ipAddress ) )
             {
                 return false;
             }
 
             try
             {
-                _buffer = new byte[DefaultReceiveBufferSize];
-
-                _groupEP = new IPEndPoint( IPAddress.Any , port );
-                
                 _socket = new Socket(_ipAddress.AddressFamily , SocketType.Dgram , ProtocolType.Udp );
+                _groupEP = new IPEndPoint( IPAddress.Any , port );
 
                 _socket.ExclusiveAddressUse = false;
                 _socket.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
@@ -87,25 +48,22 @@ namespace RabbitOM.Streaming.Rtsp
                     _socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.MulticastTimeToLive, ttl);
                 }
 
-                _socket.SetSocketOption(_ipAddress.AddressFamily == AddressFamily.InterNetwork ? SocketOptionLevel.IP : SocketOptionLevel.IPv6 , SocketOptionName.MulticastTimeToLive , ttl );
-
                 _socket.Bind(_groupEP);
+
+                _buffer = new byte[DefaultReceiveBufferSize];
 
                 return true;
             }
             catch ( Exception ex )
             {
+                Close();
+
                 OnError( ex );
             }
-
-            Close();
 
             return false;
         }
 
-        /// <summary>
-        /// Close the socket
-        /// </summary>
         public void Close()
         {
             try
@@ -129,36 +87,25 @@ namespace RabbitOM.Streaming.Rtsp
             }
 
             _socket?.Close();
-            _socket?.Dispose();
             _socket = null;
             _groupEP = null;
             _ipAddress = null;
             _buffer = null;
         }
 
-        /// <summary>
-        /// Release internal resources
-        /// </summary>
         public void Dispose()
         {
+            var socket = _socket;
+
             Close();
+            socket?.Dispose();
         }
 
-        /// <summary>
-        /// Wait data during the specified timeout
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>return true for a success, otherwise false</returns>
         public bool PollReceive( TimeSpan timeout )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
-
             try
             {
-                return _socket.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead );
+                return _socket?.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -168,13 +115,9 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Read bytes
-        /// </summary>
-        /// <returns>returns an array of bytes, otherwise null</returns>
         public byte[] Receive()
         {
-            if ( _socket == null || _buffer == null || _buffer.Length <= 0 )
+            if ( _socket == null || _buffer == null || _buffer.Length == 0 )
             {
                 return null;
             }
@@ -207,21 +150,8 @@ namespace RabbitOM.Streaming.Rtsp
             return null;
         }
 
-
-
-
-
-        /// <summary>
-        /// Occurs when an error has been detected
-        /// </summary>
-        /// <param name="exception">the exception</param>
         private void OnError( Exception exception )
         {
-            if ( exception == null )
-            {
-                return;
-            }
-
             System.Diagnostics.Debug.WriteLine( exception );
         }
     }

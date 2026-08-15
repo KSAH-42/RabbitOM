@@ -4,58 +4,23 @@ using System.Net.Sockets;
 
 namespace RabbitOM.Streaming.Rtsp
 {
-    /// <summary>
-    /// Represent a socket tcp
-    /// </summary>
     internal sealed class RtspUdpSocket : IDisposable
     {
         private const int DefaultReceiveBufferSize = 8 * 1024 * 1024;
 
 
 
-
-        private readonly Action<Exception>  _errorHandler = null;
-
-        private Socket                      _socket       = null;
-
-        private IPEndPoint                  _groupEP      = null;   
-        
-        private byte[]                      _buffer       = null;
+        private Socket _socket;
+        private IPEndPoint _groupEP;
+        private byte[] _buffer;
 
 
 
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public RtspUdpSocket()
-        {
-        }
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="errorHandler">the error handler</param>
-        public RtspUdpSocket( Action<Exception> errorHandler )
-        {
-            _errorHandler = errorHandler;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Check if the socket is opening
-        /// </summary>
         public bool IsOpening
         {
             get => _socket != null;
         }
 
-        /// <summary>
-        /// Check if the socket is opened and the internal stream has been acquired
-        /// </summary>
         public bool IsOpened
         {
             get => _socket != null;
@@ -63,13 +28,7 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-
-
-        /// <summary>
-        /// Open
-        /// </summary>
-        /// <param name="port">the port</param>
-        /// <returns>returns true for a success, otherwise false</returns>
+        // TODO: remove the try catch and bool return value
         public bool Open(int port)
         {
             if (_socket != null)
@@ -100,65 +59,40 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Close
-        /// </summary>
         public void Close()
         {
             _socket?.Close();
-            _socket?.Dispose();
+            _socket = null;
             _groupEP = null;
             _buffer = null;
         }
 
-        /// <summary>
-        /// Release internal resources
-        /// </summary>
         public void Dispose()
         {
+            var socket = _socket;
+
             Close();
+            socket?.Dispose();
         }
 
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( string value )
         {
             return Send( RtspDataConverter.ConvertToBytesUTF8( value ) );
         }
 
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte value )
         {
             return Send( new byte[1] { value } );
         }
 
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte[] buffer )
         {
             return buffer != null && Send( buffer , 0 , buffer.Length );
         }
 
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="buffer">the value</param>
-        /// <param name="offset">the offset</param>
-        /// <param name="count">the count</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Send( byte[] buffer , int offset , int count )
         {
-            if ( buffer == null || buffer.Length <= 0 )
+            if ( buffer == null || buffer.Length == 0 )
             {
                 return false;
             }
@@ -185,15 +119,11 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Receive data
-        /// </summary>
-        /// <returns>returns a buffer, otherwise null.</returns>
         public byte[] Receive()
         {
             var bytesReceived = Receive( _buffer , 0 , _buffer.Length );
 
-            if ( bytesReceived <=0 )
+            if ( bytesReceived <= 0 )
             {
                 return null;
             }
@@ -205,16 +135,9 @@ namespace RabbitOM.Streaming.Rtsp
             return buffer;
         }
 
-        /// <summary>
-        /// Receive data 
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <param name="offset">the offset</param>
-        /// <param name="count">the count</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public int Receive( byte[] buffer , int offset , int count )
         {
-            if ( buffer == null || buffer.Length <= 0 )
+            if ( buffer == null || buffer.Length == 0 )
             {
                 return 0;
             }
@@ -248,11 +171,6 @@ namespace RabbitOM.Streaming.Rtsp
             return -1;
         }
 
-
-        /// <summary>
-        /// Get receive timeout
-        /// </summary>
-        /// <returns>returns a value</returns>
         public TimeSpan GetReceiveTimeout()
         {
             if ( _socket == null )
@@ -272,10 +190,6 @@ namespace RabbitOM.Streaming.Rtsp
             return TimeSpan.Zero;
         }
 
-        /// <summary>
-        /// Get send timeout
-        /// </summary>
-        /// <returns>returns a value</returns>
         public TimeSpan GetSendTimeout()
         {
             if ( _socket == null )
@@ -295,11 +209,6 @@ namespace RabbitOM.Streaming.Rtsp
             return TimeSpan.Zero;
         }
 
-        /// <summary>
-        /// Set receive timeout
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool SetReceiveTimeout( TimeSpan value )
         {
             if ( _socket == null )
@@ -321,11 +230,6 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Set send timeout
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool SetSendTimeout( TimeSpan value )
         {
             if ( _socket == null )
@@ -347,11 +251,6 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Check the status read of the socket
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns a boolean value</returns>
         public bool PollReceive( TimeSpan timeout )
         {
             if ( _socket == null )
@@ -371,11 +270,6 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Check the status send of the socket
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns a boolean value</returns>
         public bool PollSend( TimeSpan timeout )
         {
             if ( _socket == null )
@@ -395,11 +289,6 @@ namespace RabbitOM.Streaming.Rtsp
             return false;
         }
 
-        /// <summary>
-        /// Check the status error of the socket
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns a boolean value</returns>
         public bool PoolError( TimeSpan timeout )
         {
             if ( _socket == null )
@@ -422,19 +311,9 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-
-        /// <summary>
-        /// Occurs when an error has been detected
-        /// </summary>
-        /// <param name="ex">the exception</param>
         private void OnError( Exception ex )
         {
-            if ( ex == null )
-            {
-                return;
-            }
-
-            _errorHandler?.Invoke( ex );
+            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }
