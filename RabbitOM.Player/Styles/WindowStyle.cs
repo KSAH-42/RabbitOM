@@ -49,10 +49,10 @@ namespace RabbitOM.Player.Styles
                 return;
             }
 
-			if ( window.WindowState == System.Windows.WindowState.Normal)
+			if ( window.WindowState == System.Windows.WindowState.Normal )
 			{
 				window.MaxHeight    = SystemParameters.MaximizedPrimaryScreenHeight;
-				window.WindowState  = System.Windows.WindowState.Maximized;							
+				window.WindowState  = System.Windows.WindowState.Maximized;
 			}
 			else
 			{
