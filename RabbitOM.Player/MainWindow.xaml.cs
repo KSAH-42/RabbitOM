@@ -354,7 +354,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                using ( e.Surface ) // Here, that's absolutely mandatory for freeing unmanaged memory 
+                using ( e.Surface ) // add this step to free unmanaged memory
                 {
                     _renderer.Render( e.Surface );
 
