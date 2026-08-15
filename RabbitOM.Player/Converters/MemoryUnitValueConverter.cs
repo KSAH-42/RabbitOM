@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Data;
 
@@ -9,13 +9,13 @@ namespace RabbitOM.Player.Converters
     [ValueConversion(typeof(byte), typeof(string))]
     public sealed class MemoryUnitValueConverter : IValueConverter
     {
-        private readonly IReadOnlyList<string> FormatUnits = new string[]
+        private readonly IReadOnlyList<string> Units = new string[]
         {
-            "{0:0.##} bytes",
-            "{0:0.##} Kbits",
-            "{0:0.##} Mbits",
-            "{0:0.##} Gbits",
-            "{0:0.##} Tbits"
+            "bytes",
+            "Kbits",
+            "Mbits",
+            "Gbits",
+            "Tbits"
         };
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,12 +28,10 @@ namespace RabbitOM.Player.Converters
 
                 var temp = (long) size;
 
-                while ( (temp /= 1024) > 0 && ++ index < FormatUnits.Count - 1 );
+                while ( (temp /= 1024) > 0 && ++ index < Units.Count - 1 );
             }
 
-            var format = FormatUnits.ElementAtOrDefault( index ) ?? FormatUnits.LastOrDefault();
-
-            return string.Format( format , size / Math.Pow( 1024 , index ) );
+            return string.Format( "{0:0.##} {1}" , size / Math.Pow( 1024 , index ) , Units[ index ] );
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
