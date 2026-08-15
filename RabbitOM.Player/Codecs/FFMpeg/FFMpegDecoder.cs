@@ -65,7 +65,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
 
 	                if ( ffmpeg.avcodec_open2( _context , _decoder , opts ) != 0 )
 	                {
-		                return;
+		                throw new InvalidOperationException( "can not open a codec" );
 	                }
 
                     if ( _frame == null )
@@ -155,7 +155,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
                 _context = null;
             }
 
-            _decoder = null;
+            _decoder = null; // this object is ffmpeg singleton we don't have free it
             _extraParameters = null;
         }
 
