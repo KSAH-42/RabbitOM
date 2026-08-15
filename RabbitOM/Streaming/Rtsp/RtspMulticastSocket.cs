@@ -8,18 +8,17 @@ namespace RabbitOM.Streaming.Rtsp
     {
         private const int DefaultReceiveBufferSize = 8 * 1024 * 1024;
 
+        private readonly byte[] _buffer = new byte[ DefaultReceiveBufferSize ];
         private IPAddress _ipAddress;
         private IPEndPoint _groupEP;
         private Socket _socket;
-        private byte[] _buffer;
 
         public bool IsOpened
         {
             get => _socket != null;
         }
 
-        // TODO: remove the try catch and bool return value
-        public bool Open( string ipAddress , int port , byte ttl )
+        public bool Open( string ipAddress , int port , byte ttl ) // TODO: remove the try catch and bool return value
         {
             if ( _socket != null || port < 0 || ! IPAddress.TryParse( ipAddress , out _ipAddress ) )
             {
@@ -30,7 +29,6 @@ namespace RabbitOM.Streaming.Rtsp
             {
                 _socket = new Socket(_ipAddress.AddressFamily , SocketType.Dgram , ProtocolType.Udp );
                 _groupEP = new IPEndPoint( IPAddress.Any , port );
-
                 _socket.ExclusiveAddressUse = false;
                 _socket.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
                 _socket.SetSocketOption( SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, ttl);
@@ -38,9 +36,6 @@ namespace RabbitOM.Streaming.Rtsp
                 _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption( _ipAddress ));
                 _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
                 _socket.SendBufferSize = DefaultReceiveBufferSize;
-
-                _buffer = new byte[DefaultReceiveBufferSize];
-
                 return true;
             }
             catch ( Exception ex )
@@ -79,13 +74,11 @@ namespace RabbitOM.Streaming.Rtsp
             _socket = null;
             _groupEP = null;
             _ipAddress = null;
-            _buffer = null;
         }
 
         public void Dispose()
         {
             var socket = _socket;
-
             Close();
             socket?.Dispose();
         }
@@ -100,22 +93,7 @@ namespace RabbitOM.Streaming.Rtsp
             try
             {
                 _socket.ReceiveTimeout = (int) value.TotalMilliseconds;
-
                 return true;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        public bool PollReceive( TimeSpan timeout )
-        {
-            try
-            {
-                return _socket?.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead ) ?? false;
             }
             catch ( Exception ex )
             {
@@ -127,14 +105,9 @@ namespace RabbitOM.Streaming.Rtsp
 
         public byte[] Receive()
         {
-            if ( _socket == null || _buffer == null || _buffer.Length == 0 )
-            {
-                return null;
-            }
-
             var endpoint = _groupEP as EndPoint;
 
-            if (endpoint == null )
+            if ( endpoint == null || _socket == null )
             {
                 return null;
             }
@@ -145,9 +118,9 @@ namespace RabbitOM.Streaming.Rtsp
 
                 if ( bytesReceived > 0 )
                 {
-                    var buffer = new byte[bytesReceived];
+                    var buffer = new byte[ bytesReceived ];
 
-                    Buffer.BlockCopy(_buffer , 0 , buffer , 0 , buffer.Length );
+                    Buffer.BlockCopy( _buffer , 0 , buffer , 0 , buffer.Length );
 
                     return buffer;
                 }
@@ -160,7 +133,8 @@ namespace RabbitOM.Streaming.Rtsp
             return null;
         }
 
-        private void OnError( Exception exception )
+
+        private static void OnError( Exception exception )
         {
             System.Diagnostics.Debug.WriteLine( exception );
         }
