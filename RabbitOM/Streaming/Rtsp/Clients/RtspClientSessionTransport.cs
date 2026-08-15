@@ -4,6 +4,7 @@ using System.Threading;
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
+    using System.Runtime.InteropServices;
 
     internal abstract class RtspClientSessionTransport
     {
@@ -56,9 +57,13 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         public void Stop()
         {
+            System.Diagnostics.Debug.WriteLine( "Stop-1");
+            _thread.BeginStop();
+
             Shutdown();
 
             _thread.Stop();
+            System.Diagnostics.Debug.WriteLine( "Stop-2");
         }
 
         protected abstract void Run();

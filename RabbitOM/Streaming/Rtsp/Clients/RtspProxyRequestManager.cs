@@ -67,8 +67,8 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 while( _requestListenerThread.CanContinue() )
                 {
-                    //var bytesReceived = _proxy.WaitForData() ? ReceiveMessages() : 0;
-                    var bytesReceived = ReceiveMessages();
+                    var bytesReceived = _proxy.WaitForData() ? ReceiveMessages() : 0;
+                    //var bytesReceived = ReceiveMessages();
 
                     if ( bytesReceived <= 0 )
                     {

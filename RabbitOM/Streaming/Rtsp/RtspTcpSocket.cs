@@ -242,22 +242,31 @@ namespace RabbitOM.Streaming.Rtsp
                 return 0;
             }
 
-            _receiveEventHandle.Reset();
-            _receiveEventArgs.SetBuffer( buffer , offset , count );
-
             try
             {
-                if ( socket.ReceiveAsync( _receiveEventArgs ) && ! _receiveEventHandle.Wait( socket.ReceiveTimeout ) )
-                {
-                    return -1;
-                }
-
-                return _receiveEventArgs.BytesTransferred;
+                return socket.Receive( buffer , offset , count , SocketFlags.None );
             }
-            catch ( Exception ex )
+            catch( Exception ex )
             {
                 OnError( ex );
             }
+
+            //_receiveEventHandle.Reset();
+            //_receiveEventArgs.SetBuffer( buffer , offset , count );
+
+            //try
+            //{
+            //    if ( socket.ReceiveAsync( _receiveEventArgs ) && ! _receiveEventHandle.Wait( socket.ReceiveTimeout ) )
+            //    {
+            //        return -1;
+            //    }
+
+            //    return _receiveEventArgs.BytesTransferred;
+            //}
+            //catch ( Exception ex )
+            //{
+            //    OnError( ex );
+            //}
 
             return -1;
         }
