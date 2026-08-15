@@ -9,7 +9,7 @@ namespace RabbitOM.Player.Converters
     {
         public object Convert( object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return values?.All(v => v is bool b && ! b ) ?? false;
+            return values?.All(value => bool.TryParse( value?.ToString() , out var result ) && ! result );
         }
 
         public object[] ConvertBack( object value , Type[] targetTypes, object parameter, CultureInfo culture )
