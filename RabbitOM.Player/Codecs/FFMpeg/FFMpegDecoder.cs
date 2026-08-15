@@ -34,7 +34,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
         {
             if ( _decoder != null )
             {
-                throw new InvalidOperationException( "the codec is already opened" );
+                throw new InvalidOperationException( "the decoder is already opened" );
             }
 
             try
