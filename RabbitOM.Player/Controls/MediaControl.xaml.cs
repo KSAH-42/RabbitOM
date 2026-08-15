@@ -1,9 +1,10 @@
 ﻿// this component is used to display live stream based on rtsp uri
 // and... it does not used the state gof pattern, so why ?
 // normally a player has different states like: playing, paused, stopped, etc...
-// but here we have 2 states only: started and stopped. That's all. O vms application
+// but here we have 2 states only: started and stopped. That's all.
 // it doesn"t really make sense to make a pause during a live
-// but not for replay yes. And this component is design live streaming
+// but not for replay yes. And this component is design for live streaming only
+// for instance, for the RtspV2, a RtspPlaybackReceiver must be used instead to control playback
 using System;
 using System.Windows;
 using System.Windows.Controls;
