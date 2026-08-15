@@ -253,14 +253,9 @@ namespace RabbitOM.Streaming.Rtsp
 
         public bool PollReceive( TimeSpan timeout )
         {
-            if ( _socket == null )
-            {
-                return false;
-            }
-
             try
             {
-                return _socket.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectRead );
+                return _socket?.Poll( (int) ( timeout.TotalMilliseconds * 1000 ) , SelectMode.SelectRead ) ?? false;
             }
             catch ( Exception ex )
             {

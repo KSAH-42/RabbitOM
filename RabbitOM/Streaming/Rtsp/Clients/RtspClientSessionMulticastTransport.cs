@@ -11,8 +11,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         public RtspClientSessionMulticastTransport( RtspClientSession session )
             : base( session )
         {
-            _socket  = new RtspMulticastSocket();
-
+            _socket = new RtspMulticastSocket();
             Address = session.Configuration.MulticastAddress;
             Port = session.Configuration.RtpPort;
             TTL = session.Configuration.TimeToLive;
@@ -37,21 +36,26 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 IdleTimeout = TimeSpan.FromSeconds( 5 );
 
-                if ( _socket.Open( Address , Port , TTL , Timeout ) )
+                if ( ! _socket.Open( Address , Port , TTL ) )
                 {
-                    IdleTimeout = TimeSpan.Zero;
+                    return;
                 }
+
+                if ( ! _socket.SetReceiveTimeout( Timeout ) )
+                {
+                    _socket.Close();
+                    return;
+                }
+
+                IdleTimeout = TimeSpan.Zero;
             }
             else
             {
-                if ( _socket.PollReceive( Timeout ) )
-                {
-                    var buffer = _socket.Receive();
+                var buffer = _socket.Receive();
 
-                    if ( buffer?.Length > 0 )
-                    {
-                        OnDataReceived( buffer );
-                    }
+                if ( buffer?.Length > 0 )
+                {
+                    OnDataReceived( buffer );
                 }
             }
         }

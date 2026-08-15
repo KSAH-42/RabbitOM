@@ -39,7 +39,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                 if ( ! _socket.SetReceiveTimeout( Timeout ) )
                 {
                     _socket.Close();
-
                     return;
                 }
 

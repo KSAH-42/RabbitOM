@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Rtsp
         }
 
         // TODO: remove the try catch and bool return value
-        public bool Open( string ipAddress , int port , byte ttl , TimeSpan receiveTimeout )
+        public bool Open( string ipAddress , int port , byte ttl )
         {
             if ( _socket != null || port < 0 || ! IPAddress.TryParse( ipAddress , out _ipAddress ) )
             {
@@ -33,22 +33,11 @@ namespace RabbitOM.Streaming.Rtsp
 
                 _socket.ExclusiveAddressUse = false;
                 _socket.SetSocketOption( SocketOptionLevel.Socket , SocketOptionName.ReuseAddress , true );
-                _socket.ReceiveTimeout = (int) receiveTimeout.TotalMilliseconds;
-                _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
-
-                if ( _ipAddress.AddressFamily == AddressFamily.InterNetwork )
-                {
-                    _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption( _ipAddress ));
-                    _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, ttl);
-                }
-
-                if (_ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
-                {
-                    _socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.AddMembership, new IPv6MulticastOption(_ipAddress));
-                    _socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.MulticastTimeToLive, ttl);
-                }
-
+                _socket.SetSocketOption( SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, ttl);
                 _socket.Bind(_groupEP);
+                _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption( _ipAddress ));
+                _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
+                _socket.SendBufferSize = DefaultReceiveBufferSize;
 
                 _buffer = new byte[DefaultReceiveBufferSize];
 
@@ -99,6 +88,27 @@ namespace RabbitOM.Streaming.Rtsp
 
             Close();
             socket?.Dispose();
+        }
+
+        public bool SetReceiveTimeout( TimeSpan value )
+        {
+            if ( _socket == null )
+            {
+                return false;
+            }
+
+            try
+            {
+                _socket.ReceiveTimeout = (int) value.TotalMilliseconds;
+
+                return true;
+            }
+            catch ( Exception ex )
+            {
+                OnError( ex );
+            }
+
+            return false;
         }
 
         public bool PollReceive( TimeSpan timeout )
