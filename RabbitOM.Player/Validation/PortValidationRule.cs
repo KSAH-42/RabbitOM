@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace RabbitOM.Player.Validation
 {
-    public class PortValidationRule : ValidationRule
+    public sealed class PortValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

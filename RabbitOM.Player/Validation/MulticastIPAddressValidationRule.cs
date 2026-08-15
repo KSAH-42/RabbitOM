@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace RabbitOM.Player.Validation
 {
-    public class MulticastIPAddressValidationRule : ValidationRule
+    public sealed class MulticastIPAddressValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
