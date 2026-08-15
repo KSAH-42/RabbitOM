@@ -22,5 +22,4 @@ namespace RabbitOM.Player.Validation
             return ValidationResult.ValidResult;
         }
     }
-
 }
