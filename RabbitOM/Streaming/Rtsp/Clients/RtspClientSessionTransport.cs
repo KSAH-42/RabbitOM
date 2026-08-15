@@ -3,10 +3,13 @@
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
+    using System.Threading;
 
     internal abstract class RtspClientSessionTransport
     {
         private readonly BackgroundWorker _thread;
+
+        private long _timeout;
 
 
 
@@ -23,7 +26,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         protected RtspClientSession Session { get; }
 
-        protected TimeSpan IdleTimeout {  get; set; }
+        protected TimeSpan IdleTimeout
+        {
+            get => TimeSpan.FromTicks( Volatile.Read( ref _timeout ) );
+            set => Interlocked.Exchange( ref _timeout , value.Ticks );
+        }
 
 
 
