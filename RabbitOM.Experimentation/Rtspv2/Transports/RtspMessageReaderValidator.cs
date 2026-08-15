@@ -27,7 +27,7 @@ namespace RabbitOM.Streaming.RtspV2.Transports
 
         public void Validate()
         {
-           if ( _headers.CountValues( RtspHeaderNames.CSeq ) != 1 )
+            if ( _headers.CountValues( RtspHeaderNames.CSeq ) != 1 )
             {
                 throw new ProtocolViolationException( "the collection must contains only one instance cseq header" );
             }
