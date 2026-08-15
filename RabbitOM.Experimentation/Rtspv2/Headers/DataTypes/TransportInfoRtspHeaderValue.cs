@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
     public sealed class TransportInfoRtspHeaderValue
     {
         private static readonly StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
-        
+
         private string _transport = string.Empty;
         private string _transmission = string.Empty;
         private string _source = string.Empty;
@@ -27,55 +27,55 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
 
 
         public string Transport
-        { 
+        {
             get => _transport;
             set => _transport = EnsureValue( value );
         }
 
         public string Transmission
-        { 
+        {
             get => _transmission;
             set => _transmission = EnsureValue( value );
         }
 
         public string Source
-        { 
+        {
             get => _source;
             set => _source = EnsureValue( value );
         }
 
         public string Destination
-        { 
+        {
             get => _destination;
             set => _destination = EnsureValue( value );
         }
 
         public string Address
-        { 
+        {
             get => _address;
             set => _address = EnsureValue( value );
         }
 
         public string Host
-        { 
+        {
             get => _host;
             set => _host = EnsureValue( value );
         }
 
         public string SSRC
-        { 
+        {
             get => _ssrc;
             set => _ssrc = EnsureValue( value );
         }
 
         public string Mode
-        { 
+        {
             get => _mode;
             set => _mode = EnsureValue( value );
         }
 
         public string Append
-        { 
+        {
             get => _append;
             set => _append = EnsureValue( value );
         }
@@ -91,25 +91,25 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
             get => _layers;
             set => _layers = value;
         }
-        
+
         public ValueRange? Port
         {
             get => _port;
             set => _port = value;
         }
-        
+
         public ValueRange? ClientPort
         {
             get => _clientPort;
             set => _clientPort = value;
         }
-        
+
         public ValueRange? ServerPort
         {
             get => _serverPort;
             set => _serverPort = value;
         }
-        
+
         public ValueRange? Interleaved
         {
             get => _interleaved;
@@ -231,7 +231,7 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
                         }
                     }
                 }
-                
+
                 if ( IsWellFormedValue( header.Transport ) && IsWellFormedValue( header.Transmission ) )
                 {
                     result = header;
@@ -241,7 +241,7 @@ namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
             return result != null;
         }
 
-        
+
 
 
 
