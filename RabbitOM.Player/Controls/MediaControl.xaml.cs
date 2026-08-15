@@ -5,6 +5,7 @@
 // it doesn"t really make sense to make a pause during a live
 // but not for replay yes. And this component is design for live streaming only
 // for instance, for the RtspV2, a RtspPlaybackReceiver must be used instead to control playback
+// RtspV2.Receivers has been introduce to used and to scale individual receviers most for live and the rest for playbacks
 using System;
 using System.Windows;
 using System.Windows.Controls;
