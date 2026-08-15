@@ -21,7 +21,7 @@ namespace RabbitOM.Player.Validation
 
             var bytes = ip.GetAddressBytes();
 
-            if ( bytes == null || bytes.Length == 0 || bytes[0] < 224 || bytes[0] > 239 )
+            if ( bytes[0] < 224 || bytes[0] > 239 )
             {
                 return new ValidationResult( false , "Invalid range" );
             }
