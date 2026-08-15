@@ -21,7 +21,7 @@ namespace RabbitOM.Player.Validation
 
             var bytes = ip.GetAddressBytes();
 
-            if ( bytes[0] < 224 || bytes[0] > 239 ) // ipv4 only
+            if ( bytes[0] < 224 || bytes[0] > 239 ) // consider ipv4 only
             {
                 return new ValidationResult( false , "Invalid range" );
             }
