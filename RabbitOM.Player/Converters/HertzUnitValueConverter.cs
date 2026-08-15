@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Data;
 
 namespace RabbitOM.Player.Converters
@@ -23,9 +22,7 @@ namespace RabbitOM.Player.Converters
 
             if ( long.TryParse( value?.ToString() , out var size ) )
             {
-                size = size > 0 ? size : 0;
-
-                var temp = size;
+                var temp = size = size > 0 ? size : 0;
 
                 while ( (temp /= 1000) > 0 && ++ index < Units.Count - 1 );
             }
