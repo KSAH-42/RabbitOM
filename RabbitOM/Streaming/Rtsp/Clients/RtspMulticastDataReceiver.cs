@@ -93,7 +93,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
             var endPoint = _endPoint;
 
-            var bytesReceived = socket.ReceiveFrom(_buffer , ref endPoint );
+            var bytesReceived = socket.ReceiveFrom( _buffer , ref endPoint );
 
             if ( bytesReceived <= 0 )
             {
