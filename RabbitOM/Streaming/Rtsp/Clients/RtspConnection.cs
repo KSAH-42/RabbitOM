@@ -130,14 +130,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             get => _proxy.IsOpened;
         }
 
-        /// <summary>
-        /// Check if the underlaying connection has been disposed
-        /// </summary>
-        public bool IsDisposed
-        {
-            get => _proxy.IsDisposed;
-        }
-
 
 
 

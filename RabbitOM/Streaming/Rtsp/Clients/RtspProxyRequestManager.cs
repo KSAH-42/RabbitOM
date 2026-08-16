@@ -67,8 +67,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 while( _requestListenerThread.CanContinue() )
                 {
-                    var bytesReceived = _proxy.WaitForData() ? ReceiveMessages() : 0;
-                    //var bytesReceived = ReceiveMessages();
+                    var bytesReceived = ReceiveMessages();
 
                     if ( bytesReceived <= 0 )
                     {
@@ -235,7 +234,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 return;
             }
-            
+
             if ( _extractor.HasReachSizeLimit )
             {
                 _extractor.UnInitialize();

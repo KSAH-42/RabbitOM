@@ -1,69 +1,73 @@
 ﻿using System;
 using System.Net.Sockets;
-using System.Threading;
 
 namespace RabbitOM.Streaming.Rtsp
 {
-    /// <summary>
-    /// Represent a socket tcp
-    /// </summary>
     internal sealed class RtspTcpSocket : IDisposable
     {
-        private readonly Action<Exception>  _errorHandler;
+        private const int DefaultReceiveBufferSize = 8 * 1024 * 1024;
 
-        private readonly ManualResetEventSlim _receiveEventHandle;
-
-        private readonly SocketAsyncEventArgs _receiveEventArgs;
 
         private Socket _socket;
 
-        private bool _isDisposed;
 
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="errorHandler">the error handler</param>
-        /// <exception cref="ArgumentNullException"/>
-        public RtspTcpSocket( Action<Exception> errorHandler )
-        {
-            _errorHandler = errorHandler ?? throw new ArgumentNullException( nameof( errorHandler ) );
-            _receiveEventHandle = new ManualResetEventSlim( false );
-            _receiveEventArgs = new SocketAsyncEventArgs();
-            _receiveEventArgs.Completed += ReceiveHandler;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Check if the socket is created
-        /// </summary>
-        public bool IsCreated
+        public bool IsOpened
         {
             get => _socket != null;
         }
 
-        /// <summary>
-        /// Check if the socket is connected
-        /// </summary>
         public bool IsConnected
+        {
+            get => _socket?.Connected ?? false;
+        }
+
+        public TimeSpan ReceiveTimeout
         {
             get
             {
-                try
+                var socket = _socket;
+
+                if ( socket != null )
                 {
-                    return _socket?.Connected ?? false;
-                }
-                catch ( Exception ex )
-                {
-                    OnError( ex );
+                    return TimeSpan.FromMilliseconds( socket.ReceiveTimeout );
                 }
 
-                return false;
+                return TimeSpan.Zero;
+            }
+
+            set
+            {
+                var socket = _socket;
+
+                if ( socket != null )
+                {
+                    socket.ReceiveTimeout = (int) value.TotalMilliseconds;
+                }
+            }
+        }
+
+        public TimeSpan SendTimeout
+        {
+            get
+            {
+                var socket = _socket;
+
+                if ( socket != null )
+                {
+                    return TimeSpan.FromMilliseconds( socket.SendTimeout );
+                }
+
+                return TimeSpan.Zero;
+            }
+
+            set
+            {
+                var socket = _socket;
+
+                if ( socket != null )
+                {
+                    socket.SendTimeout = (int) value.TotalMilliseconds;
+                }
             }
         }
 
@@ -72,160 +76,83 @@ namespace RabbitOM.Streaming.Rtsp
 
 
 
-        /// <summary>
-        /// Open
-        /// </summary>
-        /// <param name="ipAddress">the end point</param>
-        /// <param name="port">the port</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Connect( string ipAddress , int port )
+
+        public void Connect( string ipAddress , int port )
         {
-            if ( string.IsNullOrWhiteSpace( ipAddress ) || port < 0 )
+            if ( string.IsNullOrWhiteSpace( ipAddress ) )
             {
-                return false;
+                throw new ArgumentNullException( nameof( ipAddress ) );
             }
 
             if ( _socket != null )
             {
-                return false;
-            }
-
-            if ( _isDisposed )
-            {
-                throw new ObjectDisposedException( nameof(RtspTcpSocket) );
+                throw new InvalidOperationException( "the socket is already created" );
             }
 
             try
             {
                 _socket = new Socket( AddressFamily.InterNetwork , SocketType.Stream , ProtocolType.Tcp );
-
                 _socket.Connect(ipAddress, port);
-                _socket.ReceiveBufferSize = 8 * 1024 * 1024;
 
-                return true;
+                _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
             }
-            catch ( Exception ex )
+            catch ( Exception )
             {
-                OnError( ex );
+                _socket?.Dispose();
+                throw;
             }
-
-            Close();
-
-            return false;
         }
 
-        /// <summary>
-        /// Close
-        /// </summary>
         public void Close()
         {
             _socket?.Close();
+            _socket = null;
+        }
+
+        public void Dispose()
+        {
             _socket?.Dispose();
             _socket = null;
         }
 
-        /// <summary>
-        /// Release internal resources
-        /// </summary>
-        public void Dispose()
+        public void EnableLingerState( TimeSpan timeout )
         {
-            Close();
+            var socket = _socket;
 
-            if ( ! _isDisposed )
+            if ( socket != null )
             {
-                _receiveEventArgs.Completed -= ReceiveHandler;
-                _receiveEventHandle.Dispose();
-            }
-
-            _isDisposed = true;
-        }
-
-        /// <summary>
-        /// Shutdown
-        /// </summary>
-        public void Shutdown()
-        {
-            try
-            {
-                _socket?.Shutdown( SocketShutdown.Both );
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
+                socket.LingerState = new LingerOption( true , (int) timeout.TotalSeconds );
             }
         }
 
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Send( string value )
+        public void DisableLingerState( TimeSpan timeout )
         {
-            return Send( RtspDataConverter.ConvertToBytesUTF8( value ) );
-        }
+            var socket = _socket;
 
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Send( byte value )
-        {
-            return Send( new byte[1] { value } );
-        }
-
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Send( byte[] buffer )
-        {
-            return buffer != null && Send( buffer , 0 , buffer.Length );
-        }
-
-        /// <summary>
-        /// Send a value
-        /// </summary>
-        /// <param name="buffer">the value</param>
-        /// <param name="offset">the offset</param>
-        /// <param name="count">the count</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool Send( byte[] buffer , int offset , int count )
-        {
-            if ( buffer == null || buffer.Length <= 0 )
+            if ( socket != null )
             {
-                return false;
+                socket.LingerState = new LingerOption( false , 0 );
+            }
+        }
+
+        public int Send( byte[] buffer , int offset , int count )
+        {
+            if ( buffer == null || buffer.Length == 0 )
+            {
+                return 0;
             }
 
             if ( count <= 0 || count > buffer.Length )
             {
-                return false;
+                return 0;
             }
 
-            try
-            {
-                return _socket?.Send(buffer, offset , count , SocketFlags.None ) > 0 ;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
+            return _socket?.Send( buffer , offset , count , SocketFlags.None ) ?? 0;
         }
 
-        /// <summary>
-        /// Receive data 
-        /// </summary>
-        /// <param name="buffer">the buffer</param>
-        /// <param name="offset">the offset</param>
-        /// <param name="count">the count</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public int Receive( byte[] buffer , int offset , int count )
         {
-            if ( buffer == null || buffer.Length <= 0 )
+            if ( buffer == null || buffer.Length == 0 )
             {
                 return 0;
             }
@@ -242,258 +169,7 @@ namespace RabbitOM.Streaming.Rtsp
                 return 0;
             }
 
-            try
-            {
-                return socket.Receive( buffer , offset , count , SocketFlags.None );
-            }
-            catch( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            //_receiveEventHandle.Reset();
-            //_receiveEventArgs.SetBuffer( buffer , offset , count );
-
-            //try
-            //{
-            //    if ( socket.ReceiveAsync( _receiveEventArgs ) && ! _receiveEventHandle.Wait( socket.ReceiveTimeout ) )
-            //    {
-            //        return -1;
-            //    }
-
-            //    return _receiveEventArgs.BytesTransferred;
-            //}
-            //catch ( Exception ex )
-            //{
-            //    OnError( ex );
-            //}
-
-            return -1;
-        }
-
-        private void ReceiveHandler( object sender, SocketAsyncEventArgs e )
-        {
-            _receiveEventHandle.Set();
-        }
-
-        /// <summary>
-        /// Waiting for data received
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool WaitForData( TimeSpan timeout )
-        {
-            var socket = _socket;
-
-            if ( socket == null )
-            {
-                return false;
-            }
-
-            try
-            {
-                if ( socket.Poll( (int) timeout.Ticks , SelectMode.SelectRead ) )
-                {
-                    return socket.Available > 0;
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-
-        /// <summary>
-        /// Get receive timeout
-        /// </summary>
-        /// <returns>returns a value</returns>
-        public TimeSpan GetReceiveTimeout()
-        {
-            try
-            {
-                return TimeSpan.FromMilliseconds( _socket?.ReceiveTimeout ?? 0 );
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return TimeSpan.Zero;
-        }
-
-        /// <summary>
-        /// Get send timeout
-        /// </summary>
-        /// <returns>returns a value</returns>
-        public TimeSpan GetSendTimeout()
-        {
-            try
-            {
-                return TimeSpan.FromMilliseconds( _socket?.SendTimeout ?? 0 );
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return TimeSpan.Zero;
-        }
-
-        /// <summary>
-        /// Set receive timeout
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool SetReceiveTimeout( TimeSpan value )
-        {
-            var socket = _socket;
-
-            try
-            {
-                if ( socket != null )
-                {
-                    socket.ReceiveTimeout = (int) value.TotalMilliseconds;
-
-                    return true;
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Set send timeout
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool SetSendTimeout( TimeSpan value )
-        {
-            var socket = _socket;
-
-            try
-            {
-                if ( socket != null )
-                {
-                    socket.SendTimeout = (int) value.TotalMilliseconds;
-
-                    return true;
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Set the linger state
-        /// </summary>
-        /// <param name="status">the status</param>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        public bool SetLingerState( bool status , TimeSpan timeout )
-        {
-            var socket = _socket;
-
-            try
-            {
-                if ( socket != null )
-                {
-                    socket.LingerState = new LingerOption( status , (int) timeout.TotalSeconds );
-
-                    return true;
-                }
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check the status read of the socket
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns a boolean value</returns>
-        public bool PollReceive( TimeSpan timeout )
-        {
-            try
-            {
-                return _socket?.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectRead ) ?? false;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check the status send of the socket
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns a boolean value</returns>
-        public bool PollSend( TimeSpan timeout )
-        {
-            try
-            {
-                return _socket?.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectWrite ) ?? false;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check the status error of the socket
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns a boolean value</returns>
-        public bool PoolError( TimeSpan timeout )
-        {
-            try
-            {
-                return _socket?.Poll( 1000 * (int) timeout.TotalMilliseconds , SelectMode.SelectError ) ?? false;
-            }
-            catch ( Exception ex )
-            {
-                OnError( ex );
-            }
-
-            return false;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Occurs when an error has been detected
-        /// </summary>
-        /// <param name="ex">the exception</param>
-        private void OnError( Exception ex )
-        {
-            if ( ex == null )
-            {
-                return;
-            }
-
-            _errorHandler?.Invoke( ex );
+            return socket.Receive( buffer , offset , count , SocketFlags.None );
         }
     }
 }

@@ -94,14 +94,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             get;
         }
 
-        /// <summary>
-        /// Check if the underlaying connection has been disposed
-        /// </summary>
-        bool IsDisposed
-        {
-            get;
-        }
-
 
 
 

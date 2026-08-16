@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace RabbitOM.Player.Dialogs
@@ -21,20 +20,9 @@ namespace RabbitOM.Player.Dialogs
                     continue;
                 }
 
-                modules[ infos.Name ] = new ModuleInfo() { Name = infos.Name , Version = infos.Version?.ToString() ?? string.Empty };
-            }
+                var name = Path.GetFileName( module.Location );
 
-            using ( var process = Process.GetCurrentProcess() )
-            {
-                foreach ( ProcessModule module in process.Modules )
-                {
-                    if ( string.IsNullOrWhiteSpace( module.FileName ) )
-                    {
-                        continue;
-                    }
-
-                    modules[ module.FileName ] = new ModuleInfo() { Name = Path.GetFileName( module.FileVersionInfo.FileName ) , Version = module.FileVersionInfo?.ProductVersion ?? string.Empty };
-                }
+                modules[ name ] = new ModuleInfo() { Name = name , Version = infos.Version?.ToString() ?? string.Empty };
             }
 
             return modules.Values.OrderBy( element => element.Name );
