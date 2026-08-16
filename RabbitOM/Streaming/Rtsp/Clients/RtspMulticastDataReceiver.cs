@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     {
         private const int DefaultReceiveBufferSize = 8 * 1024 * 1024;
 
-        private readonly byte[] _buffer = new byte[ DefaultReceiveBufferSize ];
+        private readonly byte[] _buffer;
         private readonly IPAddress _ipAddress;
         private readonly EndPoint _endPoint;
         private readonly byte _ttl;
@@ -21,6 +21,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             _endPoint = new IPEndPoint( IPAddress.Any , port );
             _ttl = ttl;
             _timeout = timeout;
+            _buffer = new byte[ DefaultReceiveBufferSize ];
         }
 
         public bool IsOpened
