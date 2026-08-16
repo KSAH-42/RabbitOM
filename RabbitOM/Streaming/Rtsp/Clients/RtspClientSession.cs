@@ -2,149 +2,97 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent a Rtsp session
-    /// </summary>
     internal sealed class RtspClientSession : IDisposable
     {
-        private readonly object                                            _lock                   = null;
+        private readonly object _lock;
 
-        private readonly RtspClientConfiguration                           _configuration          = null;
+        private readonly RtspClientConfiguration _configuration;
 
-        private readonly RtspConnection                                    _connection             = null;
+        private readonly RtspConnection _connection;
 
-        private readonly RtspClientSessionInfos                            _informations           = null;
+        private readonly RtspClientSessionInfos _informations;
 
-        private readonly RtspClientSessionDispatcher                       _dispatcher             = null;
+        private readonly RtspClientSessionDispatcher _dispatcher;
 
-        private RtspClientSessionReceiver                                 _transport              = null;
-        
-
-
-
-        
+        private RtspClientSessionDataReceiver _dataReceiver;
 
 
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="sender">the sender</param>
+
         internal RtspClientSession( object sender )
         {
-            _lock            = new object();
-            _configuration   = new RtspClientConfiguration();
-            _connection      = new RtspConnection();
-            _informations    = new RtspClientSessionInfos();
-            _dispatcher      = new RtspClientSessionDispatcher( sender );
+            _lock = new object();
+
+            _configuration = new RtspClientConfiguration();
+            _connection = new RtspConnection();
+            _informations = new RtspClientSessionInfos();
+            _dispatcher = new RtspClientSessionDispatcher( sender );
         }
-        
 
 
 
-        
 
 
-
-        /// <summary>
-        /// Gets the sync root
-        /// </summary>
         public object SyncRoot
         {
             get => _lock;
         }
 
-        /// <summary>
-        /// Gets the configuration
-        /// </summary>
         public RtspClientConfiguration Configuration
         {
             get => _configuration;
         }
 
-        /// <summary>
-        /// Gets the event dispatcher
-        /// </summary>
         public RtspClientSessionDispatcher Dispatcher
         {
             get => _dispatcher;
         }
 
-        /// <summary>
-        /// Gets the supported methods
-        /// </summary>
         public RtspMethodReadonlyList SupportedMethods
         {
             get => _informations.SupportedMethods;
         }
 
-        /// <summary>
-        /// Gets the current session identifier
-        /// </summary>
         public string SessionId
         {
             get => _informations.SessionId;
         }
 
-        /// <summary>
-        /// Check if the session has been setup
-        /// </summary>
         public bool IsReady
         {
             get => _informations.IsReady;
         }
 
-        /// <summary>
-        /// Check if the session is actually playing
-        /// </summary>
         public bool IsPlaying
         {
             get => _informations.IsPlaying;
         }
 
-        /// <summary>
-        /// Check if prepare method can be called
-        /// </summary>
         public bool CanPrepare
         {
             get => _informations.CanPrepare();
         }
 
-        /// <summary>
-        /// Check if the setup method can be called
-        /// </summary>
         public bool CanSetup
         {
             get => _informations.CanSetup();
         }
 
-        /// <summary>
-        /// Check if the play method can be called
-        /// </summary>
         public bool CanPlay
         {
             get => _informations.CanPlay();
         }
 
-        /// <summary>
-        /// Check if the teardown method can be called
-        /// </summary>
         public bool CanTearDown
         {
             get => _informations.CanTearDown();
         }
 
-        /// <summary>
-        /// Check if the underlaying connection has been opened
-        /// </summary>
         public bool IsOpened
         {
             get => _connection.IsOpened;
         }
 
-        /// <summary>
-        /// Check if the connection is still active
-        /// </summary>
         public bool IsConnected
         {
             get => _connection.IsConnected;
@@ -152,16 +100,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-
-
-
-
-
-
-        /// <summary>
-        /// Open a connection
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Open()
         {
             try
@@ -227,7 +165,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                     case RtspDeliveryMode.Udp:
 
-                        _transport = new RtspClientSessionUdpReceiver( this );
+                        _dataReceiver = new RtspClientSessionDataReceiver( this , new RtspUdpDataReceiver( _configuration.RtpPort , _configuration.ReceiveTimeout ) );
 
                         setupResult = _connection.Setup()
                             .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Udp )
@@ -239,7 +177,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                     case RtspDeliveryMode.Multicast:
 
-                        _transport = new RtspClientSessionMulticastReceiver( this );
+                        _dataReceiver = new RtspClientSessionDataReceiver( this , new RtspMulticastDataReceiver( _configuration.MulticastAddress , _configuration.RtpPort , _configuration.TimeToLive , _configuration.ReceiveTimeout ) );
 
                         setupResult = _connection.Setup()
                             .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Multicast )
@@ -268,9 +206,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                 // Trigger the event connected before to publish DataReceived event
                 _dispatcher.DispatchEvent( new RtspClientConnectedEventArgs( _informations.Descriptor.SelectedTrack ) );
 
-                if ( _transport != null )
+                if ( _dataReceiver != null )
                 {
-                    _transport.Start();
+                    _dataReceiver.Start();
                 }
 
                 RtspInvokerResult playResult = _connection.Play().As<RtspPlayInvoker>().SetSessionId( _informations.SessionId ).Invoke();
@@ -278,7 +216,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                 if ( playResult == null || ! playResult.Succeed )
                 {
                     _connection.TearDown().As<RtspTearDownInvoker>().SetSessionId( _informations.SessionId ).Invoke();
-                    _transport?.Stop();
+                    _dataReceiver?.Stop();
                     _dispatcher.DispatchEvent( new RtspClientDisconnectedEventArgs() );
 
                     throw new RtspClientException( RtspClientErrorCode.PlayFailed , "Failed to invoke the play method" );
@@ -291,7 +229,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             catch ( Exception ex )
             {
                 _connection.Close();
-                _transport?.Stop();
+                _dataReceiver?.Stop();
 
                 OnException( ex );
             }
@@ -299,24 +237,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             return false;
         }
 
-        /// <summary>
-        /// Close the underlaying connection
-        /// </summary>
         public void Close()
         {
-            try
-            {
-                if (_transport != null)
-                {
-                    _transport.Stop();
-                }
-            }
-            catch (Exception ex)
-            {
-                OnException(ex);
-            }
-
-            _transport = null;
+            _dataReceiver?.Stop();
+            _dataReceiver = null;
 
             try
             {
@@ -335,7 +259,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                 if (_connection.IsOpened)
                 {
                     _connection.Close();
-                    
+
                    _dispatcher.DispatchEvent(new RtspClientDisconnectedEventArgs());
                 }
             }
@@ -347,24 +271,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             _informations.Reset();
         }
 
-        /// <summary>
-        /// Abort the underlaying connection 
-        /// </summary>
         public void Abort()
         {
-            try
-            {
-                if (_transport != null)
-                {
-                    _transport.Stop();
-                }
-            }
-            catch (Exception ex)
-            {
-                OnException(ex);
-            }
-
-            _transport = null;
+            _dataReceiver?.Stop();
+            _dataReceiver = null;
 
             try
             {
@@ -389,29 +299,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             _informations.Reset();
         }
 
-        /// <summary>
-        /// Just wait until the communication is active
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>return true for a success, otherwise false</returns>
         public bool WaitForOnline( TimeSpan timeout )
         {
             return _connection.WaitForConnected( timeout );
         }
 
-        /// <summary>
-        /// Dispose
-        /// </summary>
         public void Dispose()
         {
             Close();
             _connection.Dispose();
         }
 
-        /// <summary>
-        /// Call the ping method
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Ping()
         {
             try
@@ -429,7 +327,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
                 if ( result == null || ! result.Succeed )
                 {
-                    throw new Exception( "Failed to ping the session" );
+                    throw new RtspClientException( RtspClientErrorCode.PingFailed , "Failed to ping the session" );
                 }
 
                 return true;
@@ -442,57 +340,32 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             return false;
         }
 
-        /// <summary>
-        /// Subscribe to events
-        /// </summary>
         public void SubscribeEvents()
         {
             _connection.PacketReceived += OnDataReceived;
         }
 
-        /// <summary>
-        /// Un subscribe events
-        /// </summary>
         public void UnSusbcribeEvents()
         {
             _connection.PacketReceived -= OnDataReceived;
         }
-        
-
-
 
         
-
-        /// <summary>
-        /// Occurs when a packet has been received
-        /// </summary>
-        /// <param name="sender">the sender</param>
-        /// <param name="e">the event args</param>
+        
+        
         private void OnDataReceived(object sender, RtspPacketReceivedEventArgs e )
         {
             _dispatcher.DispatchEvent( e );
         }
 
-
-        /// <summary>
-        /// Occurs when some session exception has been raised
-        /// </summary>
-        /// <param name="ex">the exception</param>
         private void OnException( Exception ex )
         {
-            if ( ex == null )
-            {
-                return;
-            }
+            System.Diagnostics.Debug.WriteLine( ex );
 
-            if ( ex is RtspClientException )
+            if ( ex is RtspClientException exception )
             {
-                var exception = ex as RtspClientException;
-
                 _dispatcher.DispatchEvent( new RtspClientErrorEventArgs( exception.ErrorCode , exception.Message ) );
             }
-            
-            System.Diagnostics.Debug.WriteLine( ex );
         }
     }
 }

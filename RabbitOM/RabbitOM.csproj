@@ -180,9 +180,11 @@
     <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionDispatcher.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionHost.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionInfos.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionMulticastReceiver.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionReceiver.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionUdpReceiver.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\DataReceiverExtensions.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\IDataReceiver.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionDataReceiver.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\RtspMulticastDataReceiver.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\RtspUdpDataReceiver.cs" />
     <Compile Include="Streaming\Rtsp\IRtspHeaderValue.cs" />
     <Compile Include="Streaming\Rtsp\RtspActionQueue.cs" />
     <Compile Include="Streaming\Rtsp\RtspAuthenticationType.cs" />
@@ -269,7 +271,6 @@
     <Compile Include="Streaming\Rtsp\RtspMethodNames.cs" />
     <Compile Include="Streaming\Rtsp\RtspMethodReadonlyList.cs" />
     <Compile Include="Streaming\Rtsp\RtspMimeType.cs" />
-    <Compile Include="Streaming\Rtsp\RtspMulticastSocket.cs" />
     <Compile Include="Streaming\Rtsp\RtspOperator.cs" />
     <Compile Include="Streaming\Rtsp\RtspPacket.cs" />
     <Compile Include="Streaming\Rtsp\RtspPacketQueue.cs" />
@@ -287,7 +288,6 @@
     <Compile Include="Streaming\Rtsp\RtspTrackInfo.cs" />
     <Compile Include="Streaming\Rtsp\RtspTransmissionType.cs" />
     <Compile Include="Streaming\Rtsp\RtspTransportType.cs" />
-    <Compile Include="Streaming\Rtsp\RtspUdpSocket.cs" />
     <Compile Include="Streaming\Rtsp\RtspUri.cs" />
     <Compile Include="Streaming\Sdp\AddressType.cs" />
     <Compile Include="Streaming\Sdp\AttributeField.cs" />

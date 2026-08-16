@@ -36,7 +36,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// Play failed
         /// </summary>
         PlayFailed,
-                
+
         /// <summary>
         /// Failed to open the transport layer
         /// </summary>
@@ -46,5 +46,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// Keep alive failed
         /// </summary>
         KeepAliveFailed ,
+
+        /// <summary>
+        /// Heart has failed
+        /// </summary>
+        PingFailed,
     }
 }
