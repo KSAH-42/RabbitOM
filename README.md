@@ -4,7 +4,7 @@
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.png)
 
-Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/releases/tag/2.0.2.0
+Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/releases
 
 # Main features
 
