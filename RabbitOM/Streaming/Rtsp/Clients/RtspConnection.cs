@@ -7,7 +7,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// </summary>
     public sealed class RtspConnection : IRtspConnection
     {
-        private readonly RtspProxy _proxy = new RtspProxy();
+        private readonly RtspConnector _proxy = new RtspConnector();
 
 
 

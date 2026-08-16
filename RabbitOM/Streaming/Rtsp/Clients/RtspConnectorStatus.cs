@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// <summary>
     /// Represent the proxy status
     /// </summary>
-    internal sealed class RtspProxyStatus
+    internal sealed class RtspConnectorStatus
     {
         private const uint                   DefaultMaxErrors = 10;
 

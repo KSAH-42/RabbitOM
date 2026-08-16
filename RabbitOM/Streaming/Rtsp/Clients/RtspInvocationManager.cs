@@ -9,9 +9,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     ///   <para>Actually this instance factory class doesn't cache existing invoker, but if one day you need to deliver only a single instance of an invoker for performance reasons or for any others aspects that required the creation and return an unique instance of an invoker, please modify the implementation of this class and add use a singleton to control the number of reference, or perphaps used a concurrent dictionnary (or a custom collection) to store the reference of an invoker.</para>
     ///   <para>If you need to initialize an invoker before to return the desired instance, avoid to add code on the constructor of the invoker, please prefer to add initialization code on this factory class.</para>
     /// </remarks>
-    internal sealed class RtspProxyInvocationManager
+    internal sealed class RtspInvocationManager
     {
-        private readonly RtspProxy _proxy = null;
+        private readonly RtspConnector _proxy = null;
 
 
 
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// </summary>
         /// <param name="proxy">the proxy</param>
         /// <exception cref="ArgumentNullException"/>
-        public RtspProxyInvocationManager( RtspProxy proxy )
+        public RtspInvocationManager( RtspConnector proxy )
         {
             _proxy = proxy ?? throw new ArgumentNullException(nameof(proxy));
         }

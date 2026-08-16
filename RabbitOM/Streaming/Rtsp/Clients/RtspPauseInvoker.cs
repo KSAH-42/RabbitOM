@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// Constructor
         /// </summary>
         /// <param name="proxy">the proxy</param>
-        internal RtspPauseInvoker( RtspProxy proxy )
+        internal RtspPauseInvoker( RtspConnector proxy )
             : base( proxy , RtspMethod.Pause )
         {
         }

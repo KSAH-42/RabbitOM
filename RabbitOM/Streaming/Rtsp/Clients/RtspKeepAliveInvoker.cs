@@ -12,7 +12,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// </summary>
         /// <param name="proxy">the proxy</param>
         /// <param name="method">the method</param>
-        internal RtspKeepAliveInvoker( RtspProxy proxy , RtspMethod method )
+        internal RtspKeepAliveInvoker( RtspConnector proxy , RtspMethod method )
             : base( proxy , method )
         {
         }

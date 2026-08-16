@@ -7,13 +7,13 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// <summary>
     /// Represent the internal proxy event manager class
     /// </summary>
-    internal sealed class RtspProxyEventManager
+    internal sealed class RtspEventManager
     {
         private readonly RtspEventConcurrentQueue _eventQueue;
 
         private readonly BackgroundWorker _thread;
 
-        private readonly RtspProxy _proxy;
+        private readonly RtspConnector _proxy;
 
 
 
@@ -25,7 +25,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// </summary>
         /// <param name="proxy">the proxy</param>
         /// <exception cref="ArgumentNullException"/>
-        public RtspProxyEventManager( RtspProxy proxy )
+        public RtspEventManager( RtspConnector proxy )
         {
             _proxy      = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
@@ -78,7 +78,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 while ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
                 {
-                    RtspProxy.RaiseEvent( _proxy , eventArgs );
+                    RtspConnector.RaiseEvent( _proxy , eventArgs );
                 }
             }
 

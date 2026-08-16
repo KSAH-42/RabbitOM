@@ -8,7 +8,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// </summary>
     public class RtspInvoker : IRtspInvoker
     {
-        private readonly RtspProxy                 _proxy      = null;
+        private readonly RtspConnector                 _proxy      = null;
 
         private readonly RtspMessageRequestBuilder _builder    = null;
 
@@ -20,7 +20,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// <param name="proxy">the proxy</param>
         /// <param name="method">the method</param>
         /// <exception cref="ArgumentNullException"/>
-        internal RtspInvoker( RtspProxy proxy , RtspMethod method )
+        internal RtspInvoker( RtspConnector proxy , RtspMethod method )
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 

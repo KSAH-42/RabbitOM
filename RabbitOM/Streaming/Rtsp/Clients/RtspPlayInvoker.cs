@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// Constructor
         /// </summary>
         /// <param name="proxy">the proxy</param>
-        internal RtspPlayInvoker( RtspProxy proxy )
+        internal RtspPlayInvoker( RtspConnector proxy )
             : base( proxy , RtspMethod.Play )
         {
         }

@@ -5,11 +5,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// <summary>
     /// Represent the client security manager. This is class is used to manage authentication procedures
     /// </summary>
-    internal sealed class RtspProxySecurityManager
+    internal sealed class RtspSecurityManager
     {
         private readonly object _lock;
 
-        private readonly RtspProxy _proxy;
+        private readonly RtspConnector _proxy;
 
         private readonly RtspAuthorizationFactory _factory;
 
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         /// </summary>
         /// <param name="proxy">the proxy</param>
         /// <exception cref="ArgumentNullException"/>
-        public RtspProxySecurityManager( RtspProxy proxy )
+        public RtspSecurityManager( RtspConnector proxy )
         {
             _proxy   = proxy ?? throw new ArgumentNullException( nameof( proxy ) ) ;
 

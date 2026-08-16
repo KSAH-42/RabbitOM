@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal sealed class RtspProxy : IDisposable
+    internal sealed class RtspConnector : IDisposable
     {
         public event EventHandler<RtspConnectionOpenedEventArgs> Opened;
         public event EventHandler<RtspConnectionClosedEventArgs> Closed;
@@ -16,29 +16,28 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         private readonly object _lock;
         private readonly RtspTcpSocket _socket;
-        private readonly RtspProxyInformations _informations;
-        private readonly RtspProxyRequestManager _requestManager;
-        private readonly RtspProxySecurityManager _securityManager;
-        private readonly RtspProxyInvocationManager _invocationManager;
-        private readonly RtspProxyEventManager _eventManager;
-        private readonly RtspProxyEventManager _mediaEventManager;
-        private readonly RtspProxyStatus _status;
-        private readonly RtspSettings _settings;
+        private readonly RtspConnectorInfo _informations;
+        private readonly RtspConnectorStatus _status;
+        private readonly RtspConnectorSettings _settings;
+        private readonly RtspRequestManager _requestManager;
+        private readonly RtspSecurityManager _securityManager;
+        private readonly RtspInvocationManager _invocationManager;
+        private readonly RtspEventManager _eventManager;
+        private readonly RtspEventManager _mediaEventManager;
 
 
-
-        public RtspProxy()
+        public RtspConnector()
         {
             _lock = new object();
             _socket = new RtspTcpSocket();
-            _informations = new RtspProxyInformations();
-            _requestManager = new RtspProxyRequestManager( this );
-            _securityManager = new RtspProxySecurityManager( this );
-            _invocationManager = new RtspProxyInvocationManager( this );
-            _eventManager = new RtspProxyEventManager( this );
-            _mediaEventManager = new RtspProxyEventManager( this );
-            _status = new RtspProxyStatus();
-            _settings = new RtspSettings();
+            _informations = new RtspConnectorInfo();
+            _requestManager = new RtspRequestManager( this );
+            _securityManager = new RtspSecurityManager( this );
+            _invocationManager = new RtspInvocationManager( this );
+            _eventManager = new RtspEventManager( this );
+            _mediaEventManager = new RtspEventManager( this );
+            _status = new RtspConnectorStatus();
+            _settings = new RtspConnectorSettings();
         }
 
 
@@ -48,27 +47,27 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             get => _lock;
         }
 
-        public RtspProxyRequestManager RequestManager
+        public RtspRequestManager RequestManager
         {
             get => _requestManager;
         }
 
-        public RtspProxySecurityManager SecurityManager
+        public RtspSecurityManager SecurityManager
         {
             get => _securityManager;
         }
 
-        public RtspProxyInvocationManager InvocationManager
+        public RtspInvocationManager InvocationManager
         {
             get => _invocationManager;
         }
 
-        public RtspProxyEventManager EventManager
+        public RtspEventManager EventManager
         {
             get => _eventManager;
         }
 
-        public RtspProxyEventManager MediaEventManager
+        public RtspEventManager MediaEventManager
         {
             get => _mediaEventManager;
         }
@@ -349,7 +348,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-        public static void RaiseEvent( RtspProxy proxy , EventArgs e )
+        public static void RaiseEvent( RtspConnector proxy , EventArgs e )
         {
             if ( proxy == null )
             {

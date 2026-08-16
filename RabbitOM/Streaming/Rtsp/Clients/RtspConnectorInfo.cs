@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// <summary>
     /// Represent the proxy infos
     /// </summary>
-    internal sealed class RtspProxyInformations
+    internal sealed class RtspConnectorInfo
     {
         /// <summary>
         /// Represent the default sequence identifier

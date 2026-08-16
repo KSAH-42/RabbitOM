@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     /// <summary>
     /// Represent the internal proxy settings
     /// </summary>
-    public sealed class RtspSettings
+    public sealed class RtspConnectorSettings
     {
         /// <summary>
         /// The default timeout value
@@ -146,7 +146,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
         /// <summary>
-        /// Gets the timeout value or returns <see cref="RtspSettings.DefaultTimeout"/>
+        /// Gets the timeout value or returns <see cref="RtspConnectorSettings.DefaultTimeout"/>
         /// </summary>
         /// <param name="timeout">the timeout</param>
         /// <returns>returns the argument value if the number of ticks are greater than zero, otherwise the method returns the default timeout value</returns>
