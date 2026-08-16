@@ -93,11 +93,6 @@ namespace RabbitOM.Threading
             return false;
         }
 
-        public void BeginStop()
-        {
-            _stopHandle.Set();
-        }
-
         public void Stop()
         {
             Stop( Timeout.InfiniteTimeSpan );

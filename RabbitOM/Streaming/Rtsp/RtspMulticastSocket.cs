@@ -35,7 +35,6 @@ namespace RabbitOM.Streaming.Rtsp
                 _socket.Bind(_groupEP);
                 _socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption( _ipAddress ));
                 _socket.ReceiveBufferSize = DefaultReceiveBufferSize;
-                _socket.SendBufferSize = DefaultReceiveBufferSize;
                 return true;
             }
             catch ( Exception ex )

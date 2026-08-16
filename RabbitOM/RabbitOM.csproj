@@ -180,9 +180,9 @@
     <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionDispatcher.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionHost.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionInfos.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionMulticastTransport.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionTransport.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionUdpTransport.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionMulticastReceiver.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionReceiver.cs" />
+    <Compile Include="Streaming\Rtsp\Clients\RtspClientSessionUdpReceiver.cs" />
     <Compile Include="Streaming\Rtsp\IRtspHeaderValue.cs" />
     <Compile Include="Streaming\Rtsp\RtspActionQueue.cs" />
     <Compile Include="Streaming\Rtsp\RtspAuthenticationType.cs" />
