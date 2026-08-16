@@ -40,7 +40,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
             catch ( Exception )
             {
-                _socket?.Dispose();
+                Close();
                 throw;
             }
         }
