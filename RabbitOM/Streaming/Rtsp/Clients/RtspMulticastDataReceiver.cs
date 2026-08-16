@@ -69,15 +69,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 try
                 {
-                    if (_ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership, new MulticastOption(_ipAddress));
-                    }
-
-                    if (_ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
-                    {
-                        socket.SetSocketOption(SocketOptionLevel.IPv6, SocketOptionName.DropMembership, new IPv6MulticastOption(_ipAddress));
-                    }
+                    socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.DropMembership, new MulticastOption(_ipAddress));
                 }
                 catch ( Exception ex )
                 {
