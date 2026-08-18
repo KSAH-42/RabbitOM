@@ -73,7 +73,7 @@ namespace RabbitOM.Threading
                     var thread = new Thread( Processing )
                     {
                         Name         = _name ,
-                        IsBackground = true  ,  
+                        IsBackground = true  ,
                     };
 
                     thread.Start( action );
@@ -137,7 +137,7 @@ namespace RabbitOM.Threading
 
         public bool CanContinue( TimeSpan timeout )
         {
-            return _startHandle.IsSet && _stopHandle.TryWait( timeout ) == false;
+            return _startHandle.IsSet && ! _stopHandle.TryWait( timeout );
         }
 
         private void Processing( object parameter )

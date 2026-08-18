@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
-             Height="245" 
+             Height="295" 
              Width="350"
              Loaded="OnUserControlLoaded"
              Unloaded="OnUserControlUnloaded"
@@ -17,6 +17,7 @@
         <converters:BooleanStringValueConverter x:Key="BooleanStringValueConverter" TrueString="Connected" FalseString="Disconnected" />
         <converters:MemoryUnitValueConverter x:Key="MemoryUnitValueConverter" />
         <converters:HertzUnitValueConverter x:Key="HertzUnitValueConverter" />
+        <converters:DoubleAdditionValueConverter x:Key="DoubleAdditionValueConverter" OffsetValue="0.1" />
 
     </UserControl.Resources>
     
@@ -157,6 +158,20 @@
 
                     <StackPanel Orientation="Horizontal">
 
+                        <ProgressBar Orientation="Horizontal"
+                                     Margin="175,0,0,0"
+                                     Height="6"
+                                     Width="125"
+                                     Minimum="0"
+                                     Maximum="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
+                                     Value="{Binding FrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                     Background="Transparent"
+                                     />
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
                         <TextBlock Text="Bandwidth : " 
                                    FontSize="18" 
                                    Width="175" 
@@ -175,6 +190,20 @@
                                    Foreground="Beige" 
                                    />
                         
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <ProgressBar Orientation="Horizontal"
+                                     Margin="175,0,0,0"
+                                     Height="6"
+                                     Width="125"
+                                     Minimum="0"
+                                     Maximum="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
+                                     Value="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                     Background="Transparent"
+                                     />
+
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
@@ -199,6 +228,19 @@
 
                     </StackPanel>
 
+                    <StackPanel Orientation="Horizontal">
+
+                        <ProgressBar Orientation="Horizontal"
+                                     Margin="175,0,0,0"
+                                     Height="6"
+                                     Width="125"
+                                     Minimum="0"
+                                     Maximum="{Binding MaxPacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
+                                     Value="{Binding PacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                     Background="Transparent"
+                                     />
+
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
 
                         <TextBlock Text="Packets lost : " 

@@ -78,6 +78,21 @@ namespace RabbitOM.Player.Controls
 				"PacketsLostCount", typeof(long) ,
 					typeof(NetworkStatistics) );
 
+		public static readonly DependencyProperty MaxFrameCountPerSecondProperty
+			= DependencyProperty.Register(
+				"MaxFrameCountPerSecond", typeof(long) ,
+					typeof(NetworkStatistics) );
+
+		public static readonly DependencyProperty MaxBytesReceivedPerSecondProperty
+			= DependencyProperty.Register(
+				"MaxBytesReceivedPerSecond", typeof(long) ,
+					typeof(NetworkStatistics) );
+
+		public static readonly DependencyProperty MaxPacketReceivedPerSecondProperty
+			= DependencyProperty.Register(
+				"MaxPacketReceivedPerSecond", typeof(long) ,
+					typeof(NetworkStatistics) );
+
 
 
 
@@ -151,6 +166,23 @@ namespace RabbitOM.Player.Controls
 			set => SetValue( PacketsLostCountPerSecondProperty , value );
 		}
 
+		public long MaxFrameCountPerSecond
+		{
+			get => (long) GetValue( MaxFrameCountPerSecondProperty );
+			set => SetValue( MaxFrameCountPerSecondProperty , value );
+		}
+
+		public long MaxBytesReceivedPerSecond
+		{
+			get => (long) GetValue( MaxBytesReceivedPerSecondProperty );
+			set => SetValue( MaxBytesReceivedPerSecondProperty , value );
+		}
+
+		public long MaxPacketReceivedPerSecond
+		{
+			get => (long) GetValue( MaxPacketReceivedPerSecondProperty );
+			set => SetValue( MaxPacketReceivedPerSecondProperty , value );
+		}
 
 
 
@@ -195,6 +227,9 @@ namespace RabbitOM.Player.Controls
 			FrameHeight = source.GetFrameHeight();
 			FrameWidth = source.GetFrameWidth();
 			PacketsLostCount = source.GetPacketsLostCount();
+			MaxFrameCountPerSecond = source.GetMaxFrameCountPerSecond();
+			MaxBytesReceivedPerSecond = source.GetMaxBytesReceivedPerSecond();
+			MaxPacketReceivedPerSecond = source.GetMaxPacketReceivedPerSecond();
 		}
 
 

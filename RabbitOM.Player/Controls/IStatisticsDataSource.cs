@@ -24,6 +24,12 @@ namespace RabbitOM.Player.Controls
 
         long GetPacketsLostCount();
 
+        long GetMaxFrameCountPerSecond();
+
+        long GetMaxBytesReceivedPerSecond();
+
+        long GetMaxPacketReceivedPerSecond();
+
         void Clear();
     }
 }

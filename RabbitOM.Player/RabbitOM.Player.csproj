@@ -82,6 +82,7 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
+    <Compile Include="Controls\NetworkStatisticsHelper.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaPlayerTransport.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Controls\VisualTargetPresentationSource.cs" />
     <Compile Include="Controls\VisualWrapper.cs" />
     <Compile Include="Converters\BooleanMultiValueConverter.cs" />
+    <Compile Include="Converters\DoubleAdditionValueConverter.cs" />
     <Compile Include="Converters\HertzUnitValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
     <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
@@ -193,6 +195,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ListViewStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ProgressBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

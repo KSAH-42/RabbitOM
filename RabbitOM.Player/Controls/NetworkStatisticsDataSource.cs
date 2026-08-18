@@ -1,13 +1,16 @@
 ﻿using System;
-using System.Threading;
 
 namespace RabbitOM.Player.Controls
 {
+    using RabbitOM.Threading;
+
     public sealed class NetworkStatisticsDataSource : IStatisticsDataSource
     {
-        private volatile string _codec;
-        private volatile string _transport;
-        private long _connectionStatus;
+        private readonly ReaderWriterLockProvider _provider = new ReaderWriterLockProvider();
+
+        private string _codec;
+        private string _transport;
+        private bool _connectionStatus;
         private long _clock;
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
@@ -15,6 +18,12 @@ namespace RabbitOM.Player.Controls
         private long _frameHeigth;
         private long _frameWidth;
         private long _packetsLostCount;
+        private long _maxFrameCount;
+        private long _maxFrameCountPerSecond;
+        private long _maxBytesReceivedCount;
+        private long _maxBytesReceivedPerSecond;
+        private long _maxPacketReceivedCount;
+        private long _maxPacketReceivedPerSecond;
         private long _ticks;
 
         public string GetCodec()
@@ -29,57 +38,114 @@ namespace RabbitOM.Player.Controls
 
         public long GetClock()
         {
-            return Volatile.Read( ref _clock );
+            using ( _provider.ReaderLock )
+            {
+                return _clock;
+            }
         }
 
         public bool GetConnectionStatus()
         {
-            return Volatile.Read( ref _connectionStatus ) != 0;
+            using ( _provider.ReaderLock )
+            {
+                return _connectionStatus;
+            }
         }
 
         public long GetBytesReceivedPerSecond()
         {
-            return GetAverageValue( ref _bytesReceivedCount );
+            using ( _provider.ReaderLock )
+            {
+                return NetworkStatisticsHelper.GetAverageValue( ref _bytesReceivedCount , ref _ticks );
+            }
         }
 
         public long GetPacketReceivedPerSecond()
         {
-            return GetAverageValue( ref _packetReceivedCount );
+            using ( _provider.ReaderLock )
+            {
+                return NetworkStatisticsHelper.GetAverageValue( ref _packetReceivedCount , ref _ticks );
+            }
         }
 
         public long GetFrameCountPerSecond()
         {
-            return GetAverageValue( ref _frameCount );
+            using ( _provider.ReaderLock )
+            {
+                return NetworkStatisticsHelper.GetAverageValue( ref _frameCount , ref _ticks );
+            }
         }
 
         public long GetFrameHeight()
         {
-            return Volatile.Read( ref _frameHeigth );
+            using ( _provider.ReaderLock )
+            {
+                return _frameHeigth;
+            }
         }
 
         public long GetFrameWidth()
         {
-            return Volatile.Read( ref _frameWidth );
+            using ( _provider.ReaderLock )
+            {
+                return _frameWidth;
+            }
         }
 
         public long GetPacketsLostCount()
         {
-            return Volatile.Read( ref _packetsLostCount );
+            using ( _provider.ReaderLock )
+            {
+                return _packetsLostCount;
+            }
+        }
+
+        public long GetMaxFrameCountPerSecond()
+        {
+            using ( _provider.ReaderLock )
+            {
+                return NetworkStatisticsHelper.GetAverageValue( ref _maxFrameCount , ref _maxFrameCountPerSecond , ref _ticks );
+            }
+        }
+
+        public long GetMaxBytesReceivedPerSecond()
+        {
+            using ( _provider.ReaderLock )
+            {
+                return NetworkStatisticsHelper.GetAverageValue( ref _maxBytesReceivedCount , ref _maxBytesReceivedPerSecond , ref _ticks );
+            }
+        }
+
+        public long GetMaxPacketReceivedPerSecond()
+        {
+            using ( _provider.ReaderLock )
+            {
+                return NetworkStatisticsHelper.GetAverageValue( ref _maxPacketReceivedCount , ref _maxPacketReceivedPerSecond , ref _ticks );
+            }
         }
 
         public void Clear()
         {
-            _codec = null;
-            _transport = null;
-            Interlocked.Exchange( ref _ticks , 0 );
-            Interlocked.Exchange( ref _connectionStatus , 0 );
-            Interlocked.Exchange( ref _clock , 0 );
-            Interlocked.Exchange( ref _frameCount , 0 );
-            Interlocked.Exchange( ref _bytesReceivedCount , 0 );
-            Interlocked.Exchange( ref _packetReceivedCount , 0 );
-            Interlocked.Exchange( ref _frameHeigth , 0 );
-            Interlocked.Exchange( ref _frameWidth , 0 );
-            Interlocked.Exchange( ref _packetsLostCount , 0 );
+            using ( _provider.WriterLock )
+            {
+                _codec = null;
+                _transport = null;
+                _ticks = 0;
+                _connectionStatus = false;
+                _clock = 0;
+                _frameCount = 0;
+                _bytesReceivedCount = 0;
+                _packetReceivedCount = 0;
+                _frameHeigth = 0;
+                _frameWidth = 0;
+                _packetsLostCount = 0;
+                _maxFrameCount = 0;
+                _maxFrameCountPerSecond = 0;
+                _maxBytesReceivedCount = 0;
+                _maxBytesReceivedPerSecond = 0;
+                _maxPacketReceivedCount = 0;
+                _maxPacketReceivedPerSecond = 0;
+            }
         }
 
         internal void SetCodec( string value )
@@ -94,74 +160,70 @@ namespace RabbitOM.Player.Controls
 
         internal void SetConnectionStatusOn()
         {
-            Interlocked.Exchange( ref _connectionStatus , 1 );
+            using ( _provider.ReaderLock )
+            {
+                _connectionStatus = true;
+            }
         }
 
         internal void SetConnectionStatusOff()
         {
-            Interlocked.Exchange( ref _connectionStatus , 0 );
+            using ( _provider.ReaderLock )
+            {
+                _connectionStatus = false;
+            }
         }
 
         internal void SetClock( long value )
         {
-            Interlocked.Exchange( ref _clock , value );
+            using ( _provider.ReaderLock )
+            {
+                _clock = value;
+            }
         }
 
         internal void SetFrameSize( long height , long width )
         {
-            Interlocked.Exchange( ref _frameHeigth , height );
-            Interlocked.Exchange( ref _frameWidth , width );
+            using ( _provider.ReaderLock )
+            {
+                _frameHeigth = height;
+                _frameWidth = width;
+            }
         }
 
         internal void AddPacketsLost( long value )
         {
-            IncrementValue( ref _packetsLostCount , value );
+            using ( _provider.ReaderLock )
+            {
+                NetworkStatisticsHelper.IncrementValue( ref _packetsLostCount , value , ref _ticks );
+            }
         }
 
         internal void AddBytesReceived( long value )
         {
-            IncrementValue( ref _bytesReceivedCount , value );
+            using ( _provider.ReaderLock )
+            {
+                NetworkStatisticsHelper.IncrementValue( ref _bytesReceivedCount , value , ref _ticks );
+                NetworkStatisticsHelper.IncrementValue( ref _maxBytesReceivedCount , value , ref _ticks );
+            }
         }
 
         internal void IncreasePacketReceived()
         {
-            IncrementValue( ref _packetReceivedCount );
+            using ( _provider.ReaderLock )
+            {
+                NetworkStatisticsHelper.IncrementValue( ref _packetReceivedCount , 1 , ref _ticks );
+                NetworkStatisticsHelper.IncrementValue( ref _maxPacketReceivedCount , 1 , ref _ticks );
+            }
         }
 
         internal void IncreaseFrameCount()
         {
-            IncrementValue( ref _frameCount );
-        }
-
-        private void IncrementValue( ref long valueMember )
-        {
-            IncrementValue( ref valueMember , 1 );
-        }
-
-        private void IncrementValue( ref long valueMember , long value )
-        {
-            if ( value < 0 )
+            using ( _provider.ReaderLock )
             {
-                throw new ArgumentException( nameof( value ) );
+                NetworkStatisticsHelper.IncrementValue( ref _frameCount , 1 , ref _ticks );
+                NetworkStatisticsHelper.IncrementValue( ref _maxFrameCount , 1 , ref _ticks );
             }
-
-            // TODO: refactor 
-            var sum = valueMember + value; // if the sum is negative, there is an overflow we need to set the max value
-
-            Interlocked.Exchange( ref valueMember , sum >= valueMember ? sum : int.MaxValue );
-            Interlocked.Exchange( ref _ticks , Environment.TickCount );
-        }
-
-        private long GetAverageValue( ref long valueMember )
-        {
-            // TODO: refactor 
-            var totalSeconds = (long) TimeSpan.FromTicks( Environment.TickCount - _ticks ).TotalSeconds;
-
-            var result = totalSeconds > 0 ? valueMember / totalSeconds : valueMember ;
-
-            Interlocked.Exchange( ref valueMember , 0 );
-
-            return result;
         }
     }
 }
