@@ -58,7 +58,7 @@ namespace RabbitOM.Streaming.Rtp.Jpeg
         {
             if ( value < 0 )
             {
-                throw new ArgumentException( nameof( value ) ); 
+                throw new ArgumentException( nameof( value ) );
             }
 
             _stream.SetLength( value );
@@ -68,7 +68,7 @@ namespace RabbitOM.Streaming.Rtp.Jpeg
         {
             if ( value < 0 )
             {
-                throw new ArgumentException( nameof( value ) ); 
+                throw new ArgumentException( nameof( value ) );
             }
 
             _stream.SetPosition( value );
@@ -128,12 +128,12 @@ namespace RabbitOM.Streaming.Rtp.Jpeg
 
         public void WriteQuantizationTable( ArraySegment<byte> data , int factor )
         {
-            if ( data.Count <= 0 )
+            if ( data.Count == 0 )
             {
                 data = _quantizationTableFactory.CreateTable( factor );
             }
 
-            if ( data.Count <= 0 )
+            if ( data.Count == 0 )
             {
                 throw new InvalidOperationException( "Invalid quantization table" );
             }
@@ -189,12 +189,12 @@ namespace RabbitOM.Streaming.Rtp.Jpeg
                 throw new ArgumentException( "No resolution fallback available" , nameof( width ) );
             }
 
-            if ( quantizationTable.Count <= 0 )
+            if ( quantizationTable.Count == 0 )
             {
                 quantizationTable = _quantizationTableFactory.CreateTable( quantizationFactor );
             }
 
-            if ( quantizationTable.Count <= 0 )
+            if ( quantizationTable.Count == 0 )
             {
                 throw new ArgumentException( nameof( quantizationTable ) );
             }
@@ -237,12 +237,12 @@ namespace RabbitOM.Streaming.Rtp.Jpeg
 
         public void WriteHuffmanTable( byte[] codes , byte[] symbols , int tableNo , int tableClass )
         {
-            if ( codes == null || codes.Length <= 0 )
+            if ( codes == null || codes.Length == 0 )
             {
                 throw new ArgumentException( nameof( codes ) );
             }
 
-            if ( symbols == null || symbols.Length <= 0 )
+            if ( symbols == null || symbols.Length == 0 )
             {
                 throw new ArgumentException( nameof( symbols ) );
             }
