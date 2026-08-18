@@ -162,7 +162,7 @@
                                     Margin="175,0,0,0"
                                     >
                             <ProgressBar Orientation="Horizontal"
-                                         Height="6"
+                                         Height="8"
                                          Width="125"
                                          Minimum="0"
                                          Maximum="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource AddDoubleValueConverter}}"
@@ -172,7 +172,7 @@
 
                             <TextBlock Margin="3,0,0,0"
                                        Text="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                       FontSize="8" 
+                                       FontSize="9" 
                                        Foreground="Beige" 
                                        />
                         </StackPanel>
@@ -208,7 +208,7 @@
                                     >
                         
                             <ProgressBar Orientation="Horizontal"
-                                         Height="6"
+                                         Height="8"
                                          Width="125"
                                          Minimum="0"
                                          Maximum="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource AddDoubleValueConverter}}"
@@ -216,9 +216,9 @@
                                          Background="Transparent"
                                          />
            
-                            <TextBlock Margin="3,-1,0,0"
+                            <TextBlock Margin="3,0,0,0"
                                        Text="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource MemoryUnitValueConverter}}"
-                                       FontSize="8" 
+                                       FontSize="9" 
                                        Foreground="Beige" 
                                        />
                             
@@ -255,7 +255,7 @@
                                     >
                             
                             <ProgressBar Orientation="Horizontal"
-                                         Height="6"
+                                         Height="8"
                                          Width="125"
                                          Minimum="0"
                                          Maximum="{Binding MaxPacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource AddDoubleValueConverter}}"
@@ -265,7 +265,7 @@
 
                             <TextBlock Margin="3,0,0,0"
                                        Text="{Binding MaxPacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                       FontSize="8" 
+                                       FontSize="9" 
                                        Foreground="Beige" 
                                        />
                             
