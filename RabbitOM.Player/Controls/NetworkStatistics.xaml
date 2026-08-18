@@ -160,7 +160,7 @@
 
                         <ProgressBar Orientation="Horizontal"
                                      Margin="175,0,0,0"
-                                     Height="6"
+                                     Height="7"
                                      Width="125"
                                      Minimum="0"
                                      Maximum="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
@@ -196,7 +196,7 @@
 
                         <ProgressBar Orientation="Horizontal"
                                      Margin="175,0,0,0"
-                                     Height="6"
+                                     Height="7"
                                      Width="125"
                                      Minimum="0"
                                      Maximum="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
@@ -232,7 +232,7 @@
 
                         <ProgressBar Orientation="Horizontal"
                                      Margin="175,0,0,0"
-                                     Height="6"
+                                     Height="7"
                                      Width="125"
                                      Minimum="0"
                                      Maximum="{Binding MaxPacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
