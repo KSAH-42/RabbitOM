@@ -92,7 +92,7 @@
     <Compile Include="Controls\VisualTargetPresentationSource.cs" />
     <Compile Include="Controls\VisualWrapper.cs" />
     <Compile Include="Converters\BooleanMultiValueConverter.cs" />
-    <Compile Include="Converters\DoubleAdditionValueConverter.cs" />
+    <Compile Include="Converters\AddDoubleValueConverter.cs" />
     <Compile Include="Converters\HertzUnitValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
     <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />

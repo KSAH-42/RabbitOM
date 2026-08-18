@@ -17,7 +17,7 @@
         <converters:BooleanStringValueConverter x:Key="BooleanStringValueConverter" TrueString="Connected" FalseString="Disconnected" />
         <converters:MemoryUnitValueConverter x:Key="MemoryUnitValueConverter" />
         <converters:HertzUnitValueConverter x:Key="HertzUnitValueConverter" />
-        <converters:DoubleAdditionValueConverter x:Key="DoubleAdditionValueConverter" OffsetValue="0.1" />
+        <converters:AddDoubleValueConverter x:Key="AddDoubleValueConverter" OffsetValue="0.1" />
 
     </UserControl.Resources>
     
@@ -163,7 +163,7 @@
                                      Height="7"
                                      Width="125"
                                      Minimum="0"
-                                     Maximum="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
+                                     Maximum="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource AddDoubleValueConverter}}"
                                      Value="{Binding FrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                      Background="Transparent"
                                      />
@@ -199,7 +199,7 @@
                                      Height="7"
                                      Width="125"
                                      Minimum="0"
-                                     Maximum="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
+                                     Maximum="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource AddDoubleValueConverter}}"
                                      Value="{Binding BytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                      Background="Transparent"
                                      />
@@ -235,7 +235,7 @@
                                      Height="7"
                                      Width="125"
                                      Minimum="0"
-                                     Maximum="{Binding MaxPacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource DoubleAdditionValueConverter}}"
+                                     Maximum="{Binding MaxPacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl},Converter={StaticResource AddDoubleValueConverter}}"
                                      Value="{Binding PacketReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                      Background="Transparent"
                                      />

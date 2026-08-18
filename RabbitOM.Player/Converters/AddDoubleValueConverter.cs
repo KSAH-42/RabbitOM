@@ -5,7 +5,7 @@ using System.Windows.Data;
 namespace RabbitOM.Player.Converters
 {
     [ValueConversion(typeof(double),typeof(double))]
-    public sealed class DoubleAdditionValueConverter : IValueConverter
+    public sealed class AddDoubleValueConverter : IValueConverter
     {
         public double OffsetValue { get; set; }
 
