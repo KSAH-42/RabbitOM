@@ -244,7 +244,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
 
             fixed ( byte* rawBuffer = &buffer[0] )
             {
-                // normally, in this case, it's highly recommended to set to default _rawPacket->data as null after pin buffer adress and calling ffmpeg.decode func using a try finally bloc, the reason come from that the compactor on the GC can change the address of the raw buffer
+                // normally, in this case, it's highly recommended to set to default _rawPacket->data as null after unpin the buffer adress and calling ffmpeg.decode func using a try finally bloc, the reason come from that the compactor on the GC can change the address of the raw buffer
                 // and ffmpeg lib can manipulate a wrong buffer after leaving the scoped, the adress can changed and ffmpeg can manipulated a dangling pointer that can produce unescepted error.
                 // so the right approach is to force a clear on these members after...
                 // so here i don't do that because the overhead must be reduced and this member is not used elsewhere
