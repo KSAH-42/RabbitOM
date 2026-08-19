@@ -37,9 +37,9 @@ namespace RabbitOM.Streaming.RtspV2.Headers
             RtspHeaderParser.NewParser<ViaRtspHeaderValue>( RtspHeaderNames.Via, ViaRtspHeaderValue.TryParse ),
             RtspHeaderParser.NewParser<WarningRtspHeaderValue>( RtspHeaderNames.Warning, WarningRtspHeaderValue.TryParse ),
         } ,
-        new []
+        new [] // here that's the forbidden header, the developper must use it
         {
-            RtspHeaderNames.CSeq,
+            RtspHeaderNames.CSeq, // about sequence, this header must be calculated internally and never exposed
             RtspHeaderNames.Public,
             RtspHeaderNames.RtpInfo,
             RtspHeaderNames.Server,
