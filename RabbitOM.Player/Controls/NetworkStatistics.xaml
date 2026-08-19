@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
              Height="279" 
-             Width="355"
+             Width="360"
              Loaded="OnUserControlLoaded"
              Unloaded="OnUserControlUnloaded"
              >
@@ -136,7 +136,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock  Text="Frame rate : " 
+                        <TextBlock  Text="Framerate : " 
                                     FontSize="18" 
                                     Width="175" 
                                     TextAlignment="Right" 
@@ -175,13 +175,19 @@
                                        FontSize="9" 
                                        Foreground="Beige" 
                                        />
+
+                            <TextBlock Text=" fps"
+                                       FontSize="9" 
+                                       Foreground="Beige" 
+                                       />
+                            
                         </StackPanel>
 
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock Text="Bandwidth : " 
+                        <TextBlock Text="Bitrate : " 
                                    FontSize="18" 
                                    Width="175" 
                                    TextAlignment="Right" 
@@ -228,7 +234,7 @@
 
                     <StackPanel Orientation="Horizontal">
 
-                        <TextBlock Text="Packet received : " 
+                        <TextBlock Text="Packets received : " 
                                    FontSize="18" 
                                    Width="175" 
                                    TextAlignment="Right" 
@@ -268,7 +274,12 @@
                                        FontSize="9" 
                                        Foreground="Beige" 
                                        />
-                            
+
+                            <TextBlock Text=" pps"
+                                       FontSize="9" 
+                                       Foreground="Beige" 
+                                       />
+
                         </StackPanel>
                         
 
