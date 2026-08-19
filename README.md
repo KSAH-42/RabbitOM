@@ -183,7 +183,7 @@ If your camera is located I strongly recommended to used TCP. Otherwise if you u
 
 If your are using some cameras and you may use first VLC for testing, you may observed that VLC fail to display BUT the Media.Player will display the stream.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.H265.HIK.png)
 
 First of all, here I use a HIK camera, and HIK camera just works as expected and works well.
 
@@ -192,7 +192,7 @@ VLC (3.0.23 and probably previous versions) will enter in a loop and will normal
 And most of C++ forked repo use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms, and for instance hitachie/thalezed products with their great product called picatchou recorder powered by the Kadhafi.dll just fails. Where Thalezed says create an instance of library... and not load/unload or attach/detach a lib, creating an instance of lib, and allocate the Kadhafi.dll on the stack, build, and trigger cd pipeline push and and store securely into the artifactory and no one can hack it...
 I hope that one day some sales engineer will not pushed some security camera to trigger a vms product replacement silently.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Cam1.Settings.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
 
 # RabbitOM.MJpegPlayer is used to decode RTP packets ( RFC 2435 )
 
