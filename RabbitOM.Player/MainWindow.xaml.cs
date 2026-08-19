@@ -312,6 +312,8 @@ namespace RabbitOM.Player
         {
             _datasource.AddBytesReceived( e.Packet.Data.Length );
 
+            // TODO: move the inspector when the rtp sequence will be completed, it should be used on OnBuildFrame function
+
             if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
             {
                 _frameBuilder.AddPacket( packet );
@@ -331,6 +333,8 @@ namespace RabbitOM.Player
             {
                 return;
             }
+
+            // TODO: add interface on the mediaelement for getting extraparameters and to avoid h264/h265 mediaelement cast
 
             byte[] extraParameters = null;
 
