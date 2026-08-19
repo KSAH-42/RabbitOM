@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.png)
 
 Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/releases
 
@@ -163,19 +163,19 @@ This sample demonstrate how to create decoder that support different codec using
 This sample include an example of how to build a player using decoder and render running in seperate threads.
 This sample include statitics component to display the framerate, the network bandwidth just making a right click.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Sample.Client.H264.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.H264.png)
 
 # RabbitOM.Player snapshotter
 
 Just by making a right click on the image control
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Snapshotter.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Snapshotter.png)
 
 # RabbitOM.Player streaming over different transport types
 
 You can receive media content using TCP / UDP or Multicast
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.MediaPlayer.Udp.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Udp.png)
 
 If your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
 
