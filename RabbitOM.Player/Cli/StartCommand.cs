@@ -2,9 +2,16 @@
 
 namespace RabbitOM.Player.Cli
 {
-    public sealed class ApplicationCommand : Command , ICommandHandler<ApplicationCommand>
+    [Command( "start" ) ]
+    public sealed class StartCommand : Command , ICommandHandler<StartCommand>
     {
-        private Action<ApplicationCommand> _handler;
+        private Action<StartCommand> _handler;
+
+
+
+        [CommandOption("-u")]
+        [CommandOption("--uri")]
+        public string Uri { get; set; }
 
         [CommandOption("-s")]
         [CommandOption("--show-stats")]
@@ -13,15 +20,6 @@ namespace RabbitOM.Player.Cli
         [CommandOption("-i")]
         [CommandOption("--stretch-image")]
         public bool StrechImage { get; set; }
-
-        [CommandOption("-d")]
-        [CommandOption("--start-streaming")]
-        public bool StartStreaming { get; set; }
-
-        [CommandOption("-u")]
-        [CommandOption("--uri")]
-        public string Uri { get; set; }
-
 
 
 
@@ -35,7 +33,7 @@ namespace RabbitOM.Player.Cli
             _handler( this );
         }
 
-        public void SetHandler( Action<ApplicationCommand> handler )
+        public void SetHandler( Action<StartCommand> handler )
         {
             _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
         }
