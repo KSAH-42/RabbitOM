@@ -10,6 +10,13 @@ namespace RabbitOM.Player.Cli
             Name = name;
         }
 
+        public CommandOptionAttribute( int position )
+        {
+            Position = position;
+        }
+
         public string Name { get; }
+
+        public int? Position { get; }
     }
 }

@@ -8,7 +8,7 @@ namespace RabbitOM.Player.Cli
         private Action<StartCommand> _handler;
 
 
-
+        [CommandOption(0)]
         [CommandOption("-u")]
         [CommandOption("--uri")]
         public string Uri { get; set; }
@@ -20,7 +20,6 @@ namespace RabbitOM.Player.Cli
         [CommandOption("-i")]
         [CommandOption("--stretch-image")]
         public bool StrechImage { get; set; }
-
 
 
         public override void Execute()
