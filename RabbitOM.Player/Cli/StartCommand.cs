@@ -15,11 +15,11 @@ namespace RabbitOM.Player.Cli
 
         [CommandOption("-s")]
         [CommandOption("--show-stats")]
-        public bool ShowStats { get; set; }
+        public bool ShowStats { get; set; } = true;
 
         [CommandOption("-i")]
         [CommandOption("--stretch-image")]
-        public bool StrechImage { get; set; }
+        public bool StrechImage { get; set; } = true;
 
 
         public override void Execute()
