@@ -75,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Cli\ICommandHandler.cs" />
+    <Compile Include="Cli\Command.cs" />
+    <Compile Include="Cli\ApplicationCommand.cs" />
+    <Compile Include="Cli\CommandOptionAttribute.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
