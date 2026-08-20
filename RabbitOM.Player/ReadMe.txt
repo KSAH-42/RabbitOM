@@ -1,1 +1,2 @@
-﻿There is no MVVM here, for some reasons.
+﻿There is no MVVM here, using INotifyPropertyChanged or INotifyPropertyChanging, including INotifyDataErrorInfo
+  => for some reasons.
