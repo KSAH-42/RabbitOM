@@ -239,12 +239,12 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                _frameBuilder.Dispose();
+
                 _datasource.SetConnectionStatusOn();
                 _datasource.SetTransport( _client.Configuration.DeliveryMode.ToString() );
                 _datasource.SetCodec( e.TrackInfo.Encoder );
                 _datasource.SetClock( e.TrackInfo.ClockRate );
-
-                _frameBuilder.Dispose();
 
                 try
                 {
