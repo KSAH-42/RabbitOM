@@ -1,0 +1,1 @@
+﻿There is no MVVM here, for some reasons.
