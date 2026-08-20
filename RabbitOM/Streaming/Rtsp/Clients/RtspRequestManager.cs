@@ -4,50 +4,33 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
 
-    /// <summary>
-    /// Represent a request manager
-    /// </summary>
     internal sealed class RtspRequestManager : IDisposable
     {
         private readonly RtspConnector _proxy;
-
         private readonly RtspChunkQueue _chunks;
-
         private readonly RtspMessageExtactor _extractor;
-
         private readonly BackgroundWorker _chunkListenerThread;
-
         private readonly BackgroundWorker _requestListenerThread;
-
         private readonly RtspProxyRequestHandlerList _requestHandlers;
-
         private byte[] _buffer;
 
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="proxy">the proxy</param>
-        /// <exception cref="ArgumentNullException"/>
         public RtspRequestManager( RtspConnector proxy )
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
-            _chunkListenerThread   = new BackgroundWorker( "Rtsp - proxy request manager - chunk listener" );
+            _chunkListenerThread = new BackgroundWorker( "Rtsp - proxy request manager - chunk listener" );
+
             _requestListenerThread = new BackgroundWorker( "Rtsp - proxy request manager - listener " );
-            _requestHandlers       = new RtspProxyRequestHandlerList();
-            _chunks                = new RtspChunkQueue();
-            _extractor             = new RtspMessageExtactor();
-            _buffer                = new byte[ 8096 ];
+
+            _requestHandlers = new RtspProxyRequestHandlerList();
+
+            _chunks = new RtspChunkQueue();
+
+            _extractor = new RtspMessageExtactor();
+
+            _buffer = new byte[ 8096 ];
         }
 
-
-
-
-        /// <summary>
-        /// Start the listener
-        /// </summary>
         public void Start()
         {
             _chunkListenerThread.Start( () =>
@@ -77,9 +60,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             } );
         }
 
-        /// <summary>
-        /// Stop
-        /// </summary>
         public void Stop()
         {
             _requestListenerThread.Stop();
@@ -89,9 +69,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             _requestHandlers.Clear();
         }
 
-        /// <summary>
-        /// Dispose internal resources
-        /// </summary>
         public void Dispose()
         {
             Stop();
@@ -99,15 +76,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             _buffer = null;
         }
 
-        /// <summary>
-        /// Send a request
-        /// </summary>
-        /// <param name="request">the request</param>
-        /// <param name="response">the response</param>
-        /// <returns>returns true for a success, otherwise false</returns>
-        /// <remarks>
-        /// <para>This method try to send a request and wait a response using message correlation pattern</para>
-        /// </remarks>
         public bool TrySendRequest( RtspMessageRequest request , out RtspMessageResponse response )
         {
             response = null;
@@ -174,17 +142,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             return false;
         }
 
-        /// <summary>
-        /// Cancel the pending requests
-        /// </summary>
         public void CancelPendingRequests()
         {
             _requestHandlers.ForEach( handler => handler.Cancel() );
         }
 
-        /// <summary>
-        /// Receive messages
-        /// </summary>
         private int ReceiveMessages()
         {
             try
@@ -210,9 +172,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             return -1;
         }
 
-        /// <summary>
-        /// Receive the chunk
-        /// </summary>
         private void ReceiveChunks()
         {
             while ( _chunks.Any() )
@@ -224,13 +183,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Handle the chunk
-        /// </summary>
-        /// <param name="chunk">the chunk</param>
         private void DecodeChunk( byte[] chunk )
         {
-            if ( chunk == null || chunk.Length <= 0 )
+            if ( chunk == null || chunk.Length == 0 )
             {
                 return;
             }
@@ -291,10 +246,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Occurs when a message has been received
-        /// </summary>
-        /// <param name="response">the response</param>
         private void OnResponseReceived( RtspMessageResponse response )
         {
             if ( response == null )
@@ -319,37 +270,21 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             handler.HandleResponse( response );
         }
 
-        /// <summary>
-        /// Occurs when data has been received
-        /// </summary>
-        /// <param name="packet">the packet</param>
         private void OnDataReceived( RtspPacket packet )
         {
             _proxy.MediaEventManager.Dispatch( new RtspPacketReceivedEventArgs( packet ) );
         }
 
-        /// <summary>
-        /// Occurs when a message has been sended
-        /// </summary>
-        /// <param name="message">the message</param>
         private void OnMessageSended( RtspMessage message )
         {
             _proxy.EventManager.Dispatch( new RtspMessageSendedEventArgs( message ) );
         }
 
-        /// <summary>
-        /// Occurs when a message has been received
-        /// </summary>
-        /// <param name="message">the message</param>
         private void OnMessageReceived( RtspMessage message )
         {
             _proxy.EventManager.Dispatch( new RtspMessageReceivedEventArgs( message ) );
         }
 
-        /// <summary>
-        /// Occurs when a error has been detected
-        /// </summary>
-        /// <param name="ex">the exception</param>
         private void OnError( Exception ex )
         {
             _proxy.EventManager.Dispatch( new RtspConnectionErrorEventArgs( ex ) );

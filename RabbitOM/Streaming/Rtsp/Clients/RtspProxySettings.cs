@@ -2,39 +2,19 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the internal proxy settings
-    /// </summary>
     public sealed class RtspConnectorSettings
     {
-        /// <summary>
-        /// The default timeout value
-        /// </summary>
         public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds( 15 );
 
 
-
-
         private readonly object _lock = new object();
-
         private string _uri;
-
         private TimeSpan _receiveTimeout;
-
         private TimeSpan _sendTimeout;
-
         private string _userName;
-
         private string _password;
 
 
-
-
-
-
-        /// <summary>
-        /// Gets / Sets the uri
-        /// </summary>
         public string Uri
         {
             get
@@ -54,9 +34,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets / Sets the user name
-        /// </summary>
         public string UserName
         {
             get
@@ -76,9 +53,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets / Sets the password
-        /// </summary>
         public string Password
         {
             get
@@ -98,9 +72,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets / Sets the receive timeout
-        /// </summary>
         public TimeSpan ReceiveTimeout
         {
             get
@@ -120,9 +91,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets / Sets the send timeout
-        /// </summary>
         public TimeSpan SendTimeout
         {
             get
@@ -143,13 +111,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         }
 
 
-
-
-        /// <summary>
-        /// Gets the timeout value or returns <see cref="RtspConnectorSettings.DefaultTimeout"/>
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns the argument value if the number of ticks are greater than zero, otherwise the method returns the default timeout value</returns>
         public static TimeSpan GetTimeoutOrDefault( TimeSpan timeout  )
         {
             return timeout.Ticks > 0 ? timeout : DefaultTimeout;

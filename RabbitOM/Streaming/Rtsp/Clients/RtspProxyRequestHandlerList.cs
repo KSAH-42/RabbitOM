@@ -5,37 +5,15 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the request handler list
-    /// </summary>
-    internal sealed class RtspProxyRequestHandlerList 
-        : IEnumerable
-        , IEnumerable<RtspProxyRequestHandler>
-        , ICollection
-        , ICollection<RtspProxyRequestHandler>
-        , IReadOnlyCollection<RtspProxyRequestHandler>
+    internal sealed class RtspProxyRequestHandlerList : ICollection , ICollection<RtspProxyRequestHandler> , IReadOnlyCollection<RtspProxyRequestHandler>
     {
-        /// <summary>
-        /// Represent the maximum of elements allowed
-        /// </summary>
-        public const int                                           Maximum      = 1000;
+        public const int Maximum = 1000;
 
 
-
-
-        private readonly object                                    _lock        = new object();
-
+        private readonly object _lock = new object();
         private readonly IDictionary<long,RtspProxyRequestHandler> _collection  = new Dictionary<long,RtspProxyRequestHandler>();
 
 
-
-
-        /// <summary>
-        /// Gets a handler
-        /// </summary>
-        /// <param name="sequenceId">the sequence identifier</param>
-        /// <returns>returns an instance otherwise throw an exception</returns>
-        /// <exception cref="KeyNotFoundException"/>
         public RtspProxyRequestHandler this[ int sequenceId ]
         {
             get
@@ -48,35 +26,21 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         }
 
 
-
-
-        /// <summary>
-        /// Gets the sync root
-        /// </summary>
         public object SyncRoot
         {
             get => _lock;
         }
 
-        /// <summary>
-        /// Check if the collection is thread safe
-        /// </summary>
         public bool IsSynchronized
         {
             get => true;
         }
 
-        /// <summary>
-        /// Check if the collection is just a read only collection
-        /// </summary>
         public bool IsReadOnly
         {
             get => false;
         }
-        
-        /// <summary>
-        /// Gets the number of handlers
-        /// </summary>
+
         public int Count
         {
             get
@@ -88,9 +52,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the collection contains some handlers
-        /// </summary>
         public bool IsEmpty
         {
             get
@@ -102,9 +63,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the collection is full
-        /// </summary>
         public bool IsFull
         {
             get
@@ -118,14 +76,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-
-        /// <summary>
-        /// Add a handler
-        /// </summary>
-        /// <param name="handler">the handler</param>
-        /// <exception cref="ArgumentNullException"/>
-        /// <exception cref="ArgumentException"/>
-        /// <exception cref="InvalidOperationException"/>
         public void Add( RtspProxyRequestHandler handler )
         {
             if ( handler == null )
@@ -149,10 +99,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the collection contains some handlers
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Any()
         {
             lock ( _lock )
@@ -161,9 +107,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Remove all handlers and dispose each one
-        /// </summary>
         public void Clear()
         {
             lock ( _lock )
@@ -177,21 +120,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Copy the content to an array
-        /// </summary>
-        /// <param name="array">the target array</param>
-        /// <param name="arrayIndex">the start index to begin the copy</param>
-        public void CopyTo(Array array, int arrayIndex)
+        public void CopyTo(Array array, int index)
         {
-            CopyTo( array as RtspProxyRequestHandler[] , arrayIndex );
+            CopyTo( array as RtspProxyRequestHandler[] , index );
         }
 
-        /// <summary>
-        /// Copy the content to an array
-        /// </summary>
-        /// <param name="array">the target array</param>
-        /// <param name="arrayIndex">the start index to begin the copy</param>
         public void CopyTo(RtspProxyRequestHandler[] array, int arrayIndex)
         {
             lock ( _lock )
@@ -200,11 +133,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Checks if a handler exists
-        /// </summary>
-        /// <param name="handler">the handler</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Contains( RtspProxyRequestHandler handler )
         {
             if ( handler == null )
@@ -218,11 +146,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Checks if a handler exists
-        /// </summary>
-        /// <param name="sequenceId">the correlation identifier</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool ContainsById( long sequenceId )
         {
             lock ( _lock )
@@ -231,11 +154,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Finds a handler
-        /// </summary>
-        /// <param name="sequenceId">the correlation identifier</param>
-        /// <returns>returns an instance, otherwise null</returns>
         public RtspProxyRequestHandler FindById( long sequenceId )
         {
             lock ( _lock )
@@ -244,11 +162,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Get a handler at the desired index
-        /// </summary>
-        /// <param name="index">the index</param>
-        /// <returns>returns an instance, otherwise null</returns>
         public RtspProxyRequestHandler ElementAtOrDefault( int index )
         {
             lock ( _lock )
@@ -257,10 +170,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Execute a custom action on all handlers of the collection
-        /// </summary>
-        /// <param name="action">the action</param>
         public void ForEach( Action<RtspProxyRequestHandler> action )
         {
             if (action == null)
@@ -282,10 +191,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>returns an instance</returns>
         public IEnumerator<RtspProxyRequestHandler> GetEnumerator()
         {
             lock ( _lock )
@@ -294,10 +199,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets the enumerator
-        /// </summary>
-        /// <returns>returns an instance</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             lock ( _lock )
@@ -306,22 +207,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Remove a handler
-        /// </summary>
-        /// <param name="handler">the handler to be removed</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Remove( RtspProxyRequestHandler handler )
         {
             return Remove( handler , true );
         }
 
-        /// <summary>
-        /// Remove a handler
-        /// </summary>
-        /// <param name="handler">the handler to be removed</param>
-        /// <param name="dispose">set true to call release</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool Remove( RtspProxyRequestHandler handler , bool dispose )
         {
             if ( handler == null )
@@ -345,11 +235,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Remove a handler
-        /// </summary>
-        /// <param name="sequenceId">the correlation identifier</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool RemoveById( long sequenceId )
         {
             lock ( _lock )
@@ -358,11 +243,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Try to add a handler
-        /// </summary>
-        /// <param name="handler">the handler</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryAdd( RtspProxyRequestHandler handler )
         {
             if (handler == null)
@@ -388,12 +268,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Try to get a handler
-        /// </summary>
-        /// <param name="sequenceId">the correlation identifier</param>
-        /// <param name="result">the out result</param>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool TryGetById( long sequenceId , out RtspProxyRequestHandler result )
         {
             lock ( _lock )

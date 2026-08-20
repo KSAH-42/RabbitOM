@@ -2,17 +2,9 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the proxy invoker
-    /// </summary>
     public sealed class RtspOptionsInvoker : RtspInvoker
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="proxy">the proxy</param>
-        internal RtspOptionsInvoker( RtspConnector proxy )
-            : base( proxy , RtspMethod.Options )
+        internal RtspOptionsInvoker( RtspConnector proxy ) : base( proxy , RtspMethod.Options )
         {
         }
     }

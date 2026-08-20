@@ -2,39 +2,13 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the client configuration
-    /// </summary>
     public sealed class RtspClientConfiguration : IRtspClientConfiguration
     {
-        /// <summary>
-        /// Represent the default receive timeout
-        /// </summary>
         public readonly static TimeSpan   DefaultReceiveTimeout     = TimeSpan.FromSeconds( 15 );
-
-        /// <summary>
-        /// Represent the default send timeout
-        /// </summary>
         public readonly static TimeSpan   DefaultSendTimeout        = TimeSpan.FromSeconds( 15 );
-
-        /// <summary>
-        /// Represent the default keep alive interval
-        /// </summary>
         public readonly static TimeSpan   DefaultKeepAliveInterval  = TimeSpan.FromSeconds( 15 );
-
-        /// <summary>
-        /// Represent the default retries interval
-        /// </summary>
         public readonly static TimeSpan   DefaultRetriesInterval    = TimeSpan.FromSeconds( 15 );
-
-        /// <summary>
-        /// Represent the default port
-        /// </summary>
         public readonly static int        DefaultPort               = 61024;
-
-        /// <summary>
-        /// Represent the default TTL
-        /// </summary>
         public readonly static byte       DefaultTTL                = 1;
 
 

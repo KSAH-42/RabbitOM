@@ -2,9 +2,6 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the client security manager. This is class is used to manage authentication procedures
-    /// </summary>
     internal sealed class RtspSecurityManager
     {
         private readonly object _lock;
@@ -13,15 +10,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         private readonly RtspAuthorizationFactory _factory;
 
-
-
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="proxy">the proxy</param>
-        /// <exception cref="ArgumentNullException"/>
         public RtspSecurityManager( RtspConnector proxy )
         {
             _proxy   = proxy ?? throw new ArgumentNullException( nameof( proxy ) ) ;
@@ -30,13 +18,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             _factory = new RtspAuthorizationFactory();
         }
 
-
-
-
-
-        /// <summary>
-        /// Initialize
-        /// </summary>
         public void Initialize()
         {
             lock ( _lock )
@@ -45,9 +26,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the current instance has already been registered with a WWW authentication header
-        /// </summary>
         public bool IsAuthenticationSetup()
         {
             lock ( _lock )
@@ -56,10 +34,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Setup the authentication before to build the authorization response 
-        /// </summary>
-        /// <param name="response">the client response which can hold an authentication header need to build our response</param>
         public void SetupAuthentication( RtspMessageResponse response )
         {
             lock ( _lock )
@@ -68,11 +42,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Add an authorization header
-        /// </summary>
-        /// <param name="request">the request</param>
-        /// <returns>returns for a success, otherwise false</returns>
         public bool AddAuthorization( RtspMessageRequest request )
         {
             if ( request == null || request.Method == RtspMethod.UnDefined )

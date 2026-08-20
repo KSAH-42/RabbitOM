@@ -2,25 +2,12 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the proxy invoker
-    /// </summary>
     public sealed class RtspPauseInvoker : RtspInvoker
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="proxy">the proxy</param>
-        internal RtspPauseInvoker( RtspConnector proxy )
-            : base( proxy , RtspMethod.Pause )
+        internal RtspPauseInvoker( RtspConnector proxy ) : base( proxy , RtspMethod.Pause )
         {
         }
 
-        /// <summary>
-        /// Sets the session identifier
-        /// </summary>
-        /// <param name="value">the value</param>
-        /// <returns>returns the current instance</returns>
         public IRtspInvoker SetSessionId( string value )
         {
             Builder.SessionId = value;

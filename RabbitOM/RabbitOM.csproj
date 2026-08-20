@@ -126,7 +126,6 @@
     <Compile Include="Streaming\Rtp\RtpSequenceEventArgs.cs" />
     <Compile Include="Streaming\Rtp\RtpStartCodePrefix.cs" />
     <Compile Include="Streaming\Rtp\RtpStreamWriter.cs" />
-    <Compile Include="Streaming\Rtsp\Clients\RtspConnectionExtensions.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspAnnounceInvoker.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspDescribeInvoker.cs" />
     <Compile Include="Streaming\Rtsp\Clients\RtspGetParameterInvoker.cs" />

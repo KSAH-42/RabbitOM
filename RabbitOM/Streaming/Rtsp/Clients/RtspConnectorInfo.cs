@@ -2,39 +2,21 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the proxy infos
-    /// </summary>
     internal sealed class RtspConnectorInfo
     {
-        /// <summary>
-        /// Represent the default sequence identifier
-        /// </summary>
-        private const int          DefaultSequenceId  = 1;
+        private const int DefaultSequenceId  = 1;
 
 
+        private readonly object _lock = new object();
+        private int _sequenceId = DefaultSequenceId;
+        private string _sessionId = string.Empty;
 
 
-        private readonly object   _lock               = new object();
-
-        private int               _sequenceId         = DefaultSequenceId;
-
-        private string            _sessionId          = string.Empty;
-
-
-
-
-        /// <summary>
-        /// Gets the sync root
-        /// </summary>
         public object SyncRoot
         {
             get => _lock;
         }
 
-        /// <summary>
-        /// Gets the sequence identifier
-        /// </summary>
         public int SequenceId
         {
             get
@@ -46,9 +28,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets the session identifier
-        /// </summary>
         public string SessionId
         {
             get
@@ -61,12 +40,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         }
 
 
-
-
-        /// <summary>
-        /// Increment the sequence identifier
-        /// </summary>
-        /// <returns>returns the next value</returns>
         public int GetNextSequenceIdentifier()
         {
             lock ( _lock )
@@ -80,9 +53,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Reset the sequence identifier
-        /// </summary>
         public void ResetSequenceIdentifier()
         {
             lock ( _lock )
@@ -91,10 +61,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Set the session identifier
-        /// </summary>
-        /// <param name="value">the session identifier</param>
         public void SetSessionId( string value )
         {
             lock ( _lock )
@@ -103,9 +69,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Clear the session identifier
-        /// </summary>
         public void ClearSessionId()
         {
             lock ( _lock )
@@ -114,9 +77,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Reset all
-        /// </summary>
         public void ResetAll()
         {
             lock ( _lock )

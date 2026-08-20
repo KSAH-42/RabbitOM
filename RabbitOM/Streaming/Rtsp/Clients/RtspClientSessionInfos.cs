@@ -3,44 +3,26 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    /// <summary>
-    /// Represent the client session data informations
-    /// </summary>
     internal sealed class RtspClientSessionInfos
     {
-        private readonly object                      _lock             = new object();
-
-        private readonly RtspClientSessionDescriptor _descriptor       = new RtspClientSessionDescriptor();
-
-        private readonly RtspMethodList              _supportedMethods = new RtspMethodList();
-
-        private string                               _sessionId        = string.Empty;
-
-        private bool                                 _isReady          = false;
-
-        private bool                                 _isPlaying        = false;   
+        private readonly object _lock = new object();
+        private readonly RtspClientSessionDescriptor _descriptor = new RtspClientSessionDescriptor();
+        private readonly RtspMethodList _supportedMethods = new RtspMethodList();
+        private string _sessionId = string.Empty;
+        private bool _isReady;
+        private bool _isPlaying;
 
 
-
-        /// <summary>
-        /// Gets the sync root
-        /// </summary>
         public object SyncRoot 
-        { 
+        {
             get => _lock;
         }
 
-        /// <summary>
-        /// Gets the descriptor
-        /// </summary>
         public RtspClientSessionDescriptor Descriptor
         {
             get => _descriptor;
         }
-        
-        /// <summary>
-        /// Gets the session identifier
-        /// </summary>
+
         public string SessionId
         {
             get
@@ -52,9 +34,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets the ready status
-        /// </summary>
         public bool IsReady
         {
             get
@@ -65,10 +44,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                 }
             }
         }
-        
-        /// <summary>
-        /// Gets the playing status
-        /// </summary>
+
         public bool IsPlaying
         {
             get
@@ -80,21 +56,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Gets the supported methods
-        /// </summary>
         public RtspMethodReadonlyList SupportedMethods
         {
             get => new RtspMethodReadonlyList( _supportedMethods );
         }
 
-        
 
-
-        /// <summary>
-        /// Check if the session can be prepared
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool CanPrepare()
         {
             lock ( _lock )
@@ -113,10 +80,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the session can be setup
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool CanSetup()
         {
             lock ( _lock )
@@ -140,10 +103,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the session can be start the playing
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool CanPlay()
         {
             lock ( _lock )
@@ -162,10 +121,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the session can be start the playing
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool CanTearDown()
         {
             lock ( _lock )
@@ -179,10 +134,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the session id has been registered
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool IsSessionIdRegistered()
         {
             lock ( _lock )
@@ -191,11 +142,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Register the session identifier and update internal status
-        /// </summary>
-        /// <param name="sessionId">the session identifier</param>
-        /// <returns></returns>
         public bool RegisterSessionId( string sessionId )
         {
             lock ( _lock )
@@ -216,9 +162,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Un register the session and update some internals status members
-        /// </summary>
         public void UnRegisterSessionId()
         {
             lock ( _lock )
@@ -229,10 +172,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Change the playing status 
-        /// </summary>
-        /// <returns>returns true for a success, otherwise false</returns>
         public bool TurnOnPlayingStatus()
         {
             lock ( _lock )
@@ -255,9 +194,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Change the playing status 
-        /// </summary>
         public void TurnOffPlayingStatus()
         {
             lock ( _lock )
@@ -266,29 +202,16 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Add a supported method
-        /// </summary>
-        /// <param name="method">the method</param>
-        /// <returns>return true for a success, otherwise false</returns>
         public bool AddSupportedMethod( RtspMethod method )
         {
             return _supportedMethods.TryAdd( method );
         }
 
-        /// <summary>
-        /// Add a supported method
-        /// </summary>
-        /// <param name="methods">a collection of methods</param>
-        /// <returns>return true for a success, otherwise false</returns>
         public bool AddSupportedMethods( IEnumerable<RtspMethod> methods )
         {
             return _supportedMethods.TryAddRange( methods );
         }
 
-        /// <summary>
-        /// Reset internal members
-        /// </summary>
         public void Reset()
         {
             lock ( _lock )

@@ -5,32 +5,17 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
 
-    /// <summary>
-    /// Represent a request handler
-    /// </summary>
     internal sealed class RtspProxyRequestHandler : IDisposable
     {
         private readonly object _lock;
-
         private readonly ManualResetEvent _completionHandle;
-
         private readonly RtspMessageRequest _request;
-
         private RtspMessageResponse _response;
-
         private bool _succeed;
-
         private bool _isCanceled;
 
 
 
-
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="request">the request</param>
-        /// <exception cref="ArgumentNullException"/>
         public RtspProxyRequestHandler( RtspMessageRequest request )
         {
             _request          = request ?? throw new ArgumentNullException( nameof( request ) );
@@ -40,35 +25,21 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-
-
-        /// <summary>
-        /// Gets the sequence identifier
-        /// </summary>
         public long RequestId
         {
             get => _request.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq )?.Value ?? 0;
         }
 
-        /// <summary>
-        /// Gets the response
-        /// </summary>
         public RtspMessageResponse Response
         {
             get => _response;
         }
 
-        /// <summary>
-        /// Check if completion status
-        /// </summary>
         public bool IsCompleted
         {
             get => _completionHandle.TryWait( TimeSpan.Zero );
         }
 
-        /// <summary>
-        /// Gets the status
-        /// </summary>
         public bool Succeed
         {
             get
@@ -80,9 +51,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Check if the handler has been canceled
-        /// </summary>
         public bool IsCanceled
         {
             get
@@ -96,11 +64,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-
-
-        /// <summary>
-        /// Cancel the handle operation
-        /// </summary>
         public void Cancel()
         {
             if ( ! _completionHandle.TryWait( TimeSpan.Zero ) )
@@ -111,20 +74,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Wait the completion
-        /// </summary>
-        /// <param name="timeout">the timeout</param>
-        /// <returns>returns true for a success, otherwise false.</returns>
         public bool WaitCompletion( TimeSpan timeout )
         {
             return _completionHandle.TryWait( timeout );
         }
 
-        /// <summary>
-        /// Handle the response
-        /// </summary>
-        /// <param name="response">the response</param>
         public void HandleResponse( RtspMessageResponse response )
         {
             if ( _response != null || _completionHandle.TryWait( TimeSpan.Zero ) )
@@ -133,7 +87,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
 
             _response = response;
-			
+
             try
 			{
                 if ( _response == null || ! _response.TryValidate() )
@@ -168,9 +122,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 			}
         }
 
-        /// <summary>
-        /// Dispose
-        /// </summary>
         public void Dispose()
         {
             _completionHandle.Dispose();
@@ -178,11 +129,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-
-
-        /// <summary>
-        /// Occurs when cancelation is needed
-        /// </summary>
         private void OnCancel()
         {
             lock( _lock )
@@ -192,9 +138,6 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        /// <summary>
-        /// Occurs on success
-        /// </summary>
         private void OnSucceed()
         {
             lock ( _lock )
