@@ -312,7 +312,7 @@ namespace RabbitOM.Player
         {
             _datasource.AddBytesReceived( e.Packet.Data.Length );
 
-            // TODO: move the inspector when the rtp sequence will be completed, it should be used on OnBuildFrame function
+            // TODO: move the inspector when the rtp sequence will be completed, it should be used on OnBuildFrame function, but in reality the inspector must be used in before the decoder filter 
 
             if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
             {
