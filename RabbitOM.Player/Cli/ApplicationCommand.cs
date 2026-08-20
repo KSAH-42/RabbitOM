@@ -25,11 +25,6 @@ namespace RabbitOM.Player.Cli
 
 
 
-        public void SetHandler( Action<ApplicationCommand> handler )
-        {
-            _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
-        }
-
         public override void Execute()
         {
             if ( _handler == null )
@@ -38,6 +33,11 @@ namespace RabbitOM.Player.Cli
             }
 
             _handler( this );
+        }
+
+        public void SetHandler( Action<ApplicationCommand> handler )
+        {
+            _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
         }
     }
 }
