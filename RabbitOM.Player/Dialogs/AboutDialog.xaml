@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         mc:Ignorable="d"
         Title="ABOUT" 
-        Height="520" 
+        Height="490" 
         Width="460"
         MinWidth="380"
         MinHeight="250"
