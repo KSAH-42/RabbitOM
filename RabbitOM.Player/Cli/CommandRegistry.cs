@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace RabbitOM.Player.Cli
 {
-    public static class CommandModelFactory
+    public static class CommandRegistry
     {
         public static IReadOnlyDictionary<string,CommandModel> ResolveCommands()
         {
@@ -12,12 +12,7 @@ namespace RabbitOM.Player.Cli
 
             foreach ( var type in Assembly.GetExecutingAssembly().ExportedTypes )
             {
-                if ( ! typeof( Command ).IsAssignableFrom( type ) )
-                {
-                    continue;
-                }
-
-                if ( type.IsAbstract )
+                if ( ! typeof( Command ).IsAssignableFrom( type ) || type.IsAbstract )
                 {
                     continue;
                 }
