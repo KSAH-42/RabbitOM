@@ -5,8 +5,6 @@ namespace RabbitOM.Player.Cli
 {
     public static class CommandLineParser
     {
-        public static readonly IReadOnlyDictionary<string,CommandModel> SupportedTypes = CommandRegistry.ResolveCommands();
-
         public static bool TryParse( string[] args , out Command result )
         {
             throw new NotImplementedException();
