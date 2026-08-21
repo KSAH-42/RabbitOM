@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ABOUT" 
         Height="490" 
-        Width="480"
+        Width="380"
         MinWidth="380"
         MinHeight="250"
         WindowStartupLocation="CenterOwner"
@@ -46,12 +46,12 @@
 
                         <GridViewColumn Header="Component" 
                                         DisplayMemberBinding="{Binding Path=Name}" 
-                                        Width="255" 
+                                        Width="auto" 
                                         />
 
                         <GridViewColumn Header="Version" 
                                         DisplayMemberBinding="{Binding Path=Version}"
-                                        Width="110" 
+                                        Width="137" 
                                         />
 
                     </GridView>
