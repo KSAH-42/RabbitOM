@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal sealed class RtspClientSessionInfos
+    internal sealed class RtspSessionInfos
     {
         private readonly object _lock = new object();
         private readonly RtspClientSessionDescriptor _descriptor = new RtspClientSessionDescriptor();

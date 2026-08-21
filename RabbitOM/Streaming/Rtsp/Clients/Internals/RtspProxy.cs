@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal sealed class RtspConnector : IDisposable
+    internal sealed class RtspProxy : IDisposable
     {
         public event EventHandler<RtspConnectionOpenedEventArgs> Opened;
         public event EventHandler<RtspConnectionClosedEventArgs> Closed;
@@ -16,9 +16,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         private readonly object _lock;
         private readonly RtspTcpSocket _socket;
-        private readonly RtspConnectorInfo _informations;
-        private readonly RtspConnectorStatus _status;
-        private readonly RtspConnectorSettings _settings;
+        private readonly RtspProxyInfo _informations;
+        private readonly RtspProxyStatus _status;
+        private readonly RtspProxySettings _settings;
         private readonly RtspRequestManager _requestManager;
         private readonly RtspSecurityManager _securityManager;
         private readonly RtspInvocationManager _invocationManager;
@@ -26,18 +26,18 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         private readonly RtspEventManager _mediaEventManager;
 
 
-        public RtspConnector()
+        public RtspProxy()
         {
             _lock = new object();
             _socket = new RtspTcpSocket();
-            _informations = new RtspConnectorInfo();
+            _informations = new RtspProxyInfo();
             _requestManager = new RtspRequestManager( this );
             _securityManager = new RtspSecurityManager( this );
             _invocationManager = new RtspInvocationManager( this );
             _eventManager = new RtspEventManager( this );
             _mediaEventManager = new RtspEventManager( this );
-            _status = new RtspConnectorStatus();
-            _settings = new RtspConnectorSettings();
+            _status = new RtspProxyStatus();
+            _settings = new RtspProxySettings();
         }
 
 
@@ -348,7 +348,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-        public static void RaiseEvent( RtspConnector proxy , EventArgs e )
+        public static void RaiseEvent( RtspProxy proxy , EventArgs e )
         {
             if ( proxy == null )
             {

@@ -6,11 +6,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     {
         private readonly object _lock;
 
-        private readonly RtspConnector _proxy;
+        private readonly RtspProxy _proxy;
 
         private readonly RtspAuthorizationFactory _factory;
 
-        public RtspSecurityManager( RtspConnector proxy )
+        public RtspSecurityManager( RtspProxy proxy )
         {
             _proxy   = proxy ?? throw new ArgumentNullException( nameof( proxy ) ) ;
 

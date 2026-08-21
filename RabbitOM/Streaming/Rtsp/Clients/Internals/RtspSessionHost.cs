@@ -6,9 +6,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     {
         private TimeSpan _idleTimeout;
 
-        private readonly RtspClientSession _session;
+        private readonly RtspSession _session;
 
-        public RtspClientSessionHost( RtspClientSession session )
+        public RtspClientSessionHost( RtspSession session )
         {
             _session = session ?? throw new ArgumentNullException( nameof( session ) );
             _session.SubscribeEvents();

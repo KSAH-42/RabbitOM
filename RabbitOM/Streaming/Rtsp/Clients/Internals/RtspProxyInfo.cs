@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal sealed class RtspConnectorInfo
+    internal sealed class RtspProxyInfo
     {
         private const int DefaultSequenceId  = 1;
 

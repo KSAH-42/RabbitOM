@@ -6,14 +6,14 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
     public sealed class RtspClient : IRtspClient
     {
-        private readonly RtspClientSession _session;
+        private readonly RtspSession _session;
         private readonly BackgroundWorker _thread;
 
 
 
         public RtspClient()
         {
-            _session = new RtspClientSession( this );
+            _session = new RtspSession( this );
             _thread = new BackgroundWorker("Rtsp - client thread");
         }
 

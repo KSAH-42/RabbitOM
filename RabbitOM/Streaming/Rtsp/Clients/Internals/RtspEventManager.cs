@@ -8,10 +8,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     {
         private readonly RtspEventConcurrentQueue _eventQueue;
         private readonly BackgroundWorker _thread;
-        private readonly RtspConnector _proxy;
+        private readonly RtspProxy _proxy;
 
 
-        public RtspEventManager( RtspConnector proxy )
+        public RtspEventManager( RtspProxy proxy )
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             {
                 while ( _eventQueue.TryDequeue( out EventArgs eventArgs ) )
                 {
-                    RtspConnector.RaiseEvent( _proxy , eventArgs );
+                    RtspProxy.RaiseEvent( _proxy , eventArgs );
                 }
             }
 

@@ -4,9 +4,9 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     internal sealed class RtspInvocationManager
     {
-        private readonly RtspConnector _proxy = null;
+        private readonly RtspProxy _proxy = null;
 
-        public RtspInvocationManager( RtspConnector proxy )
+        public RtspInvocationManager( RtspProxy proxy )
         {
             _proxy = proxy ?? throw new ArgumentNullException(nameof(proxy));
         }

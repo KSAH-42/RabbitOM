@@ -7,10 +7,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
     internal sealed class RtspClientSessionDataReceiver
     {
         private readonly BackgroundWorker _thread;
-        private readonly RtspClientSession _session;
+        private readonly RtspSession _session;
         private readonly IDataReceiver _receiver;
 
-        public RtspClientSessionDataReceiver( RtspClientSession session , IDataReceiver receiver )
+        public RtspClientSessionDataReceiver( RtspSession session , IDataReceiver receiver )
         {
             _session = session ?? throw new ArgumentNullException( nameof( session ) );
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );

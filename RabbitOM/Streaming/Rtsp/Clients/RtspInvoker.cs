@@ -5,11 +5,11 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     public class RtspInvoker : IRtspInvoker
     {
-        private readonly RtspConnector _proxy;
+        private readonly RtspProxy _proxy;
         private readonly RtspMessageRequestBuilder _builder;
 
 
-        internal RtspInvoker( RtspConnector proxy , RtspMethod method )
+        internal RtspInvoker( RtspProxy proxy , RtspMethod method )
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 

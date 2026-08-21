@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal sealed class RtspClientSession : IDisposable
+    internal sealed class RtspSession : IDisposable
     {
         private readonly object _lock;
 
@@ -10,23 +10,23 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         private readonly RtspConnection _connection;
 
-        private readonly RtspClientSessionInfos _informations;
+        private readonly RtspSessionInfos _informations;
 
-        private readonly RtspClientSessionDispatcher _dispatcher;
+        private readonly RtspSessionEventDispatcher _dispatcher;
 
         private RtspClientSessionDataReceiver _dataReceiver;
 
 
 
 
-        internal RtspClientSession( object sender )
+        internal RtspSession( object sender )
         {
             _lock = new object();
 
             _configuration = new RtspClientConfiguration();
             _connection = new RtspConnection();
-            _informations = new RtspClientSessionInfos();
-            _dispatcher = new RtspClientSessionDispatcher( sender );
+            _informations = new RtspSessionInfos();
+            _dispatcher = new RtspSessionEventDispatcher( sender );
         }
 
 
@@ -43,7 +43,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             get => _configuration;
         }
 
-        public RtspClientSessionDispatcher Dispatcher
+        public RtspSessionEventDispatcher Dispatcher
         {
             get => _dispatcher;
         }

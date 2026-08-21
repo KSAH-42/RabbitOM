@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     public sealed class RtspPauseInvoker : RtspInvoker
     {
-        internal RtspPauseInvoker( RtspConnector proxy ) : base( proxy , RtspMethod.Pause )
+        internal RtspPauseInvoker( RtspProxy proxy ) : base( proxy , RtspMethod.Pause )
         {
         }
 

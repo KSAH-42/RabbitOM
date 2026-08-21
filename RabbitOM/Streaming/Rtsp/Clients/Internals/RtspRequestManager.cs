@@ -6,7 +6,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
     internal sealed class RtspRequestManager : IDisposable
     {
-        private readonly RtspConnector _proxy;
+        private readonly RtspProxy _proxy;
         private readonly RtspChunkQueue _chunks;
         private readonly RtspMessageExtactor _extractor;
         private readonly BackgroundWorker _chunkListenerThread;
@@ -14,7 +14,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         private readonly RtspRequestHandlerList _requestHandlers;
         private byte[] _buffer;
 
-        public RtspRequestManager( RtspConnector proxy )
+        public RtspRequestManager( RtspProxy proxy )
         {
             _proxy = proxy ?? throw new ArgumentNullException( nameof( proxy ) );
 

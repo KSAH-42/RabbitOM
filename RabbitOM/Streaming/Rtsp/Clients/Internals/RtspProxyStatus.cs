@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
 
-    internal sealed class RtspConnectorStatus
+    internal sealed class RtspProxyStatus
     {
         private const uint DefaultMaxErrors = 10;
 

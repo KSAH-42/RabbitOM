@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
 
-    internal sealed class RtspClientSessionDispatcher : IRtspClientEvents
+    internal sealed class RtspSessionEventDispatcher : IRtspClientEvents
     {
         public event EventHandler<RtspClientCommunicationStartedEventArgs> CommunicationStarted  = null;
         public event EventHandler<RtspClientCommunicationStoppedEventArgs> CommunicationStopped  = null;
@@ -19,7 +19,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         private readonly object _sender;
 
 
-        internal RtspClientSessionDispatcher( object sender )
+        internal RtspSessionEventDispatcher( object sender )
         {
             _sender = sender ?? throw new ArgumentNullException( nameof( sender ) );
             _eventListener = new BackgroundWorker("Rtsp - Event listener");

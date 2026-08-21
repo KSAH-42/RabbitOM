@@ -4,7 +4,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     public sealed class RtspSetParameterInvoker : RtspInvoker
     {
-        internal RtspSetParameterInvoker( RtspConnector proxy ) : base( proxy , RtspMethod.Setup )
+        internal RtspSetParameterInvoker( RtspProxy proxy ) : base( proxy , RtspMethod.Setup )
         {
         }
 
