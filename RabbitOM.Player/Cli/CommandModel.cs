@@ -25,7 +25,14 @@ namespace RabbitOM.Player.Cli
         {
             var command = Activator.CreateInstance( CommandType ) as Command;
 
-            return command ?? throw new InvalidOperationException( "Invalid command type" );
+            if ( command == null )
+            {
+                throw new InvalidOperationException( "Invalid command type" );
+            }
+
+            // TODO: populate the properties
+
+            return command;
         }
     }
 }
