@@ -4,11 +4,11 @@ using System.Reflection;
 
 namespace RabbitOM.Player.Cli
 {
-    public static class CommandResolver
+    public static class CommandModelFactory
     {
-        public static IReadOnlyDictionary<string,Type> ResolveCommands()
+        public static IReadOnlyDictionary<string,CommandModel> ResolveCommands()
         {
-            var result = new Dictionary<string,Type>( StringComparer.OrdinalIgnoreCase );
+            var models = new Dictionary<string,CommandModel>( StringComparer.OrdinalIgnoreCase );
 
             foreach ( var type in Assembly.GetExecutingAssembly().ExportedTypes )
             {
@@ -29,10 +29,10 @@ namespace RabbitOM.Player.Cli
                     throw new InvalidOperationException( $"the command does not used a CommandAttribute {type}" );
                 }
 
-                result.Add( commandAttribute.Verb , type );
+                models.Add( commandAttribute.Verb ,  new CommandModel( type , commandAttribute.Verb ) );
             }
 
-            return result;
+            return models;
         }
     }
 }

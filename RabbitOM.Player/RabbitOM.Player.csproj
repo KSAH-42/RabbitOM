@@ -75,8 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cli\CommandFactory.cs" />
-    <Compile Include="Cli\CommandResolver.cs" />
+    <Compile Include="Cli\CommandModelFactory.cs" />
+    <Compile Include="Cli\CommandModel.cs" />
     <Compile Include="Cli\CommandLineParser.cs" />
     <Compile Include="Cli\CommandAttribute.cs" />
     <Compile Include="Cli\ICommandHandler.cs" />
