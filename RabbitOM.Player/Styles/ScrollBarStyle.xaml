@@ -68,35 +68,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Grid Margin="0,0,0,0" x:Name="Grid">
-                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" x:Name="HoverRectangle" VerticalAlignment="Stretch" Width="13" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" >
-                            <Rectangle.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFCCC9C9" Offset="0.5" />
-                                    <GradientStop Color="#FFAFAFAF" Offset="0.5" />
-                                    <GradientStop Color="White" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" Width="13"  x:Name="PressedRectangle" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" >
-                            <Rectangle.Fill>
-                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                    <GradientStop Color="#FF292929" Offset="0.5" />
-                                    <GradientStop Color="#FF242424" Offset="0.484" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" x:Name="HoverRectangle" VerticalAlignment="Stretch" Width="13" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FFCCC9C9" />
+                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" Width="13"  x:Name="PressedRectangle" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FF292929" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True" />
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PressedRectangle" Property="Rectangle.Fill" >
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF292929" Offset="0.5" />
-                                        <GradientStop Color="#FF242424" Offset="0.484" />
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="PressedRectangle" Property="Rectangle.Fill" Value="#FF292929" />
                             <Setter TargetName="PressedRectangle" Property="Stroke" Value="DarkGray" >
                             </Setter>
                             <Setter Property="Effect" >
@@ -109,17 +87,8 @@
                             <Setter Property="Opacity" TargetName="Grid" Value="0.1"/>
                         </Trigger>
                         <Trigger Property="IsDragging" Value="True">
-                            <Setter TargetName="PressedRectangle" Property="Rectangle.Fill" >
-                                <Setter.Value>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FFCCC9C9" Offset="0.5" />
-                                        <GradientStop Color="#FFAFAFAF" Offset="0.5" />
-                                        <GradientStop Color="White" />
-                                    </LinearGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PressedRectangle" Property="Stroke" Value="#FF272727" >
-                            </Setter>
+                            <Setter TargetName="PressedRectangle" Property="Rectangle.Fill" Value="#FFCCC9C9" />
+                            <Setter TargetName="PressedRectangle" Property="Stroke" Value="#FF272727" />
                             <Setter Property="Effect" >
                                 <Setter.Value>
                                     <DropShadowEffect  BlurRadius="0" ShadowDepth="0"  RenderingBias="Quality" Color="White" Opacity="1"/>
