@@ -5,7 +5,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 {
     using RabbitOM.Threading;
 
-    internal sealed class RtspProxyRequestHandler : IDisposable
+    internal sealed class RtspRequestHandler : IDisposable
     {
         private readonly object _lock;
         private readonly ManualResetEvent _completionHandle;
@@ -16,7 +16,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-        public RtspProxyRequestHandler( RtspMessageRequest request )
+        public RtspRequestHandler( RtspMessageRequest request )
         {
             _request          = request ?? throw new ArgumentNullException( nameof( request ) );
             _lock             = new object();

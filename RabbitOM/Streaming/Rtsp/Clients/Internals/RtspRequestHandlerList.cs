@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal sealed class RtspProxyRequestHandlerList : ICollection , ICollection<RtspProxyRequestHandler> , IReadOnlyCollection<RtspProxyRequestHandler>
+    internal sealed class RtspRequestHandlerList : ICollection , ICollection<RtspRequestHandler> , IReadOnlyCollection<RtspRequestHandler>
     {
         public const int Maximum = 1000;
 
 
         private readonly object _lock = new object();
-        private readonly IDictionary<long,RtspProxyRequestHandler> _collection  = new Dictionary<long,RtspProxyRequestHandler>();
+        private readonly IDictionary<long,RtspRequestHandler> _collection  = new Dictionary<long,RtspRequestHandler>();
 
 
-        public RtspProxyRequestHandler this[ int sequenceId ]
+        public RtspRequestHandler this[ int sequenceId ]
         {
             get
             {
@@ -76,7 +76,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
 
 
-        public void Add( RtspProxyRequestHandler handler )
+        public void Add( RtspRequestHandler handler )
         {
             if ( handler == null )
             {
@@ -122,10 +122,10 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
         public void CopyTo(Array array, int index)
         {
-            CopyTo( array as RtspProxyRequestHandler[] , index );
+            CopyTo( array as RtspRequestHandler[] , index );
         }
 
-        public void CopyTo(RtspProxyRequestHandler[] array, int arrayIndex)
+        public void CopyTo(RtspRequestHandler[] array, int arrayIndex)
         {
             lock ( _lock )
             {
@@ -133,7 +133,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public bool Contains( RtspProxyRequestHandler handler )
+        public bool Contains( RtspRequestHandler handler )
         {
             if ( handler == null )
             {
@@ -154,15 +154,15 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public RtspProxyRequestHandler FindById( long sequenceId )
+        public RtspRequestHandler FindById( long sequenceId )
         {
             lock ( _lock )
             {
-                return _collection.TryGetValue( sequenceId , out RtspProxyRequestHandler result ) ? result : null ;
+                return _collection.TryGetValue( sequenceId , out RtspRequestHandler result ) ? result : null ;
             }
         }
 
-        public RtspProxyRequestHandler ElementAtOrDefault( int index )
+        public RtspRequestHandler ElementAtOrDefault( int index )
         {
             lock ( _lock )
             {
@@ -170,7 +170,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public void ForEach( Action<RtspProxyRequestHandler> action )
+        public void ForEach( Action<RtspRequestHandler> action )
         {
             if (action == null)
             {
@@ -191,7 +191,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public IEnumerator<RtspProxyRequestHandler> GetEnumerator()
+        public IEnumerator<RtspRequestHandler> GetEnumerator()
         {
             lock ( _lock )
             {
@@ -207,12 +207,12 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public bool Remove( RtspProxyRequestHandler handler )
+        public bool Remove( RtspRequestHandler handler )
         {
             return Remove( handler , true );
         }
 
-        public bool Remove( RtspProxyRequestHandler handler , bool dispose )
+        public bool Remove( RtspRequestHandler handler , bool dispose )
         {
             if ( handler == null )
             {
@@ -243,7 +243,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public bool TryAdd( RtspProxyRequestHandler handler )
+        public bool TryAdd( RtspRequestHandler handler )
         {
             if (handler == null)
             {
@@ -268,7 +268,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
             }
         }
 
-        public bool TryGetById( long sequenceId , out RtspProxyRequestHandler result )
+        public bool TryGetById( long sequenceId , out RtspRequestHandler result )
         {
             lock ( _lock )
             {

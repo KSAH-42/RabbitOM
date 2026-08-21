@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    internal enum RtspProxyMessageType
+    internal enum RtspConnectorMessageType
     {
         None = 0,
         Message,

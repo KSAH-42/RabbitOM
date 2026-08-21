@@ -11,7 +11,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
         private readonly RtspMessageExtactor _extractor;
         private readonly BackgroundWorker _chunkListenerThread;
         private readonly BackgroundWorker _requestListenerThread;
-        private readonly RtspProxyRequestHandlerList _requestHandlers;
+        private readonly RtspRequestHandlerList _requestHandlers;
         private byte[] _buffer;
 
         public RtspRequestManager( RtspConnector proxy )
@@ -22,7 +22,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
 
             _requestListenerThread = new BackgroundWorker( "Rtsp - proxy request manager - listener " );
 
-            _requestHandlers = new RtspProxyRequestHandlerList();
+            _requestHandlers = new RtspRequestHandlerList();
 
             _chunks = new RtspChunkQueue();
 
@@ -99,7 +99,7 @@ namespace RabbitOM.Streaming.Rtsp.Clients
                     _proxy.SecurityManager.AddAuthorization( request );
                 }
 
-                var handler = new RtspProxyRequestHandler( request );
+                var handler = new RtspRequestHandler( request );
 
                 _requestHandlers.Add( handler );
 

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtsp.Clients
 {
-    public sealed class RtspConnectorSettings
+    internal sealed class RtspConnectorSettings
     {
         public static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds( 15 );
 
