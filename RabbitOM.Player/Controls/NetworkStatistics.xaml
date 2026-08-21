@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
              Height="279" 
-             Width="360"
+             Width="365"
              Loaded="OnUserControlLoaded"
              Unloaded="OnUserControlUnloaded"
              >
