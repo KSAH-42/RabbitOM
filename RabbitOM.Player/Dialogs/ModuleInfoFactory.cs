@@ -22,7 +22,10 @@ namespace RabbitOM.Player.Dialogs
 
                 var name = Path.GetFileName( module.Location );
 
-                modules[ name ] = new ModuleInfo() { Name = name , Version = infos.Version?.ToString() ?? string.Empty };
+                if ( name.EndsWith( ".dll" ) || name.EndsWith( ".exe" ) )
+                {
+                    modules[ name ] = new ModuleInfo() { Name = name , Version = infos.Version?.ToString() ?? string.Empty };
+                }
             }
 
             return modules.Values.OrderBy( element => element.Name );
