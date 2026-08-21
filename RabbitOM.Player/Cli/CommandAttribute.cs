@@ -7,6 +7,11 @@ namespace RabbitOM.Player.Cli
     {
         public CommandAttribute( string verb )
         {
+            if ( string.IsNullOrWhiteSpace( verb ) )
+            {
+                throw new ArgumentNullException( nameof( verb ) );
+            }
+
             Verb = verb;
         }
 
