@@ -14,6 +14,9 @@ namespace RabbitOM.Player.Cli
         public string Uri { get; set; }
 
         [CommandOption("-s")]
+        [CommandOption("--show")]
+        public bool Show { get; set; } = true;
+
         [CommandOption("--show-stats")]
         public bool ShowStats { get; set; } = true;
 
