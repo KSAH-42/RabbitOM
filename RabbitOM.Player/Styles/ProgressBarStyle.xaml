@@ -25,7 +25,6 @@
                                 <OuterGlowBitmapEffect Opacity="0" GlowColor="White" GlowSize="3" />
                             </Border.BitmapEffect>
                         </Border>
-                        <!-- background #E6625252-->
                         <Border Background="Orange" HorizontalAlignment="Left" x:Name="PART_Indicator" BorderThickness="0,0,0.25,0.25" Margin="0.6,1,1,1" CornerRadius="2.5" VerticalAlignment="Stretch" >
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="#FF888888" />
