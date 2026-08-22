@@ -17,7 +17,7 @@ namespace RabbitOM.Player.Cli
 
         [Option("--play" , true )]
         [Option("--no-play" , false )]
-        public bool AutoPlay { get; set; }
+        public bool AutoStart { get; set; }
 
         [Option("--stats" , true )]
         [Option("--no-stats" , false )]
