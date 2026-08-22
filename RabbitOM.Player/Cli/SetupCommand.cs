@@ -9,6 +9,9 @@ namespace RabbitOM.Player.Cli
     {
         private Action<SetupCommand> _handler;
 
+
+
+
         [OptionPosition(0)]
         public string Uri { get; set; }
 
@@ -23,6 +26,7 @@ namespace RabbitOM.Player.Cli
         [Option("--stretch" , true )]
         [Option("--no-stretch" , false)]
         public bool StrechImage { get; set; }
+
 
 
 
