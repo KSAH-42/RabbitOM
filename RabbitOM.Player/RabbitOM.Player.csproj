@@ -81,8 +81,9 @@
     <Compile Include="Cli\CommandAttribute.cs" />
     <Compile Include="Cli\ICommandHandler.cs" />
     <Compile Include="Cli\Command.cs" />
-    <Compile Include="Cli\StartCommand.cs" />
-    <Compile Include="Cli\CommandOptionAttribute.cs" />
+    <Compile Include="Cli\OptionPositionAttribute.cs" />
+    <Compile Include="Cli\SetupCommand.cs" />
+    <Compile Include="Cli\OptionAttribute.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />

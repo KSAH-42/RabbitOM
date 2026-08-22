@@ -1,0 +1,44 @@
+﻿using System;
+
+namespace RabbitOM.Player.Cli
+{
+    // RabbitOM.Player.exe setup rtsp://azerty --play --no-stats --no-strech
+
+    [Command( "start" ) ]
+    public sealed class SetupCommand : Command , ICommandHandler<SetupCommand>
+    {
+        private Action<SetupCommand> _handler;
+
+        [OptionPosition(0)]
+        public string Uri { get; set; }
+
+        [Option("--play" , true )]
+        [Option("--no-play" , false )]
+        public bool AutoPlay { get; set; }
+
+        [Option("--stats" , true )]
+        [Option("--no-stats" , false )]
+        public bool ShowStats { get; set; }
+
+        [Option("--stretch" , true )]
+        [Option("--no-stretch" , false)]
+        public bool StrechImage { get; set; }
+
+
+
+        public void SetHandler( Action<SetupCommand> handler )
+        {
+            _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
+        }
+
+        public override void Execute()
+        {
+            if ( _handler == null )
+            {
+                throw new InvalidOperationException( "no handler has been defined" );
+            }
+
+            _handler( this );
+        }
+    }
+}
