@@ -10,20 +10,8 @@ namespace RabbitOM.Player.Cli
             Verbe = verbe;
         }
 
-
-
-
         public Type CommandType { get; }
 
         public string Verbe { get; }
-
-
-
-
-
-        public Command CreateCommand( string[] args )
-        {
-            throw new NotImplementedException();
-        }
     }
 }
