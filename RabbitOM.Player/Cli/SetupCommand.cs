@@ -1,4 +1,5 @@
-﻿// RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15 --play --no-stats --no-stretch
+﻿// RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
+// RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
 using System;
 
 namespace RabbitOM.Player.Cli
