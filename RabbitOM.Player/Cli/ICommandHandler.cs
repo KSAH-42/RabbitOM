@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Player.Cli
 {
-    public interface ICommandHandler<TCommand> where TCommand : Command
+    public interface ICommandHandler<TObject>
     {
-        void SetHandler( Action<TCommand> handler );
+        void SetHandler( Action<TObject> handler );
     }
 }

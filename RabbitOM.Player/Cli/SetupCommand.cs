@@ -26,19 +26,16 @@ namespace RabbitOM.Player.Cli
         public bool StrechImage { get; set; }
 
 
+        public override void Execute()
+        {
+            var handler = _handler ?? throw new InvalidOperationException( "no handler has been defined" );
+
+            handler.Invoke( this );
+        }
+
         public void SetHandler( Action<SetupCommand> handler )
         {
             _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
-        }
-
-        public override void Execute()
-        {
-            if ( _handler == null )
-            {
-                throw new InvalidOperationException( "no handler has been defined" );
-            }
-
-            _handler( this );
         }
     }
 }
