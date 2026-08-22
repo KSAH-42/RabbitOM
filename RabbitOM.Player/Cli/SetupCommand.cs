@@ -4,7 +4,7 @@ namespace RabbitOM.Player.Cli
 {
     // RabbitOM.Player.exe setup rtsp://azerty --play --no-stats --no-stretch
 
-    [Command( "setup" ) ]
+    [Command( "setup" )]
     public sealed class SetupCommand : Command , ICommandHandler<SetupCommand>
     {
         private Action<SetupCommand> _handler;
