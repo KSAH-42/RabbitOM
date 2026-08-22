@@ -1,19 +1,13 @@
 ﻿// RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
 // RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
 using System;
+using System.Windows;
 
 namespace RabbitOM.Player.Cli
 {
     [Command( "setup" )]
     public sealed class SetupCommand : Command
     {
-        private readonly Action<SetupCommand> _handler;
-
-        public SetupCommand( Action<SetupCommand> handler )
-        {
-            _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
-        }
-
         [OptionPosition(0)]
         public string Uri { get; set; }
 
@@ -31,7 +25,12 @@ namespace RabbitOM.Player.Cli
 
         public override void Execute()
         {
-            _handler.Invoke( this );
+            var mainWindow = Application.Current.Windows.FirstOrDefault<MainWindow>();
+
+            if ( mainWindow != null )
+            {
+                // TODO: populate the window or maybe make something different
+            }
         }
     }
 }

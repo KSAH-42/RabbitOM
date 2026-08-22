@@ -84,6 +84,7 @@
     <Compile Include="Cli\ICommandLine.cs" />
     <Compile Include="Cli\SetupCommand.cs" />
     <Compile Include="Cli\OptionAttribute.cs" />
+    <Compile Include="Cli\WindowCollectionExtension.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
