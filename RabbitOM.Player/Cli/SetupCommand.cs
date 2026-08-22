@@ -5,10 +5,14 @@ using System;
 namespace RabbitOM.Player.Cli
 {
     [Command( "setup" )]
-    public sealed class SetupCommand : Command , ICommandHandler<SetupCommand>
+    public sealed class SetupCommand : Command
     {
-        private Action<SetupCommand> _handler;
+        private readonly Action<SetupCommand> _handler;
 
+        public SetupCommand( Action<SetupCommand> handler )
+        {
+            _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
+        }
 
         [OptionPosition(0)]
         public string Uri { get; set; }
@@ -25,17 +29,9 @@ namespace RabbitOM.Player.Cli
         [Option("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-
         public override void Execute()
         {
-            var handler = _handler ?? throw new InvalidOperationException( "no handler has been defined" );
-
-            handler.Invoke( this );
-        }
-
-        public void SetHandler( Action<SetupCommand> handler )
-        {
-            _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
+            _handler.Invoke( this );
         }
     }
 }

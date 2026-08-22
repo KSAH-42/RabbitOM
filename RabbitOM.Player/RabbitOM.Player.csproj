@@ -79,7 +79,6 @@
     <Compile Include="Cli\CommandModel.cs" />
     <Compile Include="Cli\CommandLineParser.cs" />
     <Compile Include="Cli\CommandAttribute.cs" />
-    <Compile Include="Cli\ICommandHandler.cs" />
     <Compile Include="Cli\Command.cs" />
     <Compile Include="Cli\OptionPositionAttribute.cs" />
     <Compile Include="Cli\ICommandLine.cs" />
