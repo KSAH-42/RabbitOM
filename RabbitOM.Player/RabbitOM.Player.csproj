@@ -82,6 +82,7 @@
     <Compile Include="Cli\ICommandHandler.cs" />
     <Compile Include="Cli\Command.cs" />
     <Compile Include="Cli\OptionPositionAttribute.cs" />
+    <Compile Include="Cli\ICommandLine.cs" />
     <Compile Include="Cli\SetupCommand.cs" />
     <Compile Include="Cli\OptionAttribute.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
