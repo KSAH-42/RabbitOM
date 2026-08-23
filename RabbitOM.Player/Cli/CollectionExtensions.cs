@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace RabbitOM.Player.Cli
 {
-    public static class WindowCollectionExtension
+    public static class CollectionExtensions
     {
         public static TWindow FirstOrDefault<TWindow>( this WindowCollection source ) where TWindow : Window
         {
