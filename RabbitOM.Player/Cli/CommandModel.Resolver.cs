@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace RabbitOM.Player.Cli
 {
-    public static class CommandRegistry
+    public partial class CommandModel
     {
-        public static IReadOnlyDictionary<string,CommandModel> ResolveCommands()
+        public static IReadOnlyDictionary<string,CommandModel> GetAssemblyModels()
         {
             var models = new Dictionary<string,CommandModel>( StringComparer.OrdinalIgnoreCase );
 

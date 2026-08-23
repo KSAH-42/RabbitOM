@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Player.Cli
 {
-    public sealed class CommandModel
+    public sealed partial class CommandModel
     {
         public CommandModel( Type commandType , string verbe )
         {
