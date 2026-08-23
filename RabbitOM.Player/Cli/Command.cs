@@ -9,8 +9,6 @@ namespace RabbitOM.Player.Cli
             Dispose( false );
         }
 
-        public abstract bool CanExecute();
-
         public abstract void Execute();
 
         public void Dispose()

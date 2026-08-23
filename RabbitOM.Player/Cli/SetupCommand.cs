@@ -22,12 +22,6 @@ namespace RabbitOM.Player.Cli
         [Option("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-
-        public override bool CanExecute()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Execute()
         {
             throw new NotImplementedException();
