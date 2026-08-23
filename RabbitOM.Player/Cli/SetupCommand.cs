@@ -1,6 +1,4 @@
-﻿// RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
-// RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
-using System;
+﻿using System;
 
 namespace RabbitOM.Player.Cli
 {
@@ -22,6 +20,8 @@ namespace RabbitOM.Player.Cli
         [Option("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
+        // RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
+        // RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
         public override void Execute()
         {
             throw new NotImplementedException();
