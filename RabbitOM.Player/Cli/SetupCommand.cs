@@ -1,7 +1,6 @@
 ﻿// RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
 // RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
 using System;
-using System.Windows;
 
 namespace RabbitOM.Player.Cli
 {
@@ -25,12 +24,9 @@ namespace RabbitOM.Player.Cli
 
         public override void Execute()
         {
-            var mainWindow = Application.Current.Windows.FirstOrDefault<MainWindow>();
+            // var mainWindow = Application.Current.Windows.FirstOrDefault<MainWindow>();
 
-            if ( mainWindow != null )
-            {
-                // TODO: populate the window or maybe make something different
-            }
+            throw new NotImplementedException();
         }
     }
 }
