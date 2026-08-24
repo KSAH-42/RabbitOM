@@ -75,7 +75,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
     <Compile Include="Cli\CommandTypeAttribute.cs" />
+=======
+<<<<<<< HEAD
+=======
+    <Compile Include="Cli\CommandTypeAttribute.cs" />
+>>>>>>> fd902550 (add application interface)
+>>>>>>> 300ee1113ff19ac88f082c7638d1c5f4f8745e1c
     <Compile Include="Cli\CommandModel.Resolver.cs" />
     <Compile Include="Cli\CommandModel.cs" />
     <Compile Include="Cli\CommandLineParser.cs" />
