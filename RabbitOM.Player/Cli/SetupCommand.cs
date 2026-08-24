@@ -7,12 +7,22 @@ namespace RabbitOM.Player.Cli
     {
         private readonly IApplication _application;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fd902550 (add application interface)
         public SetupCommand( IApplication application )
         {
             _application = application ?? throw new ArgumentNullException( nameof( application ) );
         }
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fd902550 (add application interface)
         [OptionPosition(0)]
         public string Uri { get; set; }
 
@@ -28,10 +38,19 @@ namespace RabbitOM.Player.Cli
         [Option("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-        // RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
-        // RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
+
+
+
         public override void Execute()
         {
+<<<<<<< HEAD
+=======
+            // RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
+            // RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
+
+            _application.StreamUri = Uri;
+
+>>>>>>> fd902550 (add application interface)
             if ( ShowStats )
             {
                 _application.ShowStatistics();
@@ -50,8 +69,11 @@ namespace RabbitOM.Player.Cli
                 _application.UnStrechImage();
             }
 
+<<<<<<< HEAD
             _application.StreamUri = Uri;
 
+=======
+>>>>>>> fd902550 (add application interface)
             if ( AutoStart )
             {
                 _application.StartStreaming();

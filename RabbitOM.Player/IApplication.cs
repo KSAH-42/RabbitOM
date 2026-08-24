@@ -17,5 +17,10 @@ namespace RabbitOM.Player
         void StartStreaming();
 
         void StopStreaming();
+<<<<<<< HEAD
+=======
+
+        void ShowHelp();
+>>>>>>> fd902550 (add application interface)
     }
 }

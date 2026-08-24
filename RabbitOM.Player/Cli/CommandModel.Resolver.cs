@@ -24,7 +24,7 @@ namespace RabbitOM.Player.Cli
                     throw new InvalidOperationException( $"the command does not used a CommandAttribute {type}" );
                 }
 
-                models.Add( commandAttribute.Verb ,  new CommandModel( type , commandAttribute.Verb ) );
+                models.Add( commandAttribute.Verb , new CommandModel( type , commandAttribute.Verb ) );
             }
 
             return models;

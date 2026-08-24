@@ -75,6 +75,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+<<<<<<< HEAD
+=======
+    <Compile Include="Cli\CommandTypeAttribute.cs" />
+>>>>>>> fd902550 (add application interface)
     <Compile Include="Cli\CommandModel.Resolver.cs" />
     <Compile Include="Cli\CommandModel.cs" />
     <Compile Include="Cli\CommandLineParser.cs" />
@@ -82,6 +86,7 @@
     <Compile Include="Cli\Command.cs" />
     <Compile Include="Cli\OptionPositionAttribute.cs" />
     <Compile Include="Cli\ICommandLine.cs" />
+    <Compile Include="Cli\ShowHelpCommand.cs" />
     <Compile Include="Cli\SetupCommand.cs" />
     <Compile Include="Cli\OptionAttribute.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
