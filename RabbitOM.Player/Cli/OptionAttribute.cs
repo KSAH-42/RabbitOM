@@ -25,8 +25,8 @@ namespace RabbitOM.Player.Cli
 
         public string Name { get; }
 
-        public int? Position { get; }
-
         public object DefaultValue { get; }
+
+        public int? Position { get; }
     }
 }
