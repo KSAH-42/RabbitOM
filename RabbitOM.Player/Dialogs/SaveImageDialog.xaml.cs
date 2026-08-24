@@ -10,39 +10,16 @@ namespace RabbitOM.Player.Dialogs
     public partial class SaveImageDialog : Window
     {
         public static readonly RoutedCommand SelectFileCommand = new RoutedCommand();
-
         public static readonly RoutedCommand TakeSnapshotCommand = new RoutedCommand();
-
         public static readonly RoutedCommand SaveButtonCommand = new RoutedCommand();
 
-
-
-
+        public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register( "FileName", typeof(string) , typeof(SaveImageDialog) );
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(BitmapSource) ,typeof(SaveImageDialog) );
 
         public SaveImageDialog()
         {
             InitializeComponent();
         }
-
-
-
-
-
-        public static readonly DependencyProperty FileNameProperty
-            = DependencyProperty.Register(
-                "FileName", typeof(string) ,
-                    typeof(SaveImageDialog) );
-
-
-        public static readonly DependencyProperty ImageProperty
-            = DependencyProperty.Register(
-                "Image", typeof(BitmapSource) ,
-                    typeof(SaveImageDialog) );
-
-
-
-
-
 
         public string FileName
         {
@@ -62,20 +39,10 @@ namespace RabbitOM.Player.Dialogs
             set;
         }
 
-
-
-
-
-
         public void TakeSnasphot()
         {
             Image = Source?.Clone();
         }
-
-
-
-
-
 
         private void OnCanSelectFile( object sender , CanExecuteRoutedEventArgs e )
         {
