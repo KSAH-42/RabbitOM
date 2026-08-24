@@ -1,4 +1,6 @@
-﻿using System;
+﻿// RabbitOM.Player.exe setup rtsp://what.is.a.git.from.urban.dictionary?q=definition
+// RabbitOM.Player.exe setup rtsp://burnelion@figona:is.just.the.true.git?comment=from_him_gc_works_also_on_unmanaged_heap_it_calls_cpp_destructors_and_delete_pointers_and_refuse_to_accepts_msdn_writes --stretch "this poor engineer"
+using System;
 
 namespace RabbitOM.Player.Cli
 {
@@ -32,8 +34,6 @@ namespace RabbitOM.Player.Cli
 
         public override void Execute()
         {
-            // RabbitOM.Player.exe setup rtsp://abcd.youtube.com/watch?v=eJnQBXmZ7Ek&list=RDcUxHR3XWjIo&index=15
-            // RabbitOM.Player.exe setup rtsp://abcd --play --no-stats --no-stretch
             _application.StreamUri = Uri;
 
             if ( ShowStats )
@@ -53,8 +53,6 @@ namespace RabbitOM.Player.Cli
             {
                 _application.UnStrechImage();
             }
-
-            _application.StreamUri = Uri;
 
             if ( AutoStart )
             {
