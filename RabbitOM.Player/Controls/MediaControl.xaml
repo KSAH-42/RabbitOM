@@ -4,24 +4,69 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
+             xmlns:controls="clr-namespace:RabbitOM.Player.Controls"
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
-             Height="250" 
-             Width="250"
+             Width="550"
+             Height="450"
              Background="Black"
              Loaded="OnLoaded"
              Unloaded="OnUnloaded"
+             FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
              >
     
     <UserControl.Resources>
-    
+
         <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
-        
+       
         <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
     
     </UserControl.Resources>
-    
-    <Grid>
+
+    <Grid x:Name="ImageGrid"
+          x:FieldModifier="private"
+          Grid.Row="1"
+          Margin="1,0,1,1" 
+          Background="Black">
+
+        <TextBlock VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" 
+                   FontSize="20" 
+                   Foreground="White" 
+                   Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   />
+
+        <Image x:Name="_image"
+               x:FieldModifier="private"
+               Margin="0,0,0,0" 
+               SnapsToDevicePixels="True" 
+               UseLayoutRounding="True" 
+               Focusable="True"
+               Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+               Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
+               />
+
+        <StackPanel Orientation="Vertical" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Bottom">
+
+            <TextBlock FontSize="15" 
+                       HorizontalAlignment="Center"
+                       Foreground="White" 
+                       Background="Black"
+                       Text="{Binding FooterVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       />
+
+        </StackPanel>
+
+        <controls:NetworkStatistics x:Name="_statistics" 
+                                    x:FieldModifier="private"
+                                    Margin="10,20,0,0" 
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Visibility="Collapsed"
+                                    />
+
     </Grid>
-    
+
 </UserControl>
