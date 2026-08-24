@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         mc:Ignorable="d"
         Title="SOURCES" 
-        Height="580" 
+        Height="495" 
         Width="430"
         MinWidth="380"
         MinHeight="250"
