@@ -7,6 +7,7 @@ namespace RabbitOM.Player.Cli
     {
         private readonly IApplication _application;
 
+
         public SetupCommand( IApplication application )
         {
             _application = application ?? throw new ArgumentNullException( nameof( application ) );
@@ -27,8 +28,6 @@ namespace RabbitOM.Player.Cli
         [Option("--stretch" , true )]
         [Option("--no-stretch" , false)]
         public bool StrechImage { get; set; }
-
-
 
 
         public override void Execute()
