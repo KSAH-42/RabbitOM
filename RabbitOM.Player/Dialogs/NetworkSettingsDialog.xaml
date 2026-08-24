@@ -8,7 +8,7 @@
         xmlns:validation="clr-namespace:RabbitOM.Player.Validation"
         mc:Ignorable="d"
         Title="NETWORK SETTINGS" 
-        Height="237"
+        Height="257"
         Width="330"
         MinWidth="330"
         MinHeight="237"
@@ -26,10 +26,12 @@
                                                    Text="{x:Static local:NetworkSettingsDialog.MulticastTransport}"
                                                    />
 
+        <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
+        
         <converters:BooleanMultiValueConverter x:Key="BooleanMultiValueConverter" />
 
     </Window.Resources>
-    
+
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:NetworkSettingsDialog.CloseCommand}" 
@@ -38,15 +40,16 @@
 
     </Window.CommandBindings>
 
-    
+
     <Grid Background="#FF121212" >
 
         <Grid.RowDefinitions>
 
             <RowDefinition Height="35" />
             <RowDefinition MinHeight="100" Height="*" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="50" />
-            
+
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -59,7 +62,7 @@
                        />
 
         </Grid>
-        
+
         <Grid Grid.Row="1">
 
             <Grid>
@@ -81,16 +84,9 @@
                                Foreground="White"
                                HorizontalAlignment="Right"
                                Margin="0,39,0,0"
-                               Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                               Visibility="{Binding IsDatagramProtocol,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                />
-
-                    <TextBlock Text="Port :"
-                               Foreground="White"
-                               HorizontalAlignment="Right"
-                               Margin="0,39,0,0"
-                               Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
-                               />
-
+                    
                     <TextBlock Text="IP Address :"
                                Foreground="White"
                                HorizontalAlignment="Right"
@@ -121,7 +117,7 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Height="27"
-                               Visibility="{Binding SelectedTransport,Converter={StaticResource UdpStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                               Visibility="{Binding IsDatagramProtocol,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                                >
                         <TextBox.Text>
 
@@ -138,34 +134,7 @@
                             </Binding>
 
                         </TextBox.Text>
-                        
-                    </TextBox>
 
-                    <TextBox   x:Name="_port2"
-                               Width="200"
-                               Margin="0,37,0,0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Top"
-                               Height="27"
-                               Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
-                               >
-                        
-                        <TextBox.Text>
-
-                            <Binding Path="Port"
-                                     Mode="TwoWay" 
-                                     UpdateSourceTrigger="PropertyChanged" 
-                                     RelativeSource="{RelativeSource AncestorType=Window}"
-                                     >
-
-                                <Binding.ValidationRules>
-                                    <validation:PortValidationRule/>
-                                </Binding.ValidationRules>
-
-                            </Binding>
-
-                        </TextBox.Text>
-                        
                     </TextBox>
 
                     <TextBox   x:Name="_ipAddress"
@@ -191,7 +160,7 @@
                             </Binding>
 
                         </TextBox.Text>
-                        
+
                     </TextBox>
 
                 </Grid>
@@ -202,37 +171,53 @@
 
         <Grid Grid.Row="2">
 
+            <TextBlock Text="Make sure that the port is not blocked by anything, otherwise use TCP"
+                       Foreground="White"
+                       FontSize="8"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Visibility="{Binding IsDatagramProtocol,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                       />
+
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="46*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="105*"/>
+            </Grid.ColumnDefinitions>
+
             <Button Content="Cancel"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Width="80"
-                    Margin="0,0,102,10"
-                    IsCancel="True"
+                    Margin="28,0,0,0"
+                    IsCancel="True" Grid.Column="2"
                     />
 
             <Button Content="Ok"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Width="80"
-                    Margin="0,0,10,10"
+                    Margin="120,0,0,0"
                     IsDefault="True"
-                    Command="{x:Static local:NetworkSettingsDialog.CloseCommand}"
+                    Command="{x:Static local:NetworkSettingsDialog.CloseCommand}" Grid.Column="2"
                     >
-                
+
                 <Button.IsEnabled>
-                
+
                     <MultiBinding Converter="{StaticResource BooleanMultiValueConverter}">
                         <Binding ElementName="_port1" Path="(Validation.HasError)" />
-                        <Binding ElementName="_port2" Path="(Validation.HasError)" />
                         <Binding ElementName="_ipAddress" Path="(Validation.HasError)" />
                     </MultiBinding>
-                    
+
                 </Button.IsEnabled>
-                
+
             </Button>
-            
+
         </Grid>
-        
+
     </Grid>
-    
+
 </Window>

@@ -9,9 +9,10 @@ namespace RabbitOM.Player.Dialogs
     {
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
 
-        public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport ) , null );
+        public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport , OnSelectedTransportChanged ) );
         public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , new PropertyMetadata( 5004 ) , null );
         public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , new PropertyMetadata( "224.0.0.1" ) , null );
+        public static readonly DependencyProperty IsDatagramProtocolProperty = DependencyProperty.Register( "IsDatagramProtocol", typeof(bool) , typeof(NetworkSettingsDialog) , new PropertyMetadata( false ) , null );
 
         public const string TcpTransport = "TCP";
         public const string UdpTransport = "UDP";
@@ -35,6 +36,12 @@ namespace RabbitOM.Player.Dialogs
         public bool UseMulticastTransport
         {
             get => SelectedTransport == MulticastTransport;
+        }
+
+        public bool IsDatagramProtocol
+        {
+            get => (bool) GetValue( IsDatagramProtocolProperty );
+            private set => SetValue( IsDatagramProtocolProperty , value );
         }
 
         public int Port
@@ -65,6 +72,18 @@ namespace RabbitOM.Player.Dialogs
         private void OnClose( object sender , ExecutedRoutedEventArgs e )
         {
             DialogResult = true;
+        }
+
+        private static void OnSelectedTransportChanged( DependencyObject sender , DependencyPropertyChangedEventArgs e )
+        {
+            var control = sender as NetworkSettingsDialog;
+
+            if ( control != null )
+            {
+                var transport = e.NewValue as string;
+
+                control.IsDatagramProtocol = transport == UdpTransport || transport == MulticastTransport;
+            }
         }
     }
 }
