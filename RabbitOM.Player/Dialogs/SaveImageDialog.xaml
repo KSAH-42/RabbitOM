@@ -13,6 +13,7 @@
         MinWidth="320"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
+        ShowInTaskbar="False"
         >
 
     <Window.CommandBindings>

@@ -14,6 +14,7 @@
         MinHeight="237"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
+        ShowInTaskbar="False"
         >
 
     <Window.Resources>
