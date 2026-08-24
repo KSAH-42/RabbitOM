@@ -173,9 +173,9 @@
 
             <TextBlock Text="Make sure that the port is not blocked by anything, otherwise use TCP"
                        Foreground="White"
-                       FontSize="8"
+                       FontSize="10"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
+                       VerticalAlignment="Top"
                        Visibility="{Binding IsDatagramProtocol,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
                        />
 
