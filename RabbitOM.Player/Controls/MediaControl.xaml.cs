@@ -16,35 +16,21 @@ namespace RabbitOM.Player.Controls
 {
     public partial class MediaControl : UserControl
     {
+        public static readonly RoutedEvent CommunicationStartedEvent = EventManager.RegisterRoutedEvent( "CommunicationStarted" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
+        public static readonly RoutedEvent CommunicationStoppedEvent = EventManager.RegisterRoutedEvent( "CommunicationStopped" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
+        public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( "Connected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
+        public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
+        public static readonly RoutedEvent FrameReceivedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
+
+        public static readonly DependencyProperty UriProperty = DependencyProperty.Register( "Uri", typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( "UserName", typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( "Password", typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( "Transport", typeof(MediaPlayerTransport) , typeof(MediaControl) );
+
         public MediaControl()
         {
             InitializeComponent();
         }
-
-
-
-
-
-
-
-        public static readonly RoutedEvent CommunicationStartedEvent = EventManager.RegisterRoutedEvent( "CommunicationStarted" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-
-        public static readonly RoutedEvent CommunicationStoppedEvent = EventManager.RegisterRoutedEvent( "CommunicationStopped" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-
-        public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( "Connected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-
-        public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-
-        public static readonly RoutedEvent FrameReceivedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-
-
-
-
-
-
-
-
-
 
         public event RoutedEventHandler CommunicationStarted
         {
@@ -77,26 +63,6 @@ namespace RabbitOM.Player.Controls
         }
 
 
-
-
-
-
-
-        public static readonly DependencyProperty UriProperty = DependencyProperty.Register( "Uri", typeof(string) , typeof(MediaControl) );
-
-        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( "UserName", typeof(string) , typeof(MediaControl) );
-
-        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( "Password", typeof(string) , typeof(MediaControl) );
-
-        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( "Transport", typeof(MediaPlayerTransport) , typeof(MediaControl) );
-
-
-
-
-
-
-
-
         public string Uri
         {
             get => GetValue( UriProperty ) as string;
@@ -120,32 +86,6 @@ namespace RabbitOM.Player.Controls
             get => GetValue( TransportProperty ) as MediaPlayerTransport;
             set => SetValue( TransportProperty , value );
         }
-
-
-
-
-
-
-
-
-
-
-        private void OnLoaded( object sender , RoutedEventArgs e )
-        {
-        }
-
-        private void OnUnloaded( object sender , RoutedEventArgs e )
-        {
-        }
-
-
-
-
-
-
-
-
-
 
 
         public bool IsCommunicationStarted()
@@ -183,6 +123,14 @@ namespace RabbitOM.Player.Controls
         }
 
 
+
+        private void OnLoaded( object sender , RoutedEventArgs e )
+        {
+        }
+
+        private void OnUnloaded( object sender , RoutedEventArgs e )
+        {
+        }
 
         protected virtual void OnCommunicationStarted()
         {

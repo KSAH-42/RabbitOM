@@ -4,9 +4,9 @@ using System.Reflection;
 
 namespace RabbitOM.Player.Cli
 {
-    public static class CommandRegistry
+    public partial class CommandModel
     {
-        public static IReadOnlyDictionary<string,CommandModel> ResolveCommands()
+        public static IReadOnlyDictionary<string,CommandModel> GetAssemblyModels()
         {
             var models = new Dictionary<string,CommandModel>( StringComparer.OrdinalIgnoreCase );
 
@@ -24,7 +24,7 @@ namespace RabbitOM.Player.Cli
                     throw new InvalidOperationException( $"the command does not used a CommandAttribute {type}" );
                 }
 
-                models.Add( commandAttribute.Verb ,  new CommandModel( type , commandAttribute.Verb ) );
+                models.Add( commandAttribute.Verb , new CommandModel( type , commandAttribute.Verb ) );
             }
 
             return models;

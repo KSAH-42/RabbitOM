@@ -9,14 +9,23 @@ namespace RabbitOM.Player.Cli
         {
             Name = name;
         }
-
         public OptionAttribute( string name , object defaultValue )
         {
             Name = name;
             DefaultValue = defaultValue;
         }
 
+        public OptionAttribute( int position )
+        {
+            Position = position;
+        }
+
+
+
+
         public string Name { get; }
+
+        public int? Position { get; }
 
         public object DefaultValue { get; }
     }
