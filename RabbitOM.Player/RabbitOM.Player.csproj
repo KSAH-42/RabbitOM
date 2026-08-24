@@ -84,7 +84,6 @@
     <Compile Include="Cli\ICommandLine.cs" />
     <Compile Include="Cli\SetupCommand.cs" />
     <Compile Include="Cli\OptionAttribute.cs" />
-    <Compile Include="Cli\CollectionExtensions.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
@@ -105,6 +104,7 @@
     <Compile Include="Converters\AddDoubleValueConverter.cs" />
     <Compile Include="Converters\HertzUnitValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
+    <Compile Include="IApplication.cs" />
     <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
     <Compile Include="Validation\PortValidationRule.cs" />
     <Compile Include="Dialogs\NetworkSettingsDialog.xaml.cs">
