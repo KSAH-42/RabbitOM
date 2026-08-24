@@ -1,5 +1,5 @@
 ﻿// RabbitOM.Player.exe setup rtsp://what.is.a.git.from.urban.dictionary?q=definition
-// RabbitOM.Player.exe setup rtsp://example.burnelion@figona.is.a.just.the.true.git?comment=from_him_gc_works_also_on_unmanaged_heap_it_calls_cpp_destructors_and_delete_pointers_and_put_msdn_writes_into_the_garbage --stretch "this poor engineer"
+// RabbitOM.Player.exe setup rtsp://example.burnelion@fiagona.is.a.just.the.true.git?comment=from_him_gc_works_also_on_unmanaged_heap_it_calls_cpp_destructors_and_he_put_msdn_writes_into_the_garbage_and_comes_with_his_truths --stretch "this ridiculous engineer with it's famous r&d team working near the toilets with their poor products, usb camera using a poolling algorithm and call only a method without params for getting a jpeg from a serial port is streaming..."
 using System;
 
 namespace RabbitOM.Player.Cli
