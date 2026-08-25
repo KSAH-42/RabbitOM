@@ -198,17 +198,7 @@ namespace RabbitOM.Player.Controls
                 return;
             }
 
-            byte[] extraParameters = null;
-
-            if ( e.MediaElement is H265MediaElement h265Frame )
-            {
-                extraParameters = H265MediaElement.CreateExtraParameters( h265Frame );
-            }
-
-            else if ( e.MediaElement is H264MediaElement h264Frame )
-            {
-                extraParameters = H264MediaElement.CreateExtraParameters( h264Frame );
-            }
+            byte[] extraParameters = e.MediaElement is IMediaElementConfigurable configurable ? configurable.GetExtraParameters() : null;
 
             if ( ! _decoder.CanConfigure( extraParameters ) || _decoder.Configure( extraParameters ) )
             {

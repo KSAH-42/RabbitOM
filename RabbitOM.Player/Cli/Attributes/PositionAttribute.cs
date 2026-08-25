@@ -3,9 +3,9 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Property , AllowMultiple = false ) ]
-    public class OptionPositionAttribute : Attribute
+    public class PositionAttribute : Attribute
     {
-        public OptionPositionAttribute( int value )
+        public PositionAttribute( int value )
         {
             Value = value;
         }

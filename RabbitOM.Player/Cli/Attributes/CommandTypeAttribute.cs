@@ -3,7 +3,7 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Class , AllowMultiple = true ) ]
-    public class CommandTypeAttribute : Attribute
+    public sealed class CommandTypeAttribute : Attribute
     {
         public CommandTypeAttribute( string name )
         {

@@ -3,7 +3,7 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Class ) ]
-    public class CommandAttribute : Attribute
+    public sealed class CommandAttribute : Attribute
     {
         public CommandAttribute( string verb )
         {
@@ -16,5 +16,7 @@ namespace RabbitOM.Player.Cli
         }
 
         public string Verb { get; }
+
+        public string ResourceKey { get; set; }
     }
 }
