@@ -92,6 +92,7 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
+    <Compile Include="Controls\MediaControl.xaml.client.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />

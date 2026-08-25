@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.H264
 {
-    public sealed class H264MediaElement : RtpMediaElement
+    public sealed class H264MediaElement : RtpMediaElement , IMediaElementConfigurable
     {
         public H264MediaElement( byte[] buffer , byte[] startCodePrefix , byte[] sps , byte[] pps ) : base ( buffer )
         {
@@ -41,6 +41,14 @@ namespace RabbitOM.Streaming.Rtp.H264
         public byte[] PPS { get; }
 
 
+
+
+
+
+        public byte[] GetExtraParameters()
+        {
+            return CreateExtraParameters( this );
+        }
 
 
 
