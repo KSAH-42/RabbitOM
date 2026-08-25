@@ -29,11 +29,5 @@ namespace RabbitOM.Player.Cli
         [Argument("-p" , ResourceKey = "help.property5") ]
         [Argument("--property5" , ResourceKey = "help.property5") ]
         public int Property5 { get; set; }
-
-
-        public override void Execute()
-        {
-            
-        }
     }
 }

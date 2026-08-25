@@ -9,16 +9,5 @@ namespace RabbitOM.Player.Cli
     [CommandType( "/?" )]
     public sealed class ShowHelpCommand : Command
     {
-        private readonly IApplication _application;
-
-        public ShowHelpCommand( IApplication application )
-        {
-            _application = application ?? throw new ArgumentNullException( nameof( application ) );
-        }
-
-        public override void Execute()
-        {
-            _application.ShowHelp();
-        }
     }
 }

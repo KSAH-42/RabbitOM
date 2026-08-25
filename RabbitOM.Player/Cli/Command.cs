@@ -2,23 +2,7 @@
 
 namespace RabbitOM.Player.Cli
 {
-    public abstract class Command : IDisposable
+    public abstract class Command
     {
-        ~Command()
-        {
-            Dispose( false );
-        }
-
-        public abstract void Execute();
-
-        public void Dispose()
-        {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-        }
     }
 }
