@@ -1,12 +1,4 @@
 ﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats --window-state-maximize
-
-// poeme: le rabaisseur incompétent dit: "c'est appli c'est le meilleur le truc du coin"
-// et dira "mon truc est mieux" et joura la carte de la fausse modestie
-// https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
-// "I like the things that you hate"
-// "And you hate the things that I like"
-// "honestly is your church" 
-
 using System;
 
 namespace RabbitOM.Player.Cli
@@ -53,3 +45,28 @@ namespace RabbitOM.Player.Cli
         }
     }
 }
+
+
+
+// un inconnu qui code dans son armoire
+// dit un jour:
+// "c'est la meilleure 'appli' du coin"
+// puis un jour ou lui retourne le compliement et il s'énerve
+// "remballe ta merde!"
+// et retourne sur bureau pour corriger et améliorer son code en lisant le code qu'il a critiqué
+// puis son esprit s'engraisse, il devient gras
+// et son pote habillé en chemise et pantalon costard, venant de bull va aux toilettes
+// rentre dans une cabine, coulle son plasma
+// et sort de la cabine, sans se laver les mains
+// et rentre dans la salle des développeurs, touche les affaires des autres et râle
+// "je me casse" "personne ne m'aime"
+// à table l'architecte évite de s'assoir a coté de lui
+// car il sent une odeur de plasma
+// et l'inconnu se tait à table car sa lacheté l'empêche lorsqu'il s'agit de critiquer le travail de ses collègues
+
+
+// https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
+// "I like the things that you hate"
+// "And you hate the things that I like"
+// "honestly is your church" 
+// c'est tellement vrai
