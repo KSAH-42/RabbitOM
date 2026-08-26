@@ -11,7 +11,7 @@
         Height="257"
         Width="330"
         MinWidth="330"
-        MinHeight="237"
+        MinHeight="257"
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         ShowInTaskbar="False"
