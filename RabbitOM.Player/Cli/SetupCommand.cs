@@ -49,13 +49,13 @@ namespace RabbitOM.Player.Cli
 
 
 // un inconnu qui code dans son armoire
-// dit un jour:
+// dit un jour dans son coin:
 // "c'est la meilleure 'appli' du coin"
 // et cours vers son bureau pour corriger et améliorer son code copiant ce qu'il a lu
 // comme si qu'il cherchait avoir un train d'avance sur les autres
 // son esprit s'engraisse, il devient gras
-// puis un jour ou lui retourne le compliement et il s'énerve
-// "remballe ta merde!"
+// puis un jour une autre personne d'une autre équipe lui retourne le compliement
+// et il s'énerve: "remballe ta merde!"
 // et son pote habillé en chemise et pantalon costard, venant de bull va aux toilettes
 // rentre dans une cabine, coulle son plasma
 // et sort de la cabine, sans se laver les mains
@@ -65,8 +65,8 @@ namespace RabbitOM.Player.Cli
 // car il sent une odeur de plasma
 // et l'inconnu se tait à table car sa lacheté l'empêche lorsqu'il s'agit de critiquer le travail de ses collègues
 
-// https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
 // "I like the things that you hate"
 // "And you hate the things that I like"
 // et "honestly is your church" lorsque tout va mal
 // c'est tellement vrai
+// https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
