@@ -29,7 +29,7 @@ namespace RabbitOM.Player.Cli
 
         [HelpResource("cli.commands.setup.timeout")]
         [Argument("-t")]
-        [Argument("--Timeout")]
+        [Argument("--timeout")]
         public int? Timeout { get; set; }
 
         public override bool TryValidate()
