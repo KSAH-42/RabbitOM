@@ -3,8 +3,8 @@ using System;
 
 namespace RabbitOM.Player.Cli
 {
-    [Command( "setup" )]
     [HelpResource("cli.commands.setup")]
+    [Command( "setup" )]
     public sealed class SetupCommand : Command
     {
         [HelpResource("cli.commands.setup.uri")]
