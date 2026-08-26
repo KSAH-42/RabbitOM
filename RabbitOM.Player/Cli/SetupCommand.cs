@@ -47,29 +47,5 @@ namespace RabbitOM.Player.Cli
 }
 
 
-
-// un inconnu qui code dans son armoire
-// dit un jour dans son coin:
-// "c'est la meilleure 'appli' du coin"
-// et cours vers son bureau pour corriger et améliorer son code copiant ce qu'il a lu
-// comme si qu'il cherchait avoir un train d'avance sur les autres
-// son esprit s'engraisse, il devient gras
-// puis un jour une autre personne d'une autre équipe lui retourne le compliement
-// et il s'énerve: "remballe ta merde!"
-// et son pote habillé en chemise et pantalon costard, venant de bull va aux toilettes
-// rentre dans une cabine, coulle son plasma
-// et sort de la cabine, sans se laver les mains
-// et rentre dans la salle des développeurs, touche les affaires des autres et râle
-// "je me casse" "personne ne m'aime"
-// à table l'architecte évite de s'assoir a coté de lui
-// car il sent une odeur de plasma
-// et l'inconnu se tait à table car sa lacheté l'empêche lorsqu'il s'agit de critiquer le travail de ses collègues
-
-// "I like the things that you hate"
-// "And you hate the things that I like"
-// et "honestly is your church" lorsque tout va mal
-// c'est tellement vrai
-// https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
-
 // thalezed C++ recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) ); // for a compensation fixed at 70KEuro and for the java microservice and that make manage only ptz , it's just a git clone... over paied.
-// Escape from thalezed
+// Escape from thalezed, it's not a serious compagny
