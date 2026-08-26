@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Player.Cli
 {
-    [AttributeUsage( AttributeTargets.Class ) ]
+    [AttributeUsage( AttributeTargets.Class , AllowMultiple = false ) ]
     public sealed class CommandAttribute : Attribute
     {
         public CommandAttribute( string verb )

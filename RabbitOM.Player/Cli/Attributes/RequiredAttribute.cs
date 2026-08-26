@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Player.Cli
 {
-    [AttributeUsage( AttributeTargets.Property ) ]
+    [AttributeUsage( AttributeTargets.Property , AllowMultiple = false ) ]
     public sealed class RequiredAttribute : Attribute
     {
     }

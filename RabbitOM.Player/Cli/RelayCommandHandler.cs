@@ -2,8 +2,7 @@
 
 namespace RabbitOM.Player.Cli
 {
-    public sealed class RelayCommandHandler<TCommand> : ICommandHandler<TCommand>
-        where TCommand : Command
+    public sealed class RelayCommandHandler<TCommand> : ICommandHandler<TCommand> where TCommand : Command
     {
         private readonly Action<TCommand> _handler;
 

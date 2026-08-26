@@ -3,7 +3,7 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Property , AllowMultiple = false ) ]
-    public class PositionAttribute : Attribute
+    public sealed class PositionAttribute : Attribute
     {
         public PositionAttribute( int value )
         {
