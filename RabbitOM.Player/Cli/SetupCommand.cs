@@ -29,7 +29,7 @@ namespace RabbitOM.Player.Cli
         public bool StrechImage { get; set; }
 
         [HelpResource("cli.commands.setup.window_state")]
-        [Argument("--window-state")]
+        [Range("--window-state",0,2)]
         [Enum("--window-state-normal" , 0 )]
         [Enum("--window-state-center" , 1 )]
         [Enum("--window-state-maximize" , 2 )]
