@@ -1,16 +1,18 @@
-﻿using System;
+﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats
+using System;
 
 namespace RabbitOM.Player.Cli
 {
-    [Command( "setup" , ResourceKey = "cli.commands.setup.usage" )]
+    [Command( "setup" )]
+    [Help("cli.commands.setup.timeout.help")]
     public sealed class SetupCommand : Command
     {
         [Required]
         [Position(0)]
         public string Uri { get; set; }
 
+        [Flag("-p" , true ) ]
         [Flag("--play" , true ) ]
-        [Flag("--no-play" , false )]
         public bool AutoStart { get; set; }
 
         [Flag("--stats" , true )]
@@ -21,7 +23,9 @@ namespace RabbitOM.Player.Cli
         [Flag("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-        [Argument("--Timeout" , ResourceKey = "cli.commands.setup.timeout.help")]
+        [Help("cli.commands.setup.timeout.help")]
+        [Argument("-t")]
+        [Argument("--Timeout")]
         public int? Timeout { get; set; }
 
         public override bool TryValidate()

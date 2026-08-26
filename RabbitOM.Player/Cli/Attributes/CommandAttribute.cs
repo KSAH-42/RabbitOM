@@ -16,7 +16,5 @@ namespace RabbitOM.Player.Cli
         }
 
         public string Verb { get; }
-
-        public string ResourceKey { get; set; }
     }
 }
