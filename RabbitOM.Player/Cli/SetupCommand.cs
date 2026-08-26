@@ -47,5 +47,26 @@ namespace RabbitOM.Player.Cli
 }
 
 
-// thalezed C++ recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) ); // for a compensation fixed at 70KEuro and for the java microservice and that make manage only ptz , it's just a git clone... over paied.
 // Escape from thalezed, it's not a serious compagny
+
+// thalezed C++ recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) ); // for a compensation fixed at 70KEuro and for the java microservice and that make manage only ptz , it's just a git clone... over paied.
+
+//             
+//          websocket jpeg    rtp        rtp 
+// web browser  <---> decoder <--> proxy <--> cam1
+//                                            /|\ rtp stream
+//                                  recorder<--+  
+//                                 kadafi.dll to handle rtsp
+
+// or
+
+//          websocket jpeg    rtp        rtp 
+// web browser  <---> decoder <--> proxy <--> cam1
+//                                  /|\ rtp stream
+//                        recorder<--+  
+//                        kadafi.dll to handle rtsp
+
+
+// 4 streams for one device (3 for one 1 live, and 1 for recording)
+
+// don't say it's shit, thats thalezed systems; lol
