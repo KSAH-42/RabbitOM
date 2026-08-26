@@ -28,7 +28,7 @@ namespace RabbitOM.Player.Cli
         [Flag("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-        [HelpResource("cli.commands.setup.window-state")]
+        [HelpResource("cli.commands.setup.window_state")]
         [Argument("--window-state")]
         [Enum("--window-state-normal" , 0 )]
         [Enum("--window-state-center" , 1 )]
