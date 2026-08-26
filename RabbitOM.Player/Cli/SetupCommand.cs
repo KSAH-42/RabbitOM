@@ -4,30 +4,30 @@ using System;
 namespace RabbitOM.Player.Cli
 {
     [Command( "setup" )]
-    [HelpResource("cli.commands.setup.timeout.help")]
+    [HelpResource("cli.commands.setup")]
     public sealed class SetupCommand : Command
     {
-        [HelpResource("cli.commands.setup.uri.help")]
+        [HelpResource("cli.commands.setup.uri")]
         [Required]
         [Position(0)]
         public string Uri { get; set; }
 
-        [HelpResource("cli.commands.setup.auto_start.help")]
+        [HelpResource("cli.commands.setup.auto_start")]
         [Flag("-p" , true ) ]
         [Flag("--play" , true ) ]
         public bool AutoStart { get; set; }
 
-        [HelpResource("cli.commands.setup.show_stats.help")]
+        [HelpResource("cli.commands.setup.show_stats")]
         [Flag("--stats" , true )]
         [Flag("--no-stats" , false )]
         public bool ShowStats { get; set; }
 
-        [HelpResource("cli.commands.setup.stretch_image.help")]
+        [HelpResource("cli.commands.setup.stretch_image")]
         [Flag("--stretch" , true )]
         [Flag("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-        [HelpResource("cli.commands.setup.timeout.help")]
+        [HelpResource("cli.commands.setup.timeout")]
         [Argument("-t")]
         [Argument("--Timeout")]
         public int? Timeout { get; set; }
