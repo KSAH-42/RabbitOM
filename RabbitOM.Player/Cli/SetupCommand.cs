@@ -1,4 +1,5 @@
-﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats
+﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats --window-state-maximize
+
 using System;
 
 namespace RabbitOM.Player.Cli
@@ -29,9 +30,9 @@ namespace RabbitOM.Player.Cli
 
         [HelpResource("cli.commands.setup.window-state")]
         [Argument("--window-state")]
-        [Enum("--window-normal" , 0 )]
-        [Enum("--window-center" , 1 )]
-        [Enum("--window-maximize" , 2 )]
+        [Enum("--window-state-normal" , 0 )]
+        [Enum("--window-state-center" , 1 )]
+        [Enum("--window-state-maximize" , 2 )]
         public int WindowState { get; set; }
 
         [HelpResource("cli.commands.setup.timeout")]
