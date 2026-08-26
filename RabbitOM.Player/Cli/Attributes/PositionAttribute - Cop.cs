@@ -3,13 +3,13 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Property | AttributeTargets.Class , AllowMultiple = false ) ]
-    public sealed class HelpAttribute : Attribute
+    public sealed class HelpResourceAttribute : Attribute
     {
-        public HelpAttribute( string value )
+        public HelpResourceAttribute( string key )
         {
-            ResourceKey = value;
+            Key = key;
         }
 
-        public string ResourceKey { get; }
+        public string Key { get; }
     }
 }

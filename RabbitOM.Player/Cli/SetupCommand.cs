@@ -4,7 +4,7 @@ using System;
 namespace RabbitOM.Player.Cli
 {
     [Command( "setup" )]
-    [Help("cli.commands.setup.timeout.help")]
+    [HelpResource("cli.commands.setup.timeout.help")]
     public sealed class SetupCommand : Command
     {
         [Required]
@@ -23,7 +23,7 @@ namespace RabbitOM.Player.Cli
         [Flag("--no-stretch" , false)]
         public bool StrechImage { get; set; }
 
-        [Help("cli.commands.setup.timeout.help")]
+        [HelpResource("cli.commands.setup.timeout.help")]
         [Argument("-t")]
         [Argument("--Timeout")]
         public int? Timeout { get; set; }
