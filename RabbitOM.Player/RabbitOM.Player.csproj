@@ -84,7 +84,7 @@
     <Compile Include="Cli\Attributes\PositionAttribute.cs" />
     <Compile Include="Cli\CommandLineExtensions.cs" />
     <Compile Include="Cli\CommandLine.cs" />
-    <Compile Include="Cli\RelayCommandHandler.cs" />
+    <Compile Include="Cli\DelegateCommandHandler.cs" />
     <Compile Include="Cli\ICommandHandler.cs" />
     <Compile Include="Cli\ICommandLine.cs" />
     <Compile Include="Cli\SetupCommand.cs" />

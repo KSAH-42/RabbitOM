@@ -11,7 +11,7 @@ namespace RabbitOM.Player.Cli
                 throw new ArgumentNullException( nameof( commandLine ) );
             }
 
-            return commandLine.AddHandler( new RelayCommandHandler<TCommand>( handler ) );
+            return commandLine.AddHandler( new DelegateCommandHandler<TCommand>( handler ) );
         }
 
         public static ICommandLine AddHandler<TCommand>( this ICommandLine commandLine , Action<TCommand> handler , Func<TCommand> factory ) where TCommand : Command
@@ -21,7 +21,7 @@ namespace RabbitOM.Player.Cli
                 throw new ArgumentNullException( nameof( commandLine ) );
             }
 
-            return commandLine.AddHandler( new RelayCommandHandler<TCommand>( handler ) , factory );
+            return commandLine.AddHandler( new DelegateCommandHandler<TCommand>( handler ) , factory );
         }
     }
 }

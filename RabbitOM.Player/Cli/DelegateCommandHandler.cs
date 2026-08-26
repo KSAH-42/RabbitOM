@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Player.Cli
 {
-    public sealed class RelayCommandHandler<TCommand> : ICommandHandler<TCommand> where TCommand : Command
+    public sealed class DelegateCommandHandler<TCommand> : ICommandHandler<TCommand> where TCommand : Command
     {
         private readonly Action<TCommand> _handler;
 
-        public RelayCommandHandler( Action<TCommand> handler )
+        public DelegateCommandHandler( Action<TCommand> handler )
         {
             _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
         }
