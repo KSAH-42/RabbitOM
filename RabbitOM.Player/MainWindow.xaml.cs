@@ -334,7 +334,7 @@ namespace RabbitOM.Player
                 return;
             }
 
-            byte[] extraParameters = e.MediaElement is IMediaElementConfigurable configurable ? configurable.GetExtraParameters() : null;
+            byte[] extraParameters = e.MediaElement is IExtraParameters parameters ? parameters.GetExtraParameters() : null;
 
             if ( ! _decoder.CanConfigure( extraParameters ) || _decoder.Configure( extraParameters ) )
             {

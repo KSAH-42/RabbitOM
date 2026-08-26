@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Streaming.Rtp
 {
-    public interface IMediaElementConfigurable
+    public interface IExtraParameters
     {
         byte[] GetExtraParameters();
     }

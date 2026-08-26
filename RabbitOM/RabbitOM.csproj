@@ -60,7 +60,7 @@
     <Compile Include="Streaming\Rtcp\RtcpSourceDescriptionItem.cs" />
     <Compile Include="Streaming\Rtcp\RtcpSourceDescriptionPacket.cs" />
     <Compile Include="Streaming\Rtcp\RtcpDeserializer.cs" />
-    <Compile Include="Streaming\Rtp\IMediaElementConfigurable.cs" />
+    <Compile Include="Streaming\Rtp\IExtraParameters.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketsLostEventArgs.cs" />
     <Compile Include="Streaming\Rtp\RtpPacketAggregator.cs" />
     <Compile Include="Streaming\Rtp\DefaultRtpPacketInspector.cs" />

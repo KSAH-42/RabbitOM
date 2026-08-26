@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Streaming.Rtp.H265
 {
-    public sealed class H265MediaElement : RtpMediaElement , IMediaElementConfigurable
+    public sealed class H265MediaElement : RtpMediaElement , IExtraParameters
     {
         public H265MediaElement( byte[] buffer , byte[] startCodePrefix , byte[] vps , byte[] sps , byte[] pps ) : base ( buffer )
         {
