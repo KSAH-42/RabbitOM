@@ -64,7 +64,6 @@ namespace RabbitOM.Player.Cli
 // car il sent une odeur de plasma
 // et l'inconnu se tait à table car sa lacheté l'empêche lorsqu'il s'agit de critiquer le travail de ses collègues
 
-
 // https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
 // "I like the things that you hate"
 // "And you hate the things that I like"
