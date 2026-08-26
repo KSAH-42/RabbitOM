@@ -71,4 +71,4 @@ namespace RabbitOM.Player.Cli
 // c'est tellement vrai
 // https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
 
-// thalezed recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) );
+// thalezed recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) ); // for a compensation fixed at 70KEuro and for the java microservice and that make manage only ptz , it's just a git clone... over paied.
