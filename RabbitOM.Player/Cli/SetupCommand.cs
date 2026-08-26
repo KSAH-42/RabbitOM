@@ -1,5 +1,12 @@
 ﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats --window-state-maximize
 
+// poeme: le rabaisseur incompétent dit: "c'est appli c'est le meilleur le truc du coin"
+// et dira "mon truc est mieux" et joura la carte de la fausse modestie
+// https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
+// "I like the things that you hate"
+// "And you hate the things that I like"
+// "honestly is your church" 
+
 using System;
 
 namespace RabbitOM.Player.Cli
