@@ -76,6 +76,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Cli\Attributes\ArgumentAttribute.cs" />
+    <Compile Include="Cli\Attributes\RangeAttribute.cs" />
+    <Compile Include="Cli\Attributes\EnumAttribute.cs" />
     <Compile Include="Cli\Attributes\HelpResourceAttribute.cs" />
     <Compile Include="Cli\Attributes\RequiredAttribute.cs" />
     <Compile Include="Cli\Attributes\FlagAttribute.cs" />

@@ -53,8 +53,9 @@ namespace RabbitOM.Player.Cli
 // "c'est la meilleure 'appli' du coin"
 // puis un jour ou lui retourne le compliement et il s'énerve
 // "remballe ta merde!"
-// et retourne sur bureau pour corriger et améliorer son code en lisant le code qu'il a critiqué
+// et cours vers son bureau pour corriger et améliorer son code copiant ce qu'il a lu
 // puis son esprit s'engraisse, il devient gras
+// comme si qu'il cherchait avoir un train d'avance sur les autres
 // et son pote habillé en chemise et pantalon costard, venant de bull va aux toilettes
 // rentre dans une cabine, coulle son plasma
 // et sort de la cabine, sans se laver les mains
