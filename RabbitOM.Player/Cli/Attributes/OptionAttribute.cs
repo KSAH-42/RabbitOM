@@ -10,7 +10,5 @@ namespace RabbitOM.Player.Cli
         }
 
         public string Name { get; }
-
-        public string ResourceKey { get; set; }
     }
 }
