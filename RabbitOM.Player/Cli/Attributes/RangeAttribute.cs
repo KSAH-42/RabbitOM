@@ -3,14 +3,16 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Property , AllowMultiple = true ) ]
-    public sealed class RangeAttribute : OptionAttribute
+    public sealed class RangeAttribute : Attribute
     {
         public RangeAttribute( string name , int minimum , int maximum )
-            : base( name )
         {
+            Name = name;
             Minimum = minimum;
             Maximum = maximum;
         }
+
+        public string Name { get; }
 
         public int Minimum { get; }
 

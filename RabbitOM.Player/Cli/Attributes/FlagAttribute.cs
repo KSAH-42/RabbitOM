@@ -3,13 +3,15 @@
 namespace RabbitOM.Player.Cli
 {
     [AttributeUsage( AttributeTargets.Property , AllowMultiple = true ) ]
-    public sealed class FlagAttribute : OptionAttribute
+    public sealed class FlagAttribute : Attribute
     {
         public FlagAttribute( string name , bool value )
-            : base( name )
         {
+            Name = name;
             Value = value;
         }
+
+        public string Name { get; }
 
         public bool Value { get; }
     }

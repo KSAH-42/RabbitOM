@@ -90,7 +90,6 @@
     <Compile Include="Cli\ICommandHandler.cs" />
     <Compile Include="Cli\ICommandLine.cs" />
     <Compile Include="Cli\SetupCommand.cs" />
-    <Compile Include="Cli\Attributes\OptionAttribute.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
     <Compile Include="Configuration\ApplicationConfiguration.cs" />
     <Compile Include="Configuration\RtspConfigurationSection.cs" />
