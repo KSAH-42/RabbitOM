@@ -68,5 +68,5 @@ namespace RabbitOM.Player.Cli
 // https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
 // "I like the things that you hate"
 // "And you hate the things that I like"
-// "honestly is your church" 
+// et "honestly is your church" lorsque tout va mal
 // c'est tellement vrai
