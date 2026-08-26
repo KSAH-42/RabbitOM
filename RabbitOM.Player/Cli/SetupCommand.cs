@@ -70,3 +70,5 @@ namespace RabbitOM.Player.Cli
 // et "honestly is your church" lorsque tout va mal
 // c'est tellement vrai
 // https://www.youtube.com/watch?v=V6HaijesNEE&list=RDEMtbsvvYEL144G0Xq-hUs4ww&index=10
+
+// thalez recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , ... );
