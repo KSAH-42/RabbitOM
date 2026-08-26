@@ -75,7 +75,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cli\Attributes\CommandTypeAttribute.cs" />
     <Compile Include="Cli\Attributes\ArgumentAttribute.cs" />
     <Compile Include="Cli\Attributes\RequiredAttribute.cs" />
     <Compile Include="Cli\Attributes\FlagAttribute.cs" />
@@ -87,8 +86,6 @@
     <Compile Include="Cli\RelayCommandHandler.cs" />
     <Compile Include="Cli\ICommandHandler.cs" />
     <Compile Include="Cli\ICommandLine.cs" />
-    <Compile Include="Cli\SampleCommand.cs" />
-    <Compile Include="Cli\ShowHelpCommand.cs" />
     <Compile Include="Cli\SetupCommand.cs" />
     <Compile Include="Cli\Attributes\OptionAttribute.cs" />
     <Compile Include="Configuration\ConfigurationExtensions.cs" />
