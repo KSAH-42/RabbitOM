@@ -57,4 +57,5 @@ rabbitom.onvif.clients.events
 // the systems generate 3 streams for one device (2 for one 1 live, and 1 for recording) if we ignore wssocket.
 
 // for receiving live software make rtsp request to proxy
-// or ask to recorder but need to ask the archive with the start_time equals to DateTime.Now
+// or 
+// ask to the recorder by passing the start_time equals to DateTime.Now to the uri
