@@ -38,6 +38,13 @@ namespace RabbitOM.Player.Controls
                         typeof(SpinningDiamond),
                             new PropertyMetadata(false));
 
+        public static readonly DependencyProperty SpeedRatioProperty =
+            DependencyProperty.Register(
+                nameof(SpeedRatio),
+                    typeof(double),
+                        typeof(SpinningDiamond),
+                            new PropertyMetadata( 0.8 ) );
+
 
 
 
@@ -58,6 +65,12 @@ namespace RabbitOM.Player.Controls
         {
             get => (bool) GetValue(IsSpinningProperty);
             set => SetValue(IsSpinningProperty, value);
+        }
+        
+        public double SpeedRatio
+        {
+            get => (double) GetValue(SpeedRatioProperty);
+            set => SetValue(SpeedRatioProperty, value);
         }
     }
 }

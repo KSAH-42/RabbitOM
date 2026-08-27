@@ -5,23 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
              mc:Ignorable="d" 
-             Height="100" 
-             Width="100"
+             Height="25" 
+             Width="25"
+             Background="Transparent"
              >
     <Grid>
-        
-        <Rectangle Width="60" 
-                   Height="60" 
+
+        <Rectangle HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   Height="15"
+                   Width="15"
                    RenderTransformOrigin="0.5,0.5"
                    Fill="{Binding Fill, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                    >
-            
+
             <Rectangle.RenderTransform>
                 <RotateTransform x:Name="DiamondRotate" Angle="45" />
             </Rectangle.RenderTransform>
+
+            <Rectangle.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="DiamondRotate"
+                                             Storyboard.TargetProperty="Angle"
+                                             From="45"
+                                             To="405"
+                                             Duration="{Binding Duration, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                                             SpeedRatio="{Binding SpeedRatio, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                                             RepeatBehavior="Forever" 
+                                             />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Rectangle.Triggers>
             
         </Rectangle>
-        
+
     </Grid>
     
 </UserControl>

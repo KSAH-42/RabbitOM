@@ -34,6 +34,7 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( nameof(Footer), typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty IsConnectingProperty = DependencyProperty.Register( nameof(IsConnecting), typeof(bool) , typeof(MainWindow) );
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
@@ -70,6 +71,12 @@ namespace RabbitOM.Player
         {
             get => GetValue( FooterProperty ) as string;
             set => SetValue( FooterProperty , value );
+        }
+
+        public bool IsConnecting
+        {
+            get => (bool) GetValue( IsConnectingProperty );
+            private set => SetValue( IsConnectingProperty , value );
         }
 
         public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
@@ -223,6 +230,7 @@ namespace RabbitOM.Player
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
                 StatusInfo = "Connecting";
+                IsConnecting = true;
             } ) );
         }
 
@@ -232,6 +240,7 @@ namespace RabbitOM.Player
             {
                 _datasource.Clear();
                 StatusInfo = "";
+                IsConnecting = false;
             } ) );
         }
 
@@ -239,6 +248,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                IsConnecting = false;
                 _frameBuilder.Dispose();
 
                 _datasource.SetConnectionStatusOn();
@@ -300,7 +310,7 @@ namespace RabbitOM.Player
                 StatusInfo = "Connecting - Communication Lost";
                 Footer = "";
                 Image = null;
-
+                IsConnecting = ! _client.IsCommunicationStopping;
                 _datasource.SetConnectionStatusOff();
                 _frameBuilder.Clear();
                 _decoder.Close();

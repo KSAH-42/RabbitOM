@@ -183,6 +183,10 @@
                 <StackPanel VerticalAlignment="Center" 
                             HorizontalAlignment="Center" 
                             >
+
+                    <controls:SpinningDiamond Fill="White"
+                                              Visibility="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+                                              />
                     
                     <TextBlock FontSize="20" 
                                Foreground="White" 
@@ -200,17 +204,15 @@
                        Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
                        />
 
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Bottom">
 
-                    <TextBlock FontSize="15" 
+                <TextBlock FontSize="15" 
                            HorizontalAlignment="Center"
+                           VerticalAlignment="Bottom"
                            Foreground="White" 
                            Background="Black"
                            Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
                            Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
-
-                </StackPanel>
 
                 <controls:NetworkStatistics x:Name="_statistics" 
                                             Margin="10,20,0,0" 
