@@ -17,6 +17,7 @@
 		FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
         Style="{DynamicResource WindowStyle}"
         Icon="/Resources/icon.ico"
+        WindowState="Maximized"
 		>
 
     <Window.Resources>
