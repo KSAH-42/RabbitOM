@@ -43,7 +43,7 @@ rabbitom.onvif.clients.events
 // web browser  <---> decoder.exe <--> proxy.exe <--> cam1
 //                                                    /|\ rtp stream
 //                              recorder.exe-----------+  
-//                              live.kadafi.dll to handle rtsp
+//                              live.dll to handle rtsp
 
 // or
 
@@ -51,10 +51,10 @@ rabbitom.onvif.clients.events
 // web browser  <---> decoder.exe <--> proxy.exe <--> cam1  <---- ptzservice.exe
 //                                      /|\ rtp stream
 //                        recorder.exe---+  
-//                        live.kadafi.dll to handle rtsp
+//                        live.dll to handle rtsp
 //                        onvif.dll (hardcoded string with socket including copyrights,and save securely by jfrog,...) don't laugth !
 
 // the systems generate 3 streams for one device (2 for one 1 live, and 1 for recording) if we ignore wssocket.
 
-// for receiving live software make rtsp request to proxy using kadafi.dll
+// for receiving live software make rtsp request to proxy
 // or ask to recorder but need to ask the archive with the start_time equals to DateTime.Now
