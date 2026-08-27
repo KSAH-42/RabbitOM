@@ -142,8 +142,7 @@ First of all, here I use a HIK camera, and HIK camera just works as expected and
 
 The issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this library doesn't support all digest algs supported by the camera.
 VLC (3.0.23 and probably previous versions) will enter in a loop and will normally ask to you to enter the credentials until the authentication succeed. And according to the rtsp headers there is the name of dll used here located on the useragent. but thalezed hide the name... not vlc.
-And most of C++ forked repo use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms, and for instance hitachie/thalezed products with their great product called picatchou recorder powered by the dracula.dll just fails. Where Thalezed says create an instance of library... and not load/unload or attach/detach a lib, creating an instance of lib, and allocate the famous dll on the stack, build, and trigger cd pipeline push and and store securely into the artifactory and no one can hack this beautifull package...
-I hope that one day some sales engineer will not pushed some security cameras with a cyber security audits and trigger a vms product replacement silently.
+And most of C++ forked repo use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
 
