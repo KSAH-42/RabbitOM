@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace RabbitOM.Streaming.RtspV2.Authentication
+namespace RabbitOM.Net.RtspV2.Authentication
 {
     // Apply the output of this class to <seealso cref="RtspAuthorizationResponseBuilder.ClientNonce"/> property
     public sealed class ClientNonce

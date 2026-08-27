@@ -1,0 +1,93 @@
+﻿using System;
+
+namespace RabbitOM.Net.Rtcp
+{
+    public sealed class RtcpReportBlock
+    {
+        internal const int Size = 24;
+
+
+
+
+        private RtcpReportBlock()
+        {
+        }
+
+        public RtcpReportBlock( uint synchronizationSource , byte fractionLost , uint cummulativePacketsLost , uint extendedHighestSequence , uint interArrivalJitter , uint lastSRTimestamp , uint delaySinceLastSR )
+        {
+            SynchronizationSource = synchronizationSource;
+            FractionLost = fractionLost;
+            CummulativePacketsLost = cummulativePacketsLost;
+            ExtendedHighestSequence = extendedHighestSequence;
+            InterArrivalJitter = interArrivalJitter;
+            LastSRTimestamp = lastSRTimestamp;
+            DelaySinceLastSR = delaySinceLastSR;
+        }
+
+
+
+
+        public uint SynchronizationSource { get; private set; }
+
+        public byte FractionLost { get; private set; }
+
+        public uint CummulativePacketsLost { get; private set; }
+
+        public uint ExtendedHighestSequence { get; private set; }
+
+        public uint InterArrivalJitter { get; private set; }
+
+        public uint LastSRTimestamp { get; private set; }
+
+        public uint DelaySinceLastSR { get; private set; }
+
+
+
+
+
+        public static bool TryParse( ArraySegment<byte> buffer , out RtcpReportBlock result )
+        {
+            result = default;
+
+            if ( buffer.Array == null || buffer.Count < Size )
+            {
+                return false;
+            }
+
+            var offset = buffer.Offset;
+
+            result.SynchronizationSource  = (uint) buffer.Array[ offset ++ ] << 24;
+            result.SynchronizationSource |= (uint) buffer.Array[ offset ++ ] << 16;
+            result.SynchronizationSource |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.SynchronizationSource |=        buffer.Array[ offset ++ ];
+
+            result.FractionLost = buffer.Array[ offset ++ ];
+
+            result.CummulativePacketsLost  = (uint) buffer.Array[ offset ++ ] << 16;
+            result.CummulativePacketsLost |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.CummulativePacketsLost |=        buffer.Array[ offset ++ ];
+
+            result.ExtendedHighestSequence  = (uint) buffer.Array[ offset ++ ] << 24;
+            result.ExtendedHighestSequence |= (uint) buffer.Array[ offset ++ ] << 16;
+            result.ExtendedHighestSequence |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.ExtendedHighestSequence |=        buffer.Array[ offset ++ ];
+
+            result.InterArrivalJitter  = (uint) buffer.Array[ offset ++ ] << 24;
+            result.InterArrivalJitter |= (uint) buffer.Array[ offset ++ ] << 16;
+            result.InterArrivalJitter |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.InterArrivalJitter |=        buffer.Array[ offset ++ ];
+
+            result.LastSRTimestamp  = (uint) buffer.Array[ offset ++ ] << 24;
+            result.LastSRTimestamp |= (uint) buffer.Array[ offset ++ ] << 16;
+            result.LastSRTimestamp |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.LastSRTimestamp |=        buffer.Array[ offset ++ ];
+
+            result.DelaySinceLastSR  = (uint) buffer.Array[ offset ++ ] << 24;
+            result.DelaySinceLastSR |= (uint) buffer.Array[ offset ++ ] << 16;
+            result.DelaySinceLastSR |= (uint) buffer.Array[ offset ++ ] << 8;
+            result.DelaySinceLastSR |=        buffer.Array[ offset ++ ];
+
+            return true;
+        }
+    }
+}

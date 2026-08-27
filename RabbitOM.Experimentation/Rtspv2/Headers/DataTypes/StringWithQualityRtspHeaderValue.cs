@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
+namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 {
     public sealed class StringWithQualityRtspHeaderValue
     {

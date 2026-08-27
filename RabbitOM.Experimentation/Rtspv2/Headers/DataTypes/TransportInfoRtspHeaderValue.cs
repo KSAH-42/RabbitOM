@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
+namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 {
     public sealed class TransportInfoRtspHeaderValue
     {

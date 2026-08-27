@@ -6,15 +6,15 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/WindowStyle.xaml" />
-                <ResourceDictionary Source="/Styles/ComboBoxStyle.xaml" />
-                <ResourceDictionary Source="/Styles/ContextualMenuStyle.xaml" />
-                <ResourceDictionary Source="/Styles/MainMenuStyle.xaml" />
-                <ResourceDictionary Source="/Styles/ButtonStyle.xaml" />
-                <ResourceDictionary Source="/Styles/ScrollBarStyle.xaml" />
-                <ResourceDictionary Source="/Styles/TextBoxStyle.xaml" />
-                <ResourceDictionary Source="/Styles/ListViewStyle.xaml" />
-                <ResourceDictionary Source="/Styles/ProgressBarStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/WindowStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/ComboBoxStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/ContextualMenuStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/MainMenuStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/ScrollBarStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/TextBoxStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/ListViewStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Styles/ProgressBarStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

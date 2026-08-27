@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RabbitOM.Streaming.RtspV2.Headers
+namespace RabbitOM.Net.RtspV2.Headers
 {
-    using RabbitOM.Streaming.RtspV2.Headers.DataTypes;
+    using RabbitOM.Net.RtspV2.Headers.DataTypes;
 
     public sealed class CacheControlRtspHeaderValue
     {

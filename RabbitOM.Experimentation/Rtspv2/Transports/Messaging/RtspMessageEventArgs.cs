@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     public class RtspMessageEventArgs : EventArgs
     {

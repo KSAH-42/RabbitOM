@@ -2,8 +2,8 @@
 
 namespace RabbitOM.Sample.Client
 {
-    using RabbitOM.Streaming.Rtsp;
-    using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Net.Rtsp;
+    using RabbitOM.Net.Rtsp.Clients;
     using RabbitOM.Sample.Client.Helpers;
 
     static class Program

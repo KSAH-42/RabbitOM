@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
+namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 {
     public class RtspHeaderValueCollection<TValue> : ICollection<TValue> , IReadOnlyCollection<TValue>
         where TValue : class

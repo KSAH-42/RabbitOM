@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Headers
+namespace RabbitOM.Net.RtspV2.Headers
 {
-    using RabbitOM.Streaming.RtspV2.Headers.DataTypes;
+    using RabbitOM.Net.RtspV2.Headers.DataTypes;
 
     // TODO: add unit test to detect that implicit operator( string type) is not implemented, it should be block, because it lets to people to think what we can write every thing, lets the developer to use add( string name, string value) method instead
 

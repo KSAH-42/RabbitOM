@@ -3,7 +3,7 @@
 // it will force the higher level implementation to close the channel and to reopen a new one and stop to continue to used a bad readers or making an unnecessary network operations
 using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     public sealed class RtspTransportWithCircuitBreaker : ITransport
     {

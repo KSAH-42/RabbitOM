@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Receivers
+namespace RabbitOM.Net.RtspV2.Receivers
 {
     /*
         a rtsp state machine will used a session using a series of calls like options->describe->setup->play and ends by a teardown

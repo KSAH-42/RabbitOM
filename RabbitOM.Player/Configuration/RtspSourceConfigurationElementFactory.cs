@@ -8,9 +8,9 @@ namespace RabbitOM.Player.Configuration
         public static IEnumerable<RtspSourceConfigurationElement> CreateDefaultSources()
         {
             yield return "rtsp://stream.strba.sk:1935/strba/VYHLAD_JAZERO.stream";
-            yield return "rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/101";
-            yield return "rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/102";
-            yield return "rtsp://admin:camera123@192.168.1.64:554/Streaming/Channels/103";
+            yield return "rtsp://admin:camera123@192.168.1.64:554/Net/Channels/101";
+            yield return "rtsp://admin:camera123@192.168.1.64:554/Net/Channels/102";
+            yield return "rtsp://admin:camera123@192.168.1.64:554/Net/Channels/103";
             yield return "rtsp://admin:camera123@127.0.0.1:554/screenlive";
             yield return "rtsp://admin:camera123@127.0.0.1:554/city1.mp4";
             yield return "rtsp://admin:camera123@127.0.0.1:554/city2.mp4";

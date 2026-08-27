@@ -180,12 +180,16 @@
 
                 </Grid.ContextMenu>
 
-                <TextBlock VerticalAlignment="Center" 
-                           HorizontalAlignment="Center" 
-                           FontSize="20" 
-                           Foreground="White" 
-                           Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                           />
+                <StackPanel VerticalAlignment="Center" 
+                            HorizontalAlignment="Center" 
+                            >
+                    
+                    <TextBlock FontSize="20" 
+                               Foreground="White" 
+                               Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                               />
+                    
+                </StackPanel>
 
                 <Image x:Name="_image"  
                        Margin="0,0,0,0" 

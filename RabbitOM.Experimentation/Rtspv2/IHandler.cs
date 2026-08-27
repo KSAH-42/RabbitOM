@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2
+namespace RabbitOM.Net.RtspV2
 {
     public interface IHandler
     {

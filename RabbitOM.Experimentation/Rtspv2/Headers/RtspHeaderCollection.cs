@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.RtspV2.Headers
+namespace RabbitOM.Net.RtspV2.Headers
 {
     public abstract class RtspHeaderCollection : IHeaderCollection , IReadOnlyHeaderCollection
     {

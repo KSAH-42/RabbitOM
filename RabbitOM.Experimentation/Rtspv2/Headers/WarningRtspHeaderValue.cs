@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Streaming.RtspV2.Headers
+namespace RabbitOM.Net.RtspV2.Headers
 {
-    using RabbitOM.Streaming.RtspV2.Headers.DataTypes;
+    using RabbitOM.Net.RtspV2.Headers.DataTypes;
     
     public sealed class WarningRtspHeaderValue
     {

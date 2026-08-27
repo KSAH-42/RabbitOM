@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     public sealed class RtspRequestLine
     {

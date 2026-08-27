@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RabbitOM.Streaming.RtspV2.Headers
+namespace RabbitOM.Net.RtspV2.Headers
 {
     internal static class RtspHeaderValueValidator
     {

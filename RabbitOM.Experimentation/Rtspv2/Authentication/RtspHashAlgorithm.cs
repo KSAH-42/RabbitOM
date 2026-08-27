@@ -2,7 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 
-namespace RabbitOM.Streaming.RtspV2.Authentication
+namespace RabbitOM.Net.RtspV2.Authentication
 {
     public sealed class RtspHashAlgorithm : IDisposable
     {

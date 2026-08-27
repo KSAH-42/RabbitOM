@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.RtspV2.Headers.DataTypes
+namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 {
     public sealed class MediaTypeWithQualityRtspHeaderValue
     {

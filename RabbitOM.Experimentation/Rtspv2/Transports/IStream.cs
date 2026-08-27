@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     // so we don't use a pipereader class or an nuget package
     // instead we will implement a special stream

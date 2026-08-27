@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     public sealed class RtspTransport : ITransport
     {

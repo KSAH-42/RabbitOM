@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Receivers
+namespace RabbitOM.Net.RtspV2.Receivers
 {
     public class RtspStreamingStartErrorEventArgs : RtspErrorEventArgs
     {

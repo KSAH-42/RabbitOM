@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     public sealed class RtspMessageReader : IMessageReader
     {

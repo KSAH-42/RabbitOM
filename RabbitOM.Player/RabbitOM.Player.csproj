@@ -134,7 +134,7 @@
     </Compile>
     <Compile Include="Dialogs\ModuleInfoFactory.cs" />
     <Compile Include="Dialogs\ModuleInfo.cs" />
-    <Compile Include="Styles\WindowStyle.cs" />
+    <Compile Include="Themes\Styles\WindowStyle.cs" />
     <Page Include="Controls\MediaControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,39 +187,39 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Styles\ScrollBarStyle.xaml">
+    <Page Include="Themes\Styles\ScrollBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\ComboBoxStyle.xaml">
+    <Page Include="Themes\Styles\ComboBoxStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\ContextualMenuStyle.xaml">
+    <Page Include="Themes\Styles\ContextualMenuStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\ButtonStyle.xaml">
+    <Page Include="Themes\Styles\ButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\MainMenuStyle.xaml">
+    <Page Include="Themes\Styles\MainMenuStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\TextBoxStyle.xaml">
+    <Page Include="Themes\Styles\TextBoxStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\ListViewStyle.xaml">
+    <Page Include="Themes\Styles\ListViewStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\ProgressBarStyle.xaml">
+    <Page Include="Themes\Styles\ProgressBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\WindowStyle.xaml">
+    <Page Include="Themes\Styles\WindowStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

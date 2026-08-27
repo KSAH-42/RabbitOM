@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 #pragma warning disable CS1998
 
-namespace RabbitOM.Streaming.RtspV2
+namespace RabbitOM.Net.RtspV2
 {
-    using RabbitOM.Streaming.RtspV2.Headers;
+    using RabbitOM.Net.RtspV2.Headers;
 
     public sealed class RtspClient : IDisposable
     {

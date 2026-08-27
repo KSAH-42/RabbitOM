@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace RabbitOM.Sample.Client.Helpers
 {
-    using RabbitOM.Streaming.Rtsp;
+    using RabbitOM.Net.Rtsp;
 
     public sealed class CommandLineOptions
     {

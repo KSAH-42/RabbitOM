@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
     // this class must handle reopen, error reporting and transmit packet to the upper layer without parsing the payload
     public class RtspReceiverService : IDisposable

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2
+namespace RabbitOM.Net.RtspV2
 {
-    using RabbitOM.Streaming.RtspV2.Transports;
+    using RabbitOM.Net.RtspV2.Transports;
 
     public sealed class RtspClientEnvironment
     {

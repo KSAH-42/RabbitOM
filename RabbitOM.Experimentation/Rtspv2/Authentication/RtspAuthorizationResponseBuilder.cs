@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 
-namespace RabbitOM.Streaming.RtspV2.Authentication
+namespace RabbitOM.Net.RtspV2.Authentication
 {
-    using RabbitOM.Streaming.RtspV2.Headers.DataTypes;
+    using RabbitOM.Net.RtspV2.Headers.DataTypes;
 
     // use this class to generate value for the <see cref="Headers.AuthorizationRtspHeaderValue.Response"/> property
     public sealed class RtspAuthorizationResponseBuilder

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Streaming.RtspV2.Transports
+namespace RabbitOM.Net.RtspV2.Transports
 {
-    using RabbitOM.Streaming.RtspV2.Headers;
+    using RabbitOM.Net.RtspV2.Headers;
 
     public sealed class RtspMessageWriterValidator
     {

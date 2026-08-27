@@ -9,12 +9,12 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player
 {
-    using RabbitOM.Streaming.Rtp;
-    using RabbitOM.Streaming.Rtp.H264;
-    using RabbitOM.Streaming.Rtp.H265;
-    using RabbitOM.Streaming.Rtp.Jpeg;
-    using RabbitOM.Streaming.Rtsp;
-    using RabbitOM.Streaming.Rtsp.Clients;
+    using RabbitOM.Net.Rtp;
+    using RabbitOM.Net.Rtp.H264;
+    using RabbitOM.Net.Rtp.H265;
+    using RabbitOM.Net.Rtp.Jpeg;
+    using RabbitOM.Net.Rtsp;
+    using RabbitOM.Net.Rtsp.Clients;
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
     using RabbitOM.Player.Configuration;

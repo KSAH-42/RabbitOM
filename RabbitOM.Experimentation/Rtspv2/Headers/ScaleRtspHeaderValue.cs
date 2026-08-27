@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace RabbitOM.Streaming.RtspV2.Headers
+namespace RabbitOM.Net.RtspV2.Headers
 {
     public sealed class ScaleRtspHeaderValue
     {

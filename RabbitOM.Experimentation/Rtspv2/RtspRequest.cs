@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace RabbitOM.Streaming.RtspV2
+namespace RabbitOM.Net.RtspV2
 {
-    using RabbitOM.Streaming.RtspV2.Headers;
+    using RabbitOM.Net.RtspV2.Headers;
 
     public sealed class RtspRequest
     {
