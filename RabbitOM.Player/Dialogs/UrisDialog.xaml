@@ -13,6 +13,7 @@
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         ShowInTaskbar="False"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         >
 
     <Window.CommandBindings>
@@ -57,8 +58,8 @@
                       TabIndex="0" 
                       SelectionMode="Extended" 
                       VerticalAlignment="Stretch"
-                      SelectedValue="{Binding SelectedUri,RelativeSource={RelativeSource AncestorType=Window}}"
-                      ItemsSource="{Binding Uris,RelativeSource={RelativeSource AncestorType=Window}}"
+                      SelectedValue="{Binding SelectedUri}"
+                      ItemsSource="{Binding Uris}"
                       >
 
                 <ListView.ItemContainerStyle>

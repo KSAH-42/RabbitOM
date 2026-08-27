@@ -229,7 +229,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
-                StatusInfo = "Connecting";
+                StatusInfo = "Connecting...";
                 IsConnecting = true;
             } ) );
         }

@@ -18,6 +18,7 @@
         Style="{DynamicResource WindowStyle}"
         Icon="/Resources/icon.ico"
         WindowState="Maximized"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
 		>
 
     <Window.Resources>
@@ -106,8 +107,8 @@
                               SelectedIndex="0" 
                               Height="29" 
                               IsEditable="True" 
-                              Text="{Binding SelectedSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                              ItemsSource="{Binding Sources,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                              Text="{Binding SelectedSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding Sources,UpdateSourceTrigger=PropertyChanged}"
                               MaxDropDownHeight="350"
                               />
                     
@@ -133,7 +134,7 @@
                             VerticalAlignment="Top" 
                             Width="89" 
                             Height="29"
-                            Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                            Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                             Command="{x:Static local:MainWindow.ControlCommand}" 
                             />
                     
@@ -187,8 +188,8 @@
 
                     <controls:CommunicationStatusControl Fill="White"
                                                          Foreground="White"
-                                                         ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                         ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+                                                         ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                         ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged}"
                                                          />
 
                 </StackPanel>
@@ -198,8 +199,8 @@
                        SnapsToDevicePixels="True" 
                        UseLayoutRounding="True" 
                        Focusable="True"
-                       Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                       Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
+                       Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
                        />
 
 
@@ -208,7 +209,7 @@
                            VerticalAlignment="Bottom"
                            Foreground="White" 
                            Background="Black"
-                           Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                           Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                            Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
 

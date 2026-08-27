@@ -13,6 +13,7 @@
         WindowStartupLocation="CenterOwner"
         Style="{DynamicResource WindowStyle}"
         ShowInTaskbar="False"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         >
 
     <Window.CommandBindings>
@@ -38,7 +39,7 @@
                       TabIndex="0" 
                       SelectionMode="Extended" 
                       VerticalAlignment="Stretch"
-                      ItemsSource="{Binding Modules,RelativeSource={RelativeSource AncestorType=Window}}"
+                      ItemsSource="{Binding Modules}"
                       >
 
                 <ListView.View>
