@@ -7,29 +7,113 @@ namespace RabbitOM.Player.Controls
 {
 	public partial class NetworkStatistics : UserControl
     {
-		public static readonly DependencyProperty DataSourceProperty = DependencyProperty.Register("DataSource", typeof(IStatisticsDataSource) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty ConnectionStatusProperty = DependencyProperty.Register("ConnectionStatus", typeof(bool) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty CodecProperty = DependencyProperty.Register( "Codec", typeof(string) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( "Transport", typeof(string) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty ClockProperty = DependencyProperty.Register("Clock", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty FrameHeightProperty = DependencyProperty.Register( "FrameHeight", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty FrameWidthProperty = DependencyProperty.Register("FrameWidth", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty BytesReceivedPerSecondProperty = DependencyProperty.Register("BytesReceivedPerSecond", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty PacketReceivedPerSecondProperty = DependencyProperty.Register("PacketReceivedPerSecond", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty FrameCountPerSecondProperty = DependencyProperty.Register("FrameCountPerSecond", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty PacketsLostCountPerSecondProperty = DependencyProperty.Register("PacketsLostCount", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty MaxFrameCountPerSecondProperty = DependencyProperty.Register( "MaxFrameCountPerSecond", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty MaxBytesReceivedPerSecondProperty = DependencyProperty.Register( "MaxBytesReceivedPerSecond", typeof(long) ,typeof(NetworkStatistics) );
-		public static readonly DependencyProperty MaxPacketReceivedPerSecondProperty = DependencyProperty.Register( "MaxPacketReceivedPerSecond", typeof(long) ,typeof(NetworkStatistics) );
-
-
 		private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds( 1000 ) };
+
+
+
+
 
 
 		public NetworkStatistics()
         {
             InitializeComponent();
         }
+
+
+
+
+
+
+
+		public static readonly DependencyProperty DataSourceProperty =
+			DependencyProperty.Register(
+				nameof(DataSource),
+					typeof(IStatisticsDataSource),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty ConnectionStatusProperty =
+			DependencyProperty.Register(
+				nameof(ConnectionStatus),
+					typeof(bool),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty CodecProperty =
+			DependencyProperty.Register(
+				nameof(Codec),
+					typeof(string),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty TransportProperty =
+			DependencyProperty.Register(
+				nameof(Transport),
+					typeof(string),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty ClockProperty =
+			DependencyProperty.Register(
+				nameof(Clock),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty FrameHeightProperty =
+			DependencyProperty.Register(
+				nameof(FrameHeight),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty FrameWidthProperty =
+			DependencyProperty.Register(
+				nameof(FrameWidth),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty BytesReceivedPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(BytesReceivedPerSecond),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty PacketReceivedPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(PacketReceivedPerSecond),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty FrameCountPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(FrameCountPerSecond),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty PacketsLostCountPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(PacketsLostCount),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty MaxFrameCountPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(MaxFrameCountPerSecond),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty MaxBytesReceivedPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(MaxBytesReceivedPerSecond),
+					typeof(long),
+					typeof(NetworkStatistics));
+
+		public static readonly DependencyProperty MaxPacketReceivedPerSecondProperty =
+			DependencyProperty.Register(
+				nameof(MaxPacketReceivedPerSecond),
+					typeof(long),
+						typeof(NetworkStatistics));
+
+
+
+
+
+
 
 
 		public IStatisticsDataSource DataSource
@@ -118,6 +202,13 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+
+
+
+
+
+
 		public void StartCollect()
 		{
 			if ( DataSource == null || _timer.IsEnabled )
@@ -159,6 +250,13 @@ namespace RabbitOM.Player.Controls
 			MaxBytesReceivedPerSecond = source.GetMaxBytesReceivedPerSecond();
 			MaxPacketReceivedPerSecond = source.GetMaxPacketReceivedPerSecond();
 		}
+
+
+
+
+
+
+
 
 
 

@@ -29,11 +29,11 @@ namespace RabbitOM.Player
         public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
 
-        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( "Image", typeof(ImageSource) , typeof(MainWindow) );
-        public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MainWindow) );
-        public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( "ButtonStatus", typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
-        public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( "SelectedSource", typeof(string) , typeof(MainWindow) );
-        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( "Footer", typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( nameof(Image), typeof(ImageSource) , typeof(MainWindow) );
+        public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( nameof(StatusInfo), typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
+        public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( nameof(Footer), typeof(string) , typeof(MainWindow) );
 
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();

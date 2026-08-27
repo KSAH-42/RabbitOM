@@ -99,6 +99,9 @@
     <Compile Include="Controls\MediaControl.xaml.client.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
+    <Compile Include="Controls\SpinningDiamond.xaml.cs">
+      <DependentUpon>SpinningDiamond.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaPlayerTransport.cs" />
@@ -140,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NetworkStatistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SpinningDiamond.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

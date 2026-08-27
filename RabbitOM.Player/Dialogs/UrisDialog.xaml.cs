@@ -14,12 +14,31 @@ namespace RabbitOM.Player.Dialogs
         public static readonly RoutedCommand CancelCommand = new RoutedCommand();
         public static readonly RoutedCommand AcceptCommand = new RoutedCommand();
 
-        public static readonly DependencyProperty SelectedUriProperty = DependencyProperty.Register( "SelectedSource", typeof(UriInfo) , typeof(UrisDialog) );
+
+
+
+
 
         public UrisDialog()
         {
             InitializeComponent();
         }
+
+
+
+
+
+
+        public static readonly DependencyProperty SelectedUriProperty =
+            DependencyProperty.Register(
+                nameof(SelectedUri),
+                    typeof(UriInfo),
+                        typeof(UrisDialog));
+
+
+
+
+
 
         public UriInfo SelectedUri
         {
@@ -28,6 +47,12 @@ namespace RabbitOM.Player.Dialogs
         }
 
         public ObservableCollection<UriInfo> Uris { get; } = new ObservableCollection<UriInfo>();
+
+
+
+
+
+
 
         private void OnMoveUp( object sender , ExecutedRoutedEventArgs e )
         {

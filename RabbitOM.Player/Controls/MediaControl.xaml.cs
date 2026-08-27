@@ -6,29 +6,47 @@ namespace RabbitOM.Player.Controls
 {
     public partial class MediaControl : UserControl
     {
-        public static readonly RoutedEvent CommunicationStartedEvent = EventManager.RegisterRoutedEvent( "CommunicationStarted" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-        public static readonly RoutedEvent CommunicationStoppedEvent = EventManager.RegisterRoutedEvent( "CommunicationStopped" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-        public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( "Connected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-        public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( "Disconnected" , RoutingStrategy.Bubble , typeof(RoutedEventHandler) , typeof(MediaControl) );
-        
-
-
-
-
-        public static readonly DependencyProperty UriProperty = DependencyProperty.Register( "Uri", typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( "UserName", typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( "Password", typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( "Transport", typeof(MediaPlayerTransport) , typeof(MediaControl) );
-        public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( "StatusInfo", typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( "Footer", typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register( "FooterVisibility", typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
-
-
-
         public MediaControl()
         {
             InitializeComponent();
         }
+
+
+
+
+
+
+        public static readonly RoutedEvent CommunicationStartedEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(CommunicationStarted),
+                    RoutingStrategy.Bubble,
+                        typeof(RoutedEventHandler),
+                            typeof(MediaControl));
+
+
+        public static readonly RoutedEvent CommunicationStoppedEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(CommunicationStopped),
+                    RoutingStrategy.Bubble,
+                        typeof(RoutedEventHandler),
+                            typeof(MediaControl));
+
+        public static readonly RoutedEvent ConnectedEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(Connected),
+                    RoutingStrategy.Bubble,
+                        typeof(RoutedEventHandler),
+                            typeof(MediaControl));
+
+        public static readonly RoutedEvent DisconnectedEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(Disconnected),
+                    RoutingStrategy.Bubble,
+                        typeof(RoutedEventHandler),
+                            typeof(MediaControl));
+
+
+
 
 
 
@@ -57,6 +75,56 @@ namespace RabbitOM.Player.Controls
             add    => AddHandler( DisconnectedEvent , value );
             remove => RemoveHandler( DisconnectedEvent , value );
         }
+
+
+
+
+
+
+
+        public static readonly DependencyProperty UriProperty =
+            DependencyProperty.Register(
+                nameof(Uri),
+                    typeof(string),
+                        typeof(MediaControl));
+
+        public static readonly DependencyProperty UserNameProperty =
+            DependencyProperty.Register(
+                nameof(UserName),
+                    typeof(string),
+                        typeof(MediaControl));
+
+        public static readonly DependencyProperty PasswordProperty =
+            DependencyProperty.Register(
+                nameof(Password),
+                    typeof(string),
+                    typeof(MediaControl));
+
+        public static readonly DependencyProperty TransportProperty =
+            DependencyProperty.Register(
+                nameof(Transport),
+                    typeof(MediaPlayerTransport),
+                        typeof(MediaControl));
+
+        public static readonly DependencyProperty StatusInfoProperty =
+            DependencyProperty.Register(
+                nameof(StatusInfo),
+                    typeof(string),
+                    typeof(MediaControl));
+
+        public static readonly DependencyProperty FooterProperty =
+            DependencyProperty.Register(
+                nameof(Footer),
+                    typeof(string),
+                    typeof(MediaControl));
+
+        public static readonly DependencyProperty FooterVisibilityProperty =
+            DependencyProperty.Register(
+                nameof(FooterVisibility),
+                    typeof(Visibility),
+                        typeof(MediaControl),
+                            new PropertyMetadata(Visibility.Collapsed));
+
 
 
 
@@ -98,10 +166,18 @@ namespace RabbitOM.Player.Controls
             set => SetValue( FooterProperty , value );
         }
 
+        public Visibility FooterVisibility
+        {
+            get => (Visibility) GetValue( FooterVisibilityProperty );
+            set => SetValue( FooterVisibilityProperty , value );
+        }
+
         public NetworkStatistics Statistics
         {
             get => _statistics;
         }
+
+
 
 
 

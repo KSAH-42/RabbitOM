@@ -7,21 +7,62 @@ namespace RabbitOM.Player.Dialogs
 {
     public partial class NetworkSettingsDialog : Window
     {
-        public static readonly RoutedCommand CloseCommand = new RoutedCommand();
-
-        public static readonly DependencyProperty SelectedTransportProperty = DependencyProperty.Register( "SelectedTransport", typeof(string) , typeof(NetworkSettingsDialog) ,  new PropertyMetadata( TcpTransport , OnSelectedTransportChanged ) );
-        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(NetworkSettingsDialog) , new PropertyMetadata( 5004 ) , null );
-        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(NetworkSettingsDialog) , new PropertyMetadata( "224.0.0.1" ) , null );
-        public static readonly DependencyProperty IsDatagramProtocolProperty = DependencyProperty.Register( "IsDatagramProtocol", typeof(bool) , typeof(NetworkSettingsDialog) , new PropertyMetadata( false ) , null );
-
         public const string TcpTransport = "TCP";
         public const string UdpTransport = "UDP";
         public const string MulticastTransport = "MULTICAST";
+
+
+
+
+
+        public static readonly RoutedCommand CloseCommand = new RoutedCommand();
+
+
+
+
 
         public NetworkSettingsDialog()
         {
             InitializeComponent();
         }
+
+
+
+
+
+
+        public static readonly DependencyProperty SelectedTransportProperty =
+            DependencyProperty.Register(
+                nameof(SelectedTransport),
+                    typeof(string),
+                        typeof(NetworkSettingsDialog),
+                            new PropertyMetadata(TcpTransport,OnSelectedTransportChanged));
+
+        public static readonly DependencyProperty PortProperty=
+            DependencyProperty.Register(
+                nameof(Port),
+                    typeof(int),
+                        typeof(NetworkSettingsDialog),
+                            new PropertyMetadata(5004),null);
+
+        public static readonly DependencyProperty IPAddressProperty=
+            DependencyProperty.Register(
+                nameof(IPAddress),
+                    typeof(string),
+                        typeof(NetworkSettingsDialog),
+                            new PropertyMetadata("224.0.0.1"),null);
+
+        public static readonly DependencyProperty IsDatagramProtocolProperty=
+            DependencyProperty.Register(
+                nameof(IsDatagramProtocol),
+                    typeof(bool),
+                        typeof(NetworkSettingsDialog),
+                            new PropertyMetadata(false),null);
+
+
+
+
+
 
         public bool UseTcpTransport
         {
@@ -63,6 +104,11 @@ namespace RabbitOM.Player.Dialogs
         }
 
         public ObservableCollection<string> Transports { get; } = new ObservableCollection<string>() { TcpTransport , UdpTransport , MulticastTransport };
+
+
+
+
+
 
         private void OnCancel( object sender , ExecutedRoutedEventArgs e )
         {
