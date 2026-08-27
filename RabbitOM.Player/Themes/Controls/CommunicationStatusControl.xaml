@@ -24,8 +24,8 @@
                         <Rectangle x:Name="Part_Rectangle"
                                HorizontalAlignment="Center" 
                                VerticalAlignment="Center"
-                               Height="15"
-                               Width="15"
+                               Height="20"
+                               Width="20"
                                RenderTransformOrigin="0.5,0.5"
                                Fill="{TemplateBinding Fill}" 
                                >
