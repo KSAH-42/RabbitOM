@@ -85,7 +85,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                 return false;
             }
 
-            var sequenceHeader = request.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
+            var sequenceHeader = request.Headers.FindByName<CSeqRtspHeader>( RtspHeaderNames.CSeq );
 
             if ( sequenceHeader == null || !sequenceHeader.TryValidate() )
             {
@@ -253,7 +253,7 @@ namespace RabbitOM.Net.Rtsp.Clients
                 return;
             }
 
-            var headerCSeq = response.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
+            var headerCSeq = response.Headers.FindByName<CSeqRtspHeader>( RtspHeaderNames.CSeq );
 
             if ( headerCSeq == null )
             {

@@ -24,14 +24,6 @@ rabbitom.onvif.clients
 rabbitom.onvif.clients.discovery
 rabbitom.onvif.clients.events 
 
-
-
-
-
-
-
-
-
 // The escape from thalezed, and it's nanar division. That's a serious compagny..... just take packages write code and build, that's it and push a globlins artifactory.
 
 // thalezed C++ recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) ); // for a good compensation fixed at 70KEuro and for the java microservice used for send onvif ptz command, with a git clone...

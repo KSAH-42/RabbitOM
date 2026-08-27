@@ -27,7 +27,7 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         public long RequestId
         {
-            get => _request.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq )?.Value ?? 0;
+            get => _request.Headers.FindByName<CSeqRtspHeader>( RtspHeaderNames.CSeq )?.Value ?? 0;
         }
 
         public RtspMessageResponse Response
@@ -95,14 +95,14 @@ namespace RabbitOM.Net.Rtsp.Clients
                     return;
                 }
 
-                var responseCSeq = _response.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
+                var responseCSeq = _response.Headers.FindByName<CSeqRtspHeader>( RtspHeaderNames.CSeq );
 
                 if ( responseCSeq == null || !responseCSeq.TryValidate() )
                 {
                     return;
                 }
 
-                var requestCSeq = _request.Headers.FindByName<RtspHeaderCSeq>( RtspHeaderNames.CSeq );
+                var requestCSeq = _request.Headers.FindByName<CSeqRtspHeader>( RtspHeaderNames.CSeq );
 
                 if ( requestCSeq == null || ! requestCSeq.TryValidate() )
                 {

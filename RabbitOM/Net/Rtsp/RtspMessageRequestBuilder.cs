@@ -351,11 +351,11 @@ namespace RabbitOM.Net.Rtsp
         public bool CanAddHeader( RtspHeader header )
         {
             return header == null
-                || header is RtspHeaderNull
-                || header is RtspHeaderCSeq
-                || header is RtspHeaderContentLength
-                || header is RtspHeaderWWWAuthenticate
-                || header is RtspHeaderAuthorization
+                || header is NullRtspHeader
+                || header is CSeqRtspHeader
+                || header is ContentLengthRtspHeader
+                || header is WWWAuthenticateRtspHeader
+                || header is AuthorizationRtspHeader
                 ? false
                 : true;
         }
@@ -386,7 +386,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="value">the header value</param>
         public void AddHeader( string name , string value )
         {
-            _headers.TryAddOrUpdate( new RtspHeaderCustom( name , value ) );
+            _headers.TryAddOrUpdate( new CustomRtspHeader( name , value ) );
         }
 
         /// <summary>
@@ -1015,28 +1015,28 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="request">the request</param>
         protected virtual void OnBuildRequest( RtspMessageRequest request )
         {
-            request.Headers.TryAddOrUpdate( new RtspHeaderCSeq( _sequenceId ) );
+            request.Headers.TryAddOrUpdate( new CSeqRtspHeader( _sequenceId ) );
 
             if ( ! string.IsNullOrWhiteSpace( _sessionId ) )
             {
-                request.Headers.TryAddOrUpdate( new RtspHeaderSession( _sessionId ) );
+                request.Headers.TryAddOrUpdate( new SessionRtspHeader( _sessionId ) );
             }
 
             if ( _deliveryMode.HasValue )
             {
                 if ( _deliveryMode == RtspDeliveryMode.Tcp )
                 {
-                    request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewInterleavedTransportHeader() );
+                    request.Headers.TryAddOrUpdate( TransportRtspHeader.NewInterleavedTransportHeader() );
                 }
 
                 if ( _deliveryMode == RtspDeliveryMode.Udp )
                 {
-                    request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewUnicastUdpTransportHeader( _unicastPort ) );
+                    request.Headers.TryAddOrUpdate( TransportRtspHeader.NewUnicastUdpTransportHeader( _unicastPort ) );
                 }
 
                 if ( _deliveryMode == RtspDeliveryMode.Multicast )
                 {
-                    request.Headers.TryAddOrUpdate( RtspHeaderTransport.NewMulticastUdpTransportHeader( _multicastAddress , _multicastPort , _ttl ) );
+                    request.Headers.TryAddOrUpdate( TransportRtspHeader.NewMulticastUdpTransportHeader( _multicastAddress , _multicastPort , _ttl ) );
                 }
             }
 
@@ -1047,19 +1047,19 @@ namespace RabbitOM.Net.Rtsp
 
             if ( _body.Length > 0 )
             {
-                request.Headers.TryAddOrUpdate( new RtspHeaderContentLength( _body.Length ) );
+                request.Headers.TryAddOrUpdate( new ContentLengthRtspHeader( _body.Length ) );
 
                 request.Body.Value = _body.ToString();
             }
 
             if ( ! string.IsNullOrWhiteSpace( _acceptHeader ) )
             {
-                request.Headers.TryAddOrUpdate( RtspHeaderAccept.NewAcceptHeader( _acceptHeader ) );
+                request.Headers.TryAddOrUpdate( AcceptRtspHeader.NewAcceptHeader( _acceptHeader ) );
             }
 
             if ( ! string.IsNullOrWhiteSpace( _contentType ) )
             {
-                request.Headers.TryAddOrUpdate( new RtspHeaderContentType( _contentType ) );
+                request.Headers.TryAddOrUpdate( new ContentTypeRtspHeader( _contentType ) );
             }
         }
     }

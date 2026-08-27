@@ -379,7 +379,7 @@ namespace RabbitOM.Net.Rtsp
                     
                     if (RtspHeaderFactory.CanCreateHeader(line, RtspHeaderNames.ContentLength))
                     {
-                        var header = RtspHeaderFactory.CreateHeader(line) as RtspHeaderContentLength;
+                        var header = RtspHeaderFactory.CreateHeader(line) as ContentLengthRtspHeader;
 
                         if (header != null)
                         {

@@ -7,7 +7,7 @@ namespace RabbitOM.Net.Rtsp
     /// </summary>
     internal sealed class RtspAuthorizationFactory
     {
-        private RtspHeaderWWWAuthenticate _header;
+        private WWWAuthenticateRtspHeader _header;
 
         private string _userName = string.Empty;
 
@@ -65,7 +65,7 @@ namespace RabbitOM.Net.Rtsp
         /// <param name="header">the authentication header that came from the server response</param>
         public void SetupAuthentication( RtspHeader header )
         {
-            _header = header as RtspHeaderWWWAuthenticate;
+            _header = header as WWWAuthenticateRtspHeader;
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace RabbitOM.Net.Rtsp
                 return null;
             }
 
-            return new RtspHeaderAuthorization()
+            return new AuthorizationRtspHeader()
             {
                 Type     = RtspAuthenticationType.Basic ,
                 Response = challenge.CreateAuthorization()
@@ -232,7 +232,7 @@ namespace RabbitOM.Net.Rtsp
                 return null;
             }
 
-            return new RtspHeaderAuthorization()
+            return new AuthorizationRtspHeader()
             {
                 Type     = RtspAuthenticationType.Digest ,
                 Realm    = _header.Realm ,

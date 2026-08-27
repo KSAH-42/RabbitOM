@@ -424,7 +424,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         public RtspHeader GetByName(string name)
         {
-            return FindByName(name) ?? RtspHeaderNull.Value;
+            return FindByName(name) ?? NullRtspHeader.Value;
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance</returns>
         public RtspHeader GetAt(int index)
         {
-            return FindAt(index) ?? RtspHeaderNull.Value;
+            return FindAt(index) ?? NullRtspHeader.Value;
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         private readonly RtspSessionEventDispatcher _dispatcher;
 
-        private RtspClientSessionDataReceiver _dataReceiver;
+        private RtspDataReceiver _dataReceiver;
 
 
 
@@ -157,34 +157,34 @@ namespace RabbitOM.Net.Rtsp.Clients
                     case RtspDeliveryMode.Tcp:
 
                         setupResult = _connection.Setup()
-                            .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Tcp )
-                            .As<RtspSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
+                            .As<SetupRtspInvoker>().SetDeliveryMode( RtspDeliveryMode.Tcp )
+                            .As<SetupRtspInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
                             .Invoke();
 
                         break;
 
                     case RtspDeliveryMode.Udp:
 
-                        _dataReceiver = new RtspClientSessionDataReceiver( this , new RtspUdpDataReceiver( _configuration.RtpPort , _configuration.ReceiveTimeout ) );
+                        _dataReceiver = new RtspDataReceiver( this , new UdpRtspDataReceiver( _configuration.RtpPort , _configuration.ReceiveTimeout ) );
 
                         setupResult = _connection.Setup()
-                            .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Udp )
-                            .As<RtspSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
-                            .As<RtspSetupInvoker>().SetUnicastPort( _configuration.RtpPort )
+                            .As<SetupRtspInvoker>().SetDeliveryMode( RtspDeliveryMode.Udp )
+                            .As<SetupRtspInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
+                            .As<SetupRtspInvoker>().SetUnicastPort( _configuration.RtpPort )
                             .Invoke();
 
                         break;
 
                     case RtspDeliveryMode.Multicast:
 
-                        _dataReceiver = new RtspClientSessionDataReceiver( this , new RtspMulticastDataReceiver( _configuration.MulticastAddress , _configuration.RtpPort , _configuration.TimeToLive , _configuration.ReceiveTimeout ) );
+                        _dataReceiver = new RtspDataReceiver( this , new MulticastRtspDataReceiver( _configuration.MulticastAddress , _configuration.RtpPort , _configuration.TimeToLive , _configuration.ReceiveTimeout ) );
 
                         setupResult = _connection.Setup()
-                            .As<RtspSetupInvoker>().SetDeliveryMode( RtspDeliveryMode.Multicast )
-                            .As<RtspSetupInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
-                            .As<RtspSetupInvoker>().SetMulticastAddress( _configuration.MulticastAddress )
-                            .As<RtspSetupInvoker>().SetMulticastPort( _configuration.RtpPort  )
-                            .As<RtspSetupInvoker>().SetMulticastTTL( _configuration.TimeToLive  )
+                            .As<SetupRtspInvoker>().SetDeliveryMode( RtspDeliveryMode.Multicast )
+                            .As<SetupRtspInvoker>().SetTrackUri( _informations.Descriptor.SelectedTrack.ControlUri )
+                            .As<SetupRtspInvoker>().SetMulticastAddress( _configuration.MulticastAddress )
+                            .As<SetupRtspInvoker>().SetMulticastPort( _configuration.RtpPort  )
+                            .As<SetupRtspInvoker>().SetMulticastTTL( _configuration.TimeToLive  )
                             .Invoke();
 
                         break;
@@ -211,11 +211,11 @@ namespace RabbitOM.Net.Rtsp.Clients
                     _dataReceiver.Start();
                 }
 
-                RtspInvokerResult playResult = _connection.Play().As<RtspPlayInvoker>().SetSessionId( _informations.SessionId ).Invoke();
+                RtspInvokerResult playResult = _connection.Play().As<PlayRtspInvoker>().SetSessionId( _informations.SessionId ).Invoke();
 
                 if ( playResult == null || ! playResult.Succeed )
                 {
-                    _connection.TearDown().As<RtspTearDownInvoker>().SetSessionId( _informations.SessionId ).Invoke();
+                    _connection.TearDown().As<TearDownRtspInvoker>().SetSessionId( _informations.SessionId ).Invoke();
                     _dataReceiver?.Stop();
                     _dispatcher.DispatchEvent( new RtspClientDisconnectedEventArgs() );
 
@@ -246,7 +246,7 @@ namespace RabbitOM.Net.Rtsp.Clients
             {
                 if ( _informations.IsSessionIdRegistered())
                 {
-                    _connection.TearDown().As<RtspTearDownInvoker>().SetSessionId(_informations.SessionId).Invoke();
+                    _connection.TearDown().As<TearDownRtspInvoker>().SetSessionId(_informations.SessionId).Invoke();
                 }
             }
             catch (Exception ex)
@@ -318,7 +318,7 @@ namespace RabbitOM.Net.Rtsp.Clients
 
                 if ( _informations.IsSessionIdRegistered() )
                 {
-                    result = _connection.KeepAlive( _configuration.KeepAliveType ).As<RtspKeepAliveInvoker>().SetSessionId( _informations.SessionId ).Invoke();
+                    result = _connection.KeepAlive( _configuration.KeepAliveType ).As<KeepAliveRtspInvoker>().SetSessionId( _informations.SessionId ).Invoke();
                 }
                 else
                 {

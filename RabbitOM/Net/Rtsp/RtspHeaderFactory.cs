@@ -65,7 +65,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderAccept( string headerValue )
         {
-            return RtspHeaderAccept.TryParse( headerValue , out RtspHeaderAccept result ) ? result : null;
+            return AcceptRtspHeader.TryParse( headerValue , out AcceptRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderAcceptEncoding( string headerValue )
         {
-            return RtspHeaderAcceptEncoding.TryParse( headerValue , out RtspHeaderAcceptEncoding result ) ? result : null;
+            return AcceptEncodingRtspHeader.TryParse( headerValue , out AcceptEncodingRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderAcceptLanguage( string headerValue )
         {
-            return RtspHeaderAcceptLanguage.TryParse( headerValue , out RtspHeaderAcceptLanguage result ) ? result : null;
+            return AcceptLanguageRtspHeader.TryParse( headerValue , out AcceptLanguageRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderAllow( string headerValue )
         {
-            return RtspHeaderAllow.TryParse( headerValue , out RtspHeaderAllow result ) ? result : null;
+            return AllowRtspHeader.TryParse( headerValue , out AllowRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderAuthorization( string headerValue )
         {
-            return RtspHeaderAuthorization.TryParse( headerValue , out RtspHeaderAuthorization result ) ? result : null;
+            return AuthorizationRtspHeader.TryParse( headerValue , out AuthorizationRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderBandwith( string headerValue )
         {
-            return RtspHeaderBandwith.TryParse( headerValue , out RtspHeaderBandwith result ) ? result : null;
+            return BandwithRtspHeader.TryParse( headerValue , out BandwithRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderBlockSize( string headerValue )
         {
-            return RtspHeaderBlockSize.TryParse( headerValue , out RtspHeaderBlockSize result ) ? result : null;
+            return BlockSizeRtspHeader.TryParse( headerValue , out BlockSizeRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderCacheControl( string headerValue )
         {
-            return RtspHeaderCacheControl.TryParse( headerValue , out RtspHeaderCacheControl result ) ? result : null;
+            return CacheControlRtspHeader.TryParse( headerValue , out CacheControlRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderConference( string headerValue )
         {
-            return RtspHeaderConference.TryParse( headerValue , out RtspHeaderConference result ) ? result : null;
+            return ConferenceRtspHeader.TryParse( headerValue , out ConferenceRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderConnection( string headerValue )
         {
-            return RtspHeaderConnection.TryParse( headerValue , out RtspHeaderConnection result ) ? result : null;
+            return ConnectionRtspHeader.TryParse( headerValue , out ConnectionRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderContentBase( string headerValue )
         {
-            return RtspHeaderContentBase.TryParse( headerValue , out RtspHeaderContentBase result ) ? result : null;
+            return ContentBaseRtspHeader.TryParse( headerValue , out ContentBaseRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderContentEncoding( string headerValue )
         {
-            return RtspHeaderContentEncoding.TryParse( headerValue , out RtspHeaderContentEncoding result ) ? result : null;
+            return ContentEncodingRtspHeader.TryParse( headerValue , out ContentEncodingRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderContentLanguage( string headerValue )
         {
-            return RtspHeaderContentLanguage.TryParse( headerValue , out RtspHeaderContentLanguage result ) ? result : null;
+            return ContentLanguageRtspHeader.TryParse( headerValue , out ContentLanguageRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderContentLength( string headerValue )
         {
-            return RtspHeaderContentLength.TryParse( headerValue , out RtspHeaderContentLength result ) ? result : null;
+            return ContentLengthRtspHeader.TryParse( headerValue , out ContentLengthRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderContentLocation( string headerValue )
         {
-            return RtspHeaderContentLocation.TryParse( headerValue , out RtspHeaderContentLocation result ) ? result : null;
+            return ContentLocationRtspHeader.TryParse( headerValue , out ContentLocationRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderContentType( string headerValue )
         {
-            return RtspHeaderContentType.TryParse( headerValue , out RtspHeaderContentType result ) ? result : null;
+            return ContentTypeRtspHeader.TryParse( headerValue , out ContentTypeRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace RabbitOM.Net.Rtsp
                 return null;
             }
 
-            return new RtspHeaderCustom( headerName , headerValue );
+            return new CustomRtspHeader( headerName , headerValue );
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderDate( string headerValue )
         {
-            return RtspHeaderDate.TryParse( headerValue , out RtspHeaderDate result ) ? result : null;
+            return DateRtspHeader.TryParse( headerValue , out DateRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderExpires( string headerValue )
         {
-            return RtspHeaderExpires.TryParse( headerValue , out RtspHeaderExpires result ) ? result : null;
+            return ExpiresRtspHeader.TryParse( headerValue , out ExpiresRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderFrom( string headerValue )
         {
-            return RtspHeaderFrom.TryParse( headerValue , out RtspHeaderFrom result ) ? result : null;
+            return FromRtspHeader.TryParse( headerValue , out FromRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderIfMatch( string headerValue )
         {
-            return RtspHeaderIfMatch.TryParse( headerValue , out RtspHeaderIfMatch result ) ? result : null;
+            return IfMatchRtspHeader.TryParse( headerValue , out IfMatchRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderIfModifiedSince( string headerValue )
         {
-            return RtspHeaderIfModifiedSince.TryParse( headerValue , out RtspHeaderIfModifiedSince result ) ? result : null;
+            return IfModifiedSinceRtspHeader.TryParse( headerValue , out IfModifiedSinceRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderLastModified( string headerValue )
         {
-            return RtspHeaderLastModified.TryParse( headerValue , out RtspHeaderLastModified result ) ? result : null;
+            return LastModifiedRtspHeader.TryParse( headerValue , out LastModifiedRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderLocation( string headerValue )
         {
-            return RtspHeaderLocation.TryParse( headerValue , out RtspHeaderLocation result ) ? result : null;
+            return LocationRtspHeader.TryParse( headerValue , out LocationRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderProxyAuthenticate( string headerValue )
         {
-            return RtspHeaderProxyAuthenticate.TryParse( headerValue , out RtspHeaderProxyAuthenticate result ) ? result : null;
+            return ProxyAuthenticateRtspHeader.TryParse( headerValue , out ProxyAuthenticateRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderProxyRequire( string headerValue )
         {
-            return RtspHeaderProxyRequire.TryParse( headerValue , out RtspHeaderProxyRequire result ) ? result : null;
+            return ProxyRequireRtspHeader.TryParse( headerValue , out ProxyRequireRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderPublic( string headerValue )
         {
-            return RtspHeaderPublic.TryParse( headerValue , out RtspHeaderPublic result ) ? result : null;
+            return PublicRtspHeader.TryParse( headerValue , out PublicRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderRange( string headerValue )
         {
-            return RtspHeaderRange.TryParse( headerValue , out RtspHeaderRange result ) ? result : null;
+            return RangeRtspHeader.TryParse( headerValue , out RangeRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderReferer( string headerValue )
         {
-            return RtspHeaderReferer.TryParse( headerValue , out RtspHeaderReferer result ) ? result : null;
+            return RefererRtspHeader.TryParse( headerValue , out RefererRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderRequire( string headerValue )
         {
-            return RtspHeaderRequire.TryParse( headerValue , out RtspHeaderRequire result ) ? result : null;
+            return RequireRtspHeader.TryParse( headerValue , out RequireRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderRetryAfter( string headerValue )
         {
-            return RtspHeaderRetryAfter.TryParse( headerValue , out RtspHeaderRetryAfter result ) ? result : null;
+            return RetryAfterRtspHeader.TryParse( headerValue , out RetryAfterRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderRtpInfo( string headerValue )
         {
-            return RtspHeaderRtpInfo.TryParse( headerValue , out RtspHeaderRtpInfo result ) ? result : null;
+            return RtpInfoRtspHeader.TryParse( headerValue , out RtpInfoRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderScale( string headerValue )
         {
-            return RtspHeaderScale.TryParse( headerValue , out RtspHeaderScale result ) ? result : null;
+            return ScaleRtspHeader.TryParse( headerValue , out ScaleRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderCSeq( string headerValue )
         {
-            return RtspHeaderCSeq.TryParse( headerValue , out RtspHeaderCSeq result ) ? result : null;
+            return CSeqRtspHeader.TryParse( headerValue , out CSeqRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderServer( string headerValue )
         {
-            return RtspHeaderServer.TryParse( headerValue , out RtspHeaderServer result ) ? result : null;
+            return ServerRtspHeader.TryParse( headerValue , out ServerRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderSession( string headerValue )
         {
-            return RtspHeaderSession.TryParse( headerValue , out RtspHeaderSession result ) ? result : null;
+            return SessionRtspHeader.TryParse( headerValue , out SessionRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderSpeed( string headerValue )
         {
-            return RtspHeaderSpeed.TryParse( headerValue , out RtspHeaderSpeed result ) ? result : null;
+            return SpeedRtspHeader.TryParse( headerValue , out SpeedRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderTransport( string headerValue )
         {
-            return RtspHeaderTransport.TryParse( headerValue , out RtspHeaderTransport result ) ? result : null;
+            return TransportRtspHeader.TryParse( headerValue , out TransportRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderUserAgent( string headerValue )
         {
-            return RtspHeaderUserAgent.TryParse( headerValue , out RtspHeaderUserAgent result ) ? result : null;
+            return UserAgentRtspHeader.TryParse( headerValue , out UserAgentRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderVary( string headerValue )
         {
-            return RtspHeaderVary.TryParse( headerValue , out RtspHeaderVary result ) ? result : null;
+            return VaryRtspHeader.TryParse( headerValue , out VaryRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderVia( string headerValue )
         {
-            return RtspHeaderVia.TryParse( headerValue , out RtspHeaderVia result ) ? result : null;
+            return ViaRtspHeader.TryParse( headerValue , out ViaRtspHeader result ) ? result : null;
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace RabbitOM.Net.Rtsp
         /// <returns>returns an instance, otherwise null</returns>
         public static RtspHeader CreateHeaderWWWAuthenticate( string headerValue )
         {
-            return RtspHeaderWWWAuthenticate.TryParse( headerValue , out RtspHeaderWWWAuthenticate result ) ? result : null;
+            return WWWAuthenticateRtspHeader.TryParse( headerValue , out WWWAuthenticateRtspHeader result ) ? result : null;
         }
 
 
