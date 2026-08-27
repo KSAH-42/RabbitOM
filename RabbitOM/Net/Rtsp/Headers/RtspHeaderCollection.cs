@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Headers
 {
     /// <summary>
     /// Represent the message header collection

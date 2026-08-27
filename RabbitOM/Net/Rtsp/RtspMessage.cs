@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Net.Rtsp
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     /// <summary>
     /// Represent the base message class
     /// </summary>

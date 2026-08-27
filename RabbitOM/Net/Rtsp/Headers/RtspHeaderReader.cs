@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Headers
 {
     /// <summary>
     /// Represent a reader class used to read field inside a header

@@ -2,9 +2,11 @@
 
 namespace RabbitOM.Net.Rtsp.Clients
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     public sealed class RtspInvokerResultResponse
     {
-        private readonly RtspMessageResponse _message = null;
+        private readonly RtspMessageResponse _message;
 
 
         public RtspInvokerResultResponse( RtspMessageResponse message )

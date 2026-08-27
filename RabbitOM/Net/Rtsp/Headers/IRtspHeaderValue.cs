@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Headers
 {
     /// <summary>
     /// Represent the header value

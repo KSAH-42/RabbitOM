@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 
 namespace RabbitOM.Net.Rtsp
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     /// <summary>
     /// Represent a tolerant value converter
     /// </summary>

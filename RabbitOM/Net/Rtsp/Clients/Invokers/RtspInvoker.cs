@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Clients
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     public class RtspInvoker : IRtspInvoker
     {
         private readonly RtspProxy _proxy;

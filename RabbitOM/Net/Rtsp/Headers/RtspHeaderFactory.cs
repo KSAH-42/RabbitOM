@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Headers
 {
     /// <summary>
     /// Represent a message header factory

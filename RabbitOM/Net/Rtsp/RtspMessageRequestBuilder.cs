@@ -4,6 +4,8 @@ using System.Text;
 
 namespace RabbitOM.Net.Rtsp
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     /// <summary>
     /// Represent a message request builder
     /// </summary>

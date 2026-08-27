@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RabbitOM.Net.Rtsp
+namespace RabbitOM.Net.Rtsp.Headers
 {
     /// <summary>
     /// Represent a message header

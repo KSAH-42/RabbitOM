@@ -4,6 +4,7 @@ using System.Threading;
 namespace RabbitOM.Net.Rtsp.Clients
 {
     using RabbitOM.Threading;
+    using RabbitOM.Net.Rtsp.Headers;
 
     internal sealed class RtspRequestHandler : IDisposable
     {

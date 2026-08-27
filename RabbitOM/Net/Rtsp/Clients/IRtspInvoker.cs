@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 namespace RabbitOM.Net.Rtsp.Clients
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     public interface IRtspInvoker
     {
         object SyncRoot

@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Net.Rtsp.Clients
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     internal sealed class RtspSecurityManager
     {
         private readonly object _lock;

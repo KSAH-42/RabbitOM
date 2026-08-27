@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Text;
 
-// TODO: this class must be refactor when to handle very large streams
-
 namespace RabbitOM.Net.Rtsp
 {
+    using RabbitOM.Net.Rtsp.Headers;
+
     /// <summary>
     /// Represent the message stream extractor
     /// </summary>
     internal sealed class RtspMessageExtactor : IDisposable
     {
-        private readonly object           _lock              = null;
+        private readonly object _lock;
 
-        private readonly long             _limit             = 0;
+        private readonly long _limit;
 
-        private readonly RtspMemoryStream _stream            = null;
+        private readonly RtspMemoryStream _stream;
 
-        private readonly StringBuilder    _valueString       = null;
+        private readonly StringBuilder _valueString;
 
-        private RtspPacket                _interleavedPacket = null;
+        private RtspPacket _interleavedPacket;
 
-        private RtspMessageResponse       _response          = null;
+        private RtspMessageResponse _response;
 
-        private int                       _valueByte         = -1; // The name contains byte keywork but this is int value and not a byte value type. Please refer to microsoft stream implementation and definition of the method called ReadByte which returns a int and a byte. For only this case, strongly prefer this instead of using nullable value
+        private int _valueByte = -1; // The name contains byte keywork but this is int value and not a byte value type. Please refer to microsoft stream implementation and definition of the method called ReadByte which returns a int and a byte. For only this case, strongly prefer this instead of using nullable value
 
 
 
