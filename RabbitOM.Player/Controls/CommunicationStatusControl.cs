@@ -53,7 +53,7 @@ namespace RabbitOM.Player.Controls
                         typeof(CommunicationStatusControl),
                             new PropertyMetadata( ));
 
-        
+
 
 
 
