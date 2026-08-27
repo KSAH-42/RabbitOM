@@ -29,20 +29,6 @@ Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/r
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
 
-➡️ Breaking changes since the version 2.0.0.2:
-
-* Refactorization of rtp layers (H264,H265,H266)
-* Namespace reorganization
-* Rtp layer refactorization and adding add packet inspection, adding support of H264, H265, G711, and so on.
-* Add new class libray for rending jpeg using wpf
-* Improve cpu an memory consumption during rending
-
-➡️ Breaking changes since the version 2.0.0.4:
-
-* namespace reorganization
-* adding H264 player with decoder and render capable to run a separate threads by cloning decoded frame
-* adding H265 player with decoder and render capable to run a separate threads by cloning decoded frame
-
 ➡️ Next arrivals:
 
 * Adding the playser as usercontrol
