@@ -96,12 +96,10 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
+    <Compile Include="Controls\CommunicationStatusControl.cs" />
     <Compile Include="Controls\MediaControl.xaml.client.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
-    <Compile Include="Controls\SpinningDiamond.xaml.cs">
-      <DependentUpon>SpinningDiamond.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaPlayerTransport.cs" />
@@ -143,10 +141,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NetworkStatistics.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\SpinningDiamond.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,6 +188,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Styles\ScrollBarStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

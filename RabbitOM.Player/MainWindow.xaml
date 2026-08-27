@@ -184,15 +184,12 @@
                             HorizontalAlignment="Center" 
                             >
 
-                    <controls:SpinningDiamond Fill="White"
-                                              Visibility="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
-                                              />
-                    
-                    <TextBlock FontSize="20" 
-                               Foreground="White" 
-                               Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                               />
-                    
+                    <controls:CommunicationStatusControl Fill="White"
+                                                         Foreground="White"
+                                                         ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                         ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+                                                         />
+
                 </StackPanel>
 
                 <Image x:Name="_image"  
