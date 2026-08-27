@@ -6,7 +6,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Generic.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/WindowStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/ComboBoxStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/ContextualMenuStyle.xaml" />
