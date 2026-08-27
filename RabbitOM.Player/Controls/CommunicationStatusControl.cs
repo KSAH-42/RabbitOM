@@ -20,19 +20,19 @@ namespace RabbitOM.Player.Controls
                         typeof(CommunicationStatusControl),
                             new PropertyMetadata(Brushes.White));
 
-        public static readonly DependencyProperty DurationProperty =
+        public static readonly DependencyProperty AnimationDurationProperty =
             DependencyProperty.Register(
-                nameof(Duration),
+                nameof(AnimationDuration),
                     typeof(Duration),
                         typeof(CommunicationStatusControl),
                             new PropertyMetadata(new Duration(TimeSpan.FromSeconds(2))));
 
-        public static readonly DependencyProperty SpeedRatioProperty =
+        public static readonly DependencyProperty AnimationSpeedProperty =
             DependencyProperty.Register(
-                nameof(SpeedRatio),
+                nameof(AnimationSpeed),
                     typeof(double),
                         typeof(CommunicationStatusControl),
-                            new PropertyMetadata( 0.8 ) );
+                            new PropertyMetadata( 1.0 ) );
 
         public static readonly DependencyProperty ConnectingStatusProperty =
             DependencyProperty.Register(
@@ -59,16 +59,16 @@ namespace RabbitOM.Player.Controls
             set => SetValue(FillProperty, value);
         }
 
-        public Duration Duration
+        public Duration AnimationDuration
         {
-            get => (Duration)GetValue(DurationProperty);
-            set => SetValue(DurationProperty, value);
+            get => (Duration)GetValue(AnimationDurationProperty);
+            set => SetValue(AnimationDurationProperty, value);
         }
 
-        public double SpeedRatio
+        public double AnimationSpeed
         {
-            get => (double) GetValue(SpeedRatioProperty);
-            set => SetValue(SpeedRatioProperty, value);
+            get => (double) GetValue(AnimationSpeedProperty);
+            set => SetValue(AnimationSpeedProperty, value);
         }
 
         public bool ConnectingStatus

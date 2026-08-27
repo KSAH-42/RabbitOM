@@ -6,6 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/WindowStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/ComboBoxStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/ContextualMenuStyle.xaml" />
@@ -15,6 +16,7 @@
                 <ResourceDictionary Source="/Themes/Styles/TextBoxStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/ListViewStyle.xaml" />
                 <ResourceDictionary Source="/Themes/Styles/ProgressBarStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Controls/CommunicationStatusControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -4,9 +4,9 @@
                     >
 
     <ResourceDictionary.MergedDictionaries>
-        
+
         <ResourceDictionary Source="/Themes/Controls/CommunicationStatusControl.xaml" />
-        
+
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

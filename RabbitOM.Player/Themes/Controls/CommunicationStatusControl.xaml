@@ -9,6 +9,7 @@
         <Setter Property="Width" Value="auto" />
         <Setter Property="Height" Value="auto" />
         <Setter Property="ConnectingStatus" Value="False" />
+        <Setter Property="AnimationSpeed" Value="2.0" />
         <Setter Property="Template">
 
             <Setter.Value>
@@ -16,9 +17,9 @@
                 <ControlTemplate TargetType="{x:Type local:CommunicationStatusControl}">
 
                     <StackPanel Orientation="Vertical"
-                            VerticalAlignment="Stretch"
-                            HorizontalAlignment="Stretch"
-                            >
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                >
 
                         <Rectangle x:Name="Part_Rectangle"
                                HorizontalAlignment="Center" 
@@ -45,8 +46,8 @@
                                                          Storyboard.TargetProperty="Angle"
                                                          From="45"
                                                          To="405"
-                                                         Duration="{TemplateBinding Duration}"
-                                                         SpeedRatio="{TemplateBinding SpeedRatio}"
+                                                         Duration="{Binding Path=AnimationDuration, RelativeSource={RelativeSource TemplatedParent}}"
+                                                         SpeedRatio="{Binding Path=AnimationSpeed, RelativeSource={RelativeSource TemplatedParent}}"
                                                          RepeatBehavior="Forever" 
                                                          />
                                         </Storyboard>
