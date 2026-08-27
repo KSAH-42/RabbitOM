@@ -28,10 +28,11 @@ namespace RabbitOM.Player.Cli
         public bool StrechImage { get; set; }
 
         [HelpResource("cli.commands.setup.window_state")]
-        [Range("--window-state",0,2)]
+        [Range("--window-state",0,3)]
         [Enum("--window-state-normal" , 0 )]
         [Enum("--window-state-center" , 1 )]
         [Enum("--window-state-maximize" , 2 )]
+        [Enum("--window-state-fullscreen" , 3 )]
         public int WindowState { get; set; }
 
         [HelpResource("cli.commands.setup.timeout")]
