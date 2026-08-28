@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
@@ -143,6 +144,11 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+
+
+
+
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
             Statistics.DataSource = _client.DataSource;
@@ -155,6 +161,13 @@ namespace RabbitOM.Player.Controls
             Statistics.DataSource = null;
             _client.Dispose();
         }
+
+
+
+
+
+
+
 
 
         public bool StartCommunication()
@@ -176,6 +189,13 @@ namespace RabbitOM.Player.Controls
         {
             _client.StopCommunication();
         }
+
+        public ImageSource GetImage()
+        {
+            return _image.Source;
+        }
+
+
 
 
 

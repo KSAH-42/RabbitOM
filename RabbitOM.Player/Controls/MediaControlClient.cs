@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
 {
@@ -12,7 +10,6 @@ namespace RabbitOM.Player.Controls
     using RabbitOM.Net.Rtsp.Clients;
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
-    using System.Runtime.Remoting.Messaging;
 
     public sealed class MediaControlClient : IDisposable
     {
@@ -23,6 +20,10 @@ namespace RabbitOM.Player.Controls
         private readonly Renderer _renderer;
         private readonly NetworkStatisticsDataSource _datasource;
         private readonly IMediaControlHandler _controlHandler;
+
+
+
+
 
         public MediaControlClient( IMediaControlHandler controlHandler )
         {
@@ -105,11 +106,6 @@ namespace RabbitOM.Player.Controls
         public void StopCommunication()
         {
             _client.StopCommunication( TimeSpan.FromSeconds(2) );
-        }
-
-        public ImageSource GetImage()
-        {
-            return _controlHandler.Image.Source;
         }
 
         public void Dispose()

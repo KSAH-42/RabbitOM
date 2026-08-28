@@ -20,6 +20,7 @@ namespace RabbitOM.Player.Controls
         {
             _image = image ?? throw new ArgumentNullException( nameof( image ) );
             _element = element ?? throw new ArgumentNullException( nameof( element ) );
+            
             _communicationStartedHandler = communicationStartedHandler ?? throw new ArgumentNullException( nameof( communicationStartedHandler ) );
             _communicationStoppedHandler = communicationStoppedHandler ?? throw new ArgumentNullException( nameof( communicationStoppedHandler ) );
             _connectedHandler = connectedHandler ?? throw new ArgumentNullException( nameof( connectedHandler ) );
