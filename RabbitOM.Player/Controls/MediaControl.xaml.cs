@@ -183,6 +183,10 @@ namespace RabbitOM.Player.Controls
 
 
 
+        public NetworkStatistics Statistics
+        {
+            get => _statistics;
+        }
 
         public string Uri
         {
@@ -220,6 +224,12 @@ namespace RabbitOM.Player.Controls
             set => SetValue( FooterVisibilityProperty , value );
         }
 
+        public string ErrorInfo
+        {
+            get => GetValue( ErrorInfoProperty ) as string;
+            private set => SetValue( ErrorInfoProperty , value );
+        }
+
         public bool IsCommunicationStarted
         {
             get => (bool) GetValue( IsCommunicationStartedProperty );
@@ -232,16 +242,6 @@ namespace RabbitOM.Player.Controls
             private set => SetValue( IsConnectedProperty , value );
         }
 
-        public string ErrorInfo
-        {
-            get => (string) GetValue( ErrorInfoProperty );
-            private set => SetValue( ErrorInfoProperty , value );
-        }
-
-        public NetworkStatistics Statistics
-        {
-            get => _statistics;
-        }
 
 
 
