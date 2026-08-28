@@ -22,16 +22,18 @@
                                 >
 
                         <Rectangle x:Name="Part_Rectangle"
-                               HorizontalAlignment="Center" 
-                               VerticalAlignment="Center"
-                               Height="20"
-                               Width="20"
-                               RenderTransformOrigin="0.5,0.5"
-                               Fill="{TemplateBinding Fill}" 
-                               >
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"
+                                   Height="20"
+                                   Width="20" 
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Fill="{TemplateBinding Fill}" 
+                                   >
 
                             <Rectangle.RenderTransform>
-                                <RotateTransform x:Name="DiamondRotate" Angle="45" />
+                                
+                                <RotateTransform x:Name="Part_RectangleRotate" Angle="45" />
+                                
                             </Rectangle.RenderTransform>
 
                             <Rectangle.Triggers>
@@ -42,14 +44,15 @@
 
                                         <Storyboard>
 
-                                            <DoubleAnimation Storyboard.TargetName="DiamondRotate"
-                                                         Storyboard.TargetProperty="Angle"
-                                                         From="45"
-                                                         To="405"
-                                                         Duration="{Binding Path=AnimationDuration, RelativeSource={RelativeSource TemplatedParent}}"
-                                                         SpeedRatio="{Binding Path=AnimationSpeed, RelativeSource={RelativeSource TemplatedParent}}"
-                                                         RepeatBehavior="Forever" 
-                                                         />
+                                            <DoubleAnimation Storyboard.TargetName="Part_RectangleRotate"
+                                                             Storyboard.TargetProperty="Angle"
+                                                             From="45"
+                                                             To="405"
+                                                             Duration="{Binding Path=AnimationDuration, RelativeSource={RelativeSource TemplatedParent}}"
+                                                             SpeedRatio="{Binding Path=AnimationSpeed, RelativeSource={RelativeSource TemplatedParent}}"
+                                                             RepeatBehavior="Forever" 
+                                                             />
+
                                         </Storyboard>
 
                                     </BeginStoryboard>
@@ -61,11 +64,11 @@
                         </Rectangle>
 
                         <TextBlock x:Name="Part_ConnectionMessageTextBlock"
-                               HorizontalAlignment="Center"
-                               FontSize="{TemplateBinding FontSize}" 
-                               Foreground="{TemplateBinding Foreground}" 
-                               Text="{TemplateBinding ConnectingMessage}"
-                               />
+                                   HorizontalAlignment="Center"
+                                   FontSize="{TemplateBinding FontSize}" 
+                                   Foreground="{TemplateBinding Foreground}" 
+                                   Text="{TemplateBinding ConnectingMessage}"
+                                   />
 
                     </StackPanel>
 
@@ -73,8 +76,17 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="ConnectingStatus" Value="False">
-                            <Setter TargetName="Part_ConnectionMessageTextBlock" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="Part_Rectangle" Property="Visibility" Value="Collapsed" />
+                            
+                            <Setter TargetName="Part_ConnectionMessageTextBlock" 
+                                    Property="Visibility" 
+                                    Value="Collapsed" 
+                                    />
+                            
+                            <Setter TargetName="Part_Rectangle" 
+                                    Property="Visibility" 
+                                    Value="Collapsed" 
+                                    />
+                            
                         </Trigger>
 
                     </ControlTemplate.Triggers>
