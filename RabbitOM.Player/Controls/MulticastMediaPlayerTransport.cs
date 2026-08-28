@@ -5,9 +5,30 @@ namespace RabbitOM.Player.Controls
 {
     public sealed class MulticastMediaPlayerTransport : MediaPlayerTransport
     {
-        public static readonly DependencyProperty IPAddressProperty = DependencyProperty.Register( "IPAddress", typeof(string) , typeof(MulticastMediaPlayerTransport) );
-        public static readonly DependencyProperty PortProperty = DependencyProperty.Register( "Port", typeof(int) , typeof(MulticastMediaPlayerTransport) );
-        public static readonly DependencyProperty TTLProperty = DependencyProperty.Register( "TTL", typeof(byte) , typeof(MulticastMediaPlayerTransport) , new PropertyMetadata( 1 ) );
+        public static readonly DependencyProperty IPAddressProperty =
+            DependencyProperty.Register(
+                nameof(IPAddress),
+                    typeof(string),
+                        typeof(MulticastMediaPlayerTransport),
+                            new PropertyMetadata( "224.0.0.1" ) );
+
+        public static readonly DependencyProperty PortProperty =
+            DependencyProperty.Register(nameof(Port),
+                typeof(int),
+                    typeof(MulticastMediaPlayerTransport),
+                        new PropertyMetadata(5004));
+
+        public static readonly DependencyProperty TimeToLiveProperty =
+            DependencyProperty.Register(
+                    nameof(TimeToLive),
+                        typeof(byte),
+                            typeof(MulticastMediaPlayerTransport),
+                                new PropertyMetadata(1));
+
+
+
+
+
 
         public string IPAddress
         {
@@ -21,10 +42,10 @@ namespace RabbitOM.Player.Controls
             set => SetValue( PortProperty , value );
         }
 
-        public byte TTL
+        public byte TimeToLive
         {
-            get => (byte) GetValue( TTLProperty );
-            set => SetValue( TTLProperty , value );
+            get => (byte) GetValue( TimeToLiveProperty );
+            set => SetValue( TimeToLiveProperty , value );
         }
     }
 }
