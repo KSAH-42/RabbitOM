@@ -20,7 +20,5 @@ namespace RabbitOM.Player.Controls
         void OnFrameDecoded();
 
         void OnError( string error );
-
-        void OnException( Exception exception );
     }
 }

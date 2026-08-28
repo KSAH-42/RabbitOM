@@ -14,20 +14,18 @@ namespace RabbitOM.Player.Controls
         private readonly Action _disconnectedHandler;
         private readonly Action _frameDecodedHandler;
         private readonly Action<string> _errorHandler;
-        private readonly Action<Exception> _exceptionHandler;
 
-        public MediaClientHandler( Image image , FrameworkElement element , Action communicationStartedHandler , Action communicationStoppedHandler , Action connectedHandler , Action disconnectedHandler , Action frameDecodedHandler , Action<string> errorHandler , Action<Exception> exceptionHandler )
+        public MediaClientHandler( Image image , FrameworkElement element , Action communicationStartedHandler , Action communicationStoppedHandler , Action connectedHandler , Action disconnectedHandler , Action frameDecodedHandler , Action<string> errorHandler )
         {
             _image = image ?? throw new ArgumentNullException( nameof( image ) );
             _element = element ?? throw new ArgumentNullException( nameof( element ) );
-            
+
             _communicationStartedHandler = communicationStartedHandler ?? throw new ArgumentNullException( nameof( communicationStartedHandler ) );
             _communicationStoppedHandler = communicationStoppedHandler ?? throw new ArgumentNullException( nameof( communicationStoppedHandler ) );
             _connectedHandler = connectedHandler ?? throw new ArgumentNullException( nameof( connectedHandler ) );
             _disconnectedHandler = disconnectedHandler ?? throw new ArgumentNullException( nameof( disconnectedHandler ) );
             _frameDecodedHandler = frameDecodedHandler ?? throw new ArgumentNullException( nameof( frameDecodedHandler ) );
             _errorHandler = errorHandler ?? throw new ArgumentNullException( nameof( errorHandler ) );
-            _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException( nameof( exceptionHandler ) );
         }
 
         public Image Image
@@ -68,11 +66,6 @@ namespace RabbitOM.Player.Controls
         public void OnError( string error )
         {
             _errorHandler( error );
-        }
-
-        public void OnException( Exception exception )
-        {
-            _exceptionHandler( exception );
         }
     }
 }

@@ -37,8 +37,7 @@ namespace RabbitOM.Player.Controls
                 OnConnected,
                 OnDisconnected,
                 OnFrameDecoded,
-                OnError,
-                OnException
+                OnError
                 ));
         }
 
@@ -240,11 +239,6 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnError( string error )
         {
             ErrorInfo = error;
-        }
-
-        protected virtual void OnException( Exception exception )
-        {
-            ErrorInfo = "Internal Error: " + exception?.Message;
         }
     }
 }

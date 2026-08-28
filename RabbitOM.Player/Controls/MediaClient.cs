@@ -190,7 +190,7 @@ namespace RabbitOM.Player.Controls
                 }
                 catch( Exception ex )
                 {
-                    _handler.OnException( ex );
+                    _handler.OnError( ex.Message );
                 }
                 finally
                 {
