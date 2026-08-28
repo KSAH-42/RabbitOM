@@ -17,6 +17,24 @@ namespace RabbitOM.Player.Controls
 
     public partial class MediaControl : UserControl
     {
+        public static readonly RoutedEvent CommunicationStartedEvent = EventManager.RegisterRoutedEvent( nameof(CommunicationStarted), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+        public static readonly RoutedEvent CommunicationStoppedEvent = EventManager.RegisterRoutedEvent( nameof(CommunicationStopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+        public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+        public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+        public static readonly RoutedEvent FrameReceivedEvent = EventManager.RegisterRoutedEvent( nameof(FrameReceived) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+
+        public static readonly DependencyProperty UriProperty = DependencyProperty.Register( nameof(Uri) , typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaControl) , new PropertyMetadata( new TcpMediaPlayerTransport() ) );
+        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( nameof(Footer) , typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register( nameof(FooterVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
+        public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty ErrorInfoProperty = DependencyProperty.Register( nameof(ErrorInfo) , typeof(string) , typeof(MediaControl) );
+
+
+
         private readonly RtspClient _client = new RtspClient();
         private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
         private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
@@ -26,59 +44,10 @@ namespace RabbitOM.Player.Controls
 
 
 
-
-
-
         public MediaControl()
         {
             InitializeComponent();
         }
-
-
-
-
-
-
-        public static readonly RoutedEvent CommunicationStartedEvent =
-            EventManager.RegisterRoutedEvent(
-                nameof(CommunicationStarted),
-                    RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler),
-                            typeof(MediaControl));
-
-
-        public static readonly RoutedEvent CommunicationStoppedEvent =
-            EventManager.RegisterRoutedEvent(
-                nameof(CommunicationStopped),
-                    RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler),
-                            typeof(MediaControl));
-
-        public static readonly RoutedEvent ConnectedEvent =
-            EventManager.RegisterRoutedEvent(
-                nameof(Connected),
-                    RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler),
-                            typeof(MediaControl));
-
-        public static readonly RoutedEvent DisconnectedEvent =
-            EventManager.RegisterRoutedEvent(
-                nameof(Disconnected),
-                    RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler),
-                            typeof(MediaControl));
-
-        public static readonly RoutedEvent FrameReceivedEvent =
-            EventManager.RegisterRoutedEvent(
-                nameof(FrameReceived),
-                    RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler),
-                            typeof(MediaControl));
-
-
-
-
-
 
 
 
@@ -111,75 +80,6 @@ namespace RabbitOM.Player.Controls
             add    => AddHandler( FrameReceivedEvent , value );
             remove => RemoveHandler( FrameReceivedEvent , value );
         }
-
-
-
-
-
-
-
-
-        public static readonly DependencyProperty UriProperty =
-            DependencyProperty.Register(
-                nameof(Uri),
-                    typeof(string),
-                        typeof(MediaControl));
-
-        public static readonly DependencyProperty UserNameProperty =
-            DependencyProperty.Register(
-                nameof(UserName),
-                    typeof(string),
-                        typeof(MediaControl));
-
-        public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register(
-                nameof(Password),
-                    typeof(string),
-                    typeof(MediaControl));
-
-        public static readonly DependencyProperty TransportProperty =
-            DependencyProperty.Register(
-                nameof(Transport),
-                    typeof(MediaPlayerTransport),
-                        typeof(MediaControl));
-
-        public static readonly DependencyProperty FooterProperty =
-            DependencyProperty.Register(
-                nameof(Footer),
-                    typeof(string),
-                    typeof(MediaControl));
-
-        public static readonly DependencyProperty FooterVisibilityProperty =
-            DependencyProperty.Register(
-                nameof(FooterVisibility),
-                    typeof(Visibility),
-                        typeof(MediaControl),
-                            new PropertyMetadata(Visibility.Collapsed));
-
-        public static readonly DependencyProperty IsCommunicationStartedProperty =
-            DependencyProperty.Register(
-                nameof(IsCommunicationStarted),
-                    typeof(bool),
-                        typeof(MediaControl),
-                            new PropertyMetadata(false));
-
-        public static readonly DependencyProperty IsConnectedProperty =
-            DependencyProperty.Register(
-                nameof(IsConnected),
-                    typeof(bool),
-                        typeof(MediaControl),
-                            new PropertyMetadata(false));
-
-        public static readonly DependencyProperty ErrorInfoProperty =
-            DependencyProperty.Register(
-                nameof(ErrorInfo),
-                    typeof(string),
-                        typeof(MediaControl));
-
-
-
-
-
 
 
 
@@ -244,10 +144,6 @@ namespace RabbitOM.Player.Controls
 
 
 
-
-
-
-
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
             _client.CommunicationStarted += OnCommunicationStarted;
@@ -280,9 +176,6 @@ namespace RabbitOM.Player.Controls
             _renderer.Dispose();
             _decoder.Dispose();
         }
-
-
-
 
 
 
@@ -346,11 +239,6 @@ namespace RabbitOM.Player.Controls
 
 
 
-
-
-
-
-
         protected virtual void OnCommunicationStarted()
         {
             IsCommunicationStarted = true;
@@ -386,11 +274,6 @@ namespace RabbitOM.Player.Controls
         {
             RaiseEvent( new RoutedEventArgs( FrameReceivedEvent ) );
         }
-
-
-
-
-
 
 
 
@@ -520,7 +403,7 @@ namespace RabbitOM.Player.Controls
         {
             Dispatch( () =>
             {
-                using ( e.Surface ) // add this step for freeing unmanaged memory now
+                using ( e.Surface )
                 {
                     _renderer.Render( e.Surface );
 
