@@ -135,6 +135,7 @@ namespace RabbitOM.Player.Controls
         }
 
 
+
         protected virtual void OnCommunicationStarted()
         {
             IsCommunicationStarted = true;
