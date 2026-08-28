@@ -24,14 +24,14 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty ErrorInfoProperty = DependencyProperty.Register( nameof(ErrorInfo) , typeof(string) , typeof(MediaControl) );
 
 
-        private readonly MediaControlClient _client;
+        private readonly MediaClient _client;
 
 
         public MediaControl()
         {
             InitializeComponent();
 
-            _client = new MediaControlClient( new MediaControlHandler( _image , this ,
+            _client = new MediaClient( new MediaClientHandler( _image , this ,
                 OnCommunicationStarted,
                 OnCommunicationStopped,
                 OnConnected,

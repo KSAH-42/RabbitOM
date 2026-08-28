@@ -97,9 +97,9 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Controls\CommunicationStatusControl.cs" />
-    <Compile Include="Controls\MediaControlHandler.cs" />
-    <Compile Include="Controls\IMediaControlHandler.cs" />
-    <Compile Include="Controls\MediaControlClient.cs" />
+    <Compile Include="Controls\MediaClientHandler.cs" />
+    <Compile Include="Controls\IMediaClientHandler.cs" />
+    <Compile Include="Controls\MediaClient.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
