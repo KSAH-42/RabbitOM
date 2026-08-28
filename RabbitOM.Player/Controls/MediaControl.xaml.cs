@@ -14,7 +14,7 @@ namespace RabbitOM.Player.Controls
     using RabbitOM.Net.Rtsp.Clients;
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
-    
+
     public partial class MediaControl : UserControl
     {
         private readonly RtspClient _client = new RtspClient();
@@ -339,6 +339,12 @@ namespace RabbitOM.Player.Controls
             return _image.Source;
         }
 
+        private void Dispatch( Action action )
+        {
+            Dispatcher.BeginInvoke( DispatcherPriority.Render , action );
+        }
+
+
 
 
 
@@ -382,32 +388,24 @@ namespace RabbitOM.Player.Controls
         }
 
 
-        private void Dispatch( Action action )
-        {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , action );
-        }
-
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
-            Dispatch( new Action( () =>
-            {
-                OnCommunicationStarted();
-            } ) );
+            Dispatch( OnCommunicationStarted );
         }
 
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
-            Dispatch( new Action( () =>
+            Dispatch( () =>
             {
                 _datasource.Clear();
 
                 OnCommunicationStopped();
-            } ) );
+            } );
         }
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
         {
-            Dispatch( new Action( () =>
+            Dispatch( () =>
             {
                 _frameBuilder.Dispose();
 
@@ -463,12 +461,12 @@ namespace RabbitOM.Player.Controls
                 {
                     OnConnected();
                 }
-            } ) );
+            } );
         }
 
         private void OnDisconnected( object sender , RtspClientDisconnectedEventArgs e )
         {
-            Dispatch( new Action( () =>
+            Dispatch( () =>
             {
                 _datasource.SetConnectionStatusOff();
                 _frameBuilder.Clear();
@@ -476,7 +474,7 @@ namespace RabbitOM.Player.Controls
                 _renderer.Close();
 
                 OnDisconnected();
-            } ));
+            } );
         }
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
@@ -513,7 +511,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnFrameDecoded( object sender , DecodedEventArgs e )
         {
-            Dispatch( new Action( () =>
+            Dispatch( () =>
             {
                 using ( e.Surface ) // add this step for freeing unmanaged memory now
                 {
@@ -524,7 +522,7 @@ namespace RabbitOM.Player.Controls
                 }
 
                 OnFrameReceived();
-            }));
+            });
         }
     }
 }
