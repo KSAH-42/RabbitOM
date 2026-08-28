@@ -209,7 +209,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-		public void StartCollect()
+		public void StartMonitoring()
 		{
 			if ( DataSource == null || _timer.IsEnabled )
 			{

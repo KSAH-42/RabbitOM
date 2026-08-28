@@ -92,7 +92,7 @@ namespace RabbitOM.Player
             _frameBuilder.PacketsLost += OnPacketsLost;
             _decoder.Decoded += OnFrameDecoded;
             _statistics.DataSource = _datasource;
-            _statistics.StartCollect();
+            _statistics.StartMonitoring();
         }
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )

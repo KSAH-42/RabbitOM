@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent CommunicationStoppedEvent = EventManager.RegisterRoutedEvent( nameof(CommunicationStopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
-        public static readonly RoutedEvent FrameReceivedEvent = EventManager.RegisterRoutedEvent( nameof(FrameReceived) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+        public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
 
         public static readonly DependencyProperty UriProperty = DependencyProperty.Register( nameof(Uri) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaControl) );
@@ -23,11 +23,26 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty ErrorInfoProperty = DependencyProperty.Register( nameof(ErrorInfo) , typeof(string) , typeof(MediaControl) );
 
 
+        private readonly MediaControlClient _client;
+
 
         public MediaControl()
         {
             InitializeComponent();
+
+            _client = new MediaControlClient( new MediaControlHandler( _image , this ,
+                OnCommunicationStarted,
+                OnCommunicationStopped,
+                OnConnected,
+                OnDisconnected,
+                OnFrameDecoded,
+                OnError,
+                OnException
+                ));
         }
+
+
+
 
 
 
@@ -55,11 +70,13 @@ namespace RabbitOM.Player.Controls
             remove => RemoveHandler( DisconnectedEvent , value );
         }
 
-        public event RoutedEventHandler FrameReceived
+        public event RoutedEventHandler FrameDecoded
         {
-            add    => AddHandler( FrameReceivedEvent , value );
-            remove => RemoveHandler( FrameReceivedEvent , value );
+            add    => AddHandler( FrameDecodedEvent , value );
+            remove => RemoveHandler( FrameDecodedEvent , value );
         }
+
+
 
 
 
@@ -124,15 +141,43 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
-            InitializeClient();
+            Statistics.DataSource = _client.DataSource;
+            Statistics.StartMonitoring();
         }
 
         private void OnUnloaded( object sender , RoutedEventArgs e )
         {
-            UnInitializeClient();
+            Statistics.StopMonitoring();
+            Statistics.DataSource = null;
+            _client.Dispose();
         }
+
+
+        public bool StartCommunication()
+        {
+            if ( ! _client.IsCommunicationStarted() )
+            {
+                return false;
+            }
+
+            _client.Uri = Uri;
+            _client.UserName = UserName;
+            _client.Password = Password;
+            _client.Transport = Transport;
+
+            return _client.StartCommunication();
+        }
+
+        public void StopCommunication()
+        {
+            _client.StopCommunication();
+        }
+
+
 
 
 
@@ -153,6 +198,7 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnConnected()
         {
             IsConnected = true;
+            Footer = _client.Uri;
 
             RaiseEvent( new RoutedEventArgs( ConnectedEvent ) );
         }
@@ -162,14 +208,13 @@ namespace RabbitOM.Player.Controls
             IsConnected = false;
             Footer = "";
             ErrorInfo = "";
-            _image.Source = null;
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }
 
-        protected virtual void OnFrameReceived()
+        protected virtual void OnFrameDecoded()
         {
-            RaiseEvent( new RoutedEventArgs( FrameReceivedEvent ) );
+            RaiseEvent( new RoutedEventArgs( FrameDecodedEvent ) );
         }
 
         protected virtual void OnError( string error )

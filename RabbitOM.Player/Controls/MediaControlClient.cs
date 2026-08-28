@@ -12,19 +12,29 @@ namespace RabbitOM.Player.Controls
     using RabbitOM.Net.Rtsp.Clients;
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
+    using System.Runtime.Remoting.Messaging;
 
-    public partial class MediaControl
+    public sealed class MediaControlClient : IDisposable
     {
-        private readonly RtspClient _client = new RtspClient();
-        private readonly RtpPacketInspector _inspector = new DefaultRtpPacketInspector();
-        private readonly RtpMediaBuilderProxy _frameBuilder = new RtpMediaBuilderProxy();
-        private readonly Decoder _decoder = new FFMpegDecoder();
-        private readonly Renderer _renderer = new FFMpegRenderer();
-        private readonly NetworkStatisticsDataSource _datasource = new NetworkStatisticsDataSource();
+        private readonly RtspClient _client;
+        private readonly RtpPacketInspector _inspector;
+        private readonly RtpMediaBuilderProxy _frameBuilder;
+        private readonly Decoder _decoder;
+        private readonly Renderer _renderer;
+        private readonly NetworkStatisticsDataSource _datasource;
+        private readonly IMediaControlHandler _controlHandler;
 
-
-        private void InitializeClient()
+        public MediaControlClient( IMediaControlHandler controlHandler )
         {
+            _controlHandler = controlHandler ?? throw new ArgumentNullException( nameof( controlHandler ) );
+
+            _client = new RtspClient();
+            _inspector = new DefaultRtpPacketInspector();
+            _frameBuilder = new RtpMediaBuilderProxy();
+            _decoder = new FFMpegDecoder();
+            _renderer = new FFMpegRenderer();
+            _datasource = new NetworkStatisticsDataSource();
+
             _client.CommunicationStarted += OnCommunicationStarted;
             _client.CommunicationStopped += OnCommunicationStopped;
             _client.Connected += OnConnected;
@@ -33,45 +43,37 @@ namespace RabbitOM.Player.Controls
             _frameBuilder.MediaBuilded += OnBuildFrame;
             _frameBuilder.PacketsLost += OnPacketsLost;
             _decoder.Decoded += OnFrameDecoded;
-            _statistics.DataSource = _datasource;
-            _statistics.StartCollect();
-        }
-
-        private void UnInitializeClient()
-        {
-            _statistics.StopMonitoring();
-            _statistics.DataSource = null;
-            _client.StopCommunication();
-            _client.CommunicationStarted -= OnCommunicationStarted;
-            _client.CommunicationStopped -= OnCommunicationStopped;
-            _client.Connected -= OnConnected;
-            _client.Disconnected -= OnDisconnected;
-            _client.PacketReceived -= OnPacketReceived;
-            _client.Dispose();
-            _frameBuilder.MediaBuilded -= OnBuildFrame;
-            _frameBuilder.PacketsLost -= OnPacketsLost;
-            _frameBuilder.Dispose();
-            _decoder.Decoded -= OnFrameDecoded;
-            _renderer.Dispose();
-            _decoder.Dispose();
         }
 
 
-        public void StartCommunication()
+
+
+
+        public string Uri { get; set; }
+
+        public string UserName { get; set; }
+
+        public string Password { get; set; }
+
+        public MediaPlayerTransport Transport { get; set; }
+
+        public IStatisticsDataSource DataSource { get => _datasource; }
+
+
+
+
+
+
+        public bool IsCommunicationStarted()
         {
-            if ( string.IsNullOrWhiteSpace( Uri ) )
-            {
-                throw new InvalidOperationException( "the uri must be defined" );
-            }
+            return _client.IsCommunicationStarted;
+        }
 
-            if ( Transport == null )
+        public bool StartCommunication()
+        {
+            if ( string.IsNullOrWhiteSpace( Uri ) || Transport == null )
             {
-                throw new InvalidOperationException( "the transport must be set" );
-            }
-
-            if ( IsCommunicationStarted )
-            {
-                throw new InvalidOperationException( "the communication is already running" );
+                return false;
             }
 
             _client.Configuration.Uri = Uri;
@@ -97,7 +99,7 @@ namespace RabbitOM.Player.Controls
                 _client.Configuration.TimeToLive = multicastTransport.TimeToLive;
             }
 
-            _client.StartCommunication();
+            return _client.StartCommunication();
         }
 
         public void StopCommunication()
@@ -107,34 +109,44 @@ namespace RabbitOM.Player.Controls
 
         public ImageSource GetImage()
         {
-            return _image.Source;
+            return _controlHandler.Image.Source;
         }
 
-        private void Dispatch( Action action )
+        public void Dispose()
         {
-            Dispatcher.BeginInvoke( DispatcherPriority.Render , action );
+            _client.StopCommunication();
+            _client.CommunicationStarted -= OnCommunicationStarted;
+            _client.CommunicationStopped -= OnCommunicationStopped;
+            _client.Connected -= OnConnected;
+            _client.Disconnected -= OnDisconnected;
+            _client.PacketReceived -= OnPacketReceived;
+            _client.Dispose();
+            _frameBuilder.MediaBuilded -= OnBuildFrame;
+            _frameBuilder.PacketsLost -= OnPacketsLost;
+            _frameBuilder.Dispose();
+            _decoder.Decoded -= OnFrameDecoded;
+            _renderer.Dispose();
+            _decoder.Dispose();
         }
-
-
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
-            Dispatch( OnCommunicationStarted );
+            _controlHandler.Dispatch( _controlHandler.OnCommunicationStarted );
         }
 
         private void OnCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
-            Dispatch( () =>
+            _controlHandler.Dispatch( () =>
             {
                 _datasource.Clear();
 
-                OnCommunicationStopped();
+                _controlHandler.OnCommunicationStopped();
             } );
         }
 
         private void OnConnected( object sender , RtspClientConnectedEventArgs e )
         {
-            Dispatch( () =>
+            _controlHandler.Dispatch( () =>
             {
                 _frameBuilder.Dispose();
 
@@ -149,7 +161,7 @@ namespace RabbitOM.Player.Controls
 
                     if ( codec == CodecType.Unknown )
                     {
-                        OnError( "Format not supported ( " + e.TrackInfo.Encoder + " )" );
+                        _controlHandler.OnError( "Format not supported ( " + e.TrackInfo.Encoder + " )" );
                         return;
                     }
 
@@ -178,31 +190,30 @@ namespace RabbitOM.Player.Controls
                     }
 
                     _decoder.Open( codec );
-                    _renderer.Open( _image );
-
-                    Footer = _client.Configuration.Uri;
+                    _renderer.Open( _controlHandler.Image );
                 }
                 catch( Exception ex )
                 {
-                    OnException( ex );
+                    _controlHandler.OnException( ex );
                 }
                 finally
                 {
-                    OnConnected();
+                    _controlHandler.OnConnected();
                 }
             } );
         }
 
         private void OnDisconnected( object sender , RtspClientDisconnectedEventArgs e )
         {
-            Dispatch( () =>
+            _controlHandler.Dispatch( () =>
             {
                 _datasource.SetConnectionStatusOff();
                 _frameBuilder.Clear();
                 _decoder.Close();
                 _renderer.Close();
 
-                OnDisconnected();
+                _controlHandler.Image.Source = null;
+                _controlHandler.OnDisconnected();
             } );
         }
 
@@ -240,7 +251,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnFrameDecoded( object sender , DecodedEventArgs e )
         {
-            Dispatch( () =>
+            _controlHandler.Dispatch( () =>
             {
                 using ( e.Surface )
                 {
@@ -250,7 +261,7 @@ namespace RabbitOM.Player.Controls
                     _datasource.SetFrameSize( e.Surface.Height , e.Surface.Width );
                 }
 
-                OnFrameReceived();
+                _controlHandler.OnFrameDecoded();
             });
         }
     }
