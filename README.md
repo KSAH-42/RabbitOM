@@ -127,8 +127,10 @@ If your are using some cameras and you may use first VLC for testing, you may ob
 First of all, here I use a HIK camera, and HIK camera just works as expected and works well.
 
 The issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this library doesn't support all digest algs supported by the camera.
-VLC (3.0.23 and probably previous versions) will enter in a loop and will normally ask to you to enter the credentials until the authentication succeed. And according to the rtsp headers there is the name of dll used here located on the useragent.
-And the repositoring origin use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms.
+VLC (3.0.23 and probably previous versions) will enter in a loop and will normally ask to you to enter the credentials until the authentication succeed, but the rtsp source will reply by a forbidden access result, and VLC will repeat again and again and never leave the authentication loop.
+According to the rtsp headers there is the name of dll used here located on the useragent header. If you get more details, look at the Authorization header (emitted by client) and WWW-Authentication (server response).
+If you familliar we ASP.Net Web API, even if the ASP.Net framework hidden the details and support more schemes than the RTSP protocols, here it'is excatly the same headers, except that the contains are differents, etc... 
+And the repositoring of lib use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
 
