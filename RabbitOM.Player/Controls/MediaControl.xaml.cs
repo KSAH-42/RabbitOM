@@ -521,9 +521,9 @@ namespace RabbitOM.Player.Controls
 
                     _datasource.IncreaseFrameCount();
                     _datasource.SetFrameSize( e.Surface.Height , e.Surface.Width );
-
-                    OnFrameReceived();
                 }
+
+                OnFrameReceived();
             }));
         }
     }
