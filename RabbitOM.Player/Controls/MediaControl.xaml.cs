@@ -388,6 +388,13 @@ namespace RabbitOM.Player.Controls
         }
 
 
+
+
+
+
+
+
+
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
         {
             Dispatch( OnCommunicationStarted );
