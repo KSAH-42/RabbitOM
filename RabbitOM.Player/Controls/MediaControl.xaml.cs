@@ -150,7 +150,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
-            Statistics.DataSource = _client.DataSource;
+            Statistics.DataSource = _client.Statistics;
             Statistics.StartMonitoring();
         }
 

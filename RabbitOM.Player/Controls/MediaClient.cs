@@ -18,7 +18,7 @@ namespace RabbitOM.Player.Controls
         private readonly RtpMediaBuilderProxy _frameBuilder;
         private readonly Decoder _decoder;
         private readonly Renderer _renderer;
-        private readonly NetworkStatisticsDataSource _datasource;
+        private readonly NetworkStatisticsDataSource _statistics;
         private readonly IMediaHandler _handler;
 
 
@@ -34,7 +34,7 @@ namespace RabbitOM.Player.Controls
             _frameBuilder = new RtpMediaBuilderProxy();
             _decoder = new FFMpegDecoder();
             _renderer = new FFMpegRenderer();
-            _datasource = new NetworkStatisticsDataSource();
+            _statistics = new NetworkStatisticsDataSource();
 
             _client.CommunicationStarted += OnCommunicationStarted;
             _client.CommunicationStopped += OnCommunicationStopped;
@@ -58,7 +58,7 @@ namespace RabbitOM.Player.Controls
 
         public MediaPlayerTransport Transport { get; set; }
 
-        public IStatisticsDataSource DataSource { get => _datasource; }
+        public IStatisticsDataSource Statistics { get => _statistics; }
 
 
 
@@ -134,7 +134,7 @@ namespace RabbitOM.Player.Controls
         {
             _handler.Dispatch( () =>
             {
-                _datasource.Clear();
+                _statistics.Clear();
 
                 _handler.OnCommunicationStopped();
             } );
@@ -146,10 +146,10 @@ namespace RabbitOM.Player.Controls
             {
                 _frameBuilder.Dispose();
 
-                _datasource.SetConnectionStatusOn();
-                _datasource.SetTransport( _client.Configuration.DeliveryMode.ToString() );
-                _datasource.SetCodec( e.TrackInfo.Encoder );
-                _datasource.SetClock( e.TrackInfo.ClockRate );
+                _statistics.SetConnectionStatusOn();
+                _statistics.SetTransport( _client.Configuration.DeliveryMode.ToString() );
+                _statistics.SetCodec( e.TrackInfo.Encoder );
+                _statistics.SetClock( e.TrackInfo.ClockRate );
 
                 try
                 {
@@ -203,7 +203,7 @@ namespace RabbitOM.Player.Controls
         {
             _handler.Dispatch( () =>
             {
-                _datasource.SetConnectionStatusOff();
+                _statistics.SetConnectionStatusOff();
                 _frameBuilder.Clear();
                 _decoder.Close();
                 _renderer.Close();
@@ -215,19 +215,19 @@ namespace RabbitOM.Player.Controls
 
         private void OnPacketReceived( object sender , RtspPacketReceivedEventArgs e )
         {
-            _datasource.AddBytesReceived( e.Packet.Data.Length );
+            _statistics.AddBytesReceived( e.Packet.Data.Length );
 
             if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
             {
                 _frameBuilder.AddPacket( packet );
 
-                _datasource.IncreasePacketReceived();
+                _statistics.IncreasePacketReceived();
             }
         }
 
         private void OnPacketsLost( object sender , RtpPacketsLostEventArgs e )
         {
-            _datasource.AddPacketsLost( e.NumberOfPacketLost );
+            _statistics.AddPacketsLost( e.NumberOfPacketLost );
         }
 
         private void OnBuildFrame( object sender , RtpMediaBuildedEventArgs e )
@@ -253,8 +253,8 @@ namespace RabbitOM.Player.Controls
                 {
                     _renderer.Render( e.Surface );
 
-                    _datasource.IncreaseFrameCount();
-                    _datasource.SetFrameSize( e.Surface.Height , e.Surface.Width );
+                    _statistics.IncreaseFrameCount();
+                    _statistics.SetFrameSize( e.Surface.Height , e.Surface.Width );
                 }
 
                 _handler.OnFrameDecoded();

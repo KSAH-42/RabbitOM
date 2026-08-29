@@ -274,7 +274,7 @@ namespace RabbitOM.Player.Controls
 				return;
 			}
 
-			Codec = source.GetCodec();
+			Codec = source?.GetCodec();
 			Clock = source.GetClock();
 			Transport = source.GetTransport();
 			ConnectionStatus = source.GetConnectionStatus();
