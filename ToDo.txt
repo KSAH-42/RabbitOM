@@ -23,37 +23,3 @@ rabbitom.onvif.clients
  sealed class AccessControlClient {}
 rabbitom.onvif.clients.discovery
 rabbitom.onvif.clients.events 
-
-sometimes network timeout occurs, right ?
- So, here the RabbitOM say "shut up your mouth" to the security camera
- when teardown fails multiple times if it the rtsp source continue to stream. 
- It just repeat the request with the same cseq value.
-
-
-// The escape from thalezed, and it's nanar division. That's a serious compagny..... just take packages write code and build, that's it and push a globlins artifactory.
-
-// thalezed C++ recorder with onvif integration = odm + wireshark + right click + copy and paste + send( socket , szText , 0 , strlen( szText ) ); // for a good compensation fixed at 70KEuro and for the java microservice used for send onvif ptz command, with a git clone...
-
-// don't say it's shit, please respect it, thats thalezed systems;
-
-//             
-//   websocket        ws/jpeg+ff   rtp           rtp 
-// web browser  <---> decoder.exe <--> proxy.exe <--> cam1
-//                                                    /|\ rtp stream
-//                              recorder.exe-----------+  
-//                              live.dll to handle rtsp
-
-// or
-
-//   websocket        ws/jpeg+ff   rtp           rtp 
-// web browser  <---> decoder.exe <--> proxy.exe <--> cam1  <---- ptzservice.exe
-//                                      /|\ rtp stream
-//                        recorder.exe---+  
-//                        live.dll to handle rtsp
-//                        onvif.dll (hardcoded string with socket including copyrights,and save securely by jfrog,...) don't laugth !
-
-// the systems generate 3 streams for one device (2 for one 1 live, and 1 for recording) if we ignore wssocket.
-
-// for receiving live software make rtsp request to proxy
-// or 
-// ask to the recorder by passing the start_time equals to DateTime.Now to the uri
