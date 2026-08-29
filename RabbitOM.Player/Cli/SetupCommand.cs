@@ -20,12 +20,12 @@ namespace RabbitOM.Player.Cli
         [HelpResource("cli.commands.setup.show_stats")]
         [Flag("--stats" , true )]
         [Flag("--no-stats" , false )]
-        public bool ShowStats { get; set; }
+        public bool? ShowStats { get; set; }
 
         [HelpResource("cli.commands.setup.stretch_image")]
         [Flag("--stretch" , true )]
         [Flag("--no-stretch" , false)]
-        public bool StrechImage { get; set; }
+        public bool? StrechImage { get; set; }
 
         [HelpResource("cli.commands.setup.window_state")]
         [Range("--window-state",0,3)]
@@ -33,7 +33,7 @@ namespace RabbitOM.Player.Cli
         [Enum("--window-state-center" , 1 )]
         [Enum("--window-state-maximize" , 2 )]
         [Enum("--window-state-fullscreen" , 3 )]
-        public int WindowState { get; set; }
+        public int? WindowState { get; set; }
 
         [HelpResource("cli.commands.setup.timeout")]
         [Argument("-t")]
