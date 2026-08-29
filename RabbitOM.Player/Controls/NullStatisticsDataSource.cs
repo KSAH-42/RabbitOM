@@ -18,8 +18,6 @@ namespace RabbitOM.Player.Controls
         public long GetMaxFrameCountPerSecond() => default;
         public long GetMaxBytesReceivedPerSecond() => default;
         public long GetMaxPacketReceivedPerSecond() => default;
-        public void Clear()
-        {
-        }
+        public void Clear(){}
     }
 }
