@@ -14,7 +14,7 @@ namespace RabbitOM.Player.Dialogs
             InitializeComponent();
         }
 
-        public ObservableCollection<ModuleInfo> Modules { get; } = new ObservableCollection<ModuleInfo>( ModuleInfoFactory.GetCurrentProcessModules() );
+        public ReadOnlyObservableCollection<ModuleInfo> Modules { get; } = new ObservableCollection<ModuleInfo>( ModuleInfoFactory.GetCurrentProcessModules() ).ToReadOnly();
 
         private void OnClose( object sender , ExecutedRoutedEventArgs e )
         {

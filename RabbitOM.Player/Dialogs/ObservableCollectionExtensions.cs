@@ -104,5 +104,15 @@ namespace RabbitOM.Player.Dialogs
                 source.Insert( index + 1 , value );
             }
         }
+
+        public static ReadOnlyObservableCollection<T> ToReadOnly<T>( this ObservableCollection<T> source )
+        {
+            if ( source == null )
+            {
+                throw new ArgumentNullException( nameof( source ) );
+            }
+
+            return new ReadOnlyObservableCollection<T>( source );
+        }
     }
 }
