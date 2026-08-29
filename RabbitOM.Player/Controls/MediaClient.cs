@@ -19,13 +19,13 @@ namespace RabbitOM.Player.Controls
         private readonly Decoder _decoder;
         private readonly Renderer _renderer;
         private readonly NetworkStatisticsDataSource _datasource;
-        private readonly IMediaClientHandler _handler;
+        private readonly IMediaHandler _handler;
 
 
 
 
 
-        public MediaClient( IMediaClientHandler handler )
+        public MediaClient( IMediaHandler handler )
         {
             _handler = handler ?? throw new ArgumentNullException( nameof( handler ) );
 

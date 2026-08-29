@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace RabbitOM.Player.Controls
 {
-    public sealed class MediaClientHandler : IMediaClientHandler
+    public sealed class MediaClientHandler : IMediaHandler
     {
         private readonly Image _image;
         private readonly FrameworkElement _element;

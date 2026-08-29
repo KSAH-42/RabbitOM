@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace RabbitOM.Player.Controls
 {
-    public interface IMediaClientHandler
+    public interface IMediaHandler
     {
         Image Image { get; }
 
