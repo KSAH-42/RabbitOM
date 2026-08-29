@@ -213,12 +213,12 @@
                            Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
 
-                <controls:NetworkStatistics x:Name="_statistics" 
-                                            Margin="10,20,0,0" 
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                            />
+                <controls:NetworkStatisticsControl x:Name="_statistics" 
+                                                   Margin="10,20,0,0" 
+                                                   HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                                   />
 
             </Grid>
 

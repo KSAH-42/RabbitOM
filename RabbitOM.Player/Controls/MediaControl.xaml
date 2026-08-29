@@ -59,13 +59,13 @@
 
         </StackPanel>
 
-        <controls:NetworkStatistics x:Name="_statistics" 
-                                    x:FieldModifier="private"
-                                    Margin="10,20,0,0" 
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Visibility="Collapsed"
-                                    />
+        <controls:NetworkStatisticsControl x:Name="_statistics" 
+                                           x:FieldModifier="private"
+                                           Margin="10,20,0,0" 
+                                           HorizontalAlignment="Left"
+                                           VerticalAlignment="Top"
+                                           Visibility="Collapsed"
+                                           />
 
     </Grid>
 

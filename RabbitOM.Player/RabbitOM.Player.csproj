@@ -121,8 +121,8 @@
     </Compile>
     <Compile Include="Dialogs\UriInfo.cs" />
     <Compile Include="Dialogs\ObservableCollectionExtensions.cs" />
-    <Compile Include="Controls\NetworkStatistics.xaml.cs">
-      <DependentUpon>NetworkStatistics.xaml</DependentUpon>
+    <Compile Include="Controls\NetworkStatisticsControl.xaml.cs">
+      <DependentUpon>NetworkStatisticsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\IStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsDataSource.cs" />
@@ -141,7 +141,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\NetworkStatistics.xaml">
+    <Page Include="Controls\NetworkStatisticsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

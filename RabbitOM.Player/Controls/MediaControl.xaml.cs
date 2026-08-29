@@ -80,7 +80,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public NetworkStatistics Statistics
+        public NetworkStatisticsControl Statistics
         {
             get => _statistics;
         }
