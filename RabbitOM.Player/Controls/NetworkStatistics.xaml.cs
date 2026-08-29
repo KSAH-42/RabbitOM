@@ -223,12 +223,13 @@ namespace RabbitOM.Player.Controls
 		{
 			_timer.Stop();
 
-			DataSource?.Clear();
 			Clear();
 		}
 
 		private void Clear()
 		{
+			DataSource?.Clear();
+			
 			Codec = default;
 			Clock = default;
 			Transport = default;
