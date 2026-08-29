@@ -128,23 +128,23 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.WriterLock )
             {
-                _codec = null;
-                _transport = null;
-                _ticks = 0;
-                _connectionStatus = false;
-                _clock = 0;
-                _frameCount = 0;
-                _bytesReceivedCount = 0;
-                _packetReceivedCount = 0;
-                _frameHeigth = 0;
-                _frameWidth = 0;
-                _packetsLostCount = 0;
-                _maxFrameCount = 0;
-                _maxFrameCountPerSecond = 0;
-                _maxBytesReceivedCount = 0;
-                _maxBytesReceivedPerSecond = 0;
-                _maxPacketReceivedCount = 0;
-                _maxPacketReceivedPerSecond = 0;
+                _codec = default;
+                _transport = default;
+                _ticks = default;
+                _connectionStatus = default;
+                _clock = default;
+                _frameCount = default;
+                _bytesReceivedCount = default;
+                _packetReceivedCount = default;
+                _frameHeigth = default;
+                _frameWidth = default;
+                _packetsLostCount = default;
+                _maxFrameCount = default;
+                _maxFrameCountPerSecond = default;
+                _maxBytesReceivedCount = default;
+                _maxBytesReceivedPerSecond = default;
+                _maxPacketReceivedCount = default;
+                _maxPacketReceivedPerSecond = default;
             }
         }
 
