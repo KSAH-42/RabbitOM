@@ -101,6 +101,7 @@
     <Compile Include="Controls\IMediaHandler.cs" />
     <Compile Include="Controls\MediaClient.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
+    <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />

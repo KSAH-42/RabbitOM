@@ -223,26 +223,26 @@ namespace RabbitOM.Player.Controls
 		{
 			_timer.Stop();
 
-			Clear();
+			Update();
 		}
 
-		private void Clear()
+		private void Update()
 		{
-			DataSource?.Clear();
+			var source = DataSource ?? NullStatisticsDataSource.Value;
 
-			Codec = default;
-			Clock = default;
-			Transport = default;
-			ConnectionStatus = default;
-			BytesReceivedPerSecond = default;
-			PacketReceivedPerSecond = default;
-			FrameCountPerSecond = default;
-			FrameHeight = default;
-			FrameWidth = default;
-			PacketsLostCount = default;
-			MaxFrameCountPerSecond = default;
-			MaxBytesReceivedPerSecond = default;
-			MaxPacketReceivedPerSecond = default;
+			Codec = source.GetCodec();
+			Clock = source.GetClock();
+			Transport = source.GetTransport();
+			ConnectionStatus = source.GetConnectionStatus();
+			BytesReceivedPerSecond = source.GetBytesReceivedPerSecond();
+			PacketReceivedPerSecond = source.GetPacketReceivedPerSecond();
+			FrameCountPerSecond = source.GetFrameCountPerSecond();
+			FrameHeight = source.GetFrameHeight();
+			FrameWidth = source.GetFrameWidth();
+			PacketsLostCount = source.GetPacketsLostCount();
+			MaxFrameCountPerSecond = source.GetMaxFrameCountPerSecond();
+			MaxBytesReceivedPerSecond = source.GetMaxBytesReceivedPerSecond();
+			MaxPacketReceivedPerSecond = source.GetMaxPacketReceivedPerSecond();
 		}
 
 
@@ -267,26 +267,7 @@ namespace RabbitOM.Player.Controls
 
 		private void OnTimerTick( object sender , System.EventArgs e )
         {
-            var source = DataSource;
-
-			if ( source == null )
-			{
-				return;
-			}
-
-			Codec = source?.GetCodec();
-			Clock = source.GetClock();
-			Transport = source.GetTransport();
-			ConnectionStatus = source.GetConnectionStatus();
-			BytesReceivedPerSecond = source.GetBytesReceivedPerSecond();
-			PacketReceivedPerSecond = source.GetPacketReceivedPerSecond();
-			FrameCountPerSecond = source.GetFrameCountPerSecond();
-			FrameHeight = source.GetFrameHeight();
-			FrameWidth = source.GetFrameWidth();
-			PacketsLostCount = source.GetPacketsLostCount();
-			MaxFrameCountPerSecond = source.GetMaxFrameCountPerSecond();
-			MaxBytesReceivedPerSecond = source.GetMaxBytesReceivedPerSecond();
-			MaxPacketReceivedPerSecond = source.GetMaxPacketReceivedPerSecond();
+            Update();
         }
     }
 }
