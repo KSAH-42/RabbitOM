@@ -228,21 +228,21 @@ namespace RabbitOM.Player.Controls
 
 		private void Update()
 		{
-			var source = DataSource ?? NullStatisticsDataSource.Value;
+			var dataSource = DataSource ?? NullStatisticsDataSource.Value;
 
-			Codec = source.GetCodec();
-			Clock = source.GetClock();
-			Transport = source.GetTransport();
-			ConnectionStatus = source.GetConnectionStatus();
-			BytesReceivedPerSecond = source.GetBytesReceivedPerSecond();
-			PacketReceivedPerSecond = source.GetPacketReceivedPerSecond();
-			FrameCountPerSecond = source.GetFrameCountPerSecond();
-			FrameHeight = source.GetFrameHeight();
-			FrameWidth = source.GetFrameWidth();
-			PacketsLostCount = source.GetPacketsLostCount();
-			MaxFrameCountPerSecond = source.GetMaxFrameCountPerSecond();
-			MaxBytesReceivedPerSecond = source.GetMaxBytesReceivedPerSecond();
-			MaxPacketReceivedPerSecond = source.GetMaxPacketReceivedPerSecond();
+			Codec = dataSource.GetCodec();
+			Clock = dataSource.GetClock();
+			Transport = dataSource.GetTransport();
+			ConnectionStatus = dataSource.GetConnectionStatus();
+			BytesReceivedPerSecond = dataSource.GetBytesReceivedPerSecond();
+			PacketReceivedPerSecond = dataSource.GetPacketReceivedPerSecond();
+			FrameCountPerSecond = dataSource.GetFrameCountPerSecond();
+			FrameHeight = dataSource.GetFrameHeight();
+			FrameWidth = dataSource.GetFrameWidth();
+			PacketsLostCount = dataSource.GetPacketsLostCount();
+			MaxFrameCountPerSecond = dataSource.GetMaxFrameCountPerSecond();
+			MaxBytesReceivedPerSecond = dataSource.GetMaxBytesReceivedPerSecond();
+			MaxPacketReceivedPerSecond = dataSource.GetMaxPacketReceivedPerSecond();
 		}
 
 
