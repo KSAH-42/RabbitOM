@@ -7,7 +7,7 @@ namespace RabbitOM.Player.Controls
 {
 	public partial class NetworkStatistics : UserControl
     {
-		private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds( 1000 ) };
+		private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds( 1 ) };
 
 
 
