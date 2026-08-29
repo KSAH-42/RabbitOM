@@ -223,6 +223,7 @@ namespace RabbitOM.Player.Controls
 		{
 			_timer.Stop();
 
+			DataSource?.Clear();
 			Update();
 		}
 
