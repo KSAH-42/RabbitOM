@@ -25,10 +25,9 @@ rabbitom.onvif.clients.discovery
 rabbitom.onvif.clients.events 
 
 sometimes network timeout occurs, right ?
- So, here the RabbitOM say "shut up your mouth" to the rtsp source 
- when teardown fails multiple times 
- if it the rtsp source continue to stream. The RequestInvoker juste repeat the with 
- the request with the same cseq value.
+ So, here the RabbitOM say "shut up your mouth" to the security camera
+ when teardown fails multiple times if it the rtsp source continue to stream. 
+ It just repeat the request with the same cseq value.
 
 
 // The escape from thalezed, and it's nanar division. That's a serious compagny..... just take packages write code and build, that's it and push a globlins artifactory.
