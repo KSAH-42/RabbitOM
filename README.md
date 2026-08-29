@@ -18,7 +18,7 @@ Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/r
 * Support audio format RTP - L24
 * Support audio format RTP - L16
 * Support audio format RTP - L8
-* Support multiple authentication schemes as: basic and digest ( MD5, SHA1, SHA256, SHA512 )
+* Support multiple authentication schemes as: basic and digest ( MD5, SHA1, SHA256 )
 * Support RTP packets reordering
 * Support RTSP messages reordering when multiple requests are sended and responses arrive in a different order
 * Support Unicast TCP (interleaved mode) transport

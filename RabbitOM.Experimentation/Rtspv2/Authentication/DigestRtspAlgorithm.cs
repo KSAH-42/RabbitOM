@@ -4,21 +4,21 @@ using System.Security.Cryptography;
 
 namespace RabbitOM.Net.RtspV2.Authentication
 {
-    public sealed class RtspHashAlgorithm : IDisposable
+    public sealed class DigestRtspAlgorithm : IDisposable
     {
         private readonly HashAlgorithm _hashAlgorithm;
 
-        private RtspHashAlgorithm( HashAlgorithm hashAlgorithm ) => _hashAlgorithm = hashAlgorithm ?? throw new ArgumentNullException( nameof( hashAlgorithm ) );
+        private DigestRtspAlgorithm( HashAlgorithm hashAlgorithm ) => _hashAlgorithm = hashAlgorithm ?? throw new ArgumentNullException( nameof( hashAlgorithm ) );
 
-        public static RtspHashAlgorithm CreateMD5() => new RtspHashAlgorithm( MD5.Create() );
+        public static DigestRtspAlgorithm CreateMD5() => new DigestRtspAlgorithm( MD5.Create() );
 
-        public static RtspHashAlgorithm CreateSHA1() => new RtspHashAlgorithm( SHA1.Create() );
+        public static DigestRtspAlgorithm CreateSHA1() => new DigestRtspAlgorithm( SHA1.Create() );
 
-        public static RtspHashAlgorithm CreateSHA256() => new RtspHashAlgorithm( SHA256.Create() );
+        public static DigestRtspAlgorithm CreateSHA256() => new DigestRtspAlgorithm( SHA256.Create() );
 
-        public static RtspHashAlgorithm CreateSHA384() => new RtspHashAlgorithm( SHA384.Create() );
+        public static DigestRtspAlgorithm CreateSHA384() => new DigestRtspAlgorithm( SHA384.Create() );
 
-        public static RtspHashAlgorithm CreateSHA512() => new RtspHashAlgorithm( SHA512.Create() );
+        public static DigestRtspAlgorithm CreateSHA512() => new DigestRtspAlgorithm( SHA512.Create() );
 
         public string Compute( string input )
         {
