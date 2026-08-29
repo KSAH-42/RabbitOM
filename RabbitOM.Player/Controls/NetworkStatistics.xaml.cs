@@ -229,7 +229,7 @@ namespace RabbitOM.Player.Controls
 		private void Clear()
 		{
 			DataSource?.Clear();
-			
+
 			Codec = default;
 			Clock = default;
 			Transport = default;
