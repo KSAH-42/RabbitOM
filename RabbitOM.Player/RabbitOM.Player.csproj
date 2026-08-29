@@ -108,8 +108,6 @@
     <Compile Include="Controls\MediaControl.xaml.cs">
       <DependentUpon>MediaControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\VisualTargetPresentationSource.cs" />
-    <Compile Include="Controls\VisualWrapper.cs" />
     <Compile Include="Converters\BooleanMultiValueConverter.cs" />
     <Compile Include="Converters\AddDoubleValueConverter.cs" />
     <Compile Include="Converters\HertzUnitValueConverter.cs" />
