@@ -252,9 +252,8 @@ namespace RabbitOM.Player.Controls
                 using ( e.Surface )
                 {
                     _renderer.Render( e.Surface );
-
-                    _statistics.IncreaseFrameCount();
                     _statistics.SetFrameSize( e.Surface.Height , e.Surface.Width );
+                    _statistics.IncreaseFrameCount();
                 }
 
                 _handler.OnFrameDecoded();
