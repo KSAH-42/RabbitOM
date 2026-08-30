@@ -274,7 +274,7 @@
             
             <Setter.Value>
             
-                <WindowChrome ResizeBorderThickness="6" CaptionHeight="30" GlassFrameThickness="0" CornerRadius="0" />
+                <WindowChrome ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" />
             
             </Setter.Value>
             
