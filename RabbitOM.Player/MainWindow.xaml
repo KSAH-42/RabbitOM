@@ -25,7 +25,7 @@
         <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
         <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
     </Window.Resources>
-    
+
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:MainWindow.ControlCommand}" 
@@ -58,7 +58,14 @@
                         />
 
     </Window.CommandBindings>
-    
+
+    <Window.InputBindings>
+
+        <KeyBinding Key="F11" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" />
+
+    </Window.InputBindings>
+
+
     <DockPanel>
 
         <Menu DockPanel.Dock="Top">
