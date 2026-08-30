@@ -131,17 +131,16 @@
                             <DockPanel LastChildFill="True">
                                 
                                 <Border x:Name="Part_TileBar" 
-                                        Margin="0,0,0,0" 
-                                        Height="37" 
+                                        Height="35" 
                                         Background="{TemplateBinding Background}"
                                         MouseLeftButtonDown="OnClickTileBar" 
                                         DockPanel.Dock="Top"
                                         WindowChrome.IsHitTestVisibleInChrome="True"
                                         >
 
-                                    <DockPanel LastChildFill="False" VerticalAlignment="Stretch" Margin="0,7,7,0">
+                                    <DockPanel LastChildFill="False" VerticalAlignment="Stretch" Margin="0,0,3,0">
 
-                                        <Image Margin="5,0,0,0" Source="{TemplateBinding Icon}" />
+                                        <Image Margin="7,3,0,3" Source="{TemplateBinding Icon}" />
 
                                         <TextBlock Margin="5,0,0,0"
                                                    VerticalAlignment="Center" 
