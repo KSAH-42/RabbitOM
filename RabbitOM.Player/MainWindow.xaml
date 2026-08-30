@@ -57,11 +57,16 @@
                         Executed="OnCloseApplication" 
                         />
 
+        <CommandBinding Command="{x:Static local:MainWindow.FocusCommand}" 
+                        Executed="OnFocusElement"
+                        />
+
     </Window.CommandBindings>
 
     <Window.InputBindings>
 
         <KeyBinding Key="F11" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" />
+        <KeyBinding Key="F6"  Command="{x:Static local:MainWindow.FocusCommand}" CommandParameter="{Binding ElementName=UriSources}" />
 
     </Window.InputBindings>
 
@@ -118,7 +123,8 @@
 
                 <Grid Grid.Column="1">
                     
-                    <ComboBox VerticalAlignment="Top" 
+                    <ComboBox x:Name="UriSources"
+                              VerticalAlignment="Top" 
                               SelectedIndex="0" 
                               Height="29" 
                               IsEditable="True" 
@@ -167,7 +173,7 @@
 
                     <ContextMenu>
 
-                        <MenuItem x:Name="menuItemStretch"
+                        <MenuItem x:Name="MenuItemStretch"
                                   Header="Stretch"
                                   IsCheckable="True"
                                   IsChecked="True"
@@ -175,13 +181,13 @@
 
                         <Separator />
 
-                        <MenuItem x:Name="menuItemShowFooter"
+                        <MenuItem x:Name="MenuItemShowFooter"
                                   Header="Show footer info" 
                                   IsCheckable="True"
                                   IsChecked="False"
                                   />
 
-                        <MenuItem x:Name="menuItemShowStatistics"
+                        <MenuItem x:Name="MenuItemShowStatistics"
                                   Header="Show statistics" 
                                   IsCheckable="True"
                                   IsChecked="True"
@@ -197,25 +203,13 @@
 
                 </Grid.ContextMenu>
 
-                <StackPanel VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" 
-                            >
-
-                    <controls:CommunicationStatusControl Fill="White"
-                                                         Foreground="White"
-                                                         ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                                         ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged}"
-                                                         />
-
-                </StackPanel>
-
                 <Image x:Name="_image"  
                        Margin="0,0,0,0" 
                        SnapsToDevicePixels="True" 
                        UseLayoutRounding="True" 
                        Focusable="True"
                        Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
+                       Stretch="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
                        />
 
 
@@ -225,14 +219,14 @@
                            Foreground="White" 
                            Background="Black"
                            Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                           Visibility="{Binding ElementName=menuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                           Visibility="{Binding ElementName=MenuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                            />
 
-                <controls:NetworkStatisticsControl x:Name="_statistics" 
+                <controls:NetworkStatisticsControl x:Name="Statistics" 
                                                    Margin="10,20,0,0" 
                                                    HorizontalAlignment="Left"
                                                    VerticalAlignment="Top"
-                                                   Visibility="{Binding ElementName=menuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                                   Visibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                                                    />
 
             </Grid>

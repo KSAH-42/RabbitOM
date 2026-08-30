@@ -30,6 +30,7 @@ namespace RabbitOM.Player
         public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
+        public static readonly RoutedCommand FocusCommand = new RoutedCommand();
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( nameof(Image), typeof(ImageSource) , typeof(MainWindow) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( nameof(StatusInfo), typeof(string) , typeof(MainWindow) );
@@ -93,14 +94,14 @@ namespace RabbitOM.Player
             _frameBuilder.MediaBuilded += OnBuildFrame;
             _frameBuilder.PacketsLost += OnPacketsLost;
             _decoder.Decoded += OnFrameDecoded;
-            _statistics.DataSource = _datasource;
-            _statistics.StartMonitoring();
+            Statistics.DataSource = _datasource;
+            Statistics.StartMonitoring();
         }
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
         {
-            _statistics.StopMonitoring();
-            _statistics.DataSource = null;
+            Statistics.StopMonitoring();
+            Statistics.DataSource = null;
             _client.StopCommunication();
             _client.CommunicationStarted -= OnCommunicationStarted;
             _client.CommunicationStopped -= OnCommunicationStopped;
@@ -199,6 +200,18 @@ namespace RabbitOM.Player
                 Sources.AddRange( dialog.Uris.Select( uri => uri.Value ) );
                 SelectedSource = Sources.Contains( selectedUri ) ? selectedUri : Sources.FirstOrDefault();
             }
+        }
+
+        private void OnFocusElement( object sender , ExecutedRoutedEventArgs e )
+        {
+            var source = e.Parameter as UIElement;
+
+            if ( source == null )
+            {
+                return;
+            }
+
+            source.Focus();
         }
 
         private void OnShowNetworkSettingsDialog( object sender , ExecutedRoutedEventArgs e )
