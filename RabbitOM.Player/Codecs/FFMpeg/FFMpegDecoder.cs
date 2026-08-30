@@ -262,6 +262,7 @@ namespace RabbitOM.Player.Codecs.FFMpeg
                 }
             }
 
+            // here we clone the frame because the render must run in a seperate thread
             var clonedFrame = ffmpeg.av_frame_clone( _frame );
 
             if ( clonedFrame == null )
