@@ -50,8 +50,7 @@ namespace RabbitOM.Player.Controls
             DependencyProperty.Register(
                 nameof(ConnectingMessage),
                     typeof(string),
-                        typeof(CommunicationStatusControl),
-                            new PropertyMetadata( ));
+                        typeof(CommunicationStatusControl));
 
 
 
