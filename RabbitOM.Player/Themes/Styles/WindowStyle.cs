@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shell;
 
 namespace RabbitOM.Player.Themes.Styles
 {
@@ -11,6 +13,70 @@ namespace RabbitOM.Player.Themes.Styles
 			InitializeComponent();
 		}
 
+
+
+
+		public static readonly DependencyProperty IsFullScreenProperty =
+			DependencyProperty.RegisterAttached(
+				"IsFullScreen",
+					typeof(bool),
+						typeof(Window),
+							new PropertyMetadata(false, OnFullScreenChanged));
+
+
+
+
+
+		public static void SetFullScreen( DependencyObject dependencyObject, bool status )
+		{
+			if ( dependencyObject == null )
+			{
+				throw new ArgumentNullException( nameof( dependencyObject ) );
+			}
+
+			dependencyObject.SetValue( IsFullScreenProperty , status );
+		}
+
+		public static bool GetFullScreen( DependencyObject dependencyObject)
+		{
+			if ( dependencyObject == null )
+			{
+				throw new ArgumentNullException( nameof( dependencyObject ) );
+			}
+
+			return (bool) dependencyObject.GetValue( IsFullScreenProperty );
+		}
+
+
+
+
+
+
+
+		public static void OnFullScreenChanged( DependencyObject dependencyObject , DependencyPropertyChangedEventArgs e)
+		{
+			var window = dependencyObject as Window;
+
+			if ( window == null )
+			{
+				return;
+			}
+
+			if ( e.NewValue is bool status )
+			{
+				var border = window.Template.FindName( "Part_TileBar" , window ) as Border;
+
+				if ( border == null )
+				{
+					return;
+				}
+
+				border.Visibility = status ? Visibility.Collapsed : Visibility.Visible;
+				window.WindowState = WindowState.Maximized;
+
+				WindowChrome.SetIsHitTestVisibleInChrome( window , status );
+			}
+		}
 
 		public void TileBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -23,42 +89,28 @@ namespace RabbitOM.Player.Themes.Styles
 
 			var window = element.TemplatedParent as Window;
 
-			window?.DragMove();
-        }
-
-		public void MainBorder_MouseLeftButtonDown(object sender,MouseButtonEventArgs e)
-		{
-			e.Handled = true;
-
-            if ( e.ClickCount != 2 )
-            {
-                return;
-            }
-
-            var element = e.OriginalSource as FrameworkElement;
-
-            if ( element == null )
-            {
-                return;
-            }
-
-			var window = element.TemplatedParent as Window;
-
-            if ( window == null )
-            {
-                return;
-            }
-
-			if ( window.WindowState == System.Windows.WindowState.Normal )
+			if ( window == null )
 			{
-				window.MaxHeight    = SystemParameters.MaximizedPrimaryScreenHeight;
-				window.WindowState  = System.Windows.WindowState.Maximized;
+				return;
+			}
+
+			if (e.ClickCount != 2)
+			{
+				window.DragMove();
 			}
 			else
 			{
-				window.WindowState  = System.Windows.WindowState.Normal;
+				if ( window.WindowState == System.Windows.WindowState.Normal )
+				{
+					window.WindowState  = System.Windows.WindowState.Maximized;
+					window.MaxHeight    = SystemParameters.MaximizedPrimaryScreenHeight;
+				}
+				else
+				{
+					window.WindowState  = System.Windows.WindowState.Normal;
+				}
 			}
-		}
+        }
 
         public void ButtonMinimize_Click(object sender, RoutedEventArgs e)
         {

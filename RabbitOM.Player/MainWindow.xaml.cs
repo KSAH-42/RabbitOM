@@ -20,6 +20,7 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
+    using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
     public partial class MainWindow : Window
     {
@@ -28,6 +29,7 @@ namespace RabbitOM.Player
         public static readonly RoutedCommand ShowAboutDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( nameof(Image), typeof(ImageSource) , typeof(MainWindow) );
         public static readonly DependencyProperty StatusInfoProperty = DependencyProperty.Register( nameof(StatusInfo), typeof(string) , typeof(MainWindow) );
@@ -223,6 +225,11 @@ namespace RabbitOM.Player
                     _client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp; // use tcp if rtsp source is located on internet
                 }
             }
+        }
+
+        private void OnToggleFullScreen( object sender , ExecutedRoutedEventArgs e )
+        {
+            DialogStyle.SetFullScreen( this , ! DialogStyle.GetFullScreen( this ) );
         }
 
         private void OnCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )

@@ -49,6 +49,10 @@
                         Executed="OnShowNetworkSettingsDialog"
                         />
 
+        <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" 
+                        Executed="OnToggleFullScreen"
+                        />
+
         <CommandBinding Command="{x:Static ApplicationCommands.Close}"
                         Executed="OnCloseApplication" 
                         />
@@ -66,7 +70,11 @@
             <MenuItem Header="Configuration">
                 <MenuItem Header="Network settings" Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" />
             </MenuItem>
-            
+
+            <MenuItem Header="Views">
+                <MenuItem Header="Full screen" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" />
+            </MenuItem>
+
             <MenuItem Header="Help">
                 <MenuItem Header="About" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />
             </MenuItem>
