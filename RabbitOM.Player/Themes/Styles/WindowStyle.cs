@@ -8,6 +8,13 @@ namespace RabbitOM.Player.Themes.Styles
 {
 	public partial class WindowStyle : ResourceDictionary
 	{
+		public static readonly DependencyProperty IsFullScreenProperty = DependencyProperty.RegisterAttached( "IsFullScreen" , typeof( bool ) , typeof( Window ) , new PropertyMetadata( false , OnFullScreenChanged ) );
+
+
+
+
+
+
 		public WindowStyle()
 		{
 			InitializeComponent();
@@ -16,28 +23,19 @@ namespace RabbitOM.Player.Themes.Styles
 
 
 
-		public static readonly DependencyProperty IsFullScreenProperty =
-			DependencyProperty.RegisterAttached(
-				"IsFullScreen",
-					typeof(bool),
-						typeof(Window),
-							new PropertyMetadata(false, OnFullScreenChanged));
 
 
-
-
-
-		public static void SetFullScreen( DependencyObject dependencyObject, bool status )
+		public static void SetFullScreen( DependencyObject dependencyObject , bool status )
 		{
 			if ( dependencyObject == null )
 			{
 				throw new ArgumentNullException( nameof( dependencyObject ) );
 			}
 
-			dependencyObject.SetValue( IsFullScreenProperty , status );
+			dependencyObject?.SetValue( IsFullScreenProperty , status );
 		}
 
-		public static bool GetFullScreen( DependencyObject dependencyObject)
+		public static bool GetFullScreen( DependencyObject dependencyObject )
 		{
 			if ( dependencyObject == null )
 			{
@@ -53,33 +51,11 @@ namespace RabbitOM.Player.Themes.Styles
 
 
 
-		public static void OnFullScreenChanged( DependencyObject dependencyObject , DependencyPropertyChangedEventArgs e)
-		{
-			var window = dependencyObject as Window;
 
-			if ( window == null )
-			{
-				return;
-			}
-
-			if ( e.NewValue is bool status )
-			{
-				var border = window.Template.FindName( "Part_TileBar" , window ) as Border;
-
-				if ( border == null )
-				{
-					return;
-				}
-
-				border.Visibility = status ? Visibility.Collapsed : Visibility.Visible;
-				window.WindowState = WindowState.Maximized;
-
-				WindowChrome.SetIsHitTestVisibleInChrome( window , status );
-			}
-		}
-
-		public void TileBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		public void OnClickTileBar( object sender , MouseButtonEventArgs e )
         {
+			e.Handled = true;
+
 			var element = sender as FrameworkElement;
 
 			if ( element == null )
@@ -112,8 +88,10 @@ namespace RabbitOM.Player.Themes.Styles
 			}
         }
 
-        public void ButtonMinimize_Click(object sender, RoutedEventArgs e)
+        public void OnClickButtonMinimize( object sender , RoutedEventArgs e )
         {
+			e.Handled = true;
+
 			var element = sender  as FrameworkElement;
 
 			if ( element == null )
@@ -131,8 +109,10 @@ namespace RabbitOM.Player.Themes.Styles
 			window.WindowState = System.Windows.WindowState.Minimized;
         }
 
-		public void ButtonMaximize_Click(object sender, RoutedEventArgs e)
+		public void OnClickButtonMaximize( object sender, RoutedEventArgs e )
         {
+			e.Handled = true;
+
 			var element = sender as FrameworkElement;
 
 			if ( element == null )
@@ -158,8 +138,10 @@ namespace RabbitOM.Player.Themes.Styles
 			}
         }
 
-		public void ButtonClose_Click(object sender, RoutedEventArgs e)
+		public void OnClickButtonClose( object sender , RoutedEventArgs e )
         {
+			e.Handled = true;
+
 			var element = sender  as FrameworkElement;
 
 			if ( element == null )
@@ -176,5 +158,37 @@ namespace RabbitOM.Player.Themes.Styles
 
 			window.Close();
         }
+
+
+
+
+
+
+
+
+		public static void OnFullScreenChanged( DependencyObject dependencyObject , DependencyPropertyChangedEventArgs e )
+		{
+			var window = dependencyObject as Window;
+
+			if ( window == null )
+			{
+				return;
+			}
+
+			if ( e.NewValue is bool status )
+			{
+				var border = window.Template.FindName( "Part_TileBar" , window ) as Border;
+
+				if ( border == null )
+				{
+					return;
+				}
+
+				border.Visibility = status ? Visibility.Collapsed : Visibility.Visible;
+				window.WindowState = WindowState.Maximized;
+
+				WindowChrome.SetIsHitTestVisibleInChrome( window , status );
+			}
+		}
 	}
 }
