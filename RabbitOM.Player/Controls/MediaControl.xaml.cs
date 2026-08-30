@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,11 +22,9 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register( nameof(FooterVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
         public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
-        public static readonly DependencyProperty ErrorInfoProperty = DependencyProperty.Register( nameof(ErrorInfo) , typeof(string) , typeof(MediaControl) );
-
 
         private readonly MediaClient _client;
-
+        private readonly ObservableCollection<ErrorInfo> _errors;
 
         public MediaControl()
         {
@@ -39,6 +38,8 @@ namespace RabbitOM.Player.Controls
                 OnFrameDecoded,
                 OnError
                 ));
+
+            _errors = new ObservableCollection<ErrorInfo>();
         }
 
 
@@ -85,6 +86,11 @@ namespace RabbitOM.Player.Controls
             get => _statistics;
         }
 
+        public ReadOnlyCollection<ErrorInfo> Errors
+        {
+            get => _errors.ToReadOnly();
+        }
+
         public string Uri
         {
             get => GetValue( UriProperty ) as string;
@@ -121,12 +127,6 @@ namespace RabbitOM.Player.Controls
             set => SetValue( FooterVisibilityProperty , value );
         }
 
-        public string ErrorInfo
-        {
-            get => GetValue( ErrorInfoProperty ) as string;
-            private set => SetValue( ErrorInfoProperty , value );
-        }
-
         public bool IsCommunicationStarted
         {
             get => (bool) GetValue( IsCommunicationStartedProperty );
@@ -143,26 +143,18 @@ namespace RabbitOM.Player.Controls
 
 
 
-
-
-
-
-
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
-            Statistics.DataSource = _client.Statistics;
-            Statistics.StartMonitoring();
+            _statistics.DataSource = _client.Statistics;
+            _statistics.StartMonitoring();
         }
 
         private void OnUnloaded( object sender , RoutedEventArgs e )
         {
-            Statistics.StopMonitoring();
-            Statistics.DataSource = null;
+            _statistics.StopMonitoring();
+            _statistics.DataSource = null;
             _client.Dispose();
         }
-
-
-
 
 
 
@@ -187,14 +179,13 @@ namespace RabbitOM.Player.Controls
         public void StopCommunication()
         {
             _client.StopCommunication();
+            _errors.Clear();
         }
 
         public ImageSource GetImage()
         {
             return _image.Source;
         }
-
-
 
 
 
@@ -226,7 +217,6 @@ namespace RabbitOM.Player.Controls
         {
             IsConnected = false;
             Footer = "";
-            ErrorInfo = "";
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }
@@ -238,7 +228,12 @@ namespace RabbitOM.Player.Controls
 
         protected virtual void OnError( string error )
         {
-            ErrorInfo = error;
+            if ( _errors.Count > 100)
+            {
+                _errors.RemoveAt( 0 );
+            }
+
+            _errors.Add( new ErrorInfo() { Message = error } );
         }
     }
 }

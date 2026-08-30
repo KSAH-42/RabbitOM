@@ -97,6 +97,7 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Controls\CommunicationStatusControl.cs" />
+    <Compile Include="Controls\ErrorInfo.cs" />
     <Compile Include="Controls\MediaClientHandler.cs" />
     <Compile Include="Controls\IMediaHandler.cs" />
     <Compile Include="Controls\MediaClient.cs" />
@@ -120,7 +121,7 @@
       <DependentUpon>NetworkSettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\UriInfo.cs" />
-    <Compile Include="Dialogs\ObservableCollectionExtensions.cs" />
+    <Compile Include="Common\ObservableCollectionExtensions.cs" />
     <Compile Include="Controls\NetworkStatisticsControl.xaml.cs">
       <DependentUpon>NetworkStatisticsControl.xaml</DependentUpon>
     </Compile>
