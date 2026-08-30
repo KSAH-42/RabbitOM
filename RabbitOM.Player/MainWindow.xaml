@@ -79,7 +79,7 @@
             </MenuItem>
 
             <MenuItem Header="Views">
-                <MenuItem Header="Full screen" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" />
+                <MenuItem Header="Full screen" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" InputGestureText="F11" />
             </MenuItem>
 
             <MenuItem Header="Help">

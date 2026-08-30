@@ -93,11 +93,19 @@
                                 
                             </Grid>
 
+                            
                             <ContentPresenter x:Name="HeaderHost" 
                                               Margin="2,1,2,1" 
                                               Grid.Column="1" 
                                               RecognizesAccessKey="True" 
                                               ContentSource="Header" 
+                                              />
+
+                            <ContentPresenter Grid.Column="2"
+                                              Content="{TemplateBinding InputGestureText}"
+                                              HorizontalAlignment="Right"
+                                              Margin="10,0,0,0"
+                                              RecognizesAccessKey="True"
                                               />
 
                             <Grid x:Name="ArrowPanel" 
