@@ -4,7 +4,7 @@
                     x:Class="RabbitOM.Player.Themes.Styles.WindowStyle"
                     >
     
-    <Style x:Key="MetroWindowButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="WindowButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{x:Null}"/>
         <Setter Property="BorderBrush" Value="#FF707070"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -56,7 +56,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroWindowCloseButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="WindowCloseButton" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle">
             <Setter.Value>
                 <Style>
@@ -132,14 +132,14 @@
                                 
                                 <Border x:Name="Part_TileBar" 
                                         Margin="0,0,0,0" 
-                                        Height="33" 
+                                        Height="37" 
                                         Background="{TemplateBinding Background}"
                                         MouseLeftButtonDown="OnClickTileBar" 
                                         DockPanel.Dock="Top"
                                         WindowChrome.IsHitTestVisibleInChrome="True"
                                         >
 
-                                    <DockPanel LastChildFill="False" VerticalAlignment="Stretch">
+                                    <DockPanel LastChildFill="False" VerticalAlignment="Stretch" Margin="0,7,7,0">
 
                                         <Image Margin="5,0,0,0" Source="{TemplateBinding Icon}" />
 
@@ -161,7 +161,7 @@
                                                     VerticalAlignment="Center" 
                                                     Height="28" 
                                                     Width="33" 
-                                                    Style="{DynamicResource MetroWindowButtonStyle}" 
+                                                    Style="{DynamicResource WindowButton}" 
                                                     Click="OnClickButtonMinimize"
                                                     >
 
@@ -190,7 +190,7 @@
                                                     VerticalAlignment="Center" 
                                                     Height="28" 
                                                     Width="33" 
-                                                    Style="{DynamicResource MetroWindowButtonStyle}" 
+                                                    Style="{DynamicResource WindowButton}" 
                                                     Click="OnClickButtonMaximize"
                                                     >
 
@@ -218,7 +218,7 @@
                                                     VerticalAlignment="Center" 
                                                     Height="28" 
                                                     Width="33" 
-                                                    Style="{DynamicResource MetroWindowCloseButtonStyle}" 
+                                                    Style="{DynamicResource WindowCloseButton}" 
                                                     Click="OnClickButtonClose"
                                                     >
 
