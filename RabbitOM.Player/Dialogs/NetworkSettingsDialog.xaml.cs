@@ -103,7 +103,7 @@ namespace RabbitOM.Player.Dialogs
             set => SetValue( SelectedTransportProperty , value );
         }
 
-        public ObservableCollection<string> Transports { get; } = new ObservableCollection<string>() { TcpTransport , UdpTransport , MulticastTransport };
+        public ReadOnlyObservableCollection<string> Transports { get; } = new ObservableCollection<string>() { TcpTransport , UdpTransport , MulticastTransport }.ToReadOnly();
 
 
 
