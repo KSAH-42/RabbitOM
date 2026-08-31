@@ -112,7 +112,7 @@
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="ResizeMode" Value="CanResize" />
         <Setter Property="Background" Value="#FF424242"/>
-        <Setter Property="BorderThickness" Value="4,2,4,2" />
+        <Setter Property="BorderThickness" Value="4,1,4,4" />
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -131,7 +131,7 @@
                             <DockPanel>
                                 
                                 <Border x:Name="Part_TileBar" 
-                                        Height="38" 
+                                        Height="34" 
                                         Background="Black"
                                         MouseLeftButtonDown="OnClickTileBar" 
                                         DockPanel.Dock="Top"
@@ -139,17 +139,16 @@
                                         WindowChrome.IsHitTestVisibleInChrome="True"
                                         >
 
-                                    <DockPanel Margin="0,0,3,0"
-                                               LastChildFill="False" 
-                                               VerticalAlignment="Stretch" 
+                                    <DockPanel LastChildFill="False" 
+                                               Margin="3,0,4,-8"
                                                >
 
-                                        <Image Margin="7,5,0,3" 
+                                        <Image Margin="4,8,5,7"
                                                DockPanel.Dock="Left" 
                                                Source="{TemplateBinding Icon}" 
                                                />
 
-                                        <TextBlock Margin="5,0,0,0"
+                                        <TextBlock Margin="0,0,0,0"
                                                    VerticalAlignment="Center" 
                                                    Foreground="White" 
                                                    TextWrapping="NoWrap" 
@@ -255,7 +254,9 @@
                                     
                                 </Border>
                                 
-                                <AdornerDecorator DockPanel.Dock="Bottom">
+                                <AdornerDecorator DockPanel.Dock="Bottom"
+                                                  Margin="0,4,0,0"
+                                                  >
 
                                     <Grid Background="{TemplateBinding Background}">
 
@@ -267,6 +268,7 @@
                                     </Grid>
 
                                 </AdornerDecorator>
+                                
                             </DockPanel>
                             
                         </Border>
@@ -282,7 +284,7 @@
             
             <Setter.Value>
             
-                <WindowChrome ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" />
+                <WindowChrome ResizeBorderThickness="2" GlassFrameThickness="0" CornerRadius="0" />
             
             </Setter.Value>
             
