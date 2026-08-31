@@ -131,7 +131,6 @@
                             <DockPanel>
                                 
                                 <Border x:Name="Part_TileBar" 
-                                        Margin="0,0,0,0"
                                         Height="38" 
                                         Background="Black"
                                         MouseLeftButtonDown="OnClickTileBar" 
@@ -140,7 +139,7 @@
                                         WindowChrome.IsHitTestVisibleInChrome="True"
                                         >
 
-                                    <DockPanel Margin="0,3,3,0"
+                                    <DockPanel Margin="0,0,3,0"
                                                LastChildFill="False" 
                                                VerticalAlignment="Stretch" 
                                                >
