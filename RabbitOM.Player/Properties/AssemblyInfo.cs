@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle( "RabbitOM.Player" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyConfiguration( "" )]
-[assembly: AssemblyCompany( "" )]
+[assembly: AssemblyCompany( "Rabbit Corp" )]
 [assembly: AssemblyProduct( "RabbitOM.Player" )]
 [assembly: AssemblyCopyright( "Copyright ©  2026" )]
 [assembly: AssemblyTrademark( "" )]
