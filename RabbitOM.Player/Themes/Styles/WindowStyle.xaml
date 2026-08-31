@@ -111,36 +111,41 @@
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="ResizeMode" Value="CanResize" />
-        <Setter Property="Background" Value="Black"/>
-        <Setter Property="BorderThickness" Value="4" />
+        <Setter Property="Background" Value="#FF424242"/>
+        <Setter Property="BorderThickness" Value="4,2,4,2" />
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
             <Setter.Value>
                 
                 <ControlTemplate TargetType="{x:Type Window}">
 
-                    <Grid Background="{TemplateBinding Background}" >
+                    <Grid Background="Black" >
                         
                         <Border x:Name="Part_MainBorder" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
-                                Background="{TemplateBinding Background}" 
+                                Background="Black" 
                                 VerticalAlignment="Stretch" 
                                 WindowChrome.IsHitTestVisibleInChrome="True"
                                 >
                             
-                            <DockPanel LastChildFill="True">
+                            <DockPanel>
                                 
                                 <Border x:Name="Part_TileBar" 
-                                        Height="35" 
-                                        Background="{TemplateBinding Background}"
+                                        Margin="0,0,0,0"
+                                        Height="38" 
+                                        Background="Black"
                                         MouseLeftButtonDown="OnClickTileBar" 
                                         DockPanel.Dock="Top"
+                                        BorderThickness="0"
                                         WindowChrome.IsHitTestVisibleInChrome="True"
                                         >
 
-                                    <DockPanel LastChildFill="False" VerticalAlignment="Stretch" Margin="0,0,3,0">
+                                    <DockPanel Margin="0,3,3,0"
+                                               LastChildFill="False" 
+                                               VerticalAlignment="Stretch" 
+                                               >
 
-                                        <Image Margin="7,5,0,0" 
+                                        <Image Margin="7,5,0,3" 
                                                DockPanel.Dock="Left" 
                                                Source="{TemplateBinding Icon}" 
                                                />
@@ -253,7 +258,7 @@
                                 
                                 <AdornerDecorator DockPanel.Dock="Bottom">
 
-                                    <Grid Background="#FF424242">
+                                    <Grid Background="{TemplateBinding Background}">
 
                                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" 
                                                           Content="{TemplateBinding Content}" 
