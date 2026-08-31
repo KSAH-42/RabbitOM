@@ -151,10 +151,6 @@
 
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Trigger>
-
                         <Trigger Property="Role" Value="TopLevelHeader">
                             <Setter Property="Margin" Value="0,1,0,1"/>
                             <Setter Property="Padding" Value="6,3,6,3"/>
