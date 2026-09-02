@@ -25,18 +25,44 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+        public static readonly RoutedEvent SelectedRegionEvent =
+            EventManager.RegisterRoutedEvent(
+                nameof(SelectedRegion),
+                    RoutingStrategy.Direct,
+                        typeof(RoutedEventHandler),
+                            typeof(ZoomImageControl));
+
+
+
+
+
+
+
+        public event RoutedEventHandler SelectedRegion
+        {
+            add    => AddHandler( SelectedRegionEvent , value );
+            remove => RemoveHandler( SelectedRegionEvent , value );
+        }
+
+
+
+
+
+
+
         public static readonly DependencyProperty SelectionXProperty =
             DependencyProperty.Register(
                 nameof(SelectionX),
                     typeof(double),
                         typeof(ZoomImageControl));
-        
+
         public static readonly DependencyProperty SelectionYProperty =
             DependencyProperty.Register(
                 nameof(SelectionY),
                     typeof(double),
                         typeof(ZoomImageControl));
-        
+
         public static readonly DependencyProperty SelectionWidthProperty =
             DependencyProperty.Register(
                 nameof(SelectionWidth),
@@ -74,6 +100,9 @@ namespace RabbitOM.Player.Controls
                     typeof(Visibility),
                         typeof(ZoomImageControl),
                             new PropertyMetadata( Visibility.Collapsed ));
+
+
+
 
 
 
@@ -154,8 +183,12 @@ namespace RabbitOM.Player.Controls
 
         private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
         {
+            var eventArgs = new SelectedRegionRoutedEventArgs( SelectedRegionEvent , this , SelectionY , SelectionX , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight );
+
             ClearSelection();
             TextVisisbility = Visibility.Collapsed;
+
+            OnSelectedRegion( eventArgs );
         }
 
         private void OnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -198,6 +231,14 @@ namespace RabbitOM.Player.Controls
 
             TextPositionX = SelectionX ;
             TextPositionY = SelectionY ;
+        }
+
+        protected virtual void OnSelectedRegion( SelectedRegionRoutedEventArgs e )
+        {
+            if ( SelectedRegionRoutedEventArgs.IsValid( e ) )
+            {
+                RaiseEvent( e );
+            }
         }
     }
 }

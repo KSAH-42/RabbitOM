@@ -104,6 +104,7 @@
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
+    <Compile Include="Controls\SelectedRegionRoutedEventArgs.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaPlayerTransport.cs" />
