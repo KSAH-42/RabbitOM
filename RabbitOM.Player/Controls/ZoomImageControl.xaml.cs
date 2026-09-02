@@ -96,7 +96,7 @@ namespace RabbitOM.Player.Controls
 
         public static readonly DependencyProperty TextVisisbilityProperty =
             DependencyProperty.Register(
-                nameof(TextVisisbility),
+                nameof(TextVisibility),
                     typeof(Visibility),
                         typeof(ZoomImageControl),
                             new PropertyMetadata( Visibility.Collapsed ));
@@ -110,25 +110,25 @@ namespace RabbitOM.Player.Controls
         public double SelectionX
         {
             get => (double) GetValue( SelectionXProperty );
-            set => SetValue( SelectionXProperty , value );
+            private set => SetValue( SelectionXProperty , value );
         }
 
         public double SelectionY
         {
             get => (double) GetValue( SelectionYProperty );
-            set => SetValue( SelectionYProperty , value );
+            private set => SetValue( SelectionYProperty , value );
         }
 
         public double SelectionWidth
         {
             get => (double) GetValue( SelectionWidthProperty );
-            set => SetValue( SelectionWidthProperty , value );
+            private set => SetValue( SelectionWidthProperty , value );
         }
 
         public double SelectionHeight
         {
             get => (double) GetValue( SelectionHeightProperty );
-            set => SetValue( SelectionHeightProperty , value );
+            private set => SetValue( SelectionHeightProperty , value );
         }
 
         public string Text
@@ -149,10 +149,10 @@ namespace RabbitOM.Player.Controls
             set => SetValue( TextPositionYProperty , value );
         }
 
-        private Visibility TextVisisbility
+        public Visibility TextVisibility
         {
             get => (Visibility) GetValue( TextVisisbilityProperty );
-            set => SetValue( TextVisisbilityProperty , value );
+            private set => SetValue( TextVisisbilityProperty , value );
         }
 
 
@@ -180,13 +180,21 @@ namespace RabbitOM.Player.Controls
 
 
 
+        
+        private void OnControlEnabledChanged( object sender , DependencyPropertyChangedEventArgs e )
+        {
+            if ( ! IsEnabled )
+            {
+                TextVisibility = Visibility.Collapsed;
+            }
+        }
 
         private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
         {
             var eventArgs = new SelectedRegionRoutedEventArgs( SelectedRegionEvent , this , SelectionY , SelectionX , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight );
 
             ClearSelection();
-            TextVisisbility = Visibility.Collapsed;
+            TextVisibility = Visibility.Collapsed;
 
             OnSelectedRegion( eventArgs );
         }
@@ -196,12 +204,12 @@ namespace RabbitOM.Player.Controls
             _start = e.GetPosition( sender as Canvas );
 
             ClearSelection();
-            TextVisisbility = Visibility.Visible;
+            TextVisibility = Visibility.Visible;
         }
 
         private void OnCanvasMouseMove(object sender, MouseEventArgs e)
         {
-            if ( e.LeftButton != MouseButtonState.Pressed )
+            if ( ! IsEnabled || e.LeftButton != MouseButtonState.Pressed )
             {
                 return;
             }
