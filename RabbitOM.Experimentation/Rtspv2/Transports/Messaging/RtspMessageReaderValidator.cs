@@ -62,7 +62,7 @@ namespace RabbitOM.Net.RtspV2.Transports
             }
         }
 
-        public void Validate( string header )
+        public void ValidateHeader( string header )
         {
             var headerLength = header?.Length ?? 0;
 

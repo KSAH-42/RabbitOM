@@ -1,7 +1,14 @@
-﻿using System;
+﻿// This implementation represent zoom region selector and it's compose of two rectangle
+// the inner rectangle is the region that keep the aspect
+// normally the video stream must not be stretch it must keep ratio
+// and display black zones called pillars in the terms of video computer graphics
+// that's the main reason that there is two rectangles
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
@@ -26,11 +33,11 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public static readonly RoutedEvent SelectedRegionEvent =
+        public static readonly RoutedEvent RegionSelectedEvent =
             EventManager.RegisterRoutedEvent(
-                nameof(SelectedRegion),
+                nameof(RegionSelected),
                     RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler),
+                        typeof(RoutedEventHandler<SelectedRegionRoutedEventArgs>),
                             typeof(ZoomImageControl));
 
 
@@ -39,16 +46,54 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public event RoutedEventHandler SelectedRegion
+        public event RoutedEventHandler<SelectedRegionRoutedEventArgs> RegionSelected
         {
-            add    => AddHandler( SelectedRegionEvent , value );
-            remove => RemoveHandler( SelectedRegionEvent , value );
+            add    => AddHandler( RegionSelectedEvent , value );
+            remove => RemoveHandler( RegionSelectedEvent , value );
         }
 
 
 
 
 
+
+        public static readonly DependencyProperty ScaleXProperty =
+            DependencyProperty.Register(
+                nameof(ScaleX),
+                    typeof(double),
+                        typeof(ZoomImageControl),
+                            new PropertyMetadata(1.0));
+
+        public static readonly DependencyProperty ScaleYProperty =
+            DependencyProperty.Register(
+                nameof(ScaleY),
+                    typeof(double),
+                        typeof(ZoomImageControl),
+                            new PropertyMetadata(1.0));
+
+        public static readonly DependencyProperty TranslationXProperty =
+            DependencyProperty.Register(
+                nameof(TranslationX),
+                    typeof(double),
+                        typeof(ZoomImageControl));
+
+        public static readonly DependencyProperty TranslationYProperty =
+            DependencyProperty.Register(
+                nameof(TranslationY),
+                    typeof(double),
+                        typeof(ZoomImageControl));
+
+        public static readonly DependencyProperty SelectionInnerXProperty =
+            DependencyProperty.Register(
+                nameof(SelectionInnerX),
+                    typeof(double),
+                        typeof(ZoomImageControl));
+
+        public static readonly DependencyProperty SelectionInnerYProperty =
+            DependencyProperty.Register(
+                nameof(SelectionInnerY),
+                    typeof(double),
+                        typeof(ZoomImageControl));
 
 
         public static readonly DependencyProperty SelectionXProperty =
@@ -79,8 +124,14 @@ namespace RabbitOM.Player.Controls
             DependencyProperty.Register(
                 nameof(Text),
                     typeof(string),
+                        typeof(ZoomImageControl));
+
+        public static readonly DependencyProperty TextColorProperty =
+            DependencyProperty.Register(
+                nameof(TextColor),
+                    typeof(Brush),
                         typeof(ZoomImageControl)
-                            , new PropertyMetadata( "Zoom not implemented" ));
+                            , new PropertyMetadata( Brushes.Orange ));
 
         public static readonly DependencyProperty TextPositionXProperty =
             DependencyProperty.Register(
@@ -94,9 +145,9 @@ namespace RabbitOM.Player.Controls
                     typeof(double),
                         typeof(ZoomImageControl));
 
-        public static readonly DependencyProperty TextVisisbilityProperty =
+        public static readonly DependencyProperty RegionVisibilityProperty =
             DependencyProperty.Register(
-                nameof(TextVisibility),
+                nameof(RegionVisibility),
                     typeof(Visibility),
                         typeof(ZoomImageControl),
                             new PropertyMetadata( Visibility.Collapsed ));
@@ -106,6 +157,41 @@ namespace RabbitOM.Player.Controls
 
 
 
+        public double ScaleX
+        {
+            get => (double) GetValue( ScaleXProperty );
+            private set => SetValue( ScaleXProperty , value );
+        }
+
+        public double ScaleY
+        {
+            get => (double) GetValue( ScaleYProperty );
+            private set => SetValue( ScaleYProperty , value );
+        }
+
+        public double TranslationX
+        {
+            get => (double) GetValue( TranslationXProperty );
+            private set => SetValue( TranslationXProperty , value );
+        }
+
+        public double TranslationY
+        {
+            get => (double) GetValue( TranslationYProperty );
+            private set => SetValue( TranslationYProperty , value );
+        }
+
+        public double SelectionInnerX
+        {
+            get => (double) GetValue( SelectionInnerXProperty );
+            private set => SetValue( SelectionInnerXProperty , value );
+        }
+
+        public double SelectionInnerY
+        {
+            get => (double) GetValue( SelectionInnerYProperty );
+            private set => SetValue( SelectionInnerYProperty , value );
+        }
 
         public double SelectionX
         {
@@ -137,22 +223,28 @@ namespace RabbitOM.Player.Controls
             set => SetValue( TextProperty , value );
         }
 
+        public Brush TextColor
+        {
+            get => (Brush) GetValue( TextColorProperty );
+            set => SetValue( TextColorProperty , value );
+        }
+
         public double TextPositionX
         {
             get => (double) GetValue( TextPositionXProperty );
-            set => SetValue( TextPositionXProperty , value );
+            private set => SetValue( TextPositionXProperty , value );
         }
 
         public double TextPositionY
         {
             get => (double) GetValue( TextPositionYProperty );
-            set => SetValue( TextPositionYProperty , value );
+            private set => SetValue( TextPositionYProperty , value );
         }
 
-        public Visibility TextVisibility
+        public Visibility RegionVisibility
         {
-            get => (Visibility) GetValue( TextVisisbilityProperty );
-            private set => SetValue( TextVisisbilityProperty , value );
+            get => (Visibility) GetValue( RegionVisibilityProperty );
+            private set => SetValue( RegionVisibilityProperty , value );
         }
 
 
@@ -161,17 +253,37 @@ namespace RabbitOM.Player.Controls
 
 
 
+        public bool UpdateTransforms()
+        {
+            if ( ! IsEnabled || SelectionWidth <= 0 || SelectionHeight <= 0 || ActualWidth <= 0 || ActualHeight <= 0)
+            {
+                return false;
+            }
+
+            ScaleX = ActualWidth / SelectionWidth;
+            ScaleY = ActualHeight / SelectionHeight;
+
+            TranslationX = -SelectionX * ScaleX;
+            TranslationY = -SelectionY * ScaleY;
+            return true;
+        }
 
         public void ClearSelection()
         {
+            ScaleX = 1.0;
+            ScaleY = 1.0;
+            TranslationX = 0;
+            TranslationY = 0;
+            SelectionInnerX = 0;
+            SelectionInnerY = 0;
             SelectionX = 0;
             SelectionY = 0;
             SelectionWidth = 0;
             SelectionHeight = 0;
+            TextPositionY = 0;
+            TextPositionX = 0;
             InnerRectangle.Width = 0;
             InnerRectangle.Height = 0;
-            TextPositionX = 0;
-            TextPositionY = 0;
         }
 
 
@@ -179,24 +291,20 @@ namespace RabbitOM.Player.Controls
 
 
 
+        protected virtual void OnRegionSelected( SelectedRegionRoutedEventArgs e )
+        {
+            if ( SelectedRegionRoutedEventArgs.IsValid( e ) )
+            {
+                RaiseEvent( e );
+            }
+        }
 
-        
         private void OnControlEnabledChanged( object sender , DependencyPropertyChangedEventArgs e )
         {
             if ( ! IsEnabled )
             {
-                TextVisibility = Visibility.Collapsed;
+                RegionVisibility = Visibility.Collapsed;
             }
-        }
-
-        private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
-        {
-            var eventArgs = new SelectedRegionRoutedEventArgs( SelectedRegionEvent , this , SelectionY , SelectionX , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight );
-
-            ClearSelection();
-            TextVisibility = Visibility.Collapsed;
-
-            OnSelectedRegion( eventArgs );
         }
 
         private void OnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -204,7 +312,17 @@ namespace RabbitOM.Player.Controls
             _start = e.GetPosition( sender as Canvas );
 
             ClearSelection();
-            TextVisibility = Visibility.Visible;
+        }
+
+        private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
+        {
+            UpdateTransforms();
+
+            var eventArgs = new SelectedRegionRoutedEventArgs( RegionSelectedEvent , this , SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY );
+
+            RegionVisibility = Visibility.Collapsed;
+
+            OnRegionSelected( eventArgs );
         }
 
         private void OnCanvasMouseMove(object sender, MouseEventArgs e)
@@ -221,32 +339,26 @@ namespace RabbitOM.Player.Controls
             SelectionWidth = Math.Abs(pos.X - _start.X);
             SelectionHeight = Math.Abs(pos.Y - _start.Y);
 
+            TextPositionX = SelectionX;
+            TextPositionY = SelectionY;
+
             var min = Math.Min( SelectionWidth , SelectionHeight );
 
             InnerRectangle.Width = min;
             InnerRectangle.Height = min;
 
-            if ( SelectionWidth > SelectionHeight )
+            SelectionInnerX = SelectionX + SelectionWidth / 2 - min/2;
+            SelectionInnerY = SelectionY;
+
+            if ( SelectionWidth <= SelectionHeight )
             {
-                Canvas.SetLeft( InnerRectangle , SelectionX + SelectionWidth / 2 - min/2 );
-                Canvas.SetTop( InnerRectangle , SelectionY );
-            }
-            else
-            {
-                Canvas.SetLeft( InnerRectangle , SelectionX + SelectionWidth / 2 - min/2 );
-                Canvas.SetTop( InnerRectangle , SelectionY + SelectionHeight / 2 - min/2 );
+                SelectionInnerY += SelectionHeight / 2 - min/2;
             }
 
-            TextPositionX = SelectionX ;
-            TextPositionY = SelectionY ;
-        }
+            Canvas.SetTop( InnerRectangle , SelectionInnerY );
+            Canvas.SetLeft( InnerRectangle , SelectionInnerX );
 
-        protected virtual void OnSelectedRegion( SelectedRegionRoutedEventArgs e )
-        {
-            if ( SelectedRegionRoutedEventArgs.IsValid( e ) )
-            {
-                RaiseEvent( e );
-            }
+            RegionVisibility = Visibility.Visible;
         }
     }
 }

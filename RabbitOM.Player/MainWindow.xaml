@@ -167,6 +167,7 @@
                   Grid.Row="1"
                   Margin="1,0,1,1" 
                   Background="Black" 
+                  ClipToBounds="True"
                   >
 
                 <Grid.ContextMenu>
@@ -222,7 +223,18 @@
                        Focusable="True"
                        Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        Stretch="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
-                       />
+                       >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="{Binding ScaleX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                            ScaleY="{Binding ScaleY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                            />
+                            <TranslateTransform X="{Binding TranslationX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                                Y="{Binding TranslationY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                                />
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
 
 
                 <TextBlock FontSize="15" 
@@ -241,10 +253,13 @@
                                                    Visibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                                                    />
 
-                <controls:ZoomImageControl Margin="0,0,0,0" 
+                <controls:ZoomImageControl x:Name="ZoomControl"
+                                           Margin="0,0,0,0" 
                                            HorizontalAlignment="Stretch"
                                            VerticalAlignment="Stretch"
                                            Focusable="False"
+                                           TextColor="OrangeRed"
+                                           Text="Zoom in"
                                            />
             </Grid>
 

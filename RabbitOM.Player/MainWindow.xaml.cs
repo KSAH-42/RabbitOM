@@ -258,6 +258,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                ZoomControl.ClearSelection();
                 _datasource.Clear();
                 StatusInfo = "";
                 IsConnecting = false;
@@ -268,6 +269,7 @@ namespace RabbitOM.Player
         {
             Dispatcher.BeginInvoke( DispatcherPriority.Render , new Action( () =>
             {
+                ZoomControl.ClearSelection();
                 IsConnecting = false;
                 _frameBuilder.Dispose();
 

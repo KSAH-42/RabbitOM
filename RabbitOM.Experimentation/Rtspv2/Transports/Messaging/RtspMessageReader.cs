@@ -123,7 +123,7 @@ namespace RabbitOM.Net.RtspV2.Transports
                     break;
                 }
 
-                validator.Validate( header );
+                validator.ValidateHeader( header );
 
                 headers.TryAddParse( header );
             }

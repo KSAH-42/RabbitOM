@@ -15,8 +15,8 @@
                 VerticalAlignment="Stretch"
                 Background="Transparent"
                 IsHitTestVisible="True"
-                MouseUp="OnCanvasMouseUp"
                 MouseLeftButtonDown="OnCanvasMouseLeftButtonDown"
+                MouseUp="OnCanvasMouseUp"
                 MouseMove="OnCanvasMouseMove"
                 >
 
@@ -31,6 +31,7 @@
                    Canvas.Top="{Binding SelectionY}"
                    Width="{Binding SelectionWidth}"
                    Height="{Binding SelectionHeight}"
+                   Visibility="{Binding RegionVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    />
 
         <Rectangle x:Name="InnerRectangle"
@@ -40,16 +41,17 @@
                    Stroke="White" 
                    StrokeThickness="1.5" 
                    Fill="#30AAA0A0" 
+                   Visibility="{Binding RegionVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    />
 
             <TextBlock x:Name="TextInfos"
                        Text="{Binding Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                       Foreground="Red"
+                       Foreground="{Binding TextColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Canvas.Left="{Binding TextPositionX,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        Canvas.Top="{Binding TextPositionY,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       Visibility="{Binding TextVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Visibility="{Binding RegionVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        />
             
         </Canvas>
