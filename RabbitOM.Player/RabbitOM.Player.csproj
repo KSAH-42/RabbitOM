@@ -110,6 +110,9 @@
     <Compile Include="Controls\MediaControl.xaml.cs">
       <DependentUpon>MediaControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ZoomImageControl.xaml.cs">
+      <DependentUpon>ZoomImageControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanMultiValueConverter.cs" />
     <Compile Include="Converters\AddDoubleValueConverter.cs" />
     <Compile Include="Converters\HertzUnitValueConverter.cs" />
@@ -143,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NetworkStatisticsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ZoomImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

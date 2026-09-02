@@ -241,6 +241,11 @@
                                                    Visibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
                                                    />
 
+                <controls:ZoomImageControl Margin="0,0,0,0" 
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           Focusable="False"
+                                           />
             </Grid>
 
         </Grid>
