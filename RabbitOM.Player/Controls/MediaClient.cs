@@ -58,7 +58,7 @@ namespace RabbitOM.Player.Controls
 
         public MediaPlayerTransport Transport { get; set; }
 
-        public IStatisticsDataSource Statistics { get => _statistics; }
+        public IStatisticsDataSource StatisticsDataSource { get => _statistics; }
 
 
 

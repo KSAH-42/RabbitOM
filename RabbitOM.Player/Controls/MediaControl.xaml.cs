@@ -13,6 +13,7 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
+        public static readonly RoutedEvent RegionSelectedEvent = EventManager.RegisterRoutedEvent(nameof(RegionSelected),RoutingStrategy.Direct,typeof(RoutedEventHandler<SelectedRegionRoutedEventArgs>),typeof(MediaControl));
 
         public static readonly DependencyProperty UriProperty = DependencyProperty.Register( nameof(Uri) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaControl) );
@@ -22,6 +23,8 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register( nameof(FooterVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
         public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty MinimumZoomProperty = DependencyProperty.Register( nameof(MinimumZoom) , typeof(double) , typeof(MediaControl) , new PropertyMetadata( 8 ) );
 
         private readonly MediaClient _client;
         private readonly ObservableCollection<ErrorInfo> _errors;
@@ -77,6 +80,13 @@ namespace RabbitOM.Player.Controls
             remove => RemoveHandler( FrameDecodedEvent , value );
         }
 
+        public event RoutedEventHandler<SelectedRegionRoutedEventArgs> RegionSelected
+        {
+            add    => AddHandler( RegionSelectedEvent , value );
+            remove => RemoveHandler( RegionSelectedEvent , value );
+        }
+
+
 
 
 
@@ -127,6 +137,18 @@ namespace RabbitOM.Player.Controls
             set => SetValue( FooterVisibilityProperty , value );
         }
 
+        public bool IsZoomEnabled
+        {
+            get => (bool) GetValue( IsZoomEnabledProperty );
+            set => SetValue( IsZoomEnabledProperty , value );
+        }
+
+        public double MinimumZoom
+        {
+            get => (double) GetValue( MinimumZoomProperty );
+            set => SetValue( MinimumZoomProperty , value );
+        }
+
         public bool IsCommunicationStarted
         {
             get => (bool) GetValue( IsCommunicationStartedProperty );
@@ -145,7 +167,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
-            _statistics.DataSource = _client.Statistics;
+            _statistics.DataSource = _client.StatisticsDataSource;
             _statistics.StartMonitoring();
         }
 
@@ -224,6 +246,11 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnFrameDecoded()
         {
             RaiseEvent( new RoutedEventArgs( FrameDecodedEvent ) );
+        }
+
+        protected virtual void OnRegionSelected( SelectedRegionRoutedEventArgs e )
+        {
+            RaiseEvent( e );
         }
 
         protected virtual void OnError( string error )
