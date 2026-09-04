@@ -94,7 +94,7 @@ using ( var client = new RtspClient() )
 
 # About Player samples
 
-All theses GUI are written using WPF.
+GUI is written using WPF.
 
 # RabbitOM.Player is used to decode RTP packets (HEVC/H264/JPEG)
 
@@ -133,10 +133,6 @@ If you familliar with ASP.Net Web API, even if the ASP.Net hide the details and 
 And the repository that own the lib, the implementation use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms needed to authenticate successfully the rtsp server.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
-
-# RabbitOM.MJpegPlayer is used to decode RTP packets ( RFC 2435 )
-
-This sample demonstrate how to create MJpeg player to reconstruct a complete frame from jpeg fragments using a homemade jpeg image builder without any externals dependencies.
 
 # About the next rtsp client (experimental)
 

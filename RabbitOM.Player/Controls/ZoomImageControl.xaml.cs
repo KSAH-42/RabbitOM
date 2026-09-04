@@ -255,7 +255,9 @@ namespace RabbitOM.Player.Controls
 
         public bool UpdateTransforms()
         {
-            if ( ! IsEnabled || SelectionWidth <= 0 || SelectionHeight <= 0 || ActualWidth <= 0 || ActualHeight <= 0)
+            const double limit = 8;
+
+            if ( ! IsEnabled || SelectionWidth <= limit || SelectionHeight <= limit || ActualWidth <= limit || ActualHeight <= limit )
             {
                 return false;
             }
@@ -293,10 +295,7 @@ namespace RabbitOM.Player.Controls
 
         protected virtual void OnRegionSelected( SelectedRegionRoutedEventArgs e )
         {
-            if ( SelectedRegionRoutedEventArgs.IsValid( e ) )
-            {
-                RaiseEvent( e );
-            }
+            RaiseEvent( e );
         }
 
         private void OnControlEnabledChanged( object sender , DependencyPropertyChangedEventArgs e )
@@ -316,9 +315,9 @@ namespace RabbitOM.Player.Controls
 
         private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
         {
-            UpdateTransforms();
-
             var eventArgs = new SelectedRegionRoutedEventArgs( RegionSelectedEvent , this , SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY );
+
+            UpdateTransforms();
 
             RegionVisibility = Visibility.Collapsed;
 
