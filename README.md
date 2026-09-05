@@ -4,7 +4,7 @@
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Zoom.png)
 
-Follow this link to download zip/binaries: https://github.com/KSAH-42/RabbitOM/releases
+Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/releases
 
 # Main features
 
@@ -103,12 +103,6 @@ This sample include an example of how to build a player using decoder and render
 This sample include statitics component to display the framerate, the network bandwidth just making a right click.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.H264.png)
-
-# RabbitOM.Player snapshotter
-
-Just by making a right click on the image control
-
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Snapshotter.png)
 
 # RabbitOM.Player streaming over different transport types
 
