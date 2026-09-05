@@ -11,6 +11,8 @@ namespace RabbitOM.Player.Controls
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
 
+    // TODO: refactor this class to inherit from FrameworkElement, not control, or custom control, we can herit from dispatchobject, but it could better to herit from a class after the Visual or UIElement, it be possible to interact with UI and to update by getting a visual child element using the GetChild method and interact with, so this class must refactor and must be based on wpf based class, keep in mind for this class is located on the controls namespace, so it make sense, it we herit from the wpf DispathObject, it must be place in a different namespace, because it's not a part of the visualtree, and so it can not be a part of the controls namespace maybe at a lower level
+    // TODO: renaming this class as ViewPort and herit from the rigth wpf object lower than Control class
     public sealed class MediaClient : IDisposable
     {
         private readonly RtspClient _client;
@@ -18,7 +20,7 @@ namespace RabbitOM.Player.Controls
         private readonly RtpMediaBuilderProxy _frameBuilder;
         private readonly Decoder _decoder;
         private readonly Renderer _renderer;
-        private readonly NetworkStatisticsDataSource _statistics;
+        private readonly NetworkStatisticsDataSource _statistics; // TODO: try to extract and place it at a higher level and it make sense because the mediacontrol holds the stats control
         private readonly IMediaHandler _handler;
 
 
