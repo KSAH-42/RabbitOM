@@ -108,7 +108,7 @@ This sample include statitics component to display the framerate, the network ba
 
 You can receive media content using TCP / UDP or Multicast
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Udp.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.TransportTypes.png)
 
 If your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
 
