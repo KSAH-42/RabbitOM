@@ -25,7 +25,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    Stroke="WhiteSmoke" 
-                   StrokeThickness="1.0"
+                   StrokeThickness="1.5"
                    StrokeDashArray="2 2"
                    Canvas.Left="{Binding SelectionX}"
                    Canvas.Top="{Binding SelectionY}"
@@ -39,7 +39,7 @@
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    Stroke="White" 
-                   StrokeThickness="1.5" 
+                   StrokeThickness="2.0" 
                    Fill="#30AAA0A0" 
                    Visibility="{Binding RegionVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    />

@@ -263,11 +263,11 @@ namespace RabbitOM.Player.Controls
                 return false;
             }
 
-            ScaleX = ActualWidth / SelectionWidth;
-            ScaleY = ActualHeight / SelectionHeight;
+            ScaleX = ActualWidth / InnerRectangle.ActualWidth;
+            ScaleY = ActualHeight / InnerRectangle.ActualHeight;
 
-            TranslationX = -SelectionX * ScaleX;
-            TranslationY = -SelectionY * ScaleY;
+            TranslationX = -SelectionInnerX * ScaleX;
+            TranslationY = -SelectionInnerY * ScaleY;
             return true;
         }
 
