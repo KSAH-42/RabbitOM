@@ -1,4 +1,7 @@
-﻿using System;
+﻿// in this class, we inject the control here without interface
+// due that this class is a part of MediaControl class
+// and there is not reason here to use an interface as ctor injection
+using System;
 using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
@@ -14,7 +17,7 @@ namespace RabbitOM.Player.Controls
 
     public partial class MediaControl
     {
-        sealed class MediaControlService : IDisposable
+        sealed class MediaService : IDisposable
         {
             private readonly RtspClient _client;
             private readonly RtpPacketInspector _inspector;
@@ -27,7 +30,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-            public MediaControlService( MediaControl control ) // we inject the control here without interface, due that this class is a parts of MediaControl class and there is not reason here to use an interface
+            public MediaService( MediaControl control )
             {
                 _control = control ?? throw new ArgumentNullException( nameof( control ) );
 
