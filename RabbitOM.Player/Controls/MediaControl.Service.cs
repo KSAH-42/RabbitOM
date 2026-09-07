@@ -1,7 +1,4 @@
-﻿// in this class, we inject the control here without interface
-// due that this class is a part of MediaControl class
-// and there is not reason here to use an interface as ctor injection
-using System;
+﻿using System;
 using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
@@ -17,20 +14,18 @@ namespace RabbitOM.Player.Controls
 
     public partial class MediaControl
     {
-        sealed class MediaService : IDisposable
+        public sealed class Service : IDisposable
         {
             private readonly RtspClient _client;
             private readonly RtpPacketInspector _inspector;
             private readonly RtpMediaBuilderProxy _frameBuilder;
             private readonly Decoder _decoder;
             private readonly Renderer _renderer;
-            private readonly NetworkStatisticsDataSource _statistics;
+            private readonly NetworkStatisticsDataSource _datasource;
             private readonly MediaControl _control;
 
 
-
-
-            public MediaService( MediaControl control )
+            public Service( MediaControl control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
             {
                 _control = control ?? throw new ArgumentNullException( nameof( control ) );
 
@@ -39,7 +34,7 @@ namespace RabbitOM.Player.Controls
                 _frameBuilder = new RtpMediaBuilderProxy();
                 _decoder = new FFMpegDecoder();
                 _renderer = new FFMpegRenderer();
-                _statistics = new NetworkStatisticsDataSource();
+                _datasource = new NetworkStatisticsDataSource();
 
                 _client.CommunicationStarted += OnClientCommunicationStarted;
                 _client.CommunicationStopped += OnClientCommunicationStopped;
@@ -49,12 +44,9 @@ namespace RabbitOM.Player.Controls
                 _frameBuilder.MediaBuilded += OnRtpFrameBuilded;
                 _frameBuilder.PacketsLost += OnRtpPacketsLost;
                 _decoder.Decoded += OnFrameDecoded;
-                _control.Statistics.DataSource = _statistics;
+                _control.Statistics.DataSource = _datasource;
                 _control.Statistics.StartMonitoring();
             }
-
-
-
 
 
 
@@ -125,11 +117,6 @@ namespace RabbitOM.Player.Controls
 
 
 
-
-
-
-
-
             private void OnClientCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , _control.OnCommunicationStarted );
@@ -139,7 +126,7 @@ namespace RabbitOM.Player.Controls
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
-                    _statistics.Clear();
+                    _datasource.Clear();
 
                     _control.OnCommunicationStopped();
                 } );
@@ -151,10 +138,10 @@ namespace RabbitOM.Player.Controls
                 {
                     _frameBuilder.Dispose();
 
-                    _statistics.SetConnectionStatusOn();
-                    _statistics.SetTransport( _client.Configuration.DeliveryMode.ToString() );
-                    _statistics.SetCodec( e.TrackInfo.Encoder );
-                    _statistics.SetClock( e.TrackInfo.ClockRate );
+                    _datasource.SetConnectionStatusOn();
+                    _datasource.SetTransport( _client.Configuration.DeliveryMode.ToString() );
+                    _datasource.SetCodec( e.TrackInfo.Encoder );
+                    _datasource.SetClock( e.TrackInfo.ClockRate );
 
                     try
                     {
@@ -166,20 +153,11 @@ namespace RabbitOM.Player.Controls
                         }
                         else if ( codec == CodecType.H264 )
                         {
-                            _frameBuilder.Setup( () => new H264FrameBuilder()
-                            {
-                                SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                                PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                            } );
+                            _frameBuilder.Setup( () => new H264FrameBuilder( Convert.FromBase64String(e.TrackInfo.SPS) , Convert.FromBase64String(e.TrackInfo.PPS) ) );
                         }
                         else if ( codec == CodecType.H265 )
                         {
-                            _frameBuilder.Setup( () => new H265FrameBuilder()
-                            {
-                                SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                                PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                                VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
-                            } );
+                            _frameBuilder.Setup( () => new H265FrameBuilder( Convert.FromBase64String(e.TrackInfo.SPS) , Convert.FromBase64String(e.TrackInfo.PPS) , Convert.FromBase64String(e.TrackInfo.VPS) ) );
                         }
                         else
                         {
@@ -205,7 +183,7 @@ namespace RabbitOM.Player.Controls
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
-                    _statistics.SetConnectionStatusOff();
+                    _datasource.SetConnectionStatusOff();
                     _frameBuilder.Clear();
                     _decoder.Close();
                     _renderer.Close();
@@ -217,19 +195,19 @@ namespace RabbitOM.Player.Controls
 
             private void OnClientPacketReceived( object sender , RtspPacketReceivedEventArgs e )
             {
-                _statistics.AddBytesReceived( e.Packet.Data.Length );
+                _datasource.AddBytesReceived( e.Packet.Data.Length );
 
                 if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
                 {
                     _frameBuilder.AddPacket( packet );
 
-                    _statistics.IncreasePacketReceived();
+                    _datasource.IncreasePacketReceived();
                 }
             }
 
             private void OnRtpPacketsLost( object sender , RtpPacketsLostEventArgs e )
             {
-                _statistics.AddPacketsLost( e.NumberOfPacketLost );
+                _datasource.AddPacketsLost( e.NumberOfPacketLost );
             }
 
             private void OnRtpFrameBuilded( object sender , RtpMediaBuildedEventArgs e )
@@ -251,11 +229,11 @@ namespace RabbitOM.Player.Controls
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
-                    using ( e.Surface )
+                    using ( e.Surface ) // mandatory to free unmanaged cloned buffer
                     {
                         _renderer.Render( e.Surface );
-                        _statistics.SetFrameSize( e.Surface.Height , e.Surface.Width );
-                        _statistics.IncreaseFrameCount();
+                        _datasource.SetFrameSize( e.Surface.Height , e.Surface.Width );
+                        _datasource.IncreaseFrameCount();
                     }
 
                     _control.OnFrameDecoded();

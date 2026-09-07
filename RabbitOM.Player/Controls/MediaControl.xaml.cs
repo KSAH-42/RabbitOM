@@ -26,7 +26,7 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty MinimumZoomProperty = DependencyProperty.Register( nameof(MinimumZoom) , typeof(double) , typeof(MediaControl) , new PropertyMetadata( 8 ) );
 
-        private readonly MediaService _service;
+        private readonly Service _service;
         private readonly ObservableCollection<ErrorInfo> _errors;
 
         public MediaControl()
@@ -34,7 +34,7 @@ namespace RabbitOM.Player.Controls
             InitializeComponent();
 
             _errors = new ObservableCollection<ErrorInfo>();
-            _service = new MediaService( this );
+            _service = new Service( this );
         }
 
 

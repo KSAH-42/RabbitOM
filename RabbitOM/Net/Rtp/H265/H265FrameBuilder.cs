@@ -10,6 +10,21 @@ namespace RabbitOM.Net.Rtp.H265
 
 
 
+        public H265FrameBuilder()
+        {
+        }
+
+        public H265FrameBuilder( byte[] sps , byte[] pps , byte[] vps )
+        {
+            SPS = sps;
+            PPS = pps;
+            VPS = vps;
+        }
+
+
+
+
+
         public byte[] SPS
         {
             get => _frameFactory.SPS;

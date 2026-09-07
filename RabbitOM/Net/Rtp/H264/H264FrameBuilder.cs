@@ -10,6 +10,20 @@ namespace RabbitOM.Net.Rtp.H264
 
 
 
+        public H264FrameBuilder()
+        {
+        }
+
+        public H264FrameBuilder( byte[] sps , byte[] pps )
+        {
+            SPS = sps;
+            PPS = pps;
+        }
+
+
+
+
+
         public byte[] SPS
         {
             get => _frameFactory.SPS;
