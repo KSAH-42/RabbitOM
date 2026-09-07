@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
@@ -12,13 +13,14 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
-        public static readonly RoutedEvent ZoomRegionChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomRegionChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomRegionChangedRoutedEventArgs>),typeof(MediaControl));
+        public static readonly RoutedEvent ZoomChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),typeof(MediaControl));
 
+        public static readonly DependencyProperty StrechImageProperty = DependencyProperty.Register( nameof(StrechImage) , typeof(Stretch) , typeof(MediaControl) , new PropertyMetadata( Stretch.Fill ) );
+        public static readonly DependencyProperty SourceVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaControl) , new PropertyMetadata( new TcpMediaPlayerTransport() ) );
-        public static readonly DependencyProperty UriVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
         public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
@@ -70,27 +72,33 @@ namespace RabbitOM.Player.Controls
             remove => RemoveHandler( FrameDecodedEvent , value );
         }
 
-        public event RoutedEventHandler<ZoomRegionChangedRoutedEventArgs> ZoomRegionChanged
+        public event RoutedEventHandler<ZoomChangedRoutedEventArgs> ZoomChanged
         {
-            add    => AddHandler( ZoomRegionChangedEvent , value );
-            remove => RemoveHandler( ZoomRegionChangedEvent , value );
+            add    => AddHandler( ZoomChangedEvent , value );
+            remove => RemoveHandler( ZoomChangedEvent , value );
         }
 
 
 
 
 
+
+        public Stretch StrechImage
+        {
+            get => (Stretch) GetValue( StrechImageProperty );
+            set => SetValue( StrechImageProperty , value );
+        }
+
+        public Visibility SourceVisibility
+        {
+            get => (Visibility) GetValue( SourceVisibilityProperty );
+            set => SetValue( SourceVisibilityProperty , value );
+        }
 
         public string Source
         {
             get => GetValue( SourceProperty ) as string;
             set => SetValue( SourceProperty , value );
-        }
-
-        public Visibility SourceVisibility
-        {
-            get => (Visibility) GetValue( UriVisibilityProperty );
-            set => SetValue( UriVisibilityProperty , value );
         }
 
         public string UserName
@@ -135,6 +143,14 @@ namespace RabbitOM.Player.Controls
             private set => SetValue( IsConnectedProperty , value );
         }
 
+
+
+
+
+
+
+
+
         public ReadOnlyObservableCollection<ErrorInfo> Errors
         {
             get => _errors.ToReadOnly();
@@ -151,18 +167,6 @@ namespace RabbitOM.Player.Controls
         }
 
 
-
-
-
-        private void OnLoaded( object sender , RoutedEventArgs e )
-        {
-            _service.Initialize();
-        }
-
-        private void OnUnloaded( object sender , RoutedEventArgs e )
-        {
-            _service.Dispose();
-        }
 
 
 
@@ -190,11 +194,6 @@ namespace RabbitOM.Player.Controls
             _service.StopCommunication();
         }
 
-        public void AddError( string error )
-        {
-            _errors.Add( new ErrorInfo() { Message = error } );
-        }
-
         public void AddError( ErrorInfo error )
         {
             _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
@@ -204,6 +203,11 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+        private void OnUnloaded( object sender , RoutedEventArgs e )
+        {
+            _service.Dispose();
+        }
 
         protected virtual void OnCommunicationStarted()
         {
@@ -238,7 +242,7 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( FrameDecodedEvent ) );
         }
 
-        protected virtual void OnZoomRegionChanged( ZoomRegionChangedRoutedEventArgs e )
+        protected virtual void OnZoomChanged( ZoomChangedRoutedEventArgs e )
         {
             RaiseEvent( e );
         }

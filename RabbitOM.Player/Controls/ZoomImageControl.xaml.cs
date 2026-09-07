@@ -34,11 +34,11 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public static readonly RoutedEvent RegionSelectedEvent =
+        public static readonly RoutedEvent ZoomChangedEvent =
             EventManager.RegisterRoutedEvent(
-                nameof(RegionSelected),
+                nameof(ZoomChanged),
                     RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler<ZoomRegionChangedRoutedEventArgs>),
+                        typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),
                             typeof(ZoomImageControl));
 
 
@@ -47,10 +47,10 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public event RoutedEventHandler<ZoomRegionChangedRoutedEventArgs> RegionSelected
+        public event RoutedEventHandler<ZoomChangedRoutedEventArgs> ZoomChanged
         {
-            add    => AddHandler( RegionSelectedEvent , value );
-            remove => RemoveHandler( RegionSelectedEvent , value );
+            add    => AddHandler( ZoomChangedEvent , value );
+            remove => RemoveHandler( ZoomChangedEvent , value );
         }
 
 
@@ -294,7 +294,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-        protected virtual void OnRegionSelected( ZoomRegionChangedRoutedEventArgs e )
+        protected virtual void OnRegionSelected( ZoomChangedRoutedEventArgs e )
         {
             RaiseEvent( e );
         }
@@ -316,7 +316,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
         {
-            var eventArgs = new ZoomRegionChangedRoutedEventArgs( RegionSelectedEvent , this , SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY );
+            var eventArgs = new ZoomChangedRoutedEventArgs( ZoomChangedEvent , this , new ZoomRegion( SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY ) );
 
             UpdateTransforms();
 

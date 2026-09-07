@@ -10,20 +10,16 @@
              Width="550"
              Height="450"
              Background="Black"
-             Loaded="OnLoaded"
              Unloaded="OnUnloaded"
-             FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
+             FocusManager.FocusedElement="{Binding ElementName=_grid}"
              >
-    
-    <UserControl.Resources>
 
+    <UserControl.Resources>
         <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
-       
         <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
-    
     </UserControl.Resources>
 
-    <Grid x:Name="ImageGrid"
+    <Grid x:Name="_grid"
           x:FieldModifier="private"
           Grid.Row="1"
           Margin="1,0,1,1" 
@@ -60,6 +56,7 @@
         </StackPanel>
 
         <controls:NetworkStatisticsControl x:Name="_statistics" 
+                                           x:FieldModifier="private"
                                            Margin="10,20,0,0" 
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top"

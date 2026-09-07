@@ -103,7 +103,8 @@
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
-    <Compile Include="Controls\ZoomRegionChangedRoutedEventArgs.cs" />
+    <Compile Include="Controls\ZoomChangedRoutedEventArgs.cs" />
+    <Compile Include="Controls\ZoomRegion.cs" />
     <Compile Include="Controls\RoutedEventHandlerT.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Windows;
 
 namespace RabbitOM.Player.Controls
 {
-    public class ZoomRegionChangedRoutedEventArgs : RoutedEventArgs
+    public sealed class ZoomRegion
     {
-        public ZoomRegionChangedRoutedEventArgs( RoutedEvent routedEvent , object source , double x , double y ,  double width , double height , double scaleX , double scaleY , double translationX , double translationY )
-            : base( routedEvent , source )
+        public ZoomRegion( double x , double y ,  double width , double height , double scaleX , double scaleY , double translationX , double translationY )
         {
             X = x;
             Y = y;
@@ -17,9 +15,6 @@ namespace RabbitOM.Player.Controls
             TranslationX = translationX;
             TranslationY = translationY;
         }
-
-
-
 
         public double Y { get; }
 
@@ -36,13 +31,5 @@ namespace RabbitOM.Player.Controls
         public double TranslationX { get; }
 
         public double TranslationY { get; }
-
-
-
-
-        internal static bool IsValid( ZoomRegionChangedRoutedEventArgs e )
-        {
-            return e != null && e.Source != null && e.Height > 0 && e.Width > 0;
-        }
     }
 }

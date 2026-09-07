@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
 {
@@ -36,13 +37,7 @@ namespace RabbitOM.Player.Controls
                 _decoder = new FFMpegDecoder();
                 _renderer = new FFMpegRenderer();
                 _statistics = new NetworkStatisticsDataSource();
-            }
 
-
-
-
-            public void Initialize()
-            {
                 _client.CommunicationStarted += OnClientCommunicationStarted;
                 _client.CommunicationStopped += OnClientCommunicationStopped;
                 _client.Connected += OnClientConnected;
@@ -54,26 +49,6 @@ namespace RabbitOM.Player.Controls
                 _control.Statistics.DataSource = _statistics;
                 _control.Statistics.StartMonitoring();
             }
-
-            public void Dispose()
-            {
-                _control.Statistics.StopMonitoring();
-                _control.Statistics.DataSource = null;
-                _client.StopCommunication();
-                _client.CommunicationStarted -= OnClientCommunicationStarted;
-                _client.CommunicationStopped -= OnClientCommunicationStopped;
-                _client.Connected -= OnClientConnected;
-                _client.Disconnected -= OnClientDisconnected;
-                _client.PacketReceived -= OnClientPacketReceived;
-                _client.Dispose();
-                _frameBuilder.MediaBuilded -= OnRtpFrameBuilded;
-                _frameBuilder.PacketsLost -= OnRtpPacketsLost;
-                _frameBuilder.Dispose();
-                _decoder.Decoded -= OnFrameDecoded;
-                _renderer.Dispose();
-                _decoder.Dispose();
-            }
-
 
 
 
@@ -126,6 +101,25 @@ namespace RabbitOM.Player.Controls
                 _client.StopCommunication( TimeSpan.FromSeconds(2) );
             }
 
+            public void Dispose()
+            {
+                _control.Statistics.StopMonitoring();
+                _control.Statistics.DataSource = null;
+                _client.StopCommunication();
+                _client.CommunicationStarted -= OnClientCommunicationStarted;
+                _client.CommunicationStopped -= OnClientCommunicationStopped;
+                _client.Connected -= OnClientConnected;
+                _client.Disconnected -= OnClientDisconnected;
+                _client.PacketReceived -= OnClientPacketReceived;
+                _client.Dispose();
+                _frameBuilder.MediaBuilded -= OnRtpFrameBuilded;
+                _frameBuilder.PacketsLost -= OnRtpPacketsLost;
+                _frameBuilder.Dispose();
+                _decoder.Decoded -= OnFrameDecoded;
+                _renderer.Dispose();
+                _decoder.Dispose();
+            }
+
 
 
 
@@ -135,12 +129,12 @@ namespace RabbitOM.Player.Controls
 
             private void OnClientCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
             {
-                _control.Dispatcher.BeginFastInvoke( _control.OnCommunicationStarted );
+                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , _control.OnCommunicationStarted );
             }
 
             private void OnClientCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
             {
-                _control.Dispatcher.BeginFastInvoke( () =>
+                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
                     _statistics.Clear();
 
@@ -150,7 +144,7 @@ namespace RabbitOM.Player.Controls
 
             private void OnClientConnected( object sender , RtspClientConnectedEventArgs e )
             {
-                _control.Dispatcher.BeginFastInvoke( () =>
+                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
                     _frameBuilder.Dispose();
 
@@ -161,15 +155,21 @@ namespace RabbitOM.Player.Controls
 
                     try
                     {
-                        CodecType codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
+                        var codec = FFMpegCodecTypeConverter.Convert( e.TrackInfo.Encoder );
 
-                        if ( codec == CodecType.Unknown )
+                        if ( codec == CodecType.MJPEG )
                         {
-                            _control.AddError( "Format not supported ( " + e.TrackInfo.Encoder + " )" );
-                            return;
+                            _frameBuilder.Setup( () => new JpegFrameBuilder() );
                         }
-
-                        if ( codec == CodecType.H265 )
+                        else if ( codec == CodecType.H264 )
+                        {
+                            _frameBuilder.Setup( () => new H264FrameBuilder()
+                            {
+                                SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
+                                PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
+                            } );
+                        }
+                        else if ( codec == CodecType.H265 )
                         {
                             _frameBuilder.Setup( () => new H265FrameBuilder()
                             {
@@ -178,19 +178,10 @@ namespace RabbitOM.Player.Controls
                                 VPS = Convert.FromBase64String(e.TrackInfo.VPS) ,
                             } );
                         }
-
-                        if ( codec == CodecType.H264 )
+                        else
                         {
-                            _frameBuilder.Setup( () => new H264FrameBuilder()
-                            {
-                                SPS = Convert.FromBase64String(e.TrackInfo.SPS) ,
-                                PPS = Convert.FromBase64String(e.TrackInfo.PPS) ,
-                            } );
-                        }
-
-                        if ( codec == CodecType.MJPEG )
-                        {
-                            _frameBuilder.Setup( () => new JpegFrameBuilder() );
+                            _control.AddError( "Format not supported ( " + e.TrackInfo.Encoder + " )" );
+                            return;
                         }
 
                         _decoder.Open( codec );
@@ -209,7 +200,7 @@ namespace RabbitOM.Player.Controls
 
             private void OnClientDisconnected( object sender , RtspClientDisconnectedEventArgs e )
             {
-                _control.Dispatcher.BeginFastInvoke( () =>
+                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
                     _statistics.SetConnectionStatusOff();
                     _frameBuilder.Clear();
@@ -255,7 +246,7 @@ namespace RabbitOM.Player.Controls
 
             private void OnFrameDecoded( object sender , DecodedEventArgs e )
             {
-                _control.Dispatcher.BeginFastInvoke( () =>
+                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
                     using ( e.Surface )
                     {
