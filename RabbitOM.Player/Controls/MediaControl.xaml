@@ -60,7 +60,6 @@
         </StackPanel>
 
         <controls:NetworkStatisticsControl x:Name="_statistics" 
-                                           x:FieldModifier="private"
                                            Margin="10,20,0,0" 
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top"

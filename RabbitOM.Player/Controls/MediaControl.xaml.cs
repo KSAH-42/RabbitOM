@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
@@ -13,36 +12,27 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
-        public static readonly RoutedEvent RegionSelectedEvent = EventManager.RegisterRoutedEvent(nameof(RegionSelected),RoutingStrategy.Direct,typeof(RoutedEventHandler<SelectedRegionRoutedEventArgs>),typeof(MediaControl));
+        public static readonly RoutedEvent ZoomRegionChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomRegionChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomRegionChangedRoutedEventArgs>),typeof(MediaControl));
 
-        public static readonly DependencyProperty UriProperty = DependencyProperty.Register( nameof(Uri) , typeof(string) , typeof(MediaControl) );
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaControl) , new PropertyMetadata( new TcpMediaPlayerTransport() ) );
-        public static readonly DependencyProperty FooterProperty = DependencyProperty.Register( nameof(Footer) , typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty FooterVisibilityProperty = DependencyProperty.Register( nameof(FooterVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
+        public static readonly DependencyProperty UriVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
         public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty MinimumZoomProperty = DependencyProperty.Register( nameof(MinimumZoom) , typeof(double) , typeof(MediaControl) , new PropertyMetadata( 8 ) );
 
-        private readonly MediaClient _client;
+        private readonly MediaControlService _service;
         private readonly ObservableCollection<ErrorInfo> _errors;
 
         public MediaControl()
         {
             InitializeComponent();
 
-            _client = new MediaClient( new MediaClientHandler( _image , this ,
-                OnCommunicationStarted,
-                OnCommunicationStopped,
-                OnConnected,
-                OnDisconnected,
-                OnFrameDecoded,
-                OnError
-                ));
-
             _errors = new ObservableCollection<ErrorInfo>();
+            _service = new MediaControlService( this );
         }
 
 
@@ -80,10 +70,10 @@ namespace RabbitOM.Player.Controls
             remove => RemoveHandler( FrameDecodedEvent , value );
         }
 
-        public event RoutedEventHandler<SelectedRegionRoutedEventArgs> RegionSelected
+        public event RoutedEventHandler<ZoomRegionChangedRoutedEventArgs> ZoomRegionChanged
         {
-            add    => AddHandler( RegionSelectedEvent , value );
-            remove => RemoveHandler( RegionSelectedEvent , value );
+            add    => AddHandler( ZoomRegionChangedEvent , value );
+            remove => RemoveHandler( ZoomRegionChangedEvent , value );
         }
 
 
@@ -91,20 +81,16 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public NetworkStatisticsControl Statistics
+        public string Source
         {
-            get => _statistics;
+            get => GetValue( SourceProperty ) as string;
+            set => SetValue( SourceProperty , value );
         }
 
-        public ReadOnlyCollection<ErrorInfo> Errors
+        public Visibility SourceVisibility
         {
-            get => _errors.ToReadOnly();
-        }
-
-        public string Uri
-        {
-            get => GetValue( UriProperty ) as string;
-            set => SetValue( UriProperty , value );
+            get => (Visibility) GetValue( UriVisibilityProperty );
+            set => SetValue( UriVisibilityProperty , value );
         }
 
         public string UserName
@@ -123,18 +109,6 @@ namespace RabbitOM.Player.Controls
         {
             get => GetValue( TransportProperty ) as MediaPlayerTransport;
             set => SetValue( TransportProperty , value );
-        }
-
-        public string Footer
-        {
-            get => GetValue( FooterProperty ) as string;
-            set => SetValue( FooterProperty , value );
-        }
-
-        public Visibility FooterVisibility
-        {
-            get => (Visibility) GetValue( FooterVisibilityProperty );
-            set => SetValue( FooterVisibilityProperty , value );
         }
 
         public bool IsZoomEnabled
@@ -161,21 +135,33 @@ namespace RabbitOM.Player.Controls
             private set => SetValue( IsConnectedProperty , value );
         }
 
+        public ReadOnlyObservableCollection<ErrorInfo> Errors
+        {
+            get => _errors.ToReadOnly();
+        }
+
+        public Image Image
+        {
+            get => _image;
+        }
+
+        public NetworkStatisticsControl Statistics
+        {
+            get => _statistics;
+        }
+
 
 
 
 
         private void OnLoaded( object sender , RoutedEventArgs e )
         {
-            _statistics.DataSource = _client.StatisticsDataSource;
-            _statistics.StartMonitoring();
+            _service.Initialize();
         }
 
         private void OnUnloaded( object sender , RoutedEventArgs e )
         {
-            _statistics.StopMonitoring();
-            _statistics.DataSource = null;
-            _client.Dispose();
+            _service.Dispose();
         }
 
 
@@ -183,31 +169,37 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+        public bool CanConfigure()
+        {
+            return _service.CanConfigure();
+        }
+
+        public void Configure()
+        {
+            _service.Configure();
+        }
+
         public bool StartCommunication()
         {
-            if ( ! _client.IsCommunicationStarted() )
-            {
-                return false;
-            }
-
-            _client.Uri = Uri;
-            _client.UserName = UserName;
-            _client.Password = Password;
-            _client.Transport = Transport;
-
-            return _client.StartCommunication();
+            return _service.StartCommunication();
         }
 
         public void StopCommunication()
         {
-            _client.StopCommunication();
-            _errors.Clear();
+            _service.StopCommunication();
         }
 
-        public ImageSource GetImage()
+        public void AddError( string error )
         {
-            return _image.Source;
+            _errors.Add( new ErrorInfo() { Message = error } );
         }
+
+        public void AddError( ErrorInfo error )
+        {
+            _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
+        }
+
 
 
 
@@ -230,7 +222,6 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnConnected()
         {
             IsConnected = true;
-            Footer = _client.Uri;
 
             RaiseEvent( new RoutedEventArgs( ConnectedEvent ) );
         }
@@ -238,7 +229,6 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnDisconnected()
         {
             IsConnected = false;
-            Footer = "";
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }
@@ -248,19 +238,9 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( FrameDecodedEvent ) );
         }
 
-        protected virtual void OnRegionSelected( SelectedRegionRoutedEventArgs e )
+        protected virtual void OnZoomRegionChanged( ZoomRegionChangedRoutedEventArgs e )
         {
             RaiseEvent( e );
-        }
-
-        protected virtual void OnError( string error )
-        {
-            if ( _errors.Count > 100)
-            {
-                _errors.RemoveAt( 0 );
-            }
-
-            _errors.Add( new ErrorInfo() { Message = error } );
         }
     }
 }

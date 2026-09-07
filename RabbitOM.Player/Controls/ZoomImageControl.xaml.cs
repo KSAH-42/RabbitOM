@@ -38,7 +38,7 @@ namespace RabbitOM.Player.Controls
             EventManager.RegisterRoutedEvent(
                 nameof(RegionSelected),
                     RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler<SelectedRegionRoutedEventArgs>),
+                        typeof(RoutedEventHandler<ZoomRegionChangedRoutedEventArgs>),
                             typeof(ZoomImageControl));
 
 
@@ -47,7 +47,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public event RoutedEventHandler<SelectedRegionRoutedEventArgs> RegionSelected
+        public event RoutedEventHandler<ZoomRegionChangedRoutedEventArgs> RegionSelected
         {
             add    => AddHandler( RegionSelectedEvent , value );
             remove => RemoveHandler( RegionSelectedEvent , value );
@@ -262,7 +262,7 @@ namespace RabbitOM.Player.Controls
             {
                 return false;
             }
-
+            
             ScaleX = ActualWidth / InnerRectangle.ActualWidth;
             ScaleY = ActualHeight / InnerRectangle.ActualHeight;
 
@@ -294,7 +294,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-        protected virtual void OnRegionSelected( SelectedRegionRoutedEventArgs e )
+        protected virtual void OnRegionSelected( ZoomRegionChangedRoutedEventArgs e )
         {
             RaiseEvent( e );
         }
@@ -316,7 +316,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
         {
-            var eventArgs = new SelectedRegionRoutedEventArgs( RegionSelectedEvent , this , SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY );
+            var eventArgs = new ZoomRegionChangedRoutedEventArgs( RegionSelectedEvent , this , SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY );
 
             UpdateTransforms();
 

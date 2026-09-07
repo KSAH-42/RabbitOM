@@ -3,9 +3,9 @@ using System.Windows;
 
 namespace RabbitOM.Player.Controls
 {
-    public class SelectedRegionRoutedEventArgs : RoutedEventArgs
+    public class ZoomRegionChangedRoutedEventArgs : RoutedEventArgs
     {
-        public SelectedRegionRoutedEventArgs( RoutedEvent routedEvent , object source , double x , double y ,  double width , double height , double scaleX , double scaleY , double translationX , double translationY )
+        public ZoomRegionChangedRoutedEventArgs( RoutedEvent routedEvent , object source , double x , double y ,  double width , double height , double scaleX , double scaleY , double translationX , double translationY )
             : base( routedEvent , source )
         {
             X = x;
@@ -40,7 +40,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-        internal static bool IsValid( SelectedRegionRoutedEventArgs e )
+        internal static bool IsValid( ZoomRegionChangedRoutedEventArgs e )
         {
             return e != null && e.Source != null && e.Height > 0 && e.Width > 0;
         }

@@ -98,13 +98,12 @@
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Controls\CommunicationStatusControl.cs" />
     <Compile Include="Controls\ErrorInfo.cs" />
-    <Compile Include="Controls\MediaClientHandler.cs" />
-    <Compile Include="Controls\IMediaHandler.cs" />
-    <Compile Include="Controls\MediaClient.cs" />
+    <Compile Include="Controls\DispatcherExtensions.cs" />
+    <Compile Include="Controls\MediaControl.Service.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
-    <Compile Include="Controls\SelectedRegionRoutedEventArgs.cs" />
+    <Compile Include="Controls\ZoomRegionChangedRoutedEventArgs.cs" />
     <Compile Include="Controls\RoutedEventHandlerT.cs" />
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
