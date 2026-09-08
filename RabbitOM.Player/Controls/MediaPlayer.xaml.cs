@@ -124,7 +124,7 @@ namespace RabbitOM.Player.Controls
         public MediaPlayerTransport Transport
         {
             get => GetValue( TransportProperty ) as MediaPlayerTransport;
-            set => SetValue( TransportProperty , value );
+            set => SetValue( TransportProperty , value ?? throw new ArgumentNullException( nameof( value ) ) );
         }
 
         public bool IsConnecting
