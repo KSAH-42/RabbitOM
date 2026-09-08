@@ -11,6 +11,7 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
+    using System.Windows.Media;
     using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
     public partial class MainWindow : Window
@@ -49,7 +50,7 @@ namespace RabbitOM.Player
         {
             try
             {
-                if ( _mediaPlayer.IsStarted() )
+                if ( _mediaPlayer.IsStarted )
                 {
                     _mediaPlayer.Stop();
                     return;
@@ -79,7 +80,7 @@ namespace RabbitOM.Player
             }
             finally
             {
-                ButtonStatus = _mediaPlayer.IsStarted() ? "Stop" : "Play";
+                ButtonStatus = _mediaPlayer.IsStarted ? "Stop" : "Play";
             }
         }
 

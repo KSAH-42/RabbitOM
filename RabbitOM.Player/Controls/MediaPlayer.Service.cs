@@ -58,7 +58,7 @@ namespace RabbitOM.Player.Controls
             }
 
 
-            public bool IsCommunicationStopping
+            public bool IsStopping
             {
                 get => _client.IsCommunicationStopping;
             }

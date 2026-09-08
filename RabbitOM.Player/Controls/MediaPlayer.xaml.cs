@@ -25,6 +25,7 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty IsConnectingProperty = DependencyProperty.Register( nameof(IsConnecting) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsPlayingProperty = DependencyProperty.Register( nameof(IsPlaying) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsStartedProperty = DependencyProperty.Register( nameof(IsStarted) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
 
         private readonly Service _service;
         private readonly ObservableCollection<ErrorInfo> _errors;
@@ -89,7 +90,7 @@ namespace RabbitOM.Player.Controls
             get => (Stretch) GetValue( StretchImageProperty );
             set => SetValue( StretchImageProperty , value );
         }
-       
+
         public Visibility StatisticsVisibility
         {
             get => (Visibility) GetValue( StatisticsVisibilityProperty );
@@ -144,6 +145,12 @@ namespace RabbitOM.Player.Controls
             private set => SetValue( IsPlayingProperty , value );
         }
 
+        public bool IsStarted
+        {
+            get => (bool) GetValue( IsStartedProperty );
+            private set => SetValue( IsStartedProperty , value );
+        }
+
 
 
 
@@ -180,19 +187,20 @@ namespace RabbitOM.Player.Controls
             _service.Configure();
         }
 
-        public bool IsStarted()
-        {
-            return _service.IsStarted;
-        }
-
         public bool Play()
         {
-            return _service.Start();
+            if ( ! _service.IsStarted )
+            {
+                 return IsStarted = _service.Start();
+            }
+
+            return false;
         }
 
         public void Stop()
         {
             _service.Stop();
+            IsStarted = false;
         }
 
         public void AddError( ErrorInfo error )
@@ -245,7 +253,7 @@ namespace RabbitOM.Player.Controls
         {
             IsPlaying = false;
             IsConnected = false;
-            IsConnecting = ! _service.IsCommunicationStopping;
+            IsConnecting = ! _service.IsStopping;
             ZoomControl.ClearSelection();
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
