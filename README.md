@@ -27,7 +27,7 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Support auto reconnection in case of network failures
 * Support events Handlers for connection loss, receiving packet, etc...
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
-* Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications
+* Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications or even block by the windows firewall.
 
 ➡️ Next arrivals:
 
