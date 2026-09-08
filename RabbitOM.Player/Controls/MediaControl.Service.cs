@@ -50,6 +50,19 @@ namespace RabbitOM.Player.Controls
 
 
 
+
+
+
+            public bool IsCommunicationStopping
+            {
+                get => _client.IsCommunicationStopping;
+            }
+
+
+
+
+
+
             public bool CanConfigure()
             {
                 if ( string.IsNullOrWhiteSpace( _control.Source ) || _control.Transport == null )
@@ -119,7 +132,11 @@ namespace RabbitOM.Player.Controls
 
             private void OnClientCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
             {
-                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , _control.OnCommunicationStarted );
+                _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
+                {
+                    _control.ClearImage();
+                    _control.OnCommunicationStarted();
+                } );
             }
 
             private void OnClientCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
@@ -128,6 +145,7 @@ namespace RabbitOM.Player.Controls
                 {
                     _datasource.Clear();
 
+                    _control.ClearImage();
                     _control.OnCommunicationStopped();
                 } );
             }
@@ -136,12 +154,12 @@ namespace RabbitOM.Player.Controls
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
-                    _frameBuilder.Dispose();
-
                     _datasource.SetConnectionStatusOn();
                     _datasource.SetTransport( _client.Configuration.DeliveryMode.ToString() );
                     _datasource.SetCodec( e.TrackInfo.Encoder );
                     _datasource.SetClock( e.TrackInfo.ClockRate );
+
+                    _frameBuilder.Dispose(); // from .net recommendations, dispose must not throw any exceptions
 
                     try
                     {
@@ -188,7 +206,7 @@ namespace RabbitOM.Player.Controls
                     _decoder.Close();
                     _renderer.Close();
 
-                    _control.Image.Source = null;
+                    _control.ClearImage();
                     _control.OnDisconnected();
                 } );
             }

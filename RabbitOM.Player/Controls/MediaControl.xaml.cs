@@ -22,6 +22,7 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaControl) , new PropertyMetadata( new TcpMediaPlayerTransport() ) );
         public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsConnectingProperty = DependencyProperty.Register( nameof(IsConnecting) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty MinimumZoomProperty = DependencyProperty.Register( nameof(MinimumZoom) , typeof(double) , typeof(MediaControl) , new PropertyMetadata( 8 ) );
@@ -137,6 +138,12 @@ namespace RabbitOM.Player.Controls
             private set => SetValue( IsCommunicationStartedProperty , value );
         }
 
+        public bool IsConnecting
+        {
+            get => (bool) GetValue( IsConnectingProperty );
+            private set => SetValue( IsConnectingProperty , value );
+        }
+
         public bool IsConnected
         {
             get => (bool) GetValue( IsConnectedProperty );
@@ -199,6 +206,10 @@ namespace RabbitOM.Player.Controls
             _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
         }
 
+        private void ClearImage()
+        {
+            _image.Source = null;
+        }
 
 
 
@@ -212,12 +223,14 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnCommunicationStarted()
         {
             IsCommunicationStarted = true;
+            IsConnecting = true;
 
             RaiseEvent( new RoutedEventArgs( CommunicationStartedEvent ) );
         }
 
         protected virtual void OnCommunicationStopped()
         {
+            IsConnecting = false;
             IsCommunicationStarted = false;
 
             RaiseEvent( new RoutedEventArgs( CommunicationStoppedEvent ) );
@@ -226,6 +239,7 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnConnected()
         {
             IsConnected = true;
+            IsConnecting = false;
 
             RaiseEvent( new RoutedEventArgs( ConnectedEvent ) );
         }
@@ -233,6 +247,7 @@ namespace RabbitOM.Player.Controls
         protected virtual void OnDisconnected()
         {
             IsConnected = false;
+            IsConnecting = ! _service.IsCommunicationStopping;
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }

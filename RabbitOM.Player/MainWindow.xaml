@@ -204,17 +204,13 @@
 
                 </Grid.ContextMenu>
 
-                <StackPanel VerticalAlignment="Center" 
-                            HorizontalAlignment="Center" 
-                            >
-
-                    <controls:CommunicationStatusControl Fill="White"
-                                                         Foreground="White"
-                                                         ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                         ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
-                                                         />
-
-                </StackPanel>
+                <controls:CommunicationStatusControl Fill="White"
+                                     VerticalAlignment="Center" 
+                                     HorizontalAlignment="Center" 
+                                     Foreground="White"
+                                     ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged}"
+                                     />
 
                 <Image x:Name="_image"  
                        Margin="0,0,0,0" 

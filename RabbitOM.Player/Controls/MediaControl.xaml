@@ -12,6 +12,7 @@
              Background="Black"
              Unloaded="OnUnloaded"
              FocusManager.FocusedElement="{Binding ElementName=_grid}"
+             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
              >
 
     <UserControl.Resources>
@@ -25,12 +26,13 @@
           Margin="1,0,1,1" 
           Background="Black">
 
-        <TextBlock VerticalAlignment="Center" 
-                   HorizontalAlignment="Center" 
-                   FontSize="20" 
-                   Foreground="White" 
-                   Text="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   />
+        <controls:CommunicationStatusControl Fill="White"
+                                             VerticalAlignment="Center" 
+                                             HorizontalAlignment="Center" 
+                                             Foreground="White"
+                                             ConnectingMessage="Connecting..."
+                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged}"
+                                             />
 
         <Image x:Name="_image"
                x:FieldModifier="private"
@@ -38,9 +40,20 @@
                SnapsToDevicePixels="True" 
                UseLayoutRounding="True" 
                Focusable="True"
-               Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
-               Stretch="{Binding ElementName=menuItemStretch, Path=IsChecked, Converter={StaticResource BooleanStretchValueConverter}}"
-               />
+               Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+               Stretch="{Binding StrechImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+               >
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="{Binding ScaleX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                    ScaleY="{Binding ScaleY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                    />
+                    <TranslateTransform X="{Binding TranslationX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                        Y="{Binding TranslationY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
+                                        />
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
 
         <StackPanel Orientation="Vertical" 
                     HorizontalAlignment="Center" 
@@ -50,7 +63,8 @@
                        HorizontalAlignment="Center"
                        Foreground="White" 
                        Background="Black"
-                       Text="{Binding FooterVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Text="{Binding Source,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Visibility="{Binding SourceVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        />
 
         </StackPanel>
@@ -62,6 +76,15 @@
                                            VerticalAlignment="Top"
                                            Visibility="Collapsed"
                                            />
+
+        <controls:ZoomImageControl x:Name="ZoomControl"
+                                   Margin="0,0,0,0" 
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   Focusable="False"
+                                   TextColor="OrangeRed"
+                                   Text="Zoom in"
+                                   />
 
     </Grid>
 
