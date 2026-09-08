@@ -6,6 +6,8 @@ using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
+    // TODO: renaming properties
+
     public partial class MediaControl : UserControl
     {
         public static readonly RoutedEvent CommunicationStartedEvent = EventManager.RegisterRoutedEvent( nameof(CommunicationStarted), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
@@ -15,17 +17,18 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaControl) );
         public static readonly RoutedEvent ZoomChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),typeof(MediaControl));
 
-        public static readonly DependencyProperty StrechImageProperty = DependencyProperty.Register( nameof(StrechImage) , typeof(Stretch) , typeof(MediaControl) , new PropertyMetadata( Stretch.Fill ) );
+        public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaControl) , new PropertyMetadata( Stretch.Fill ) );
+        public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Visible ) );
         public static readonly DependencyProperty SourceVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaControl) , new PropertyMetadata( Visibility.Collapsed ) );
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaControl) );
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaControl) );
-        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaControl) , new PropertyMetadata( new TcpMediaPlayerTransport() ) );
+        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaControl) , new PropertyMetadata( null ) );
         public static readonly DependencyProperty IsCommunicationStartedProperty = DependencyProperty.Register( nameof(IsCommunicationStarted) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectingProperty = DependencyProperty.Register( nameof(IsConnecting) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
-        public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
-        public static readonly DependencyProperty MinimumZoomProperty = DependencyProperty.Register( nameof(MinimumZoom) , typeof(double) , typeof(MediaControl) , new PropertyMetadata( 8 ) );
+        //public static readonly DependencyProperty IsZoomEnabledProperty = DependencyProperty.Register( nameof(IsZoomEnabled) , typeof(bool) , typeof(MediaControl) , new PropertyMetadata( false ) );
+        //public static readonly DependencyProperty MinimumZoomProperty = DependencyProperty.Register( nameof(MinimumZoom) , typeof(double) , typeof(MediaControl) , new PropertyMetadata( 8.0 ) );
 
         private readonly Service _service;
         private readonly ObservableCollection<ErrorInfo> _errors;
@@ -34,6 +37,7 @@ namespace RabbitOM.Player.Controls
         {
             InitializeComponent();
 
+            Transport = new TcpMediaPlayerTransport();
             _errors = new ObservableCollection<ErrorInfo>();
             _service = new Service( this );
         }
@@ -84,10 +88,16 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public Stretch StrechImage
+        public Stretch StretchImage
         {
-            get => (Stretch) GetValue( StrechImageProperty );
-            set => SetValue( StrechImageProperty , value );
+            get => (Stretch) GetValue( StretchImageProperty );
+            set => SetValue( StretchImageProperty , value );
+        }
+       
+        public Visibility StatisticsVisibility
+        {
+            get => (Visibility) GetValue( StatisticsVisibilityProperty );
+            set => SetValue( StatisticsVisibilityProperty , value );
         }
 
         public Visibility SourceVisibility
@@ -120,17 +130,17 @@ namespace RabbitOM.Player.Controls
             set => SetValue( TransportProperty , value );
         }
 
-        public bool IsZoomEnabled
-        {
-            get => (bool) GetValue( IsZoomEnabledProperty );
-            set => SetValue( IsZoomEnabledProperty , value );
-        }
+        //public bool IsZoomEnabled
+        //{
+        //    get => (bool) GetValue( IsZoomEnabledProperty );
+        //    set => SetValue( IsZoomEnabledProperty , value );
+        //}
 
-        public double MinimumZoom
-        {
-            get => (double) GetValue( MinimumZoomProperty );
-            set => SetValue( MinimumZoomProperty , value );
-        }
+        //public double MinimumZoom
+        //{
+        //    get => (double) GetValue( MinimumZoomProperty );
+        //    set => SetValue( MinimumZoomProperty , value );
+        //}
 
         public bool IsCommunicationStarted
         {
@@ -191,12 +201,17 @@ namespace RabbitOM.Player.Controls
             _service.Configure();
         }
 
-        public bool StartCommunication()
+        public bool IsStarted()
+        {
+            return _service.IsCommunicationStarted;
+        }
+
+        public bool StartStreaming()
         {
             return _service.StartCommunication();
         }
 
-        public void StopCommunication()
+        public void StopStreaming()
         {
             _service.StopCommunication();
         }
@@ -222,32 +237,40 @@ namespace RabbitOM.Player.Controls
 
         protected virtual void OnCommunicationStarted()
         {
+            // these 3 lines should be wrapped into a state ?
             IsCommunicationStarted = true;
             IsConnecting = true;
+            ZoomControl.ClearSelection();
 
             RaiseEvent( new RoutedEventArgs( CommunicationStartedEvent ) );
         }
 
         protected virtual void OnCommunicationStopped()
         {
+            // these 3 lines should be wrapped into a state ?
             IsConnecting = false;
             IsCommunicationStarted = false;
+            ZoomControl.ClearSelection();
 
             RaiseEvent( new RoutedEventArgs( CommunicationStoppedEvent ) );
         }
 
         protected virtual void OnConnected()
         {
+            // these 3 lines should be wrapped into a state ?
             IsConnected = true;
             IsConnecting = false;
+            ZoomControl.ClearSelection();
 
             RaiseEvent( new RoutedEventArgs( ConnectedEvent ) );
         }
 
         protected virtual void OnDisconnected()
         {
+            // these 3 lines should be wrapped into a state ?
             IsConnected = false;
             IsConnecting = ! _service.IsCommunicationStopping;
+            ZoomControl.ClearSelection();
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }

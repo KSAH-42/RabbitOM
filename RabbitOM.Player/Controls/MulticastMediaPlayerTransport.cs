@@ -23,7 +23,7 @@ namespace RabbitOM.Player.Controls
                     nameof(TimeToLive),
                         typeof(byte),
                             typeof(MulticastMediaPlayerTransport),
-                                new PropertyMetadata(1));
+                                new PropertyMetadata((byte)1));
 
 
 

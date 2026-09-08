@@ -7,12 +7,9 @@
              xmlns:controls="clr-namespace:RabbitOM.Player.Controls"
              xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
              mc:Ignorable="d" 
-             Width="550"
-             Height="450"
-             Background="Black"
+             d:DesignWidth="550"
+             d:DesignHeight="450"
              Unloaded="OnUnloaded"
-             FocusManager.FocusedElement="{Binding ElementName=_grid}"
-             DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
              >
 
     <UserControl.Resources>
@@ -20,18 +17,18 @@
         <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
     </UserControl.Resources>
 
-    <Grid x:Name="_grid"
-          x:FieldModifier="private"
-          Grid.Row="1"
+    <Grid Grid.Row="1"
           Margin="1,0,1,1" 
-          Background="Black">
+          Background="Black"
+          ClipToBounds="True"
+          >
 
         <controls:CommunicationStatusControl Fill="White"
                                              VerticalAlignment="Center" 
                                              HorizontalAlignment="Center" 
                                              Foreground="White"
                                              ConnectingMessage="Connecting..."
-                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged}"
+                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                              />
 
         <Image x:Name="_image"
@@ -39,9 +36,9 @@
                Margin="0,0,0,0" 
                SnapsToDevicePixels="True" 
                UseLayoutRounding="True" 
-               Focusable="True"
-               Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-               Stretch="{Binding StrechImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch"
+               Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                >
             <Image.RenderTransform>
                 <TransformGroup>
@@ -55,26 +52,21 @@
             </Image.RenderTransform>
         </Image>
 
-        <StackPanel Orientation="Vertical" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Bottom">
-
-            <TextBlock FontSize="15" 
-                       HorizontalAlignment="Center"
-                       Foreground="White" 
-                       Background="Black"
-                       Text="{Binding Source,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       Visibility="{Binding SourceVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       />
-
-        </StackPanel>
+        <TextBlock FontSize="15" 
+                   HorizontalAlignment="Center"
+                   Foreground="White" 
+                   Background="Black"
+                   VerticalAlignment="Bottom"
+                   Text="{Binding Source,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   Visibility="{Binding SourceVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   />
 
         <controls:NetworkStatisticsControl x:Name="_statistics" 
                                            x:FieldModifier="private"
                                            Margin="10,20,0,0" 
                                            HorizontalAlignment="Left"
                                            VerticalAlignment="Top"
-                                           Visibility="Collapsed"
+                                           Visibility="{Binding StatisticsVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                            />
 
         <controls:ZoomImageControl x:Name="ZoomControl"

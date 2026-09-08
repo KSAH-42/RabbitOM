@@ -52,6 +52,11 @@ namespace RabbitOM.Player.Controls
 
 
 
+            public bool IsCommunicationStarted
+            {
+                get => _client.IsCommunicationStarted;
+            }
+
 
             public bool IsCommunicationStopping
             {
@@ -92,7 +97,7 @@ namespace RabbitOM.Player.Controls
                 }
                 else if ( _control.Transport is MulticastMediaPlayerTransport multicastTransport )
                 {
-                    _client.Configuration.DeliveryMode = RtspDeliveryMode.Udp;
+                    _client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast;
                     _client.Configuration.RtpPort = multicastTransport.Port;
                     _client.Configuration.MulticastAddress = multicastTransport.IPAddress;
                     _client.Configuration.TimeToLive = multicastTransport.TimeToLive;

@@ -12,10 +12,8 @@
 		Width="890"
         MinHeight="420"
         MinWidth="420"
-		Loaded="OnWindowLoaded" 
 		Closing="OnWindowClosing"
-		FocusManager.FocusedElement="{Binding ElementName=ImageGrid}"
-        Style="{DynamicResource WindowStyle}"
+		Style="{DynamicResource WindowStyle}"
         Icon="/Resources/icon.ico"
         WindowState="Maximized"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -58,7 +56,7 @@
                         />
 
         <CommandBinding Command="{x:Static local:MainWindow.FocusCommand}" 
-                        Executed="OnFocusElement"
+                        Executed="OnControlFocus"
                         />
 
     </Window.CommandBindings>
@@ -163,11 +161,9 @@
 
             </Grid>
 
-            <Grid x:Name="ImageGrid"
-                  Grid.Row="1"
+            <Grid Grid.Row="1"
                   Margin="1,0,1,1" 
                   Background="Black" 
-                  ClipToBounds="True"
                   >
 
                 <Grid.ContextMenu>
@@ -204,59 +200,17 @@
 
                 </Grid.ContextMenu>
 
-                <controls:CommunicationStatusControl Fill="White"
-                                     VerticalAlignment="Center" 
-                                     HorizontalAlignment="Center" 
-                                     Foreground="White"
-                                     ConnectingMessage="{Binding StatusInfo,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                     ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged}"
-                                     />
+                <controls:MediaControl x:Name="_mediaControl"
+                                       x:FieldModifier="private"
+                                       Margin="0,0,0,0"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       Focusable="True"
+                                       StretchImage="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
+                                       SourceVisibility="{Binding ElementName=MenuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                       StatisticsVisibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                      />
 
-                <Image x:Name="_image"  
-                       Margin="0,0,0,0" 
-                       SnapsToDevicePixels="True" 
-                       UseLayoutRounding="True" 
-                       Focusable="True"
-                       Source="{Binding Image,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       Stretch="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
-                       >
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleX="{Binding ScaleX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                            ScaleY="{Binding ScaleY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                            />
-                            <TranslateTransform X="{Binding TranslationX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                                Y="{Binding TranslationY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                                />
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-
-
-                <TextBlock FontSize="15" 
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Bottom"
-                           Foreground="White" 
-                           Background="Black"
-                           Text="{Binding Footer,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                           Visibility="{Binding ElementName=MenuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                           />
-
-                <controls:NetworkStatisticsControl x:Name="Statistics" 
-                                                   Margin="10,20,0,0" 
-                                                   HorizontalAlignment="Left"
-                                                   VerticalAlignment="Top"
-                                                   Visibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                                   />
-
-                <controls:ZoomImageControl x:Name="ZoomControl"
-                                           Margin="0,0,0,0" 
-                                           HorizontalAlignment="Stretch"
-                                           VerticalAlignment="Stretch"
-                                           Focusable="False"
-                                           TextColor="OrangeRed"
-                                           Text="Zoom in"
-                                           />
             </Grid>
 
         </Grid>
