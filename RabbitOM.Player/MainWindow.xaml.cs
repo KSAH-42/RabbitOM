@@ -42,22 +42,22 @@ namespace RabbitOM.Player
 
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
         {
-            _mediaControl.StopStreaming();
+            _mediaPlayer.Stop();
         }
 
         private void OnControl( object sender , ExecutedRoutedEventArgs e )
         {
             try
             {
-                if ( _mediaControl.IsStarted() )
+                if ( _mediaPlayer.IsStarted() )
                 {
-                    _mediaControl.StopStreaming();
+                    _mediaPlayer.Stop();
                     return;
                 }
 
                 if ( ! RtspUri.TryParse( SelectedSource , out RtspUri uri ) )
                 {
-                    MessageBox.Show( "Invalid uri" );
+                    MessageBox.Show( "Please enter a valid uri" , "Uri format" , MessageBoxButton.OK , MessageBoxImage.Information );
                     return;
                 }
 
@@ -66,41 +66,41 @@ namespace RabbitOM.Player
                     Sources.Add( SelectedSource );
                 }
 
-                _mediaControl.Source = uri.ToString( true );
-                _mediaControl.UserName = uri.UserName;
-                _mediaControl.Password = uri.Password;
+                _mediaPlayer.Source = uri.ToString( true );
+                _mediaPlayer.UserName = uri.UserName;
+                _mediaPlayer.Password = uri.Password;
 
-                if ( _mediaControl.CanConfigure() )
-                {
-                    _mediaControl.Configure();
-                }
-
-                _mediaControl.StartStreaming();
+                _mediaPlayer.Configure();
+                _mediaPlayer.Play();
+            }
+            catch( Exception ex )
+            {
+                MessageBox.Show( ex.Message , "Error" , MessageBoxButton.OK , MessageBoxImage.Error );
             }
             finally
             {
-                ButtonStatus = _mediaControl.IsStarted() ? "Stop" : "Play";
+                ButtonStatus = _mediaPlayer.IsStarted() ? "Stop" : "Play";
             }
         }
 
         private void OnCloseApplication( object sender , ExecutedRoutedEventArgs e )
         {
-            if ( MessageBox.Show( "Would you like to close the application ?" , "Closing Application" , MessageBoxButton.YesNo , MessageBoxImage.Question) == MessageBoxResult.Yes )
+            if ( MessageBox.Show( "Would you like to close the application ?" , "Closing Application" , MessageBoxButton.YesNo , MessageBoxImage.Question ) == MessageBoxResult.Yes )
             {
-                this.Close();
+                Close();
             }
         }
 
         private void OnCanSaveImage( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = _mediaControl.Image.Source is BitmapSource;
+            e.CanExecute = _mediaPlayer.Image.Source is BitmapSource;
         }
 
         private void OnSaveImage( object sender , ExecutedRoutedEventArgs e )
         {
             var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.Source = _mediaControl.Image.Source as BitmapSource;
+            dialog.Source = _mediaPlayer.Image.Source as BitmapSource;
 
             dialog.TakeSnasphot();
             dialog.ShowDialog();
@@ -137,16 +137,16 @@ namespace RabbitOM.Player
             {
                 if ( dialog.UseUdpTransport )
                 {
-                    _mediaControl.Transport = new UdpMediaPlayerTransport() { Port = dialog.Port };
+                    _mediaPlayer.Transport = new UdpMediaPlayerTransport() { Port = dialog.Port };
                 }
 
                 else if ( dialog.UseMulticastTransport )
                 {
-                    _mediaControl.Transport = new MulticastMediaPlayerTransport() { Port = dialog.Port , IPAddress = dialog.IPAddress };
+                    _mediaPlayer.Transport = new MulticastMediaPlayerTransport() { Port = dialog.Port , IPAddress = dialog.IPAddress };
                 }
                 else
                 {
-                    _mediaControl.Transport = new TcpMediaPlayerTransport();
+                    _mediaPlayer.Transport = new TcpMediaPlayerTransport();
                 }
             }
         }

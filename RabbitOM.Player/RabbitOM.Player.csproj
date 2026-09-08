@@ -99,7 +99,7 @@
     <Compile Include="Controls\CommunicationStatusControl.cs" />
     <Compile Include="Controls\ErrorInfo.cs" />
     <Compile Include="Controls\DispatcherExtensions.cs" />
-    <Compile Include="Controls\MediaControl.Service.cs" />
+    <Compile Include="Controls\MediaPlayer.Service.cs" />
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
@@ -109,8 +109,8 @@
     <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
     <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaPlayerTransport.cs" />
-    <Compile Include="Controls\MediaControl.xaml.cs">
-      <DependentUpon>MediaControl.xaml</DependentUpon>
+    <Compile Include="Controls\MediaPlayer.xaml.cs">
+      <DependentUpon>MediaPlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ZoomImageControl.xaml.cs">
       <DependentUpon>ZoomImageControl.xaml</DependentUpon>
@@ -143,7 +143,7 @@
     <Compile Include="Dialogs\ModuleInfoFactory.cs" />
     <Compile Include="Dialogs\ModuleInfo.cs" />
     <Compile Include="Themes\Styles\WindowStyle.cs" />
-    <Page Include="Controls\MediaControl.xaml">
+    <Page Include="Controls\MediaPlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

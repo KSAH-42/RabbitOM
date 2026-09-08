@@ -12,7 +12,7 @@ namespace RabbitOM.Player.Controls
     using RabbitOM.Player.Codecs;
     using RabbitOM.Player.Codecs.FFMpeg;
 
-    public partial class MediaControl
+    public partial class MediaPlayer
     {
         public sealed class Service : IDisposable
         {
@@ -22,10 +22,10 @@ namespace RabbitOM.Player.Controls
             private readonly Decoder _decoder;
             private readonly Renderer _renderer;
             private readonly NetworkStatisticsDataSource _datasource;
-            private readonly MediaControl _control;
+            private readonly MediaPlayer _control;
 
 
-            public Service( MediaControl control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
+            public Service( MediaPlayer control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
             {
                 _control = control ?? throw new ArgumentNullException( nameof( control ) );
 
@@ -52,7 +52,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-            public bool IsCommunicationStarted
+            public bool IsStarted
             {
                 get => _client.IsCommunicationStarted;
             }
@@ -68,18 +68,24 @@ namespace RabbitOM.Player.Controls
 
 
 
-            public bool CanConfigure()
-            {
-                if ( string.IsNullOrWhiteSpace( _control.Source ) || _control.Transport == null )
-                {
-                    return false;
-                }
-
-                return ! _client.IsCommunicationStarted;
-            }
 
             public void Configure()
             {
+                if ( string.IsNullOrWhiteSpace( _control.Source ) )
+                {
+                    throw new InvalidOperationException( "the source is invalid" );
+                }
+
+                if ( _control.Transport == null )
+                {
+                    throw new InvalidOperationException( "the transport is not defined" );
+                }
+
+                if ( _client.IsCommunicationStarted )
+                {
+                    throw new InvalidOperationException( "the connection is actually active the" );
+                }
+
                 _client.Configuration.Uri = _control.Source;
                 _client.Configuration.UserName = _control.UserName;
                 _client.Configuration.Password = _control.Password;
@@ -104,12 +110,12 @@ namespace RabbitOM.Player.Controls
                 }
             }
 
-            public bool StartCommunication()
+            public bool Start()
             {
                 return _client.StartCommunication();
             }
 
-            public void StopCommunication()
+            public void Stop()
             {
                 _client.StopCommunication( TimeSpan.FromSeconds(2) );
             }
@@ -140,7 +146,7 @@ namespace RabbitOM.Player.Controls
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
                     _control.ClearImage();
-                    _control.OnCommunicationStarted();
+                    _control.OnStarted();
                 } );
             }
 
@@ -151,7 +157,7 @@ namespace RabbitOM.Player.Controls
                     _datasource.Clear();
 
                     _control.ClearImage();
-                    _control.OnCommunicationStopped();
+                    _control.OnStopped();
                 } );
             }
 

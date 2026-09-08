@@ -200,7 +200,7 @@
 
                 </Grid.ContextMenu>
 
-                <controls:MediaControl x:Name="_mediaControl"
+                <controls:MediaPlayer x:Name="_mediaPlayer"
                                        x:FieldModifier="private"
                                        Margin="0,0,0,0"
                                        HorizontalAlignment="Stretch"
