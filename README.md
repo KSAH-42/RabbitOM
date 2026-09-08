@@ -31,12 +31,11 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 
 ➡️ Next arrivals:
 
-* Adding the playser as usercontrol
 * Adding a CLI on the media player
 * Adding the SRTP support 
 * Adding the Replay feature
-* Adding the New RTSP Client 
-* Adding RTSP receivers
+* Adding the new RTSP Client 
+* Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
 

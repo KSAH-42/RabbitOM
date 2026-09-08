@@ -3,9 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace RabbitOM.Player
 {
@@ -27,7 +25,6 @@ namespace RabbitOM.Player
 
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
-        
 
         public string ButtonStatus
         {
