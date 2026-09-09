@@ -1,4 +1,4 @@
-﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats --window-state-maximize
+﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats --window-state-maximize --redirect-address 192.168.1.2 
 using System;
 
 namespace RabbitOM.Player.Cli
@@ -39,6 +39,16 @@ namespace RabbitOM.Player.Cli
         [Argument("-t")]
         [Argument("--timeout")]
         public int? Timeout { get; set; }
+
+        [HelpResource("cli.commands.setup.redirect.address")]
+        [Argument("-a")]
+        [Argument("--redirect-address")]
+        public string RedirectAddress { get; set; }
+
+        [HelpResource("cli.commands.setup.redirect.port")]
+        [Argument("-r")]
+        [Argument("--redirect-port")]
+        public int? RedirectPort { get; set; }
 
         public override bool TryValidate()
         {
