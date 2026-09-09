@@ -11,7 +11,6 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
     using RabbitOM.Player.Dialogs;
-    using System.Windows.Media;
     using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
     public partial class MainWindow : Window
@@ -161,12 +160,7 @@ namespace RabbitOM.Player
         {
             var source = e.Parameter as UIElement;
 
-            if ( source == null )
-            {
-                return;
-            }
-
-            source.Focus();
+            source?.Focus();
         }
     }
 }
