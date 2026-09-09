@@ -44,6 +44,7 @@ namespace RabbitOM.Player.Controls
                 _frameBuilder.MediaBuilded += OnRtpFrameBuilded;
                 _frameBuilder.PacketsLost += OnRtpPacketsLost;
                 _decoder.Decoded += OnFrameDecoded;
+                
                 _control.Statistics.DataSource = _datasource;
                 _control.Statistics.StartMonitoring();
             }
