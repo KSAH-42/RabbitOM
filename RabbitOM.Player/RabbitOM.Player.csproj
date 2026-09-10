@@ -103,6 +103,9 @@
     <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
+    <Compile Include="Controls\ViewPort.xaml.cs">
+      <DependentUpon>ViewPort.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ZoomChangedRoutedEventArgs.cs" />
     <Compile Include="Controls\ZoomRegion.cs" />
     <Compile Include="Controls\RoutedEventHandler.cs" />
@@ -148,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NetworkStatisticsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ViewPort.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

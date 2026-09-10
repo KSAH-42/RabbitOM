@@ -12,7 +12,7 @@ using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
-    // TODO: to moved to the media control 
+    // TODO: to be removed and place into the different control
     public partial class ZoomImageControl : UserControl
     {
         private Point _start;
