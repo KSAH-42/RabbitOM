@@ -38,7 +38,7 @@
                    Margin="0"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
-                   Stroke="White" 
+                   Stroke="GreenYellow" 
                    StrokeThickness="2.0" 
                    Fill="#30AAA0A0" 
                    Visibility="{Binding RegionVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
