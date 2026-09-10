@@ -6,16 +6,16 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Themes/Styles/WindowStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/ComboBoxStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/ContextualMenuStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/MainMenuStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/ButtonStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/ScrollBarStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/TextBoxStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/ListViewStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Styles/ProgressBarStyle.xaml" />
-                <ResourceDictionary Source="/Themes/Controls/CommunicationStatusControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/WindowStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/ComboBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/ContextualMenuStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/MainMenuStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/ScrollBarStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/TextBoxStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/ListViewStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Styles/ProgressBarStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Controls/CommunicationStatusControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

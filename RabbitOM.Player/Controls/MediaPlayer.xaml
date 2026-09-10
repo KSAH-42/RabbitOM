@@ -13,8 +13,10 @@
              >
 
     <UserControl.Resources>
-        <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
-        <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
+        <ResourceDictionary>
+            <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
+            <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid Grid.Row="1"

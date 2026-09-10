@@ -5,7 +5,7 @@
 
     <ResourceDictionary.MergedDictionaries>
 
-        <ResourceDictionary Source="/Themes/Controls/CommunicationStatusControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/RabbitOM.Player;component/Themes/Controls/CommunicationStatusControl.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
 
