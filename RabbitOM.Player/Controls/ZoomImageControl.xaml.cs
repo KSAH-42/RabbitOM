@@ -6,6 +6,8 @@ using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
+    using RabbitOM.Player.Data;
+
     // TODO: to be removed and place into the different control
     public partial class ZoomImageControl : UserControl
     {

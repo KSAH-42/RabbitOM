@@ -6,6 +6,8 @@ using System.Windows.Input;
 
 namespace RabbitOM.Player.Dialogs
 {
+    using RabbitOM.Player.Data;
+
     public partial class UrisDialog : Window
     {
         public static readonly RoutedCommand MoveUpCommand = new RoutedCommand();

@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RabbitOM.Player.Dialogs
+namespace RabbitOM.Player.Data
 {
     public static class ModuleInfoFactory
     {

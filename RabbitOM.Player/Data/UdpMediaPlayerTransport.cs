@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace RabbitOM.Player.Controls
+namespace RabbitOM.Player.Data
 {
     public sealed class UdpMediaPlayerTransport : MediaPlayerTransport
     {

@@ -10,8 +10,12 @@ namespace RabbitOM.Player
     using RabbitOM.Net.Rtsp;
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Controls;
+    using RabbitOM.Player.Data;
     using RabbitOM.Player.Dialogs;
     using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
+
+    // TODO: add save feature when configuration has been changed
+    // TODO: add a new configuration section for saving networksettings
 
     public partial class MainWindow : Window
     {

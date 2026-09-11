@@ -97,21 +97,21 @@
     <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Controls\CommunicationStatusControl.cs" />
-    <Compile Include="Controls\ErrorInfo.cs" />
+    <Compile Include="Data\ErrorInfo.cs" />
     <Compile Include="Controls\DispatcherExtensions.cs" />
-    <Compile Include="Controls\MediaPlayer.Service.cs" />
-    <Compile Include="Controls\MulticastMediaPlayerTransport.cs" />
+    <Compile Include="Controls\MediaPlayer.xaml.VideoSource.cs" />
+    <Compile Include="Data\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
     <Compile Include="Controls\NetworkStatisticsHelper.cs" />
     <Compile Include="Controls\ViewPort.xaml.cs">
       <DependentUpon>ViewPort.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ZoomChangedRoutedEventArgs.cs" />
-    <Compile Include="Controls\ZoomRegion.cs" />
+    <Compile Include="Data\ZoomRegion.cs" />
     <Compile Include="Controls\RoutedEventHandler.cs" />
-    <Compile Include="Controls\UdpMediaPlayerTransport.cs" />
-    <Compile Include="Controls\TcpMediaPlayerTransport.cs" />
-    <Compile Include="Controls\MediaPlayerTransport.cs" />
+    <Compile Include="Data\UdpMediaPlayerTransport.cs" />
+    <Compile Include="Data\TcpMediaPlayerTransport.cs" />
+    <Compile Include="Data\MediaPlayerTransport.cs" />
     <Compile Include="Controls\MediaPlayer.xaml.cs">
       <DependentUpon>MediaPlayer.xaml</DependentUpon>
     </Compile>
@@ -123,13 +123,13 @@
     <Compile Include="Converters\HertzUnitValueConverter.cs" />
     <Compile Include="Converters\StringVisibilityValueConverter.cs" />
     <Compile Include="IApplication.cs" />
-    <Compile Include="Validation\MulticastIPAddressValidationRule.cs" />
-    <Compile Include="Validation\PortValidationRule.cs" />
+    <Compile Include="Data\Validation\MulticastIPAddressValidationRule.cs" />
+    <Compile Include="Data\Validation\PortValidationRule.cs" />
     <Compile Include="Dialogs\NetworkSettingsDialog.xaml.cs">
       <DependentUpon>NetworkSettingsDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\UriInfo.cs" />
-    <Compile Include="Common\ObservableCollectionExtensions.cs" />
+    <Compile Include="Data\UriInfo.cs" />
+    <Compile Include="Data\ObservableCollectionExtensions.cs" />
     <Compile Include="Controls\NetworkStatisticsControl.xaml.cs">
       <DependentUpon>NetworkStatisticsControl.xaml</DependentUpon>
     </Compile>
@@ -143,8 +143,8 @@
     <Compile Include="Dialogs\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ModuleInfoFactory.cs" />
-    <Compile Include="Dialogs\ModuleInfo.cs" />
+    <Compile Include="Data\ModuleInfoFactory.cs" />
+    <Compile Include="Data\ModuleInfo.cs" />
     <Compile Include="Themes\Styles\WindowStyle.cs" />
     <Page Include="Controls\MediaPlayer.xaml">
       <SubType>Designer</SubType>

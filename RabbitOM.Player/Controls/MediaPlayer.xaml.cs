@@ -6,6 +6,8 @@ using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
+    using RabbitOM.Player.Data;
+
     public partial class MediaPlayer : UserControl
     {
         public static readonly RoutedEvent StartedEvent = EventManager.RegisterRoutedEvent( nameof(Started), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
@@ -27,7 +29,7 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty IsPlayingProperty = DependencyProperty.Register( nameof(IsPlaying) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsStartedProperty = DependencyProperty.Register( nameof(IsStarted) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
 
-        private readonly Service _service;
+        private readonly VideoSource _videoSource;
         private readonly ObservableCollection<ErrorInfo> _errors;
 
         public MediaPlayer()
@@ -36,7 +38,7 @@ namespace RabbitOM.Player.Controls
 
             Transport = new TcpMediaPlayerTransport();
             _errors = new ObservableCollection<ErrorInfo>();
-            _service = new Service( this );
+            _videoSource = new VideoSource( this );
         }
 
 
@@ -184,14 +186,14 @@ namespace RabbitOM.Player.Controls
 
         public void Configure()
         {
-            _service.Configure();
+            _videoSource.Configure();
         }
 
         public bool Play()
         {
-            if ( ! _service.IsStarted )
+            if ( ! _videoSource.IsStarted )
             {
-                 return IsStarted = _service.Start();
+                 return IsStarted = _videoSource.Start();
             }
 
             return false;
@@ -199,7 +201,7 @@ namespace RabbitOM.Player.Controls
 
         public void Stop()
         {
-            _service.Stop();
+            _videoSource.Stop();
             IsStarted = false;
         }
 
@@ -219,7 +221,7 @@ namespace RabbitOM.Player.Controls
 
         private void OnUnloaded( object sender , RoutedEventArgs e )
         {
-            _service.Dispose();
+            _videoSource.Dispose();
         }
 
         protected virtual void OnStarted()
@@ -253,7 +255,7 @@ namespace RabbitOM.Player.Controls
         {
             IsPlaying = false;
             IsConnected = false;
-            IsConnecting = ! _service.IsStopping;
+            IsConnecting = ! _videoSource.IsStopping;
             ZoomControl.ClearSelection();
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );

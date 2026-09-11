@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Player.Dialogs
+namespace RabbitOM.Player.Data
 {
     public sealed class UriInfo
     {

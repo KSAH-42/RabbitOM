@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Player.Controls
+namespace RabbitOM.Player.Data
 {
     public sealed class ZoomRegion
     {

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
-        xmlns:validation="clr-namespace:RabbitOM.Player.Validation"
+        xmlns:validation="clr-namespace:RabbitOM.Player.Data.Validation"
         mc:Ignorable="d"
         Title="NETWORK SETTINGS" 
         Height="257"

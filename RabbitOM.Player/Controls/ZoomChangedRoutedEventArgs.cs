@@ -3,6 +3,8 @@ using System.Windows;
 
 namespace RabbitOM.Player.Controls
 {
+    using RabbitOM.Player.Data;
+
     public class ZoomChangedRoutedEventArgs : RoutedEventArgs
     {
         public ZoomChangedRoutedEventArgs( RoutedEvent routedEvent , object source , ZoomRegion region ) : base( routedEvent , source )

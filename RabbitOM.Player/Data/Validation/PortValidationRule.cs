@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace RabbitOM.Player.Validation
+namespace RabbitOM.Player.Data.Validation
 {
     public sealed class PortValidationRule : ValidationRule
     {

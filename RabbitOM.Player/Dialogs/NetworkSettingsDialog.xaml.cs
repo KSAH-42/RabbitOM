@@ -5,6 +5,8 @@ using System.Windows.Input;
 
 namespace RabbitOM.Player.Dialogs
 {
+    using RabbitOM.Player.Data;
+
     public partial class NetworkSettingsDialog : Window
     {
         public const string TcpTransport = "TCP";
