@@ -1,10 +1,4 @@
-﻿// This implementation represent zoom region selector and it's compose of two rectangle
-// the inner rectangle is the region that keep the aspect
-// normally the video stream must not be stretch it must keep ratio
-// and display black zones called pillars in the terms of video computer graphics
-// that's the main reason that there is two rectangles
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -262,7 +256,7 @@ namespace RabbitOM.Player.Controls
             {
                 return false;
             }
-            
+
             ScaleX = ActualWidth / InnerRectangle.ActualWidth;
             ScaleY = ActualHeight / InnerRectangle.ActualHeight;
 
@@ -309,13 +303,31 @@ namespace RabbitOM.Player.Controls
 
         private void OnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _start = e.GetPosition( sender as Canvas );
+            var canvas = sender as Canvas;
+
+            if ( canvas == null )
+            {
+                return;
+            }
+
+            canvas.CaptureMouse();
+
+            _start = e.GetPosition( canvas );
 
             ClearSelection();
         }
 
         private void OnCanvasMouseUp( object sender , MouseButtonEventArgs e )
         {
+            var canvas = sender as Canvas;
+
+            if ( canvas == null )
+            {
+                return;
+            }
+
+            canvas.ReleaseMouseCapture();
+
             var eventArgs = new ZoomChangedRoutedEventArgs( ZoomChangedEvent , this , new ZoomRegion( SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY ) );
 
             UpdateTransforms();
@@ -332,7 +344,14 @@ namespace RabbitOM.Player.Controls
                 return;
             }
 
-            var pos = e.GetPosition(sender as Canvas);
+            var canvas = sender as Canvas;
+
+            if ( canvas == null || ! canvas.IsMouseCaptured )
+            {
+                return;
+            }
+
+            var pos = e.GetPosition( canvas );
 
             SelectionX = Math.Min(pos.X, _start.X);
             SelectionY = Math.Min(pos.Y, _start.Y);
