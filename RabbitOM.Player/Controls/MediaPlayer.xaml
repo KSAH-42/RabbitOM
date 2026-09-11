@@ -20,17 +20,16 @@
     </UserControl.Resources>
 
     <Grid Grid.Row="1"
-          Margin="1,0,1,1" 
+          Margin="1,21,1,-20" 
           Background="Black"
-          ClipToBounds="True"
           >
 
         <controls:CommunicationStatusControl Fill="White"
-                                             VerticalAlignment="Center" 
+                                             VerticalAlignment="Top" 
                                              HorizontalAlignment="Center" 
                                              Foreground="White"
                                              ConnectingMessage="Connecting..."
-                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0,246,0,0"
                                              />
 
         <Image x:Name="_image"

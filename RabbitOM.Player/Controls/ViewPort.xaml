@@ -7,13 +7,14 @@
              mc:Ignorable="d" 
              >
     
-    <Grid ClipToBounds="True">
+    <Grid>
 
         <Canvas Margin="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="Transparent"
                 IsHitTestVisible="True"
+                ClipToBounds="True"
                 >
 
             <Image x:Name="_image"
