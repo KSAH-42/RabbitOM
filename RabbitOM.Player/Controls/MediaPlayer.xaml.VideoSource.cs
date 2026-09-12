@@ -15,7 +15,7 @@ namespace RabbitOM.Player.Controls
 
     public partial class MediaPlayer
     {
-        sealed class VideoSource : IDisposable
+        public sealed class VideoSource : IDisposable
         {
             private readonly RtspClient _client;
             private readonly RtpPacketInspector _inspector;
@@ -26,7 +26,7 @@ namespace RabbitOM.Player.Controls
             private readonly MediaPlayer _control;
 
 
-            public VideoSource( MediaPlayer control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
+            internal VideoSource( MediaPlayer control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
             {
                 _control = control;
 
