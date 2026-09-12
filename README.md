@@ -38,8 +38,13 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
+* Net Core Migration (it's already exist but as private repository)
 
 The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
+
+# Next Breaking changes
+
+➡️ The solution will be migrate for Visual Studio 2026
 
 # About the actual rtsp client and how to receive packets ?
 
@@ -93,8 +98,9 @@ using ( var client = new RtspClient() )
 
 # About Player samples
 
-GUI is written using WPF without using MVVM. MVVM is not a good things for handling video streaming. MVVM was not a good idea if event, routedevent need to be raised or even to subscribe. It make sense to subscribe to custom events handler exposed by a dialog box, or an usercontrol, but not to a viewmodel. And by design, CustomControl can not expose a DataContext. And, mvvm introduce a lot classes. It's pretty rare to have a view where datacontext will be changed. For instance, it's often one datacontext for one viewmodel. It's really rare to set a datacontext to a dialogbox and to set a different datacontext for the same dialogbox during the runtime. It's always the same. And using only mvvm, people will not have a deep understanding about how wpf works. And sometimes nugetpackage need to be added to avoid adding code on the code behind. 
-Take a look, on projects like mahapps on github, mvvm is not used, even the custom MessageBox dialog don't used mvvm. mahapps framework include a BaseViewModel class, but it's not used internally. It is just expose for mvvm developpers who want to start a wpf project using mvvm and without writting classes associated to the mvvm pattern, like RelayCommand, etc... 
+GUI is written using WPF without using MVVM. MVVM is not a good approach for handling video streaming. And sometimes, MVVM break things for instance if an event, a routedevent need to be raised or even to subscribe, it doesn't make sense to subscribe to custom events handler exposed by a viewmodel, but it make more sense to subscribe to events to a dialog box, or an usercontrol.
+And by design, CustomControl can not expose a DataContext. Even if Mvvm is great, it introduce a lot classes. It's pretty rare to have a view where datacontext will be changed. For instance, it's often one datacontext for one viewmodel. It's really rare to set a datacontext to a dialogbox and to set a different datacontext for the same dialogbox during the runtime. It's always the same. And using only mvvm, people will not have a deep understanding about how wpf works. And sometimes nugetpackage need to be added to avoid adding code on the code behind. 
+Take a look, on projects like mahapps on github, mvvm is not used, even the custom MessageBox dialog don't used mvvm. mahapps framework include a BaseViewModel class, but it's not used internally... Without using mvvm requiered a more deeper knowledge on the presentation. User Mvvm for writting usercontrols, and introducing something strange. I prefer the harder way. Some people prefer using sourcetree or an equivalent tool, i prefer using git on a terminal.
 
 # RabbitOM.Player is used to decode RTP packets (HEVC/H264/JPEG)
 
