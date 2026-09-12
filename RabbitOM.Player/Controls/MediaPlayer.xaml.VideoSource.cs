@@ -28,7 +28,7 @@ namespace RabbitOM.Player.Controls
 
             internal VideoSource( MediaPlayer control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
             {
-                _control = control;
+                _control = control ?? throw new ArgumentNullException( nameof( control ) );
 
                 _client = new RtspClient();
                 _inspector = new DefaultRtpPacketInspector();
