@@ -1,4 +1,7 @@
-﻿using System;
+﻿// TODO: add save feature when configuration has been changed
+// TODO: add a new configuration section for saving networksettings
+
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -9,13 +12,9 @@ namespace RabbitOM.Player
 {
     using RabbitOM.Net.Rtsp;
     using RabbitOM.Player.Configuration;
-    using RabbitOM.Player.Controls;
     using RabbitOM.Player.Data;
     using RabbitOM.Player.Dialogs;
     using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
-
-    // TODO: add save feature when configuration has been changed
-    // TODO: add a new configuration section for saving networksettings
 
     public partial class MainWindow : Window
     {
@@ -95,6 +94,27 @@ namespace RabbitOM.Player
             }
         }
 
+        private void OnShowNetworkSettingsDialog( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new NetworkSettingsDialog() { Owner = Window.GetWindow( this ) };
+
+            if ( dialog.ShowDialog() == true )
+            {
+                if ( dialog.UseUdpTransport )
+                {
+                    _mediaPlayer.Transport = new UdpMediaPlayerTransport() { Port = dialog.Port };
+                }
+                else if ( dialog.UseMulticastTransport )
+                {
+                    _mediaPlayer.Transport = new MulticastMediaPlayerTransport() { Port = dialog.Port , IPAddress = dialog.IPAddress };
+                }
+                else
+                {
+                    _mediaPlayer.Transport = new TcpMediaPlayerTransport();
+                }
+            }
+        }
+
         private void OnCanSaveImage( object sender , CanExecuteRoutedEventArgs e )
         {
             e.CanExecute = _mediaPlayer.Image.Source is BitmapSource;
@@ -130,28 +150,6 @@ namespace RabbitOM.Player
                 Sources.Clear();
                 Sources.AddRange( dialog.Uris.Select( uri => uri.Value ) );
                 SelectedSource = Sources.Contains( selectedUri ) ? selectedUri : Sources.FirstOrDefault();
-            }
-        }
-
-        private void OnShowNetworkSettingsDialog( object sender , ExecutedRoutedEventArgs e )
-        {
-            var dialog = new NetworkSettingsDialog() { Owner = Window.GetWindow( this ) };
-
-            if ( dialog.ShowDialog() == true )
-            {
-                if ( dialog.UseUdpTransport )
-                {
-                    _mediaPlayer.Transport = new UdpMediaPlayerTransport() { Port = dialog.Port };
-                }
-
-                else if ( dialog.UseMulticastTransport )
-                {
-                    _mediaPlayer.Transport = new MulticastMediaPlayerTransport() { Port = dialog.Port , IPAddress = dialog.IPAddress };
-                }
-                else
-                {
-                    _mediaPlayer.Transport = new TcpMediaPlayerTransport();
-                }
             }
         }
 
