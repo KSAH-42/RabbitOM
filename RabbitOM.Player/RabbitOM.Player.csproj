@@ -107,6 +107,7 @@
       <DependentUpon>ViewPort.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ZoomChangedRoutedEventArgs.cs" />
+    <Compile Include="Data\ZoomProperties.cs" />
     <Compile Include="Data\ZoomRegion.cs" />
     <Compile Include="Controls\RoutedEventHandler.cs" />
     <Compile Include="Data\UdpMediaPlayerTransport.cs" />
