@@ -93,7 +93,7 @@ using ( var client = new RtspClient() )
 
 # About Player samples
 
-GUI is written using WPF.
+GUI is written using WPF without using MVVM. MVVM isn't no good things for handling video streaming. MVVM was not a good idea if event, routedevent be to be raised or even to subscibe. It make sense to subscribe to events handler to a dialog box, or usercontrol, but not to a viewmodel. And by design, CustomControl can not expose a DataContext. And, mvvm introduce a lot classes. It's pretty rare to have a view where datacontext will be changed. For instance, it's often one datacontext for one viewmodel. It's really rare to set a datacontext to a dialogbox and to set a different datacontext for the same dialogbox during the runtime. It's always the same. And using only mvvm, people will not have a deep understanding about how wpf works. Take a look, on projects like mahapps on github, mvvm is not used, even the custom MessageBox dialog don't used mvvm. mahapps framework include a BaseViewModel, but it's not used internally, it is just expose for people who want to start a wpf project using mvvm and without writting classes associated to the mvvm pattern, like RelayCommand, etc... 
 
 # RabbitOM.Player is used to decode RTP packets (HEVC/H264/JPEG)
 
