@@ -20,6 +20,10 @@ namespace RabbitOM.Net.Sdp.Serialization
             return string.Format( "{0} ({1})" , field.Address , field.Name );
         }
 
+        // TODO: include a validation
+        // kader.sahnine11@gmail.com should be ok
+        // a.sahnine@netcourrier.com should be ok
+        // https://github.com/KSAH-42/RabbitOM should failed
         public static bool TryParse(string value, out EmailField result)
         {
             result = null;
