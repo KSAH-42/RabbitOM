@@ -102,7 +102,7 @@
     <Compile Include="Controls\MediaPlayerControl.xaml.VideoSource.cs" />
     <Compile Include="Data\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
-    <Compile Include="Controls\NetworkStatisticsHelper.cs" />
+    <Compile Include="Controls\StatisticsHelper.cs" />
     <Compile Include="Controls\ViewPortControl.xaml.cs">
       <DependentUpon>ViewPortControl.xaml</DependentUpon>
     </Compile>

@@ -56,7 +56,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return NetworkStatisticsHelper.GetAverageValue( ref _bytesReceivedCount , ref _ticks );
+                return StatisticsHelper.GetAverageValue( ref _bytesReceivedCount , ref _ticks );
             }
         }
 
@@ -64,7 +64,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return NetworkStatisticsHelper.GetAverageValue( ref _packetReceivedCount , ref _ticks );
+                return StatisticsHelper.GetAverageValue( ref _packetReceivedCount , ref _ticks );
             }
         }
 
@@ -72,7 +72,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return NetworkStatisticsHelper.GetAverageValue( ref _frameCount , ref _ticks );
+                return StatisticsHelper.GetAverageValue( ref _frameCount , ref _ticks );
             }
         }
 
@@ -104,7 +104,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return NetworkStatisticsHelper.GetAverageValue( ref _maxFrameCount , ref _maxFrameCountPerSecond , ref _ticks );
+                return StatisticsHelper.GetAverageValue( ref _maxFrameCount , ref _maxFrameCountPerSecond , ref _ticks );
             }
         }
 
@@ -112,7 +112,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return NetworkStatisticsHelper.GetAverageValue( ref _maxBytesReceivedCount , ref _maxBytesReceivedPerSecond , ref _ticks );
+                return StatisticsHelper.GetAverageValue( ref _maxBytesReceivedCount , ref _maxBytesReceivedPerSecond , ref _ticks );
             }
         }
 
@@ -120,7 +120,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return NetworkStatisticsHelper.GetAverageValue( ref _maxPacketReceivedCount , ref _maxPacketReceivedPerSecond , ref _ticks );
+                return StatisticsHelper.GetAverageValue( ref _maxPacketReceivedCount , ref _maxPacketReceivedPerSecond , ref _ticks );
             }
         }
 
@@ -195,7 +195,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                NetworkStatisticsHelper.IncrementValue( ref _packetsLostCount , value , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _packetsLostCount , value , ref _ticks );
             }
         }
 
@@ -203,8 +203,8 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                NetworkStatisticsHelper.IncrementValue( ref _bytesReceivedCount , value , ref _ticks );
-                NetworkStatisticsHelper.IncrementValue( ref _maxBytesReceivedCount , value , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _bytesReceivedCount , value , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _maxBytesReceivedCount , value , ref _ticks );
             }
         }
 
@@ -212,8 +212,8 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                NetworkStatisticsHelper.IncrementValue( ref _packetReceivedCount , 1 , ref _ticks );
-                NetworkStatisticsHelper.IncrementValue( ref _maxPacketReceivedCount , 1 , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _packetReceivedCount , 1 , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _maxPacketReceivedCount , 1 , ref _ticks );
             }
         }
 
@@ -221,8 +221,8 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                NetworkStatisticsHelper.IncrementValue( ref _frameCount , 1 , ref _ticks );
-                NetworkStatisticsHelper.IncrementValue( ref _maxFrameCount , 1 , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _frameCount , 1 , ref _ticks );
+                StatisticsHelper.IncrementValue( ref _maxFrameCount , 1 , ref _ticks );
             }
         }
     }

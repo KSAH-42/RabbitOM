@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Player.Controls
 {
-    public static class NetworkStatisticsHelper
+    internal static class StatisticsHelper
     {
         public static void IncrementValue( ref long memberValue , long value , ref long ticks )
         {
