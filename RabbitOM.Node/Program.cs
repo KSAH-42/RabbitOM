@@ -14,7 +14,7 @@ namespace RabbitOM.Node
     // TODO: add socket redirector
     // TODO: add storage
     // TODO: migrate using asp .net core and move as RabbitOM.Node.Api
-
+    // TODO: add the RabbitOM.Node.Front as web interface that interact with backend
     static class Program
     {
         [Obsolete("the implementation here will be drasticaly changed")]
