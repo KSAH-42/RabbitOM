@@ -13,7 +13,7 @@ namespace RabbitOM.Player.Controls
     using RabbitOM.Player.Codecs.FFMpeg;
     using RabbitOM.Player.Data;
 
-    public partial class MediaPlayer
+    public partial class MediaPlayerControl
     {
         public sealed class VideoSource : IDisposable
         {
@@ -23,10 +23,10 @@ namespace RabbitOM.Player.Controls
             private readonly Decoder _decoder;
             private readonly Renderer _renderer;
             private readonly NetworkStatisticsDataSource _datasource;
-            private readonly MediaPlayer _control;
+            private readonly MediaPlayerControl _control;
 
 
-            internal VideoSource( MediaPlayer control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
+            internal VideoSource( MediaPlayerControl control ) // here we inject the control here without using an interface for a simple reasons: it just a part of MediaControl class and we don't need to mock, it's enougth, if this class is outside the MediaControl class, at this moment yes, we need to inject something, but not here, it's too much.
             {
                 _control = control ?? throw new ArgumentNullException( nameof( control ) );
 

@@ -8,27 +8,27 @@ namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
 
-    public partial class MediaPlayer : UserControl
+    public partial class MediaPlayerControl : UserControl
     {
-        public static readonly RoutedEvent StartedEvent = EventManager.RegisterRoutedEvent( nameof(Started), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
-        public static readonly RoutedEvent StoppedEvent = EventManager.RegisterRoutedEvent( nameof(Stopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
-        public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
-        public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
-        public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
-        public static readonly RoutedEvent ZoomChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),typeof(MediaPlayer));
+        public static readonly RoutedEvent StartedEvent = EventManager.RegisterRoutedEvent( nameof(Started), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
+        public static readonly RoutedEvent StoppedEvent = EventManager.RegisterRoutedEvent( nameof(Stopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
+        public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
+        public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
+        public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
+        public static readonly RoutedEvent ZoomChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),typeof(MediaPlayerControl));
 
 
-        public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaPlayer) , new PropertyMetadata( Stretch.Fill ) );
-        public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility) , typeof(Visibility) , typeof(MediaPlayer) , new PropertyMetadata( Visibility.Visible ) );
-        public static readonly DependencyProperty SourceVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaPlayer) , new PropertyMetadata( Visibility.Collapsed ) );
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source) , typeof(string) , typeof(MediaPlayer) );
-        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaPlayer) );
-        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaPlayer) );
-        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaPlayer) , new PropertyMetadata( null ) );
-        public static readonly DependencyProperty IsConnectingProperty = DependencyProperty.Register( nameof(IsConnecting) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
-        public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
-        public static readonly DependencyProperty IsPlayingProperty = DependencyProperty.Register( nameof(IsPlaying) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
-        public static readonly DependencyProperty IsStartedProperty = DependencyProperty.Register( nameof(IsStarted) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaPlayerControl) , new PropertyMetadata( Stretch.Fill ) );
+        public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility) , typeof(Visibility) , typeof(MediaPlayerControl) , new PropertyMetadata( Visibility.Visible ) );
+        public static readonly DependencyProperty SourceVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaPlayerControl) , new PropertyMetadata( Visibility.Collapsed ) );
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source) , typeof(string) , typeof(MediaPlayerControl) );
+        public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaPlayerControl) );
+        public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaPlayerControl) );
+        public static readonly DependencyProperty TransportProperty = DependencyProperty.Register( nameof(Transport) , typeof(MediaPlayerTransport) , typeof(MediaPlayerControl) , new PropertyMetadata( null ) );
+        public static readonly DependencyProperty IsConnectingProperty = DependencyProperty.Register( nameof(IsConnecting) , typeof(bool) , typeof(MediaPlayerControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsConnectedProperty = DependencyProperty.Register( nameof(IsConnected) , typeof(bool) , typeof(MediaPlayerControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsPlayingProperty = DependencyProperty.Register( nameof(IsPlaying) , typeof(bool) , typeof(MediaPlayerControl) , new PropertyMetadata( false ) );
+        public static readonly DependencyProperty IsStartedProperty = DependencyProperty.Register( nameof(IsStarted) , typeof(bool) , typeof(MediaPlayerControl) , new PropertyMetadata( false ) );
 
 
         private readonly VideoSource _videoSource;
@@ -36,7 +36,7 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public MediaPlayer()
+        public MediaPlayerControl()
         {
             InitializeComponent();
 
