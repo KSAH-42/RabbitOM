@@ -29,6 +29,11 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications or even block by the windows firewall.
 
+➡️ Next Breaking changes
+
+* Making the mediaplayer usercontrol run on a seperate thread as STA Thread with it's own classical message pump, controls will be instanciated in this thread
+* The solution will be migrate for Visual Studio 2026
+
 ➡️ Next arrivals:
 
 * Adding a CLI on the media player
@@ -41,10 +46,6 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Net Core Migration (it's already exist but as private repository)
 
 The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
-
-# Next Breaking changes
-
-➡️ The solution will be migrate for Visual Studio 2026
 
 # About the actual rtsp client and how to receive packets ?
 
