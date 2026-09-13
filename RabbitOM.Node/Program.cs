@@ -7,10 +7,13 @@ namespace RabbitOM.Node
     using RabbitOM.Node.Helpers;
 
     // TODO: rename as RabbitOM.Node
-    // TODO: then add the cli
-    // TODO: then add decoders
-    // TODO: then add the interpertor
     // TODO: then remove the code below
+    // TODO: then add the cli
+    // TODO: then add decoders and enable or not decoding using the cli
+    // TODO: then add the interpertor
+    // TODO: add socket redirector
+    // TODO: add storage
+    // TODO: migrate using asp .net core and move as RabbitOM.Node.Api
 
     static class Program
     {
