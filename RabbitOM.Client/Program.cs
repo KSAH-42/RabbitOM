@@ -6,6 +6,10 @@ namespace RabbitOM.Sample.Client
     using RabbitOM.Net.Rtsp.Clients;
     using RabbitOM.Sample.Client.Helpers;
 
+    // TODO: rename as RabbitOM.Node
+    // TODO: then add the cli
+    // TODO: then add the interpertor
+
     static class Program
     {
         static void Main( string[] args )
