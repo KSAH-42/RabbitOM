@@ -30,30 +30,6 @@ namespace RabbitOM.Player.Controls
 
 
 
-        public static readonly RoutedEvent ZoomChangedEvent =
-            EventManager.RegisterRoutedEvent(
-                nameof(ZoomChanged),
-                    RoutingStrategy.Direct,
-                        typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),
-                            typeof(ZoomImageControl));
-
-
-
-
-
-
-
-        public event RoutedEventHandler<ZoomChangedRoutedEventArgs> ZoomChanged
-        {
-            add    => AddHandler( ZoomChangedEvent , value );
-            remove => RemoveHandler( ZoomChangedEvent , value );
-        }
-
-
-
-
-
-
         public static readonly DependencyProperty ScaleXProperty =
             DependencyProperty.Register(
                 nameof(ScaleX),
@@ -290,11 +266,6 @@ namespace RabbitOM.Player.Controls
 
 
 
-        protected virtual void OnRegionSelected( ZoomChangedRoutedEventArgs e )
-        {
-            RaiseEvent( e );
-        }
-
         private void OnControlEnabledChanged( object sender , DependencyPropertyChangedEventArgs e )
         {
             if ( ! IsEnabled )
@@ -330,13 +301,9 @@ namespace RabbitOM.Player.Controls
 
             canvas.ReleaseMouseCapture();
 
-            var eventArgs = new ZoomChangedRoutedEventArgs( ZoomChangedEvent , this , new ZoomRegion( SelectionInnerX , SelectionInnerY , InnerRectangle.ActualWidth , InnerRectangle.ActualHeight , ScaleX , ScaleY , TranslationX , TranslationY ) );
-
             UpdateTransforms();
 
             RegionVisibility = Visibility.Collapsed;
-
-            OnRegionSelected( eventArgs );
         }
 
         private void OnCanvasMouseMove(object sender, MouseEventArgs e)
