@@ -1,17 +1,20 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Client
+namespace RabbitOM.Node
 {
     using RabbitOM.Net.Rtsp;
     using RabbitOM.Net.Rtsp.Clients;
-    using RabbitOM.Sample.Client.Helpers;
+    using RabbitOM.Node.Helpers;
 
     // TODO: rename as RabbitOM.Node
     // TODO: then add the cli
+    // TODO: then add decoders
     // TODO: then add the interpertor
+    // TODO: then remove the code below
 
     static class Program
     {
+        [Obsolete("the implementation here will be drasticaly changed")]
         static void Main( string[] args )
         {
             try

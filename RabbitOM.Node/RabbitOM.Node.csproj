@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{14469407-333C-403D-9F72-1F8C6DB39928}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>RabbitOM.Tests.Client</RootNamespace>
-    <AssemblyName>RabbitOM.Tests.Client</AssemblyName>
+    <RootNamespace>RabbitOM.Node</RootNamespace>
+    <AssemblyName>RabbitOM.Node</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

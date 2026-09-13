@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Sample.Client.Helpers
+namespace RabbitOM.Node.Helpers
 {
     public static class Constants
     {

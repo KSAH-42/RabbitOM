@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle( "RabbitOM.Sample.Client" )]
+[assembly: AssemblyTitle( "RabbitOM.Node" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Rabbit Corp" )]
-[assembly: AssemblyProduct( "RabbitOM.Sample.Client" )]
-[assembly: AssemblyCopyright( "Copyright © Rabbit Corp. 2025" )]
+[assembly: AssemblyProduct( "RabbitOM.Node" )]
+[assembly: AssemblyCopyright( "Copyright © Rabbit Corp. 2026" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 

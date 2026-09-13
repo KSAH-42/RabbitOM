@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RabbitOM.Sample.Client.Helpers
+namespace RabbitOM.Node.Helpers
 {
     using RabbitOM.Net.Rtsp;
 

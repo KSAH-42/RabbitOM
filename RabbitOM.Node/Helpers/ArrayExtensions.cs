@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Sample.Client.Helpers
+namespace RabbitOM.             Node.Helpers
 {
     public static class ArrayExtensions
     {
