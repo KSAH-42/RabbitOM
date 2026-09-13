@@ -17,6 +17,7 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayer) );
         public static readonly RoutedEvent ZoomChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),typeof(MediaPlayer));
 
+
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaPlayer) , new PropertyMetadata( Stretch.Fill ) );
         public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility) , typeof(Visibility) , typeof(MediaPlayer) , new PropertyMetadata( Visibility.Visible ) );
         public static readonly DependencyProperty SourceVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaPlayer) , new PropertyMetadata( Visibility.Collapsed ) );
@@ -29,8 +30,11 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty IsPlayingProperty = DependencyProperty.Register( nameof(IsPlaying) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
         public static readonly DependencyProperty IsStartedProperty = DependencyProperty.Register( nameof(IsStarted) , typeof(bool) , typeof(MediaPlayer) , new PropertyMetadata( false ) );
 
+
         private readonly VideoSource _videoSource;
         private readonly ObservableCollection<ErrorInfo> _errors;
+
+
 
         public MediaPlayer()
         {
