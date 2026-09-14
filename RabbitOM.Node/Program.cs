@@ -17,7 +17,6 @@ namespace RabbitOM.Node
     // TODO: add the RabbitOM.Node.Front as web interface that interact with backend
     static class Program
     {
-        [Obsolete("the implementation here will be drasticaly changed")]
         static void Main( string[] args )
         {
             try
@@ -43,7 +42,7 @@ namespace RabbitOM.Node
             {
                 throw new ArgumentNullException( nameof( options ) );
             }
-            
+
             using ( var client = new RtspClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
@@ -93,11 +92,6 @@ namespace RabbitOM.Node
                 client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
                 client.Configuration.MediaFormat = RtspMediaFormat.Video;
                 client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
-
-                // client.Configuration.DeliveryMode = RtspDeliveryMode.Multicast;
-                // client.Configuration.MulticastAddress = "229.0.0.1";
-                // client.Configuration.RtpPort = 55000;
-                // client.Configuration.TimeToLive = 15;
 
                 client.StartCommunication();
 
