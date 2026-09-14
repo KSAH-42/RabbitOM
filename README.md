@@ -103,7 +103,7 @@ GUI is written using WPF without using MVVM. MVVM is not a good approach for han
 And by design, CustomControl can not expose a DataContext. Even if Mvvm is great, it introduce a lot classes. It's pretty rare to have a view where datacontext will be changed. For instance, it's often one datacontext for one viewmodel. It's really rare to set a datacontext to a dialogbox and to set a different datacontext for the same dialogbox during the runtime. It's always the same. And using only mvvm, people will not have a deep understanding about how wpf works. And sometimes nugetpackage need to be added to avoid adding code on the code behind. 
 Take a look, on projects like mahapps on github, mvvm is not used, even the custom MessageBox dialog don't used mvvm. mahapps framework include a BaseViewModel class, but it's not used internally... Without using mvvm requiered a more deeper knowledge on the presentation. User Mvvm for writting usercontrols, and introducing something strange. I prefer the harder way. Some people prefer using sourcetree or an equivalent tool, i prefer using git on a terminal.
 
-# RabbitOM.Player is used to decode RTP packets (HEVC/H264/JPEG)
+# RabbitOM.Player used to decode RTP packets (HEVC/H264/JPEG)
 
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
 This sample include an example of how to build a player using decoder and render running in seperate threads.
@@ -134,6 +134,45 @@ If you familliar with ASP.Net Web API, even if the ASP.Net hide the details and 
 And the repository that own the lib, the implementation use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms needed to authenticate successfully the rtsp server. And maybe, if sales engineer identify this issue, they just can push this kind of camera for pushing the enduser for vms product replacement after making a cyber security audit.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
+
+# RabbitOM.Node used for receive packet and run scripts triggered by rtsp events
+
+This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and can interact with the shell. 
+You can configure the application edit a yaml file to run scripts triggered by the rtsp client events, and for instance monitor a rtsp stream.
+
+~~~~YML
+
+name: client handler
+
+handlers:
+  - name: start handler
+    type: on-communication-started
+    code: |
+      powershell -command "New-Item -Path C:\Projects\rtsp-log.txt"
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Communication Started'"
+
+  - name: stop handler
+    type: on-communication-stopped
+    code: |
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Communication Stopped'"
+
+  - name: Connected handler
+    type: on-connected
+    code: |
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Connected'"
+
+  - name: disconnected handler
+    type: on-disconnected
+    code: |
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Disconnected'"
+
+~~~~
+
+and run by executing the following command (if no yaml is specified, the application will just display communication info).
+
+~~~~
+RabbitOM.Node.exe rtsp://admin:camera123@127.0.0.1/toy.mp4 -s my-client-handler.yml
+~~~~
 
 # About the next rtsp client (experimental)
 
@@ -181,7 +220,6 @@ static class Program
 }
 
 ~~~~
-
 
 # Getting more details ?
 

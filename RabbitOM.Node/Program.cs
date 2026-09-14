@@ -1,106 +1,48 @@
-﻿using System;
+﻿// TODO: rename as RabbitOM.Node
+// TODO: then remove the code below
+// TODO: then add the cli
+// TODO: then add decoders and enable or not decoding using the cli
+// TODO: then add the interpertor
+// TODO: add socket redirector
+// TODO: add storage
+// TODO: migrate using asp .net core and move as RabbitOM.Node.Api
+// TODO: add the RabbitOM.Node.Front as web interface that interact with backend
+
+// The Player Cli will used when it's implemented will be finished, here we don't used a cli.
+
+using System;
 
 namespace RabbitOM.Node
 {
-    using RabbitOM.Net.Rtsp;
-    using RabbitOM.Net.Rtsp.Clients;
-    using RabbitOM.Node.Helpers;
+    using RabbitOM.Node.Services;
 
-    // TODO: rename as RabbitOM.Node
-    // TODO: then remove the code below
-    // TODO: then add the cli
-    // TODO: then add decoders and enable or not decoding using the cli
-    // TODO: then add the interpertor
-    // TODO: add socket redirector
-    // TODO: add storage
-    // TODO: migrate using asp .net core and move as RabbitOM.Node.Api
-    // TODO: add the RabbitOM.Node.Front as web interface that interact with backend
-    static class Program
+	static class Program
     {
         static void Main( string[] args )
         {
             try
             {
-                if ( CommandLineOptions.TryParse( args , out var options ) && options.TryValidate() )
+                if ( ApplicationParameters.CanParse( args ) )
                 {
-                    Run( options );
+                    var service = new ApplicationServiceBuilder()
+                        .SetParameters( args )
+                        .SetupEventDispatcher()
+                        .Build();
+
+                    service.Run();
                 }
                 else
                 {
-                    CommandLineOptions.ShowHelp();
+                    ApplicationHelp.ShowHelp();
                 }
+            }
+            catch( Exception ex )
+            {
+                ApplicationHelp.ShowHelp( ex );
             }
             finally
             {
-                Console.ForegroundColor = ConsoleColor.White;
-            }
-        }
-
-        static void Run( CommandLineOptions options )
-        {
-            if ( options == null )
-            {
-                throw new ArgumentNullException( nameof( options ) );
-            }
-
-            using ( var client = new RtspClient() )
-            {
-                client.CommunicationStarted += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine( "Communication started - " + DateTime.Now );
-                };
-
-                client.CommunicationStopped += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine( "Communication stopped - " + DateTime.Now );
-                };
-
-                client.Connected += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine( "Client connected - " + client.Configuration.Uri );
-                };
-
-                client.Disconnected += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine( "Client disconnected - " + DateTime.Now );
-                };
-
-                client.Error += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine( "Client Error: " + (sender as RtspClient).Configuration.Uri + " " + e.Code );
-                };
-
-                client.PacketReceived += ( sender , e ) =>
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkGreen;
-                    Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
-                };
-
-                // Please note, read the manufacturer's documentation
-                // to get the right uri
-
-                client.Configuration.Uri = options.Uri;
-                client.Configuration.UserName = options.UserName;
-                client.Configuration.Password = options.Password;
-                client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
-                client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
-                client.Configuration.KeepAliveType = RtspKeepAliveType.Options;
-                client.Configuration.MediaFormat = RtspMediaFormat.Video;
-                client.Configuration.DeliveryMode = RtspDeliveryMode.Tcp;
-
-                client.StartCommunication();
-
-                Console.CancelKeyPress += ( sender , e ) => Console.ForegroundColor = ConsoleColor.White;
-
-                Console.WriteLine( "Press any keys to close the application" );
-                Console.ReadKey();
-
-                client.StopCommunication( TimeSpan.FromSeconds( 3 ) );
+                Console.ResetColor();
             }
         }
     }

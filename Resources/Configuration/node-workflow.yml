@@ -1,0 +1,23 @@
+name: client handler
+
+handlers:
+  - name: start handler
+    type: on-communication-started
+    code: |
+      powershell -command "New-Item -Path C:\Projects\rtsp-log.txt"
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Communication Started'"
+
+  - name: stop handler
+    type: on-communication-stopped
+    code: |
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Communication Stopped'"
+
+  - name: Connected handler
+    type: on-connected
+    code: |
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Connected'"
+
+  - name: disconnected handler
+    type: on-disconnected
+    code: |
+      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Disconnected'"

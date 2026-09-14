@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.10.12201.205 stable
+VisualStudioVersion = 18.10.12201.205
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player", "RabbitOM.Player\RabbitOM.Player.csproj", "{7EAC1801-0B1C-423C-9BC9-7A0140172A04}"
 EndProject
@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 		Resources\Configuration\config-H265.xml = Resources\Configuration\config-H265.xml
 		Resources\Configuration\config-JPEG.xml = Resources\Configuration\config-JPEG.xml
 		Resources\Configuration\config.xml = Resources\Configuration\config.xml
+		Resources\Configuration\node-workflow.yml = Resources\Configuration\node-workflow.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
