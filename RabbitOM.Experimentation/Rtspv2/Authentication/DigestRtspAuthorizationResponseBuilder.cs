@@ -45,45 +45,51 @@ namespace RabbitOM.Net.RtspV2.Authentication
                 return string.Empty;
             }
 
+            DigestRtspAlgorithm algorithm = null;
+
             if ( SupportedTypes.IsMd5Algorithm( Algorithm ) )
             {
-                return BuildDigestResponse( DigestRtspAlgorithm.CreateMD5() );
+                algorithm = DigestRtspAlgorithm.CreateMD5();
             }
-
-            if ( SupportedTypes.IsSha1Algorithm( Algorithm ) )
+            else if ( SupportedTypes.IsSha1Algorithm( Algorithm ) )
             {
-                return BuildDigestResponse( DigestRtspAlgorithm.CreateSHA1() );
+                algorithm = DigestRtspAlgorithm.CreateSHA1();
             }
-
-            if ( SupportedTypes.IsSha256Algorithm( Algorithm ) )
+            else if ( SupportedTypes.IsSha256Algorithm( Algorithm ) )
             {
-                return BuildDigestResponse( DigestRtspAlgorithm.CreateSHA256() );
+                algorithm = DigestRtspAlgorithm.CreateSHA256();
             }
-
-            if ( SupportedTypes.IsSha384Algorithm( Algorithm ) )
+            else if ( SupportedTypes.IsSha384Algorithm( Algorithm ) )
             {
-                return BuildDigestResponse( DigestRtspAlgorithm.CreateSHA384() );
+                algorithm = DigestRtspAlgorithm.CreateSHA384();
             }
-
-            if ( SupportedTypes.IsSha512Algorithm( Algorithm ) )
+            else if ( SupportedTypes.IsSha512Algorithm( Algorithm ) )
             {
-                return BuildDigestResponse( DigestRtspAlgorithm.CreateSHA512() );
+                algorithm = DigestRtspAlgorithm.CreateSHA512();
             }
 
-            return string.Empty;
-        }
+            if ( algorithm == null ) { return string.Empty; }
 
-        private string BuildDigestResponse( DigestRtspAlgorithm algorithm )
-        {
             using ( algorithm )
             {
-                var hash1 = algorithm.Compute( UserName + ":" + Realm + ":" + Password );
-                var hash2 = algorithm.Compute( Method + ":" + Uri );
-
-                return string.IsNullOrWhiteSpace( QualityOfProtection )
-                    ? algorithm.Compute( $"{hash1}:{Nonce}:{hash2}")
-                    : algorithm.Compute( $"{hash1}:{Nonce}:{NonceCount}:{ClientNonce}:{QualityOfProtection}:{hash2}");
+                return OnBuildResponse( algorithm );
             }
+        }
+
+
+
+
+
+
+
+        private string OnBuildResponse( DigestRtspAlgorithm algorithm )
+        {
+            var hash1 = algorithm.Compute( UserName + ":" + Realm + ":" + Password );
+            var hash2 = algorithm.Compute( Method + ":" + Uri );
+
+            return string.IsNullOrWhiteSpace( QualityOfProtection )
+                ? algorithm.Compute( $"{hash1}:{Nonce}:{hash2}")
+                : algorithm.Compute( $"{hash1}:{Nonce}:{NonceCount}:{ClientNonce}:{QualityOfProtection}:{hash2}");
         }
     }
 }
