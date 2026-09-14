@@ -20,21 +20,20 @@ namespace RabbitOM.Node
     {
         static void Main( string[] args )
         {
+            if ( ! ApplicationParameters.CanParse( args ) )
+            {
+                ApplicationHelp.ShowHelp();
+                return;
+            }
+
             try
             {
-                if ( ApplicationParameters.CanParse( args ) )
-                {
-                    var service = new ApplicationServiceBuilder()
-                        .SetParameters( args )
-                        .SetupEventDispatcher()
-                        .Build();
+                var service = new ApplicationServiceBuilder()
+                    .AddParameters( args )
+                    .AddEventDispatcher()
+                    .Build();
 
-                    service.Run();
-                }
-                else
-                {
-                    ApplicationHelp.ShowHelp();
-                }
+                service.Run();
             }
             catch( Exception ex )
             {

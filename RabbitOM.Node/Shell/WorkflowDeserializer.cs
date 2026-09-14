@@ -10,15 +10,16 @@ namespace RabbitOM.Node.Shell
 			name: client handler
 
 			handlers:
-			  - name: a
+			  - name: output file
 				type: on-communication-started
 				code: |
-				  curl www.google.fr
+				  curl -s www.google.fr >> c:\projects\curl-output.txt
 
-			  - name: b
+			  - name: create temp directory
 				type: on-communication-stopped
 				code: |
-				  mkdir mydirectory
+				  powershell -command "mkdir tempdir"
+		          powershell -command "cat c:\projects\curl-output.txt >> c:\projects\curl-output2.txt"
 		*/
 		public static Workflow Deserialize( string input )
 		{

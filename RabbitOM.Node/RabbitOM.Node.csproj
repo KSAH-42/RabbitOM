@@ -63,7 +63,6 @@
     <Compile Include="Shell\EventNames.cs" />
     <Compile Include="Shell\ITaskExecutor.cs" />
     <Compile Include="Shell\EventDispatcher.cs" />
-    <Compile Include="Shell\TaskExecutor.cs" />
     <Compile Include="Shell\WorkflowDeserializer.cs" />
     <Compile Include="Shell\WorkflowHandler.cs" />
     <Compile Include="Shell\Workflow.cs" />

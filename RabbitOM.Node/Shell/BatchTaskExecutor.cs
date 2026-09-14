@@ -1,39 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace RabbitOM.Node.Shell
 {
-	public sealed class BatchTaskExecutor : TaskExecutor
+	public sealed class BatchTaskExecutor : ITaskExecutor
 	{
-		public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(3);
-
-		public override void Execute( string input )
+		public void Execute( string input )
 		{
-			if ( string.IsNullOrWhiteSpace( input ) )
+			if ( string.IsNullOrEmpty( input ) )
 			{
-				throw new ArgumentNullException( nameof( input ) );
+				return;
 			}
 
 			var entries = input.Split( new[] { '\r', '\n' } , StringSplitOptions.RemoveEmptyEntries );
 
+			if ( entries.Length == 0 )
+			{
+				return;
+			}
+
 			using ( var process = new Process() )
 			{
-				process.StartInfo = new ProcessStartInfo {
-					FileName = "cmd.exe",
-					RedirectStandardInput = true,
-					RedirectStandardOutput = false,
-					RedirectStandardError = false,
-					UseShellExecute = false,
-					CreateNoWindow = true
-				};
-
+				process.StartInfo = new ProcessStartInfo { FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = false, RedirectStandardError = false, UseShellExecute = false, CreateNoWindow = true };
 				process.Start();
 				process.StandardInput.AutoFlush = true;
-
-				var postEvents = new Queue<string>();
-
-				postEvents.Enqueue( "exit" );
 
 				foreach (var entry in entries)
 				{
@@ -46,7 +36,6 @@ namespace RabbitOM.Node.Shell
 				}
 
 				process.StandardInput.WriteLine( "exit" );
-
 				process.WaitForExit();
 			}
 		}

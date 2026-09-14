@@ -2,10 +2,8 @@
 
 namespace RabbitOM.Node.Shell
 {
-	public interface ITaskExecutor : IDisposable
+	public interface ITaskExecutor
 	{
 		void Execute( string input );
-
-		void Abort();
 	}
 }

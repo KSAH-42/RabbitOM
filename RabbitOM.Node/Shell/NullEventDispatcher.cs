@@ -11,9 +11,5 @@ namespace RabbitOM.Node.Shell
 		public void DispatchEvent( string eventType )
 		{
 		}
-
-		public void Dispose()
-		{
-		}
 	}
 }
