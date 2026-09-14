@@ -6,29 +6,15 @@ namespace RabbitOM.Node.Services
 {
     public sealed class ApplicationParameters
     {
-        public string Uri { get; set; }
+        public string Uri { get; private set; }
 
-        public string ScriptWorkflow { get; set; }
+        public string ScriptWorkflow { get; private set; }
 
 
 
-        public void Validate()
-        {
-            if ( string.IsNullOrWhiteSpace( Uri ) )
-            {
-                throw new ValidationException( "the uri is null or empty or white space" );
-            }
 
-            if ( ! System.Uri.TryCreate( Uri , UriKind.Absolute , out var uri ) )
-            {
-                throw new ValidationException( "the uri is not well formed" );
-            }
 
-            if ( uri.Scheme != "rtsp" )
-            {
-                throw new ValidationException( "the scheme must be rtsp" );
-            }
-        }
+
 
 
         public static bool CanParse( string[] input )
@@ -67,6 +53,31 @@ namespace RabbitOM.Node.Services
             }
 
             return result;
+        }
+
+
+
+
+
+
+
+
+        public void Validate()
+        {
+            if ( string.IsNullOrWhiteSpace( Uri ) )
+            {
+                throw new ValidationException( "the uri is null or empty or white space" );
+            }
+
+            if ( ! System.Uri.TryCreate( Uri , UriKind.Absolute , out var uri ) )
+            {
+                throw new ValidationException( "the uri is not well formed" );
+            }
+
+            if ( uri.Scheme != "rtsp" )
+            {
+                throw new ValidationException( "the scheme must be rtsp" );
+            }
         }
     }
 }

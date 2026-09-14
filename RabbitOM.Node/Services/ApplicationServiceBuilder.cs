@@ -8,9 +8,14 @@ namespace RabbitOM.Node.Services
 	public sealed class ApplicationServiceBuilder
 	{
 		private ApplicationParameters _parameters;
+
 		private IEventDispatcher _dispatcher;
 
-		public ApplicationServiceBuilder SetParameters( string[] parameters )
+
+
+
+
+		public ApplicationServiceBuilder AddParameters( string[] parameters )
 		{
 			if ( _parameters != null )
 			{
@@ -24,7 +29,7 @@ namespace RabbitOM.Node.Services
 			return this;
 		}
 
-		public ApplicationServiceBuilder SetupEventDispatcher()
+		public ApplicationServiceBuilder AddEventDispatcher()
 		{
 			if ( _parameters == null )
 			{
@@ -45,7 +50,7 @@ namespace RabbitOM.Node.Services
 
 			var workflow = WorkflowDeserializer.Deserialize( script );
 
-			_dispatcher = new EventDispatcher( new BatchTaskExecutor() , workflow );
+			_dispatcher = new EventDispatcher( workflow , new BatchTaskExecutor() );
 
 			return this;
 		}

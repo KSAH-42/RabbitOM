@@ -138,7 +138,7 @@ And the repository that own the lib, the implementation use an Authenticator cap
 # RabbitOM.Node used for receive packet and run scripts triggered by rtsp events
 
 This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and can interact with the shell. 
-You can configure the application edit a yaml file to run scripts triggered by the rtsp client events, and for instance monitor a rtsp stream.
+You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events, and for instance monitor a rtsp stream. For cloud native app, it may be possible that module used to trigger action rely on shell with yaml, and not a language, or plugin based app, the reason is probably that web introduce higher level concept, we can language a process and pass a code to interpretor and execute them.
 
 ~~~~YML
 
@@ -149,22 +149,22 @@ handlers:
     type: on-communication-started
     code: |
       powershell -command "New-Item -Path C:\Projects\rtsp-log.txt"
-      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Communication Started'"
+      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Communication Started\""
 
   - name: stop handler
     type: on-communication-stopped
     code: |
-      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Communication Stopped'"
+      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Communication Stopped\""
 
-  - name: Connected handler
+  - name: connected handler
     type: on-connected
     code: |
-      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Connected'"
+      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Connected\""
 
   - name: disconnected handler
     type: on-disconnected
     code: |
-      powershell -command "Add-Content -Path C:\Projects\rtsp-log.txt -Value 'Disconnected'"
+      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Disconnected\""
 
 ~~~~
 

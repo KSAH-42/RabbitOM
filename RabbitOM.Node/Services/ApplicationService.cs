@@ -9,7 +9,12 @@ namespace RabbitOM.Node.Services
 	public sealed class ApplicationService : IApplicationService
 	{
         private readonly ApplicationParameters _parameters;
+
         private readonly IEventDispatcher _dispatcher;
+
+
+
+
 
         public ApplicationService( ApplicationParameters parameters , IEventDispatcher dispatcher )
         {
@@ -17,12 +22,15 @@ namespace RabbitOM.Node.Services
             _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
         }
 
+
+
+
+
         public void Run()
         {
             var uri = RtspUri.Parse( _parameters.Uri );
 
             using ( var client = new RtspClient() )
-            using ( _dispatcher )
             {
                 client.CommunicationStarted += ( sender , e ) =>
                 {
