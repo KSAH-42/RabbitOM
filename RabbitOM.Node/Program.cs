@@ -20,7 +20,7 @@ namespace RabbitOM.Node
     {
         static void Main( string[] args )
         {
-            if ( ! ApplicationParameters.CanParse( args ) )
+            if ( ApplicationHelp.CanShowHelp( args ) )
             {
                 ApplicationHelp.ShowHelp();
                 return;

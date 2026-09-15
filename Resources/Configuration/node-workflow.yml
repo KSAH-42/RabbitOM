@@ -21,3 +21,8 @@ handlers:
     type: on-disconnected
     code: |
       powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Disconnected\""
+
+  - name: error handler
+    type: on-error
+    code: |
+      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Error\""

@@ -30,6 +30,7 @@ namespace RabbitOM.Node.Services
         {
             var uri = RtspUri.Parse( _parameters.Uri );
 
+            using ( _dispatcher )
             using ( var client = new RtspClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>

@@ -5,38 +5,44 @@ namespace RabbitOM.Node.Shell
 {
 	public sealed class BatchTaskExecutor : ITaskExecutor
 	{
+		private readonly Process _process;
+
+		public BatchTaskExecutor()
+		{
+			_process = new Process() { StartInfo = new ProcessStartInfo { FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = false, RedirectStandardError = false, UseShellExecute = false, CreateNoWindow = true } };
+			_process.Start();
+			_process.StandardInput.AutoFlush = true;
+		}
+
 		public void Execute( string input )
 		{
-			if ( string.IsNullOrEmpty( input ) )
+			var entries = input?.Split( new[] { '\r', '\n' } , StringSplitOptions.RemoveEmptyEntries ) ?? Array.Empty<string>();
+
+			foreach ( var entry in entries )
 			{
-				return;
-			}
-
-			var entries = input.Split( new[] { '\r', '\n' } , StringSplitOptions.RemoveEmptyEntries );
-
-			if ( entries.Length == 0 )
-			{
-				return;
-			}
-
-			using ( var process = new Process() )
-			{
-				process.StartInfo = new ProcessStartInfo { FileName = "cmd.exe", RedirectStandardInput = true, RedirectStandardOutput = false, RedirectStandardError = false, UseShellExecute = false, CreateNoWindow = true };
-				process.Start();
-				process.StandardInput.AutoFlush = true;
-
-				foreach (var entry in entries)
+				if ( entry.Trim().Equals( "powershell" , StringComparison.OrdinalIgnoreCase ) )
 				{
-					if ( entry.Trim().Equals( "powershell" , StringComparison.OrdinalIgnoreCase ) )
-					{
-						continue;
-					}
-
-					process.StandardInput.WriteLine( entry );
+					continue;
 				}
 
-				process.StandardInput.WriteLine( "exit" );
-				process.WaitForExit();
+				_process.StandardInput.WriteLine( entry );
+			}
+		}
+
+		public void Dispose()
+		{
+			try
+			{
+				_process.StandardInput.WriteLine( "exit" );
+				_process.WaitForExit();
+			}
+			catch ( Exception ex )
+			{
+				System.Diagnostics.Debug.WriteLine( ex );
+			}
+			finally
+			{
+				_process.Dispose();
 			}
 		}
 	}

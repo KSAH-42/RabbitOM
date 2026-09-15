@@ -11,5 +11,21 @@ namespace RabbitOM.Node.Shell
 		public void DispatchEvent( string eventType )
 		{
 		}
+
+		public void AddHandler( string eventType , string code )
+		{
+		}
+
+		public void RemoveHandler( string eventType )
+		{
+		}
+
+		public void RemoveHandlers()
+		{
+		}
+
+		public void Dispose()
+		{
+		}
 	}
 }

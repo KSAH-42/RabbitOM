@@ -17,11 +17,6 @@ namespace RabbitOM.Node.Services
 
 
 
-        public static bool CanParse( string[] input )
-        {
-            return input?.Length >= 1;
-        }
-
         public static ApplicationParameters Parse( string[] input )
         {
             if ( input == null )

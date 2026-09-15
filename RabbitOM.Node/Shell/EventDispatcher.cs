@@ -1,51 +1,71 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace RabbitOM.Node.Shell
 {
 	public sealed class EventDispatcher : IEventDispatcher
 	{
-		private readonly Workflow _workflow;
-
 		private readonly ITaskExecutor _executor;
 
+		private readonly Dictionary<string,string> _handlers;
 
 
 
-		public EventDispatcher( Workflow workflow , ITaskExecutor executor )
+
+		public EventDispatcher( ITaskExecutor executor )
 		{
-			_workflow = workflow ?? throw new ArgumentNullException( nameof( workflow ) );
-
 			_executor = executor ?? throw new ArgumentNullException( nameof( executor ) );
+
+			_handlers = new Dictionary<string, string>();
 		}
 
 
 
-		// TODO: do we need to do the same thing like the rtsp event dispatcher, actually no
+
 
 		public void DispatchEvent( string eventType )
 		{
-			if ( eventType == null || eventType.IndexOf( ' ' ) >= 0 )
+			if ( _handlers.TryGetValue( eventType ?? string.Empty , out var handler ) )
 			{
-				throw new ArgumentNullException( nameof( eventType ) );
-			}
-
-			foreach ( var handler in _workflow.Handlers ?? Enumerable.Empty<WorkflowHandler>() )
-			{
-				if ( handler == null || handler.Type != eventType )
-				{
-					continue;
-				}
-
 				try
 				{
-					_executor.Execute( handler.Code );
+					_executor.Execute( handler );
 				}
 				catch ( Exception ex )
 				{
 					System.Diagnostics.Debug.WriteLine( ex );
 				}
 			}
+		}
+
+		public void AddHandler( string eventType , string code )
+		{
+			if ( string.IsNullOrEmpty( eventType ) )
+			{
+				throw new ArgumentNullException( nameof( eventType ) );
+			}
+
+			if ( string.IsNullOrEmpty( code ) )
+			{
+				throw new ArgumentNullException( nameof( code ) );
+			}
+
+			_handlers.Add( eventType , code );
+		}
+
+		public void RemoveHandler( string eventType )
+		{
+			_handlers.Remove( eventType ?? string.Empty );
+		}
+
+		public void RemoveHandlers()
+		{
+			_handlers.Clear();
+		}
+
+		public void Dispose()
+		{ 
+			_executor.Dispose();
 		}
 	}
 }

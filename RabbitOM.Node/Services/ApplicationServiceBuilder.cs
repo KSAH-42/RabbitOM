@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace RabbitOM.Node.Services
 {
@@ -50,7 +51,15 @@ namespace RabbitOM.Node.Services
 
 			var workflow = WorkflowDeserializer.Deserialize( script );
 
-			_dispatcher = new EventDispatcher( workflow , new BatchTaskExecutor() );
+			_dispatcher = new EventDispatcher( new BatchTaskExecutor() );
+
+			foreach ( var handler in workflow.Handlers ?? Enumerable.Empty<WorkflowHandler>() )
+			{
+				if ( handler != null )
+				{
+					_dispatcher.AddHandler( handler.Type , handler.Code );
+				}
+			}
 
 			return this;
 		}
