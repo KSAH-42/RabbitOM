@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
-	using System.Windows.Input;
 
     public partial class ViewPortControl : UserControl
     {
@@ -42,6 +43,8 @@ namespace RabbitOM.Player.Controls
             ZoomProperties.ScaleY = ActualHeight / InnerRectangle.ActualHeight;
             ZoomProperties.TranslationX = -ZoomProperties.SelectionInnerX * ZoomProperties.ScaleX;
             ZoomProperties.TranslationY = -ZoomProperties.SelectionInnerY * ZoomProperties.ScaleY;
+
+            OnZoomIn();
             return true;
         }
 
@@ -61,8 +64,13 @@ namespace RabbitOM.Player.Controls
             ZoomProperties.TextPositionX = 0;
             InnerRectangle.Width = 0;
             InnerRectangle.Height = 0;
-            OuterRectangle.Width = 0;
-            OuterRectangle.Height = 0;
+
+            OnZoomReset();
+        }
+
+        public void ClearImage()
+        {
+            _image.Source = null;
         }
 
 
@@ -148,6 +156,70 @@ namespace RabbitOM.Player.Controls
             Canvas.SetLeft( InnerRectangle , ZoomProperties.SelectionInnerX );
 
             ZoomProperties.Visibility = Visibility.Visible;
+        }
+
+        private void OnZoomIn()
+        {
+            var sb = (Storyboard)Resources["ZoomStoryboard"];
+
+            if ( sb == null || sb.Children.Count != 4 )
+            {
+                return;
+            }
+
+            if ( sb.Children[0] is DoubleAnimation animScaleX )
+            {
+                animScaleX.To = ZoomProperties.ScaleX;
+            }
+
+            if ( sb.Children[1] is DoubleAnimation animScaleY )
+            {
+                animScaleY.To = ZoomProperties.ScaleY;
+            }
+
+            if ( sb.Children[2] is DoubleAnimation animTransX )
+            {
+                animTransX.To = ZoomProperties.TranslationX;
+            }
+
+            if ( sb.Children[3] is DoubleAnimation animTransY )
+            {
+                animTransY.To = ZoomProperties.TranslationY;
+            }
+
+            sb.Begin();
+        }
+
+        private void OnZoomReset()
+        {
+            var sb = (Storyboard)Resources["ZoomStoryboard"];
+
+            if ( sb == null || sb.Children.Count != 4 )
+            {
+                return;
+            }
+
+            if ( sb.Children[0] is DoubleAnimation animScaleX )
+            {
+                animScaleX.To = 1.0;
+            }
+
+            if ( sb.Children[1] is DoubleAnimation animScaleY )
+            {
+                animScaleY.To = 1.0;
+            }
+
+            if ( sb.Children[2] is DoubleAnimation animTransX )
+            {
+                animTransX.To = 0.0;
+            }
+
+            if ( sb.Children[3] is DoubleAnimation animTransY )
+            {
+                animTransY.To = 0.0;
+            }
+
+            sb.Begin();
         }
     }
 }

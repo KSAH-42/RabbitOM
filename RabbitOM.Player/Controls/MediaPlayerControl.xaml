@@ -20,48 +20,27 @@
     </UserControl.Resources>
 
     <Grid Grid.Row="1"
-          Margin="1,1,1,-20" 
+          Margin="1,1,1,1" 
           Background="Black"
-		  ClipToBounds="True"
-          >
+		  >
 
-        <controls:CommunicationStatusControl Fill="White"
-                                             VerticalAlignment="Top" 
+		<controls:CommunicationStatusControl Fill="White"
+											 VerticalAlignment="Center" 
                                              HorizontalAlignment="Center" 
                                              Foreground="White"
                                              ConnectingMessage="Connecting..."
-                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}" Margin="0,246,0,0"
+                                             ConnectingStatus="{Binding IsConnecting,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                              />
 
-        <Image x:Name="_image"
+		<controls:ViewPortControl x:Name="_viewport"
                x:FieldModifier="private"
                Margin="0,0,0,0" 
                SnapsToDevicePixels="True" 
                UseLayoutRounding="True" 
-               HorizontalAlignment="Stretch"
+			   HorizontalAlignment="Stretch"
                VerticalAlignment="Stretch"
-               Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
-               >
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="{Binding ScaleX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                    ScaleY="{Binding ScaleY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                    />
-                    <TranslateTransform X="{Binding TranslationX, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                        Y="{Binding TranslationY, ElementName=ZoomControl , UpdateSourceTrigger=PropertyChanged}" 
-                                        />
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-
-        <TextBlock FontSize="15" 
-                   HorizontalAlignment="Center"
-                   Foreground="White" 
-                   Background="Black"
-                   VerticalAlignment="Bottom"
-                   Text="{Binding Source,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   Visibility="{Binding SourceVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   />
+			   StretchImage="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+               />
 
         <controls:NetworkStatisticsControl x:Name="_statistics" 
                                            x:FieldModifier="private"
@@ -71,15 +50,15 @@
                                            Visibility="{Binding StatisticsVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                                            />
 
-        <controls:ZoomImageControl x:Name="ZoomControl"
-                                   Margin="0,0,0,0" 
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   Focusable="False"
-                                   TextColor="OrangeRed"
-                                   Text="Zoom in"
-                                   />
+		<TextBlock FontSize="15" 
+                   Foreground="White" 
+                   Background="Black"
+                   VerticalAlignment="Bottom"
+                   HorizontalAlignment="Center"
+				   Text="{Binding Source,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   Visibility="{Binding SourceVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   />
 
-    </Grid>
+	</Grid>
 
 </UserControl>

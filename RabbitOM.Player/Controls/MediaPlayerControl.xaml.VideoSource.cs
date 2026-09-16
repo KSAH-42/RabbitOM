@@ -147,7 +147,7 @@ namespace RabbitOM.Player.Controls
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
-                    _control.ClearImage();
+                    _control.Viewport.ClearImage();
                     _control.OnStarted();
                 } );
             }
@@ -158,7 +158,7 @@ namespace RabbitOM.Player.Controls
                 {
                     _datasource.Clear();
 
-                    _control.ClearImage();
+                    _control.Viewport.ClearImage();
                     _control.OnStopped();
                 } );
             }
@@ -197,7 +197,7 @@ namespace RabbitOM.Player.Controls
                         }
 
                         _decoder.Open( codec );
-                        _renderer.Open( _control.Image );
+                        _renderer.Open( _control.Viewport.Image );
                     }
                     catch( Exception ex )
                     {
@@ -219,7 +219,7 @@ namespace RabbitOM.Player.Controls
                     _decoder.Close();
                     _renderer.Close();
 
-                    _control.ClearImage();
+                    _control.Viewport.ClearImage();
                     _control.OnDisconnected();
                 } );
             }

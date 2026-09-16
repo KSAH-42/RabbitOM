@@ -8,41 +8,65 @@
 			 DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
 			 IsEnabledChanged="OnControlEnabledChanged"
              >
-    
-    <Grid>
+
+	<UserControl.Resources>
+		<Storyboard x:Key="ZoomStoryboard">
+
+			<DoubleAnimation Storyboard.TargetName="ImageScale"
+							 Storyboard.TargetProperty="ScaleX"
+							 Duration="0:0:0.1"
+							 />
+
+			<DoubleAnimation Storyboard.TargetName="ImageScale"
+							 Storyboard.TargetProperty="ScaleY"
+							 Duration="0:0:0.1"
+							 />
+
+			<DoubleAnimation Storyboard.TargetName="ImageTranslate"
+							 Storyboard.TargetProperty="X"
+							 Duration="0:0:0.1"
+							 />
+
+			<DoubleAnimation Storyboard.TargetName="ImageTranslate" 
+							 Storyboard.TargetProperty="Y"
+							 Duration="0:0:0.1"
+							 />
+		</Storyboard>
+		
+	</UserControl.Resources>
+	
+
+	<Grid ClipToBounds="True">
+
+		<Image x:Name="_image"
+                x:FieldModifier="private"
+                Margin="0,0,0,0" 
+                SnapsToDevicePixels="True" 
+                UseLayoutRounding="True" 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                >
+			<Image.RenderTransform>
+				<TransformGroup>
+					<TransformGroup>
+						<ScaleTransform x:Name="ImageScale" />
+						<TranslateTransform x:Name="ImageTranslate" />
+					</TransformGroup>
+				</TransformGroup>
+			</Image.RenderTransform>
+		</Image>
 
 		<Canvas Margin="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="Transparent"
                 IsHitTestVisible="True"
-                MouseLeftButtonDown="OnCanvasMouseLeftButtonDown"
+				MouseLeftButtonDown="OnCanvasMouseLeftButtonDown"
                 MouseUp="OnCanvasMouseUp"
                 MouseMove="OnCanvasMouseMove"
-                ClipToBounds="True"
                 >
-
-			<Image x:Name="_image"
-                   x:FieldModifier="private"
-                   Margin="0,0,0,0" 
-                   SnapsToDevicePixels="True" 
-                   UseLayoutRounding="True" 
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   >
-				<Image.RenderTransform>
-					<TransformGroup>
-						<ScaleTransform ScaleX="{Binding ZoomProperties.ScaleX, UpdateSourceTrigger=PropertyChanged}" 
-                                        ScaleY="{Binding ZoomProperties.ScaleY, UpdateSourceTrigger=PropertyChanged}" 
-                                        />
-						<TranslateTransform X="{Binding ZoomProperties.TranslationX, UpdateSourceTrigger=PropertyChanged}" 
-                                            Y="{Binding ZoomProperties.TranslationY, UpdateSourceTrigger=PropertyChanged}" 
-                                            />
-					</TransformGroup>
-				</Image.RenderTransform>
-			</Image>
-
+			
 			<Rectangle x:Name="OuterRectangle"
                        Margin="0"
                        HorizontalAlignment="Stretch"

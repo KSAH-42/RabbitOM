@@ -201,15 +201,14 @@
                 </Grid.ContextMenu>
 
                 <controls:MediaPlayerControl x:Name="_mediaPlayer"
-                                       x:FieldModifier="private"
-                                       Margin="0,0,0,0"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       Focusable="True"
-                                       StretchImage="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
-                                       SourceVisibility="{Binding ElementName=MenuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                       StatisticsVisibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                      />
+                                            x:FieldModifier="private"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Focusable="True"
+                                            StretchImage="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
+                                            SourceVisibility="{Binding ElementName=MenuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                            StatisticsVisibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                            />
 
             </Grid>
 

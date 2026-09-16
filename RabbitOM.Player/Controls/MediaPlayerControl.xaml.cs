@@ -170,9 +170,9 @@ namespace RabbitOM.Player.Controls
             get => _errors.ToReadOnly();
         }
 
-        public Image Image
+        public ViewPortControl Viewport
         {
-            get => _image;
+            get => _viewport;
         }
 
         public NetworkStatisticsControl Statistics
@@ -214,11 +214,6 @@ namespace RabbitOM.Player.Controls
             _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
         }
 
-        private void ClearImage()
-        {
-            _image.Source = null;
-        }
-
 
 
 
@@ -232,7 +227,7 @@ namespace RabbitOM.Player.Controls
         {
             IsConnecting = true;
             IsPlaying = false;
-            ZoomControl.ClearSelection();
+            Viewport.ClearZoomSelection();
 
             RaiseEvent( new RoutedEventArgs( StartedEvent ) );
         }
@@ -241,7 +236,7 @@ namespace RabbitOM.Player.Controls
         {
             IsConnecting = false;
             IsPlaying = false;
-            ZoomControl.ClearSelection();
+            Viewport.ClearZoomSelection();
 
             RaiseEvent( new RoutedEventArgs( StoppedEvent ) );
         }
@@ -250,7 +245,7 @@ namespace RabbitOM.Player.Controls
         {
             IsConnected = true;
             IsConnecting = false;
-            ZoomControl.ClearSelection();
+            Viewport.ClearZoomSelection();
 
             RaiseEvent( new RoutedEventArgs( ConnectedEvent ) );
         }
@@ -260,7 +255,7 @@ namespace RabbitOM.Player.Controls
             IsPlaying = false;
             IsConnected = false;
             IsConnecting = ! _videoSource.IsStopping;
-            ZoomControl.ClearSelection();
+            Viewport.ClearZoomSelection();
 
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }

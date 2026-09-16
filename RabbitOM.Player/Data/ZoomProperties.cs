@@ -16,7 +16,7 @@ namespace RabbitOM.Player.Data
         public static readonly DependencyProperty SelectionYProperty = DependencyProperty.Register( nameof(SelectionY), typeof(double), typeof(ZoomProperties));
         public static readonly DependencyProperty SelectionWidthProperty = DependencyProperty.Register( nameof(SelectionWidth), typeof(double), typeof(ZoomProperties));
         public static readonly DependencyProperty SelectionHeightProperty = DependencyProperty.Register( nameof(SelectionHeight), typeof(double), typeof(ZoomProperties));
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register( nameof(Text), typeof(string), typeof(ZoomProperties));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register( nameof(Text), typeof(string), typeof(ZoomProperties) , new PropertyMetadata( "Zoom in" ) );
         public static readonly DependencyProperty TextColorProperty = DependencyProperty.Register( nameof(TextColor), typeof(Brush), typeof(ZoomProperties) , new PropertyMetadata( Brushes.Orange ));
         public static readonly DependencyProperty TextPositionXProperty = DependencyProperty.Register( nameof(TextPositionX), typeof(double), typeof(ZoomProperties));
         public static readonly DependencyProperty TextPositionYProperty = DependencyProperty.Register( nameof(TextPositionY), typeof(double), typeof(ZoomProperties));
