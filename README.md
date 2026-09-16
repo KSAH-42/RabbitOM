@@ -138,7 +138,8 @@ And the repository that own the lib, the implementation use an Authenticator cap
 # RabbitOM.NodeShell used to receive packet and run scripts triggered by rtsp events
 
 This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and interact with the shell. 
-You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events, and for instance the process can monitor a rtsp stream.
+You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events, and for instance the process can monitor a rtsp stream. For instance, the when the communication back with a camera you can run curl to post a command to a web api.
+The file below tells to application to trigger powershell command in order logs the activity in to a file.
 
 ~~~~YML
 
