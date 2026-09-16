@@ -201,15 +201,16 @@ namespace RabbitOM.Player.Controls
             IsStarted = false;
         }
 
-        public void AddError( ErrorInfo error )
-        {
-            _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
-        }
-
         public ImageSource GetImage()
         {
             return _viewport.Image.Source;
         }
+
+        private void AddError( ErrorInfo error )
+        {
+            _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
+        }
+
 
 
 
