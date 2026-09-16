@@ -108,6 +108,7 @@ Take a look, on projects like mahapps on github, mvvm is not used, even the cust
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
 This sample include an example of how to build a player using decoder and render running in seperate threads.
 This sample include statitics component to display the framerate, the network bandwidth just making a right click.
+This sample include a zoom feature (keep down the mouse left button, and draw the zoom area and release the button).
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.H264.png)
 
@@ -135,11 +136,11 @@ And the repository that own the lib, the implementation use an Authenticator cap
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
 
-# RabbitOM.NodeShell used to receive packet and run scripts triggered by rtsp events
+# RabbitOM.NodeShell used to receive packet and run scripts triggered by the rtsp client events
 
 This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and interact with the shell. 
-You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events, and for instance the process can monitor a rtsp stream. For instance, the when the communication back with a camera you can run curl to post a command to a web api.
-The file below tells to application to trigger powershell command in order logs the activity in to a file.
+You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events. For instance, when the communication back with a camera you can use curl.
+Here in this example, the application will used powershell to logs the activity of the communication.
 
 ~~~~YML
 

@@ -9,10 +9,7 @@ namespace RabbitOM.NodeShell.Services
 	public sealed class ApplicationService : IApplicationService
 	{
         private readonly ApplicationParameters _parameters;
-
         private readonly IEventDispatcher _dispatcher;
-
-
 
 
 
@@ -21,8 +18,6 @@ namespace RabbitOM.NodeShell.Services
             _parameters = parameters ?? throw new ArgumentNullException( nameof( parameters ) );
             _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
         }
-
-
 
 
 
