@@ -117,14 +117,14 @@ namespace RabbitOM.Player
 
         private void OnCanSaveImage( object sender , CanExecuteRoutedEventArgs e )
         {
-            e.CanExecute = _mediaPlayer.Viewport.Image.Source is BitmapSource;
+            e.CanExecute = _mediaPlayer.GetImage() is BitmapSource;
         }
 
         private void OnSaveImage( object sender , ExecutedRoutedEventArgs e )
         {
             var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
 
-            dialog.Source = _mediaPlayer.Viewport.Image.Source as BitmapSource;
+            dialog.Source = _mediaPlayer.GetImage() as BitmapSource;
 
             dialog.TakeSnasphot();
             dialog.ShowDialog();

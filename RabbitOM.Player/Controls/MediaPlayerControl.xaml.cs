@@ -163,16 +163,15 @@ namespace RabbitOM.Player.Controls
             get => _errors.ToReadOnly();
         }
 
-        public ViewPortControl Viewport
-        {
-            get => _viewport;
-        }
-
         public NetworkStatisticsControl Statistics
         {
             get => _statistics;
         }
 
+        private ViewPortControl Viewport
+        {
+            get => _viewport;
+        }
 
 
 
@@ -205,6 +204,11 @@ namespace RabbitOM.Player.Controls
         public void AddError( ErrorInfo error )
         {
             _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
+        }
+
+        public ImageSource GetImage()
+        {
+            return _viewport.Image.Source;
         }
 
 
