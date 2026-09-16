@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.NodeShell.Services
 {
     using RabbitOM.Net.Rtsp;
     using RabbitOM.Net.Rtsp.Clients;
-    using RabbitOM.Node.Shell;
+    using RabbitOM.NodeShell.Runtime;
 
 	public sealed class ApplicationService : IApplicationService
 	{
@@ -30,7 +30,7 @@ namespace RabbitOM.Node.Services
         {
             var uri = RtspUri.Parse( _parameters.Uri );
 
-            using ( _dispatcher )
+            using ( var eventManager = new EventManager( _dispatcher ) )
             using ( var client = new RtspClient() )
             {
                 client.CommunicationStarted += ( sender , e ) =>
@@ -38,7 +38,7 @@ namespace RabbitOM.Node.Services
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine( "Communication started - " + DateTime.Now );
 
-                    _dispatcher.DispatchEvent( EventNames.CommunicationStartEvent );
+                    eventManager.PostEvent( EventNames.CommunicationStartEvent );
                 };
 
                 client.CommunicationStopped += ( sender , e ) =>
@@ -46,7 +46,7 @@ namespace RabbitOM.Node.Services
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine( "Communication stopped - " + DateTime.Now );
 
-                    _dispatcher.DispatchEvent( EventNames.CommunicationStopEvent );
+                    eventManager.PostEvent( EventNames.CommunicationStopEvent );
                 };
 
                 client.Connected += ( sender , e ) =>
@@ -54,7 +54,7 @@ namespace RabbitOM.Node.Services
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine( "Client connected - " + client.Configuration.Uri );
 
-                    _dispatcher.DispatchEvent( EventNames.ConnectedEvent );
+                    eventManager.PostEvent( EventNames.ConnectedEvent );
                 };
 
                 client.Disconnected += ( sender , e ) =>
@@ -62,7 +62,7 @@ namespace RabbitOM.Node.Services
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.WriteLine( "Client disconnected - " + DateTime.Now );
 
-                    _dispatcher.DispatchEvent( EventNames.DisconnectedEvent );
+                    eventManager.PostEvent( EventNames.DisconnectedEvent );
                 };
 
                 client.Error += ( sender , e ) =>
@@ -70,7 +70,7 @@ namespace RabbitOM.Node.Services
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine( "Client Error: " + (sender as RtspClient).Configuration.Uri + " " + e.Code );
 
-                    _dispatcher.DispatchEvent( EventNames.ErrorEvent );
+                    eventManager.PostEvent( EventNames.ErrorEvent );
                 };
 
                 client.PacketReceived += ( sender , e ) =>

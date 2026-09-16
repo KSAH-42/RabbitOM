@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RabbitOM.Node.Shell
+namespace RabbitOM.NodeShell.Runtime
 {
 	public sealed class BatchTaskExecutor : ITaskExecutor
 	{
@@ -13,6 +13,8 @@ namespace RabbitOM.Node.Shell
 			_process.Start();
 			_process.StandardInput.AutoFlush = true;
 		}
+
+		public TimeSpan WaitTimeout { get; set; } = TimeSpan.FromSeconds(5);
 
 		public void Execute( string input )
 		{
@@ -34,7 +36,11 @@ namespace RabbitOM.Node.Shell
 			try
 			{
 				_process.StandardInput.WriteLine( "exit" );
-				_process.WaitForExit();
+
+				if ( ! _process.WaitForExit( (int) WaitTimeout.TotalMilliseconds ) )
+				{
+					_process.Kill();
+				}
 			}
 			catch ( Exception ex )
 			{

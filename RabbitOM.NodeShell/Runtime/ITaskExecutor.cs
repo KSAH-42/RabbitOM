@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Node.Shell
+namespace RabbitOM.NodeShell.Runtime
 {
 	public interface ITaskExecutor	: IDisposable
 	{

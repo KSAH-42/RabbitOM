@@ -37,7 +37,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM", "RabbitOM\Rabbit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Experimentation", "RabbitOM.Experimentation\RabbitOM.Experimentation.csproj", "{412F9423-532C-4517-8CED-BAD0F86D397D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Node", "RabbitOM.Node\RabbitOM.Node.csproj", "{14469407-333C-403D-9F72-1F8C6DB39928}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.NodeShell", "RabbitOM.NodeShell\RabbitOM.NodeShell.csproj", "{14469407-333C-403D-9F72-1F8C6DB39928}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

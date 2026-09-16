@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace RabbitOM.Node.Shell
+namespace RabbitOM.NodeShell.Runtime
 {
 	public static class WorkflowDeserializer
 	{

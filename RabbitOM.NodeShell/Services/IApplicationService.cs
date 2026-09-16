@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.NodeShell.Services
 {
 	public interface IApplicationService
 	{

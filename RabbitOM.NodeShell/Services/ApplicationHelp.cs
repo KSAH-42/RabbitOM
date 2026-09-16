@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.NodeShell.Services
 {
     public static class ApplicationHelp
 	{

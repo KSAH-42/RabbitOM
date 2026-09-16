@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Node.Shell
+namespace RabbitOM.NodeShell.Runtime
 {
 	public sealed class Workflow
 	{

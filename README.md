@@ -135,7 +135,7 @@ And the repository that own the lib, the implementation use an Authenticator cap
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
 
-# RabbitOM.Node used to receive packet and run scripts triggered by rtsp events
+# RabbitOM.NodeShell used to receive packet and run scripts triggered by rtsp events
 
 This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and interact with the shell. 
 You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events, and for instance the process can monitor a rtsp stream.
@@ -176,7 +176,7 @@ handlers:
 and run by executing the following command (if no yaml is specified, the application will just display communication info).
 
 ~~~~
-RabbitOM.Node.exe rtsp://admin:camera123@127.0.0.1/toy.mp4 -s my-client-handler.yml
+RabbitOM.NodeShell.exe rtsp://admin:camera123@127.0.0.1/toy.mp4 -s my-client-handler.yml
 ~~~~
 
 # About the next rtsp client (experimental)

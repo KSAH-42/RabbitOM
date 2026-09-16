@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="ActionExtensions.cs" />
     <Compile Include="ArraySegmentExtensions.cs" />
+    <Compile Include="Collections\CircualConcurrentQueue.cs" />
+    <Compile Include="Collections\CircularConcurrentQueue.Scope.cs" />
     <Compile Include="DelegateExtensions.cs" />
     <Compile Include="Disposer.cs" />
     <Compile Include="EnumerableExtensions.cs" />

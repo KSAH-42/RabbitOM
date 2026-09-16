@@ -2,7 +2,7 @@
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.NodeShell.Services
 {
     public sealed class ApplicationParameters
     {

@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.NodeShell.Services
 {
-	using RabbitOM.Node.Shell;
+	using RabbitOM.NodeShell.Runtime;
 
 	public sealed class ApplicationServiceBuilder
 	{
@@ -16,7 +16,7 @@ namespace RabbitOM.Node.Services
 
 
 
-		public ApplicationServiceBuilder AddParameters( string[] parameters )
+		public ApplicationServiceBuilder SetParameters( string[] parameters )
 		{
 			if ( _parameters != null )
 			{
@@ -30,7 +30,7 @@ namespace RabbitOM.Node.Services
 			return this;
 		}
 
-		public ApplicationServiceBuilder AddEventDispatcher()
+		public ApplicationServiceBuilder SetupEventDispatcher()
 		{
 			if ( _parameters == null )
 			{
