@@ -15,7 +15,6 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
         public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
-        public static readonly RoutedEvent ZoomChangedEvent = EventManager.RegisterRoutedEvent(nameof(ZoomChanged),RoutingStrategy.Direct,typeof(RoutedEventHandler<ZoomChangedRoutedEventArgs>),typeof(MediaPlayerControl));
 
 
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaPlayerControl) , new PropertyMetadata( Stretch.Fill ) );
@@ -78,12 +77,6 @@ namespace RabbitOM.Player.Controls
         {
             add    => AddHandler( FrameDecodedEvent , value );
             remove => RemoveHandler( FrameDecodedEvent , value );
-        }
-
-        public event RoutedEventHandler<ZoomChangedRoutedEventArgs> ZoomChanged
-        {
-            add    => AddHandler( ZoomChangedEvent , value );
-            remove => RemoveHandler( ZoomChangedEvent , value );
         }
 
 
@@ -265,11 +258,6 @@ namespace RabbitOM.Player.Controls
             IsPlaying = true;
 
             RaiseEvent( new RoutedEventArgs( FrameDecodedEvent ) );
-        }
-
-        protected virtual void OnZoomChanged( ZoomChangedRoutedEventArgs e )
-        {
-            RaiseEvent( e );
         }
     }
 }
