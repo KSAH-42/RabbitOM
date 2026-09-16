@@ -4,51 +4,81 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+			 DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+			 IsEnabledChanged="OnControlEnabledChanged"
              >
     
     <Grid>
 
-        <Canvas Margin="0"
+		<Canvas Margin="0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Background="Transparent"
                 IsHitTestVisible="True"
+                MouseLeftButtonDown="OnCanvasMouseLeftButtonDown"
+                MouseUp="OnCanvasMouseUp"
+                MouseMove="OnCanvasMouseMove"
                 ClipToBounds="True"
                 >
 
-            <Image x:Name="_image"
+			<Image x:Name="_image"
                    x:FieldModifier="private"
                    Margin="0,0,0,0" 
                    SnapsToDevicePixels="True" 
                    UseLayoutRounding="True" 
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
-                   />
+                   Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                   >
+				<Image.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleX="{Binding ZoomProperties.ScaleX, UpdateSourceTrigger=PropertyChanged}" 
+                                        ScaleY="{Binding ZoomProperties.ScaleY, UpdateSourceTrigger=PropertyChanged}" 
+                                        />
+						<TranslateTransform X="{Binding ZoomProperties.TranslationX, UpdateSourceTrigger=PropertyChanged}" 
+                                            Y="{Binding ZoomProperties.TranslationY, UpdateSourceTrigger=PropertyChanged}" 
+                                            />
+					</TransformGroup>
+				</Image.RenderTransform>
+			</Image>
 
-            <Rectangle x:Name="ZoomOuterRectangle"
+			<Rectangle x:Name="OuterRectangle"
                        Margin="0"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Stroke="WhiteSmoke" 
                        StrokeThickness="1.5"
                        StrokeDashArray="2 2"
+                       Canvas.Left="{Binding ZoomProperties.SelectionX}"
+                       Canvas.Top="{Binding ZoomProperties.SelectionY}"
+                       Width="{Binding ZoomProperties.SelectionWidth}"
+                       Height="{Binding ZoomProperties.SelectionHeight}"
+                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        />
 
-            <Rectangle x:Name="ZoomInnerRectangle"
+			<Rectangle x:Name="InnerRectangle"
                        Margin="0"
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Stroke="GreenYellow" 
                        StrokeThickness="2.0" 
                        Fill="#30AAA0A0" 
+                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        />
 
-            <TextBlock x:Name="ZoomInfos"
+			<TextBlock x:Name="TextInfos"
+                       Text="{Binding ZoomProperties.Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                       Foreground="{Binding ZoomProperties.TextColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Canvas.Left="{Binding ZoomProperties.TextPositionX,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Canvas.Top="{Binding ZoomProperties.TextPositionY,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                        />
 
-        </Canvas>
+		</Canvas>
 
-    </Grid>
+	</Grid>
 
 </UserControl>
