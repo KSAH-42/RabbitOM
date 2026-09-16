@@ -167,27 +167,30 @@ namespace RabbitOM.Player.Controls
                 return;
             }
 
-            if ( sb.Children[0] is DoubleAnimation animScaleX )
+            if ( ZoomProperties.HasValidTransformValues() )
             {
-                animScaleX.To = ZoomProperties.ScaleX;
-            }
+                if ( sb.Children[0] is DoubleAnimation animScaleX )
+                {
+                    animScaleX.To = ZoomProperties.ScaleX;
+                }
 
-            if ( sb.Children[1] is DoubleAnimation animScaleY )
-            {
-                animScaleY.To = ZoomProperties.ScaleY;
-            }
+                if ( sb.Children[1] is DoubleAnimation animScaleY )
+                {
+                    animScaleY.To = ZoomProperties.ScaleY;
+                }
 
-            if ( sb.Children[2] is DoubleAnimation animTransX )
-            {
-                animTransX.To = ZoomProperties.TranslationX;
-            }
+                if ( sb.Children[2] is DoubleAnimation animTransX )
+                {
+                    animTransX.To = ZoomProperties.TranslationX;
+                }
 
-            if ( sb.Children[3] is DoubleAnimation animTransY )
-            {
-                animTransY.To = ZoomProperties.TranslationY;
-            }
+                if ( sb.Children[3] is DoubleAnimation animTransY )
+                {
+                    animTransY.To = ZoomProperties.TranslationY;
+                }
 
-            sb.Begin();
+                sb.Begin( this );
+            }
         }
 
         private void OnZoomReset()
@@ -199,27 +202,30 @@ namespace RabbitOM.Player.Controls
                 return;
             }
 
-            if ( sb.Children[0] is DoubleAnimation animScaleX )
+            if ( ZoomProperties.HasValidTransformValues() )
             {
-                animScaleX.To = 1.0;
-            }
+                if ( sb.Children[0] is DoubleAnimation animScaleX )
+                {
+                    animScaleX.To = 1.0;
+                }
 
-            if ( sb.Children[1] is DoubleAnimation animScaleY )
-            {
-                animScaleY.To = 1.0;
-            }
+                if ( sb.Children[1] is DoubleAnimation animScaleY )
+                {
+                    animScaleY.To = 1.0;
+                }
 
-            if ( sb.Children[2] is DoubleAnimation animTransX )
-            {
-                animTransX.To = 0.0;
-            }
+                if ( sb.Children[2] is DoubleAnimation animTransX )
+                {
+                    animTransX.To = 0.0;
+                }
 
-            if ( sb.Children[3] is DoubleAnimation animTransY )
-            {
-                animTransY.To = 0.0;
-            }
+                if ( sb.Children[3] is DoubleAnimation animTransY )
+                {
+                    animTransY.To = 0.0;
+                }
 
-            sb.Begin();
+                sb.Begin( this );
+            }
         }
     }
 }

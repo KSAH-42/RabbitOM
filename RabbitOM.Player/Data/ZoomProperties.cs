@@ -113,5 +113,13 @@ namespace RabbitOM.Player.Data
             get => (Visibility) GetValue( VisibilityProperty );
             set => SetValue( VisibilityProperty , value );
         }
+
+
+        public bool HasValidTransformValues()
+        {
+            return ! double.IsInfinity( ScaleX ) && ! double.IsInfinity( ScaleY ) && ! double.IsNaN( ScaleX ) && ! double.IsNaN( ScaleY )
+                && ! double.IsInfinity( TranslationX ) && ! double.IsInfinity( TranslationX ) && ! double.IsNaN( TranslationX ) && ! double.IsNaN( TranslationX )
+                ;
+        }
     }
 }

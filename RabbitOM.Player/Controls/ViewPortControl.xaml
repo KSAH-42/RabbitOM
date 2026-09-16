@@ -49,10 +49,8 @@
                 >
 			<Image.RenderTransform>
 				<TransformGroup>
-					<TransformGroup>
-						<ScaleTransform x:Name="ImageScale" />
-						<TranslateTransform x:Name="ImageTranslate" />
-					</TransformGroup>
+					<ScaleTransform x:Name="ImageScale" />
+					<TranslateTransform x:Name="ImageTranslate" />
 				</TransformGroup>
 			</Image.RenderTransform>
 		</Image>
