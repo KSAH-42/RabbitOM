@@ -5,28 +5,9 @@ namespace RabbitOM.Player.Data
 {
     public abstract class MediaPlayerTransport : DependencyObject
     {
-        public static readonly DependencyProperty ReceiveTimeoutProperty =
-            DependencyProperty.Register(
-                nameof(ReceiveTimeout),
-                    typeof(TimeSpan),
-                        typeof(MediaPlayerTransport),
-                            new PropertyMetadata( TimeSpan.FromSeconds( 3 ) ));
-
-        public static readonly DependencyProperty SendTimeoutProperty =
-            DependencyProperty.Register(
-                nameof(SendTimeout),
-                    typeof(TimeSpan),
-                        typeof(MediaPlayerTransport),
-                            new PropertyMetadata( TimeSpan.FromSeconds( 3 ) ));
-
-        public static readonly DependencyProperty RetriesIntervalProperty =
-            DependencyProperty.Register(
-                nameof(RetriesInterval),
-                    typeof(TimeSpan),
-                        typeof(MediaPlayerTransport),
-                            new PropertyMetadata( TimeSpan.FromSeconds( 5 ) ));
-
-
+        public static readonly DependencyProperty ReceiveTimeoutProperty = DependencyProperty.Register( nameof(ReceiveTimeout), typeof(TimeSpan), typeof(MediaPlayerTransport), new PropertyMetadata( TimeSpan.FromSeconds( 3 ) ));
+        public static readonly DependencyProperty SendTimeoutProperty = DependencyProperty.Register( nameof(SendTimeout), typeof(TimeSpan), typeof(MediaPlayerTransport), new PropertyMetadata( TimeSpan.FromSeconds( 3 ) ));
+        public static readonly DependencyProperty RetriesIntervalProperty = DependencyProperty.Register( nameof(RetriesInterval), typeof(TimeSpan), typeof(MediaPlayerTransport), new PropertyMetadata( TimeSpan.FromSeconds( 5 ) ));
 
 
 

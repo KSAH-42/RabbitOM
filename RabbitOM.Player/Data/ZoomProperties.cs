@@ -22,7 +22,13 @@ namespace RabbitOM.Player.Data
         public static readonly DependencyProperty TextPositionYProperty = DependencyProperty.Register( nameof(TextPositionY), typeof(double), typeof(ZoomProperties));
         public static readonly DependencyProperty VisibilityProperty = DependencyProperty.Register( nameof(Visibility), typeof(Visibility), typeof(ZoomProperties), new PropertyMetadata( Visibility.Collapsed ));
 
-        public Point StartPoint { get; set; }
+
+
+        public Point StartPoint
+        {
+            get;
+            set;
+        }
 
         public double ScaleX
         {
