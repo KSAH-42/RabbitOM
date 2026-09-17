@@ -1,7 +1,4 @@
-﻿// TODO: add save feature when configuration has been changed
-// TODO: add a new configuration section for saving networksettings
-
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
