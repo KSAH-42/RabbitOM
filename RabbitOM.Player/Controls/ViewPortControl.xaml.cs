@@ -9,14 +9,25 @@ namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
 
-    public partial class ViewPortControl : UserControl
+	public partial class ViewPortControl : UserControl
     {
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(ViewPortControl) , new PropertyMetadata( Stretch.Fill ) );
+
+
+
+
 
         public ViewPortControl()
         {
             InitializeComponent();
+
+            ZoomProperties = new ZoomProperties();
+            Image = ImageBox;
         }
+
+
+
+
 
         public Stretch StretchImage
         {
@@ -24,29 +35,15 @@ namespace RabbitOM.Player.Controls
             set => SetValue( StretchImageProperty , value );
         }
 
-        public ZoomProperties ZoomProperties { get; } = new ZoomProperties();
+        public ZoomProperties ZoomProperties { get; }
 
-        public Image Image { get => _image; }
+        public Image Image { get; }
 
 
 
-        public bool UpdateTransforms()
-        {
-            const double limit = 8;
 
-            if ( ! IsEnabled || ZoomProperties.SelectionWidth <= limit || ZoomProperties.SelectionHeight <= limit || ActualWidth <= limit || ActualHeight <= limit )
-            {
-                return false;
-            }
 
-            ZoomProperties.ScaleX = ActualWidth / InnerRectangle.ActualWidth;
-            ZoomProperties.ScaleY = ActualHeight / InnerRectangle.ActualHeight;
-            ZoomProperties.TranslationX = -ZoomProperties.SelectionInnerX * ZoomProperties.ScaleX;
-            ZoomProperties.TranslationY = -ZoomProperties.SelectionInnerY * ZoomProperties.ScaleY;
 
-            OnZoomIn();
-            return true;
-        }
 
         public void ClearZoomSelection()
         {
@@ -70,8 +67,37 @@ namespace RabbitOM.Player.Controls
 
         public void ClearImage()
         {
-            _image.Source = null;
+            Image.Source = null;
         }
+
+        public bool UpdateTransforms()
+        {
+            const double limit = 8;
+
+            if ( ! IsEnabled || ZoomProperties.SelectionWidth <= limit || ZoomProperties.SelectionHeight <= limit || ActualWidth <= limit || ActualHeight <= limit )
+            {
+                return false;
+            }
+
+            if ( StretchImage != Stretch.Fill )
+            {
+                ZoomProperties.SelectionInnerX -= (ActualWidth - Image.RenderSize.Width ) / 2;
+                ZoomProperties.SelectionInnerY -= (ActualHeight - Image.RenderSize.Height) / 2;
+            }
+
+            ZoomProperties.ScaleX = Image.ActualWidth / InnerRectangle.ActualWidth;
+            ZoomProperties.ScaleY = Image.ActualHeight / InnerRectangle.ActualHeight;
+            ZoomProperties.TranslationX = -ZoomProperties.SelectionInnerX * ZoomProperties.ScaleX;
+            ZoomProperties.TranslationY = -ZoomProperties.SelectionInnerY * ZoomProperties.ScaleY;
+
+            OnZoomIn();
+            return true;
+        }
+
+        
+
+
+
 
 
 

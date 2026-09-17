@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RabbitOM.Player.Controls"
              mc:Ignorable="d"
-			 DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
 			 IsEnabledChanged="OnControlEnabledChanged"
              >
 
@@ -38,14 +37,14 @@
 
 	<Grid ClipToBounds="True">
 
-		<Image x:Name="_image"
+		<Image x:Name="ImageBox"
                 x:FieldModifier="private"
                 Margin="0,0,0,0" 
                 SnapsToDevicePixels="True" 
                 UseLayoutRounding="True" 
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+			    Stretch="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                 >
 			<Image.RenderTransform>
 				<TransformGroup>
@@ -72,11 +71,11 @@
                        Stroke="WhiteSmoke" 
                        StrokeThickness="1.5"
                        StrokeDashArray="2 2"
-                       Canvas.Left="{Binding ZoomProperties.SelectionX}"
-                       Canvas.Top="{Binding ZoomProperties.SelectionY}"
-                       Width="{Binding ZoomProperties.SelectionWidth}"
-                       Height="{Binding ZoomProperties.SelectionHeight}"
-                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Canvas.Left="{Binding ZoomProperties.SelectionX,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Canvas.Top="{Binding ZoomProperties.SelectionY,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Width="{Binding ZoomProperties.SelectionWidth,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Height="{Binding ZoomProperties.SelectionHeight,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                        />
 
 			<Rectangle x:Name="InnerRectangle"
@@ -86,17 +85,17 @@
                        Stroke="GreenYellow" 
                        StrokeThickness="2.0" 
                        Fill="#30AAA0A0" 
-                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                        />
 
 			<TextBlock x:Name="TextInfos"
-                       Text="{Binding ZoomProperties.Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                       Foreground="{Binding ZoomProperties.TextColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Text="{Binding ZoomProperties.Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                       Foreground="{Binding ZoomProperties.TextColor,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Canvas.Left="{Binding ZoomProperties.TextPositionX,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       Canvas.Top="{Binding ZoomProperties.TextPositionY,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                       Canvas.Left="{Binding ZoomProperties.TextPositionX,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Canvas.Top="{Binding ZoomProperties.TextPositionY,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                       Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                        />
 
 		</Canvas>
