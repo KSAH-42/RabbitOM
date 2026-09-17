@@ -85,16 +85,15 @@ namespace RabbitOM.Player.Controls
                 ZoomProperties.SelectionInnerY -= (ActualHeight - Image.RenderSize.Height) / 2;
             }
 
-            ZoomProperties.ScaleX = Image.ActualWidth / InnerRectangle.ActualWidth;
-            ZoomProperties.ScaleY = Image.ActualHeight / InnerRectangle.ActualHeight;
+            ZoomProperties.ScaleX = Image.RenderSize.Width / InnerRectangle.ActualWidth;
+            ZoomProperties.ScaleY = Image.RenderSize.Height / InnerRectangle.ActualHeight;
             ZoomProperties.TranslationX = -ZoomProperties.SelectionInnerX * ZoomProperties.ScaleX;
             ZoomProperties.TranslationY = -ZoomProperties.SelectionInnerY * ZoomProperties.ScaleY;
 
-            OnZoomIn();
             return true;
         }
 
-        
+
 
 
 
@@ -137,6 +136,7 @@ namespace RabbitOM.Player.Controls
             canvas.ReleaseMouseCapture();
 
             UpdateTransforms();
+            OnZoomIn();
 
             ZoomProperties.Visibility = Visibility.Collapsed;
         }
