@@ -31,8 +31,7 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 
 ➡️ Next Breaking changes
 
-* Making the mediaplayer usercontrol run on a seperate thread as STA Thread with it's own classical message pump, controls will be instanciated in this thread
-* The solution will be migrate for Visual Studio 2026
+* Making the mediaplayer usercontrol run on a seperate thread
 
 ➡️ Next arrivals:
 
@@ -43,7 +42,7 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
-* Net Core Migration (it's already exist but as private repository)
+* Net Core Migration
 
 The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
 
