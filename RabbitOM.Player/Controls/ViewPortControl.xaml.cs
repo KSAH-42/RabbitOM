@@ -70,13 +70,13 @@ namespace RabbitOM.Player.Controls
             Image.Source = null;
         }
 
-        public bool UpdateTransforms()
+        private void UpdateTransforms()
         {
             const double limit = 8;
 
             if ( ! IsEnabled || ZoomProperties.SelectionWidth <= limit || ZoomProperties.SelectionHeight <= limit || ActualWidth <= limit || ActualHeight <= limit )
             {
-                return false;
+                return;
             }
 
             if ( StretchImage != Stretch.Fill )
@@ -90,7 +90,7 @@ namespace RabbitOM.Player.Controls
             ZoomProperties.TranslationX = -ZoomProperties.SelectionInnerX * ZoomProperties.ScaleX;
             ZoomProperties.TranslationY = -ZoomProperties.SelectionInnerY * ZoomProperties.ScaleY;
 
-            return true;
+            OnZoomIn();
         }
 
 
@@ -136,7 +136,6 @@ namespace RabbitOM.Player.Controls
             canvas.ReleaseMouseCapture();
 
             UpdateTransforms();
-            OnZoomIn();
 
             ZoomProperties.Visibility = Visibility.Collapsed;
         }
