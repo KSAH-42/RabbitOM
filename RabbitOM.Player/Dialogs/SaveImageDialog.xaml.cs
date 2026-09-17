@@ -13,6 +13,8 @@ namespace RabbitOM.Player.Dialogs
         public static readonly RoutedCommand TakeSnapshotCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveButtonCommand = new RoutedCommand();
 
+        public static readonly DependencyProperty FileNameProperty = DependencyProperty.Register( nameof(FileName), typeof(string), typeof(SaveImageDialog));
+        public static readonly DependencyProperty ImageProperty = DependencyProperty.Register( nameof(Image), typeof(BitmapSource), typeof(SaveImageDialog));
 
 
 
@@ -21,23 +23,6 @@ namespace RabbitOM.Player.Dialogs
         {
             InitializeComponent();
         }
-
-
-
-
-
-        public static readonly DependencyProperty FileNameProperty =
-            DependencyProperty.Register(
-                nameof(FileName),
-                    typeof(string),
-                        typeof(SaveImageDialog));
-
-        public static readonly DependencyProperty ImageProperty =
-            DependencyProperty.Register(
-                nameof(Image),
-                    typeof(BitmapSource),
-                        typeof(SaveImageDialog));
-
 
 
 
@@ -60,9 +45,6 @@ namespace RabbitOM.Player.Dialogs
             get;
             set;
         }
-
-
-
 
 
 
