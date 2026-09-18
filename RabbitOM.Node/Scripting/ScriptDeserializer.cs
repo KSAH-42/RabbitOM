@@ -26,11 +26,11 @@ namespace RabbitOM.Node.Scripting
 
 			if ( assembliesNode != null )
 			{
-				script.Assemblies = new List<AssemblyFile>();
+				script.Assemblies = new List<ScriptAssembly>();
 
 				foreach ( var assembly in assembliesNode.Elements( "property" ) )
 				{
-					script.Assemblies.Add( new AssemblyFile { Name = assembly.Value?.Trim() } );
+					script.Assemblies.Add( new ScriptAssembly { Name = assembly.Value?.Trim() } );
 				}
 			}
 
@@ -38,11 +38,11 @@ namespace RabbitOM.Node.Scripting
 
 			if ( propertiesNode != null )
 			{
-				script.Properties = new List<Property>();
+				script.Properties = new List<ScriptProperty>();
 
 				foreach ( var property in propertiesNode.Elements( "property" ) )
 				{
-					script.Properties.Add( new Property
+					script.Properties.Add( new ScriptProperty
 					{
 						Name = property.Attribute( "name" )?.Value?.Trim() ,
 						Value = property.Value?.Trim() ,

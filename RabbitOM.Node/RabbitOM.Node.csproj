@@ -49,12 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scripting\Property.cs" />
+    <Compile Include="Scripting\StringExtensions.cs" />
+    <Compile Include="Scripting\NodeScriptConfigurer.cs" />
+    <Compile Include="Scripting\ScriptProperty.cs" />
     <Compile Include="Scripting\CodeDomProviderFactory.cs" />
     <Compile Include="Scripting\NodeEvent.cs" />
     <Compile Include="Scripting\NodeScript.cs" />
     <Compile Include="Scripting\NodeScriptBuilder.cs" />
-    <Compile Include="Scripting\AssemblyFile.cs" />
+    <Compile Include="Scripting\ScriptAssembly.cs" />
     <Compile Include="Scripting\ScriptValidator.cs" />
     <Compile Include="Scripting\Script.cs" />
     <Compile Include="Scripting\ScriptDeserializer.cs" />
@@ -80,8 +82,6 @@
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripting\Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

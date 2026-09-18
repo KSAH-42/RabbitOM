@@ -9,9 +9,9 @@ namespace RabbitOM.Node.Scripting
 
 		public string Language { get; set; }
 
-		public List<AssemblyFile> Assemblies { get; set; }
+		public List<ScriptAssembly> Assemblies { get; set; }
 
-		public List<Property> Properties { get; set; }
+		public List<ScriptProperty> Properties { get; set; }
 
 		public string Code { get; set; }
 	}

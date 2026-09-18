@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	public sealed class AssemblyFile
+	public sealed class ScriptAssembly
 	{
 		public string Name { get; set; }
 	}

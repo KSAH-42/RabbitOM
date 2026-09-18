@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <script>
-	<name>my script</name>
+	<name>a less sophistcated script compared to SmartDevice handler</name>
 	<language>csharp</language>
 	<assemblies>
 		<assembly>System.Speech.dll</assembly>
 	</assemblies>
 	<properties>
-		<property name="CommunicationStartedMessage">the communication is started</property>
-		<property name="CommunicationStoppedMessage">the communication is stopped</property>
-		<property name="ConnectedMessage">connected to the camera</property>
+		<property name="CommunicationStartedMessage">the communication is started, please contact Lilian for doing something</property>
+	    <property name="CommunicationStoppedMessage">the communication is stopped</property>
+		<property name="ConnectedMessage">connected to the camera, please contact Lydia for reporting</property>
 		<property name="DisconnectedMessage">disconnected from the camera</property>
 	</properties>
 	<code>
@@ -27,7 +27,6 @@
 
 			public override void Execute( NodeEvent nodeEvent )
 			{
-
 			}
 			
 			protected override void Dispose( bool disposing )
