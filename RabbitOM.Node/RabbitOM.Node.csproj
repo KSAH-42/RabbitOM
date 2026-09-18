@@ -49,8 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Scripting\Events\INodeEventHandler.cs" />
-    <Compile Include="Scripting\Events\NodeEvent.cs" />
+    <Compile Include="Scripting\Property.cs" />
+    <Compile Include="Scripting\CodeDomProviderFactory.cs" />
+    <Compile Include="Scripting\NodeEvent.cs" />
     <Compile Include="Scripting\NodeScript.cs" />
     <Compile Include="Scripting\NodeScriptBuilder.cs" />
     <Compile Include="Scripting\AssemblyFile.cs" />
@@ -78,6 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scripting\Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -11,6 +11,8 @@ namespace RabbitOM.Node.Scripting
 
 		public List<AssemblyFile> Assemblies { get; set; }
 
+		public List<Property> Properties { get; set; }
+
 		public string Code { get; set; }
 	}
 }

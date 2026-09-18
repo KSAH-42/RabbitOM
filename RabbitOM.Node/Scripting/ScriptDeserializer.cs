@@ -17,19 +17,36 @@ namespace RabbitOM.Node.Scripting
 
 			var script = new Script
 			{
-				Name       = root.Element( "name" )?.Value?.Trim() ,
-				Language   = root.Element( "language" )?.Value?.Trim() ,
-				Code       = root.Element( "code" )?.Value ,
-				Assemblies = new List<AssemblyFile>()
+				Name     = root.Element( "name" )?.Value?.Trim() ,
+				Language = root.Element( "language" )?.Value?.Trim() ,
+				Code     = root.Element( "code" )?.Value
 			};
 
 			var assembliesNode = root.Element( "assemblies" );
 
 			if ( assembliesNode != null )
 			{
-				foreach ( var assembly in assembliesNode.Elements( "assembly" ) )
+				script.Assemblies = new List<AssemblyFile>();
+
+				foreach ( var assembly in assembliesNode.Elements( "property" ) )
 				{
 					script.Assemblies.Add( new AssemblyFile { Name = assembly.Value?.Trim() } );
+				}
+			}
+
+			var propertiesNode = root.Element( "properties" );
+
+			if ( propertiesNode != null )
+			{
+				script.Properties = new List<Property>();
+
+				foreach ( var property in propertiesNode.Elements( "property" ) )
+				{
+					script.Properties.Add( new Property
+					{
+						Name = property.Attribute( "name" )?.Value?.Trim() ,
+						Value = property.Value?.Trim() ,
+					} );
 				}
 			}
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.CSharp;
-using System;
+﻿using System;
 using System.Linq;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -8,6 +7,8 @@ using System.Text;
 
 namespace RabbitOM.Node.Scripting
 {
+	using Microsoft.CSharp;
+
 	public sealed class NodeScriptBuilder
 	{
 		public string Code { get; set; }
@@ -21,7 +22,7 @@ namespace RabbitOM.Node.Scripting
 
 		public NodeScript Build()
 		{
-			using ( var provider = new CSharpCodeProvider() )
+			using ( var provider = CodeDomProviderFactory.CreateProvider( Language ) )
             {
                 var parameters = new CompilerParameters
                 {

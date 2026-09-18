@@ -9,7 +9,7 @@ namespace RabbitOM.Node.Scripting
 			Dispose( false );
 		}
 
-		public abstract void Execute();
+		public abstract void Execute( NodeEvent nodeEvent );
 
 		public void Dispose()
 		{

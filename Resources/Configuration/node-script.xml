@@ -1,15 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <script>
 	<name>my script</name>
+	<language>csharp</language>
 	<assemblies>
-		<assembly>a.dll</assembly>
-		<assembly>b.dll</assembly>
-		<assembly>c.dll</assembly>
+		<assembly>System.Speech.dll</assembly>
 	</assemblies>
+	<properties>
+		<property name="CommunicationStartedMessage">the communication is started</property>
+		<property name="CommunicationStoppedMessage">the communication is stopped</property>
+		<property name="ConnectedMessage">connected to the camera</property>
+		<property name="DisconnectedMessage">disconnected from the camera</property>
+	</properties>
 	<code>
-		public class MyNodeScript : NodeScript
+		using RabbitOM.Node;
+		using RabbitOM.Node.Scripting;
+		using System.Speech.Synthesis;
+
+		public sealed class DeviceMonitoringScript : NodeScript
 		{
-			public override void Execute() {}
+			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
+			
+			public string CommunicationStartedMessage { get; set; }
+			public string CommunicationStoppedMessage { get; set; }
+			public string ConnectedMessage { get; set; }
+			public string DisconnectedMessage { get; set; }
+
+			public override void Execute( NodeEvent nodeEvent )
+			{
+
+			}
+			
+			protected override void Dispose( bool disposing )
+			{
+				if ( disposing )
+				{
+					_synthesizer.Dispose();
+				}
+			}
 		}
 	</code>
 </script>
