@@ -53,6 +53,10 @@
     <Compile Include="Scripting\Events\NodeEvent.cs" />
     <Compile Include="Scripting\NodeScript.cs" />
     <Compile Include="Scripting\NodeScriptBuilder.cs" />
+    <Compile Include="Scripting\AssemblyFile.cs" />
+    <Compile Include="Scripting\ScriptValidator.cs" />
+    <Compile Include="Scripting\Script.cs" />
+    <Compile Include="Scripting\ScriptDeserializer.cs" />
     <Compile Include="Services\ApplicationHelp.cs" />
     <Compile Include="Services\IApplicationService.cs" />
     <Compile Include="Services\ApplicationService.cs" />

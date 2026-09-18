@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<name>my script</name>
+	<assemblies>
+		<assembly>a.dll</assembly>
+		<assembly>b.dll</assembly>
+		<assembly>c.dll</assembly>
+	</assemblies>
+	<code>
+		public class MyNodeScript : NodeScript
+		{
+			public override void Execute() {}
+		}
+	</code>
+</script>
