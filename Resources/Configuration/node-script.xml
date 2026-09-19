@@ -3,7 +3,8 @@
 	<name>Device montoring script</name>
 	<language>csharp</language>
 	<assemblies>
-		<assembly>System.Speech.dll</assembly>
+		<!-- use ILSpy -> open from the GAC to the real path, it may change -->
+		<assembly>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll</assembly>
 	</assemblies>
 	<properties>
 		<property name="CommunicationStartedMessage">the communication is started, please contact Lilian for doing something</property>
@@ -14,11 +15,18 @@
 	<code>
 		using RabbitOM.Node;
 		using RabbitOM.Node.Scripting;
+		using RabbitOM.Net.Rtsp.Clients;
+		using System;
 		using System.Speech.Synthesis;
 
 		public sealed class DeviceMonitoringScript : NodeScript
 		{
 			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
+
+			public DeviceMonitoringScript()
+			{
+				_synthesizer.SetOutputToDefaultAudioDevice();
+			}
 
 			public string CommunicationStartedMessage { get; set; }
 			public string CommunicationStoppedMessage { get; set; }
@@ -27,6 +35,14 @@
 
 			public override void Handle( object sender , EventArgs e )
 			{
+				if ( e is RtspClientConnectedEventArgs )
+				{
+					_synthesizer.Speak( ConnectedMessage );
+				}
+				else if ( e is RtspClientDisconnectedEventArgs )
+				{
+					_synthesizer.Speak( DisconnectedMessage );
+				}
 			}
 
 			protected override void Dispose( bool disposing )

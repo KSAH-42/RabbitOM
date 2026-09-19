@@ -46,6 +46,7 @@ namespace RabbitOM.Node.Scripting
 			converters[ typeof( float  ) ] = () => property.SetValue( _nodeScript , value.ToFloat() );
 			converters[ typeof( double ) ] = () => property.SetValue( _nodeScript , value.ToDouble() );
 			converters[ typeof( decimal) ] = () => property.SetValue( _nodeScript , value.ToDecimal() );
+			converters[ typeof( string ) ] = () => property.SetValue( _nodeScript , value );
 			converters[ typeof( DateTime ) ] = () => property.SetValue( _nodeScript , value.ToDateTime() );
 			converters[ typeof( TimeSpan ) ] = () => property.SetValue( _nodeScript , value.ToTimeSpan() );
 			converters[ typeof( Guid     ) ] = () => property.SetValue( _nodeScript , value.ToGuid() );

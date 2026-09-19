@@ -28,7 +28,7 @@ namespace RabbitOM.Node.Scripting
 			{
 				script.Assemblies = new List<ScriptAssembly>();
 
-				foreach ( var assembly in assembliesNode.Elements( "property" ) )
+				foreach ( var assembly in assembliesNode.Elements( "assembly" ) )
 				{
 					script.Assemblies.Add( new ScriptAssembly { Name = assembly.Value?.Trim() } );
 				}
