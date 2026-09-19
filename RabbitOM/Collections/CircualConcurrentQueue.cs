@@ -8,6 +8,7 @@ namespace RabbitOM.Collections
 {
     using RabbitOM.Threading;
 
+    // TODO: remove this collection
     public sealed partial class CircualConcurrentQueue<TElement> : ICollection, IReadOnlyCollection<TElement>
         where TElement : class
     {
