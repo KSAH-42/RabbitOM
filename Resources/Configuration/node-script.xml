@@ -19,16 +19,16 @@
 		public sealed class DeviceMonitoringScript : NodeScript
 		{
 			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
-			
+
 			public string CommunicationStartedMessage { get; set; }
 			public string CommunicationStoppedMessage { get; set; }
 			public string ConnectedMessage { get; set; }
 			public string DisconnectedMessage { get; set; }
 
-			public override void Handle( EventContext context )
+			public override void Handle( object sender , EventArgs e )
 			{
 			}
-			
+
 			protected override void Dispose( bool disposing )
 			{
 				if ( disposing )
