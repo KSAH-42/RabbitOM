@@ -35,6 +35,7 @@ namespace RabbitOM.Node.Scripting
 		public void Stop()
 		{
 			_worker.Stop();
+			_events.Clear();
 		}
 
 		public void PostEvent( object source , EventArgs e )
@@ -74,6 +75,8 @@ namespace RabbitOM.Node.Scripting
 
 		private void DoEvents()
 		{
+			_script.Setup();
+
 			while ( CircualConcurrentQueue<NodeEvent>.Wait( _events , _worker.ExitHandle ) )
 			{
 				if ( _events.TryDequeue( out NodeEvent nodeEvent ) )

@@ -9,6 +9,8 @@ namespace RabbitOM.Node.Scripting
 			Dispose( false );
 		}
 
+		public virtual void Setup() { }
+
 		public abstract void Handle( object sender , EventArgs e );
 
 		public void Dispose()
