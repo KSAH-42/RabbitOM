@@ -149,7 +149,6 @@ You can also configure the script: in the xml section called "properties", the n
 	<name>Device montoring script</name>
 	<language>csharp</language>
 	<assemblies>
-		<!-- first open ILSpy -> go to menu File/Open from the GAC to the search the real path, it may change -->
 		<assembly>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll</assembly>
 	</assemblies>
 	<properties>
@@ -204,13 +203,13 @@ You can also configure the script: in the xml section called "properties", the n
 
 ~~~~
 
-and run by executing the following command (take about the path it may be incorrect)
+and run by executing the following command (take care regarding the path it may be incorrect)
 
 ~~~~
 rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-script.xml
 ~~~~
 
-# RabbitOM.NodeShell used to receive packet and run scripts triggered by the rtsp client events
+# RabbitOM.NodeShell used to receive packet and run scripts triggered by the rtsp client events (TO BE removed and replace by the node)
 
 This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and interact with the shell. 
 You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events. For instance, when the communication back with a camera you can use curl.
@@ -249,7 +248,7 @@ handlers:
 
 ~~~~
 
-and run by executing the following command (take about the path it may be incorrect)
+and run by executing the following command (take care regarding the path it may be incorrect)
 
 ~~~~
 rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-workflow.yml

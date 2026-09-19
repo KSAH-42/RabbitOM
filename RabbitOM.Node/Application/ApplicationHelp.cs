@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.Node.Application
 {
     public static class ApplicationHelp
 	{
@@ -30,7 +30,7 @@ namespace RabbitOM.Node.Services
             Console.WriteLine();
             Console.WriteLine("Arguments:");
             Console.WriteLine();
-            Console.WriteLine("-s\t[optional] the yaml file containing client handlers code");
+            Console.WriteLine("-s\t[optional] the xml file containing client handlers code");
             Console.WriteLine();
 
             if ( exception != null )

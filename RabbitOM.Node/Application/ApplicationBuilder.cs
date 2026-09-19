@@ -2,18 +2,19 @@
 using System.IO;
 using System.Linq;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.Node.Application
 {
 	using RabbitOM.Node.Scripting;
+	using RabbitOM.Node.Scripting.Models;
 
-	public sealed class ApplicationServiceBuilder
+	public sealed class ApplicationBuilder
 	{
 		private ApplicationParameters _parameters;
 		private ScriptModel _script;
 		private IScriptRunner _scriptRunner;
 
 
-		public ApplicationServiceBuilder SetParameters( string[] parameters )
+		public ApplicationBuilder SetParameters( string[] parameters )
 		{
 			if ( _parameters != null )
 			{
@@ -27,7 +28,7 @@ namespace RabbitOM.Node.Services
 			return this;
 		}
 
-		public ApplicationServiceBuilder LoadScript()
+		public ApplicationBuilder LoadScript()
 		{
 			if ( _parameters == null )
 			{
@@ -55,7 +56,7 @@ namespace RabbitOM.Node.Services
 			return this;
 		}
 
-		public ApplicationServiceBuilder SetupRunner()
+		public ApplicationBuilder SetupRunner()
 		{
 			if ( _script == null )
 			{
@@ -73,7 +74,7 @@ namespace RabbitOM.Node.Services
 				Code = _script.Code ,
 			};
 
-			foreach ( var assembly in _script.Assemblies ?? Enumerable.Empty<AssemblyModel>() )
+			foreach ( var assembly in _script.Assemblies ?? Enumerable.Empty<ScriptAssemblyModel>() )
 			{
 				builder.Assemblies.Add( assembly.Name );
 			}
@@ -81,7 +82,7 @@ namespace RabbitOM.Node.Services
 			var nodeScript = builder.Build();
 			var configurer = new NodeScriptConfigurer( nodeScript );
 
-			foreach ( var property in _script.Properties ?? Enumerable.Empty<PropertyModel>() )
+			foreach ( var property in _script.Properties ?? Enumerable.Empty<ScriptPropertyModel>() )
 			{
 				configurer.ConfigureProperty( property.Name , property.Value );
 			}
@@ -91,9 +92,9 @@ namespace RabbitOM.Node.Services
 			return this;
 		}
 
-		public IApplicationService Build()
+		public IApplication Build()
 		{
-			return new ApplicationService( _scriptRunner ?? NullNodeScriptRunner.Instance , _parameters.Uri );
+			return new NodeApplication( _scriptRunner ?? NullNodeScriptRunner.Instance , _parameters.Uri );
 		}
 	}
 }

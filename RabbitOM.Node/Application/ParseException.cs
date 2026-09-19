@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.Node.Application
 {
 	[Serializable]
 	public class ParseException : Exception

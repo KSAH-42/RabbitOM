@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scripting\NodeScriptRunnerLauncher.cs" />
     <Compile Include="Scripting\NodeEvent.cs" />
     <Compile Include="Scripting\NodeScriptExtensions.cs" />
     <Compile Include="Scripting\NodeScriptRunner.cs" />
@@ -56,22 +57,22 @@
     <Compile Include="Scripting\INodeScriptRunner.cs" />
     <Compile Include="Scripting\StringExtensions.cs" />
     <Compile Include="Scripting\NodeScriptConfigurer.cs" />
-    <Compile Include="Scripting\PropertyModel.cs" />
+    <Compile Include="Scripting\Models\ScriptPropertyModel.cs" />
     <Compile Include="Scripting\CodeDomProviderFactory.cs" />
     <Compile Include="Scripting\NodeScript.cs" />
     <Compile Include="Scripting\NodeScriptBuilder.cs" />
-    <Compile Include="Scripting\AssemblyModel.cs" />
-    <Compile Include="Scripting\ScriptModelValidator.cs" />
-    <Compile Include="Scripting\ScriptModel.cs" />
-    <Compile Include="Scripting\ScriptModelDeserializer.cs" />
-    <Compile Include="Services\ApplicationHelp.cs" />
-    <Compile Include="Services\IApplicationService.cs" />
-    <Compile Include="Services\ApplicationService.cs" />
-    <Compile Include="Services\ApplicationParameters.cs" />
+    <Compile Include="Scripting\Models\ScriptAssemblyModel.cs" />
+    <Compile Include="Scripting\Models\ScriptModelValidator.cs" />
+    <Compile Include="Scripting\Models\ScriptModel.cs" />
+    <Compile Include="Scripting\Models\ScriptModelDeserializer.cs" />
+    <Compile Include="Application\ApplicationHelp.cs" />
+    <Compile Include="Application\IApplication.cs" />
+    <Compile Include="Application\NodeApplication.cs" />
+    <Compile Include="Application\ApplicationParameters.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ApplicationServiceBuilder.cs" />
-    <Compile Include="Services\ParseException.cs" />
+    <Compile Include="Application\ApplicationBuilder.cs" />
+    <Compile Include="Application\ParseException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

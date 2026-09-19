@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Node
 {
-    using RabbitOM.Node.Services;
+    using RabbitOM.Node.Application;
 
 	static class Program
     {
@@ -16,13 +16,13 @@ namespace RabbitOM.Node
 
             try
             {
-                var service = new ApplicationServiceBuilder()
+                var application = new ApplicationBuilder()
                     .SetParameters( args )
                     .LoadScript()
                     .SetupRunner()
                     .Build();
 
-                service.Run();
+                application.Run();
             }
             catch( Exception ex )
             {

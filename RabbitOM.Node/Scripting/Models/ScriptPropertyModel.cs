@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Node.Scripting
+namespace RabbitOM.Node.Scripting.Models
 {
-	public sealed class PropertyModel
+	public sealed class ScriptPropertyModel
 	{
 		public string Name { get; set; }
 

@@ -2,17 +2,13 @@
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.Node.Application
 {
     public sealed class ApplicationParameters
     {
         public string Uri { get; private set; }
 
         public string ScriptWorkflow { get; private set; }
-
-
-
-
 
 
 

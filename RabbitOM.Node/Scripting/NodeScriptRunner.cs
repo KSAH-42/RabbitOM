@@ -73,6 +73,7 @@ namespace RabbitOM.Node.Scripting
 			}
 		}
 
+		// TODO: refactor this code
 		private void DoEvents()
 		{
 			_script.Setup();

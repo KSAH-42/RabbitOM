@@ -28,7 +28,7 @@ namespace RabbitOM.Node.Scripting
 
 			if ( property.Name != name )
 			{
-				throw new InvalidOperationException( "" );
+				throw new InvalidOperationException( "the property name is not the same" );
 			}
 
 			var converters = new Dictionary<Type,Action>();

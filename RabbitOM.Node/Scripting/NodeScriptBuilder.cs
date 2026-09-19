@@ -15,10 +15,14 @@ namespace RabbitOM.Node.Scripting
 
 		public string Language { get; set; }
 
-		public HashSet<string> Assemblies { get; } = new HashSet<string>() { "System.dll" , "RabbitOM.dll" };
+		public HashSet<string> Assemblies { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase ) { "System.dll" , "RabbitOM.dll" };
 
 
 
+		// Here we use a CodeDomProvider, and it'doesn't support all features of C#
+		// It seems the same thing when use <x:code> tag in the xaml to add c# code without touching the code behind
+		// using the <x:code> xml tag has some limitations about the c# language feature for WPF app based on the .net framework
+		// Think that according to .net community, RosylnCompiler is recommended
 
 		public NodeScript Build()
 		{

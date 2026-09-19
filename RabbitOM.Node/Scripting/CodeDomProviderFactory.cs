@@ -6,7 +6,7 @@ namespace RabbitOM.Node.Scripting
 	using Microsoft.CSharp;
 	using Microsoft.VisualBasic;
 
-	public static class CodeDomProviderFactory
+	internal static class CodeDomProviderFactory
 	{
 		private readonly static StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
 

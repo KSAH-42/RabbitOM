@@ -1,33 +1,29 @@
 ﻿using System;
 
-namespace RabbitOM.Node.Services
+namespace RabbitOM.Node.Application
 {
     using RabbitOM.Net.Rtsp;
     using RabbitOM.Net.Rtsp.Clients;
 	using RabbitOM.Node.Scripting;
 
-	public sealed class ApplicationService : IApplicationService
+	public sealed class NodeApplication : IApplication
 	{
         private readonly IScriptRunner _scriptRunner;
         private readonly RtspUri _uri;
 
 
-
-		public ApplicationService(IScriptRunner scriptRunner , string uri )
+		public NodeApplication( IScriptRunner scriptRunner , string uri )
 		{
 			_scriptRunner = scriptRunner ?? throw new ArgumentNullException( nameof( scriptRunner ) );
 			_uri = RtspUri.Parse( uri );
 		}
 
 
-
-		 public void Run()
+		public void Run()
         {
             using ( var client = new RtspClient() )
-            using ( _scriptRunner )
+            using ( var scope = new NodeScriptRunnerLauncher( _scriptRunner ) )
 			{
-				_scriptRunner.Start();
-
 				client.CommunicationStarted += ( sender , e ) =>
                 {
                     Console.ForegroundColor = ConsoleColor.White;
