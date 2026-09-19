@@ -8,23 +8,21 @@ namespace RabbitOM.NodeShell.Services
 
 	public sealed class ApplicationService : IApplicationService
 	{
-        private readonly ApplicationParameters _parameters;
         private readonly IEventDispatcher _dispatcher;
+        private readonly RtspUri _uri;
 
 
 
-        public ApplicationService( ApplicationParameters parameters , IEventDispatcher dispatcher )
+        public ApplicationService( IEventDispatcher dispatcher , string uri )
         {
-            _parameters = parameters ?? throw new ArgumentNullException( nameof( parameters ) );
             _dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
+            _uri = RtspUri.Parse( uri );
         }
 
 
 
         public void Run()
         {
-            var uri = RtspUri.Parse( _parameters.Uri );
-
             using ( var eventManager = new EventManager( _dispatcher ) )
             using ( var client = new RtspClient() )
             {
@@ -74,9 +72,9 @@ namespace RabbitOM.NodeShell.Services
                     Console.WriteLine( "DataReceived {0}" , e.Packet.Data.Length );
                 };
 
-                client.Configuration.Uri = uri.ToString( true );
-                client.Configuration.UserName = uri.UserName;
-                client.Configuration.Password = uri.Password;
+                client.Configuration.Uri = _uri.ToString( true );
+                client.Configuration.UserName = _uri.UserName;
+                client.Configuration.Password = _uri.Password;
                 client.Configuration.ReceiveTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.SendTimeout = TimeSpan.FromSeconds( 3 );
                 client.Configuration.KeepAliveType = RtspKeepAliveType.Options;

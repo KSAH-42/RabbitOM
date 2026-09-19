@@ -23,7 +23,7 @@ namespace RabbitOM.Collections
 
 
         public CircualConcurrentQueue()
-            : this ( 1000 )
+            : this ( 10000 )
         {
         }
 

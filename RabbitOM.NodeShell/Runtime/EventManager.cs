@@ -8,14 +8,14 @@ namespace RabbitOM.NodeShell.Runtime
 	public sealed class EventManager : IDisposable
 	{
 		private readonly IEventDispatcher _dispatcher;
-		private readonly CircualConcurrentQueue<Action> _actions;
+		private readonly CircualConcurrentQueue<string> _events;
 		private readonly BackgroundWorker _worker;
 		private volatile bool _isDisposed;
 
 		public EventManager( IEventDispatcher dispatcher )
 		{
 			_dispatcher = dispatcher ?? throw new ArgumentNullException( nameof( dispatcher ) );
-			_actions = new CircualConcurrentQueue<Action>();
+			_events = new CircualConcurrentQueue<string>();
 			_worker = new BackgroundWorker( "EventManager" );
 			_worker.Start( PumpEvents );
 		}
@@ -24,7 +24,7 @@ namespace RabbitOM.NodeShell.Runtime
 		{
 			_isDisposed = true;
 			_worker.Stop();
-			_actions.Clear();
+			_events.Clear();
 			_dispatcher.Dispose();
 		}
 
@@ -35,22 +35,22 @@ namespace RabbitOM.NodeShell.Runtime
 				throw new ObjectDisposedException( nameof(EventManager) );
 			}
 
-			_actions.Enqueue( () => _dispatcher.DispatchEvent( eventType ) );
+			_events.Enqueue( eventType );
 		}
 
 		private void PumpEvents()
 		{
-			while ( CircualConcurrentQueue<Action>.Wait( _actions , _worker.ExitHandle ) )
+			while ( CircualConcurrentQueue<string>.Wait( _events , _worker.ExitHandle ) )
 			{
-				if ( _actions.TryDequeue( out Action action ) )
+				if ( _events.TryDequeue( out var evt ) )
 				{
-					action.Invoke();
+					_dispatcher.DispatchEvent( evt );
 				}
 			}
 
-			while ( _actions.TryDequeue( out Action action ) )
+			while ( _events.TryDequeue( out var evt ) )
 			{
-				action.Invoke();
+				_dispatcher.DispatchEvent( evt );
 			}
 		}
 	}

@@ -18,6 +18,8 @@ namespace RabbitOM.Node
             {
                 var service = new ApplicationServiceBuilder()
                     .SetParameters( args )
+                    .LoadScript()
+                    .SetupRunner()
                     .Build();
 
                 service.Run();

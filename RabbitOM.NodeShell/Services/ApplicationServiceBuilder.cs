@@ -66,7 +66,7 @@ namespace RabbitOM.NodeShell.Services
 
 		public IApplicationService Build()
 		{
-			return new ApplicationService( _parameters , _dispatcher ?? NullEventDispatcher.Instance );
+			return new ApplicationService( _dispatcher ?? NullEventDispatcher.Instance , _parameters.Uri );
 		}
 	}
 }
