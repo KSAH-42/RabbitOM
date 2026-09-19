@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scripting\NodeScriptRunner.cs" />
     <Compile Include="Scripting\StringExtensions.cs" />
     <Compile Include="Scripting\NodeScriptConfigurer.cs" />
     <Compile Include="Scripting\ScriptProperty.cs" />
