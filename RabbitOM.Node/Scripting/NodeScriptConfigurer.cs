@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RabbitOM.Node.Scripting
 {
@@ -10,8 +11,6 @@ namespace RabbitOM.Node.Scripting
 		{
 			_nodeScript = nodeScript ?? throw new ArgumentNullException( nameof( nodeScript ) );
 		}
-
-		// TODO: maybe refactor this method by removing the StringExtensions and create a property_converter class (not static) that used dictionary where K=type and V=Func , inject to the ctor the source object, add method to add convert func, etc.. and create static factory method that populate the dictionary
 
 		public void ConfigureProperty( string name, string value )
 		{
@@ -32,69 +31,28 @@ namespace RabbitOM.Node.Scripting
 				throw new InvalidOperationException( "" );
 			}
 
-			if ( property.PropertyType == typeof( bool ) )
+			var converters = new Dictionary<Type,Action>();
+
+			converters[ typeof( bool   ) ] = () => property.SetValue( _nodeScript , value.ToBool() );
+			converters[ typeof( char   ) ] = () => property.SetValue( _nodeScript , value.ToChar() );
+			converters[ typeof( sbyte  ) ] = () => property.SetValue( _nodeScript , value.ToSByte() );
+			converters[ typeof( byte   ) ] = () => property.SetValue( _nodeScript , value.ToByte() );
+			converters[ typeof( short  ) ] = () => property.SetValue( _nodeScript , value.ToShort() );
+			converters[ typeof( ushort ) ] = () => property.SetValue( _nodeScript , value.ToUShort() );
+			converters[ typeof( int    ) ] = () => property.SetValue( _nodeScript , value.ToInt() );
+			converters[ typeof( uint   ) ] = () => property.SetValue( _nodeScript , value.ToUInt() );
+			converters[ typeof( long   ) ] = () => property.SetValue( _nodeScript , value.ToLong() );
+			converters[ typeof( ulong  ) ] = () => property.SetValue( _nodeScript , value.ToULong() );
+			converters[ typeof( float  ) ] = () => property.SetValue( _nodeScript , value.ToFloat() );
+			converters[ typeof( double ) ] = () => property.SetValue( _nodeScript , value.ToDouble() );
+			converters[ typeof( decimal) ] = () => property.SetValue( _nodeScript , value.ToDecimal() );
+			converters[ typeof( DateTime ) ] = () => property.SetValue( _nodeScript , value.ToDateTime() );
+			converters[ typeof( TimeSpan ) ] = () => property.SetValue( _nodeScript , value.ToTimeSpan() );
+			converters[ typeof( Guid     ) ] = () => property.SetValue( _nodeScript , value.ToGuid() );
+
+			if ( converters.TryGetValue( property.PropertyType , out var converter ) )
 			{
-				property.SetValue( _nodeScript , value.ToBool() );
-			}
-			else if ( property.PropertyType == typeof( char ) )
-			{
-				property.SetValue( _nodeScript , value.ToChar() );
-			}
-			else if ( property.PropertyType == typeof( sbyte ) )
-			{
-				property.SetValue( _nodeScript , value.ToSByte() );
-			}
-			else if ( property.PropertyType == typeof( byte ) )
-			{
-				property.SetValue( _nodeScript , value.ToByte() );
-			}
-			else if ( property.PropertyType == typeof( short ) )
-			{
-				property.SetValue( _nodeScript , value.ToShort() );
-			}
-			else if ( property.PropertyType == typeof( ushort ) )
-			{
-				property.SetValue( _nodeScript , value.ToUShort() );
-			}
-			else if ( property.PropertyType == typeof( int ) )
-			{
-				property.SetValue( _nodeScript , value.ToInt() );
-			}
-			else if ( property.PropertyType == typeof( uint ) )
-			{
-				property.SetValue( _nodeScript , value.ToUInt() );
-			}
-			else if ( property.PropertyType == typeof( long ) )
-			{
-				property.SetValue( _nodeScript , value.ToLong() );
-			}
-			else if ( property.PropertyType == typeof( ulong ) )
-			{
-				property.SetValue( _nodeScript , value.ToULong() );
-			}
-			else if ( property.PropertyType == typeof( double ) )
-			{
-				property.SetValue( _nodeScript , value.ToDouble() );
-			}
-			else if ( property.PropertyType == typeof( float ) )
-			{
-				property.SetValue( _nodeScript , value.ToFloat() );
-			}
-			else if ( property.PropertyType == typeof( decimal ) )
-			{
-				property.SetValue( _nodeScript , value.ToDecimal() );
-			}
-			else if ( property.PropertyType == typeof( DateTime ) )
-			{
-				property.SetValue( _nodeScript , value.ToDateTime() );
-			}
-			else if ( property.PropertyType == typeof( TimeSpan ) )
-			{
-				property.SetValue( _nodeScript , value.ToTimeSpan() );
-			}
-			else if ( property.PropertyType == typeof( Guid ) )
-			{
-				property.SetValue( _nodeScript , value.ToGuid() );
+				converter.Invoke();
 			}
 			else
 			{
