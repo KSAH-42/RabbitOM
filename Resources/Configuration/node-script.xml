@@ -25,7 +25,7 @@
 			public string ConnectedMessage { get; set; }
 			public string DisconnectedMessage { get; set; }
 
-			public override void Execute( NodeEvent nodeEvent )
+			public override void Handle( EventContext context )
 			{
 			}
 			

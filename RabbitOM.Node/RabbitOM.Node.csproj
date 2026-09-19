@@ -53,7 +53,7 @@
     <Compile Include="Scripting\NodeScriptConfigurer.cs" />
     <Compile Include="Scripting\ScriptProperty.cs" />
     <Compile Include="Scripting\CodeDomProviderFactory.cs" />
-    <Compile Include="Scripting\NodeEvent.cs" />
+    <Compile Include="Scripting\EventContext.cs" />
     <Compile Include="Scripting\NodeScript.cs" />
     <Compile Include="Scripting\NodeScriptBuilder.cs" />
     <Compile Include="Scripting\ScriptAssembly.cs" />
