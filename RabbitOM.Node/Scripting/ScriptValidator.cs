@@ -9,7 +9,7 @@ namespace RabbitOM.Node.Scripting
 		{
 			if ( script == null )
 			{
-				throw new ArgumentNullException( "script" );
+				throw new ArgumentNullException( nameof( script ) );
 			}
 
 			if ( string.IsNullOrWhiteSpace( script.Name ) )
