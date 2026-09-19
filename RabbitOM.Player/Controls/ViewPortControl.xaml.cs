@@ -1,4 +1,8 @@
-﻿using System;
+﻿// The zoom here used two rectangles, the reason come to keep the ratio
+// the better is have a square, the square will keep the ratio
+// not the rectangle, allowing the user to a single rectangle will deformed the image
+
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
