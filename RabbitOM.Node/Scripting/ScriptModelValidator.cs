@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RabbitOM.Node.Scripting
 {
-	public static class ScriptValidator
+	public static class ScriptModelValidator
 	{
-		public static void Validate( Script script )
+		public static void Validate( ScriptModel script )
 		{
 			if ( script == null )
 			{

@@ -9,7 +9,7 @@ namespace RabbitOM.Node.Services
 	public sealed class ApplicationServiceBuilder
 	{
 		private ApplicationParameters _parameters;
-		private Script _script;
+		private ScriptModel _script;
 		private IScriptRunner _scriptRunner;
 
 
@@ -46,9 +46,9 @@ namespace RabbitOM.Node.Services
 
 			var content = File.Exists( _parameters.ScriptWorkflow ) ? File.ReadAllText( _parameters.ScriptWorkflow ) : _parameters.ScriptWorkflow;
 
-			var script = ScriptDeserializer.Deserialize( content );
+			var script = ScriptModelDeserializer.Deserialize( content );
 
-			ScriptValidator.Validate( script );
+			ScriptModelValidator.Validate( script );
 
 			_script = script;
 
@@ -73,7 +73,7 @@ namespace RabbitOM.Node.Services
 				Code = _script.Code ,
 			};
 
-			foreach ( var assembly in _script.Assemblies ?? Enumerable.Empty<ScriptAssembly>() )
+			foreach ( var assembly in _script.Assemblies ?? Enumerable.Empty<AssemblyModel>() )
 			{
 				builder.Assemblies.Add( assembly.Name );
 			}
@@ -81,7 +81,7 @@ namespace RabbitOM.Node.Services
 			var nodeScript = builder.Build();
 			var configurer = new NodeScriptConfigurer( nodeScript );
 
-			foreach ( var property in _script.Properties ?? Enumerable.Empty<ScriptProperty>() )
+			foreach ( var property in _script.Properties ?? Enumerable.Empty<PropertyModel>() )
 			{
 				configurer.ConfigureProperty( property.Name , property.Value );
 			}

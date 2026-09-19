@@ -4,9 +4,9 @@ using System.Xml.Linq;
 
 namespace RabbitOM.Node.Scripting
 {
-	public static class ScriptDeserializer
+	public static class ScriptModelDeserializer
 	{
-		public static Script Deserialize( string input )
+		public static ScriptModel Deserialize( string input )
 		{
 			if ( string.IsNullOrWhiteSpace( input ) )
 			{
@@ -15,7 +15,7 @@ namespace RabbitOM.Node.Scripting
 
 			var root = XElement.Parse( input );
 
-			var script = new Script
+			var script = new ScriptModel
 			{
 				Name     = root.Element( "name" )?.Value?.Trim() ,
 				Language = root.Element( "language" )?.Value?.Trim() ,
@@ -26,11 +26,11 @@ namespace RabbitOM.Node.Scripting
 
 			if ( assembliesNode != null )
 			{
-				script.Assemblies = new List<ScriptAssembly>();
+				script.Assemblies = new List<AssemblyModel>();
 
 				foreach ( var assembly in assembliesNode.Elements( "assembly" ) )
 				{
-					script.Assemblies.Add( new ScriptAssembly { Name = assembly.Value?.Trim() } );
+					script.Assemblies.Add( new AssemblyModel { Name = assembly.Value?.Trim() } );
 				}
 			}
 
@@ -38,11 +38,11 @@ namespace RabbitOM.Node.Scripting
 
 			if ( propertiesNode != null )
 			{
-				script.Properties = new List<ScriptProperty>();
+				script.Properties = new List<PropertyModel>();
 
 				foreach ( var property in propertiesNode.Elements( "property" ) )
 				{
-					script.Properties.Add( new ScriptProperty
+					script.Properties.Add( new PropertyModel
 					{
 						Name = property.Attribute( "name" )?.Value?.Trim() ,
 						Value = property.Value?.Trim() ,

@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	public sealed class ScriptProperty
+	public sealed class PropertyModel
 	{
 		public string Name { get; set; }
 
