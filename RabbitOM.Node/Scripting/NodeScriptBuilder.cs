@@ -15,7 +15,7 @@ namespace RabbitOM.Node.Scripting
 
 		public string Language { get; set; }
 
-		public HashSet<string> Assemblies { get; } = new HashSet<string>() { "System.dll" };
+		public HashSet<string> Assemblies { get; } = new HashSet<string>() { "System.dll" , "RabbitOM.dll" };
 
 
 
