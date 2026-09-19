@@ -15,7 +15,8 @@ namespace RabbitOM.Net.Rtp.Jpeg
         private static readonly byte[] StartOfFrameMarker      = { 0xFF , 0xC0 };
         private static readonly byte[] HuffmanTableMarker      = { 0xFF , 0xC4 };
         private static readonly byte[] CommentsMarker          = { 0xFF , 0xFE };
-        private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
+		private static readonly byte[] App1Marker              = { 0xFF , 0xEB };
+		private static readonly byte[] IdentifierJFIF          = { 0x4A , 0x46 , 0x49 , 0x46 , 0x00 };
         private static readonly byte[] StartOfScanPayload      = { 0x03 , 0x01 , 0x00 , 0x02 , 0x11 , 0x03 , 0x11 , 0x00 , 0x3F , 0x00 };
 
         private static readonly byte[] ChrominanceDirectCodeLens        = { 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 };

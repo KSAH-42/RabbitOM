@@ -49,6 +49,7 @@
     <Compile Include="Disposer.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="EventHandlerExtensions.cs" />
+    <Compile Include="Net\Rtp\Jpeg\JpegRectangle.cs" />
     <Compile Include="Numerics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResolutionInfo.cs" />

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RabbitOM.Net.Rtp.Jpeg
 {
@@ -287,5 +289,22 @@ namespace RabbitOM.Net.Rtp.Jpeg
             _stream.WriteUInt16( length );
             _stream.WriteString( text );
         }
+
+        public void WriteMetaData( JpegRectangle rectangle )
+        {
+            var array = rectangle.ToArray();
+
+			int length = 3 + array.Length;
+
+			if ( length > SegmentMaxLength )
+			{
+				throw new InvalidOperationException( "the length header field is too big" );
+			}
+
+			_stream.Write( App1Marker );
+			_stream.WriteUInt16( length );
+			_stream.WriteByte( 1 ); // type of rectangle
+			_stream.Write( array );
+		}
     }
 }
