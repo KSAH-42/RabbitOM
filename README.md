@@ -134,6 +134,82 @@ And the repository that own the lib, the implementation use an Authenticator cap
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
 
+# RabbitOM.Node used to receive packet and run .net scripts triggered by the rtsp client events
+
+This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and to run .net script written in C# or VB. 
+You can configure the application edit a xml file. it support the following language:
+
+In this example, the node will monitor the status of communication and trigger a vocal alert when the communication is back or lost.
+You can also configure the script: in the xml section called "properties", the name of property are case sensitive may be the same of property define into the class.
+
+~~~~XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<name>Device montoring script</name>
+	<language>csharp</language>
+	<assemblies>
+		<!-- first open ILSpy -> go to menu File/Open from the GAC to the search the real path, it may change -->
+		<assembly>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll</assembly>
+	</assemblies>
+	<properties>
+		<property name="CommunicationStartedMessage">the communication is started, please contact Lilian for doing something</property>
+	    <property name="CommunicationStoppedMessage">the communication is stopped</property>
+		<property name="ConnectedMessage">connected to the camera, please contact Lydia for reporting</property>
+		<property name="DisconnectedMessage">disconnected from the camera</property>
+	</properties>
+	<code>
+		using RabbitOM.Node;
+		using RabbitOM.Node.Scripting;
+		using RabbitOM.Net.Rtsp.Clients;
+		using System;
+		using System.Speech.Synthesis;
+
+		public sealed class DeviceMonitoringScript : NodeScript
+		{
+			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
+
+			public DeviceMonitoringScript()
+			{
+				_synthesizer.SetOutputToDefaultAudioDevice();
+			}
+
+			public string CommunicationStartedMessage { get; set; }
+			public string CommunicationStoppedMessage { get; set; }
+			public string ConnectedMessage { get; set; }
+			public string DisconnectedMessage { get; set; }
+
+			public override void Handle( object sender , EventArgs e )
+			{
+				if ( e is RtspClientConnectedEventArgs )
+				{
+					_synthesizer.Speak( ConnectedMessage );
+				}
+				else if ( e is RtspClientDisconnectedEventArgs )
+				{
+					_synthesizer.Speak( DisconnectedMessage );
+				}
+			}
+
+			protected override void Dispose( bool disposing )
+			{
+				if ( disposing )
+				{
+					_synthesizer.Dispose();
+				}
+			}
+		}
+	</code>
+</script>
+
+~~~~
+
+and run by executing the following command (take about the path it may be incorrect)
+
+~~~~
+rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-script.xml
+~~~~
+
 # RabbitOM.NodeShell used to receive packet and run scripts triggered by the rtsp client events
 
 This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and interact with the shell. 
@@ -173,10 +249,10 @@ handlers:
 
 ~~~~
 
-and run by executing the following command (if no yaml is specified, the application will just display communication info).
+and run by executing the following command (take about the path it may be incorrect)
 
 ~~~~
-RabbitOM.NodeShell.exe rtsp://admin:camera123@127.0.0.1/toy.mp4 -s my-client-handler.yml
+rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-workflow.yml
 ~~~~
 
 # About the next rtsp client (experimental)
