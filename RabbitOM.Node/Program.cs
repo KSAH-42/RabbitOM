@@ -8,25 +8,25 @@ namespace RabbitOM.Node
     {
         static void Main( string[] args )
         {
-            if ( ApplicationHelp.CanShowHelp( args ) )
+            if ( HelpManager.CanShowHelp( args ) )
             {
-                ApplicationHelp.ShowHelp();
+                HelpManager.ShowHelp();
                 return;
             }
 
             try
             {
-                var application = new ApplicationBuilder()
-                    .SetParameters( args )
+                var application = new ApplicationBuilder( ApplicationSettings.Parse( args ) )
                     .LoadScript()
                     .SetupRunner()
-                    .Build();
+                    .Build()
+                    ;
 
                 application.Run();
             }
             catch( Exception ex )
             {
-                ApplicationHelp.ShowHelp( ex );
+                HelpManager.ShowHelp( ex );
             }
             finally
             {

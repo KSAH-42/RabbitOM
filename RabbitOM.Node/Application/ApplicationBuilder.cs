@@ -4,48 +4,49 @@ using System.Linq;
 
 namespace RabbitOM.Node.Application
 {
+	using RabbitOM.Node.Logging;
 	using RabbitOM.Node.Scripting;
 	using RabbitOM.Node.Scripting.Models;
 
 	public sealed class ApplicationBuilder
 	{
-		private ApplicationParameters _parameters;
-		private ScriptModel _script;
 		private IScriptRunner _scriptRunner;
 
+		private ScriptModel _script;
 
-		public ApplicationBuilder SetParameters( string[] parameters )
+		private readonly ApplicationSettings _settings;
+
+
+
+
+
+		public ApplicationBuilder( ApplicationSettings settings )
 		{
-			if ( _parameters != null )
-			{
-				throw new InvalidOperationException( "the parameters has been already set" );
-			}
-
-			var applicationParameters = ApplicationParameters.Parse( parameters );
-			applicationParameters.Validate();
-			_parameters = applicationParameters;
-
-			return this;
+			_settings = settings ?? throw new ArgumentNullException( nameof( settings ) );
 		}
+
+
+
+
 
 		public ApplicationBuilder LoadScript()
 		{
-			if ( _parameters == null )
-			{
-				throw new InvalidOperationException( "Parameters must be set be call this method" );
-			}
-
 			if ( _script != null )
 			{
 				throw new InvalidOperationException( "The script is already loaded" );
 			}
 
-			if ( string.IsNullOrWhiteSpace( _parameters.ScriptWorkflow ) )
+			if ( _settings == null )
 			{
-				return this;
+				throw new InvalidOperationException( "No settings has been defined" );
 			}
 
-			var content = File.Exists( _parameters.ScriptWorkflow ) ? File.ReadAllText( _parameters.ScriptWorkflow ) : _parameters.ScriptWorkflow;
+			if ( string.IsNullOrWhiteSpace( _settings.Script ) )
+			{
+				throw new InvalidOperationException( "No script has been defined" );
+			}
+
+			var content = File.Exists( _settings.Script ) ? File.ReadAllText( _settings.Script ) : _settings.Script;
 
 			var script = ScriptModelDeserializer.Deserialize( content );
 
@@ -94,7 +95,7 @@ namespace RabbitOM.Node.Application
 
 		public IApplication Build()
 		{
-			return new NodeApplication( _scriptRunner ?? NullNodeScriptRunner.Instance , _parameters.Uri );
+			return new NodeApplication( new ConsoleLogger() , _scriptRunner ?? NullNodeScriptRunner.Instance , _settings );
 		}
 	}
 }

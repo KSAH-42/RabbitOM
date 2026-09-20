@@ -49,8 +49,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\OptionAttribute.cs" />
+    <Compile Include="Application\HelpManager.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Scripting\Messages\CircularMessageQueue.cs" />
+    <Compile Include="Scripting\Messages\CircularMessageQueue.Scope.cs" />
+    <Compile Include="Scripting\Messages\PacketReceivedMessage.cs" />
+    <Compile Include="Scripting\Messages\ErrorMessage.cs" />
+    <Compile Include="Scripting\Messages\DisconnectedMessage.cs" />
+    <Compile Include="Scripting\Messages\ConnectedMessage.cs" />
+    <Compile Include="Scripting\Messages\CommunicationStoppedMessage.cs" />
+    <Compile Include="Scripting\Messages\CommunicationStartedMessage.cs" />
+    <Compile Include="Scripting\Messages\MessageType.cs" />
+    <Compile Include="Scripting\Messages\Message.cs" />
     <Compile Include="Scripting\NodeScriptRunnerLauncher.cs" />
-    <Compile Include="Scripting\NodeEvent.cs" />
     <Compile Include="Scripting\NodeScriptExtensions.cs" />
     <Compile Include="Scripting\NodeScriptRunner.cs" />
     <Compile Include="Scripting\NullNodeScriptRunner.cs" />
@@ -65,14 +78,12 @@
     <Compile Include="Scripting\Models\ScriptModelValidator.cs" />
     <Compile Include="Scripting\Models\ScriptModel.cs" />
     <Compile Include="Scripting\Models\ScriptModelDeserializer.cs" />
-    <Compile Include="Application\ApplicationHelp.cs" />
     <Compile Include="Application\IApplication.cs" />
     <Compile Include="Application\NodeApplication.cs" />
-    <Compile Include="Application\ApplicationParameters.cs" />
+    <Compile Include="Application\ApplicationSettings.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Application\ApplicationBuilder.cs" />
-    <Compile Include="Application\ParseException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

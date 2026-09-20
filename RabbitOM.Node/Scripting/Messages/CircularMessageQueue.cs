@@ -4,30 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace RabbitOM.Collections
+namespace RabbitOM.Node.Scripting.Messages
 {
-    using RabbitOM.Threading;
-
-    // TODO: remove this collection
-    public sealed partial class CircualConcurrentQueue<TElement> : ICollection, IReadOnlyCollection<TElement>
-        where TElement : class
+    public sealed partial class CircularMessageQueue : ICollection, IReadOnlyCollection<Message>
     {
         private readonly int _limit;
         private readonly object _lock;
         private readonly ManualResetEventSlim _eventHandle;
-        private readonly Queue<TElement> _collection;
+        private readonly Queue<Message> _collection;
         private readonly Scope _scope;
 
 
 
 
 
-        public CircualConcurrentQueue()
+        public CircularMessageQueue()
             : this ( 10000 )
         {
         }
 
-        public CircualConcurrentQueue( int limit )
+        public CircularMessageQueue( int limit )
         {
             if ( limit <= 0 )
             {
@@ -36,7 +32,7 @@ namespace RabbitOM.Collections
 
             _limit = limit;
             _lock = new object();
-            _collection = new Queue<TElement>();
+            _collection = new Queue<Message>();
             _eventHandle = new ManualResetEventSlim( false );
             _scope = new Scope( this );
         }
@@ -89,7 +85,7 @@ namespace RabbitOM.Collections
 
 
 
-        public static bool Wait( CircualConcurrentQueue<TElement> queue , WaitHandle cancellationHandle )
+        public static bool Wait( CircularMessageQueue queue , WaitHandle cancellationHandle )
         {
             if ( queue == null )
             {
@@ -101,7 +97,12 @@ namespace RabbitOM.Collections
                 throw new ArgumentNullException( nameof( cancellationHandle ) );
             }
 
-            return queue._eventHandle.TryWait( cancellationHandle );
+            var handles = new WaitHandle[]
+            {
+                cancellationHandle , queue._eventHandle.WaitHandle
+            };
+
+            return WaitHandle.WaitAny( handles ) == 1;
         }
 
 
@@ -117,7 +118,7 @@ namespace RabbitOM.Collections
             }
         }
 
-        public IEnumerator<TElement> GetEnumerator()
+        public IEnumerator<Message> GetEnumerator()
         {
             lock ( _lock )
             {
@@ -137,12 +138,16 @@ namespace RabbitOM.Collections
         {
             lock ( _lock )
             {
-                _collection.CopyTo( array as TElement[] , index );
+                _collection.CopyTo( array as Message[] , index );
             }
         }
 
-        public void Enqueue( TElement element )
+        public void Enqueue( Message message )
         {
+            if ( message == null )
+            {
+                throw new ArgumentNullException( nameof( message ) );
+            }
             lock ( _lock )
             {
                 using ( _scope )
@@ -152,12 +157,12 @@ namespace RabbitOM.Collections
                         _collection.Dequeue();
                     }
 
-                    _collection.Enqueue( element );
+                    _collection.Enqueue( message );
                 }
             }
         }
 
-        public TElement Dequeue()
+        public Message Dequeue()
         {
             lock ( _lock )
             {
@@ -168,7 +173,7 @@ namespace RabbitOM.Collections
             }
         }
 
-        public bool TryDequeue( out TElement result )
+        public bool TryDequeue( out Message result )
         {
             result = default;
 

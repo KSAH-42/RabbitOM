@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Node.Scripting
 {
+	using RabbitOM.Node.Scripting.Messages;
+
 	public interface IScriptRunner : IDisposable
 	{
 		bool IsStarted { get; }
@@ -10,6 +12,6 @@ namespace RabbitOM.Node.Scripting
 
 		void Stop();
 
-		void PostEvent( object source , EventArgs e );
+		void PostMessage( Message message );
 	}
 }

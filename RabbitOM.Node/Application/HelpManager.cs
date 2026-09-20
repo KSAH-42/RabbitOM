@@ -4,13 +4,13 @@ using System.Reflection;
 
 namespace RabbitOM.Node.Application
 {
-    public static class ApplicationHelp
-	{
+    public static class HelpManager
+    {
         public static bool CanShowHelp( string[] args )
         {
             if ( args == null || args.Length == 0 )
             {
-                return false;
+                return true;
             }
 
             return args.Any( arg => arg == "/?" || arg == "-h" || arg == "--help" );
@@ -21,17 +21,22 @@ namespace RabbitOM.Node.Application
             var processName = Assembly.GetExecutingAssembly().GetName().Name + ".exe";
 
             Console.ResetColor();
-            Console.WriteLine( $"RTSP Node" );
+            Console.WriteLine( "Arguments:");
             Console.WriteLine();
-            Console.WriteLine( "Usages: " );
-            Console.WriteLine();
-            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4" );
-            Console.WriteLine( $"{processName} rtsp://admin:camera123@127.0.0.1/toy.mp4 -s workflow.yml" );
-            Console.WriteLine();
-            Console.WriteLine("Arguments:");
-            Console.WriteLine();
-            Console.WriteLine("-s\t[optional] the xml file containing client handlers code");
-            Console.WriteLine();
+
+            foreach( var property in typeof(ApplicationSettings).GetProperties() )
+            {
+                Console.WriteLine( $"{property.Name}" );
+
+                foreach ( var option in property.GetCustomAttributes<OptionAttribute>() )
+                {
+                    var prefix = string.IsNullOrWhiteSpace( option.Name ) ? "" : string.Format( "   {0,-20}" , option.Name );
+
+                    Console.WriteLine( "{0} {1} {2}" , prefix , option.Help , option.IsRequired ? "[required]" : "" );
+                }
+
+                Console.WriteLine();
+            }
 
             if ( exception != null )
             {
@@ -39,8 +44,9 @@ namespace RabbitOM.Node.Application
                 Console.WriteLine();
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine( exception );
-                Console.ResetColor();
             }
+
+            Console.ResetColor();
         }
-	}
+    }
 }

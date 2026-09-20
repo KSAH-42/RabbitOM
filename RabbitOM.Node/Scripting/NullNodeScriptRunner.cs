@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Node.Scripting
 {
+	using RabbitOM.Node.Scripting.Messages;
+
 	public sealed class NullNodeScriptRunner : IScriptRunner
 	{
 		public readonly static NullNodeScriptRunner Instance = new NullNodeScriptRunner();
@@ -14,7 +16,7 @@ namespace RabbitOM.Node.Scripting
 
 		public void Stop() { }
 
-		public void PostEvent( object source , EventArgs e ) { }
+		public void PostMessage( Message message ) { }
 
 		public void Dispose() { }
 	}

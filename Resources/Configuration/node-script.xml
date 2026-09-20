@@ -6,50 +6,43 @@
 		<assembly>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll</assembly>
 	</assemblies>
 	<properties>
-		<property name="CommunicationStartedMessage">Lilian the communication is now active</property>
-	    <property name="CommunicationStoppedMessage">the communication is stopped</property>
-		<property name="ConnectedMessage">Lydia, the device is connected now</property>
-		<property name="DisconnectedMessage">Lydia, the device is disconnected</property>
-		<property name="ErrorMessage">Communication failure detected</property>
+		<property name="CommunicationStartedMessage">The communication is started</property>
+	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
+		<property name="ConnectedMessage">Connected to the camera</property>
+		<property name="DisconnectedMessage">Disconnected from the camera</property>
+		<property name="ErrorMessage">Communicatio error</property>
 	</properties>
 	<code>
 		using RabbitOM.Node;
 		using RabbitOM.Node.Scripting;
-		using RabbitOM.Net.Rtsp.Clients;
+		using RabbitOM.Node.Scripting.Messages;
 		using System;
 		using System.Speech.Synthesis;
 
 		public sealed class DeviceMonitoringScript : NodeScript
 		{
 			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
-
-
+					
 			public DeviceMonitoringScript()
 			{ 
 				_synthesizer.SetOutputToDefaultAudioDevice(); 
 			}
-
-
+			
 			public string CommunicationStartedMessage { get; set; }
-
 			public string CommunicationStoppedMessage { get; set; }
-
 			public string ConnectedMessage { get; set; }
-
 			public string DisconnectedMessage { get; set; }
-
 			public string ErrorMessage { get; set; }
-
-
-			public override void Handle( object sender , EventArgs e )
+			
+			public override void Handle( Message message )
 			{
-				if ( e is RtspClientConnectedEventArgs )
+				if ( message.Type == MessageType.Connected )
 				{
-					_synthesizer.Speak( ConnectedMessage );
+                    _synthesizer.Speak( ConnectedMessage ); 
 				}
-				else if ( e is RtspClientDisconnectedEventArgs )
-				{
-					_synthesizer.Speak( DisconnectedMessage );
+                else if ( message.Type == MessageType.Disconnected )
+                {
+                    _synthesizer.Speak( DisconnectedMessage );
 				}
 			}
 

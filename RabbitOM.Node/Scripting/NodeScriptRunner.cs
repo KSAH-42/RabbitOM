@@ -2,14 +2,14 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	using RabbitOM.Collections;
 	using RabbitOM.Threading;
+	using RabbitOM.Node.Scripting.Messages;
 
 	public sealed class NodeScriptRunner : IScriptRunner
 	{
 		private readonly NodeScript _script;
 		private readonly BackgroundWorker _worker;
-		private readonly CircualConcurrentQueue<NodeEvent> _events;
+		private readonly CircularMessageQueue _messages;
 		private volatile bool _disposed;
 
 		public NodeScriptRunner( NodeScript script )
@@ -17,7 +17,7 @@ namespace RabbitOM.Node.Scripting
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 
 			_worker = new BackgroundWorker( "Node script runner" );
-			_events = new CircualConcurrentQueue<NodeEvent>();
+			_messages = new CircularMessageQueue();
 		}
 
 		public bool IsStarted
@@ -35,24 +35,19 @@ namespace RabbitOM.Node.Scripting
 		public void Stop()
 		{
 			_worker.Stop();
-			_events.Clear();
+			_messages.Clear();
 		}
 
-		public void PostEvent( object source , EventArgs e )
+		public void PostMessage( Message message )
 		{
-			if ( source == null )
+			if ( message == null )
 			{
-				throw new ArgumentNullException( nameof( source ) );
-			}
-
-			if ( e == null )
-			{
-				throw new ArgumentNullException( nameof( e ) );
+				throw new ArgumentNullException( nameof( message ) );
 			}
 
 			EnsureNotDisposed();
 
-			_events.Enqueue( new NodeEvent( source , e ) );
+			_messages.Enqueue( message );
 		}
 
 		public void Dispose()
@@ -73,22 +68,21 @@ namespace RabbitOM.Node.Scripting
 			}
 		}
 
-		// TODO: refactor this code
 		private void DoEvents()
 		{
 			_script.Setup();
 
-			while ( CircualConcurrentQueue<NodeEvent>.Wait( _events , _worker.ExitHandle ) )
+			while ( CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) )
 			{
-				if ( _events.TryDequeue( out NodeEvent nodeEvent ) )
+				if ( _messages.TryDequeue( out var message ) )
 				{
-					_script.TryHandle( nodeEvent.Sender , nodeEvent.EventArgs );
+					_script.TryHandle( message );
 				}
 			}
 
-			while ( _events.TryDequeue( out NodeEvent nodeEvent ) )
+			while ( _messages.TryDequeue( out var message ) )
 			{
-				_script.TryHandle( nodeEvent.Sender , nodeEvent.EventArgs );
+				_script.TryHandle( message );
 			}
 		}
 	}

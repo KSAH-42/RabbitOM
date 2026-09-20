@@ -2,9 +2,11 @@
 
 namespace RabbitOM.Node.Scripting
 {
+	using RabbitOM.Node.Scripting.Messages;
+
 	internal static class NodeScriptExtensions
 	{
-		public static bool TryHandle( this NodeScript script , object sender , EventArgs e )
+		public static bool TryHandle( this NodeScript script , Message message )
 		{
 			if ( script == null )
 			{
@@ -13,7 +15,7 @@ namespace RabbitOM.Node.Scripting
 
 			try
 			{
-				script.Handle( sender , e );
+				script.Handle( message );
 				return true;
 			}
 			catch ( Exception ex )

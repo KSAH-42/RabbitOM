@@ -146,47 +146,49 @@ You can also configure the script: in the xml section called "properties", the n
 
 <?xml version="1.0" encoding="utf-8"?>
 <script>
-	<name>Device montoring script</name>
+	<name>Device monitoring script</name>
 	<language>csharp</language>
 	<assemblies>
 		<assembly>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll</assembly>
 	</assemblies>
 	<properties>
-		<property name="CommunicationStartedMessage">the communication is started, please contact Lilian for doing something</property>
-	    <property name="CommunicationStoppedMessage">the communication is stopped</property>
-		<property name="ConnectedMessage">connected to the camera, please contact Lydia for reporting</property>
-		<property name="DisconnectedMessage">disconnected from the camera</property>
+		<property name="CommunicationStartedMessage">The communication is started</property>
+	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
+		<property name="ConnectedMessage">Connected to the camera</property>
+		<property name="DisconnectedMessage">Disconnected from the camera</property>
+		<property name="ErrorMessage">Communicatio error</property>
 	</properties>
 	<code>
 		using RabbitOM.Node;
 		using RabbitOM.Node.Scripting;
-		using RabbitOM.Net.Rtsp.Clients;
+		using RabbitOM.Node.Scripting.Messages;
 		using System;
 		using System.Speech.Synthesis;
 
 		public sealed class DeviceMonitoringScript : NodeScript
 		{
 			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
-
+					
 			public DeviceMonitoringScript()
-			{
-				_synthesizer.SetOutputToDefaultAudioDevice();
+			{ 
+				_synthesizer.SetOutputToDefaultAudioDevice(); 
 			}
-
+			
 			public string CommunicationStartedMessage { get; set; }
 			public string CommunicationStoppedMessage { get; set; }
 			public string ConnectedMessage { get; set; }
 			public string DisconnectedMessage { get; set; }
-
-			public override void Handle( object sender , EventArgs e )
+			public string ErrorMessage { get; set; }
+			
+			public override void Handle( Message message )
 			{
-				if ( e is RtspClientConnectedEventArgs )
+				if ( message.Type == MessageType.Connected )
 				{
-					_synthesizer.Speak( ConnectedMessage );
+                    _synthesizer.Speak( ConnectedMessage ); 
 				}
-				else if ( e is RtspClientDisconnectedEventArgs )
-				{
-					_synthesizer.Speak( DisconnectedMessage );
+                else if ( message.Type == MessageType.Disconnected )
+                {
+                    _synthesizer.Speak( DisconnectedMessage );
 				}
 			}
 
@@ -207,51 +209,6 @@ and run by executing the following command (take care regarding the path it may 
 
 ~~~~
 rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-script.xml
-~~~~
-
-# RabbitOM.NodeShell used to receive packet and run scripts triggered by the rtsp client events (TO BE removed and replace by the node)
-
-This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and interact with the shell. 
-You can configure the application edit a yaml file (Parse by YamlDotNet) to run scripts triggered by the rtsp client events. For instance, when the communication back with a camera you can use curl.
-Here in this example, the application will used powershell to logs the activity of the communication.
-
-~~~~YML
-
-name: client handler
-
-handlers:
-  - name: start handler
-    type: on-communication-started
-    code: |
-      powershell -command "New-Item -Path C:\Projects\rtsp-log.txt"
-      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Communication Started\""
-
-  - name: stop handler
-    type: on-communication-stopped
-    code: |
-      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Communication Stopped\""
-
-  - name: connected handler
-    type: on-connected
-    code: |
-      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Connected\""
-
-  - name: disconnected handler
-    type: on-disconnected
-    code: |
-      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Disconnected\""
-
-  - name: error handler
-    type: on-error
-    code: |
-      powershell -command "$TimeStamp = Get-Date; Add-Content -Path C:\Projects\rtsp-log.txt -Value \"$TimeStamp - Error\""
-
-~~~~
-
-and run by executing the following command (take care regarding the path it may be incorrect)
-
-~~~~
-rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-workflow.yml
 ~~~~
 
 # About the next rtsp client (experimental)

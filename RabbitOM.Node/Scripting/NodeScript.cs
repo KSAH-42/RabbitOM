@@ -2,6 +2,8 @@
 
 namespace RabbitOM.Node.Scripting
 {
+	using RabbitOM.Node.Scripting.Messages;
+
 	public abstract class NodeScript : IDisposable
 	{
 		~NodeScript()
@@ -11,7 +13,7 @@ namespace RabbitOM.Node.Scripting
 
 		public virtual void Setup() { }
 
-		public abstract void Handle( object sender , EventArgs e );
+		public abstract void Handle( Message mesage );
 
 		public void Dispose()
 		{
