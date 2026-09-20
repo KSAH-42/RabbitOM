@@ -46,7 +46,8 @@ namespace RabbitOM.Node.Application
                 Uri = input[0],
             };
 
-            // TODO: refactor and optimize the code, and add the support of IsRequired
+
+            // TODO: refactor as O(n) and add support of IsRequired
 
             for ( var i = 1 ; i < input.Length ; ++ i )
             {
