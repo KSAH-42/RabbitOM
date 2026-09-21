@@ -13,7 +13,7 @@ namespace RabbitOM.Net.Rtsp.Clients
         private readonly BackgroundWorker _chunkListenerThread;
         private readonly BackgroundWorker _requestListenerThread;
         private readonly RtspRequestHandlerList _requestHandlers;
-        private byte[] _buffer;
+        private readonly byte[] _buffer;
 
         public RtspRequestManager( RtspProxy proxy )
         {
@@ -74,7 +74,6 @@ namespace RabbitOM.Net.Rtsp.Clients
         {
             Stop();
             _extractor.Dispose();
-            _buffer = null;
         }
 
         public bool TrySendRequest( RtspMessageRequest request , out RtspMessageResponse response )
