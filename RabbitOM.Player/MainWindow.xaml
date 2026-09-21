@@ -226,6 +226,7 @@
 
 					<TabItem Header="SCRIPT">
 						<Grid>
+							<TextBox Margin="10,10,10,50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 							<TextBlock Text="Not currentlty available" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
 						</Grid>
 					</TabItem>

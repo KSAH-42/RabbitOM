@@ -13,7 +13,8 @@
         <Setter Property="FontSize" Value="15"   />
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="CaretBrush" Value="White" />
-        <Setter Property="Validation.ErrorTemplate">
+		<Setter Property="Background" Value="#FF242222" />
+		<Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <Border BorderBrush="Red"
@@ -34,7 +35,7 @@
                             CornerRadius="3" 
                             Padding="4" 
                             BorderThickness="1" 
-                            Background="Transparent"
+                            Background="{TemplateBinding Background}"
                             >
 
                         <Border.BorderBrush>
