@@ -7,8 +7,9 @@ using System.Windows.Media;
 namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
+	using System.Data.SqlTypes;
 
-    public partial class MediaPlayerControl : UserControl
+	public partial class MediaPlayerControl : UserControl , IDisposable
     {
         public static readonly RoutedEvent StartedEvent = EventManager.RegisterRoutedEvent( nameof(Started), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
         public static readonly RoutedEvent StoppedEvent = EventManager.RegisterRoutedEvent( nameof(Stopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
@@ -42,6 +43,11 @@ namespace RabbitOM.Player.Controls
             Transport = new TcpMediaPlayerTransport();
             _errors = new ObservableCollection<ErrorInfo>();
             _videoSource = new VideoSource( this );
+        }
+
+        ~MediaPlayerControl()
+        {
+            Dispose( false );
         }
 
 
@@ -211,15 +217,24 @@ namespace RabbitOM.Player.Controls
             _errors.Add( error ?? throw new ArgumentNullException( nameof( error ) ) );
         }
 
-
-
-
-
-
-        private void OnUnloaded( object sender , RoutedEventArgs e )
+        public void Dispose()
         {
-            _videoSource.Dispose();
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
+
+        protected virtual void Dispose( bool disposing )
+        {
+            if ( disposing )
+            {
+                _videoSource.Dispose();
+                _statistics.Dispose();
+            }
+        }
+
+
+
+
 
         protected virtual void OnStarted()
         {

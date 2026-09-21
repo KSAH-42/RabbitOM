@@ -43,6 +43,7 @@ namespace RabbitOM.Player
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
         {
             _mediaPlayer.Stop();
+            _mediaPlayer.Dispose();
         }
 
         private void OnControl( object sender , ExecutedRoutedEventArgs e )

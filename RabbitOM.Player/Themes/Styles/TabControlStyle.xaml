@@ -1,0 +1,173 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+
+	<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="TabControlBackgroundBottom">
+		<GradientStop Color="#FF0F0F0F" Offset="0" />
+		<GradientStop Color="#FF414141" Offset="1" />
+	</LinearGradientBrush>
+
+	<Style TargetType="TabItem">
+		<Setter Property="Foreground" Value="White" />
+		<Setter Property="Width" Value="Auto"/>
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Template">
+			<Setter.Value>
+				
+				<ControlTemplate TargetType="TabItem">
+					
+					<Grid Name="Panel" >
+						
+						<Border Name="Border" 
+								Background="{TemplateBinding Background}"
+								CornerRadius="10"
+								>
+							
+							<ContentPresenter x:Name="ContentSite" 
+											  Margin="10,2"
+											  VerticalAlignment="Center" 
+											  HorizontalAlignment="Center" 
+											  ContentSource="Header" 
+											  >
+								
+								<ContentPresenter.Effect>
+								
+									<DropShadowEffect BlurRadius="0.0" 
+													  Color="#032A6B" 
+													  Direction="90" 
+													  Opacity="1" 
+													  ShadowDepth="1" 
+													  />
+									
+								</ContentPresenter.Effect>
+								
+							</ContentPresenter>
+							
+						</Border>
+						
+					</Grid>
+
+					<ControlTemplate.Triggers>
+
+						<Trigger Property="IsFocused" Value="True">
+							<Setter Property="BorderBrush" Value="White" />
+						</Trigger>
+
+						<Trigger    SourceName="Panel"          Property="IsMouseOver" Value="True">
+							<Setter TargetName="ContentSite"    Property="Effect">
+								<Setter.Value>
+									<DropShadowEffect BlurRadius="13" 
+													  ShadowDepth="0" 
+													  RenderingBias="Quality" 
+													  Color="White" 
+													  Opacity="1"
+													  />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="Panel" Property="Background">
+								<Setter.Value>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#F1808080" />
+									</LinearGradientBrush>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+
+						<Trigger    Property="IsSelected" Value="True">
+							<Setter Property="Foreground" Value="White"/>
+							<Setter Property="Background" TargetName="Panel" >
+								<Setter.Value>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#E6484848" Offset="1"     />
+									</LinearGradientBrush>
+								</Setter.Value>
+							</Setter>
+
+						</Trigger>
+
+						<Trigger    Property="IsSelected" Value="False">
+							<Setter Property="Background" TargetName="Panel">
+								<Setter.Value>
+									<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+										<GradientStop Color="#F1000000" Offset="1" />
+									</LinearGradientBrush>
+								</Setter.Value>
+							</Setter>
+						</Trigger>
+
+						<MultiTrigger>
+							<MultiTrigger.Conditions>
+								<Condition Property="IsMouseOver"   Value="True"  />
+								<Condition Property="IsSelected"    Value="False" />
+							</MultiTrigger.Conditions>
+							<MultiTrigger.Setters>
+								<Setter TargetName="Panel" Property="Background" >
+									<Setter.Value>
+										<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+											<!--<GradientStop Color="#CF626262" Offset="0.434" />
+											<GradientStop Color="#DB4E4E4E" Offset="0.506" />-->
+											<GradientStop Color="#E6525252" />
+											<!--<GradientStop Color="#E6525252" Offset="1" />-->
+										</LinearGradientBrush>
+									</Setter.Value>
+								</Setter>
+							</MultiTrigger.Setters>
+						</MultiTrigger>
+
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style TargetType="TabControl">
+		<Setter Property="OverridesDefaultStyle" Value="True" />
+		<Setter Property="BorderBrush" Value="#FF7F7F7F" />
+		<Setter Property="BorderThickness" Value="1.0" />
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="TabControl">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Border Grid.Row="0" 
+								BorderThickness="{TemplateBinding BorderThickness}" 
+								BorderBrush="{TemplateBinding BorderBrush}" 
+								Background="{TemplateBinding Background}"
+								>
+							<Border>
+								<Border>
+									<ContentPresenter ContentSource="SelectedContent"/>
+								</Border>
+							</Border>
+						</Border>
+						<Border x:Name="TabPanelBorder" 
+								Margin="0,-20,0,0" 
+								Padding="20"
+								Grid.Row="1" 
+								HorizontalAlignment="Center" 
+								BorderThickness="0" 
+								>
+							<TabPanel x:Name="TabPanel" 
+									  HorizontalAlignment="Center"  
+									  IsItemsHost="true" 
+									  />
+						</Border>
+					</Grid>
+
+					<ControlTemplate.Triggers>
+
+						<Trigger Property="IsMouseOver" Value="True" SourceName="TabPanelBorder">
+							<Setter TargetName="TabPanelBorder" Property="BorderBrush" Value="WhiteSmoke" />
+						</Trigger>
+
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+</ResourceDictionary>

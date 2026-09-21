@@ -5,7 +5,7 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
 {
-	public partial class NetworkStatisticsControl : UserControl
+	public partial class NetworkStatisticsControl : UserControl	, IDisposable
     {
 		public static readonly DependencyProperty DataSourceProperty = DependencyProperty.Register( nameof(DataSource), typeof(IStatisticsDataSource), typeof(NetworkStatisticsControl));
 		public static readonly DependencyProperty ConnectionStatusProperty = DependencyProperty.Register( nameof(ConnectionStatus), typeof(bool), typeof(NetworkStatisticsControl));
@@ -28,7 +28,14 @@ namespace RabbitOM.Player.Controls
 		public NetworkStatisticsControl()
         {
             InitializeComponent();
+
+			_timer.Tick += OnTimerTick;
         }
+
+		~NetworkStatisticsControl()
+		{
+			Dispose( false );
+		}
 
 
 
@@ -161,27 +168,29 @@ namespace RabbitOM.Player.Controls
 			MaxPacketReceivedPerSecond = dataSource.GetMaxPacketReceivedPerSecond();
 		}
 
+		public void Dispose()
+		{
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
 
-
-
-
-
-
-
-
-
-        private void OnUserControlLoaded( object sender , RoutedEventArgs e )
+        protected void Dispose( bool disposing )
         {
-            _timer.Tick += OnTimerTick;
+			if ( disposing )
+			{
+				StopMonitoring();
+				_timer.Tick -= OnTimerTick;
+			}
         }
 
-        private void OnUserControlUnloaded( object sender , RoutedEventArgs e )
-        {
-			_timer.Stop();
-			_timer.Tick -= OnTimerTick;
-        }
 
-		private void OnTimerTick( object sender , System.EventArgs e )
+
+
+
+
+
+
+        private void OnTimerTick( object sender , System.EventArgs e )
         {
             Update();
         }

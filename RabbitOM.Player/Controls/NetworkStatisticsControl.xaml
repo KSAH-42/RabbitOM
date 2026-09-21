@@ -8,8 +8,6 @@
              mc:Ignorable="d" 
              Height="279" 
              Width="365"
-             Loaded="OnUserControlLoaded"
-             Unloaded="OnUserControlUnloaded"
              DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
              >
 

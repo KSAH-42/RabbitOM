@@ -9,7 +9,6 @@
              mc:Ignorable="d" 
              d:DesignWidth="550"
              d:DesignHeight="450"
-             Unloaded="OnUnloaded"
              >
 
     <UserControl.Resources>
