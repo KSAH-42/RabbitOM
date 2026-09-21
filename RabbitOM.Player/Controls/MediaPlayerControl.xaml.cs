@@ -21,6 +21,7 @@ namespace RabbitOM.Player.Controls
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaPlayerControl) , new PropertyMetadata( Stretch.Fill ) );
         public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility) , typeof(Visibility) , typeof(MediaPlayerControl) , new PropertyMetadata( Visibility.Visible ) );
         public static readonly DependencyProperty SourceVisibilityProperty = DependencyProperty.Register( nameof(SourceVisibility) , typeof(Visibility) , typeof(MediaPlayerControl) , new PropertyMetadata( Visibility.Collapsed ) );
+        public static readonly DependencyProperty SourceMarginProperty = DependencyProperty.Register( nameof(SourceMargin) , typeof(Thickness) , typeof(MediaPlayerControl) );
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source) , typeof(string) , typeof(MediaPlayerControl) );
         public static readonly DependencyProperty UserNameProperty = DependencyProperty.Register( nameof(UserName) , typeof(string) , typeof(MediaPlayerControl) );
         public static readonly DependencyProperty PasswordProperty = DependencyProperty.Register( nameof(Password) , typeof(string) , typeof(MediaPlayerControl) );
@@ -100,6 +101,12 @@ namespace RabbitOM.Player.Controls
         {
             get => (Visibility) GetValue( StatisticsVisibilityProperty );
             set => SetValue( StatisticsVisibilityProperty , value );
+        }
+
+        public Thickness SourceMargin
+        {
+            get => (Thickness) GetValue( SourceMarginProperty );
+            set => SetValue( SourceMarginProperty , value );
         }
 
         public Visibility SourceVisibility

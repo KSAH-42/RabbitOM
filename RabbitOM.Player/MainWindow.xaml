@@ -161,64 +161,75 @@
 
             </Grid>
 
-			<Grid Grid.Row="1" Margin="1,0,1,1" Background="Black" >
-				<TabControl>
-					<TabItem Header="Video">
-						<Grid>
+			<Grid Grid.Row="1" Margin="1,0,1,1">
+				
+				<TabControl HorizontalAlignment="Stretch" 
+							VerticalAlignment="Stretch" 
+							TabStripPlacement="Bottom" 
+							HorizontalContentAlignment="Right" 
+							FontSize="15" 
+							Padding="0,5,0,0"
+							>
+				
+					<TabItem Header="VIDEO">
+						
+						<Grid Background="Black">
 
 							<Grid.ContextMenu>
 
 								<ContextMenu>
 
 									<MenuItem x:Name="MenuItemStretch"
-                       Header="Stretch"
-                       IsCheckable="True"
-                       IsChecked="True"
-                       />
+                                              Header="Stretch"
+                                              IsCheckable="True"
+                                              IsChecked="True"
+                                              />
 
 									<Separator />
 
-									<MenuItem x:Name="MenuItemShowFooter"
-                       Header="Show footer info" 
-                       IsCheckable="True"
-                       IsChecked="False"
-                       />
+									<MenuItem x:Name="MenuItemShowSourceInfo"
+                                              Header="Show source info" 
+                                              IsCheckable="True"
+                                              IsChecked="False"
+                                              />
 
 									<MenuItem x:Name="MenuItemShowStatistics"
-                       Header="Show statistics" 
-                       IsCheckable="True"
-                       IsChecked="True"
-                       />
+                                              Header="Show statistics" 
+                                              IsCheckable="True"
+                                              IsChecked="True"
+                                              />
 
 									<Separator />
 
 									<MenuItem Header="Save Image" 
-                       Command="{x:Static local:MainWindow.SaveImageCommand}" 
-                       />
+                                              Command="{x:Static local:MainWindow.SaveImageCommand}" 
+                                              />
 
 								</ContextMenu>
 
 							</Grid.ContextMenu>
 
 							<controls:MediaPlayerControl x:Name="_mediaPlayer"
-                                 x:FieldModifier="private"
-                                 HorizontalAlignment="Stretch"
-                                 VerticalAlignment="Stretch"
-                                 Focusable="True"
-                                 StretchImage="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
-                                 SourceVisibility="{Binding ElementName=MenuItemShowFooter, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                 StatisticsVisibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                 />
+                                                         x:FieldModifier="private"
+                                                         HorizontalAlignment="Stretch"
+                                                         VerticalAlignment="Stretch"
+                                                         Focusable="True"
+                                                         StretchImage="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
+                                                         SourceVisibility="{Binding ElementName=MenuItemShowSourceInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                                         StatisticsVisibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                                         />
 
 						</Grid>
-					</TabItem>
-					<TabItem Header="Script">
 						
 					</TabItem>
-				</TabControl>
-			</Grid>
 
-           
+					<TabItem Header="SCRIPT">
+						
+					</TabItem>
+					
+				</TabControl>
+				
+			</Grid>
 
         </Grid>
         

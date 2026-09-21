@@ -56,7 +56,8 @@
                    HorizontalAlignment="Center"
 				   Text="{Binding Source,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                    Visibility="{Binding SourceVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                   />
+                   Margin="{Binding SourceMargin,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
+				   />
 
 	</Grid>
 
