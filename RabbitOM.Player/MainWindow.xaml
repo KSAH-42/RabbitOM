@@ -167,8 +167,8 @@
 							VerticalAlignment="Stretch" 
 							TabStripPlacement="Bottom" 
 							HorizontalContentAlignment="Right" 
-							FontSize="14" 
-							Padding="0,5,0,0"
+							FontSize="18" 
+							Padding="0,0,11,9"
 							>
 				
 					<TabItem Header="VIDEO">

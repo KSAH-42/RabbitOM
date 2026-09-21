@@ -97,11 +97,12 @@
 					<Border BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}"
 							Background="{TemplateBinding Background}"
-							Padding="{TemplateBinding Padding}"
 							HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
 							>
 
-						<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+						<Grid HorizontalAlignment="Stretch" 
+							  VerticalAlignment="Stretch"
+							  >
 
 							<ContentPresenter ContentSource="SelectedContent" />
 
@@ -109,11 +110,11 @@
 									   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
 									   >
 
-								<WrapPanel  Margin="{TemplateBinding Padding}" 
-											IsItemsHost="True"
+								<WrapPanel  IsItemsHost="True"
 											Orientation="Horizontal"
 											HorizontalAlignment="Stretch"
 											VerticalAlignment="Bottom"
+											Margin="{TemplateBinding Padding}" 
 											/>
 
 							</DockPanel>

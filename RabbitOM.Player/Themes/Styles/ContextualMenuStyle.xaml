@@ -25,8 +25,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="HighlightedOn">
+                   
+					<ControlTemplate.Resources>
+                    
+						<Storyboard x:Key="HighlightedOn">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
                             </DoubleAnimationUsingKeyFrames>
@@ -34,7 +36,8 @@
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
-                        <Storyboard x:Key="HightlightedOff">
+                        
+						<Storyboard x:Key="HightlightedOff">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverShineBorder" Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
                             </DoubleAnimationUsingKeyFrames>
@@ -42,12 +45,16 @@
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
+						
                     </ControlTemplate.Resources>
-                    <Border x:Name="Border" 
+                    
+					<Border x:Name="Border" 
+							Margin="3,2,3,2"
                             Background="Transparent" 
                             BorderThickness="{TemplateBinding BorderThickness}" 
-                            CornerRadius="0,0,0,0" Margin="3,2,3,2"
+                            CornerRadius="0,0,0,0" 
                             >
+						
                         <Grid Margin="0,0,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition MinWidth="25" Width="27" SharedSizeGroup="MenuItemIconColumnGroup" />
@@ -61,7 +68,7 @@
                                     Grid.ColumnSpan="4" 
                                     Background="#CF626262" 
                                     Opacity="0" 
-                                    CornerRadius="10"
+                                    CornerRadius="5"
                                     />
 
                             <Border x:Name="HoverShineBorder" 
@@ -69,7 +76,7 @@
                                     Opacity="0" 
                                     Height="Auto" 
                                     Background="#CF626262" 
-                                    CornerRadius="10" 
+                                    CornerRadius="5" 
                                     />
 
                             <ContentPresenter x:Name="Icon" 
@@ -79,8 +86,8 @@
                                               />
 
                             <Grid x:Name="GlyphPanel" 
-                                  Visibility="Hidden" 
                                   Margin="9,0,0,0" 
+                                  Visibility="Hidden" 
                                   VerticalAlignment="Center"
                                   >
                             
