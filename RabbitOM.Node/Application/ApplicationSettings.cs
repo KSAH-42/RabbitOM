@@ -47,7 +47,7 @@ namespace RabbitOM.Node.Application
             };
 
 
-            // TODO: refactor as O(n) and add support of IsRequired, and move the code to a different class
+            // TODO: refactor as O(n) and move the code to a different class
 
             for ( var i = 1 ; i < input.Length ; ++ i )
             {
