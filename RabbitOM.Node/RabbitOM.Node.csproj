@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\PropertyValueConverter.cs" />
     <Compile Include="Application\OptionAttribute.cs" />
     <Compile Include="Application\HelpManager.cs" />
     <Compile Include="Logging\ConsoleLogger.cs" />
