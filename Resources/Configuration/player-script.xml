@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<name>player script</name>
+	<language>csharp</language>
+	<properties>
+		<property name="Property1">Value1</property>
+		<property name="Property2">Value2</property>
+		<property name="Property3">Value3</property>
+	</properties>
+	<code>
+		using System;
+
+		public sealed class MyPlayerScript : PlayerScript
+		{
+			public string Property1 { get; set; }
+			public string Property2 { get; set; }
+			public string Property3 { get; set; }
+
+			protected virtual void OnKeyPress( object sender , KeyPressEventArgs e )
+			{
+			}
+
+			protected virtual void OnMouseEvent( object sender , MouseEventArgs e )
+			{
+			}
+
+            // receive commands from a small web server (use Microsoft.AspNet.WebApi.Core ??)		
+			protected virtual void OnReceiveCommand( object sender , Command command )
+			{
+				if ( command.Type == CommandType.StartRequest )
+				{
+					Player.StartStreaming();
+				}
+				else if ( command.Type == CommandType.StopRequest )
+				{
+					Player.StopStreaming();
+				}
+			}
+		}
+	</code>
+</script>
