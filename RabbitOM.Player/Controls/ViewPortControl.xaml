@@ -59,7 +59,7 @@
                 VerticalAlignment="Stretch"
                 Background="Transparent"
                 IsHitTestVisible="True"
-				MouseLeftButtonDown="OnCanvasMouseLeftButtonDown"
+				MouseDown="OnCanvasMouseLeftButtonDown"
                 MouseUp="OnCanvasMouseUp"
                 MouseMove="OnCanvasMouseMove"
                 >

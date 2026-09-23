@@ -11,6 +11,7 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Configuration;
     using RabbitOM.Player.Data;
     using RabbitOM.Player.Dialogs;
+    using RabbitOM.Player.Resources;
     using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
     public partial class MainWindow : Window
@@ -25,6 +26,13 @@ namespace RabbitOM.Player
 
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(MainWindow) , new PropertyMetadata("zerzer"));
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            Script = ResourceManager.GetResourceFile( ResourceNames.ScriptTemplate );
+        }
 
         public string ButtonStatus
         {
@@ -36,6 +44,12 @@ namespace RabbitOM.Player
         {
             get => GetValue( SelectedSourceProperty ) as string;
             set => SetValue( SelectedSourceProperty , value );
+        }
+
+        public string Script
+        {
+            get => GetValue( ScriptProperty ) as string;
+            set => SetValue( ScriptProperty , value );
         }
 
         public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );

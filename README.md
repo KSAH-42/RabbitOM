@@ -208,7 +208,7 @@ You can also configure the script: in the xml section called "properties", the n
 and run by executing the following command (take care regarding the path it may be incorrect)
 
 ~~~~
-rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-script.xml
+RabbitOM.Node.exe rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\..\..\Resources\Configuration\node-script.xml
 ~~~~
 
 # About the next rtsp client (experimental)

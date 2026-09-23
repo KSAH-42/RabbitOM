@@ -169,13 +169,14 @@
                                          Background="Transparent"
                                          />
 
-                            <TextBlock Margin="3,0,0,0"
+                            <TextBlock Margin="3,-0.55,0,0"
                                        Text="{Binding MaxFrameCountPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                        FontSize="9" 
                                        Foreground="Beige" 
                                        />
 
-                            <TextBlock Text=" fps"
+                            <TextBlock Margin="0,-0.55,0,0"
+									   Text=" fps"
                                        FontSize="9" 
                                        Foreground="Beige" 
                                        />
@@ -221,7 +222,7 @@
                                          Background="Transparent"
                                          />
            
-                            <TextBlock Margin="3,0,0,0"
+                            <TextBlock Margin="3,-0.55,0,0"
                                        Text="{Binding MaxBytesReceivedPerSecond,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, Converter={StaticResource MemoryUnitValueConverter}}"
                                        FontSize="9" 
                                        Foreground="Beige" 
@@ -274,7 +275,8 @@
                                        Foreground="Beige" 
                                        />
 
-                            <TextBlock Text=" pps"
+							<TextBlock Margin="0,-0.25,0,0"
+									   Text=" pps"
                                        FontSize="9" 
                                        Foreground="Beige" 
                                        />

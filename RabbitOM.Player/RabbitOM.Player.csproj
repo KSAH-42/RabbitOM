@@ -52,6 +52,7 @@
       <HintPath>..\packages\FFmpeg.Native.4.4.0.2386\lib\netstandard2.0\FFmpeg.Native.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -141,6 +142,20 @@
     </Compile>
     <Compile Include="Data\ModuleInfoFactory.cs" />
     <Compile Include="Data\ModuleInfo.cs" />
+    <Compile Include="Resources\ResourceManager.cs" />
+    <Compile Include="Resources\ResourceNames.cs" />
+    <Compile Include="Scripting\CodeDomProviderFactory.cs" />
+    <Compile Include="Scripting\Messages\Message.cs" />
+    <Compile Include="Scripting\Models\ReferenceModel.cs" />
+    <Compile Include="Scripting\Models\ScriptModel.cs" />
+    <Compile Include="Scripting\Models\Serializer.cs" />
+    <Compile Include="Scripting\Models\Validator.cs" />
+    <Compile Include="Scripting\Models\PropertyModel.cs" />
+    <Compile Include="Scripting\PlayerScript.cs" />
+    <Compile Include="Scripting\PlayerScriptBuilder.cs" />
+    <Compile Include="Scripting\PlayerScriptConfigurer.cs" />
+    <Compile Include="Scripting\PlayerScriptProxy.cs" />
+    <Compile Include="Scripting\StringExtensions.cs" />
     <Compile Include="Themes\Styles\WindowStyle.cs" />
     <Page Include="Controls\MediaPlayerControl.xaml">
       <SubType>Designer</SubType>
@@ -287,6 +302,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
   </ItemGroup>
   <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
     <PropertyGroup>

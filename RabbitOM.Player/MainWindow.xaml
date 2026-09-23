@@ -16,8 +16,7 @@
 		Style="{DynamicResource WindowStyle}"
         Icon="/Resources/icon.ico"
         WindowState="Maximized"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
-		>
+        >
 
     <Window.Resources>
         <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
@@ -126,8 +125,8 @@
                               SelectedIndex="0" 
                               Height="29" 
                               IsEditable="True" 
-                              Text="{Binding SelectedSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                              ItemsSource="{Binding Sources,UpdateSourceTrigger=PropertyChanged}"
+                              Text="{Binding SelectedSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+                              ItemsSource="{Binding Sources,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
                               MaxDropDownHeight="350"
                               />
                     
@@ -153,7 +152,7 @@
                             VerticalAlignment="Top" 
                             Width="89" 
                             Height="29"
-                            Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                            Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
                             Command="{x:Static local:MainWindow.ControlCommand}" 
                             />
                     
@@ -226,8 +225,19 @@
 
 					<TabItem Header="SCRIPT">
 						<Grid>
-							<TextBox Margin="10,10,10,50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AcceptsReturn="True" AcceptsTab="True" />
-							<TextBlock Text="Not currentlty available" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" />
+							<TextBox Margin="10,10,10,50" 
+									 HorizontalAlignment="Stretch" 
+									 VerticalAlignment="Stretch" 
+									 AcceptsReturn="True" 
+									 AcceptsTab="True" 
+									 Text="{Binding Script,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+									 />
+							
+							<TextBlock Text="Not available" 
+									   Foreground="Yellow" 
+									   HorizontalAlignment="Center" 
+									   VerticalAlignment="Center" 
+									   />
 						</Grid>
 					</TabItem>
 					
