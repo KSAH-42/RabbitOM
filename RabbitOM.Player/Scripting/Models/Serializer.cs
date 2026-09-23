@@ -21,7 +21,7 @@ namespace RabbitOM.Player.Scripting.Models
 
 			foreach (var reference in model.References ?? Enumerable.Empty<ReferenceModel>())
 			{
-				references.Add(new XElement("reference", reference.Name ?? string.Empty));
+				references.Add(new XElement("reference", new XAttribute("name", reference.Name ?? string.Empty)));
 			}
 
 			var properties = new XElement("properties");
@@ -56,7 +56,7 @@ namespace RabbitOM.Player.Scripting.Models
 
 			foreach (var reference in root.Element( "references" )?.Elements( "reference" ) ?? XElement.EmptySequence)
 			{
-				script.References.Add( new ReferenceModel { Name = reference.Value?.Trim() } );
+				script.References.Add( new ReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() } );
 			}
 
 			foreach (var property in root.Element( "properties" )?.Elements( "property" ) ?? XElement.EmptySequence)

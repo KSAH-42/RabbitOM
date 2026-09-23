@@ -1,0 +1,6 @@
+@RabbitOM.Player.Decoder.Api_HostAddress = http://localhost:5183
+
+GET {{RabbitOM.Player.Decoder.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
