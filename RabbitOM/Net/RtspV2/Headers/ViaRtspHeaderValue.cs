@@ -4,23 +4,23 @@ namespace RabbitOM.Net.RtspV2.Headers
 {
     using RabbitOM.Net.RtspV2.Headers.DataTypes;
 
-    public sealed class AcceptLanguageRtspHeaderValue
+    public sealed class ViaRtspHeaderValue
     {
-        public LanguageWithQualityRtspHeaderValueCollection Values { get; } = new LanguageWithQualityRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<ProxyRtspHeaderValue> Values { get; } = new RtspHeaderValueCollection<ProxyRtspHeaderValue>();
 
-        public static bool TryParse( string input , out AcceptLanguageRtspHeaderValue result )
+        public static bool TryParse( string input , out ViaRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
-                var header = new AcceptLanguageRtspHeaderValue();
+                var header = new ViaRtspHeaderValue();
 
                 foreach ( var token in tokens )
                 {
-                    if ( LanguageWithQualityRtspHeaderValue.TryParse( token , out var element ) )
+                    if ( ProxyRtspHeaderValue.TryParse( token , out var proxy ) )
                     {
-                        header.Values.TryAdd( element );
+                        header.Values.TryAdd( proxy );
                     }
                 }
 

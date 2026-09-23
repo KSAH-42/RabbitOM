@@ -47,7 +47,7 @@ namespace RabbitOM.Net.RtspV2.Headers
 
         public int? MinimumFresh { get; set; }
 
-        public StringParameterRtspHeaderValueCollection Parameters { get; } = new StringParameterRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<StringParameterRtspHeaderValue> Parameters { get; } = new RtspHeaderValueCollection<StringParameterRtspHeaderValue>();
 
 
 

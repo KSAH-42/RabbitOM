@@ -6,6 +6,7 @@ using System.Text;
 namespace RabbitOM.Net.RtspV2.Headers
 {
     using RabbitOM.Net.RtspV2.Headers.DataTypes;
+	using System.Net.Http.Headers;
 
     public sealed class WWWAuthenticateRtspHeaderValue
     {
@@ -20,7 +21,7 @@ namespace RabbitOM.Net.RtspV2.Headers
         private string _algorithm = string.Empty;
         private bool? _stale;
         private string _qualityOfProtection = string.Empty;
-        private readonly StringParameterRtspHeaderValueCollection _extensions = new StringParameterRtspHeaderValueCollection();
+        private readonly RtspHeaderValueCollection<StringParameterRtspHeaderValue> _extensions = new RtspHeaderValueCollection<StringParameterRtspHeaderValue>();
 
 
 
@@ -68,7 +69,7 @@ namespace RabbitOM.Net.RtspV2.Headers
             set => _qualityOfProtection = EnsureValue( value );
         }
 
-        public StringParameterRtspHeaderValueCollection Extensions
+        public RtspHeaderValueCollection<StringParameterRtspHeaderValue> Extensions
         {
             get => _extensions;
         }

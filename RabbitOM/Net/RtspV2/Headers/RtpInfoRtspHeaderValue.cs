@@ -6,7 +6,7 @@ namespace RabbitOM.Net.RtspV2.Headers
 
     public sealed class RtpInfoRtspHeaderValue
     {
-        public RtpInfoSourceRtspHeaderValueCollection Values { get; } = new RtpInfoSourceRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<RtpInfoSourceRtspHeaderValue> Values { get; } = new RtspHeaderValueCollection<RtpInfoSourceRtspHeaderValue>();
 
         public static bool TryParse( string input , out RtpInfoRtspHeaderValue result )
         {

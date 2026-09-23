@@ -6,7 +6,7 @@ namespace RabbitOM.Net.RtspV2.Headers
     
     public sealed class RequireRtspHeaderValue
     {
-        public StringRtspHeaderValueCollection Tags { get; } = new StringRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<string> Tags { get; } = new RtspHeaderValueCollection<string>( RtspHeaderValueValidator.IsWellFormed );
         
         public static bool TryParse( string input , out RequireRtspHeaderValue result )
         {

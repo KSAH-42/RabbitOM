@@ -6,7 +6,7 @@ namespace RabbitOM.Net.RtspV2.Headers
 
     public sealed class AllowRtspHeaderValue
     {
-        public RtspMethodHeaderValueCollection Methods { get; } = new RtspMethodHeaderValueCollection();
+        public RtspHeaderValueCollection<RtspMethod> Methods { get; } = new RtspHeaderValueCollection<RtspMethod>();
 
         public static bool TryParse( string input , out AllowRtspHeaderValue result )
         {

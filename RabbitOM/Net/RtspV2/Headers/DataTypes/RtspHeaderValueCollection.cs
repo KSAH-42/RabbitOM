@@ -4,11 +4,28 @@ using System.Collections.Generic;
 
 namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 {
-    public class RtspHeaderValueCollection<TValue> : ICollection<TValue> , IReadOnlyCollection<TValue>
+    public sealed class RtspHeaderValueCollection<TValue> : ICollection<TValue> , IReadOnlyCollection<TValue>
         where TValue : class
     {
-        private readonly List<TValue> _collection = new List<TValue>();
+        private readonly List<TValue> _collection;
 
+        private readonly Func<TValue, bool> _validator;
+
+
+
+
+
+
+        public RtspHeaderValueCollection()
+            : this ( value => ! object.ReferenceEquals( value , null ) )
+        {
+        }
+
+        public RtspHeaderValueCollection( Func<TValue, bool> validator )
+        {
+            _validator = validator ?? throw new ArgumentNullException( nameof( validator ) );
+            _collection = new List<TValue>();
+        }
 
 
 
@@ -54,7 +71,7 @@ namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 
         public void Add( TValue item )
         {
-            if ( ! OnValidate( item ) )
+            if ( ! _validator( item ) )
             {
                 throw new ArgumentException( nameof( item ) );
             }
@@ -96,7 +113,7 @@ namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 
         public bool TryAdd( TValue item )
         {
-            if ( ! OnValidate( item ) )
+            if ( ! _validator( item ) )
             {
                 return false;
             }
@@ -104,18 +121,6 @@ namespace RabbitOM.Net.RtspV2.Headers.DataTypes
             _collection.Add( item );
 
             return true;
-        }
-
-
-
-
-
-
-
-
-        protected virtual bool OnValidate( TValue value )
-        {
-            return ! object.ReferenceEquals( value , null );
         }
     }
 }

@@ -23,7 +23,7 @@ namespace RabbitOM.Net.RtspV2.Headers
         private string _qualityOfProtection = string.Empty;
         private string _nonceCount = string.Empty;
         private string _clientNonce = string.Empty;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
+        private readonly RtspHeaderValueCollection<string> _extensions = new RtspHeaderValueCollection<string>( RtspHeaderValueValidator.IsWellFormed );
 
 
 
@@ -101,7 +101,7 @@ namespace RabbitOM.Net.RtspV2.Headers
             set => _qualityOfProtection = EnsureValue( value );
         }
 
-        public StringRtspHeaderValueCollection Extensions
+        public RtspHeaderValueCollection<string> Extensions
         {
             get => _extensions;
         }

@@ -1,34 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Globalization;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 {
     public sealed class MediaTypeWithQualityRtspHeaderValue
     {
         public MediaTypeWithQualityRtspHeaderValue( string value )
-            : this( value , null , null , new StringParameterRtspHeaderValueCollection() )
+            : this( value , null , null , new RtspHeaderValueCollection<StringParameterRtspHeaderValue>() )
         {
         }
 
         public MediaTypeWithQualityRtspHeaderValue( string value , double quality )
-            : this( value , quality , null , new StringParameterRtspHeaderValueCollection() )
+            : this( value , quality , null , new RtspHeaderValueCollection<StringParameterRtspHeaderValue>() )
         {
         }
 
         public MediaTypeWithQualityRtspHeaderValue( string value , double quality , string charset )
-            : this( value , quality , charset , new StringParameterRtspHeaderValueCollection() )
+            : this( value , quality , charset , new RtspHeaderValueCollection<StringParameterRtspHeaderValue>() )
         {
         }
 
-        public MediaTypeWithQualityRtspHeaderValue( string value , double? quality , string charset , StringParameterRtspHeaderValueCollection parameters )
+        public MediaTypeWithQualityRtspHeaderValue( string value , double? quality , string charset , RtspHeaderValueCollection<StringParameterRtspHeaderValue> parameters )
         {
             Value = RtspHeaderValueValidator.EnsureWellFormed( value );
             CharSet = RtspHeaderValueValidator.EnsureWellFormed( charset );
             Quality = quality;
-            Parameters = parameters ?? new StringParameterRtspHeaderValueCollection();
+            Parameters = parameters ?? new RtspHeaderValueCollection<StringParameterRtspHeaderValue>();
         }
 
 
@@ -40,7 +41,7 @@ namespace RabbitOM.Net.RtspV2.Headers.DataTypes
         
         public string CharSet { get; }
 
-        public StringParameterRtspHeaderValueCollection Parameters { get; }
+        public RtspHeaderValueCollection<StringParameterRtspHeaderValue> Parameters { get; }
 
 
 
@@ -55,7 +56,7 @@ namespace RabbitOM.Net.RtspV2.Headers.DataTypes
 
                 if ( RtspHeaderValueValidator.IsWellFormed( name , RtspHeaderValueValidatorCharSet.BasicToken ) )
                 {
-                    var parameters = new StringParameterRtspHeaderValueCollection();
+                    var parameters = new RtspHeaderValueCollection<StringParameterRtspHeaderValue>();
                     
                     var charset = string.Empty;
                     

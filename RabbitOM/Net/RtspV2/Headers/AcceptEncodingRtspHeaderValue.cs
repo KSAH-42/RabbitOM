@@ -4,21 +4,21 @@ namespace RabbitOM.Net.RtspV2.Headers
 {
     using RabbitOM.Net.RtspV2.Headers.DataTypes;
 
-    public sealed class UserAgentRtspHeaderValue
+    public sealed class AcceptEncodingRtspHeaderValue
     {
-        public ProductInfoRtspHeaderValueCollection Values { get; } = new ProductInfoRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<StringWithQualityRtspHeaderValue> Values { get; } = new RtspHeaderValueCollection<StringWithQualityRtspHeaderValue>();
 
-        public static bool TryParse( string input , out UserAgentRtspHeaderValue result )
+        public static bool TryParse( string input , out AcceptEncodingRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
-                var header = new UserAgentRtspHeaderValue();
+                var header = new AcceptEncodingRtspHeaderValue();
 
                 foreach ( var token in tokens )
                 {
-                    if ( ProductInfoRtspHeaderValue.TryParse( token , out var element ) )
+                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
                     {
                         header.Values.TryAdd( element );
                     }

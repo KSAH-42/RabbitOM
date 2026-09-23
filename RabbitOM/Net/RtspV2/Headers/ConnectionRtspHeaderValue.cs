@@ -3,25 +3,22 @@
 namespace RabbitOM.Net.RtspV2.Headers
 {
     using RabbitOM.Net.RtspV2.Headers.DataTypes;
-
-    public sealed class AcceptEncodingRtspHeaderValue
+    
+    public sealed class ConnectionRtspHeaderValue
     {
-        public StringWithQualityRtspHeaderValueCollection Values { get; } = new StringWithQualityRtspHeaderValueCollection();
-
-        public static bool TryParse( string input , out AcceptEncodingRtspHeaderValue result )
+        public RtspHeaderValueCollection<string> Values { get; } = new RtspHeaderValueCollection<string>( RtspHeaderValueValidator.IsWellFormed );
+        
+        public static bool TryParse( string input , out ConnectionRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
-                var header = new AcceptEncodingRtspHeaderValue();
+                var header = new ConnectionRtspHeaderValue();
 
                 foreach ( var token in tokens )
                 {
-                    if ( StringWithQualityRtspHeaderValue.TryParse( token , out var element ) )
-                    {
-                        header.Values.TryAdd( element );
-                    }
+                    header.Values.TryAdd( RtspHeaderValueSanitizer.UnQuotesWithTrim( token ) );
                 }
 
                 if ( header.Values.Count > 0 )
@@ -32,6 +29,7 @@ namespace RabbitOM.Net.RtspV2.Headers
 
             return result != null;
         }
+
 
         public override string ToString()
         {

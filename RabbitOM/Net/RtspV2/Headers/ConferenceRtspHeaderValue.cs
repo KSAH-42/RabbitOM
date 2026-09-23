@@ -26,7 +26,7 @@ namespace RabbitOM.Net.RtspV2.Headers
         private string _access = string.Empty;
         private byte? _ttl;
         private ValueRange? _port;
-        private readonly StringRtspHeaderValueCollection _extensions = new StringRtspHeaderValueCollection();
+        private readonly RtspHeaderValueCollection<string> _extensions = new RtspHeaderValueCollection<string>( RtspHeaderValueValidator.IsWellFormed );
 
 
 
@@ -115,7 +115,7 @@ namespace RabbitOM.Net.RtspV2.Headers
             set => _port = value;
         }
 
-        public StringRtspHeaderValueCollection Extensions
+        public RtspHeaderValueCollection<string> Extensions
         {
             get => _extensions;
         }

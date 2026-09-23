@@ -4,10 +4,10 @@ using System.Linq;
 namespace RabbitOM.Net.RtspV2.Headers
 {
     using RabbitOM.Net.RtspV2.Headers.DataTypes;
-    
+
     public sealed class IfMatchRtspHeaderValue
     {
-        public StringRtspHeaderValueCollection ETags { get; } = new StringRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<string> ETags { get; } = new RtspHeaderValueCollection<string>( RtspHeaderValueValidator.IsWellFormed );
 
         public static bool TryParse( string input , out IfMatchRtspHeaderValue result )
         {

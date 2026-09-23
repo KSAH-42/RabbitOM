@@ -6,7 +6,7 @@ namespace RabbitOM.Net.RtspV2.Headers
 
     public sealed class TransportRtspHeaderValue
     {
-        public TransportInfoRtspHeaderValueCollection Values { get; } = new TransportInfoRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<TransportInfoRtspHeaderValue> Values { get; } = new RtspHeaderValueCollection<TransportInfoRtspHeaderValue>();
 
         public static bool TryParse( string input , out TransportRtspHeaderValue result )
         {

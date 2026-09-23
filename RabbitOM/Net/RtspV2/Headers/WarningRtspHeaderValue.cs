@@ -7,7 +7,7 @@ namespace RabbitOM.Net.RtspV2.Headers
     
     public sealed class WarningRtspHeaderValue
     {
-        public WarningInfoRtspHeaderValueCollection Values { get; } = new WarningInfoRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<WarningInfoRtspHeaderValue> Values { get; } = new RtspHeaderValueCollection<WarningInfoRtspHeaderValue>();
         
         public override string ToString()
         {

@@ -4,23 +4,21 @@ namespace RabbitOM.Net.RtspV2.Headers
 {
     using RabbitOM.Net.RtspV2.Headers.DataTypes;
 
-    // TODO: add unit test to detect that implicit operator( string type) is not implemented, it should be block, because it lets to people to think what we can write every thing, lets the developer to use add( string name, string value) method instead
-
-    public sealed class AcceptRtspHeaderValue
+    public sealed class UserAgentRtspHeaderValue
     {
-        public MediaTypeWithQualityRtspHeaderValueCollection Values { get; } = new MediaTypeWithQualityRtspHeaderValueCollection();
+        public RtspHeaderValueCollection<ProductInfoRtspHeaderValue> Values { get; } = new RtspHeaderValueCollection<ProductInfoRtspHeaderValue>();
 
-        public static bool TryParse( string input , out AcceptRtspHeaderValue result )
+        public static bool TryParse( string input , out UserAgentRtspHeaderValue result )
         {
             result = null;
 
             if ( RtspHeaderValueParser.TryParse( input , "," , out string[] tokens ) )
             {
-                var header = new AcceptRtspHeaderValue();
+                var header = new UserAgentRtspHeaderValue();
 
                 foreach ( var token in tokens )
                 {
-                    if ( MediaTypeWithQualityRtspHeaderValue.TryParse( token , out var element ) )
+                    if ( ProductInfoRtspHeaderValue.TryParse( token , out var element ) )
                     {
                         header.Values.TryAdd( element );
                     }
