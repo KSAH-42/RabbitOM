@@ -151,6 +151,7 @@
     <Compile Include="Scripting\Models\Serializer.cs" />
     <Compile Include="Scripting\Models\Validator.cs" />
     <Compile Include="Scripting\Models\PropertyModel.cs" />
+    <Compile Include="Scripting\PlayerScriptHost.cs" />
     <Compile Include="Scripting\PlayerScript.cs" />
     <Compile Include="Scripting\PlayerScriptBuilder.cs" />
     <Compile Include="Scripting\PlayerScriptConfigurer.cs" />
