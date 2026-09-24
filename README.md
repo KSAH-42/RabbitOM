@@ -108,8 +108,6 @@ This sample include an example of how to build a player using decoder and render
 This sample include statitics component to display the framerate, the network bandwidth just making a right click.
 This sample include a zoom feature (keep down the mouse left button, and draw the zoom area and release the button).
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.H264.png)
-
 # RabbitOM.Player streaming over different transport types
 
 You can receive media content using TCP / UDP or Multicast
@@ -121,8 +119,6 @@ If your camera is located I strongly recommended to used TCP. Otherwise if you u
 # If you test first with VLC
 
 If your are using some cameras and you may use first VLC for testing, you may observed that VLC fail to display BUT the Media.Player will display the stream.
-
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.H265.HIK.png)
 
 First of all, here I use a HIK camera, and HIK camera just works as expected and works well.
 
