@@ -1,6 +1,6 @@
 // here the idea is to push to a local tcp listener decoded packet by
 // spawning a child process that use and settings as parameters rtsp uri, receiver port, etc... ?
-// and by security we can't connect to listener other wise is to use shared mem
+// and the push data to a listener create by the ui or used create an internal listener and wait a tcp client connection
 // so step one just finish scripting impl in ui
 // two migrate all in .net core
 // three, use bottom up approach start the decoder process impl, and launch it by the ui
