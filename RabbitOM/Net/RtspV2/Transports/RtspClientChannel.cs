@@ -19,13 +19,6 @@ namespace RabbitOM.Net.RtspV2.Transports
 
 
 
-        ~RtspClientChannel()
-        {
-            Dispose( false );
-        }
-
-
-
 
         public abstract bool IsOpened { get; }
 

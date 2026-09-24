@@ -19,6 +19,11 @@ namespace RabbitOM.Player.Codecs.FFMpeg
             _frame = frame;
         }
 
+        ~FFMpegSurface()
+        {
+            Dispose( false );
+        }
+
         public override IntPtr Frame
         {
             get => _frame != null ? (IntPtr) _frame : IntPtr.Zero;

@@ -26,10 +26,7 @@ namespace RabbitOM.Player.Codecs
 
         protected virtual void Dispose( bool disposing )
         {
-            if ( disposing )
-            {
-                Close();
-            }
+            Close();
         }
     }
 }

@@ -5,35 +5,23 @@ namespace RabbitOM.Net.RtspV2.Receivers
     public abstract class RtspMediaReceiver : IMediaReceiver , IDisposable
     {
         public event EventHandler<RtspCommunicationStartedEventArgs> CommunicationStarted;
-        
+
         public event EventHandler<RtspCommunicationStoppedEventArgs> CommunicationStopped;
-        
+
         public event EventHandler<RtspConnectedEventArgs> Connected;
-        
+
         public event EventHandler<RtspDisconnectedEventArgs> Disconnected;
-        
+
         public event EventHandler<RtspStreamingStartedEventArgs> StreamingStarted;
-        
+
         public event EventHandler<RtspStreamingStoppedEventArgs> StreamingStopped;
-        
+
         public event EventHandler<RtspStreamingStatusChangedEventArgs> StreamingStatusChanged;
-        
+
         public event EventHandler<RtspStreamingDataReceivedEventArgs> StreamingDataReceived;
-        
+
         public event EventHandler<RtspErrorEventArgs> Error;
-        
 
-
-
-
-
-
-
-        ~RtspMediaReceiver()
-        {
-            Dispose( false );
-        }
-        
 
 
 
@@ -42,13 +30,13 @@ namespace RabbitOM.Net.RtspV2.Receivers
 
 
         public abstract bool IsCommunicationStarted { get; }
-        
+
         public abstract bool IsCommunicationStopping { get;}
-       
+
         public abstract bool IsConnected { get; }
-        
+
         public abstract bool IsStreamingStarted { get; }
-        
+
         public abstract bool IsReceivingData { get; }
 
 
@@ -76,8 +64,11 @@ namespace RabbitOM.Net.RtspV2.Receivers
 
         protected virtual void Dispose( bool disposing )
         {
+            if ( disposing )
+            {
+                StopCommunication();
+            }
         }
-        
 
 
 

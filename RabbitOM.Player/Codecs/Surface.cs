@@ -1,5 +1,4 @@
-﻿using FFmpeg.AutoGen;
-using System;
+﻿using System;
 
 namespace RabbitOM.Player.Codecs
 {
@@ -9,11 +8,6 @@ namespace RabbitOM.Player.Codecs
         {
             Width = width;
             Height = height;
-        }
-
-        ~Surface()
-        {
-            Dispose( false );
         }
 
         public int Width { get; }

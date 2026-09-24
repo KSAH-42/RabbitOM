@@ -6,11 +6,6 @@ namespace RabbitOM.Node.Scripting
 
 	public abstract class NodeScript : IDisposable
 	{
-		~NodeScript()
-		{
-			Dispose( false );
-		}
-
 		public virtual void Setup() { }
 
 		public abstract void Handle( Message mesage );

@@ -12,11 +12,6 @@ namespace RabbitOM.Net.RtspV2.Transports
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
         }
 
-        ~RtspReceiverService()
-        {
-            Dispose( false );
-        }
-
         public bool IsStarted
         {
             get => throw new NotImplementedException( "To be implemented" );

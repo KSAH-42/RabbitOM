@@ -7,9 +7,8 @@ using System.Windows.Media;
 namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
-	using System.Data.SqlTypes;
 
-	public partial class MediaPlayerControl : UserControl , IDisposable
+	public sealed partial class MediaPlayerControl : UserControl , IDisposable
     {
         public static readonly RoutedEvent StartedEvent = EventManager.RegisterRoutedEvent( nameof(Started), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
         public static readonly RoutedEvent StoppedEvent = EventManager.RegisterRoutedEvent( nameof(Stopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
@@ -44,11 +43,6 @@ namespace RabbitOM.Player.Controls
             Transport = new TcpMediaPlayerTransport();
             _errors = new ObservableCollection<ErrorInfo>();
             _videoSource = new VideoSource( this );
-        }
-
-        ~MediaPlayerControl()
-        {
-            Dispose( false );
         }
 
 
@@ -226,24 +220,16 @@ namespace RabbitOM.Player.Controls
 
         public void Dispose()
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                _videoSource.Dispose();
-                _statistics.Dispose();
-            }
+            _videoSource.Dispose();
+            _statistics.Dispose();
         }
 
 
 
 
 
-        protected virtual void OnStarted()
+
+        private void OnStarted()
         {
             IsConnecting = true;
             IsPlaying = false;
@@ -252,7 +238,7 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( StartedEvent ) );
         }
 
-        protected virtual void OnStopped()
+        private void OnStopped()
         {
             IsConnecting = false;
             IsPlaying = false;
@@ -261,7 +247,7 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( StoppedEvent ) );
         }
 
-        protected virtual void OnConnected()
+        private void OnConnected()
         {
             IsConnected = true;
             IsConnecting = false;
@@ -270,7 +256,7 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( ConnectedEvent ) );
         }
 
-        protected virtual void OnDisconnected()
+        private void OnDisconnected()
         {
             IsPlaying = false;
             IsConnected = false;
@@ -280,7 +266,7 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }
 
-        protected virtual void OnFrameDecoded()
+        private void OnFrameDecoded()
         {
             IsPlaying = true;
 

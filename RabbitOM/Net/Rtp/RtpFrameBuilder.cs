@@ -25,15 +25,6 @@ namespace RabbitOM.Net.Rtp
 
 
 
-        ~RtpFrameBuilder()
-        {
-            Dispose( false );
-        }
-
-
-
-
-
         private readonly IPacketAggregator _aggregator = new RtpPacketAggregator() { MaximumNumberOfPackets = 1000 };
 
 
@@ -123,7 +114,7 @@ namespace RabbitOM.Net.Rtp
         protected virtual void Dispose( bool disposing )
         {
         }
-        
+
 
 
 

@@ -17,11 +17,6 @@ namespace RabbitOM.Net.Rtsp.Clients
             _thread = new BackgroundWorker("Rtsp - client thread");
         }
 
-        ~RtspClient()
-        {
-            Dispose( false );
-        }
-
 
 
         public event EventHandler<RtspClientCommunicationStartedEventArgs> CommunicationStarted
@@ -133,17 +128,8 @@ namespace RabbitOM.Net.Rtsp.Clients
 
         public void Dispose()
         {
-            Dispose( true );
-            GC.SuppressFinalize( this );
-        }
-
-        private void Dispose( bool disposing )
-        {
-            if ( disposing )
-            {
-                StopCommunication();
-                _session.Dispose();
-            }
+            StopCommunication();
+            _session.Dispose();
         }
     }
 }

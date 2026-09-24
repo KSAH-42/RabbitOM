@@ -17,10 +17,8 @@ namespace RabbitOM.Net.Rtp
 
 
 
-        ~RtpSampleBuilder()
-        {
-            Dispose( false );
-        }
+
+
 
 
 

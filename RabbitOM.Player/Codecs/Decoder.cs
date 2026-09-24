@@ -6,25 +6,12 @@ namespace RabbitOM.Player.Codecs
     {
         public event EventHandler<DecodedEventArgs> Decoded;
 
-
-
-
-
-
         ~Decoder()
         {
             Dispose( false );
         }
 
-
-
-
-
         public abstract bool IsOpened { get; }
-
-
-
-
 
         public abstract void Open( CodecType type );
 
@@ -44,17 +31,8 @@ namespace RabbitOM.Player.Codecs
 
         protected virtual void Dispose( bool disposing )
         {
-            if ( disposing )
-            {
-                Close();
-            }
+            Close();
         }
-
-
-
-
-
-
 
         protected virtual void OnDecoded( DecodedEventArgs e )
         {

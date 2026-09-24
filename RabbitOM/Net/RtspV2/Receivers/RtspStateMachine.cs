@@ -6,18 +6,7 @@ namespace RabbitOM.Net.RtspV2.Receivers
     {
         public abstract TimeSpan IdleTime { get; }
 
-
-
-
         public abstract void Run();
-
-
-
-
-        ~RtspStateMachine()
-        {
-            Dispose( false );
-        }
 
         public void Dispose()
         {
