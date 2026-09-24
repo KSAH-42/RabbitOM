@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Threading;
 
-namespace RabbitOM.Player.Controls
+namespace RabbitOM.Player
 {
     public static class DispatcherExtensions
     {

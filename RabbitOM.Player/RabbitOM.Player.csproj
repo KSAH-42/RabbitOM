@@ -99,7 +99,7 @@
     <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
     <Compile Include="Controls\CommunicationStatusControl.cs" />
     <Compile Include="Data\ErrorInfo.cs" />
-    <Compile Include="Controls\DispatcherExtensions.cs" />
+    <Compile Include="DispatcherExtensions.cs" />
     <Compile Include="Controls\MediaPlayerControl.xaml.VideoSource.cs" />
     <Compile Include="Data\MulticastMediaPlayerTransport.cs" />
     <Compile Include="Controls\NullStatisticsDataSource.cs" />
