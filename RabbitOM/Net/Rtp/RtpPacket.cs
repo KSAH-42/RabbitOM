@@ -50,6 +50,11 @@ namespace RabbitOM.Net.Rtp
             return packet != null && RtpPacketType.DYNAMIC_1 <= packet.Type && packet.Type <= RtpPacketType.DYNAMIC_32;
         }
 
+        public static bool IsRtcpType( RtpPacket packet )
+        {
+            return packet != null && RtpPacketType.RTCP_RESERVED_A <= packet.Type && packet.Type <= RtpPacketType.RTCP_RESERVED_E;
+        }
+
         public static bool TryParse( byte[] buffer , out RtpPacket result )
         {
             result = null;

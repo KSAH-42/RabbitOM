@@ -230,9 +230,9 @@ namespace RabbitOM.Player.Controls
 
                 if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
                 {
-                    _frameBuilder.AddPacket( packet );
-
                     _datasource.IncreasePacketReceived();
+
+                    _frameBuilder.AddPacket( packet );
                 }
             }
 
