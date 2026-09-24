@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Node.Scripting.Models
 {
-	public sealed class ScriptAssemblyModel
+	public sealed class ReferenceModel
 	{
 		public string Name { get; set; }
 	}

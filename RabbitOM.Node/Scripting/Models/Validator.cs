@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RabbitOM.Node.Scripting.Models
 {
-	public static class ScriptModelValidator
+	public static class Validator
 	{
 		// a very simple validator here, but no remote validation here
 		// done by an authority to validate the script remotely and check

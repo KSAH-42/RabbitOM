@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace RabbitOM.Node.Scripting.Models
 {
-	public static class ScriptModelDeserializer
+	public static class Deserializer
 	{
 		public static ScriptModel Deserialize( string input )
 		{
@@ -21,14 +21,14 @@ namespace RabbitOM.Node.Scripting.Models
 				Code     = root.Element( "code" )?.Value
 			};
 
-			foreach ( var assembly in root.Element( "assemblies" )?.Elements( "assembly" ) ?? XElement.EmptySequence )
+			foreach (var reference in root.Element( "references" )?.Elements( "reference" ) ?? XElement.EmptySequence)
 			{
-				script.Assemblies.Add( new ScriptAssemblyModel { Name = assembly.Value?.Trim() } );
+				script.References.Add( new ReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() } );
 			}
 
 			foreach ( var property in root.Element( "properties" )?.Elements( "property" ) ?? XElement.EmptySequence )
 			{
-				script.Properties.Add( new ScriptPropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() , Value = property.Value?.Trim() , } );
+				script.Properties.Add( new PropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() , Value = property.Value?.Trim() , } );
 			}
 
 			return script;

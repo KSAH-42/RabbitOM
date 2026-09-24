@@ -9,9 +9,9 @@ namespace RabbitOM.Node.Scripting.Models
 
 		public string Language { get; set; }
 
-		public List<ScriptAssemblyModel> Assemblies { get; } = new List<ScriptAssemblyModel>();
+		public List<ReferenceModel> References { get; } = new List<ReferenceModel>();
 
-		public List<ScriptPropertyModel> Properties { get; } = new List<ScriptPropertyModel>();
+		public List<PropertyModel> Properties { get; } = new List<PropertyModel>();
 
 		public string Code { get; set; }
 	}

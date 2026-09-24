@@ -1,331 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7EAC1801-0B1C-423C-9BC9-7A0140172A04}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
-    <RootNamespace>RabbitOM.Player</RootNamespace>
-    <AssemblyName>RabbitOM.Player</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>false</Deterministic>
-    <RuntimeIdentifiers>win;win-x64</RuntimeIdentifiers>
-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="FFmpeg.AutoGen, Version=4.4.1.0, Culture=neutral, PublicKeyToken=9b7632533a381715, processorArchitecture=MSIL">
-      <HintPath>..\packages\FFmpeg.AutoGen.4.4.1\lib\net472\FFmpeg.AutoGen.dll</HintPath>
-    </Reference>
-    <Reference Include="FFmpeg.Native, Version=4.4.0.2386, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FFmpeg.Native.4.4.0.2386\lib\netstandard2.0\FFmpeg.Native.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.IO.Abstractions, Version=10.0.0.0, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Abstractions.10.0.1\lib\net461\System.IO.Abstractions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Cli\Attributes\ArgumentAttribute.cs" />
-    <Compile Include="Cli\Attributes\RangeAttribute.cs" />
-    <Compile Include="Cli\Attributes\EnumAttribute.cs" />
-    <Compile Include="Cli\Attributes\HelpResourceAttribute.cs" />
-    <Compile Include="Cli\Attributes\RequiredAttribute.cs" />
-    <Compile Include="Cli\Attributes\FlagAttribute.cs" />
-    <Compile Include="Cli\Attributes\CommandAttribute.cs" />
-    <Compile Include="Cli\Command.cs" />
-    <Compile Include="Cli\Attributes\PositionAttribute.cs" />
-    <Compile Include="Cli\CommandLineExtensions.cs" />
-    <Compile Include="Cli\CommandLine.cs" />
-    <Compile Include="Cli\DelegateCommandHandler.cs" />
-    <Compile Include="Cli\ICommandHandler.cs" />
-    <Compile Include="Cli\ICommandLine.cs" />
-    <Compile Include="Cli\SetupCommand.cs" />
-    <Compile Include="Configuration\ConfigurationExtensions.cs" />
-    <Compile Include="Configuration\ApplicationConfiguration.cs" />
-    <Compile Include="Configuration\RtspConfigurationSection.cs" />
-    <Compile Include="Configuration\RtspSourceConfigurationElementFactory.cs" />
-    <Compile Include="Configuration\RtspSourceConfigurationElementCollection.cs" />
-    <Compile Include="Configuration\RtspSourceConfigurationElement.cs" />
-    <Compile Include="Controls\CommunicationStatusControl.cs" />
-    <Compile Include="Data\ErrorInfo.cs" />
-    <Compile Include="DispatcherExtensions.cs" />
-    <Compile Include="Controls\MediaPlayerControl.xaml.VideoSource.cs" />
-    <Compile Include="Data\MulticastMediaPlayerTransport.cs" />
-    <Compile Include="Controls\NullStatisticsDataSource.cs" />
-    <Compile Include="Controls\StatisticsHelper.cs" />
-    <Compile Include="Controls\ViewPortControl.xaml.cs">
-      <DependentUpon>ViewPortControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\ZoomProperties.cs" />
-    <Compile Include="Controls\RoutedEventHandler.cs" />
-    <Compile Include="Data\UdpMediaPlayerTransport.cs" />
-    <Compile Include="Data\TcpMediaPlayerTransport.cs" />
-    <Compile Include="Data\MediaPlayerTransport.cs" />
-    <Compile Include="Controls\MediaPlayerControl.xaml.cs">
-      <DependentUpon>MediaPlayerControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Converters\BooleanMultiValueConverter.cs" />
-    <Compile Include="Converters\AddDoubleValueConverter.cs" />
-    <Compile Include="Converters\HertzUnitValueConverter.cs" />
-    <Compile Include="Converters\StringVisibilityValueConverter.cs" />
-    <Compile Include="IApplication.cs" />
-    <Compile Include="Dialogs\MulticastIPAddressValidationRule.cs" />
-    <Compile Include="Dialogs\PortValidationRule.cs" />
-    <Compile Include="Dialogs\NetworkSettingsDialog.xaml.cs">
-      <DependentUpon>NetworkSettingsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\UriInfo.cs" />
-    <Compile Include="Data\ObservableCollectionExtensions.cs" />
-    <Compile Include="Controls\NetworkStatisticsControl.xaml.cs">
-      <DependentUpon>NetworkStatisticsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\IStatisticsDataSource.cs" />
-    <Compile Include="Controls\NetworkStatisticsDataSource.cs" />
-    <Compile Include="Converters\MemoryUnitValueConverter.cs" />
-    <Compile Include="Converters\BooleanStringValueConverter.cs" />
-    <Compile Include="Dialogs\UrisDialog.xaml.cs">
-      <DependentUpon>UrisDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Dialogs\AboutDialog.xaml.cs">
-      <DependentUpon>AboutDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Data\ModuleInfoFactory.cs" />
-    <Compile Include="Data\ModuleInfo.cs" />
-    <Compile Include="Resources\ResourceManager.cs" />
-    <Compile Include="Resources\ResourceNames.cs" />
-    <Compile Include="Scripting\CodeDomProviderFactory.cs" />
-    <Compile Include="Scripting\Messages\Message.cs" />
-    <Compile Include="Scripting\Models\ReferenceModel.cs" />
-    <Compile Include="Scripting\Models\ScriptModel.cs" />
-    <Compile Include="Scripting\Models\Serializer.cs" />
-    <Compile Include="Scripting\Models\Validator.cs" />
-    <Compile Include="Scripting\Models\PropertyModel.cs" />
-    <Compile Include="Scripting\PlayerScriptHost.cs" />
-    <Compile Include="Scripting\PlayerScript.cs" />
-    <Compile Include="Scripting\PlayerScriptBuilder.cs" />
-    <Compile Include="Scripting\PlayerScriptConfigurer.cs" />
-    <Compile Include="Scripting\PlayerScriptProxy.cs" />
-    <Compile Include="Scripting\StringExtensions.cs" />
-    <Compile Include="Themes\Styles\WindowStyle.cs" />
-    <Page Include="Controls\MediaPlayerControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\NetworkStatisticsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\ViewPortControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\NetworkSettingsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\UrisDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Dialogs\AboutDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SaveImageDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Converters\BooleanStretchValueConverter.cs" />
-    <Compile Include="Converters\BooleanVisibilityValueConverter.cs" />
-    <Compile Include="Codecs\FFMpeg\FFMpegCodecTypeConverter.cs" />
-    <Compile Include="Codecs\FFMpeg\FFMpegDecoder.cs" />
-    <Compile Include="Codecs\FFMpeg\FFMpegRenderer.cs" />
-    <Compile Include="Codecs\FFMpeg\FFMpegSurface.cs" />
-    <Compile Include="Codecs\CodecType.cs" />
-    <Compile Include="Codecs\Surface.cs" />
-    <Compile Include="Codecs\DecodedEventArgs.cs" />
-    <Compile Include="Codecs\Decoder.cs" />
-    <Compile Include="Codecs\Renderer.cs" />
-    <Compile Include="Codecs\ImageExtensions.cs" />
-    <Compile Include="Codecs\WritableBitmapLocker.cs" />
-    <Compile Include="Dialogs\SaveImageDialog.xaml.cs">
-      <DependentUpon>SaveImageDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Themes\Controls\CommunicationStatusControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\ScrollBarStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\ComboBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\ContextualMenuStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\ButtonStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\MainMenuStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\TabControlStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\TextBoxStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\ListViewStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\ProgressBarStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Styles\WindowStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RabbitOM\RabbitOM.csproj">
-      <Project>{353a7a14-1085-4fd1-b0ef-02499276571d}</Project>
-      <Name>RabbitOM</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
-  </ItemGroup>
-  <Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
-    <PropertyGroup>
-      <NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>
-      <FFmpegPkg>
-      </FFmpegPkg>
-      <FFmpegFallback>$(NuGetPackageRoot)ffmpeg.native.*\</FFmpegFallback>
-      <FFmpegRidPattern>win*-x64</FFmpegRidPattern>
-    </PropertyGroup>
-    <ItemGroup>
-      <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
-      <FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
-    </ItemGroup>
-    <Message Text="Copying PkgFFmpeg_Native_H265: @(PkgFFmpeg_Native_H265)" Importance="High" />
-    <Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot)" Importance="High" />
-    <Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
-    <Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
-    <Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
-    <Copy SourceFiles="@(FFmpegNativeFiles)" DestinationFiles="@(FFmpegDestinationFiles)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition=" '@(FFmpegNativeFiles)' != '' " />
-    <Message Text="FFmpeg output folder: $(OutDir)" Importance="High" />
-  </Target>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UseWPF>true</UseWPF>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<SelfContained>true</SelfContained>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<BaseOutputPath>bin\</BaseOutputPath>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup>
+		<Product>RabbitOM</Product>
+		<Authors>Rabbit Corp</Authors>
+		<Description>Network communication library</Description>
+		<Copyright>Copyright © 2026 RabbitOM</Copyright>
+		<Trademark>RabbitOM™</Trademark>
+		<MajorVersion>2</MajorVersion>
+		<MinorVersion>0</MinorVersion>
+		<PatchVersion>9</PatchVersion>
+		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+	</PropertyGroup>
+	<ItemGroup>
+	  <Resource Include="Resources\icon.ico" />
+	  <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.8.0" />
+		<PackageReference Include="FFmpeg.AutoGen" Version="4.4.1.0" />
+		<PackageReference Include="FFmpeg.Native" Version="4.4.0.2386" />
+	</ItemGroup>
+	<Target Name="AutoVersion" BeforeTargets="GenerateAssemblyInfo">
+		<PropertyGroup>
+			<Number>$([System.DateTime]::Now.ToString("yyyyMMdd"))</Number>
+			<BuildNumber>$([System.String]::Copy($(Number)).Substring(0,3))</BuildNumber>
+			<Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildNumber)</Version>
+			<FileVersion>$(Version)</FileVersion>
+			<InformationalVersion>$(Version)</InformationalVersion>
+			<AssemblyVersion>$(Version)</AssemblyVersion>
+		</PropertyGroup>
+		<!--<Message Text="$(Version)" Importance="High" />-->
+	</Target>
+	<Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
+		<PropertyGroup>
+			<NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>
+			<FFmpegPkg>
+			</FFmpegPkg>
+			<FFmpegFallback>$(NuGetPackageRoot)ffmpeg.native.*\</FFmpegFallback>
+			<FFmpegRidPattern>win*-x64</FFmpegRidPattern>
+		</PropertyGroup>
+		<ItemGroup>
+			<FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+			<FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+		</ItemGroup>
+		<Message Text="Copying PkgFFmpeg_Native_H265: @(PkgFFmpeg_Native_H265)" Importance="High" />
+		<Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot)" Importance="High" />
+		<Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
+		<Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
+		<Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
+		<Copy SourceFiles="@(FFmpegNativeFiles)" DestinationFiles="@(FFmpegDestinationFiles)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition=" '@(FFmpegNativeFiles)' != '' " />
+		<Message Text="FFmpeg output folder: $(OutDir)" Importance="High" />
+	</Target>
 </Project>

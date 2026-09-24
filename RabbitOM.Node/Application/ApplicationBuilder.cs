@@ -48,9 +48,9 @@ namespace RabbitOM.Node.Application
 
 			var content = File.Exists( _settings.Script ) ? File.ReadAllText( _settings.Script ) : _settings.Script;
 
-			var script = ScriptModelDeserializer.Deserialize( content );
+			var script = Deserializer.Deserialize( content );
 
-			ScriptModelValidator.Validate( script );
+			Validator.Validate( script );
 
 			_script = script;
 
@@ -75,15 +75,15 @@ namespace RabbitOM.Node.Application
 				Code = _script.Code ,
 			};
 
-			foreach ( var assembly in _script.Assemblies ?? Enumerable.Empty<ScriptAssemblyModel>() )
+			foreach ( var assembly in _script.References ?? Enumerable.Empty<ReferenceModel>() )
 			{
-				builder.Assemblies.Add( assembly.Name );
+				builder.References.Add( assembly.Name );
 			}
 
 			var nodeScript = builder.Build();
 			var configurer = new NodeScriptConfigurer( nodeScript );
 
-			foreach ( var property in _script.Properties ?? Enumerable.Empty<ScriptPropertyModel>() )
+			foreach ( var property in _script.Properties ?? Enumerable.Empty<PropertyModel>() )
 			{
 				configurer.ConfigureProperty( property.Name , property.Value );
 			}

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RabbitOM.Node": {
+      "commandName": "Project",
+      "commandLineArgs": "rtsp://admin:camera123@127.0.0.1/toy.mp4 -s ..\\..\\..\\..\\Resources\\Configuration\\node-script.xml"
+    }
+  }
+}

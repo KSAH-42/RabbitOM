@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Reflection;
+using System.IO;
 using System.Text;
+using System.Reflection;
 
 namespace RabbitOM.Node.Scripting
 {
-	using Microsoft.CSharp;
+	using Microsoft.CodeAnalysis;
 
 	public sealed class NodeScriptBuilder
 	{
@@ -15,50 +14,59 @@ namespace RabbitOM.Node.Scripting
 
 		public string Language { get; set; }
 
-		public HashSet<string> Assemblies { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase ) { "System.dll" , "RabbitOM.dll" };
+		public HashSet<string> References { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase ) { "RabbitOM.dll" };
 
 
-
-		// Here we use a CodeDomProvider, and it'doesn't support all features of C#
-		// It seems the same thing when use <x:code> tag in the xaml to add c# code without touching the code behind
-		// using the <x:code> xml tag has some limitations about the c# language feature for WPF app based on the .net framework
-		// Think that according to .net community, RosylnCompiler is recommended
 
 		public NodeScript Build()
 		{
-			using ( var provider = CodeDomProviderFactory.CreateProvider( Language ) )
-            {
-                var parameters = new CompilerParameters
-                {
-                    GenerateInMemory = true,
-                    TreatWarningsAsErrors = false,
-                    GenerateExecutable = false
-                };
+			var references = new List<MetadataReference>();
 
-				parameters.ReferencedAssemblies.AddRange( Assemblies.ToArray() );
-				parameters.ReferencedAssemblies.Add( Assembly.GetExecutingAssembly().Location );
+			references.Add( MetadataReference.CreateFromFile( typeof(object).Assembly.Location ) );
+			references.Add( MetadataReference.CreateFromFile( typeof(NodeScript).Assembly.Location ) );
 
-				var results = provider.CompileAssemblyFromSource( parameters , Code );
+			foreach ( var reference in References )
+			{
+				references.Add( MetadataReference.CreateFromFile( reference ) );
+			}
 
-				if ( results.Errors.HasErrors )
-				{
-					throw new InvalidOperationException( new StringBuilder()
+			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
+
+			foreach (string refPath in trustedAssembliesPaths)
+			{
+				references.Add(MetadataReference.CreateFromFile(refPath));
+			}
+
+			var tree = CodeProviderFactory.CreateSyntaxTree( Language , Code );
+
+			var compilation = CodeProviderFactory.CreateCompilation( Language , "nodeScript.dll" , new [] { tree } , references );
+
+			using var memoryStream = new MemoryStream();
+
+			var result = compilation.Emit( memoryStream );
+
+			if ( ! result.Success )
+			{
+				throw new InvalidOperationException( new StringBuilder()
 						.Append( "can not create an instance of the script" )
 						.AppendLine()
-						.Append( string.Join( Environment.NewLine , results.Errors ) )
+						.Append( string.Join( Environment.NewLine , result.Diagnostics ) )
 						.ToString() );
-				}
-
-				foreach( var type in results.CompiledAssembly.GetTypes() )
-				{
-					if ( typeof( NodeScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
-					{
-						return (NodeScript) Activator.CreateInstance( type );
-					}
-				}
-
-				throw new InvalidOperationException( "no valid type has been found" );
 			}
+
+			memoryStream.Position = 0;
+
+			var assembly = Assembly.Load( memoryStream.ToArray() );
+
+			foreach( var type in assembly.GetTypes() )
+			{
+				if ( typeof( NodeScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
+				{
+					return (NodeScript) Activator.CreateInstance( type );
+				}
+			}
+
+			throw new InvalidOperationException( "no valid type has been found" );
 		}
 	}
 }
