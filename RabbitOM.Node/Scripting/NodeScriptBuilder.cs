@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Reflection;
+using System.Text;
+using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Node.Scripting
 {
-	using Microsoft.CodeAnalysis;
-
 	public sealed class NodeScriptBuilder
 	{
 		public string Code { get; set; }
@@ -16,14 +15,11 @@ namespace RabbitOM.Node.Scripting
 
 		public HashSet<string> References { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase ) { "RabbitOM.dll" };
 
-
-
 		public NodeScript Build()
 		{
 			var references = new List<MetadataReference>();
 
-			references.Add( MetadataReference.CreateFromFile( typeof(object).Assembly.Location ) );
-			references.Add( MetadataReference.CreateFromFile( typeof(NodeScript).Assembly.Location ) );
+			references.Add(MetadataReference.CreateFromFile(typeof(NodeScript).Assembly.Location));
 
 			foreach ( var reference in References )
 			{

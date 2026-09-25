@@ -1,68 +1,71 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Microsoft.CodeAnalysis;
 
-namespace RabbitOM.Player.Scripting
+namespace RabbitOM.Node.Scripting
 {
-	using Microsoft.CSharp;
+	using RabbitOM.Player.Scripting;
 
 	public sealed class PlayerScriptBuilder
 	{
-		public string Folder { get; set; }
-
 		public string Code { get; set; }
 
 		public string Language { get; set; }
 
-		public HashSet<string> Assemblies { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase )
+		public HashSet<string> References { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase ) { "RabbitOM.dll" };
+
+
+
+		public PlayerScript Build()
 		{
-			"System.dll" ,
-			"System.Core.dll" ,
-			"WindowsBase.dll" ,
-			"RabbitOM.dll"
-		};
+			var references = new List<MetadataReference>();
 
+			references.Add(MetadataReference.CreateFromFile( typeof(PlayerScript).Assembly.Location));
 
+			foreach ( var reference in References )
+			{
+				references.Add( MetadataReference.CreateFromFile( reference ) );
+			}
 
-		public string BuildAssembly()
-		{
-			var assemblyFile = Path.Combine( Folder ?? string.Empty , $"\\Scripts\\script{Guid.NewGuid().ToString()}.dll" );
+			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
 
-			using ( var provider = CodeDomProviderFactory.CreateProvider( Language ) )
-            {
-                var parameters = new CompilerParameters
-                {
-                    GenerateInMemory = false,
-                    GenerateExecutable = false,
-                    TreatWarningsAsErrors = false,
-					OutputAssembly = assemblyFile,
-                };
+			foreach (string refPath in trustedAssembliesPaths)
+			{
+				references.Add(MetadataReference.CreateFromFile(refPath));
+			}
 
-				parameters.ReferencedAssemblies.AddRange( Assemblies.ToArray() );
-				parameters.ReferencedAssemblies.Add( Assembly.GetExecutingAssembly().Location );
+			var tree = CodeProviderFactory.CreateSyntaxTree( Language , Code );
 
-				var results = provider.CompileAssemblyFromSource( parameters , Code );
+			var compilation = CodeProviderFactory.CreateCompilation( Language , "nodeScript.dll" , new [] { tree } , references );
 
-				if ( results.Errors.HasErrors )
-				{
-					if ( File.Exists(assemblyFile) )
-					{
-						File.Delete(assemblyFile);
-					}
+			using var memoryStream = new MemoryStream();
 
-					throw new InvalidOperationException( new StringBuilder()
+			var result = compilation.Emit( memoryStream );
+
+			if ( ! result.Success )
+			{
+				throw new InvalidOperationException( new StringBuilder()
 						.Append( "can not create an instance of the script" )
 						.AppendLine()
-						.Append( string.Join( Environment.NewLine , results.Errors ) )
+						.Append( string.Join( Environment.NewLine , result.Diagnostics ) )
 						.ToString() );
-				}
-
-				return assemblyFile;
 			}
+
+			memoryStream.Position = 0;
+
+			var assembly = Assembly.Load( memoryStream.ToArray() );
+
+			foreach( var type in assembly.GetTypes() )
+			{
+				if ( typeof( PlayerScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
+				{
+					return (PlayerScript) Activator.CreateInstance( type );
+				}
+			}
+
+			throw new InvalidOperationException( "no valid type has been found" );
 		}
 	}
 }
