@@ -1,13 +1,12 @@
 ﻿using Microsoft.CodeAnalysis;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Text;
+using System.Runtime.Loader;
 
 namespace RabbitOM.Node.Scripting
 {
 	using RabbitOM.Player.Scripting;
-	using System.Runtime.Loader;
 
 	public sealed class PlayerScriptBuilder
 	{
