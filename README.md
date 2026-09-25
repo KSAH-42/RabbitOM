@@ -29,12 +29,13 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications or even block by the windows firewall.
 
-➡️ Next Breaking changes
+➡️ Breaking changes
 
-* Making the mediaplayer usercontrol run on a seperate thread
+* NET Core Migration
 
 ➡️ Next arrivals:
 
+* Making the mediaplayer usercontrol run on a seperate thread
 * Adding a CLI on the media player
 * Adding the SRTP support 
 * Adding the Replay feature
