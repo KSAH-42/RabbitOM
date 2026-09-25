@@ -344,7 +344,7 @@
                                 <Border x:Name="DropDownBorder" 
                                         Background="#FF0A0A0A" 
                                         BorderBrush="White" 
-                                        BorderThickness="1" 
+                                        BorderThickness="0.5" 
                                         CornerRadius="3" 
                                         />
                                 
