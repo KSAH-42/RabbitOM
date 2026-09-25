@@ -19,9 +19,9 @@
 		<Description>Network communication library</Description>
 		<Copyright>Copyright © 2026 RabbitOM</Copyright>
 		<Trademark>RabbitOM™</Trademark>
-		<MajorVersion>2</MajorVersion>
-		<MinorVersion>0</MinorVersion>
-		<PatchVersion>9</PatchVersion>
+		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Deterministic>false</Deterministic>
 		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
@@ -35,17 +35,6 @@
 		<PackageReference Include="FFmpeg.AutoGen" Version="4.4.1.0" />
 		<PackageReference Include="FFmpeg.Native" Version="4.4.0.2386" />
 	</ItemGroup>
-	<Target Name="AutoVersion" BeforeTargets="GenerateAssemblyInfo">
-		<PropertyGroup>
-			<Number>$([System.DateTime]::Now.ToString("yyyyMMdd"))</Number>
-			<BuildNumber>$([System.String]::Copy($(Number)).Substring(0,3))</BuildNumber>
-			<Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildNumber)</Version>
-			<FileVersion>$(Version)</FileVersion>
-			<InformationalVersion>$(Version)</InformationalVersion>
-			<AssemblyVersion>$(Version)</AssemblyVersion>
-		</PropertyGroup>
-		<!--<Message Text="$(Version)" Importance="High" />-->
-	</Target>
 	<Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
 		<PropertyGroup>
 			<NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>

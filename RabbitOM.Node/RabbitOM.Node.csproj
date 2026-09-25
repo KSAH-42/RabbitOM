@@ -15,9 +15,8 @@
 		<Description>Rtsp node</Description>
 		<Copyright>Copyright © 2026 RabbitOM</Copyright>
 		<Trademark>RabbitOM™</Trademark>
-		<MajorVersion>2</MajorVersion>
-		<MinorVersion>0</MinorVersion>
-		<PatchVersion>9</PatchVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Deterministic>false</Deterministic>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
@@ -25,15 +24,4 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.8.0" />
 	</ItemGroup>
-	<Target Name="AutoVersion" BeforeTargets="GenerateAssemblyInfo">
-		<PropertyGroup>
-			<Number>$([System.DateTime]::Now.ToString("yyyyMMdd"))</Number>
-			<BuildNumber>$([System.String]::Copy($(Number)).Substring(0,3))</BuildNumber>
-			<Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildNumber)</Version>
-			<FileVersion>$(Version)</FileVersion>
-			<InformationalVersion>$(Version)</InformationalVersion>
-			<AssemblyVersion>$(Version)</AssemblyVersion>
-		</PropertyGroup>
-		<!--<Message Text="$(Version)" Importance="High" />-->
-	</Target>
 </Project>

@@ -1,4 +1,4 @@
-# A RTSP client streaming library using .net 
+# A RTSP client streaming library using .net core
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
@@ -42,7 +42,6 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
-* Net Core Migration
 
 The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
 

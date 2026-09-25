@@ -5,6 +5,15 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
+	<PropertyGroup>
+		<Product>RabbitOM Test</Product>
+		<Authors>Rabbit Corp</Authors>
+		<Description>Test library</Description>
+		<Copyright>Copyright © 2026 RabbitOM</Copyright>
+		<Trademark>RabbitOM™</Trademark>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<Deterministic>false</Deterministic>
+	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
 		<PackageReference Include="MSTest" Version="3.6.4" />
