@@ -13,7 +13,7 @@ namespace RabbitOM.Player.Scripting.Models
 				throw new ArgumentNullException( nameof( model ) );
 			}
 
-			var root = new XElement("script" , new XElement("language", model.Language ?? string.Empty) );
+			var root = new XElement("script" , new XAttribute("language", model.Language ?? string.Empty) );
 
 			var references = new XElement("references");
 
@@ -47,18 +47,18 @@ namespace RabbitOM.Player.Scripting.Models
 
 			var script = new ScriptModel
 			{
-				Language = root.Element( "language" )?.Value?.Trim() ,
-				Code     = root.Element( "code" )?.Value
+				Language = root.Attribute( "language" )?.Value?.Trim() !,
+				Code     = root.Element( "code" )?.Value !
 			};
 
 			foreach (var reference in root.Element( "references" )?.Elements( "reference" ) ?? XElement.EmptySequence)
 			{
-				script.References.Add( new ReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() } );
+				script.References.Add( new ReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() ! } );
 			}
 
 			foreach (var property in root.Element( "properties" )?.Elements( "property" ) ?? XElement.EmptySequence)
 			{
-				script.Properties.Add( new PropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() , Value = property.Value?.Trim() , } );
+				script.Properties.Add( new PropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() ! , Value = property.Value?.Trim() , } );
 			}
 
 			return script;

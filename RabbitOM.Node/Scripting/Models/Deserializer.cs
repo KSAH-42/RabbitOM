@@ -16,7 +16,7 @@ namespace RabbitOM.Node.Scripting.Models
 
 			var script = new ScriptModel
 			{
-				Language = root.Element( "language" )?.Value?.Trim() ,
+				Language = root.Attribute( "language" )?.Value?.Trim() ,
 				Code     = root.Element( "code" )?.Value
 			};
 

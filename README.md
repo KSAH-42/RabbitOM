@@ -141,8 +141,7 @@ You can also configure the script: in the xml section called "properties", the n
 ~~~~XML
 
 <?xml version="1.0" encoding="utf-8"?>
-<script>
-	<language>csharp</language>
+<script language="csharp">
 	<references>
 		<reference name="C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.12\System.Windows.Extensions.dll" />
 	</references>
