@@ -28,7 +28,7 @@ jobs:
         
     - name: Build
       run: |
-        msbuild $SOLUTION_NAME /p:Configuration="Release"
+        dotnet build -c release
 
     - name: UnitTests
       run: |
