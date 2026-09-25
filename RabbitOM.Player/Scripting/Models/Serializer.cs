@@ -13,9 +13,7 @@ namespace RabbitOM.Player.Scripting.Models
 				throw new ArgumentNullException( nameof( model ) );
 			}
 
-			var root = new XElement("script",
-				new XElement("name", model.Name ?? string.Empty ) ,
-				new XElement("language", model.Language ?? string.Empty) );
+			var root = new XElement("script" , new XElement("language", model.Language ?? string.Empty) );
 
 			var references = new XElement("references");
 
@@ -49,7 +47,6 @@ namespace RabbitOM.Player.Scripting.Models
 
 			var script = new ScriptModel
 			{
-				Name     = root.Element( "name" )?.Value?.Trim() ,
 				Language = root.Element( "language" )?.Value?.Trim() ,
 				Code     = root.Element( "code" )?.Value
 			};

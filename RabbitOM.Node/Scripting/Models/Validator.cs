@@ -16,11 +16,6 @@ namespace RabbitOM.Node.Scripting.Models
 				throw new ArgumentNullException( nameof( script ) );
 			}
 
-			if ( string.IsNullOrWhiteSpace( script.Name ) )
-			{
-				throw new ValidationException( "A name must be provided" );
-			}
-
 			if ( string.IsNullOrWhiteSpace( script.Language ) )
 			{
 				throw new ValidationException( "The language must be specified" );

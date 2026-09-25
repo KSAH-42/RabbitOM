@@ -5,8 +5,6 @@ namespace RabbitOM.Player.Scripting.Models
 {
 	public sealed class ScriptModel
 	{
-		public string Name { get; set; }
-
 		public string Language { get; set; }
 
 		public List<ReferenceModel> References { get; } = new List<ReferenceModel>();

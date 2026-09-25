@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <script>
-	<name>Device monitoring script</name>
 	<language>csharp</language>
 	<references>
 		<reference name="C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.12\System.Windows.Extensions.dll" />
