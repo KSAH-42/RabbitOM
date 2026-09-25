@@ -144,30 +144,38 @@ You can also configure the script: in the xml section called "properties", the n
 <script>
 	<name>Device monitoring script</name>
 	<language>csharp</language>
-	<assemblies>
-		<assembly>C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll</assembly>
-	</assemblies>
+	<references>
+		<reference name="C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.12\System.Windows.Extensions.dll" />
+	</references>
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
 	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
 		<property name="ConnectedMessage">Connected to the camera</property>
 		<property name="DisconnectedMessage">Disconnected from the camera</property>
-		<property name="ErrorMessage">Communicatio error</property>
+		<property name="ErrorMessage">Communication error</property>
+		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
 	<code>
 		using RabbitOM.Node;
 		using RabbitOM.Node.Scripting;
 		using RabbitOM.Node.Scripting.Messages;
 		using System;
-		using System.Speech.Synthesis;
+		using System.IO;
+		using System.Media;
+		using System.Runtime.InteropServices;
 
 		public sealed class DeviceMonitoringScript : NodeScript
 		{
-			private readonly SpeechSynthesizer _synthesizer = new SpeechSynthesizer();
-					
+		    private dynamic _voice;
+			
 			public DeviceMonitoringScript()
-			{ 
-				_synthesizer.SetOutputToDefaultAudioDevice(); 
+			{
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice");
+				
+				if ( type != null )
+				{
+					_voice = Activator.CreateInstance(type);
+				}
 			}
 			
 			public string CommunicationStartedMessage { get; set; }
@@ -175,25 +183,64 @@ You can also configure the script: in the xml section called "properties", the n
 			public string ConnectedMessage { get; set; }
 			public string DisconnectedMessage { get; set; }
 			public string ErrorMessage { get; set; }
+			public string AlertSoundFile { get; set; }
 			
 			public override void Handle( Message message )
 			{
 				if ( message.Type == MessageType.Connected )
 				{
-                    _synthesizer.Speak( ConnectedMessage ); 
+					Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine( ConnectedMessage );
+					Console.ResetColor();
+					_voice?.Speak( ConnectedMessage );
 				}
                 else if ( message.Type == MessageType.Disconnected )
                 {
-                    _synthesizer.Speak( DisconnectedMessage );
+				    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine( DisconnectedMessage );
+					Console.ResetColor();
+					_voice?.Speak( DisconnectedMessage );
+				}
+				else if ( message.Type == MessageType.Error )
+				{
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine( ErrorMessage );
+					Console.ResetColor();
+					PlaySound( AlertSoundFile );
 				}
 			}
-
+			
 			protected override void Dispose( bool disposing )
 			{
-				if ( disposing )
+				if ( _voice != null )
 				{
-					_synthesizer.Dispose();
+					Marshal.ReleaseComObject( _voice );
+					_voice = null;
 				}
+				
+				base.Dispose( disposing );
+			}
+			
+			private static void PlaySound( string fileName )
+			{
+				Console.WriteLine( "****************" );
+				
+				Console.WriteLine( File.Exists( fileName ) );
+				if ( ! File.Exists( fileName ) )
+				{
+					return;
+				}
+				
+				try
+				{
+					var player = new SoundPlayer( @"C:\Windows\Media\ding.wav" );
+					player.Play();
+				}
+				catch( Exception ex )
+				{
+					Console.WriteLine( ex );
+				}
+				
 			}
 		}
 	</code>
