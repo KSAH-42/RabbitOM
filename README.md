@@ -1,4 +1,4 @@
-# A RTSP client streaming library using .net core
+# A RTSP client streaming library in .NET Core
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
