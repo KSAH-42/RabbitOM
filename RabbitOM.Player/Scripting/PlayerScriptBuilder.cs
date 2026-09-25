@@ -1,8 +1,8 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Runtime.Loader;
+using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Node.Scripting
 {

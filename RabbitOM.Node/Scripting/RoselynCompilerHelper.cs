@@ -8,7 +8,7 @@ namespace RabbitOM.Node.Scripting
 	using Microsoft.CodeAnalysis.CSharp;
 	using Microsoft.CodeAnalysis.VisualBasic;
 
-	internal static class CodeProviderFactory
+	internal static class RoselynCompilerHelper
 	{
 		private readonly static StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
 

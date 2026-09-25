@@ -33,9 +33,9 @@ namespace RabbitOM.Node.Scripting
 				references.Add(MetadataReference.CreateFromFile(refPath));
 			}
 
-			var tree = CodeProviderFactory.CreateSyntaxTree( Language , Code );
+			var tree = RoselynCompilerHelper.CreateSyntaxTree( Language , Code );
 
-			var compilation = CodeProviderFactory.CreateCompilation( Language , "nodeScript.dll" , new [] { tree } , references );
+			var compilation = RoselynCompilerHelper.CreateCompilation( Language , "nodeScript.dll" , new [] { tree } , references );
 
 			using var memoryStream = new MemoryStream();
 
