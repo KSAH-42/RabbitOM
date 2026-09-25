@@ -1,6 +1,12 @@
 using System.Reflection;
 using System.Windows;
 
+[assembly: AssemblyCopyright("Copyright © 2026 RabbitOM")]
+[assembly: AssemblyCompany("Rabbit Corp")]
+[assembly: AssemblyProduct("RabbitOM.Player")]
+[assembly: AssemblyTitle("RabbitOM.Player")]
+[assembly: AssemblyDescription("Media Player")]
+[assembly: AssemblyTrademark("RabbitOM™")]
 [assembly: AssemblyVersion("2.0.9.*")]
 [assembly: ThemeInfo(
 	ResourceDictionaryLocation.None ,            //where theme specific resource dictionaries are located

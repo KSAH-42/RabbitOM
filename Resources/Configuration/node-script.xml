@@ -6,8 +6,8 @@
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
 	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
-		<property name="ConnectedMessage">Connected to the camera</property>
-		<property name="DisconnectedMessage">Disconnected from the camera</property>
+		<property name="ConnectedMessage">Connected</property>
+		<property name="DisconnectedMessage">Disconnected</property>
 		<property name="ErrorMessage">Communication error</property>
 		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
@@ -79,9 +79,6 @@
 			
 			private static void PlaySound( string fileName )
 			{
-				Console.WriteLine( "****************" );
-				
-				Console.WriteLine( File.Exists( fileName ) );
 				if ( ! File.Exists( fileName ) )
 				{
 					return;

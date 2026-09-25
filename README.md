@@ -35,14 +35,15 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 
 ➡️ Next arrivals:
 
-* Making the mediaplayer usercontrol run on a seperate thread
-* Adding a CLI on the media player
 * Adding the SRTP support 
+
+* Adding a CLI on the media player
 * Adding the Replay feature
 * Adding the new RTSP Client 
 * Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
+* Making the mediaplayer usercontrol run on a seperate thread
 
 The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
 
@@ -148,8 +149,8 @@ You can also configure the script: in the xml section called "properties", the n
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
 	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
-		<property name="ConnectedMessage">Connected to the camera</property>
-		<property name="DisconnectedMessage">Disconnected from the camera</property>
+		<property name="ConnectedMessage">Connected</property>
+		<property name="DisconnectedMessage">Disconnected</property>
 		<property name="ErrorMessage">Communication error</property>
 		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
@@ -221,9 +222,6 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			private static void PlaySound( string fileName )
 			{
-				Console.WriteLine( "****************" );
-				
-				Console.WriteLine( File.Exists( fileName ) );
 				if ( ! File.Exists( fileName ) )
 				{
 					return;

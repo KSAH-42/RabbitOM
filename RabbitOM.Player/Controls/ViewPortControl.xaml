@@ -69,7 +69,7 @@
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Stroke="WhiteSmoke" 
-                       StrokeThickness="1.5"
+                       StrokeThickness="0.5"
                        StrokeDashArray="2 2"
                        Canvas.Left="{Binding ZoomProperties.SelectionX,RelativeSource={RelativeSource AncestorType=UserControl}}"
                        Canvas.Top="{Binding ZoomProperties.SelectionY,RelativeSource={RelativeSource AncestorType=UserControl}}"
@@ -83,7 +83,7 @@
                        HorizontalAlignment="Stretch"
                        VerticalAlignment="Stretch"
                        Stroke="GreenYellow" 
-                       StrokeThickness="2.0" 
+                       StrokeThickness="1.0" 
                        Fill="#30AAA0A0" 
                        Visibility="{Binding ZoomProperties.Visibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=UserControl}}"
                        />

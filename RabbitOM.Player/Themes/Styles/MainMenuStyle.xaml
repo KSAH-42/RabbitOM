@@ -133,7 +133,7 @@
 
                                     <Border x:Name="SubMenuBorder" 
                                             Background="#FF424242" 
-                                            BorderThickness="1" 
+                                            BorderThickness="0.5" 
                                             CornerRadius="0" 
                                             Opacity="0.8"
                                             BorderBrush="WhiteSmoke"
