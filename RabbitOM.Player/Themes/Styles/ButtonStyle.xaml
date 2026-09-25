@@ -87,7 +87,7 @@
                         <Border x:Name="Border" 
                                 CornerRadius="12" 
                                 Padding="0" 
-                                BorderThickness="1.1" 
+                                BorderThickness="0.5" 
                                 BorderBrush="White" 
                                 Background="Transparent"
                                 >
@@ -128,19 +128,13 @@
                         </Trigger>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            
-                            <Setter Property="Effect" TargetName="PART_ContentPresenter">
-                                <Setter.Value>
-                                    <DropShadowEffect  BlurRadius="0" ShadowDepth="0"  RenderingBias="Quality" Color="White" Opacity="0.3"/>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Effect" >
-                                <Setter.Value>
-                                    <DropShadowEffect  BlurRadius="0" ShadowDepth="0"  RenderingBias="Quality" Color="White" Opacity="0.7"/>
-                                </Setter.Value>
-                            </Setter>
-
-                            <Trigger.EnterActions>
+							<Setter TargetName="Border" Property="Background" Value="#E6827272" />
+							<Setter Property="Effect" >
+								<Setter.Value>
+									<DropShadowEffect  BlurRadius="0" ShadowDepth="0"  RenderingBias="Quality" Color="White" Opacity="0.2"/>
+								</Setter.Value>
+							</Setter>
+							<Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="PART_ContentPresenter"  Storyboard.TargetProperty="Effect.BlurRadius" From="0" To="13" Duration="00:00:00.1300000" />
