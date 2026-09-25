@@ -7,14 +7,14 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Player
 {
-    using RabbitOM.Net.Rtsp;
-    using RabbitOM.Player.Configuration;
-    using RabbitOM.Player.Data;
-    using RabbitOM.Player.Dialogs;
-    using RabbitOM.Player.Resources;
-    using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
+	using RabbitOM.Net.Rtsp;
+	using RabbitOM.Player.Configuration;
+	using RabbitOM.Player.Data;
+	using RabbitOM.Player.Dialogs;
+	using RabbitOM.Player.Services;
+	using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
-    public partial class MainWindow : Window
+	public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
         public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
@@ -31,7 +31,8 @@ namespace RabbitOM.Player
         public MainWindow()
         {
             InitializeComponent();
-            Script = ResourceManager.GetResourceFile( ResourceNames.ScriptTemplate );
+
+            Script = ResourceService.GetResourceFile( ResourceService.Names.ScriptTemplate );
         }
 
         public string ButtonStatus

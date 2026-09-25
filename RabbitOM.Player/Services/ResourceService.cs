@@ -2,10 +2,15 @@
 using System.IO;
 using System.Reflection;
 
-namespace RabbitOM.Player.Resources
+namespace RabbitOM.Player.Services
 {
-	public static class ResourceManager
+	public static class ResourceService
 	{
+		public static class Names
+		{
+			public const string ScriptTemplate = "ScriptTemplate.txt";
+		}
+
 		public static string GetResourceFile(string resourceName)
 		{
 			var asm = Assembly.GetExecutingAssembly();
