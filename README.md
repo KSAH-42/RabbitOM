@@ -35,14 +35,15 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 
 ➡️ Next arrivals:
 
-* Making the mediaplayer usercontrol run on a seperate thread
-* Adding a CLI on the media player
 * Adding the SRTP support 
+
+* Adding a CLI on the media player
 * Adding the Replay feature
 * Adding the new RTSP Client 
 * Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
+* Making the mediaplayer usercontrol run on a seperate thread
 
 The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
 

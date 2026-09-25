@@ -19,7 +19,7 @@
                 <ControlTemplate>
                     <Border BorderBrush="Red"
                             CornerRadius="3" 
-                            BorderThickness="2"
+                            BorderThickness="0.5"
                             >
                         <AdornedElementPlaceholder />
                     </Border>
@@ -34,7 +34,7 @@
                     <Border x:Name="Border" 
                             CornerRadius="3" 
                             Padding="4" 
-                            BorderThickness="1" 
+                            BorderThickness="0.5" 
                             Background="{TemplateBinding Background}"
                             >
 

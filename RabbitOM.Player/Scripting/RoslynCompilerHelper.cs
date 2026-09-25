@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Collections.Generic;
 
 namespace RabbitOM.Player.Scripting
 {
@@ -8,7 +6,7 @@ namespace RabbitOM.Player.Scripting
 	using Microsoft.CodeAnalysis.CSharp;
 	using Microsoft.CodeAnalysis.VisualBasic;
 
-	internal static class CodeProviderFactory
+	internal static class RoslynCompilerHelper
 	{
 		private readonly static StringComparer ValueComparer = StringComparer.OrdinalIgnoreCase;
 
@@ -57,13 +55,6 @@ namespace RabbitOM.Player.Scripting
 			if ( references == null )
 			{
 				throw new ArgumentNullException( nameof( references ) );
-			}
-
-			var fileName = Path.Combine( AppContext.BaseDirectory , assemblyName );
-
-			if ( File.Exists( fileName ) )
-			{
-				File.Delete( fileName );
 			}
 
 			if ( ValueComparer.Equals( language , "csharp" ) )

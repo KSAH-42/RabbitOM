@@ -8,13 +8,6 @@
 		<SelfContained>true</SelfContained>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Product>RabbitOM</Product>
-		<Authors>Rabbit Corp</Authors>
-		<Description>Rtsp node</Description>
-		<Copyright>Copyright © 2026 RabbitOM</Copyright>
-		<Trademark>RabbitOM™</Trademark>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<Deterministic>false</Deterministic>
 		<ApplicationIcon>icon.ico</ApplicationIcon>

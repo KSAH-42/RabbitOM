@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Product>RabbitOM Test</Product>
+		<Product>RabbitOM.Tests</Product>
 		<Authors>Rabbit Corp</Authors>
 		<Description>Test library</Description>
 		<Copyright>Copyright © 2026 RabbitOM</Copyright>

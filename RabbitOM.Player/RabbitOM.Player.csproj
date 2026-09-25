@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net10.0-windows</TargetFramework>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
@@ -14,7 +14,7 @@
 		<OutputPath>bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup>
-		<Product>RabbitOM</Product>
+		<Product>RabbitOM.Player</Product>
 		<Authors>Rabbit Corp</Authors>
 		<Description>Network communication library</Description>
 		<Copyright>Copyright © 2026 RabbitOM</Copyright>

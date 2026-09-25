@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Player.Scripting
 {
-	using RabbitOM.Player.Scripting.Messages;
-
 	public abstract class PlayerScript : IDisposable
 	{
 		public PlayerScriptApplication Application { get; internal set; }

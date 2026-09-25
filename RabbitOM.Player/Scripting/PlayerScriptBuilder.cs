@@ -1,17 +1,14 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Runtime.Loader;
+using System.Text;
 using Microsoft.CodeAnalysis;
 
-namespace RabbitOM.Node.Scripting
+namespace RabbitOM.Player.Scripting
 {
-	using RabbitOM.Player.Scripting;
-
 	public sealed class PlayerScriptBuilder
 	{
 		private readonly AssemblyLoadContext _loadContext;
-
 
 
 
@@ -22,6 +19,7 @@ namespace RabbitOM.Node.Scripting
 
 
 
+		public string ScriptFileName { get; set; } = "playerScript.dll";
 
 		public string Code { get; set; }
 
@@ -31,6 +29,15 @@ namespace RabbitOM.Node.Scripting
 
 
 
+		public void ClearOutputDirectory()
+		{
+			var assemblyFileName = Path.Combine( AppContext.BaseDirectory , ScriptFileName );
+
+			if ( File.Exists( assemblyFileName ) )
+			{
+				File.Delete( assemblyFileName );
+			}
+		}
 
 		public PlayerScript Build()
 		{
@@ -50,9 +57,9 @@ namespace RabbitOM.Node.Scripting
 				references.Add(MetadataReference.CreateFromFile(refPath));
 			}
 
-			var tree = CodeProviderFactory.CreateSyntaxTree( Language , Code );
+			var tree = RoslynCompilerHelper.CreateSyntaxTree( Language , Code );
 
-			var compilation = CodeProviderFactory.CreateCompilation( Language , "nodeScript.dll" , new [] { tree } , references );
+			var compilation = RoslynCompilerHelper.CreateCompilation( Language , ScriptFileName , new [] { tree } , references );
 
 			using var memoryStream = new MemoryStream();
 
