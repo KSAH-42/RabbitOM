@@ -3,20 +3,15 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player.Scripting
 {
-	public sealed class PlayerScriptProxy : MarshalByRefObject
+	public sealed class PlayerScriptApplication 
 	{
 		private readonly IApplication _application;
 		private readonly Dispatcher _dispatcher;
 
-		public PlayerScriptProxy( IApplication application )
+		public PlayerScriptApplication( IApplication application )
 		{
 			_application = application ?? throw new ArgumentNullException( nameof( application ) );
 			_dispatcher = Dispatcher.CurrentDispatcher;
-		}
-
-		public override object InitializeLifetimeService()
-		{
-			return null;
 		}
 
 		public void StartStreaming()

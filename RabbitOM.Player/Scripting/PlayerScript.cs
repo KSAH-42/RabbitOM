@@ -4,9 +4,9 @@ namespace RabbitOM.Player.Scripting
 {
 	using RabbitOM.Player.Scripting.Messages;
 
-	public abstract class PlayerScript : MarshalByRefObject , IDisposable
+	public abstract class PlayerScript : IDisposable
 	{
-		public PlayerScriptProxy Proxy { get; internal set; }
+		public PlayerScriptApplication Application { get; internal set; }
 
 		public virtual void Setup() { }
 

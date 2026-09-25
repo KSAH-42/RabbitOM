@@ -1,15 +1,29 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Node.Scripting
 {
 	using RabbitOM.Player.Scripting;
+	using System.Runtime.Loader;
 
 	public sealed class PlayerScriptBuilder
 	{
+		private readonly AssemblyLoadContext _loadContext;
+
+
+
+
+		public PlayerScriptBuilder( AssemblyLoadContext loadContext )
+		{
+			_loadContext = loadContext ?? throw new ArgumentNullException( nameof( loadContext ) );
+		}
+
+
+
+
 		public string Code { get; set; }
 
 		public string Language { get; set; }
@@ -18,11 +32,12 @@ namespace RabbitOM.Node.Scripting
 
 
 
+
 		public PlayerScript Build()
 		{
 			var references = new List<MetadataReference>();
 
-			references.Add(MetadataReference.CreateFromFile( typeof(PlayerScript).Assembly.Location));
+			references.Add(MetadataReference.CreateFromFile(typeof(PlayerScript).Assembly.Location));
 
 			foreach ( var reference in References )
 			{
@@ -55,13 +70,13 @@ namespace RabbitOM.Node.Scripting
 
 			memoryStream.Position = 0;
 
-			var assembly = Assembly.Load( memoryStream.ToArray() );
+			var assembly = _loadContext.LoadFromStream( memoryStream );
 
 			foreach( var type in assembly.GetTypes() )
 			{
 				if ( typeof( PlayerScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
 				{
-					return (PlayerScript) Activator.CreateInstance( type );
+					return (PlayerScript) Activator.CreateInstance( type ) !;
 				}
 			}
 
