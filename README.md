@@ -169,7 +169,7 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice");
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated a CoClass don't forget that the major of COM object works only on Windows
 				
 				if ( type != null )
 				{
