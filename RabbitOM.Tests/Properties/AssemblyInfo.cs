@@ -1,7 +1,7 @@
 using System.Reflection;
 
-[assembly: AssemblyCopyright("Copyright © 2026 RabbitOM")]
-[assembly: AssemblyCompany("Rabbit Corp")]
+[assembly: AssemblyCopyright("Copyright © 2026 A. SAHNINE")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RabbitOM.Tests")]
 [assembly: AssemblyTitle("RabbitOM.Tests")]
 [assembly: AssemblyDescription("Unit Tests library")]

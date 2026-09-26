@@ -1,8 +1,8 @@
 using System.Reflection;
 using System.Windows;
 
-[assembly: AssemblyCopyright("Copyright © 2026 RabbitOM")]
-[assembly: AssemblyCompany("Rabbit Corp")]
+[assembly: AssemblyCopyright("Copyright © 2026 A. SAHNINE")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("RabbitOM.Player")]
 [assembly: AssemblyTitle("RabbitOM.Player")]
 [assembly: AssemblyDescription("Media Player")]

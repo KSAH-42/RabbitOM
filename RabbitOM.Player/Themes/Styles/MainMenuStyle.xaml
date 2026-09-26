@@ -47,32 +47,22 @@
                             </Grid.ColumnDefinitions>
 
                             <Border x:Name="HoverBorder" 
-                                    CornerRadius="1,1,1,1"
+                                    CornerRadius="4"
                                     Grid.Column="0" 
                                     Grid.ColumnSpan="4" 
-                                    Background="DimGray" 
+                                    Background="#FF525252" 
                                     Opacity="0" 
                                     />
 
-                            <Border x:Name="HoverShineBorder" 
-                                    CornerRadius="1,1,1,1" 
+							<Border x:Name="HoverShineBorder" 
+                                    CornerRadius="4" 
                                     Grid.ColumnSpan="4" 
                                     Opacity="0" 
-                                    Height="Auto" 
-                                    >
-                                
-                                <Border.Background>
-                                
-                                    <LinearGradientBrush EndPoint="0.5,0.971" StartPoint="0.5,0.042">
-                                        <GradientStop Color="#4CFFFFFF" Offset="0"/>
-                                        <GradientStop Color="#26FFFFFF" Offset="1"/>
-                                    </LinearGradientBrush>
-                                    
-                                </Border.Background>
-                                
-                            </Border>
+                                    Height="Auto"
+									Background="#FF626262"
+                                    />
 
-                            <ContentPresenter x:Name="Icon" 
+							<ContentPresenter x:Name="Icon" 
                                               Margin="4,0,6,0" 
                                               VerticalAlignment="Center" 
                                               ContentSource="Icon" 
@@ -133,10 +123,10 @@
 
                                     <Border x:Name="SubMenuBorder" 
                                             Background="#FF424242" 
-                                            BorderThickness="0.5" 
+                                            BorderThickness="0" 
                                             CornerRadius="0" 
                                             Opacity="0.8"
-                                            BorderBrush="WhiteSmoke"
+                                            BorderBrush="Black"
                                             />
                                     
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
@@ -259,7 +249,7 @@
 
                         <Trigger Property="IsEnabled" Value="False">
 
-                            <Setter TargetName="Border" Property="Background" Value="#FF787878"/>
+							<Setter TargetName="Border" Property="Background" Value="#FF525252"/>
 
                             <Setter TargetName="Border" Property="BorderBrush" Value="#AAA"/>
 

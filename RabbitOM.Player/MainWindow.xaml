@@ -82,7 +82,9 @@
 
             <MenuItem Header="Views">
                 <MenuItem Header="Full screen" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" InputGestureText="F11" />
-            </MenuItem>
+				<Separator/>
+				<MenuItem Header="Save Image" Command="{x:Static local:MainWindow.SaveImageCommand}" />
+			</MenuItem>
 
             <MenuItem Header="Help">
                 <MenuItem Header="About" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />

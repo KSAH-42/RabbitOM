@@ -112,11 +112,11 @@ namespace RabbitOM.Player.Controls
             }
         }
 
-        private void OnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnCanvasMouseDown(object sender, MouseButtonEventArgs e)
         {
             var canvas = sender as Canvas;
 
-            if ( canvas == null )
+            if ( canvas == null || e.RightButton == MouseButtonState.Pressed )
             {
                 return;
             }
