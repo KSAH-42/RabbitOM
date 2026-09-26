@@ -69,18 +69,7 @@ namespace RabbitOM.Node.Application
 				throw new InvalidOperationException( "The runner is alread setup" );
 			}
 
-			var builder = new NodeScriptBuilder()
-			{
-				Language = _script.Language ,
-				Code = _script.Code ,
-			};
-
-			foreach ( var assembly in _script.References ?? Enumerable.Empty<ReferenceModel>() )
-			{
-				builder.References.Add( assembly.Name );
-			}
-
-			var nodeScript = builder.Build();
+			var nodeScript = new NodeScriptBuilder( _script ).Build();
 			var configurer = new NodeScriptConfigurer( nodeScript );
 
 			foreach ( var property in _script.Properties ?? Enumerable.Empty<PropertyModel>() )

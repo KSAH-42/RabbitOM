@@ -140,7 +140,7 @@ You can also configure the script: in the xml section called "properties", the n
 <?xml version="1.0" encoding="utf-8"?>
 <script language="csharp">
 	<references>
-		<reference name="C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.12\System.Windows.Extensions.dll" />
+		<reference name="C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.12\System.Windows.Extensions.dll" forceload="true" />
 	</references>
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
@@ -216,7 +216,7 @@ You can also configure the script: in the xml section called "properties", the n
 				base.Dispose( disposing );
 			}
 			
-			private static void PlaySound( string fileName )
+			private void PlaySound( string fileName )
 			{
 				if ( ! File.Exists( fileName ) )
 				{
@@ -225,14 +225,13 @@ You can also configure the script: in the xml section called "properties", the n
 				
 				try
 				{
-					var player = new SoundPlayer( @"C:\Windows\Media\ding.wav" );
+					var player = new SoundPlayer( fileName );
 					player.Play();
 				}
 				catch( Exception ex )
 				{
 					Console.WriteLine( ex );
 				}
-				
 			}
 		}
 	</code>

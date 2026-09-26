@@ -5,5 +5,7 @@ namespace RabbitOM.Node.Scripting.Models
 	public sealed class ReferenceModel
 	{
 		public string Name { get; set; }
+
+		public bool ForceLoad { get; set; }
 	}
 }

@@ -1,30 +1,29 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text;
-using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Node.Scripting
 {
+	using RabbitOM.Node.Scripting.Models;
+
 	public sealed class NodeScriptBuilder
 	{
-		public string Code { get; set; }
+		private readonly ScriptModel _model;
 
-		public string Language { get; set; }
+		public NodeScriptBuilder( ScriptModel model )
+		{
+			_model = model ?? throw new ArgumentNullException( nameof( model ) );
+		}
 
-		public HashSet<string> References { get; } = new HashSet<string>( StringComparer.OrdinalIgnoreCase ) { "RabbitOM.dll" };
-
+		// TODO: refactor this method
 		public NodeScript Build()
 		{
 			var references = new List<MetadataReference>();
-
-			references.Add(MetadataReference.CreateFromFile(typeof(NodeScript).Assembly.Location));
-
-			foreach ( var reference in References )
-			{
-				references.Add( MetadataReference.CreateFromFile( reference ) );
-			}
 
 			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
 
@@ -33,9 +32,39 @@ namespace RabbitOM.Node.Scripting
 				references.Add(MetadataReference.CreateFromFile(refPath));
 			}
 
-			var tree = RoslynCompilerHelper.CreateSyntaxTree( Language , Code );
+			references.Add(MetadataReference.CreateFromFile("RabbitOM.dll"));
+			references.Add(MetadataReference.CreateFromFile(typeof(NodeScript).Assembly.Location));
 
-			var compilation = RoslynCompilerHelper.CreateCompilation( Language , "nodeScript.dll" , new [] { tree } , references );
+			foreach ( var reference in _model.References ?? Enumerable.Empty<ReferenceModel>() )
+			{
+				if ( reference == null )
+				{
+					continue;
+				}
+
+				var fileName = Path.GetFileName(reference.Name);
+
+				if ( ! File.Exists( Path.Combine( AppContext.BaseDirectory , fileName ) ) )
+				{
+					var target = Path.Combine( AppContext.BaseDirectory , fileName );
+					File.Copy( reference.Name , target, true );
+
+					references.Add( MetadataReference.CreateFromFile( target ) );
+				}
+				else
+				{
+					references.Add( MetadataReference.CreateFromFile( fileName ) );
+				}
+
+				if ( reference.ForceLoad )
+				{
+					AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine( AppContext.BaseDirectory , fileName ));
+				}
+			}
+
+			var tree = RoslynCompilerHelper.CreateSyntaxTree( _model.Language , _model.Code );
+
+			var compilation = RoslynCompilerHelper.CreateCompilation( _model.Language , "nodeScript.dll" , new [] { tree } , references );
 
 			using var memoryStream = new MemoryStream();
 
