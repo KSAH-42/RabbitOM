@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Dialogs
 
     public partial class AboutDialog : Window
     {
-        public static readonly RoutedCommand VisiteWebSiteCommand = new RoutedCommand();
+        public static readonly RoutedCommand VisitWebSiteCommand = new RoutedCommand();
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
 
         public AboutDialog()
@@ -20,7 +20,7 @@ namespace RabbitOM.Player.Dialogs
 
         public ReadOnlyObservableCollection<ModuleInfo> Modules { get; } = new ObservableCollection<ModuleInfo>( ModuleInfoFactory.GetCurrentProcessModules() ).ToReadOnly();
 
-        private void OnVisiteWebSite( object sender , ExecutedRoutedEventArgs e )
+        private void OnVisitWebSite( object sender , ExecutedRoutedEventArgs e )
         {
             var process = new Process()
             {

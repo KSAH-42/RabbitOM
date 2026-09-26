@@ -29,23 +29,19 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications or even block by the windows firewall.
 
-➡️ Breaking changes
+# Breaking changes
 
 * NET Core Migration
 
-➡️ Next arrivals:
+# Next arrivals:
 
-* Adding the SRTP support 
-
+* Adding SRTP support 
 * Adding a CLI on the media player
-* Adding the Replay feature
 * Adding the new RTSP Client 
 * Adding new RTSP receivers
 * Adding RTCP layer 
 * Onvif
-* Making the mediaplayer usercontrol run on a seperate thread
-
-The actual RtspClient class WILL BE REMOVED (see streaming.experimentation project which is actually in progress)
+* Adding the Replay feature
 
 # About the actual rtsp client and how to receive packets ?
 

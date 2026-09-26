@@ -19,7 +19,7 @@
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:AboutDialog.CloseCommand}" Executed="OnClose" />
-		<CommandBinding Command="{x:Static local:AboutDialog.VisiteWebSiteCommand}" Executed="OnVisiteWebSite" />
+		<CommandBinding Command="{x:Static local:AboutDialog.VisitWebSiteCommand}" Executed="OnVisitWebSite" />
 
     </Window.CommandBindings>
 
@@ -72,8 +72,8 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Width="80"
-                    Margin="0,0,10,10"
-                    Command="{x:Static local:AboutDialog.VisiteWebSiteCommand}"
+                    Margin="10,0,0,10"
+                    Command="{x:Static local:AboutDialog.VisitWebSiteCommand}"
                     />
 			
             <Button Content="Ok"
