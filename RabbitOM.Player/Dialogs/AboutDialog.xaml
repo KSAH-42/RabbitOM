@@ -19,6 +19,7 @@
     <Window.CommandBindings>
 
         <CommandBinding Command="{x:Static local:AboutDialog.CloseCommand}" Executed="OnClose" />
+		<CommandBinding Command="{x:Static local:AboutDialog.VisiteWebSiteCommand}" Executed="OnVisiteWebSite" />
 
     </Window.CommandBindings>
 
@@ -67,6 +68,14 @@
 
         <Grid Grid.Row="1">
 
+			<Button Content="Web site"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Width="80"
+                    Margin="0,0,10,10"
+                    Command="{x:Static local:AboutDialog.VisiteWebSiteCommand}"
+                    />
+			
             <Button Content="Ok"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
@@ -76,6 +85,7 @@
                     IsDefault="True"
                     Command="{x:Static local:AboutDialog.CloseCommand}"
                     />
+			
         </Grid>
         
     </Grid>
