@@ -10,20 +10,12 @@ namespace RabbitOM.Player.Converters
     {
         public object Convert( object value , Type targetType , object parameter , CultureInfo culture )
         {
-            if (value is Visibility visibility)
-            {
-                return visibility == Visibility.Visible;
-            }
-            return false;
+            return value is Visibility visibility && visibility == Visibility.Visible;
         }
 
         public object ConvertBack( object value , Type targetType , object parameter , CultureInfo culture )
         {
-            if (value is bool isChecked)
-            {
-                return isChecked ? Visibility.Visible : Visibility.Collapsed;
-            }
-            return Visibility.Collapsed;
+            return value is bool status && status ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

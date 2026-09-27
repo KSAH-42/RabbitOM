@@ -11,22 +11,12 @@ namespace RabbitOM.Player.Converters
     {
         public object Convert( object value , Type targetType , object parameter , CultureInfo culture )
         {
-            if (value is Stretch stretch)
-            {
-                return stretch == Stretch.Fill;
-            }
-
-            return false;
+            return value is Stretch stretch && stretch == Stretch.Fill;
         }
 
         public object ConvertBack( object value , Type targetType , object parameter , CultureInfo culture )
         {
-            if (value is bool isStretched)
-            {
-                return isStretched ? Stretch.Fill : Stretch.Uniform;
-            }
-
-            return Stretch.Uniform;
+            return value is bool status && status ? Stretch.Fill : Stretch.Uniform;
         }
     }
 }
