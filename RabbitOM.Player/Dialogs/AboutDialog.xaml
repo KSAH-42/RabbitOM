@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ABOUT" 
         Height="490" 
-        Width="460"
+        Width="480"
         MinWidth="380"
         MinHeight="250"
         WindowStartupLocation="CenterOwner"
