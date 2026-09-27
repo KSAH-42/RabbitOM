@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -17,16 +17,25 @@ namespace RabbitOM.Player
 	public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
-        public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowAboutDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
+        public static readonly RoutedCommand ToggleStretchCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowAboutDialogCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowStatisticsCommand = new RoutedCommand();
+        public static readonly RoutedCommand ShowInfoCommand = new RoutedCommand();
+        public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
         public static readonly RoutedCommand FocusCommand = new RoutedCommand();
+
+
 
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(MainWindow) , new PropertyMetadata("zerzer"));
+
+
+
+
 
         public MainWindow()
         {
@@ -34,6 +43,10 @@ namespace RabbitOM.Player
 
             Script = ResourceService.GetResourceFile( ResourceService.Names.ScriptTemplate );
         }
+
+
+
+
 
         public string ButtonStatus
         {
@@ -55,10 +68,22 @@ namespace RabbitOM.Player
 
         public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
 
+
+
+
+
         private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Dispose();
+        }
+
+        private void OnCloseApplication( object sender , ExecutedRoutedEventArgs e )
+        {
+            if ( MessageBox.Show( "Would you like to close the application ?" , "Closing Application" , MessageBoxButton.YesNo , MessageBoxImage.Question ) == MessageBoxResult.Yes )
+            {
+                Close();
+            }
         }
 
         private void OnControl( object sender , ExecutedRoutedEventArgs e )
@@ -99,12 +124,17 @@ namespace RabbitOM.Player
             }
         }
 
-        private void OnCloseApplication( object sender , ExecutedRoutedEventArgs e )
+        private void OnToggleFullScreen( object sender , ExecutedRoutedEventArgs e )
         {
-            if ( MessageBox.Show( "Would you like to close the application ?" , "Closing Application" , MessageBoxButton.YesNo , MessageBoxImage.Question ) == MessageBoxResult.Yes )
-            {
-                Close();
-            }
+            DialogStyle.SetFullScreen( this , ! DialogStyle.GetFullScreen( this ) );
+        }
+
+        private void OnToggleStretch( object sender , ExecutedRoutedEventArgs e )
+        {
+            _mediaPlayer.StretchImage = _mediaPlayer.StretchImage == System.Windows.Media.Stretch.Fill
+                ? Stretch.Uniform
+                : Stretch.Fill
+                ;
         }
 
         private void OnShowNetworkSettingsDialog( object sender , ExecutedRoutedEventArgs e )
@@ -128,28 +158,6 @@ namespace RabbitOM.Player
             }
         }
 
-        private void OnCanSaveImage( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = _mediaPlayer.GetImage() is BitmapSource;
-        }
-
-        private void OnSaveImage( object sender , ExecutedRoutedEventArgs e )
-        {
-            var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
-
-            dialog.Source = _mediaPlayer.GetImage() as BitmapSource;
-
-            dialog.TakeSnasphot();
-            dialog.ShowDialog();
-        }
-
-        private void OnShowAboutDialog( object sender , ExecutedRoutedEventArgs e )
-        {
-            var dialog = new AboutDialog() { Owner = Window.GetWindow( this ) };
-
-            dialog.ShowDialog();
-        }
-
         private void OnShowUrisDialog( object sender , ExecutedRoutedEventArgs e )
         {
             var dialog = new UrisDialog() { Owner = Window.GetWindow( this ) };
@@ -166,12 +174,45 @@ namespace RabbitOM.Player
             }
         }
 
-        private void OnToggleFullScreen( object sender , ExecutedRoutedEventArgs e )
+        private void OnShowAboutDialog( object sender , ExecutedRoutedEventArgs e )
         {
-            DialogStyle.SetFullScreen( this , ! DialogStyle.GetFullScreen( this ) );
+            var dialog = new AboutDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.ShowDialog();
         }
 
-        private void OnControlFocus( object sender , ExecutedRoutedEventArgs e )
+        private void OnShowStatistics( object sender , ExecutedRoutedEventArgs e )
+        {
+            _mediaPlayer.Statistics.Visibility = _mediaPlayer.Statistics.Visibility == Visibility.Visible 
+                ? Visibility.Collapsed
+                : Visibility.Visible
+                ;
+        }
+
+        private void OnShowInfo( object sender , ExecutedRoutedEventArgs e )
+        {
+            _mediaPlayer.SourceVisibility = _mediaPlayer.SourceVisibility == Visibility.Visible
+                ? Visibility.Collapsed
+                : Visibility.Visible
+                ;
+        }
+
+        private void OnCanSaveImage( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = _mediaPlayer.GetImage() is BitmapSource;
+        }
+
+        private void OnSaveImage( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new SaveImageDialog() { Owner = Window.GetWindow( this ) };
+
+            dialog.Source = _mediaPlayer.GetImage() as BitmapSource;
+
+            dialog.TakeSnasphot();
+            dialog.ShowDialog();
+        }
+
+        private void OnFocus( object sender , ExecutedRoutedEventArgs e )
         {
             var source = e.Parameter as UIElement;
 

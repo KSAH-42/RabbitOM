@@ -25,11 +25,43 @@
 
     <Window.CommandBindings>
 
-        <CommandBinding Command="{x:Static local:MainWindow.ControlCommand}" 
+		<CommandBinding Command="{x:Static ApplicationCommands.Close}"
+                        Executed="OnCloseApplication" 
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ControlCommand}" 
                         Executed="OnControl"
                         />
-        
-        <CommandBinding Command="{x:Static local:MainWindow.SaveImageCommand}" 
+
+		<CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" 
+                        Executed="OnToggleFullScreen"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ToggleStretchCommand}" 
+                        Executed="OnToggleStretch"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" 
+                        Executed="OnShowNetworkSettingsDialog"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ShowUrisDialogCommand}" 
+                        Executed="OnShowUrisDialog"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" 
+                        Executed="OnShowAboutDialog"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ShowStatisticsCommand}" 
+                        Executed="OnShowStatistics"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.ShowInfoCommand}" 
+                        Executed="OnShowInfo"
+                        />
+
+		<CommandBinding Command="{x:Static local:MainWindow.SaveImageCommand}" 
                         CanExecute="OnCanSaveImage"
                         Executed="OnSaveImage"
                         />
@@ -38,24 +70,8 @@
                         Executed="OnShowAboutDialog"
                         />
 
-        <CommandBinding Command="{x:Static local:MainWindow.ShowUrisDialogCommand}" 
-                        Executed="OnShowUrisDialog"
-                        />
-
-        <CommandBinding Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" 
-                        Executed="OnShowNetworkSettingsDialog"
-                        />
-
-        <CommandBinding Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" 
-                        Executed="OnToggleFullScreen"
-                        />
-
-        <CommandBinding Command="{x:Static ApplicationCommands.Close}"
-                        Executed="OnCloseApplication" 
-                        />
-
         <CommandBinding Command="{x:Static local:MainWindow.FocusCommand}" 
-                        Executed="OnControlFocus"
+                        Executed="OnFocus"
                         />
 
     </Window.CommandBindings>
@@ -83,6 +99,9 @@
             <MenuItem Header="Views">
                 <MenuItem Header="Full screen" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" InputGestureText="F11" />
 				<Separator/>
+				<MenuItem Header="Show statistics" Command="{x:Static local:MainWindow.ShowStatisticsCommand}" />
+				<MenuItem Header="Show infos" Command="{x:Static local:MainWindow.ShowInfoCommand}" />
+				<MenuItem Header="Stretch" Command="{x:Static local:MainWindow.ToggleStretchCommand}" />
 				<MenuItem Header="Save Image" Command="{x:Static local:MainWindow.SaveImageCommand}" />
 			</MenuItem>
 
