@@ -7,13 +7,11 @@ using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Player
 {
-	using Microsoft.CodeAnalysis.CSharp.Syntax;
 	using RabbitOM.Net.Rtsp;
 	using RabbitOM.Player.Configuration;
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Dialogs;
 	using RabbitOM.Player.Services;
-	using System.Windows.Controls;
 	using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
     public partial class MainWindow : Window
