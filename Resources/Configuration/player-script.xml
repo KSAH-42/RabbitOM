@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <script language="csharp">
+	<references/>
 	<properties>
 		<property name="Property1">Value1</property>
 		<property name="Property2">Value2</property>
 		<property name="Property3">Value3</property>
 	</properties>
 	<code>
-		using RabbitOM.Player.Scritping;
+		using RabbitOM.Player.Scripting;
 		using System;
 
 		public sealed class MyPlayerScript : PlayerScript
