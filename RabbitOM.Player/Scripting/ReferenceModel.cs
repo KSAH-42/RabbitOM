@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Player.Scripting.Models
+namespace RabbitOM.Player.Scripting
 {
 	public sealed class ReferenceModel
 	{

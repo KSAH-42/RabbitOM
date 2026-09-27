@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace RabbitOM.Player.Scripting.Models
+namespace RabbitOM.Player.Scripting
 {
 	public static class Validator
 	{

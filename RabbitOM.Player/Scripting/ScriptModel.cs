@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RabbitOM.Player.Scripting.Models
+namespace RabbitOM.Player.Scripting
 {
 	public sealed class ScriptModel
 	{

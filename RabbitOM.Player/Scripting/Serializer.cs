@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Linq;
 
-namespace RabbitOM.Player.Scripting.Models
+namespace RabbitOM.Player.Scripting
 {
 	public static class Serializer
 	{
