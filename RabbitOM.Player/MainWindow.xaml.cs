@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace RabbitOM.Player
 {
+	using Microsoft.CodeAnalysis.CSharp.Syntax;
 	using RabbitOM.Net.Rtsp;
 	using RabbitOM.Player.Configuration;
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Dialogs;
 	using RabbitOM.Player.Services;
+	using System.Windows.Controls;
 	using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
-    // TODO: refactor and add dp
-	public partial class MainWindow : Window
+    public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();
         public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
@@ -32,6 +33,9 @@ namespace RabbitOM.Player
 
         public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
+        public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage), typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata(Stretch.Fill,OnStretchImageChanged) );
+        public static readonly DependencyProperty InfoVisibilityProperty = DependencyProperty.Register( nameof(InfoVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Collapsed,OnInfoVisibilityChanged) );
+        public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Visible,OnStatisticsVisibilityChanged) );
         public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(MainWindow) , new PropertyMetadata("zerzer"));
 
 
@@ -65,6 +69,24 @@ namespace RabbitOM.Player
         {
             get => GetValue( ScriptProperty ) as string;
             set => SetValue( ScriptProperty , value );
+        }
+
+        public Stretch StretchImage
+        {
+            get => (Stretch) GetValue( StretchImageProperty );
+            set => SetValue( StretchImageProperty , value );
+        }
+
+        public Visibility InfoVisibility
+        {
+            get => (Visibility) GetValue( InfoVisibilityProperty );
+            set => SetValue( InfoVisibilityProperty , value );
+        }
+
+        public Visibility StatisticsVisibility
+        {
+            get => (Visibility) GetValue( StatisticsVisibilityProperty );
+            set => SetValue( StatisticsVisibilityProperty , value );
         }
 
         public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
@@ -130,14 +152,6 @@ namespace RabbitOM.Player
             DialogStyle.SetFullScreen( this , ! DialogStyle.GetFullScreen( this ) );
         }
 
-        private void OnToggleStretch( object sender , ExecutedRoutedEventArgs e )
-        {
-            _mediaPlayer.StretchImage = _mediaPlayer.StretchImage == System.Windows.Media.Stretch.Fill
-                ? Stretch.Uniform
-                : Stretch.Fill
-                ;
-        }
-
         private void OnShowNetworkSettingsDialog( object sender , ExecutedRoutedEventArgs e )
         {
             var dialog = new NetworkSettingsDialog() { Owner = Window.GetWindow( this ) };
@@ -182,9 +196,17 @@ namespace RabbitOM.Player
             dialog.ShowDialog();
         }
 
+        private void OnToggleStretch( object sender , ExecutedRoutedEventArgs e )
+        {
+            StretchImage = StretchImage == Stretch.Fill
+                ? Stretch.Uniform
+                : Stretch.Fill
+                ;
+        }
+
         private void OnShowStatistics( object sender , ExecutedRoutedEventArgs e )
         {
-            _mediaPlayer.Statistics.Visibility = _mediaPlayer.Statistics.Visibility == Visibility.Visible 
+            StatisticsVisibility = StatisticsVisibility == Visibility.Visible 
                 ? Visibility.Collapsed
                 : Visibility.Visible
                 ;
@@ -192,7 +214,7 @@ namespace RabbitOM.Player
 
         private void OnShowInfo( object sender , ExecutedRoutedEventArgs e )
         {
-            _mediaPlayer.SourceVisibility = _mediaPlayer.SourceVisibility == Visibility.Visible
+            InfoVisibility = InfoVisibility == Visibility.Visible
                 ? Visibility.Collapsed
                 : Visibility.Visible
                 ;
@@ -219,5 +241,36 @@ namespace RabbitOM.Player
 
             source?.Focus();
         }
-    }
+
+        private static void OnStretchImageChanged( DependencyObject sender , DependencyPropertyChangedEventArgs e )
+        {
+			var window = sender as MainWindow;
+
+            if ( window != null )
+            {
+                window._mediaPlayer.StretchImage = (Stretch) e.NewValue;
+            }
+        }
+
+        private static void OnInfoVisibilityChanged( DependencyObject sender , DependencyPropertyChangedEventArgs e )
+        {
+			var window = sender as MainWindow;
+
+            if ( window != null )
+            {
+                window._mediaPlayer.SourceVisibility = (Visibility) e.NewValue;
+                window.InvalidateProperty( InfoVisibilityProperty );
+            }
+        }
+
+        private static void OnStatisticsVisibilityChanged( DependencyObject sender , DependencyPropertyChangedEventArgs e )
+        {
+			var window = sender as MainWindow;
+
+            if ( window != null )
+            {
+                window._mediaPlayer.Statistics.Visibility = (Visibility) e.NewValue;
+            }
+        }
+	}
 }

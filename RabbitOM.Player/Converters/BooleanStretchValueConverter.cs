@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -10,12 +11,22 @@ namespace RabbitOM.Player.Converters
     {
         public object Convert( object value , Type targetType , object parameter , CultureInfo culture )
         {
-            return value is bool status && status ? Stretch.Fill : Stretch.Uniform;
+            if (value is Stretch stretch)
+            {
+                return stretch == Stretch.Fill;
+            }
+
+            return false;
         }
 
         public object ConvertBack( object value , Type targetType , object parameter , CultureInfo culture )
         {
-            return value is Stretch stretch && stretch == Stretch.Fill;
+            if (value is bool isStretched)
+            {
+                return isStretched ? Stretch.Fill : Stretch.Uniform;
+            }
+
+            return Stretch.Uniform;
         }
     }
 }

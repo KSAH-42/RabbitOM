@@ -16,14 +16,14 @@
 		Style="{DynamicResource WindowStyle}"
         Icon="pack://application:,,,/Resources/icon.ico"
         WindowState="Maximized"
-        >
+		>
 
-    <Window.Resources>
-        <converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
-        <converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
-    </Window.Resources>
+	<Window.Resources>
+		<converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
+		<converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
+	</Window.Resources>
 
-    <Window.CommandBindings>
+	<Window.CommandBindings>
 
 		<CommandBinding Command="{x:Static ApplicationCommands.Close}"
                         Executed="OnCloseApplication" 
@@ -66,96 +66,122 @@
                         Executed="OnSaveImage"
                         />
 
-        <CommandBinding Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" 
+		<CommandBinding Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" 
                         Executed="OnShowAboutDialog"
                         />
 
-        <CommandBinding Command="{x:Static local:MainWindow.FocusCommand}" 
+		<CommandBinding Command="{x:Static local:MainWindow.FocusCommand}" 
                         Executed="OnFocus"
                         />
 
-    </Window.CommandBindings>
+	</Window.CommandBindings>
 
-    <Window.InputBindings>
+	<Window.InputBindings>
 
-        <KeyBinding Key="F11" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" />
-        <KeyBinding Key="F6"  Command="{x:Static local:MainWindow.FocusCommand}" CommandParameter="{Binding ElementName=UriSources}" />
+		<KeyBinding Key="F11" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" />
+		<KeyBinding Key="F6"  Command="{x:Static local:MainWindow.FocusCommand}" CommandParameter="{Binding ElementName=UriSources}" />
 
-    </Window.InputBindings>
+	</Window.InputBindings>
 
 
-    <DockPanel>
+	<DockPanel>
 
-        <Menu DockPanel.Dock="Top">
+		<Menu DockPanel.Dock="Top">
 
-            <MenuItem Header="Application">
-                <MenuItem Header="Quit" Command="{x:Static ApplicationCommands.Close}" />
-            </MenuItem>
-
-            <MenuItem Header="Configuration">
-                <MenuItem Header="Network settings" Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" />
-            </MenuItem>
-
-            <MenuItem Header="Views">
-                <MenuItem Header="Full screen" Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" InputGestureText="F11" />
-				<Separator/>
-				<MenuItem Header="Show statistics" Command="{x:Static local:MainWindow.ShowStatisticsCommand}" />
-				<MenuItem Header="Show infos" Command="{x:Static local:MainWindow.ShowInfoCommand}" />
-				<MenuItem Header="Stretch" Command="{x:Static local:MainWindow.ToggleStretchCommand}" />
-				<MenuItem Header="Save Image" Command="{x:Static local:MainWindow.SaveImageCommand}" />
+			<MenuItem Header="Application">
+				<MenuItem Header="Quit" Command="{x:Static ApplicationCommands.Close}" />
 			</MenuItem>
 
-            <MenuItem Header="Help">
-                <MenuItem Header="About" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />
-            </MenuItem>
+			<MenuItem Header="Configuration">
+				<MenuItem Header="Network settings" Command="{x:Static local:MainWindow.ShowNetworkSettingsDialogCommand}" />
+			</MenuItem>
 
-        </Menu>
+			<MenuItem Header="Views">
+				<MenuItem Header="Full screen" 
+						  Command="{x:Static local:MainWindow.ToggleFullScreenCommand}" InputGestureText="F11" 
+						  />
+				
+				<Separator/>
 
-        <Grid Margin="1,1,1,1" >
+				<MenuItem Header="Stretch" 
+						  Command="{x:Static local:MainWindow.ToggleStretchCommand}" 
+						  IsCheckable="True"
+						  IsChecked="{Binding StretchImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanStretchValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+						  />
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="39" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+				<MenuItem Header="Show infos" 
+						  Command="{x:Static local:MainWindow.ShowInfoCommand}" 
+						  IsCheckable="True"
+						  IsChecked="{Binding InfoVisibility,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+						  />
 
-            <Grid Grid.Row="0" Margin="0,2,0,0" >
+				<MenuItem Header="Show statistics" 
+						  Command="{x:Static local:MainWindow.ShowStatisticsCommand}" 
+						  IsCheckable="True"
+						  IsChecked="{Binding StatisticsVisibility,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}"
+						  />
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="82" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="39" />
-                    <ColumnDefinition Width="102" />
-                </Grid.ColumnDefinitions>
+				<MenuItem Header="Save Image" 
+						  Command="{x:Static local:MainWindow.SaveImageCommand}" 
+						  />
+				
+			</MenuItem>
 
-                <Grid Grid.Column="0">
-                    
-                    <TextBlock Margin="10,5,1,1"
+			<MenuItem Header="Help">
+				<MenuItem Header="About" Command="{x:Static local:MainWindow.ShowAboutDialogCommand}" />
+			</MenuItem>
+
+		</Menu>
+
+		<Grid Margin="1,1,1,1" >
+
+			<Grid.RowDefinitions>
+				<RowDefinition Height="39" />
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="0" Margin="0,2,0,0" >
+
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="82" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="39" />
+					<ColumnDefinition Width="102" />
+				</Grid.ColumnDefinitions>
+
+				<Grid Grid.Column="0">
+
+					<TextBlock Margin="10,5,1,1"
                                HorizontalAlignment="Left" 
                                VerticalAlignment="Top" 
                                Foreground="White"
                                TextAlignment="Right"
                                Text="RTSP URI :" 
                                />
-                    
-                </Grid>
 
-                <Grid Grid.Column="1">
-                    
-                    <ComboBox x:Name="UriSources"
+				</Grid>
+
+				<Grid Grid.Column="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="313*"/>
+						<ColumnDefinition Width="344*"/>
+					</Grid.ColumnDefinitions>
+
+					<ComboBox x:Name="UriSources"
                               VerticalAlignment="Top" 
                               SelectedIndex="0" 
                               Height="29" 
                               IsEditable="True" 
                               Text="{Binding SelectedSource,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
                               ItemsSource="{Binding Sources,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
-                              MaxDropDownHeight="350"
+                              MaxDropDownHeight="350" Grid.ColumnSpan="2"
                               />
-                    
-                </Grid>
 
-                <Grid Grid.Column="2">
+				</Grid>
 
-                    <Button Margin="0,0,0,0"
+				<Grid Grid.Column="2">
+
+					<Button Margin="0,0,0,0"
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Top" 
                             Width="33" 
@@ -164,11 +190,11 @@
                             Command="{x:Static local:MainWindow.ShowUrisDialogCommand}" 
                             />
 
-                </Grid>
+				</Grid>
 
-                <Grid Grid.Column="3">
-                    
-                    <Button Margin="0,0,7,0"
+				<Grid Grid.Column="3">
+
+					<Button Margin="0,0,7,0"
                             HorizontalAlignment="Right" 
                             VerticalAlignment="Top" 
                             Width="89" 
@@ -176,13 +202,13 @@
                             Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
                             Command="{x:Static local:MainWindow.ControlCommand}" 
                             />
-                    
-                </Grid>
 
-            </Grid>
+				</Grid>
+
+			</Grid>
 
 			<Grid Grid.Row="1" Margin="1,0,1,1">
-				
+
 				<TabControl HorizontalAlignment="Stretch" 
 							VerticalAlignment="Stretch" 
 							TabStripPlacement="Bottom" 
@@ -190,33 +216,33 @@
 							FontSize="20" 
 							Padding="0,0,11,9"
 							>
-				
+
 					<TabItem Header="VIDEO">
-						
-						<Grid Background="Black">
+
+						<Grid Background="Black" Tag="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
 
 							<Grid.ContextMenu>
 
 								<ContextMenu>
 
-									<MenuItem x:Name="MenuItemStretch"
-                                              Header="Stretch"
+									<MenuItem Header="Stretch"
                                               IsCheckable="True"
-                                              IsChecked="True"
+                                              IsChecked="{Binding PlacementTarget.Tag.StretchImage,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanStretchValueConverter},RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+											  Command="{x:Static local:MainWindow.ToggleStretchCommand}"
                                               />
 
 									<Separator />
 
-									<MenuItem x:Name="MenuItemShowSourceInfo"
-                                              Header="Show source info" 
+									<MenuItem Header="Show source info" 
                                               IsCheckable="True"
-                                              IsChecked="False"
+                                              IsChecked="{Binding PlacementTarget.Tag.InfoVisibility,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              Command="{x:Static local:MainWindow.ShowInfoCommand}"
                                               />
 
-									<MenuItem x:Name="MenuItemShowStatistics"
-                                              Header="Show statistics" 
+									<MenuItem Header="Show statistics" 
                                               IsCheckable="True"
-                                              IsChecked="True"
+                                              IsChecked="{Binding PlacementTarget.Tag.StatisticsVisibility,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                              Command="{x:Static local:MainWindow.ShowStatisticsCommand}"
                                               />
 
 									<Separator />
@@ -234,14 +260,14 @@
                                                          HorizontalAlignment="Stretch"
                                                          VerticalAlignment="Stretch"
                                                          Focusable="True"
-                                                         StretchImage="{Binding ElementName=MenuItemStretch, Path=IsChecked,Converter={StaticResource BooleanStretchValueConverter}}"
-                                                         SourceVisibility="{Binding ElementName=MenuItemShowSourceInfo, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
-                                                         StatisticsVisibility="{Binding ElementName=MenuItemShowStatistics, Path=IsChecked,Converter={StaticResource BooleanVisibilityValueConverter}}"
+                                                         StretchImage="{Binding StretchImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+                                                         SourceVisibility="{Binding InfoVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+                                                         StatisticsVisibility="{Binding StatisticsVisibility,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
 														 SourceMargin="0,0,0,42"
 														 />
 
 						</Grid>
-						
+
 					</TabItem>
 
 					<TabItem Header="SCRIPT">
@@ -253,7 +279,7 @@
 									 AcceptsTab="True" 
 									 Text="{Binding Script,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
 									 />
-							
+
 							<TextBlock Text="Not available" 
 									   Foreground="Yellow" 
 									   HorizontalAlignment="Center" 
@@ -261,13 +287,13 @@
 									   />
 						</Grid>
 					</TabItem>
-					
+
 				</TabControl>
-				
+
 			</Grid>
 
-        </Grid>
-        
-    </DockPanel>
-    
+		</Grid>
+
+	</DockPanel>
+
 </Window>
