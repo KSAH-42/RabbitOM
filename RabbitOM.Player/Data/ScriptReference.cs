@@ -1,14 +1,15 @@
 ﻿using System;
 
-namespace RabbitOM.Node.Scripting.Models
+namespace RabbitOM.Player.Data
 {
-	public sealed class ReferenceModel
+	public sealed class ScriptReference
 	{
 		public string Name { get; set; }
 
 		public bool ForceLoad { get; set; }
 
-		public static bool IsNullOrEmpty( ReferenceModel reference )
+
+		public static bool IsNullOrEmpty( ScriptReference reference )
 		{
 			return reference == null || string.IsNullOrWhiteSpace( reference.Name );
 		}

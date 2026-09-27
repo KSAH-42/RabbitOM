@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
 using System.Xml.Linq;
 
-namespace RabbitOM.Player.Scripting
+namespace RabbitOM.Player.Data
 {
-	public static class Serializer
+	public static class ScriptSerializer
 	{
-		public static string Serialize( ScriptModel model )
+		public static string Serialize( Script model )
 		{
 			if ( model == null )
 			{
@@ -17,14 +16,16 @@ namespace RabbitOM.Player.Scripting
 
 			var references = new XElement("references");
 
-			foreach (var reference in model.References ?? Enumerable.Empty<ReferenceModel>())
+			foreach (var reference in model.References ?? [] )
 			{
-				references.Add(new XElement("reference", new XAttribute("name", reference.Name ?? string.Empty)));
+				references.Add( new XElement("reference", 
+					new XAttribute("name", reference.Name ?? string.Empty ),
+					new XAttribute("forceload", reference.ForceLoad.ToString() ) ));
 			}
 
 			var properties = new XElement("properties");
 
-			foreach (var property in model.Properties ?? Enumerable.Empty<PropertyModel>())
+			foreach (var property in model.Properties ?? [] )
 			{
 				properties.Add( new XElement("property", new XAttribute("name", property.Name ?? string.Empty), property.Value ?? string.Empty ) );
 			}
@@ -36,7 +37,7 @@ namespace RabbitOM.Player.Scripting
 			return root.ToString();
 		}
 
-		public static ScriptModel Deserialize( string input )
+		public static Script Deserialize( string input )
 		{
 			if ( string.IsNullOrWhiteSpace( input ) )
 			{
@@ -45,20 +46,26 @@ namespace RabbitOM.Player.Scripting
 
 			var root = XElement.Parse( input );
 
-			var script = new ScriptModel
+			var script = new Script
 			{
-				Language = root.Attribute( "language" )?.Value?.Trim() !,
-				Code     = root.Element( "code" )?.Value !
+				Language = root.Attribute( "language" )?.Value?.Trim(),
+				Code = root.Element( "code" )?.Value,
+				References = [],
+				Properties = [],
 			};
 
 			foreach (var reference in root.Element( "references" )?.Elements( "reference" ) ?? XElement.EmptySequence)
 			{
-				script.References.Add( new ReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() ! } );
+				script.References.Add( new ScriptReference {
+					Name = reference.Attribute( "name" )?.Value?.Trim() ,
+					ForceLoad = bool.Parse( reference.Attribute( "forceload" )?.Value ?? "false" ) } );
 			}
 
 			foreach (var property in root.Element( "properties" )?.Elements( "property" ) ?? XElement.EmptySequence)
 			{
-				script.Properties.Add( new PropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() ! , Value = property.Value?.Trim() , } );
+				script.Properties.Add( new ScriptProperty {
+					Name = property.Attribute( "name" )?.Value?.Trim(),
+					Value = property.Value?.Trim() } );
 			}
 
 			return script;

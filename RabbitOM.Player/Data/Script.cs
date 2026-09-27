@@ -1,12 +1,22 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
-namespace RabbitOM.Node.Scripting.Models
+namespace RabbitOM.Player.Data
 {
-	public static class Validator
+	public sealed class Script
 	{
-		public static void Validate( ScriptModel script )
+		public string Language { get; set; }
+
+		public List<ScriptReference> References { get; set; }
+
+		public List<ScriptProperty> Properties { get; set; }
+
+		public string Code { get; set; }
+
+
+
+
+		public static void Validate( Script script )
 		{
 			if ( script == null )
 			{
@@ -23,12 +33,12 @@ namespace RabbitOM.Node.Scripting.Models
 				throw new ValidationException( "The code must be provided" );
 			}
 
-			if ( script?.References.Any( ReferenceModel.IsNullOrEmpty ) == true )
+			if ( script?.References.Any( ScriptReference.IsNullOrEmpty ) == true )
 		    {
 				throw new ValidationException( "Contains null or empty reference" );
 			}
 
-			if ( script?.Properties.Any( PropertyModel.IsNullOrEmpty ) == true )
+			if ( script?.Properties.Any( ScriptProperty.IsNullOrEmpty ) == true )
 		    {
 				throw new ValidationException( "Contains null or empty property" );
 			}

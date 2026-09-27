@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace RabbitOM.Player.Scripting
 {
 	public sealed class PlayerScriptConfigurer
 	{
-		private readonly PlayerScript _nodeScript;
+		private readonly PlayerScript _script;
 
-		public PlayerScriptConfigurer( PlayerScript nodeScript )
+		public PlayerScriptConfigurer( PlayerScript script )
 		{
-			_nodeScript = nodeScript ?? throw new ArgumentNullException( nameof( nodeScript ) );
+			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 		}
 
 		public void ConfigureProperty( string name, string value )
@@ -19,7 +18,7 @@ namespace RabbitOM.Player.Scripting
 				throw new ArgumentNullException( nameof( name ) );
 			}
 
-			var property = _nodeScript.GetType().GetProperty( name );
+			var property = _script.GetType().GetProperty( name );
 
 			if ( property == null )
 			{
@@ -33,23 +32,23 @@ namespace RabbitOM.Player.Scripting
 
 			var converters = new Dictionary<Type,Action>();
 
-			converters[ typeof( bool   ) ] = () => property.SetValue( _nodeScript , value.ToBool() );
-			converters[ typeof( char   ) ] = () => property.SetValue( _nodeScript , value.ToChar() );
-			converters[ typeof( sbyte  ) ] = () => property.SetValue( _nodeScript , value.ToSByte() );
-			converters[ typeof( byte   ) ] = () => property.SetValue( _nodeScript , value.ToByte() );
-			converters[ typeof( short  ) ] = () => property.SetValue( _nodeScript , value.ToShort() );
-			converters[ typeof( ushort ) ] = () => property.SetValue( _nodeScript , value.ToUShort() );
-			converters[ typeof( int    ) ] = () => property.SetValue( _nodeScript , value.ToInt() );
-			converters[ typeof( uint   ) ] = () => property.SetValue( _nodeScript , value.ToUInt() );
-			converters[ typeof( long   ) ] = () => property.SetValue( _nodeScript , value.ToLong() );
-			converters[ typeof( ulong  ) ] = () => property.SetValue( _nodeScript , value.ToULong() );
-			converters[ typeof( float  ) ] = () => property.SetValue( _nodeScript , value.ToFloat() );
-			converters[ typeof( double ) ] = () => property.SetValue( _nodeScript , value.ToDouble() );
-			converters[ typeof( decimal) ] = () => property.SetValue( _nodeScript , value.ToDecimal() );
-			converters[ typeof( string ) ] = () => property.SetValue( _nodeScript , value );
-			converters[ typeof( DateTime ) ] = () => property.SetValue( _nodeScript , value.ToDateTime() );
-			converters[ typeof( TimeSpan ) ] = () => property.SetValue( _nodeScript , value.ToTimeSpan() );
-			converters[ typeof( Guid     ) ] = () => property.SetValue( _nodeScript , value.ToGuid() );
+			converters[ typeof( bool   ) ] = () => property.SetValue( _script , value.ToBool() );
+			converters[ typeof( char   ) ] = () => property.SetValue( _script , value.ToChar() );
+			converters[ typeof( sbyte  ) ] = () => property.SetValue( _script , value.ToSByte() );
+			converters[ typeof( byte   ) ] = () => property.SetValue( _script , value.ToByte() );
+			converters[ typeof( short  ) ] = () => property.SetValue( _script , value.ToShort() );
+			converters[ typeof( ushort ) ] = () => property.SetValue( _script , value.ToUShort() );
+			converters[ typeof( int    ) ] = () => property.SetValue( _script , value.ToInt() );
+			converters[ typeof( uint   ) ] = () => property.SetValue( _script , value.ToUInt() );
+			converters[ typeof( long   ) ] = () => property.SetValue( _script , value.ToLong() );
+			converters[ typeof( ulong  ) ] = () => property.SetValue( _script , value.ToULong() );
+			converters[ typeof( float  ) ] = () => property.SetValue( _script , value.ToFloat() );
+			converters[ typeof( double ) ] = () => property.SetValue( _script , value.ToDouble() );
+			converters[ typeof( decimal) ] = () => property.SetValue( _script , value.ToDecimal() );
+			converters[ typeof( string ) ] = () => property.SetValue( _script , value );
+			converters[ typeof( DateTime ) ] = () => property.SetValue( _script , value.ToDateTime() );
+			converters[ typeof( TimeSpan ) ] = () => property.SetValue( _script , value.ToTimeSpan() );
+			converters[ typeof( Guid     ) ] = () => property.SetValue( _script , value.ToGuid() );
 
 			if ( converters.TryGetValue( property.PropertyType , out var converter ) )
 			{
@@ -57,7 +56,7 @@ namespace RabbitOM.Player.Scripting
 			}
 			else
 			{
-				throw new NotSupportedException( $"the property:{property.Name} and it's dataType:{property.PropertyType} on the {_nodeScript.GetType()} class is not supported" );
+				throw new NotSupportedException( $"the property:{property.Name} and it's dataType:{property.PropertyType} on the {_script.GetType()} class is not supported" );
 			}
 		}
 	}

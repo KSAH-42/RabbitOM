@@ -22,6 +22,10 @@
 	  <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Include="Data\ScriptProperty.cs" />
+	  <None Include="Data\ScriptReference.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.8.0" />

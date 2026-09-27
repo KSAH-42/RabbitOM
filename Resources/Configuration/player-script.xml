@@ -1,15 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <script language="csharp">
-	<references>
-		<reference name="C:\WINDOWS\Microsoft.NET\assembly\GAC_MSIL\System.Speech\v4.0_4.0.0.0__31bf3856ad364e35\System.Speech.dll" />
-	</references>
 	<properties>
 		<property name="Property1">Value1</property>
 		<property name="Property2">Value2</property>
 		<property name="Property3">Value3</property>
 	</properties>
 	<code>
-		using RabbitOM.Player.Scritping.Messages;
+		using RabbitOM.Player.Scritping;
 		using System;
 
 		public sealed class MyPlayerScript : PlayerScript

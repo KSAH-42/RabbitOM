@@ -1,87 +1,86 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
+using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Node.Scripting
 {
 	using RabbitOM.Node.Scripting.Models;
 
+	// TODO: try to move this code into a separate process
 	public sealed class NodeScriptBuilder
 	{
+		private const string DefaultAssemblyName = "RabbitOM.Node.Script.dll";
 		private readonly ScriptModel _model;
+		private readonly List<MetadataReference> _references;
+
+
 
 		public NodeScriptBuilder( ScriptModel model )
 		{
 			_model = model ?? throw new ArgumentNullException( nameof( model ) );
+			_references = new List<MetadataReference>();
 		}
 
-		// TODO: refactor this method
-		public NodeScript Build()
-		{
-			var references = new List<MetadataReference>();
 
+
+
+		public NodeScriptBuilder LoadReferences()
+		{
 			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
 
 			foreach (string refPath in trustedAssembliesPaths)
 			{
-				references.Add(MetadataReference.CreateFromFile(refPath));
+				_references.Add(MetadataReference.CreateFromFile(refPath));
 			}
 
-			references.Add(MetadataReference.CreateFromFile("RabbitOM.dll"));
-			references.Add(MetadataReference.CreateFromFile(typeof(NodeScript).Assembly.Location));
+			_references.Add(MetadataReference.CreateFromFile("RabbitOM.dll"));
+			_references.Add(MetadataReference.CreateFromFile(typeof(NodeScript).Assembly.Location));
 
-			foreach ( var reference in _model.References ?? Enumerable.Empty<ReferenceModel>() )
+			foreach ( var reference in _model.References ?? [] )
 			{
-				if ( reference == null )
-				{
-					continue;
-				}
-
-				var fileName = Path.GetFileName(reference.Name);
+				var fileName = Path.GetFileName( reference.Name );
 
 				if ( ! File.Exists( Path.Combine( AppContext.BaseDirectory , fileName ) ) )
 				{
-					var target = Path.Combine( AppContext.BaseDirectory , fileName );
-					File.Copy( reference.Name , target, true );
+					File.Copy( reference.Name , Path.Combine( AppContext.BaseDirectory , fileName ) , true );
+				}
 
-					references.Add( MetadataReference.CreateFromFile( target ) );
-				}
-				else
-				{
-					references.Add( MetadataReference.CreateFromFile( fileName ) );
-				}
+				_references.Add( MetadataReference.CreateFromFile( fileName ) );
 
 				if ( reference.ForceLoad )
 				{
-					AssemblyLoadContext.Default.LoadFromAssemblyPath(Path.Combine( AppContext.BaseDirectory , fileName ));
+					AssemblyLoadContext.Default.LoadFromAssemblyPath( Path.Combine( AppContext.BaseDirectory , fileName ) );
 				}
 			}
 
+			return this;
+		}
+
+		public NodeScript Build()
+		{
 			var tree = RoslynCompilerHelper.CreateSyntaxTree( _model.Language , _model.Code );
 
-			var compilation = RoslynCompilerHelper.CreateCompilation( _model.Language , "nodeScript.dll" , new [] { tree } , references );
+			var compilation = RoslynCompilerHelper.CreateCompilation( _model.Language , DefaultAssemblyName , new [] { tree } , _references );
 
-			using var memoryStream = new MemoryStream();
-
-			var result = compilation.Emit( memoryStream );
-
-			if ( ! result.Success )
+			using ( var stream = File.Create( DefaultAssemblyName ) )
 			{
-				throw new InvalidOperationException( new StringBuilder()
-						.Append( "can not create an instance of the script" )
-						.AppendLine()
-						.Append( string.Join( Environment.NewLine , result.Diagnostics ) )
-						.ToString() );
+				var result = compilation.Emit( stream );
+
+				if ( ! result.Success )
+				{
+					throw new InvalidOperationException( new StringBuilder()
+							.Append( "can not create an instance of the script" )
+							.AppendLine()
+							.Append( string.Join( Environment.NewLine , result.Diagnostics ) )
+							.ToString() );
+				}
 			}
 
-			memoryStream.Position = 0;
-
-			var assembly = Assembly.Load( memoryStream.ToArray() );
+			var assembly = Assembly.LoadFrom( DefaultAssemblyName );
 
 			foreach( var type in assembly.GetTypes() )
 			{

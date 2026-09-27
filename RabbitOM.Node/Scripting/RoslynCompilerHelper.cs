@@ -59,13 +59,6 @@ namespace RabbitOM.Node.Scripting
 				throw new ArgumentNullException( nameof( references ) );
 			}
 
-			var fileName = Path.Combine( AppContext.BaseDirectory , assemblyName );
-
-			if ( File.Exists( fileName ) )
-			{
-				File.Delete( fileName );
-			}
-
 			if ( ValueComparer.Equals( language , "csharp" ) )
 			{
 				var compilationOptions = new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, optimizationLevel: OptimizationLevel.Release );
