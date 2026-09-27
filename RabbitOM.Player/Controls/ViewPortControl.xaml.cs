@@ -13,6 +13,7 @@ namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
 
+    // TODO: refactor
 	public partial class ViewPortControl : UserControl
     {
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(ViewPortControl) , new PropertyMetadata( Stretch.Fill ) );
