@@ -5,14 +5,14 @@ namespace RabbitOM.Node.Scripting
 	using RabbitOM.Threading;
 	using RabbitOM.Node.Scripting.Messages;
 
-	public sealed class NodeScriptRunner : IScriptRunner
+	public sealed class NodeScriptHost : IScriptHost
 	{
 		private readonly NodeScript _script;
 		private readonly BackgroundWorker _worker;
 		private readonly CircularMessageQueue _messages;
 		private volatile bool _disposed;
 
-		public NodeScriptRunner( NodeScript script )
+		public NodeScriptHost( NodeScript script )
 		{
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 
@@ -64,7 +64,7 @@ namespace RabbitOM.Node.Scripting
 		{
 			if ( _disposed )
 			{
-				throw new ObjectDisposedException( nameof(NodeScriptRunner) );
+				throw new ObjectDisposedException( nameof(NodeScriptHost) );
 			}
 		}
 

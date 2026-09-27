@@ -4,11 +4,11 @@ namespace RabbitOM.Node.Scripting
 {
 	using RabbitOM.Node.Scripting.Messages;
 
-	public sealed class NullNodeScriptRunner : IScriptRunner
+	public sealed class NullNodeScriptHost : IScriptHost
 	{
-		public readonly static NullNodeScriptRunner Instance = new NullNodeScriptRunner();
+		public readonly static NullNodeScriptHost Instance = new NullNodeScriptHost();
 
-		private NullNodeScriptRunner() { }
+		private NullNodeScriptHost() { }
 
 		public bool IsStarted { get; }
 

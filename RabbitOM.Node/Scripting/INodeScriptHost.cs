@@ -4,7 +4,7 @@ namespace RabbitOM.Node.Scripting
 {
 	using RabbitOM.Node.Scripting.Messages;
 
-	public interface IScriptRunner : IDisposable
+	public interface IScriptHost : IDisposable
 	{
 		bool IsStarted { get; }
 

@@ -2,6 +2,7 @@
 
 namespace RabbitOM.Node.Scripting.Messages
 {
+	// TODO: used a single Message class an remove childs classes
 	public abstract class Message
 	{
 		protected Message( object source , MessageType type )

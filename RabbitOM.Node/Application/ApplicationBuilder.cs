@@ -10,7 +10,7 @@ namespace RabbitOM.Node.Application
 
 	public sealed class ApplicationBuilder
 	{
-		private IScriptRunner _scriptRunner;
+		private IScriptHost _scriptHost;
 
 		private ScriptModel _script;
 
@@ -57,14 +57,14 @@ namespace RabbitOM.Node.Application
 			return this;
 		}
 
-		public ApplicationBuilder SetupRunner()
+		public ApplicationBuilder SetupScriptHost()
 		{
 			if ( _script == null )
 			{
 				throw new InvalidOperationException( "The script is already loaded" );
 			}
 
-			if ( _scriptRunner != null )
+			if ( _scriptHost != null )
 			{
 				throw new InvalidOperationException( "The runner is alread setup" );
 			}
@@ -77,14 +77,14 @@ namespace RabbitOM.Node.Application
 				configurer.ConfigureProperty( property.Name , property.Value );
 			}
 
-			_scriptRunner = new NodeScriptRunner( nodeScript );
+			_scriptHost = new NodeScriptHost( nodeScript );
 
 			return this;
 		}
 
 		public IApplication Build()
 		{
-			return new NodeApplication( new ConsoleLogger() , _scriptRunner ?? NullNodeScriptRunner.Instance , _settings );
+			return new NodeApplication( new ConsoleLogger() , _scriptHost ?? NullNodeScriptHost.Instance , _settings );
 		}
 	}
 }

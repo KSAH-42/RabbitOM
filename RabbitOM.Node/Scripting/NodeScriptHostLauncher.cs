@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	public struct NodeScriptRunnerLauncher : IDisposable
+	public struct NodeScriptHostLauncher : IDisposable
 	{
-		private readonly IScriptRunner _runner;
+		private readonly IScriptHost _runner;
 
-		public NodeScriptRunnerLauncher( IScriptRunner runner )
+		public NodeScriptHostLauncher( IScriptHost runner )
 		{
 			_runner = runner ?? throw new ArgumentNullException( nameof( runner ) );
 

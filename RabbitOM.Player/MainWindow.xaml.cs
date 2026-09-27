@@ -14,6 +14,7 @@ namespace RabbitOM.Player
 	using RabbitOM.Player.Services;
 	using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
+    // TODO: refactor and add dp
 	public partial class MainWindow : Window
     {
         public static readonly RoutedCommand ControlCommand = new RoutedCommand();

@@ -18,7 +18,7 @@ namespace RabbitOM.Node
             {
                 var application = new ApplicationBuilder( ApplicationSettings.Parse( args ) )
                     .LoadScript()
-                    .SetupRunner()
+                    .SetupScriptHost()
                     .Build()
                     ;
 
