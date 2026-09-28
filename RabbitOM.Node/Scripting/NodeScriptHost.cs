@@ -29,7 +29,7 @@ namespace RabbitOM.Node.Scripting
 		{
 			EnsureNotDisposed();
 
-			_worker.Start( DoEvents );
+			_worker.Start( PumpMessages );
 		}
 
 		public void Stop()
@@ -38,26 +38,18 @@ namespace RabbitOM.Node.Scripting
 			_messages.Clear();
 		}
 
-		public void PostMessage( Message message )
-		{
-			if ( message == null )
-			{
-				throw new ArgumentNullException( nameof( message ) );
-			}
-
-			EnsureNotDisposed();
-
-			_messages.Enqueue( message );
-		}
-
 		public void Dispose()
 		{
 			_disposed = true;
+			Stop();
+			_script.Dispose();
+		}
 
-			using ( _script )
-			{
-				Stop();
-			}
+		public void PostMessage( Message message )
+		{
+			EnsureNotDisposed();
+
+			_messages.Enqueue( message ?? throw new ArgumentNullException( nameof( message ) ) );
 		}
 
 		private void EnsureNotDisposed()
@@ -68,21 +60,20 @@ namespace RabbitOM.Node.Scripting
 			}
 		}
 
-		private void DoEvents()
+		private void PumpMessages()
 		{
 			_script.Setup();
 
-			while ( CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) )
+			var count = 0;
+
+			while ( count <= 1 )
 			{
-				if ( _messages.TryDequeue( out var message ) )
+				count += CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) ? 0 : 1;
+
+				while ( _messages.TryDequeue( out var message ) )
 				{
 					_script.TryHandle( message );
 				}
-			}
-
-			while ( _messages.TryDequeue( out var message ) )
-			{
-				_script.TryHandle( message );
 			}
 		}
 	}

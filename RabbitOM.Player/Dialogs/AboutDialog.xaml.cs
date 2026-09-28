@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
 namespace RabbitOM.Player.Dialogs
 {
     using RabbitOM.Player.Data;
+    using RabbitOM.Player.Services;
 
     public partial class AboutDialog : Window
     {
         public static readonly RoutedCommand VisitWebSiteCommand = new RoutedCommand();
         public static readonly RoutedCommand CloseCommand = new RoutedCommand();
+
+        private readonly WebNavigationService _navigationService = new WebNavigationService();
 
         public AboutDialog()
         {
@@ -22,18 +24,9 @@ namespace RabbitOM.Player.Dialogs
 
         private void OnVisitWebSite( object sender , ExecutedRoutedEventArgs e )
         {
-            var process = new Process()
+            if ( ! _navigationService.TryNavigate( "https://github.com/KSAH-42/RabbitOM" , out var exception ) )
             {
-                StartInfo = new ProcessStartInfo() { UseShellExecute = true , FileName = "https://github.com/KSAH-42/RabbitOM" }
-            };
-
-            try
-            {
-                process.Start();
-            }
-            catch ( Exception ex )
-            {
-                MessageBox.Show( ex.ToString() );
+                MessageBox.Show( exception.ToString() );
             }
         }
 

@@ -14,18 +14,12 @@ namespace RabbitOM.Player.Scripting
 		private volatile bool _disposed;
 
 
-
-
-
 		public PlayerScriptHost( PlayerScript script )
 		{
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 			_worker = new BackgroundWorker( "Node script runner" );
 			_messages = new CircularMessageQueue();
 		}
-
-
-
 
 
 		public bool IsStarted
@@ -35,10 +29,7 @@ namespace RabbitOM.Player.Scripting
 
 		public void Start()
 		{
-			if ( _disposed )
-			{
-				throw new ObjectDisposedException( nameof(PlayerScriptHost) );
-			}
+			EnsureNotDisposed();
 
 			_worker.Start( PumpMessages );
 		}
@@ -49,26 +40,6 @@ namespace RabbitOM.Player.Scripting
 			_messages.Clear();
 		}
 
-		public void PostMessage( Message message )
-		{
-			if ( message == null )
-			{
-				throw new ArgumentNullException( nameof( message ) );
-			}
-
-			if ( _disposed )
-			{
-				throw new ObjectDisposedException( nameof(PlayerScriptHost) );
-			}
-
-			if ( ! _worker.IsStarted || _worker.IsStopping )
-			{
-				throw new InvalidOperationException( nameof(PlayerScriptHost) );
-			}
-
-			_messages.Enqueue( message );
-		}
-
 		public void Dispose()
 		{
 			_disposed = true;
@@ -76,17 +47,32 @@ namespace RabbitOM.Player.Scripting
 			_script.Dispose();
 		}
 
+		public void PostMessage( Message message )
+		{
+			EnsureNotDisposed();
 
+			_messages.Enqueue( message ?? throw new ArgumentNullException( nameof( message ) ) );
+		}
 
-
+		private void EnsureNotDisposed()
+		{
+			if ( _disposed )
+			{
+				throw new ObjectDisposedException( nameof(PlayerScriptHost) );
+			}
+		}
 
 		private void PumpMessages()
 		{
 			_script.Setup();
 
-			while ( CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) )
+			var count = 0;
+
+			while ( count <= 1 )
 			{
-				if ( _messages.TryDequeue( out var message ) )
+				count += CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) ? 0 : 1;
+
+				while ( _messages.TryDequeue( out var message ) )
 				{
 					_script.TryHandle( message );
 				}
