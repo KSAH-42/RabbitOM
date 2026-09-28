@@ -9,7 +9,11 @@ namespace RabbitOM.Player.Scripting
 {
 	using RabbitOM.Player.Data;
 
-	// TODO: try to move this code into a separate process
+	// TODO: try to move this code into a separate process and reused it by the node
+	// how to authenticate a process that we need to launch, use OS policy etc.
+	// process A want to start the process B, how can it make trust on it ?
+	// but if not, how to do ? write on the input and readoutput of the process ?
+	// it's not safe writing on the input and read the output only it's cipher text
 	public sealed class PlayerScriptBuilder
 	{
 		private const string DefaultAssemblyName = "RabbitOM.Player.Script.dll";

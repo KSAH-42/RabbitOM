@@ -5,7 +5,7 @@ namespace RabbitOM.Player.Scripting
 	using RabbitOM.Threading;
 	using RabbitOM.Player.Scripting.Messages;
 
-	// TODO: try to refactor and remove the CircularMessageQueue
+	[Obsolete]
 	public sealed class PlayerScriptHost : IDisposable
 	{
 		private readonly PlayerScript _script;
