@@ -7,9 +7,22 @@ namespace RabbitOM.Player.Services
 
 	public sealed class ScriptingService : IDisposable
 	{
+		private readonly IApplication _application;
+
+
+
+		public ScriptingService( IApplication application )
+		{
+			_application = application ?? throw new ArgumentNullException( nameof( application ) );
+		}
+
+
+
+		public bool IsScriptCreated { get; }
+
 		public bool IsScriptRunning { get; }
 
-		public bool IsScriptCompiled { get; }
+
 
 		public void CompileScript( string document )
 		{
