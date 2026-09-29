@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows;
 
-namespace RabbitOM.Player
+namespace RabbitOM.Player.Application
 {
-    public sealed class PlayerApplication : IApplication
+    public sealed class MediaPlayerApplication : IApplication
     {
         private readonly MainWindow _window;
 
-        public PlayerApplication( MainWindow window )
+        public MediaPlayerApplication( MainWindow window )
         {
             _window = window ?? throw new ArgumentNullException( nameof( window ) );
         }

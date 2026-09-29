@@ -5,7 +5,7 @@ namespace RabbitOM.Player
 {
     public interface IApplication
     {
-        public Window Window { get; }
+        Window Window { get; }
 
         void StartStreaming();
         void StartStreaming( string uri );
