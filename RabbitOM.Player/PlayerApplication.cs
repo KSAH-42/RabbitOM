@@ -19,17 +19,18 @@ namespace RabbitOM.Player
 
         public void StartStreaming()
         {
-            throw new NotImplementedException();
+            _window.StartStreamingCommand.Execute( null , _window );
         }
 
         public void StartStreaming( string uri )
         {
-            throw new NotImplementedException();
+            _window.SelectedSource = uri;
+            _window.StartStreamingCommand.Execute( null , _window );
         }
 
         public void StopStreaming()
         {
-            throw new NotImplementedException();
+            _window.StopStreamingCommand.Execute( null , _window );
         }
     }
 }

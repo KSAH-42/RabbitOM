@@ -17,19 +17,6 @@ namespace RabbitOM.Player
 
     public partial class MainWindow : Window
     {
-        public static readonly RoutedCommand ControlCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleFullScreenCommand = new RoutedCommand();
-        public static readonly RoutedCommand ToggleStretchCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowNetworkSettingsDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowUrisDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowAboutDialogCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowStatisticsCommand = new RoutedCommand();
-        public static readonly RoutedCommand ShowInfoCommand = new RoutedCommand();
-        public static readonly RoutedCommand SaveImageCommand = new RoutedCommand();
-        public static readonly RoutedCommand FocusCommand = new RoutedCommand();
-
-
-
         public static readonly DependencyProperty StreamingStatusProperty = DependencyProperty.Register( nameof(StreamingStatus), typeof(bool) , typeof(MainWindow) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage), typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata(Stretch.Fill,OnStretchImageChanged) );
@@ -45,8 +32,22 @@ namespace RabbitOM.Player
         {
             InitializeComponent();
 
+            CommandBindings.Add( new CommandBinding( StartStreamingCommand , OnStartStreaming ));
+            CommandBindings.Add( new CommandBinding( StopStreamingCommand , OnStopStreaming ));
+            CommandBindings.Add( new CommandBinding( ToggleFullScreenCommand , OnToggleFullScreen ));
+            CommandBindings.Add( new CommandBinding( ToggleStretchCommand , OnToggleStretch ));
+            CommandBindings.Add( new CommandBinding( ShowNetworkSettingsDialogCommand , OnShowNetworkSettingsDialog ));
+            CommandBindings.Add( new CommandBinding( ShowUrisDialogCommand , OnShowUrisDialog ));
+            CommandBindings.Add( new CommandBinding( ShowAboutDialogCommand , OnShowAboutDialog ));
+            CommandBindings.Add( new CommandBinding( ShowStatisticsCommand , OnShowStatistics ));
+            CommandBindings.Add( new CommandBinding( ShowInfoCommand , OnShowInfo ));
+            CommandBindings.Add( new CommandBinding( FocusCommand , OnFocus ));
+            CommandBindings.Add( new CommandBinding( SaveImageCommand , OnSaveImage , OnCanSaveImage ));
+
             Script = ResourceService.GetResourceFile( ResourceService.Names.ScriptTemplate );
         }
+
+
 
 
 
@@ -92,6 +93,30 @@ namespace RabbitOM.Player
 
 
 
+
+
+
+
+        public RoutedCommand CloseCommand { get; } = new RoutedCommand();
+        public RoutedCommand StartStreamingCommand { get; } = new RoutedCommand();
+        public RoutedCommand StopStreamingCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleFullScreenCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleStretchCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowNetworkSettingsDialogCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowUrisDialogCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowAboutDialogCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowStatisticsCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowInfoCommand { get; } = new RoutedCommand();
+        public RoutedCommand FocusCommand { get; } = new RoutedCommand();
+        public RoutedCommand SaveImageCommand { get; } = new RoutedCommand();
+        public RoutedCommand StretchCommand { get; } = new RoutedCommand();
+
+
+
+
+
+
+
         private void OnWindowClosing( object sender , CancelEventArgs e )
         {
             _mediaPlayer.Stop();
@@ -106,13 +131,12 @@ namespace RabbitOM.Player
             }
         }
 
-        private void OnControl( object sender , ExecutedRoutedEventArgs e )
+        private void OnStartStreaming( object sender , ExecutedRoutedEventArgs e )
         {
             try
             {
                 if ( _mediaPlayer.IsStarted )
                 {
-                    _mediaPlayer.Stop();
                     return;
                 }
 
@@ -142,6 +166,12 @@ namespace RabbitOM.Player
             {
                 StreamingStatus = _mediaPlayer.IsStarted;
             }
+        }
+
+        private void OnStopStreaming( object sender , ExecutedRoutedEventArgs e )
+        {
+            _mediaPlayer.Stop();
+            StreamingStatus = false;
         }
 
         private void OnToggleFullScreen( object sender , ExecutedRoutedEventArgs e )
