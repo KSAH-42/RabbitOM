@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -91,9 +92,7 @@ namespace RabbitOM.Player
 
 
 
-
-
-        private void OnWindowClosing( object sender , System.ComponentModel.CancelEventArgs e )
+        private void OnWindowClosing( object sender , CancelEventArgs e )
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Dispose();

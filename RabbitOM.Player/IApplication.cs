@@ -1,23 +1,14 @@
 ﻿using System;
+using System.Windows;
 
 namespace RabbitOM.Player
 {
     public interface IApplication
     {
-        string StreamUri { get; set; }
-
-        void ShowStatistics();
-
-        void HideStatistics();
-
-        void StrechImage();
-
-        void UnStrechImage();
+        public Window Window { get; }
 
         void StartStreaming();
-
+        void StartStreaming( string uri );
         void StopStreaming();
-
-        void ShowHelp();
     }
 }
