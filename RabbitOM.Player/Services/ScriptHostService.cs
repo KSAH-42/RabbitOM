@@ -8,7 +8,6 @@ namespace RabbitOM.Player.Services
 	using RabbitOM.Player.Scripting;
 	using RabbitOM.Player.Scripting.Messages;
 
-	// DO a TBR
 	public sealed class ScriptHostService : IDisposable
 	{
 		private readonly IApplication _application;
@@ -57,7 +56,6 @@ namespace RabbitOM.Player.Services
 
 
 
-		// Eval or CompileScript ? Eval is more apropriate to ECMA script engine, normally Eval method execute also the code 
 		public void CompileScript( string document )
 		{
 			EnsureNotDisposed();
