@@ -21,7 +21,6 @@
 	<Window.Resources>
 		<converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
 		<converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
-		<converters:RevertBooleanVisibilityValueConverter x:Key="RevertBooleanVisibilityValueConverter"   />
 		<converters:VisibilityBooleanValueConverter x:Key="VisibilityBooleanValueConverter" />
 		<converters:BooleanStringValueConverter x:Key="StreamingStatusValueConverter" TrueString="Stop" FalseString="Play" />
 	</Window.Resources>
