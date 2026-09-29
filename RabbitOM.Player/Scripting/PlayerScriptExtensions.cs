@@ -1,8 +1,9 @@
-﻿using RabbitOM.Player.Scripting.Messages;
-using System;
+﻿using System;
 
 namespace RabbitOM.Player.Scripting
 {
+	using RabbitOM.Player.Scripting.Messages;
+
 	public static class PlayerScriptExtensions
 	{
 		public static bool TryHandle( this PlayerScript script , Message message )
