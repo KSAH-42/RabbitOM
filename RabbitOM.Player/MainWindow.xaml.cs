@@ -32,6 +32,7 @@ namespace RabbitOM.Player
         {
             InitializeComponent();
 
+            CommandBindings.Add( new CommandBinding( ToggleStartStopStreamingCommand , OnToggleStartStopStreaming ));
             CommandBindings.Add( new CommandBinding( StartStreamingCommand , OnStartStreaming ));
             CommandBindings.Add( new CommandBinding( StopStreamingCommand , OnStopStreaming ));
             CommandBindings.Add( new CommandBinding( ToggleFullScreenCommand , OnToggleFullScreen ));
@@ -100,6 +101,7 @@ namespace RabbitOM.Player
         public RoutedCommand CloseCommand { get; } = new RoutedCommand();
         public RoutedCommand StartStreamingCommand { get; } = new RoutedCommand();
         public RoutedCommand StopStreamingCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleStartStopStreamingCommand { get; } = new RoutedCommand();
         public RoutedCommand ToggleFullScreenCommand { get; } = new RoutedCommand();
         public RoutedCommand ToggleStretchCommand { get; } = new RoutedCommand();
         public RoutedCommand ShowNetworkSettingsDialogCommand { get; } = new RoutedCommand();
@@ -129,6 +131,13 @@ namespace RabbitOM.Player
             {
                 Close();
             }
+        }
+
+        private void OnToggleStartStopStreaming( object sender , ExecutedRoutedEventArgs e )
+        {
+            Action<object,ExecutedRoutedEventArgs> action = StreamingStatus ? OnStopStreaming : OnStartStreaming;
+
+            action( sender , e );
         }
 
         private void OnStartStreaming( object sender , ExecutedRoutedEventArgs e )

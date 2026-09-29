@@ -23,21 +23,16 @@
 		<converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
 		<converters:RevertBooleanVisibilityValueConverter x:Key="RevertBooleanVisibilityValueConverter"   />
 		<converters:VisibilityBooleanValueConverter x:Key="VisibilityBooleanValueConverter" />
+		<converters:BooleanStringValueConverter x:Key="StreamingStatusValueConverter" TrueString="Stop" FalseString="Play" />
 	</Window.Resources>
 
 	<Window.InputBindings>
-
 		<KeyBinding Key="F11" Command="{Binding ToggleFullScreenCommand,RelativeSource={RelativeSource AncestorType=Window}}" />
 		<KeyBinding Key="F6"  Command="{Binding FocusCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding ElementName=UriSources}" />
-
 	</Window.InputBindings>
 
 	<Window.CommandBindings>
-
-		<CommandBinding Command="{x:Static ApplicationCommands.Close}"
-                        Executed="OnCloseApplication" 
-                        />
-		
+		<CommandBinding Command="{x:Static ApplicationCommands.Close}" Executed="OnCloseApplication" />
 	</Window.CommandBindings>
 
 	<DockPanel>
@@ -153,29 +148,14 @@
 
 				<Grid Grid.Column="3">
 
-					<StackPanel Margin="0,0,7,0">
-
-						<StackPanel Visibility="{Binding StreamingStatus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource RevertBooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}">
-							<Button HorizontalAlignment="Right" 
-									VerticalAlignment="Top" 
-									Width="89" 
-									Height="30"
-									Content="Play" 
-									Command="{Binding StartStreamingCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-									/>
-						</StackPanel>
-
-						<StackPanel Visibility="{Binding StreamingStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource BooleanVisibilityValueConverter},RelativeSource={RelativeSource AncestorType=Window}}">
-							<Button HorizontalAlignment="Right" 
-									VerticalAlignment="Top" 
-									Width="89" 
-									Height="30"
-									Content="Stop" 
-									Command="{Binding StopStreamingCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-									/>
-						</StackPanel>
-
-					</StackPanel>
+					<Button Margin="0,0,7,0"
+							HorizontalAlignment="Right" 
+							VerticalAlignment="Top" 
+							Width="89" 
+							Height="30"
+							Content="{Binding StreamingStatus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource StreamingStatusValueConverter},RelativeSource={RelativeSource AncestorType=Window}}" 
+							Command="{Binding ToggleStartStopStreamingCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+							/>
 
 				</Grid>
 
