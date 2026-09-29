@@ -129,11 +129,10 @@ And the repository that own the lib, the implementation use an Authenticator cap
 
 # RabbitOM.Node used to receive packet and run .net scripts triggered by the rtsp client events
 
-This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and to run .net script written in C# or VB. 
-You can configure the application edit a xml file.
+This process is used to receive packets from a rtsp source (ip camera,recorder, etc...) and to run .net script written in C# or VB.
 
-In this example, the node will monitor the status of communication and trigger a vocal alert when the communication is back or lost.
-You can also configure the script: in the xml section called "properties", the name of property are case sensitive may be the same of property define into the class.
+In this example, the node will monitor the status of the communication and trigger a vocal alert when the communication is back or lost.
+You can also configure the script: in the xml section called "properties", the name of a property are case sensitive may be the same of the clr property.
 
 ~~~~XML
 
