@@ -32,6 +32,13 @@
 
 	</Window.InputBindings>
 
+	<Window.CommandBindings>
+
+		<CommandBinding Command="{x:Static ApplicationCommands.Close}"
+                        Executed="OnCloseApplication" 
+                        />
+		
+	</Window.CommandBindings>
 
 	<DockPanel>
 
