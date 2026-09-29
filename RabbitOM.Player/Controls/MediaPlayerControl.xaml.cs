@@ -7,6 +7,7 @@ using System.Windows.Media;
 namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
+	using System.Windows.Input;
 
 	public sealed partial class MediaPlayerControl : UserControl , IDisposable
     {
@@ -39,6 +40,9 @@ namespace RabbitOM.Player.Controls
         public MediaPlayerControl()
         {
             InitializeComponent();
+
+            CommandBindings.Add( new CommandBinding( PlayCommand , (s,e ) => Play() ) );
+            CommandBindings.Add( new CommandBinding( StopCommand , (s,e ) => Stop() ) );
 
             Transport = new TcpMediaPlayerTransport();
             _errors = new ObservableCollection<ErrorInfo>();
@@ -80,6 +84,12 @@ namespace RabbitOM.Player.Controls
             remove => RemoveHandler( FrameDecodedEvent , value );
         }
 
+
+
+
+        public RoutedCommand PlayCommand { get; } = new RoutedCommand();
+
+        public RoutedCommand StopCommand { get; } = new RoutedCommand();
 
 
 
@@ -156,6 +166,7 @@ namespace RabbitOM.Player.Controls
             get => (bool) GetValue( IsStartedProperty );
             private set => SetValue( IsStartedProperty , value );
         }
+
 
 
 

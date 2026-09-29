@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace RabbitOM.Player.Controls
@@ -22,6 +23,7 @@ namespace RabbitOM.Player.Controls
 		public static readonly DependencyProperty MaxBytesReceivedPerSecondProperty = DependencyProperty.Register( nameof(MaxBytesReceivedPerSecond), typeof(long), typeof(NetworkStatisticsControl));
 		public static readonly DependencyProperty MaxPacketReceivedPerSecondProperty = DependencyProperty.Register( nameof(MaxPacketReceivedPerSecond), typeof(long), typeof(NetworkStatisticsControl));
 
+
 		private readonly DispatcherTimer _timer = new DispatcherTimer() { Interval = TimeSpan.FromSeconds( 1 ) };
 
 
@@ -29,8 +31,20 @@ namespace RabbitOM.Player.Controls
         {
             InitializeComponent();
 
+			CommandBindings.Add( new CommandBinding( StartMonitoringCommand , (s,e) => StartMonitoring() ));
+			CommandBindings.Add( new CommandBinding( StopMonitoringCommand , (s,e) => StopMonitoring() ));
+
 			_timer.Tick += OnTimerTick;
         }
+
+
+
+
+
+
+		public RoutedCommand StartMonitoringCommand { get; } = new RoutedCommand();
+
+		public RoutedCommand StopMonitoringCommand { get; } = new RoutedCommand();
 
 
 
