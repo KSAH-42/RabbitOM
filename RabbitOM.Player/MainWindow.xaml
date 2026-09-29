@@ -224,11 +224,13 @@
 
 					<TabItem Header="SCRIPT">
 						<Grid>
-							<TextBox Margin="10,10,10,50" 
-									 HorizontalAlignment="Stretch" 
-									 VerticalAlignment="Stretch" 
+							<TextBox Margin="1,10,1,50" 
 									 AcceptsReturn="True" 
 									 AcceptsTab="True" 
+									 HorizontalAlignment="Stretch" 
+									 HorizontalScrollBarVisibility="Auto"
+									 VerticalAlignment="Stretch" 
+									 VerticalScrollBarVisibility="Auto"
 									 Text="{Binding Script,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
 									 />
 
