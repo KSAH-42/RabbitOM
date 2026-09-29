@@ -30,7 +30,7 @@ namespace RabbitOM.Player
 
 
 
-        public static readonly DependencyProperty ButtonStatusProperty = DependencyProperty.Register( nameof(ButtonStatus), typeof(string) , typeof(MainWindow) , new PropertyMetadata( "Play" ) );
+        public static readonly DependencyProperty StreamingStatusProperty = DependencyProperty.Register( nameof(StreamingStatus), typeof(bool) , typeof(MainWindow) );
         public static readonly DependencyProperty SelectedSourceProperty = DependencyProperty.Register( nameof(SelectedSource), typeof(string) , typeof(MainWindow) );
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage), typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata(Stretch.Fill,OnStretchImageChanged) );
         public static readonly DependencyProperty InfoVisibilityProperty = DependencyProperty.Register( nameof(InfoVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Collapsed,OnInfoVisibilityChanged) );
@@ -52,10 +52,10 @@ namespace RabbitOM.Player
 
 
 
-        public string ButtonStatus
+        public bool StreamingStatus
         {
-            get => GetValue( ButtonStatusProperty ) as string;
-            set => SetValue( ButtonStatusProperty , value );
+            get => (bool) GetValue( StreamingStatusProperty );
+            private set => SetValue( StreamingStatusProperty , value );
         }
 
         public string SelectedSource
@@ -140,7 +140,7 @@ namespace RabbitOM.Player
             }
             finally
             {
-                ButtonStatus = _mediaPlayer.IsStarted ? "Stop" : "Play";
+                StreamingStatus = _mediaPlayer.IsStarted;
             }
         }
 

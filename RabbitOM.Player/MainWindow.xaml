@@ -21,6 +21,7 @@
 	<Window.Resources>
 		<converters:BooleanStretchValueConverter x:Key="BooleanStretchValueConverter" />
 		<converters:BooleanVisibilityValueConverter x:Key="BooleanVisibilityValueConverter" />
+		<converters:BooleanStringValueConverter x:Key="StreamingStatusValueConverter" FalseString="Play" TrueString="Stop" />
 	</Window.Resources>
 
 	<Window.CommandBindings>
@@ -199,7 +200,7 @@
                             VerticalAlignment="Top" 
                             Width="89" 
                             Height="29"
-                            Content="{Binding ButtonStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
+                            Content="{Binding StreamingStatus,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window},Converter={StaticResource StreamingStatusValueConverter}}"
                             Command="{x:Static local:MainWindow.ControlCommand}" 
                             />
 
