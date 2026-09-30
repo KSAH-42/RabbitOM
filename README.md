@@ -144,9 +144,9 @@ You can also configure the script: in the xml section called "properties", the n
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
 	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
-		<property name="ConnectedMessage">Connected</property>
-		<property name="DisconnectedMessage">Disconnected</property>
-		<property name="ErrorMessage">Communication error</property>
+		<property name="ConnectedMessage">Connected to the device</property>
+		<property name="DisconnectedMessage">Disconnected from the device</property>
+		<property name="ErrorMessage">Communication error happens</property>
 		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
 	<code>
@@ -164,7 +164,7 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated a CoClass don't forget that the major of COM object works only on Windows
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated a CoClass don't forget that the major of COM object works only on Windows. Some time it may be possible that an exception. You must check if the progid is present the HKCLASSROOT hives over use regsvr32 
 				
 				if ( type != null )
 				{

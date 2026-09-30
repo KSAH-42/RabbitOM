@@ -18,6 +18,12 @@
 		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
+	  <Compile Remove="Controllers\**" />
+	  <EmbeddedResource Remove="Controllers\**" />
+	  <None Remove="Controllers\**" />
+	  <Page Remove="Controllers\**" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Resource Include="Resources\icon.ico" />
 	  <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
 	</ItemGroup>
