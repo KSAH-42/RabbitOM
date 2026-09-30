@@ -295,7 +295,6 @@ namespace RabbitOM.Player
             if ( window != null )
             {
                 window._mediaPlayer.SourceVisibility = (Visibility) e.NewValue;
-                window.InvalidateProperty( InfoVisibilityProperty );
             }
         }
 
