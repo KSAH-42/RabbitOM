@@ -7,7 +7,7 @@ namespace RabbitOM.Player.Application
     {
         private readonly MainWindow _window;
 
-        public MediaPlayerApplication( MainWindow window )
+        public MediaPlayerApplication( MainWindow window ) // TODO: use an interface ????
         {
             _window = window ?? throw new ArgumentNullException( nameof( window ) );
         }
