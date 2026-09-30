@@ -7,7 +7,7 @@ namespace RabbitOM.Player.Application
     {
         private readonly MainWindow _window;
 
-        public MediaPlayerApplication( MainWindow window ) // TODO: use an interface ????
+        public MediaPlayerApplication( MainWindow window ) // TODO: use an interface ???? it make sense to inject the main window into the global app object. it just make, may be we can inject a controller.
         {
             _window = window ?? throw new ArgumentNullException( nameof( window ) );
         }
