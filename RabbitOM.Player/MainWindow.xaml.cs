@@ -22,7 +22,7 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage), typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata(Stretch.Fill,OnStretchImageChanged) );
         public static readonly DependencyProperty InfoVisibilityProperty = DependencyProperty.Register( nameof(InfoVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Collapsed,OnInfoVisibilityChanged) );
         public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Visible,OnStatisticsVisibilityChanged) );
-        public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(MainWindow) , new PropertyMetadata("zerzer"));
+        public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(MainWindow) );
 
 
 
