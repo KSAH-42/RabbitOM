@@ -144,8 +144,11 @@ namespace RabbitOM.Player.Services
 		{
 			System.Diagnostics.Debug.Assert( _script != null );
 
-			_script.Application ??= new PlayerScriptApplication( _application );
-			_script.Setup();
+			if ( _script.Application == null )
+			{
+				_script.Application = new PlayerScriptApplication( _application );
+				_script.Setup(); // called once in case of restart the script
+			}
 
 			var count = 0;
 
