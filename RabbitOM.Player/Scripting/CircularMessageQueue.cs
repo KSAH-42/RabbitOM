@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace RabbitOM.Player.Scripting.Messages
+namespace RabbitOM.Player.Scripting
 {
     public sealed partial class CircularMessageQueue : ICollection, IReadOnlyCollection<Message>
     {

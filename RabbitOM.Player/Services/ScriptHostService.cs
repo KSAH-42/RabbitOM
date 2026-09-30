@@ -6,7 +6,6 @@ namespace RabbitOM.Player.Services
 	using RabbitOM.Threading;
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Scripting;
-	using RabbitOM.Player.Scripting.Messages;
 
 	public sealed class ScriptHostService : IDisposable
 	{
