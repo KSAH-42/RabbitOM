@@ -60,79 +60,79 @@ namespace RabbitOM.Player.Controls
 		public bool ConnectionStatus
 		{
 			get => (bool) GetValue( ConnectionStatusProperty );
-			set => SetValue( ConnectionStatusProperty , value );
+			private set => SetValue( ConnectionStatusProperty , value );
 		}
 
 		public string Codec
 		{
 			get => (string) GetValue( CodecProperty );
-			set => SetValue( CodecProperty , value );
+			private set => SetValue( CodecProperty , value );
 		}
 
 		public string Transport
 		{
 			get => (string) GetValue( TransportProperty );
-			set => SetValue( TransportProperty , value );
+			private set => SetValue( TransportProperty , value );
 		}
 
 		public long Clock
 		{
 			get => (long) GetValue( ClockProperty );
-			set => SetValue( ClockProperty , value );
+			private set => SetValue( ClockProperty , value );
 		}
 
 		public long FrameHeight
 		{
 			get => (long) GetValue( FrameHeightProperty );
-			set => SetValue( FrameHeightProperty , value );
+			private set => SetValue( FrameHeightProperty , value );
 		}
 
 		public long FrameWidth
 		{
 			get => (long) GetValue( FrameWidthProperty );
-			set => SetValue( FrameWidthProperty , value );
+			private set => SetValue( FrameWidthProperty , value );
 		}
 
 		public long BytesReceivedPerSecond
 		{
 			get => (long) GetValue( BytesReceivedPerSecondProperty );
-			set => SetValue( BytesReceivedPerSecondProperty , value );
+			private set => SetValue( BytesReceivedPerSecondProperty , value );
 		}
 
 		public long PacketReceivedPerSecond
 		{
 			get => (long) GetValue( PacketReceivedPerSecondProperty );
-			set => SetValue( PacketReceivedPerSecondProperty , value );
+			private set => SetValue( PacketReceivedPerSecondProperty , value );
 		}
 
 		public long FrameCountPerSecond
 		{
 			get => (long) GetValue( FrameCountPerSecondProperty );
-			set => SetValue( FrameCountPerSecondProperty , value );
+			private set => SetValue( FrameCountPerSecondProperty , value );
 		}
 
 		public long PacketsLostCount
 		{
 			get => (long) GetValue( PacketsLostCountPerSecondProperty );
-			set => SetValue( PacketsLostCountPerSecondProperty , value );
+			private set => SetValue( PacketsLostCountPerSecondProperty , value );
 		}
 
 		public long MaxFrameCountPerSecond
 		{
 			get => (long) GetValue( MaxFrameCountPerSecondProperty );
-			set => SetValue( MaxFrameCountPerSecondProperty , value );
+			private set => SetValue( MaxFrameCountPerSecondProperty , value );
 		}
 
 		public long MaxBytesReceivedPerSecond
 		{
 			get => (long) GetValue( MaxBytesReceivedPerSecondProperty );
-			set => SetValue( MaxBytesReceivedPerSecondProperty , value );
+			private set => SetValue( MaxBytesReceivedPerSecondProperty , value );
 		}
 
 		public long MaxPacketReceivedPerSecond
 		{
 			get => (long) GetValue( MaxPacketReceivedPerSecondProperty );
-			set => SetValue( MaxPacketReceivedPerSecondProperty , value );
+			private set => SetValue( MaxPacketReceivedPerSecondProperty , value );
 		}
 
 
