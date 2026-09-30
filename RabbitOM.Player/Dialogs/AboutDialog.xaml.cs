@@ -24,9 +24,13 @@ namespace RabbitOM.Player.Dialogs
 
         private void OnVisitWebSite( object sender , ExecutedRoutedEventArgs e )
         {
-            if ( ! _navigationService.TryNavigate( "https://github.com/KSAH-42/RabbitOM" , out var exception ) )
+            try
             {
-                MessageBox.Show( exception.ToString() );
+                _navigationService.Navigate( "https://github.com/KSAH-42/RabbitOM" );
+            }
+            catch( Exception ex )
+            {
+                MessageBox.Show( ex.ToString() );
             }
         }
 
