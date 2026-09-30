@@ -3,6 +3,7 @@ using System.Collections;
 
 namespace RabbitOM.Player.Scripting
 {
+    // TODO: replace this class by a kind channel class with read and write method that embebbed a concurrent collection with sync feature. we don't have to iterate and provide IEnumerable mecanism
     public sealed partial class CircularMessageQueue : ICollection, IReadOnlyCollection<Message>
     {
         private readonly int _limit;
