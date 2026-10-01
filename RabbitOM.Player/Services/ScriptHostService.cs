@@ -127,6 +127,7 @@ namespace RabbitOM.Player.Services
 			if ( _script != null )
 			{
 				_script.Dispose();
+				_script = null;
 				_loadContext.Unload();
 			}
 		}
