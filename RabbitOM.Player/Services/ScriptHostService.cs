@@ -93,6 +93,7 @@ namespace RabbitOM.Player.Services
 		public void SendMessage( Message message )
 		{
 			EnsureNotDisposed();
+			EnsureScriptCreated();
 
 			_channel.WriteMessage( message );
 		}
