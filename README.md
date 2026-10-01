@@ -144,15 +144,14 @@ You can also configure the script: in the xml section called "properties", the n
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
 	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
-		<property name="ConnectedMessage">Connected to the device</property>
-		<property name="DisconnectedMessage">Disconnected from the device</property>
-		<property name="ErrorMessage">Communication error happens</property>
+		<property name="ConnectedMessage">Connected</property>
+		<property name="DisconnectedMessage">Disconnected</property>
+		<property name="ErrorMessage">Communication error</property>
 		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
 	<code>
 		using RabbitOM.Node;
 		using RabbitOM.Node.Scripting;
-		using RabbitOM.Node.Scripting.Messages;
 		using System;
 		using System.IO;
 		using System.Media;
@@ -164,7 +163,7 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated a CoClass don't forget that the major of COM object works only on Windows. Some time it may be possible that an exception. You must check if the progid is present the HKCLASSROOT hives over use regsvr32 
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated a CoClass don't forget that the major of COM object works only on Windows
 				
 				if ( type != null )
 				{
@@ -181,21 +180,21 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public override void Handle( Message message )
 			{
-				if ( message.Type == MessageType.Connected )
+				if ( message.Type == MessageTypes.Connected )
 				{
 					Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine( ConnectedMessage );
 					Console.ResetColor();
 					_voice?.Speak( ConnectedMessage );
 				}
-                else if ( message.Type == MessageType.Disconnected )
+                else if ( message.Type == MessageTypes.Disconnected )
                 {
 				    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine( DisconnectedMessage );
 					Console.ResetColor();
 					_voice?.Speak( DisconnectedMessage );
 				}
-				else if ( message.Type == MessageType.Error )
+				else if ( message.Type == MessageTypes.Error )
 				{
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine( ErrorMessage );
@@ -221,7 +220,7 @@ You can also configure the script: in the xml section called "properties", the n
 				{
 					return;
 				}
-				
+
 				try
 				{
 					var player = new SoundPlayer( fileName );

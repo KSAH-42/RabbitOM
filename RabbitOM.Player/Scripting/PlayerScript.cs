@@ -4,7 +4,7 @@ namespace RabbitOM.Player.Scripting
 {
 	public abstract class PlayerScript : IDisposable
 	{
-		public PlayerScriptApplication Application { get; internal set; }
+		public ApplicationProxy Application { get; internal set; }
 
 		public virtual void Setup() { }
 

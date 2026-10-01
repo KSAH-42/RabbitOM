@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	using RabbitOM.Node.Scripting.Messages;
-
 	public abstract class NodeScript : IDisposable
 	{
 		public virtual void Setup() { }

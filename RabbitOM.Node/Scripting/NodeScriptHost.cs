@@ -3,13 +3,12 @@
 namespace RabbitOM.Node.Scripting
 {
 	using RabbitOM.Threading;
-	using RabbitOM.Node.Scripting.Messages;
 
 	public sealed class NodeScriptHost : IScriptHost
 	{
 		private readonly NodeScript _script;
 		private readonly BackgroundWorker _worker;
-		private readonly CircularMessageQueue _messages;
+		private readonly MessageChannel _messages;
 		private volatile bool _disposed;
 
 		public NodeScriptHost( NodeScript script )
@@ -17,7 +16,7 @@ namespace RabbitOM.Node.Scripting
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 
 			_worker = new BackgroundWorker( "Node script runner" );
-			_messages = new CircularMessageQueue();
+			_messages = new MessageChannel();
 		}
 
 		public bool IsStarted
@@ -35,7 +34,7 @@ namespace RabbitOM.Node.Scripting
 		public void Stop()
 		{
 			_worker.Stop();
-			_messages.Clear();
+			_messages.ClearMessages();
 		}
 
 		public void Dispose()
@@ -43,13 +42,14 @@ namespace RabbitOM.Node.Scripting
 			_disposed = true;
 			Stop();
 			_script.Dispose();
+			_messages.Dispose();
 		}
 
 		public void PostMessage( Message message )
 		{
 			EnsureNotDisposed();
 
-			_messages.Enqueue( message ?? throw new ArgumentNullException( nameof( message ) ) );
+			_messages.WriteMessage( message );
 		}
 
 		private void EnsureNotDisposed()
@@ -68,9 +68,9 @@ namespace RabbitOM.Node.Scripting
 
 			while ( count <= 1 )
 			{
-				count += CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) ? 0 : 1;
+				count += MessageChannel.Wait( _messages , _worker.ExitHandle ) ? 0 : 1;
 
-				while ( _messages.TryDequeue( out var message ) )
+				while ( _messages.TryReadMessage( out var message ) )
 				{
 					_script.TryHandle( message );
 				}

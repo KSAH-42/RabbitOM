@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	using RabbitOM.Node.Scripting.Messages;
-
 	public interface IScriptHost : IDisposable
 	{
 		bool IsStarted { get; }

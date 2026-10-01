@@ -11,7 +11,7 @@ namespace RabbitOM.Player.Services
 	{
 		private readonly IApplication _application;
 		private readonly BackgroundWorker _worker; // may be use the original thread class and set as foreground thread and allow to control threading appartement, it could be use fully if we manipulated COM objects see MTA, MTA, and neutral COM appartements 
-		private readonly CircularMessageQueue _messages;
+		private readonly MessageChannel _channel;
 		private readonly AssemblyLoadContext _loadContext;
 		private PlayerScript _script;
 		private bool _disposed;	// remove volatile key because all service methode must call in the main thread
@@ -30,7 +30,7 @@ namespace RabbitOM.Player.Services
 		{
 			_application = application ?? throw new ArgumentNullException( nameof( application ) );
 			_loadContext = loadContext ?? throw new ArgumentNullException( nameof( loadContext ) );
-			_messages = new CircularMessageQueue();
+			_channel = new MessageChannel();
 			_worker = new BackgroundWorker( "Scripting service" );
 		}
 
@@ -82,8 +82,11 @@ namespace RabbitOM.Player.Services
 
 		public void Dispose()
 		{
+			if ( _disposed ) return;
+
 			TerminateScript();
 			FreeScript();
+			_channel.Dispose();
 			_disposed = true;
 		}
 
@@ -91,7 +94,7 @@ namespace RabbitOM.Player.Services
 		{
 			EnsureNotDisposed();
 
-			_messages.Enqueue( message ?? throw new ArgumentNullException( nameof( message ) ) );
+			_channel.WriteMessage( message );
 		}
 
 
@@ -146,7 +149,7 @@ namespace RabbitOM.Player.Services
 
 			if ( _script.Application == null )
 			{
-				_script.Application = new PlayerScriptApplication( _application );
+				_script.Application = new ApplicationProxy( _application );
 				_script.Setup(); // called once in case of restart the script
 			}
 
@@ -154,9 +157,9 @@ namespace RabbitOM.Player.Services
 
 			while ( count <= 1 )
 			{
-				count += CircularMessageQueue.Wait( _messages , _worker.ExitHandle ) ? 0 : 1;
+				count += MessageChannel.Wait( _channel , _worker.ExitHandle ) ? 0 : 1;
 
-				while ( _messages.TryDequeue( out var message ) )
+				while ( _channel.TryReadMessage( out var message ) )
 				{
 					_script.TryHandle( message );
 				}

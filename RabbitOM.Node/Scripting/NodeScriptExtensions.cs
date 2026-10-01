@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	using RabbitOM.Node.Scripting.Messages;
-
 	internal static class NodeScriptExtensions
 	{
 		public static bool TryHandle( this NodeScript script , Message message )

@@ -14,7 +14,6 @@
 	<code>
 		using RabbitOM.Node;
 		using RabbitOM.Node.Scripting;
-		using RabbitOM.Node.Scripting.Messages;
 		using System;
 		using System.IO;
 		using System.Media;
@@ -43,21 +42,21 @@
 			
 			public override void Handle( Message message )
 			{
-				if ( message.Type == MessageType.Connected )
+				if ( message.Type == MessageTypes.Connected )
 				{
 					Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine( ConnectedMessage );
 					Console.ResetColor();
 					_voice?.Speak( ConnectedMessage );
 				}
-                else if ( message.Type == MessageType.Disconnected )
+                else if ( message.Type == MessageTypes.Disconnected )
                 {
 				    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine( DisconnectedMessage );
 					Console.ResetColor();
 					_voice?.Speak( DisconnectedMessage );
 				}
-				else if ( message.Type == MessageType.Error )
+				else if ( message.Type == MessageTypes.Error )
 				{
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine( ErrorMessage );

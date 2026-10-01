@@ -2,8 +2,6 @@
 
 namespace RabbitOM.Node.Scripting
 {
-	using RabbitOM.Node.Scripting.Messages;
-
 	public sealed class NullNodeScriptHost : IScriptHost
 	{
 		public readonly static NullNodeScriptHost Instance = new NullNodeScriptHost();

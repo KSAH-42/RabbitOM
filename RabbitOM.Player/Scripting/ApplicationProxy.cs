@@ -3,12 +3,12 @@ using System.Windows.Threading;
 
 namespace RabbitOM.Player.Scripting
 {
-	public sealed class PlayerScriptApplication
+	public sealed class ApplicationProxy
 	{
 		private readonly IApplication _application;
 		private readonly Dispatcher _dispatcher;
 
-		public PlayerScriptApplication( IApplication application )
+		public ApplicationProxy( IApplication application )
 		{
 			_application = application ?? throw new ArgumentNullException( nameof( application ) );
 			_dispatcher = application.Window.Dispatcher;
