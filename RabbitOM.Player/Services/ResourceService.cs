@@ -6,10 +6,7 @@ namespace RabbitOM.Player.Services
 {
 	public static class ResourceService
 	{
-		public static class Names
-		{
-			public const string ScriptTemplate = "ScriptTemplate.txt";
-		}
+		public const string ScriptTemplate = "ScriptTemplate.txt";
 
 		public static string GetResourceFile(string resourceName)
 		{

@@ -9,14 +9,21 @@
 	<code>
 		using RabbitOM.Player.Scripting;
 		using System;
+		using System.Windows;
 
 		public sealed class MyPlayerScript : PlayerScript
 		{
+		    public MyPlayerScript()
+			{
+			}
+
 			public string Property1 { get; set; }
 			public string Property2 { get; set; }
 			public string Property3 { get; set; }
-
-			public override void Handle( Message message ) { }
+			
+			protected override void Dispose( bool disposing )
+			{
+			}
 		}
 	</code>
 </script>

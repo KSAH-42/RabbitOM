@@ -289,7 +289,3 @@ static class Program
 }
 
 ~~~~
-
-# Getting more details ?
-
-If you want to get more details, you can send me an email to "a.sahnine@netcourrier.com" or "kader.sahnine11@gmail.com"

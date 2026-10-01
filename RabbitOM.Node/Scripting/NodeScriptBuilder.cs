@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Node.Scripting
 {
-	using RabbitOM.Node.Scripting.Models;
+	using RabbitOM.Node.Models;
 
 	// TODO: try to move this code into a separate process
 	public sealed class NodeScriptBuilder

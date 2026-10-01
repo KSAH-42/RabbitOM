@@ -5,8 +5,8 @@ using System.Linq;
 namespace RabbitOM.Node.Application
 {
 	using RabbitOM.Node.Logging;
+	using RabbitOM.Node.Models;
 	using RabbitOM.Node.Scripting;
-	using RabbitOM.Node.Scripting.Models;
 
 	public sealed class ApplicationBuilder
 	{
@@ -50,7 +50,7 @@ namespace RabbitOM.Node.Application
 
 			var script = Deserializer.Deserialize( content );
 
-			Validator.Validate( script );
+			ScriptValidator.Validate( script );
 
 			_script = script;
 
@@ -72,7 +72,7 @@ namespace RabbitOM.Node.Application
 			var nodeScript = new NodeScriptBuilder( _script ).LoadReferences().Build();
 			var configurer = new NodeScriptConfigurer( nodeScript );
 
-			foreach ( var property in _script.Properties ?? Enumerable.Empty<PropertyModel>() )
+			foreach ( var property in _script.Properties ?? Enumerable.Empty<ScriptPropertyModel>() )
 			{
 				configurer.ConfigureProperty( property.Name , property.Value );
 			}

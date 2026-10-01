@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace RabbitOM.Node.Scripting.Models
+namespace RabbitOM.Node.Models
 {
-	public static class Validator
+	public static class ScriptValidator
 	{
 		public static void Validate( ScriptModel script )
 		{
@@ -23,12 +23,12 @@ namespace RabbitOM.Node.Scripting.Models
 				throw new ValidationException( "The code must be provided" );
 			}
 
-			if ( script?.References.Any( ReferenceModel.IsNullOrEmpty ) == true )
+			if ( script?.References.Any( ScriptReferenceModel.IsNullOrEmpty ) == true )
 		    {
 				throw new ValidationException( "Contains null or empty reference" );
 			}
 
-			if ( script?.Properties.Any( PropertyModel.IsNullOrEmpty ) == true )
+			if ( script?.Properties.Any( ScriptPropertyModel.IsNullOrEmpty ) == true )
 		    {
 				throw new ValidationException( "Contains null or empty property" );
 			}

@@ -36,7 +36,7 @@
 
 	<DockPanel>
 
-		<Menu DockPanel.Dock="Top">
+		<Menu DockPanel.Dock="Top" >
 
 			<MenuItem Header="Application">
 				<MenuItem Header="Quit" Command="{x:Static ApplicationCommands.Close}" />
@@ -170,7 +170,7 @@
 							Padding="0,0,11,9"
 							>
 
-					<TabItem Header="VIDEO">
+					<TabItem Header="VIEW">
 
 						<Grid Background="Black" Tag="{Binding RelativeSource={RelativeSource AncestorType=Window}}">
 
@@ -221,24 +221,14 @@
 
 					</TabItem>
 
-					<TabItem Header="SCRIPT">
+					<TabItem Header="CODE">
+						
 						<Grid>
-							<TextBox Margin="1,10,1,50" 
-									 AcceptsReturn="True" 
-									 AcceptsTab="True" 
-									 HorizontalAlignment="Stretch" 
-									 HorizontalScrollBarVisibility="Auto"
-									 VerticalAlignment="Stretch" 
-									 VerticalScrollBarVisibility="Auto"
-									 Text="{Binding Script,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,RelativeSource={RelativeSource AncestorType=Window}}"
-									 />
-
-							<TextBlock Text="Not available" 
-									   Foreground="Yellow" 
-									   HorizontalAlignment="Center" 
-									   VerticalAlignment="Center" 
-									   />
+							
+							<controls:ScriptEditorControl x:Name="_scriptEditor" />
+							
 						</Grid>
+						
 					</TabItem>
 
 				</TabControl>

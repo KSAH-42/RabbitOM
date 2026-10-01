@@ -45,7 +45,7 @@ namespace RabbitOM.Player
             CommandBindings.Add( new CommandBinding( FocusCommand , OnFocus ));
             CommandBindings.Add( new CommandBinding( SaveImageCommand , OnSaveImage , OnCanSaveImage ));
 
-            Script = ResourceService.GetResourceFile( ResourceService.Names.ScriptTemplate );
+            _scriptEditor.Reset();
         }
 
 

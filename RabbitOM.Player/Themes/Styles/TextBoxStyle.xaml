@@ -19,7 +19,7 @@
                 <ControlTemplate>
                     <Border BorderBrush="Red"
                             CornerRadius="3" 
-                            BorderThickness="0.5"
+                            BorderThickness="1.5"
                             >
                         <AdornedElementPlaceholder />
                     </Border>

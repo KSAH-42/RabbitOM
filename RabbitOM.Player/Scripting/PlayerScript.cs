@@ -1,14 +1,11 @@
 ﻿using System;
+using System.Windows;
 
 namespace RabbitOM.Player.Scripting
 {
 	public abstract class PlayerScript : IDisposable
 	{
-		public ApplicationProxy Application { get; internal set; }
-
-		public virtual void Setup() { }
-
-		public abstract void Handle( Message message );
+		public Window Window { get; } = App.Current.MainWindow;
 
 		public void Dispose()
 		{

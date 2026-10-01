@@ -1,22 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.Loader;
-using System.Text;
 using System.Reflection;
+using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Player.Scripting
 {
 	using RabbitOM.Player.Data;
 
-	// TODO: try to move this code into a separate process and reused it by the node
-	// how to authenticate a process that we need to launch, use OS policy etc.
-	// process A want to start the process B, how can it make trust on it ?
-	// but if not, how to do ? write on the input and readoutput of the process ?
-	// it's not safe writing on the input and read the output only it's cipher text
 	public sealed class PlayerScriptBuilder
 	{
-		private const string DefaultAssemblyName = "RabbitOM.Player.Script.dll";
 		private readonly Script _script;
 		private readonly AssemblyLoadContext _loadContext;
 		private readonly List<MetadataReference> _metadataReferences;
@@ -28,6 +21,9 @@ namespace RabbitOM.Player.Scripting
 			_loadContext = loadContext ?? throw new ArgumentNullException( nameof( loadContext ) );
 			_metadataReferences = new List<MetadataReference>();
 		}
+
+
+		public string OutputAssembly { get; set; } = "RabbitOM.Player.Script.dll";
 
 
 		public PlayerScriptBuilder LoadReferences()
@@ -63,36 +59,42 @@ namespace RabbitOM.Player.Scripting
 
 		public PlayerScript Build()
 		{
-			var tree = RoslynCompilerHelper.CreateSyntaxTree( _script.Language , _script.Code );
-
-			var compilation = RoslynCompilerHelper.CreateCompilation( _script.Language , DefaultAssemblyName , new [] { tree } , _metadataReferences );
-
-			using ( var stream = File.Create( DefaultAssemblyName ) )
+			try
 			{
-				var result = compilation.Emit( stream );
+				var tree = RoslynCompilerHelper.CreateSyntaxTree( _script.Language , _script.Code );
 
-				if ( ! result.Success )
+				var compilation = RoslynCompilerHelper.CreateCompilation( _script.Language , OutputAssembly , new [] { tree } , _metadataReferences );
+
+				using ( var stream = File.Create( OutputAssembly ) )
 				{
-					throw new InvalidOperationException( new StringBuilder()
-							.Append( "can not create an instance of the script" )
-							.AppendLine()
-							.Append( string.Join( Environment.NewLine , result.Diagnostics ) )
-							.ToString() );
+					var result = compilation.Emit( stream );
+
+					if ( ! result.Success )
+					{
+						throw new BuildException( "Build failed: IL emit failed" , result.Diagnostics.Select( diagnotic => diagnotic.ToString() ) );
+					}
 				}
 
-			}
+				var assembly = Assembly.LoadFrom( OutputAssembly );
 
-			var assembly = Assembly.LoadFrom( DefaultAssemblyName );
-
-			foreach( var type in assembly.GetTypes() )
-			{
-				if ( typeof( PlayerScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
+				foreach( var type in assembly.GetTypes() )
 				{
-					return (PlayerScript) Activator.CreateInstance( type ) !;
+					if ( typeof( PlayerScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
+					{
+						return (PlayerScript) Activator.CreateInstance( type );
+					}
 				}
-			}
 
-			throw new InvalidOperationException( "no valid type has been found" );
+				throw new BuildException( "Build failed: type not found" );
+			}
+			catch ( BuildException )
+			{
+				throw;
+			}
+			catch ( Exception ex)
+			{
+				throw new BuildException( "Build failed" , ex );
+			}
 		}
 	}
 }

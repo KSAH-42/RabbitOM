@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace RabbitOM.Node.Scripting.Models
+namespace RabbitOM.Node.Models
 {
 	public static class Deserializer
 	{
@@ -22,12 +22,12 @@ namespace RabbitOM.Node.Scripting.Models
 
 			foreach (var reference in root.Element( "references" )?.Elements( "reference" ) ?? XElement.EmptySequence)
 			{
-				script.References.Add( new ReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() , ForceLoad = bool.Parse( reference.Attribute( "forceload" )?.Value?.Trim() ?? "false" ) } );
+				script.References.Add( new ScriptReferenceModel { Name = reference.Attribute( "name" )?.Value?.Trim() , ForceLoad = bool.Parse( reference.Attribute( "forceload" )?.Value?.Trim() ?? "false" ) } );
 			}
 
 			foreach ( var property in root.Element( "properties" )?.Elements( "property" ) ?? XElement.EmptySequence )
 			{
-				script.Properties.Add( new PropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() , Value = property.Value?.Trim() } );
+				script.Properties.Add( new ScriptPropertyModel { Name = property.Attribute( "name" )?.Value?.Trim() , Value = property.Value?.Trim() } );
 			}
 
 			return script;
