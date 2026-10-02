@@ -68,8 +68,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Grid Margin="0,0,0,0" x:Name="Grid">
-                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" x:Name="HoverRectangle" VerticalAlignment="Stretch" Width="9" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FFCCC9C9" />
-                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" Width="9"  x:Name="PressedRectangle" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FF292929" />
+						<Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" x:Name="HoverRectangle" Width="11" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FFCCC9C9" />
+                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" Width="11"  x:Name="PressedRectangle" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FF292929" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True" />

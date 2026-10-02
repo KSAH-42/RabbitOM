@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace RabbitOM.Player.Services
 {
-	public sealed class WebNavigationService   // we don't implemente an interface it's enougth
+	public sealed class WebNavigationService
 	{
 		public void Navigate(string address )
 		{

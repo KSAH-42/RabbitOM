@@ -10,9 +10,9 @@ namespace RabbitOM.Player.Services
 
 		public static string GetResourceFile(string resourceName)
 		{
-			var asm = Assembly.GetExecutingAssembly();
+			var assembly = Assembly.GetExecutingAssembly();
 
-			using ( var stream = asm.GetManifestResourceStream($"RabbitOM.Player.Resources.{resourceName}") )
+			using ( var stream = assembly.GetManifestResourceStream($"RabbitOM.Player.Resources.{resourceName}") )
 			using ( var reader = new StreamReader(stream) )
 			{
 				return reader.ReadToEnd();
