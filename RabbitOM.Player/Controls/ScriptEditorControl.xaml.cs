@@ -24,6 +24,8 @@ namespace RabbitOM.Player.Controls
 			CommandBindings.Add( new CommandBinding( SaveScriptCommand , (s,e) => SaveScript() ) );
 			CommandBindings.Add( new CommandBinding( RunScriptCommand , (s,e) => RunScript() ) );
 			CommandBindings.Add( new CommandBinding( StopScriptCommand , (s,e) => StopScript() ) );
+
+			DataContext = this;
 		}
 
 
