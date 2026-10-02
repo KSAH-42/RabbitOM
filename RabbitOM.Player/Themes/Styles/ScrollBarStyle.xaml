@@ -128,7 +128,7 @@
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
                     <Grid x:Name="GridRoot" 
 						  Width="16" 
-						  Background="#FF656565"
+						  Background="#AA656565"
 						  >
                         <Grid.RowDefinitions>
                             <RowDefinition MaxHeight="18" />
