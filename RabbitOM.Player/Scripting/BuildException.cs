@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace RabbitOM.Player.Scripting
@@ -34,13 +33,11 @@ namespace RabbitOM.Player.Scripting
 
 		public override string ToString()
 		{
-			var builder = new StringBuilder();
-
-			builder.AppendLine( base.ToString() );
+			var builder = new StringBuilder().AppendLine( base.ToString() );
 
 			foreach ( var error in _buildErrors )
 			{
-				builder.AppendLine( $"  error: {error}" );
+				builder.AppendLine( $"error: {error}" );
 			}
 
 			return builder.ToString();
