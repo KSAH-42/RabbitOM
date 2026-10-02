@@ -104,7 +104,9 @@
 							  VerticalAlignment="Stretch"
 							  >
 
-							<ContentPresenter ContentSource="SelectedContent" />
+							<ContentPresenter x:Name="PART_SelectedContentHost" 
+											  ContentSource="SelectedContent" 
+											  />
 
 							<DockPanel DockPanel.Dock="{TemplateBinding TabStripPlacement}"
 									   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

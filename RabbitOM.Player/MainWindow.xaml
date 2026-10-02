@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:RabbitOM.Player"
         xmlns:controls="clr-namespace:RabbitOM.Player.Controls"
         xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
+		xmlns:behaviors="clr-namespace:RabbitOM.Player.Themes.Styles"
         mc:Ignorable="d"
         Title="MEDIA PLAYER - HEVC/H264/MJPEG"
 		Height="725" 
@@ -168,6 +169,7 @@
 							HorizontalContentAlignment="Center" 
 							FontSize="20" 
 							Padding="0,0,11,9"
+							behaviors:TabControlFadeBehavior.EnableFade="True"
 							>
 
 					<TabItem Header="VIEW">
