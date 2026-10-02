@@ -18,21 +18,21 @@ namespace RabbitOM.Player.Controls
 		{
 			InitializeComponent();
 
+			DataContext = this;
+
 			CommandBindings.Add( new CommandBinding( ClearCommand , (s,e) => Clear() ) );
 			CommandBindings.Add( new CommandBinding( ResetCommand , (s,e) => Reset() ) );
-			CommandBindings.Add( new CommandBinding( LoadScriptCommand , (s,e) => LoadScript() ) );
-			CommandBindings.Add( new CommandBinding( SaveScriptCommand , (s,e) => SaveScript() ) );
+			CommandBindings.Add( new CommandBinding( ImportCommand , (s,e) => Import() ) );
+			CommandBindings.Add( new CommandBinding( ExportCommand , (s,e) => Export() ) );
 			CommandBindings.Add( new CommandBinding( RunScriptCommand , (s,e) => RunScript() ) );
 			CommandBindings.Add( new CommandBinding( StopScriptCommand , (s,e) => StopScript() ) );
-
-			DataContext = this;
 		}
 
 
 
-		public RoutedCommand LoadScriptCommand { get; } = new RoutedCommand();
+		public RoutedCommand ImportCommand { get; } = new RoutedCommand();
 
-		public RoutedCommand SaveScriptCommand { get; } = new RoutedCommand();
+		public RoutedCommand ExportCommand { get; } = new RoutedCommand();
 
 		public RoutedCommand RunScriptCommand { get; } = new RoutedCommand();
 
@@ -60,18 +60,22 @@ namespace RabbitOM.Player.Controls
 
 
 
-		public void LoadScript()
+		public void Import()
 		{
 			throw new NotImplementedException();
 		}
 
-		public void SaveScript()
+		public void Export()
 		{
 			throw new NotImplementedException();
 		}
 
 		public void RunScript()
 		{
+			// compile using task to not freeze the ui
+		    // then show a dialog result only if the compilation failed and let the user to copy and paste error code
+			// in another window, the best ui will expose a kind of text box without a using a dialog box. this is not an ide.
+			// will do the same thing as "git extensions" when it display the output of the git process when making a push
 			throw new NotImplementedException();
 		}
 
