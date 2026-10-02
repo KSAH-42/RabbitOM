@@ -20,6 +20,40 @@
 				 Text="{Binding Script,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 				 />
 
+		<StackPanel HorizontalAlignment="Left" 
+					VerticalAlignment="Bottom"
+					Orientation="Horizontal"
+					Margin="0,0,0,10"
+					>
+
+			<Button Content="Import"
+					Width="100"
+					Margin="5,0,0,0"
+					/>
+
+			<Button Content="Export"
+					HorizontalAlignment="Left" 
+					VerticalAlignment="Bottom"
+					Width="100"
+					Margin="7,0,0,0"
+					/>
+			
+		</StackPanel>
+
+		<StackPanel HorizontalAlignment="Right" 
+					VerticalAlignment="Bottom"
+					Orientation="Horizontal"
+					Margin="0,0,0,10"
+					>
+
+			<Button Content="Run"
+					Width="100"
+					Margin="0,0,5,0"
+					/>
+
+		</StackPanel>
+		
+
 		<TextBlock Text="Not available" 
 				   Foreground="Yellow" 
 				   HorizontalAlignment="Center" 
