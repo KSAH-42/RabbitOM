@@ -4,6 +4,7 @@ namespace RabbitOM.Node
 {
     using RabbitOM.Node.Application;
 
+    // TODO: rename as RabbitOM.Player.Node the player connect to a store and get the a node script and launch it localy
 	static class Program
     {
         static void Main( string[] args )
