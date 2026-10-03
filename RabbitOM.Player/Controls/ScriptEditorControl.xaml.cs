@@ -44,6 +44,11 @@ namespace RabbitOM.Player.Controls
 
 		public RoutedCommand ResetCommand { get; } = new RoutedCommand();
 
+		public IScriptLoader Loader { get; set; }
+
+		public IScriptSaver Saver { get; set; }
+
+		public IServiceProvider Runner { get; set; }
 
 
 
