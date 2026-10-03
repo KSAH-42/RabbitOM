@@ -6,10 +6,9 @@ using Microsoft.Win32;
 
 namespace RabbitOM.Player.Controls
 {
-	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Services;
 
-	public partial class ScriptEditorControl : UserControl , IDisposable
+	public partial class ScriptEditorControl : UserControl
 	{
 		public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(ScriptEditorControl) );
 		public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register( nameof(IsScriptRunning), typeof(bool) , typeof(ScriptEditorControl) );
@@ -32,6 +31,19 @@ namespace RabbitOM.Player.Controls
 
 
 
+		public string Script
+        {
+            get => GetValue( ScriptProperty ) as string;
+            set => SetValue( ScriptProperty , value );
+        }
+
+		public bool IsScriptRunning
+		{
+			get => (bool) GetValue( IsRunningProperty );
+			private set => SetValue( IsRunningProperty , value );
+		}
+
+
 		public RoutedCommand ImportCommand { get; } = new RoutedCommand();
 
 		public RoutedCommand ExportCommand { get; } = new RoutedCommand();
@@ -52,24 +64,6 @@ namespace RabbitOM.Player.Controls
 
 
 
-		public string Script
-        {
-            get => GetValue( ScriptProperty ) as string;
-            set => SetValue( ScriptProperty , value );
-        }
-
-		public bool IsScriptRunning
-		{
-			get => (bool) GetValue( IsRunningProperty );
-			private set => SetValue( IsRunningProperty , value );
-		}
-
-
-
-
-		public void Dispose()
-		{
-		}
 
 
 
