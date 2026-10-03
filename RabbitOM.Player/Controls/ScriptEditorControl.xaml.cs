@@ -57,11 +57,11 @@ namespace RabbitOM.Player.Controls
 
 		public RoutedCommand ResetCommand { get; } = new RoutedCommand();
 
-		public IScriptLoader Loader { get; set; }
+		public IScriptLoader Loader { get; set; } // pass a nested class that update private properties into ctor of ScriptLoaderImpl class that avoid to impl an interface on the usercontrol
 
-		public IScriptSaver Saver { get; set; }
+		public IScriptSaver Saver { get; set; } // pass a nested class that update private properties into ctor of ScriptSaverImpl class that avoid to impl an interface on the usercontrol
 
-		public IScriptRunner Runner { get; set; }
+		public IScriptRunner Runner { get; set; } // pass a nested class that update private properties into ctor of ScriptRunnerImpl class that avoid to impl an interface on the usercontrol
 
 
 
