@@ -44,8 +44,6 @@ namespace RabbitOM.Player
             CommandBindings.Add( new CommandBinding( ShowInfoCommand , OnShowInfo ));
             CommandBindings.Add( new CommandBinding( FocusCommand , OnFocus ));
             CommandBindings.Add( new CommandBinding( SaveImageCommand , OnSaveImage , OnCanSaveImage ));
-
-            _scriptEditor.Reset();
         }
 
 

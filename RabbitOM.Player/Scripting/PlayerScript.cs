@@ -7,6 +7,8 @@ namespace RabbitOM.Player.Scripting
 	{
 		public Window Window { get; } = App.Current.MainWindow;
 
+		public virtual void Setup() { } // call after properties has been apply
+
 		public void Dispose()
 		{
 			Dispose( true );

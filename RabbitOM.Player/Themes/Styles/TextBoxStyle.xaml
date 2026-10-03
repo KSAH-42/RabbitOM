@@ -14,6 +14,7 @@
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="CaretBrush" Value="White" />
 		<Setter Property="Background" Value="#FF242222" />
+		<Setter Property="BorderThickness" Value="1.5" />
 		<Setter Property="Validation.ErrorTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -34,7 +35,7 @@
                     <Border x:Name="Border" 
                             CornerRadius="3" 
                             Padding="4" 
-                            BorderThickness="0.5" 
+                            BorderThickness="{TemplateBinding BorderThickness}" 
                             Background="{TemplateBinding Background}"
                             >
 

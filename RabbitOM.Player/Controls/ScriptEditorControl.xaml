@@ -10,13 +10,14 @@
 			 >
 	<Grid>
 		
-		<TextBox Margin="1,1,1,50" 
+		<TextBox Margin="0,1,0,50" 
 				 AcceptsReturn="True" 
 				 AcceptsTab="True" 
 				 HorizontalAlignment="Stretch" 
 				 HorizontalScrollBarVisibility="Auto"
 				 VerticalAlignment="Stretch" 
 				 VerticalScrollBarVisibility="Auto"
+				 BorderThickness="0.75"
 				 Text="{Binding Script,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 				 />
 

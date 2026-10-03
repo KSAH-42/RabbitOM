@@ -257,7 +257,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
         <Setter Property="Background" Value="{StaticResource ComboxBackground}" />
-        <Setter Property="Template">
+		<Setter Property="BorderThickness" Value="1.5" />
+		<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
         
@@ -271,7 +272,7 @@
                         <Border x:Name="Border" 
                                 CornerRadius="3" 
                                 Padding="4" 
-                                BorderThickness="0.5" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
                                 Background="{TemplateBinding Background}" 
                                 >
                             
