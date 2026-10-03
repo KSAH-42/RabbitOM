@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
-
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					>
     <Style TargetType="{x:Type RepeatButton}" BasedOn="{x:Null}">
         <Setter Property="Focusable" Value="false" />
         <Setter Property="Background" Value="{DynamicResource NormalBrush}" />
@@ -67,9 +66,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Grid Margin="0,0,0,0" x:Name="Grid">
-						<Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" x:Name="HoverRectangle" Width="11" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FFCCC9C9" />
-                        <Rectangle Margin="0.0,0,0,0" HorizontalAlignment="Center" Width="11"  x:Name="PressedRectangle" VerticalAlignment="Stretch" Height="Auto" RadiusX="7" RadiusY="7"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FF292929" />
+                    <Grid x:Name="Grid">
+						<Rectangle  HorizontalAlignment="Center" x:Name="HoverRectangle" Width="11" VerticalAlignment="Stretch" Height="Auto" RadiusX="9" RadiusY="9"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FFCCC9C9" />
+						<Rectangle  HorizontalAlignment="Center" Width="11"  x:Name="PressedRectangle" VerticalAlignment="Stretch" Height="Auto" RadiusX="9" RadiusY="9"  Opacity="1" MinHeight="10" Stroke="#FF272727" StrokeThickness="1" Fill="#FF292929" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True" />
@@ -118,77 +117,71 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type ScrollBar}">
-        <Setter Property="Background" Value="Black" />
-        <Setter Property="Focusable" Value="false" />
-        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Grid x:Name="GridRoot" 
+	<Style TargetType="{x:Type ScrollBar}">
+		<Setter Property="Background" Value="Black" />
+		<Setter Property="Focusable" Value="false" />
+		<Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type ScrollBar}">
+					<Grid x:Name="GridRoot" 
 						  Width="16" 
 						  Background="#AA656565"
 						  >
-                        <Grid.RowDefinitions>
-                            <RowDefinition MaxHeight="18" />
-                            <RowDefinition Height="0.00001*" />
-                            <RowDefinition MaxHeight="18" />
-                        </Grid.RowDefinitions>
-
-                        <RepeatButton x:Name="DecreaseRepeat" Command="ScrollBar.LineUpCommand" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                            <Grid Margin="0,0,0,0">
-                                <Path Margin="4.742,3.997,4.946,5.327" VerticalAlignment="Stretch" Height="Auto" Fill="Black" Stretch="Fill" Stroke="Black" StrokeThickness="1" Data="M5.2422477,11.132184 L11.5544,11.132184 8.6412958,4.4969033 z" x:Name="DecreaseArrow" />
-                            </Grid>
-                        </RepeatButton>
-
-                        <Border Grid.Row="1" Background="Black" CornerRadius="3" Margin="0"  Width="4.7" Height="Auto" HorizontalAlignment="Center" />
-
-                        <Track Grid.Row="1" x:Name="PART_Track" Margin="0" Orientation="Vertical" IsDirectionReversed="true" HorizontalAlignment="Center" >
-                            <Track.Thumb>
-                                <Thumb Style="{DynamicResource NuclearThumbStyle}" Background="{x:Null}" Foreground="{x:Null}" />
-                            </Track.Thumb>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton x:Name="PageUp" Style="{DynamicResource NuclearScrollRepeatButtonStyle}" Command="ScrollBar.PageDownCommand" />
-                            </Track.IncreaseRepeatButton>
-                            <Track.DecreaseRepeatButton>
-                                <RepeatButton x:Name="PageDown" Style="{DynamicResource NuclearScrollRepeatButtonStyle}" Command="ScrollBar.PageUpCommand" />
-                            </Track.DecreaseRepeatButton>
-                        </Track>
-
-                        <RepeatButton Grid.Row="2" x:Name="IncreaseRepeat" Command="ScrollBar.LineDownCommand">
-                            <Grid>
-                                <Path Margin="4.742,3.997,4.946,5.327" x:Name="IncreaseArrow" VerticalAlignment="Stretch" Height="Auto" Fill="Black" Stretch="Fill" Stroke="Black" StrokeThickness="1" Data="M5.2422477,11.132184 L11.5544,11.132184 8.6412958,4.4969033 z" RenderTransformOrigin="0.5,0.5">
-                                    <Path.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform ScaleX="1" ScaleY="1" />
-                                            <SkewTransform AngleX="0" AngleY="0" />
-                                            <RotateTransform Angle="180" />
-                                            <TranslateTransform X="0" Y="0" />
-                                        </TransformGroup>
-                                    </Path.RenderTransform>
-                                </Path>
-                            </Grid>
-                        </RepeatButton>
-
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Orientation" Value="Horizontal">
-                            <Setter Property="LayoutTransform" TargetName="GridRoot">
-                                <Setter.Value>
-                                    <RotateTransform Angle="-90" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PART_Track" Property="Orientation" Value="Vertical" />
-                            <Setter Property="Command" Value="ScrollBar.LineLeftCommand" TargetName="DecreaseRepeat" />
-                            <Setter Property="Command" Value="ScrollBar.LineRightCommand" TargetName="IncreaseRepeat" />
-                            <Setter Property="Command" Value="ScrollBar.PageLeftCommand" TargetName="PageDown" />
-                            <Setter Property="Command" Value="ScrollBar.PageRightCommand" TargetName="PageUp" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    
+						<Grid.RowDefinitions>
+							<RowDefinition MaxHeight="18" />
+							<RowDefinition Height="0.00001*" />
+							<RowDefinition MaxHeight="18" />
+						</Grid.RowDefinitions>
+						<RepeatButton x:Name="DecreaseRepeat" Command="ScrollBar.LineUpCommand" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
+							<Grid  >
+								<Path Margin="4.742,3.997,4.946,5.327" VerticalAlignment="Stretch" Height="Auto" Fill="Black" Stretch="Fill" Stroke="Black" StrokeThickness="1" Data="M5.2422477,11.132184 L11.5544,11.132184 8.6412958,4.4969033 z" x:Name="DecreaseArrow" />
+							</Grid>
+						</RepeatButton>
+						<Border Grid.Row="1" Background="Black" CornerRadius="3" Margin="0"  Width="4.7" Height="Auto" HorizontalAlignment="Center" />
+						<Track Grid.Row="1" x:Name="PART_Track" Margin="0" Orientation="Vertical" IsDirectionReversed="true" HorizontalAlignment="Center" >
+							<Track.IncreaseRepeatButton>
+								<RepeatButton x:Name="PageUp" Style="{DynamicResource NuclearScrollRepeatButtonStyle}" Command="ScrollBar.PageDownCommand" />
+							</Track.IncreaseRepeatButton>
+							<Track.Thumb>
+								<Thumb Style="{DynamicResource NuclearThumbStyle}" Background="{x:Null}" Foreground="{x:Null}" />
+							</Track.Thumb>
+							<Track.DecreaseRepeatButton>
+								<RepeatButton x:Name="PageDown" Style="{DynamicResource NuclearScrollRepeatButtonStyle}" Command="ScrollBar.PageUpCommand" />
+							</Track.DecreaseRepeatButton>
+						</Track>
+						<RepeatButton Grid.Row="2" x:Name="IncreaseRepeat" Command="ScrollBar.LineDownCommand">
+							<Grid>
+								<Path Margin="4.742,3.997,4.946,5.327" x:Name="IncreaseArrow" VerticalAlignment="Stretch" Height="Auto" Fill="Black" Stretch="Fill" Stroke="Black" StrokeThickness="1" Data="M5.2422477,11.132184 L11.5544,11.132184 8.6412958,4.4969033 z" RenderTransformOrigin="0.5,0.5">
+									<Path.RenderTransform>
+										<TransformGroup>
+											<ScaleTransform ScaleX="1" ScaleY="1" />
+											<SkewTransform AngleX="0" AngleY="0" />
+											<RotateTransform Angle="180" />
+											<TranslateTransform X="0" Y="0" />
+										</TransformGroup>
+									</Path.RenderTransform>
+								</Path>
+							</Grid>
+						</RepeatButton>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="Orientation" Value="Horizontal">
+							<Setter Property="LayoutTransform" TargetName="GridRoot">
+								<Setter.Value>
+									<RotateTransform Angle="-90" />
+								</Setter.Value>
+							</Setter>
+							<Setter TargetName="PART_Track" Property="Orientation" Value="Vertical" />
+							<Setter Property="Command" Value="ScrollBar.LineLeftCommand" TargetName="DecreaseRepeat" />
+							<Setter Property="Command" Value="ScrollBar.LineRightCommand" TargetName="IncreaseRepeat" />
+							<Setter Property="Command" Value="ScrollBar.PageLeftCommand" TargetName="PageDown" />
+							<Setter Property="Command" Value="ScrollBar.PageRightCommand" TargetName="PageUp" />
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 </ResourceDictionary>
