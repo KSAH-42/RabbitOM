@@ -31,7 +31,7 @@ namespace RabbitOM.Player
         public MainWindow()
         {
             InitializeComponent();
-
+            
             CommandBindings.Add( new CommandBinding( ToggleStartStopStreamingCommand , OnToggleStartStopStreaming ));
             CommandBindings.Add( new CommandBinding( StartStreamingCommand , OnStartStreaming ));
             CommandBindings.Add( new CommandBinding( StopStreamingCommand , OnStopStreaming ));

@@ -6,6 +6,7 @@ using Microsoft.Win32;
 
 namespace RabbitOM.Player.Controls
 {
+	using RabbitOM.Player.Scripting;
 	using RabbitOM.Player.Services;
 
 	public partial class ScriptEditorControl : UserControl
@@ -60,7 +61,7 @@ namespace RabbitOM.Player.Controls
 
 		public IScriptSaver Saver { get; set; }
 
-		public IServiceProvider Runner { get; set; }
+		public IScriptRunner Runner { get; set; }
 
 
 

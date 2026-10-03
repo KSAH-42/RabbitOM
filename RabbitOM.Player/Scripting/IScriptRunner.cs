@@ -2,11 +2,13 @@
 
 namespace RabbitOM.Player.Scripting
 {
+	using RabbitOM.Player.Data;
+
 	public interface IScriptRunner : IDisposable
 	{
 		bool IsRunning { get; }
 
-		void Run( string document );
+		void Run( Script script );
 
 		void Terminate();
 	}
