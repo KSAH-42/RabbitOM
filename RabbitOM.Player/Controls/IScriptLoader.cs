@@ -1,5 +1,4 @@
-﻿using RabbitOM.Player.Data;
-using System;
+﻿using System;
 
 namespace RabbitOM.Player.Controls
 {
