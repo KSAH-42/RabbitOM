@@ -1,18 +1,20 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Win32;
 
 namespace RabbitOM.Player.Controls
 {
-	using RabbitOM.Player.Scripting;
 	using RabbitOM.Player.Services;
 
 	public partial class ScriptEditorControl : UserControl
 	{
 		public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(ScriptEditorControl) );
-		public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register( nameof(IsScriptRunning), typeof(bool) , typeof(ScriptEditorControl) );
+		public static readonly DependencyProperty IsScriptRunningProperty = DependencyProperty.Register( nameof(IsScriptRunning), typeof(bool) , typeof(ScriptEditorControl) );
+		public static readonly DependencyProperty RunnerProperty = DependencyProperty.Register( nameof(Runner), typeof(IScriptRunner) , typeof(ScriptEditorControl) , new PropertyMetadata( null , OnScriptRunnerChanged ));
+
 
 		public ScriptEditorControl()
 		{
@@ -20,15 +22,30 @@ namespace RabbitOM.Player.Controls
 
 			DataContext = this;
 
-			CommandBindings.Add( new CommandBinding( ClearCommand , OnClearScript , OnCanClearScript ) );
-			CommandBindings.Add( new CommandBinding( ResetCommand , OnResetScript , OnCanResetScript ) );
-			CommandBindings.Add( new CommandBinding( ImportCommand , OnImportScript , OnCanImportScript ) );
-			CommandBindings.Add( new CommandBinding( ExportCommand , OnExportScript , OnCanExportScript ) );
-			CommandBindings.Add( new CommandBinding( RunCommand , OnRunScript , OnCanRunScript ) );
-			CommandBindings.Add( new CommandBinding( StopCommand , OnStopScript , OnCanStopScript ) );
+			CommandBindings.Add( new CommandBinding( ClearCommand , OnClear ) );
+			CommandBindings.Add( new CommandBinding( ResetCommand , OnReset ) );
+			CommandBindings.Add( new CommandBinding( ImportCommand , OnImport ) );
+			CommandBindings.Add( new CommandBinding( ExportCommand , OnExport ) );
+			CommandBindings.Add( new CommandBinding( StartStopCommand , OnStartStop , OnCanStartStop) );
 
-			Script = ResourceService.GetResourceFile( ResourceService.ScriptTemplate );
+			Reset();
 		}
+
+
+
+
+		public RoutedCommand ImportCommand { get; } = new RoutedCommand();
+
+		public RoutedCommand ExportCommand { get; } = new RoutedCommand();
+
+		public RoutedCommand StartStopCommand { get; } = new RoutedCommand();
+
+		public RoutedCommand ClearCommand { get; } = new RoutedCommand();
+
+		public RoutedCommand ResetCommand { get; } = new RoutedCommand();
+
+
+
 
 
 
@@ -40,87 +57,155 @@ namespace RabbitOM.Player.Controls
 
 		public bool IsScriptRunning
 		{
-			get => (bool) GetValue( IsRunningProperty );
-			private set => SetValue( IsRunningProperty , value );
+			get => (bool) GetValue( IsScriptRunningProperty );
+			private set => SetValue( IsScriptRunningProperty , value );
+		}
+
+		public IScriptRunner Runner
+		{
+			get => (IScriptRunner) GetValue( RunnerProperty );
+			set => SetValue( RunnerProperty , value );
 		}
 
 
-		public RoutedCommand ImportCommand { get; } = new RoutedCommand();
-
-		public RoutedCommand ExportCommand { get; } = new RoutedCommand();
-
-		public RoutedCommand RunCommand { get; } = new RoutedCommand();
-
-		public RoutedCommand StopCommand { get; } = new RoutedCommand();
-
-		public RoutedCommand ClearCommand { get; } = new RoutedCommand();
-
-		public RoutedCommand ResetCommand { get; } = new RoutedCommand();
-
-		public IScriptLoader Loader { get; set; } // pass a nested class that update private properties into ctor of ScriptLoaderImpl class that avoid to impl an interface on the usercontrol
-
-		public IScriptSaver Saver { get; set; } // pass a nested class that update private properties into ctor of ScriptSaverImpl class that avoid to impl an interface on the usercontrol
-
-		public IScriptRunner Runner { get; set; } // pass a nested class that update private properties into ctor of ScriptRunnerImpl class that avoid to impl an interface on the usercontrol
 
 
 
+		public void RunScript()
+		{
+			try
+			{
+				if ( Runner != null && Runner.IsRunning )
+				{
+					Runner.Run( Script );
+				}
+			}
+			catch( Exception ex )
+			{
+				MessageBox.Show( ex.ToString() );
+			}
+			finally
+			{
+				IsScriptRunning = Runner?.IsRunning ?? false;
+			}
+		}
+
+		public void StopScript()
+		{
+			try
+			{
+				Runner?.Terminate();
+			}
+			catch( Exception ex )
+			{
+				MessageBox.Show( ex.ToString() );
+			}
+			finally
+			{
+				IsScriptRunning = Runner?.IsRunning ?? false;
+			}
+		}
+
+		public void Import( string fileName )
+		{
+			try
+			{
+				Script = File.ReadAllText( fileName );
+			}
+			catch( Exception ex )
+			{
+				MessageBox.Show( ex.Message );
+			}
+		}
+
+		public void Export( string fileName )
+		{
+			try
+			{
+				File.WriteAllText( fileName , Script );
+			}
+			catch( Exception ex )
+			{
+				MessageBox.Show( ex.Message );
+			}
+		}
+
+		public void Reset()
+		{
+			Script = ResourceService.GetResourceFile( ResourceService.ScriptTemplate );
+		}
+
+		public void Clear()
+		{
+			Script = string.Empty;
+		}
 
 
 
 
-		private void OnCanImportScript( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
 
-		private void OnCanExportScript( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
 
-		private void OnCanRunScript( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
+		private void OnCanStartStop( object sender , CanExecuteRoutedEventArgs e )
+		{
+			e.CanExecute = Runner != null;
+		}
 
-		private void OnCanStopScript( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
+		private void OnStartStop( object sender , ExecutedRoutedEventArgs e )
+		{
+			if ( IsScriptRunning )
+			{
+				RunScript();
+			}
+			else
+			{
+				StopScript();
+			}
+		}
 
-		private void OnCanClearScript( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
+		private void OnImport( object sender , ExecutedRoutedEventArgs e )
+		{
+			var dialog = new OpenFileDialog() { Filter = "XML file (*.xml)|*.xml", CheckFileExists = false };
 
-		private void OnCanResetScript( object sender , CanExecuteRoutedEventArgs e )
-        {
-            e.CanExecute = true;
-        }
+			if ( dialog.ShowDialog() == true )
+			{
+				Import( dialog.FileName );
+			}
+		}
 
-		private void OnImportScript( object sender , ExecutedRoutedEventArgs e )
-        {
-        }
+		private void OnExport( object sender , ExecutedRoutedEventArgs e )
+		{
+			var dialog = new SaveFileDialog() { Filter = "XML file (*.xml)|*.xml" };
 
-		private void OnExportScript( object sender , ExecutedRoutedEventArgs e )
-        {
-        }
+			if ( dialog.ShowDialog() == true )
+			{
+				Export( dialog.FileName );
+			}
+		}
 
-		private void OnRunScript( object sender , ExecutedRoutedEventArgs e )
-        {
-        }
+		private void OnReset( object sender , ExecutedRoutedEventArgs e )
+		{
+			Reset();
+		}
 
-		private void OnStopScript( object sender , ExecutedRoutedEventArgs e )
-        {
-        }
+		private void OnClear( object sender , ExecutedRoutedEventArgs e )
+		{
+			Clear();
+		}
 
-		private void OnClearScript( object sender , ExecutedRoutedEventArgs e )
-        {
-        }
 
-		private void OnResetScript( object sender , ExecutedRoutedEventArgs e )
-        {
-        }
+
+		private static void OnScriptRunnerChanged( DependencyObject dependencyObject , DependencyPropertyChangedEventArgs e )
+		{
+			var control = dependencyObject as ScriptEditorControl;
+
+			if ( control == null )
+			{
+				return;
+			}
+
+			var runner = e.NewValue as IScriptRunner;
+
+			control.IsScriptRunning = runner?.IsRunning ?? false;
+		}
 	}
 }
