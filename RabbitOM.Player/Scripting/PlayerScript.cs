@@ -45,6 +45,7 @@ namespace RabbitOM.Player.Scripting
 		*/
 
 	/*
+	 *  // check if we can used directly/only the kestrel server class instead of using the httplistener or using all the asp.net core
 		* public IServer Server { get; } // for controlling remotly the application using http server
 		*/
 
@@ -54,6 +55,6 @@ namespace RabbitOM.Player.Scripting
 
 	/*
 		* move it into the window class ?
-		* public IReadOnlyCollection<Decoder or Player> Decoders or Players { get; } 
+		* public IReadOnlyCollection<Decoder or Player> Decoders { get; } 
 		*/
 }

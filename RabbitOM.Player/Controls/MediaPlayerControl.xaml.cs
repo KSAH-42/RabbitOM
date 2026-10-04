@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Player.Data;
-	using System.Windows.Input;
 
 	public sealed partial class MediaPlayerControl : UserControl , IDisposable
     {
