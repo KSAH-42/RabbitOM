@@ -95,8 +95,8 @@ using ( var client = new RtspClient() )
 
 # About Player / VideoDecoder sample
 
-GUI is written using WPF without using MVVM. MVVM is not a good approach for handling video streaming. And by design, CustomControl can not expose a DataContext. Even if Mvvm is great, it introduce a lot classes. It's pretty rare to have a view where it's datacontext will be changed during the lifetime of the view. And using only mvvm, people will not have a deep understanding about how wpf works. And sometimes nugetpackage need to be added to avoid adding code on the code behind. 
-Take a look, on projects like mahapps on github, mvvm is not used, even the custom MessageBox dialog don't used mvvm. mahapps framework include a BaseViewModel class, but it's not used internally... Without using mvvm requiered a more deeper knowledge on the presentation. User Mvvm for writting usercontrols, and introducing something strange. I prefer the harder way. Some people prefer using sourcetree or an equivalent tool, i prefer using git on a terminal.
+GUI is written using WPF without using MVVM. MVVM is not a good approach for handling video streaming. And by design, CustomControl can not expose a DataContext. Even if Mvvm is great, it introduce a lot classes. It's pretty rare to have a view where it's datacontext will be changed during the lifetime of the view. And using only mvvm, people will not have a deep understanding about how wpf works. And sometimes nugetpackage are added to avoid to grow the code behind. 
+Take a look, on projects like mahapps on github, mvvm is not used, even the custom MessageBox dialog don't used mvvm. mahapps framework include a BaseViewModel class, but it's not used internally. Without using mvvm requiered a more deeper knowledge on the presentation framework. Using Mvvm for writting usercontrols, introducing something strange. I prefer the harder way.
     
 # RabbitOM.Player used to decode RTP packets (HEVC/H264/JPEG)
 
