@@ -92,7 +92,7 @@
                     <TextBlock Text="IP Address :"
                                Foreground="White"
                                HorizontalAlignment="Right"
-                               Margin="0,75,0,0"
+                               Margin="0,77,0,0"
                                Visibility="{Binding SelectedTransport,Converter={StaticResource MulticastStringVisibilityValueConverter}}"
                                />
 

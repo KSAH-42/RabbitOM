@@ -51,7 +51,7 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
 
-                        <ScrollViewer x:Name="PART_ContentHost" />
+                        <ScrollViewer Margin="0,-2,0,0" x:Name="PART_ContentHost" />
 
                     </Border>
 

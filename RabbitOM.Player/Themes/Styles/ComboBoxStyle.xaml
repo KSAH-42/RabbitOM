@@ -298,7 +298,7 @@
                                      />
 
                         <ContentPresenter   x:Name="ContentSite"
-                                            Margin="3,3,23,3"
+                                            Margin="7,3,23,3"
                                             Content="{TemplateBinding SelectionBoxItem}"
                                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
