@@ -152,7 +152,7 @@
 							HorizontalAlignment="Right" 
 							VerticalAlignment="Top" 
 							Width="89" 
-							Height="30"
+							Height="29"
 							Content="{Binding StreamingStatus,Mode=OneWay,UpdateSourceTrigger=PropertyChanged,Converter={StaticResource StreamingStatusValueConverter},RelativeSource={RelativeSource AncestorType=Window}}" 
 							Command="{Binding ToggleStartStopStreamingCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
 							/>
