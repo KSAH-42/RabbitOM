@@ -10,6 +10,7 @@ namespace RabbitOM.Player
 {
 	using RabbitOM.Net.Rtsp;
 	using RabbitOM.Player.Configuration;
+    using RabbitOM.Player.Controls;
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Dialogs;
 	using RabbitOM.Player.Services;
@@ -31,7 +32,7 @@ namespace RabbitOM.Player
         public MainWindow()
         {
             InitializeComponent();
-            
+
             CommandBindings.Add( new CommandBinding( ToggleStartStopStreamingCommand , OnToggleStartStopStreaming ));
             CommandBindings.Add( new CommandBinding( StartStreamingCommand , OnStartStreaming ));
             CommandBindings.Add( new CommandBinding( StopStreamingCommand , OnStopStreaming ));
@@ -44,6 +45,8 @@ namespace RabbitOM.Player
             CommandBindings.Add( new CommandBinding( ShowInfoCommand , OnShowInfo ));
             CommandBindings.Add( new CommandBinding( FocusCommand , OnFocus ));
             CommandBindings.Add( new CommandBinding( SaveImageCommand , OnSaveImage , OnCanSaveImage ));
+
+            _scriptEditor.Runner = new ScriptRunner();
         }
 
 

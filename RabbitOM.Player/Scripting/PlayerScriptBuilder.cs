@@ -65,7 +65,14 @@ namespace RabbitOM.Player.Scripting
 
 				var compilation = RoslynCompilerHelper.CreateCompilation( _script.Language , OutputAssembly , new [] { tree } , _metadataReferences );
 
-				using ( var stream = File.Create( OutputAssembly ) )
+				var assemblyFile = Path.Combine( AppContext.BaseDirectory , OutputAssembly );
+
+				if ( File.Exists( assemblyFile ) )
+				{
+					File.Delete( assemblyFile );
+				}
+
+				using ( var stream = File.Create( assemblyFile ) )
 				{
 					var result = compilation.Emit( stream );
 
@@ -75,7 +82,7 @@ namespace RabbitOM.Player.Scripting
 					}
 				}
 
-				var assembly = Assembly.LoadFrom( OutputAssembly );
+				var assembly = _loadContext.LoadFromAssemblyPath( assemblyFile );
 
 				foreach( var type in assembly.GetTypes() )
 				{

@@ -75,7 +75,7 @@ namespace RabbitOM.Player.Controls
 		{
 			try
 			{
-				if ( Runner != null && Runner.IsRunning )
+				if ( Runner != null && ! Runner.IsRunning )
 				{
 					Runner.Run( Script );
 				}
@@ -154,11 +154,11 @@ namespace RabbitOM.Player.Controls
 		{
 			if ( IsScriptRunning )
 			{
-				RunScript();
+				StopScript();
 			}
 			else
 			{
-				StopScript();
+				RunScript();
 			}
 		}
 

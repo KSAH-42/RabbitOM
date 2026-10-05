@@ -144,8 +144,8 @@ You can also configure the script: in the xml section called "properties", the n
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
 	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
-		<property name="ConnectedMessage">Connected</property>
-		<property name="DisconnectedMessage">Disconnected</property>
+		<property name="ConnectedMessage">Connected to the device</property>
+		<property name="DisconnectedMessage">Disconnected from the device</property>
 		<property name="ErrorMessage">Communication error</property>
 		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
@@ -163,7 +163,7 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated a CoClass don't forget that the major of COM object works only on Windows
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated the CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
 				
 				if ( type != null )
 				{
