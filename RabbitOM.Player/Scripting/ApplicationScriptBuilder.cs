@@ -1,21 +1,20 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Loader;
-using System.Reflection;
 using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Player.Scripting
 {
 	using RabbitOM.Player.Data;
 
-	public sealed class PlayerScriptBuilder
+	public sealed class ApplicationScriptBuilder
 	{
 		private readonly Script _script;
 		private readonly AssemblyLoadContext _loadContext;
 		private readonly List<MetadataReference> _metadataReferences;
 
 
-		public PlayerScriptBuilder( Script script , AssemblyLoadContext loadContext )
+		public ApplicationScriptBuilder( Script script , AssemblyLoadContext loadContext )
 		{
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 			_loadContext = loadContext ?? throw new ArgumentNullException( nameof( loadContext ) );
@@ -26,7 +25,7 @@ namespace RabbitOM.Player.Scripting
 		public string OutputAssembly { get; set; } = "RabbitOM.Player.Script.dll";
 
 
-		public PlayerScriptBuilder LoadReferences()
+		public ApplicationScriptBuilder LoadReferences()
 		{
 			var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
 
@@ -35,7 +34,7 @@ namespace RabbitOM.Player.Scripting
 				_metadataReferences.Add(MetadataReference.CreateFromFile(refPath));
 			}
 
-			_metadataReferences.Add( MetadataReference.CreateFromFile(typeof(PlayerScript).Assembly.Location) );
+			_metadataReferences.Add( MetadataReference.CreateFromFile(typeof(ApplicationScript).Assembly.Location) );
 
 			foreach ( var reference in _script.References ?? [] )
 			{
@@ -57,7 +56,7 @@ namespace RabbitOM.Player.Scripting
 			return this;
 		}
 
-		public PlayerScript Build()
+		public ApplicationScript Build()
 		{
 			try
 			{
@@ -86,9 +85,9 @@ namespace RabbitOM.Player.Scripting
 
 				foreach( var type in assembly.GetTypes() )
 				{
-					if ( typeof( PlayerScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
+					if ( typeof( ApplicationScript ).IsAssignableFrom( type ) && ! type.IsAbstract )
 					{
-						return (PlayerScript) Activator.CreateInstance( type );
+						return (ApplicationScript) Activator.CreateInstance( type );
 					}
 				}
 

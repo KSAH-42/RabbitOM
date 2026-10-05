@@ -2,11 +2,11 @@
 
 namespace RabbitOM.Player.Scripting
 {
-	public sealed class PlayerScriptConfigurer
+	public sealed class ApplicationScriptConfigurer
 	{
-		private readonly PlayerScript _script;
+		private readonly ApplicationScript _script;
 
-		public PlayerScriptConfigurer( PlayerScript script )
+		public ApplicationScriptConfigurer( ApplicationScript script )
 		{
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
 		}

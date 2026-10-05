@@ -2,11 +2,16 @@
 
 namespace RabbitOM.Player.Scripting
 {
-	public abstract class PlayerScript : IDisposable
+	public abstract class ApplicationScript : IDisposable
 	{
+		~ApplicationScript()
+		{
+			Dispose( false );
+		}
+
 		public MainWindow Window { get; } = App.Current.MainWindow as MainWindow;
 
-		public virtual void Setup() { } // call after properties has been apply
+		public virtual void Setup() { }
 
 		public void Dispose()
 		{
@@ -18,6 +23,9 @@ namespace RabbitOM.Player.Scripting
 		{
 		}
 	}
+
+	// launch node with the rtsp client but include a script engine and the node can publish
+	// data to the player web server, and then the application script can react
 
 	// merge all this feature below into indivual service class and expose an IReadonlyCollection<IService> as property in the PlayerScript class
 	// or expose IServiceProvider with individual static factory class

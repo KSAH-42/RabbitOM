@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Runtime.Loader;
+using System.Windows;
 
 namespace RabbitOM.Player.Controls
 {
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Scripting;
-	using System.Windows;
 
 	public sealed class ScriptRunner : IScriptRunner
 	{
 		static ScriptRunner()
 		{
-			App.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+			App.Current.DispatcherUnhandledException += OnUnhandledException;
 		}
 
 		private AssemblyLoadContext _loadContext;
-		private PlayerScript _script;
+		private ApplicationScript _script;
 
 		public bool IsRunning
 		{
@@ -40,11 +40,11 @@ namespace RabbitOM.Player.Controls
 			try
 			{
 				var model = ScriptSerializer.Deserialize( script );
-				var builder = new PlayerScriptBuilder( model , _loadContext );
+				var builder = new ApplicationScriptBuilder( model , _loadContext );
 
 				_script = builder.LoadReferences().Build();
 
-				var configurer = new PlayerScriptConfigurer( _script );
+				var configurer = new ApplicationScriptConfigurer( _script );
 
 				if ( model.Properties != null )
 				{
@@ -81,6 +81,7 @@ namespace RabbitOM.Player.Controls
 
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
+			GC.Collect(); // call again to fix unauthorizedexception for release files and write again on the generated assembly script
 		}
 
 		public void Dispose()
@@ -88,7 +89,7 @@ namespace RabbitOM.Player.Controls
 			Terminate();
 		}
 
-		private static void Current_DispatcherUnhandledException( object sender , System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
+		private static void OnUnhandledException( object sender , System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
 		{
 			e.Handled = true;
 
