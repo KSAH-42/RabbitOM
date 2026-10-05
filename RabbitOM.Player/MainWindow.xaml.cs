@@ -23,7 +23,6 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage), typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata(Stretch.Fill,OnStretchImageChanged) );
         public static readonly DependencyProperty InfoVisibilityProperty = DependencyProperty.Register( nameof(InfoVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Collapsed,OnInfoVisibilityChanged) );
         public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Visible,OnStatisticsVisibilityChanged) );
-        public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(MainWindow) );
 
 
 
@@ -67,12 +66,6 @@ namespace RabbitOM.Player
             set => SetValue( SelectedSourceProperty , value );
         }
 
-        public string Script
-        {
-            get => GetValue( ScriptProperty ) as string;
-            set => SetValue( ScriptProperty , value );
-        }
-
         public Stretch StretchImage
         {
             get => (Stretch) GetValue( StretchImageProperty );
@@ -93,6 +86,7 @@ namespace RabbitOM.Player
 
         public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
 
+        public MediaPlayerControl MediaPlayer { get => _mediaPlayer; }
 
 
 
@@ -124,6 +118,7 @@ namespace RabbitOM.Player
         {
             _mediaPlayer.Stop();
             _mediaPlayer.Dispose();
+            _scriptEditor.Dispose();
         }
 
         private void OnCloseApplication( object sender , ExecutedRoutedEventArgs e )

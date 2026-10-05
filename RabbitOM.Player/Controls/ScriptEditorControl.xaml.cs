@@ -9,7 +9,7 @@ namespace RabbitOM.Player.Controls
 {
 	using RabbitOM.Player.Services;
 
-	public partial class ScriptEditorControl : UserControl
+	public sealed partial class ScriptEditorControl : UserControl , IDisposable
 	{
 		public static readonly DependencyProperty ScriptProperty = DependencyProperty.Register( nameof(Script), typeof(string) , typeof(ScriptEditorControl) );
 		public static readonly DependencyProperty IsScriptRunningProperty = DependencyProperty.Register( nameof(IsScriptRunning), typeof(bool) , typeof(ScriptEditorControl) );
@@ -138,6 +138,12 @@ namespace RabbitOM.Player.Controls
 		public void Clear()
 		{
 			Script = string.Empty;
+		}
+
+		public void Dispose()
+		{
+			Runner?.Dispose();
+			Runner = null;
 		}
 
 

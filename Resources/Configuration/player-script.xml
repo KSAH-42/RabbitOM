@@ -7,11 +7,12 @@
 		<property name="Property3">Value3</property>
 	</properties>
 	<code>
+		using RabbitOM.Player;
 		using RabbitOM.Player.Scripting;
 		using System;
 		using System.Windows;
 
-		public sealed class MyPlayerScript : PlayerScript
+		public sealed class CustomApplicationScript : ApplicationScript
 		{
 		    public MyPlayerScript()
 			{
@@ -20,10 +21,6 @@
 			public string Property1 { get; set; }
 			public string Property2 { get; set; }
 			public string Property3 { get; set; }
-			
-			protected override void Dispose( bool disposing )
-			{
-			}
 		}
 	</code>
 </script>

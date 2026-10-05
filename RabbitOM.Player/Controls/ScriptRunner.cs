@@ -34,7 +34,7 @@ namespace RabbitOM.Player.Controls
 				throw new InvalidOperationException();
 			}
 
-			_loadContext?.Unload();
+			Terminate(); // force gc to collect used reference and avoid access exception when delete script assembly file
 			_loadContext = new AssemblyLoadContext( Guid.NewGuid().ToString() , true );
 
 			try
@@ -81,7 +81,7 @@ namespace RabbitOM.Player.Controls
 
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
-			GC.Collect(); // call again to fix unauthorizedexception for release files and write again on the generated assembly script
+			GC.Collect();
 		}
 
 		public void Dispose()
