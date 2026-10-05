@@ -5,9 +5,15 @@ namespace RabbitOM.Player.Controls
 {
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Scripting;
+	using System.Windows;
 
 	public sealed class ScriptRunner : IScriptRunner
 	{
+		static ScriptRunner()
+		{
+			App.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+		}
+
 		private AssemblyLoadContext _loadContext;
 		private PlayerScript _script;
 
@@ -72,14 +78,21 @@ namespace RabbitOM.Player.Controls
 
 			_loadContext?.Unload();
 			_loadContext = null;
+
 			GC.Collect();
 			GC.WaitForPendingFinalizers();
-			GC.Collect();
 		}
 
 		public void Dispose()
 		{
 			Terminate();
+		}
+
+		private static void Current_DispatcherUnhandledException( object sender , System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
+		{
+			e.Handled = true;
+
+			MessageBox.Show( e.Exception?.ToString() ?? "unhandled exception" );
 		}
 	}
 }

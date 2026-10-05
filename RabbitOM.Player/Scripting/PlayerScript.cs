@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Windows;
 
 namespace RabbitOM.Player.Scripting
 {
 	public abstract class PlayerScript : IDisposable
 	{
-		public Window Window { get; } = App.Current.MainWindow;
+		public MainWindow Window { get; } = App.Current.MainWindow as MainWindow;
 
 		public virtual void Setup() { } // call after properties has been apply
 

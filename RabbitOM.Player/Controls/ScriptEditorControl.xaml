@@ -61,14 +61,7 @@
 					/>
 
 		</StackPanel>
-		
 
-		<TextBlock Text="Not available" 
-				   Foreground="Yellow" 
-				   HorizontalAlignment="Center" 
-				   VerticalAlignment="Center" 
-				   />
-		
 	</Grid>
 	
 </UserControl>

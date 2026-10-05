@@ -19,9 +19,13 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="Controllers\**" />
+	  <Compile Remove="Net\**" />
 	  <EmbeddedResource Remove="Controllers\**" />
+	  <EmbeddedResource Remove="Net\**" />
 	  <None Remove="Controllers\**" />
+	  <None Remove="Net\**" />
 	  <Page Remove="Controllers\**" />
+	  <Page Remove="Net\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Resource Include="Resources\icon.ico" />
@@ -37,6 +41,7 @@
 		<PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.8.0" />
 		<PackageReference Include="FFmpeg.AutoGen" Version="4.4.1.0" />
 		<PackageReference Include="FFmpeg.Native" Version="4.4.0.2386" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 	<Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
 		<PropertyGroup>
