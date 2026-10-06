@@ -13,7 +13,6 @@ namespace RabbitOM.Player
     using RabbitOM.Player.Controls;
 	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Dialogs;
-	using RabbitOM.Player.Services;
 	using DialogStyle = RabbitOM.Player.Themes.Styles.WindowStyle;
 
     public partial class MainWindow : Window
@@ -23,9 +22,6 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage), typeof(Stretch) , typeof(MainWindow) , new PropertyMetadata(Stretch.Fill,OnStretchImageChanged) );
         public static readonly DependencyProperty InfoVisibilityProperty = DependencyProperty.Register( nameof(InfoVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Collapsed,OnInfoVisibilityChanged) );
         public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Visible,OnStatisticsVisibilityChanged) );
-
-
-
 
 
         public MainWindow()
@@ -44,6 +40,9 @@ namespace RabbitOM.Player
             CommandBindings.Add( new CommandBinding( ShowInfoCommand , OnShowInfo ));
             CommandBindings.Add( new CommandBinding( FocusCommand , OnFocus ));
             CommandBindings.Add( new CommandBinding( SaveImageCommand , OnSaveImage , OnCanSaveImage ));
+            CommandBindings.Add( new CommandBinding( TabNextCommand , OnTabNext ) );
+            CommandBindings.Add( new CommandBinding( StartScriptCommand , OnStartScript ) );
+            CommandBindings.Add( new CommandBinding( StopScriptCommand , OnStopScript ) );
 
             _scriptEditor.Runner = new ScriptRunner();
         }
@@ -51,7 +50,23 @@ namespace RabbitOM.Player
 
 
 
-
+        public RoutedCommand CloseCommand { get; } = new RoutedCommand();
+        public RoutedCommand StartStreamingCommand { get; } = new RoutedCommand();
+        public RoutedCommand StopStreamingCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleStartStopStreamingCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleFullScreenCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleStretchCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowNetworkSettingsDialogCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowUrisDialogCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowAboutDialogCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowStatisticsCommand { get; } = new RoutedCommand();
+        public RoutedCommand ShowInfoCommand { get; } = new RoutedCommand();
+        public RoutedCommand FocusCommand { get; } = new RoutedCommand();
+        public RoutedCommand SaveImageCommand { get; } = new RoutedCommand();
+        public RoutedCommand StretchCommand { get; } = new RoutedCommand();
+        public RoutedCommand TabNextCommand { get; } = new RoutedCommand();
+        public RoutedCommand StartScriptCommand { get; } = new RoutedCommand();
+        public RoutedCommand StopScriptCommand { get; } = new RoutedCommand();
 
 
         public bool StreamingStatus
@@ -87,28 +102,6 @@ namespace RabbitOM.Player
         public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
 
         public MediaPlayerControl MediaPlayer { get => _mediaPlayer; }
-
-
-
-
-
-
-        public RoutedCommand CloseCommand { get; } = new RoutedCommand();
-        public RoutedCommand StartStreamingCommand { get; } = new RoutedCommand();
-        public RoutedCommand StopStreamingCommand { get; } = new RoutedCommand();
-        public RoutedCommand ToggleStartStopStreamingCommand { get; } = new RoutedCommand();
-        public RoutedCommand ToggleFullScreenCommand { get; } = new RoutedCommand();
-        public RoutedCommand ToggleStretchCommand { get; } = new RoutedCommand();
-        public RoutedCommand ShowNetworkSettingsDialogCommand { get; } = new RoutedCommand();
-        public RoutedCommand ShowUrisDialogCommand { get; } = new RoutedCommand();
-        public RoutedCommand ShowAboutDialogCommand { get; } = new RoutedCommand();
-        public RoutedCommand ShowStatisticsCommand { get; } = new RoutedCommand();
-        public RoutedCommand ShowInfoCommand { get; } = new RoutedCommand();
-        public RoutedCommand FocusCommand { get; } = new RoutedCommand();
-        public RoutedCommand SaveImageCommand { get; } = new RoutedCommand();
-        public RoutedCommand StretchCommand { get; } = new RoutedCommand();
-
-
 
 
 
@@ -272,6 +265,26 @@ namespace RabbitOM.Player
             var source = e.Parameter as UIElement;
 
             source?.Focus();
+        }
+
+        private void OnTabNext( object sender , ExecutedRoutedEventArgs e )
+        {
+            if ( _tabcontrol.Items.Count <= 0 )
+            {
+                return;
+            }
+
+            _tabcontrol.SelectedIndex = (_tabcontrol.SelectedIndex + 1 ) % _tabcontrol.Items.Count;
+        }
+
+        private void OnStartScript( object sender , ExecutedRoutedEventArgs e )
+        {
+            _scriptEditor.RunScript();
+        }
+
+        private void OnStopScript( object sender , ExecutedRoutedEventArgs e )
+        {
+            _scriptEditor.StopScript();
         }
 
         private static void OnStretchImageChanged( DependencyObject sender , DependencyPropertyChangedEventArgs e )

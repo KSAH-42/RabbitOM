@@ -27,8 +27,24 @@
 	</Window.Resources>
 
 	<Window.InputBindings>
-		<KeyBinding Key="F11" Command="{Binding ToggleFullScreenCommand,RelativeSource={RelativeSource AncestorType=Window}}" />
-		<KeyBinding Key="F6"  Command="{Binding FocusCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding ElementName=UriSources}" />
+		<KeyBinding Command="{Binding ToggleFullScreenCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+					Key="F11" 
+					/>
+		<KeyBinding Command="{Binding FocusCommand,RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding ElementName=UriSources}" 
+					Key="F6"
+					/>
+		<KeyBinding Command="{Binding TabNextCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+					Key="F8"
+					/>
+		<KeyBinding Command="{Binding StartScriptCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+					Key="F5"
+					/>
+
+		<KeyBinding Command="{Binding StopScriptCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+					Key="F5"
+					Modifiers="Shift"
+					/>
+
 	</Window.InputBindings>
 
 	<Window.CommandBindings>
@@ -50,7 +66,8 @@
 			<MenuItem Header="Views">
 				
 				<MenuItem Header="Full screen" 
-						  Command="{Binding ToggleFullScreenCommand,RelativeSource={RelativeSource AncestorType=Window}}" InputGestureText="F11" 
+						  Command="{Binding ToggleFullScreenCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+						  InputGestureText="F11" 
 						  />
 				
 				<Separator/>
@@ -75,6 +92,11 @@
 
 				<MenuItem Header="Save Image" 
 						  Command="{Binding SaveImageCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
+						  />
+
+				<MenuItem Header="Toggle pane" 
+						  Command="{Binding TabNextCommand,RelativeSource={RelativeSource AncestorType=Window}}"
+						  InputGestureText="F8" 
 						  />
 				
 			</MenuItem>
@@ -163,7 +185,8 @@
 
 			<Grid Grid.Row="1" Margin="1,0,1,1">
 
-				<TabControl HorizontalAlignment="Stretch" 
+				<TabControl x:Name="_tabcontrol" 
+							HorizontalAlignment="Stretch" 
 							VerticalAlignment="Stretch" 
 							TabStripPlacement="Bottom" 
 							HorizontalContentAlignment="Center" 
