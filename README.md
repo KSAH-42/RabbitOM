@@ -137,14 +137,6 @@ You can run a script for controlling the application
  
 ~~~~
 
-# RabbitOM.Player streaming over different transport types
-
-You can receive media content using TCP / UDP or Multicast
-
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.TransportTypes.png)
-
-If your camera is located I strongly recommended to used TCP. Otherwise if you used UDP or the event the multicast transport, contact your IT administrator and discuss with him.
-
 # If you test first with VLC
 
 If your are using some cameras and you may use first VLC for testing, you may observed that VLC fail to display BUT the Media.Player will display the stream.
