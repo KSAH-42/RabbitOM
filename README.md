@@ -107,7 +107,7 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 
 # RabbitOM.Player and run script
 
-The media player used the Roslyne compiler to compile script for controlling the application.
+The media player used the Roslyn compiler to compile script for controlling the application.
 
 ~~~~XML
 
@@ -187,7 +187,7 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated the CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // resolve the type of CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
 				
 				if ( type != null )
 				{

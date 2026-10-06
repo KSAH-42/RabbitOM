@@ -25,7 +25,7 @@
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // instanciated the CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // resolve the type of the CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
 				
 				if ( type != null )
 				{
