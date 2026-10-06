@@ -102,14 +102,40 @@ Take a look, on projects like mahapps on github, mvvm is not used, even the cust
 
 This sample demonstrate how to create decoder that support different codec using FFMpeg.AutoGen dependencies.
 This sample include an example of how to build a player using decoder and render running in seperate threads.
-This sample include statitics component to display the framerate, the network bandwidth just making a right click.
+This sample include statistics component to display the framerate, the network bandwidth just making a right click.
 This sample include a zoom feature (keep down the mouse left button, and draw the zoom area and release the button).
 
 # RabbitOM.Player and run script
 
 You can run a script for controlling the application
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Scripting.png)
+~~~~XML
+
+<?xml version="1.0" encoding="utf-8"?>
+<script language="csharp">
+	<references/>
+	<properties>
+		<property name="Message">my message</property>
+	</properties>
+	<code>
+		using RabbitOM.Player;
+		using RabbitOM.Player.Scripting;
+		using System;
+		using System.Windows;
+
+		public sealed class CustomApplicationScript : ApplicationScript
+		{
+			public string Message { get; set; }
+			
+			public override void Setup()
+			{
+				MessageBox.Show( Message );
+			}
+		}
+	</code>
+</script>
+ 
+~~~~
 
 # RabbitOM.Player streaming over different transport types
 
