@@ -123,7 +123,7 @@ The media player used the Roslyn compiler to compile script for controlling the 
 		using System;
 		using System.Windows;
 
-		public sealed class CustomApplicationScript : ApplicationScript
+		public sealed class MediaPlayerScript : ApplicationScript
 		{
 			public string Message { get; set; }
 			
