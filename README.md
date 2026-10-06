@@ -107,7 +107,7 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 
 # RabbitOM.Player and run script
 
-You can run a script for controlling the application
+The media player used the Roslyne compiler to compile script for controlling the application.
 
 ~~~~XML
 

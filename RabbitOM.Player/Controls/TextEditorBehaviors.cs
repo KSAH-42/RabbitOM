@@ -42,7 +42,26 @@ namespace RabbitOM.Player.Controls
                 return;
             }
 
-            textEditor.Text = e.NewValue as string ?? string.Empty;
+            textEditor.TextChanged -= OnTextEditorValueChanged;
+
+            if (textEditor.Text != (string)e.NewValue)
+            {
+                textEditor.Text = (string)e.NewValue;
+            }
+
+            textEditor.TextChanged += OnTextEditorValueChanged;
+        }
+
+        private static void OnTextEditorValueChanged( object sender, EventArgs e)
+        {
+            var textEditor = sender as TextEditor;
+
+            if ( textEditor == null )
+            {
+                return;
+            }
+
+            textEditor.SetValue( TextProperty , textEditor.Text );
         }
 	}
 }
