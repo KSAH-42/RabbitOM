@@ -21,7 +21,7 @@ namespace RabbitOM.Player.Scripting
 
 		protected virtual void Dispose( bool disposing )
 		{
-			Window = null; // set as null to allow the garbage to collect and tell to it that no more reference are keeped/locked in someway
+			Window = null; // set as null to allow the garbage to collect and tell to it that no more reference are keeped/locked in someway 
 		}
 	}
 
