@@ -105,6 +105,12 @@ This sample include an example of how to build a player using decoder and render
 This sample include statitics component to display the framerate, the network bandwidth just making a right click.
 This sample include a zoom feature (keep down the mouse left button, and draw the zoom area and release the button).
 
+# RabbitOM.Player and run script
+
+You can run a script for controlling the application
+
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Scripting.png)
+
 # RabbitOM.Player streaming over different transport types
 
 You can receive media content using TCP / UDP or Multicast
