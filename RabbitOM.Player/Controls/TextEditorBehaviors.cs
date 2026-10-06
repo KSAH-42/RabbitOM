@@ -2,6 +2,8 @@
 using System;
 using System.Windows;
 
+#pragma warning disable CA1416
+
 namespace RabbitOM.Player.Controls
 {
 	public static class TextEditorBehaviors
@@ -61,7 +63,9 @@ namespace RabbitOM.Player.Controls
                 return;
             }
 
-            textEditor.SetValue( TextProperty , textEditor.Text );
+			textEditor.SetValue( TextProperty , textEditor.Text );
         }
 	}
 }
+
+#pragma warning restore CA1416

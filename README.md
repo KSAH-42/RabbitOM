@@ -171,7 +171,6 @@ You can also configure the script: in the xml section called "properties", the n
 		<property name="ConnectedMessage">Connected to the device</property>
 		<property name="DisconnectedMessage">Disconnected from the device</property>
 		<property name="ErrorMessage">Communication error</property>
-		<property name="AlertSoundFile">C:\Windows\Media\ding.wav</property>
 	</properties>
 	<code>
 		using RabbitOM.Node;
@@ -187,7 +186,7 @@ You can also configure the script: in the xml section called "properties", the n
 			
 			public DeviceMonitoringScript()
 			{
-				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // resolve the type of CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
+				var type = Type.GetTypeFromProgID("SAPI.SpVoice"); // resolve the type of the CoClass don't forget that the majority of COM objects works only on Windows and required a COM registration, it's generally a kind of script embedded in resource of ATL projects and used by an exported method invoked by regsvr32.exe to write progmatic identifier and the CLSID of coclass in a hives. And make sure that you have the enought rights. that the first basic troubleshooting
 				
 				if ( type != null )
 				{
@@ -200,7 +199,6 @@ You can also configure the script: in the xml section called "properties", the n
 			public string ConnectedMessage { get; set; }
 			public string DisconnectedMessage { get; set; }
 			public string ErrorMessage { get; set; }
-			public string AlertSoundFile { get; set; }
 			
 			public override void Handle( Message message )
 			{
@@ -223,7 +221,7 @@ You can also configure the script: in the xml section called "properties", the n
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine( ErrorMessage );
 					Console.ResetColor();
-					PlaySound( AlertSoundFile );
+					_voice?.Speak( ErrorMessage );
 				}
 			}
 			
@@ -236,24 +234,6 @@ You can also configure the script: in the xml section called "properties", the n
 				}
 				
 				base.Dispose( disposing );
-			}
-			
-			private void PlaySound( string fileName )
-			{
-				if ( ! File.Exists( fileName ) )
-				{
-					return;
-				}
-
-				try
-				{
-					var player = new SoundPlayer( fileName );
-					player.Play();
-				}
-				catch( Exception ex )
-				{
-					Console.WriteLine( ex );
-				}
 			}
 		}
 	</code>
