@@ -8,6 +8,7 @@ namespace RabbitOM.Player.Scripting
 {
 	using RabbitOM.Player.Data;
 
+	// TODO: refactor this class
 	public sealed class ApplicationScriptBuilder
 	{
 		private readonly Script _script;
