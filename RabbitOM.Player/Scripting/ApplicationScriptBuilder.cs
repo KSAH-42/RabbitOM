@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.Loader;
-using Microsoft.CodeAnalysis;
 
 namespace RabbitOM.Player.Scripting
 {
@@ -14,6 +15,8 @@ namespace RabbitOM.Player.Scripting
 		private readonly List<MetadataReference> _metadataReferences;
 
 
+
+
 		public ApplicationScriptBuilder( Script script , AssemblyLoadContext loadContext )
 		{
 			_script = script ?? throw new ArgumentNullException( nameof( script ) );
@@ -22,8 +25,51 @@ namespace RabbitOM.Player.Scripting
 		}
 
 
-		public string OutputAssembly { get; set; } = "RabbitOM.Player.Script.dll";
 
+
+		public string OutputAssembly { get; set; } = $"RabbitOM.Player.Script.dll";
+
+		public string OutputFolder { get; set; } = @"scripts";
+
+		public bool UseTempAssembly { get; set; } = true;
+
+
+
+
+		public ApplicationScriptBuilder ClearOutputDirectory()
+		{
+			if ( string.IsNullOrWhiteSpace( OutputFolder ) )
+			{
+				throw new InvalidOperationException( "the OutputFolder property must be defined" );
+			}
+
+			var path = Path.Combine( AppContext.BaseDirectory , OutputFolder );
+
+			if ( Directory.Exists( path ) )
+			{
+				var assemblyName = Path.GetFileNameWithoutExtension( OutputAssembly );
+
+				foreach ( var file in Directory.GetFiles( path ) )
+				{
+					var fileName = Path.GetFileNameWithoutExtension( file );
+					if ( ! fileName.StartsWith( assemblyName ) )
+					{
+						continue;
+					}
+
+					try
+					{
+						File.Delete( file );
+					}
+					catch( Exception ex )
+					{
+						Debug.WriteLine( ex );
+					}
+				}
+			}
+
+			return this;
+		}
 
 		public ApplicationScriptBuilder LoadReferences()
 		{
@@ -60,16 +106,18 @@ namespace RabbitOM.Player.Scripting
 		{
 			try
 			{
+				var scriptFolder = Path.Combine( AppContext.BaseDirectory , OutputFolder );
+
+				if ( ! Directory.Exists( scriptFolder ) )
+				{
+					Directory.CreateDirectory( scriptFolder );
+				}
+
+				var assemblyFile = Path.Combine( scriptFolder , UseTempAssembly ? ( Path.GetFileNameWithoutExtension( OutputAssembly ) + $".{Guid.NewGuid()}.dll" ) : OutputAssembly );
+
 				var tree = RoslynCompilerHelper.CreateSyntaxTree( _script.Language , _script.Code );
 
 				var compilation = RoslynCompilerHelper.CreateCompilation( _script.Language , OutputAssembly , new [] { tree } , _metadataReferences );
-
-				var assemblyFile = Path.Combine( AppContext.BaseDirectory , OutputAssembly );
-
-				if ( File.Exists( assemblyFile ) )
-				{
-					File.Delete( assemblyFile );
-				}
 
 				using ( var stream = File.Create( assemblyFile ) )
 				{

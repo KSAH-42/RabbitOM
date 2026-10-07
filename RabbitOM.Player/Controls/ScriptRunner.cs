@@ -9,40 +9,62 @@ namespace RabbitOM.Player.Controls
 
 	public sealed class ScriptRunner : IScriptRunner
 	{
+		private AssemblyLoadContext _loadContext;
+		private ApplicationScript _script;
+
+
+
+
 		static ScriptRunner()
 		{
 			App.Current.DispatcherUnhandledException += OnUnhandledException;
 		}
 
-		private AssemblyLoadContext _loadContext;
-		private ApplicationScript _script;
+
+
 
 		public bool IsRunning
 		{
 			get => _script != null;
 		}
 
+
+
+
+
+		private static void OnUnhandledException( object sender , System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
+		{
+			e.Handled = true;
+
+			MessageBox.Show( e.Exception?.ToString() ?? "unhandled exception" );
+		}
+
+
+
+
+
 		public void Run( string script )
 		{
-			if ( string.IsNullOrWhiteSpace( script ) )
-			{
-				throw new ArgumentNullException( nameof( script ) );
-			}
-
 			if ( _script != null )
 			{
-				throw new InvalidOperationException();
+				throw new InvalidOperationException( "the instance of the script is not null" );
 			}
 
-			Terminate(); // force gc to collect used reference and avoid access exception when delete script assembly file
-			_loadContext = new AssemblyLoadContext( Guid.NewGuid().ToString() , true );
+			if ( _loadContext != null )
+			{
+				throw new InvalidOperationException( "the instance of the loadContext is not null" );
+			}
+
+			_loadContext = new AssemblyLoadContext( "RabbitOM.MediaPlayer.Scripting" , true );
 
 			try
 			{
 				var model = ScriptSerializer.Deserialize( script );
-				var builder = new ApplicationScriptBuilder( model , _loadContext );
 
-				_script = builder.LoadReferences().Build();
+				_script = new ApplicationScriptBuilder( model , _loadContext )
+					.ClearOutputDirectory()
+					.LoadReferences()
+					.Build();
 
 				var configurer = new ApplicationScriptConfigurer( _script );
 
@@ -76,24 +98,16 @@ namespace RabbitOM.Player.Controls
 				_script = null;
 			}
 
-			_loadContext?.Unload();
-			_loadContext = null;
-
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			GC.Collect();
+			if ( _loadContext != null )
+			{
+				_loadContext.Unload();
+				_loadContext = null;
+			}
 		}
 
 		public void Dispose()
 		{
 			Terminate();
-		}
-
-		private static void OnUnhandledException( object sender , System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
-		{
-			e.Handled = true;
-
-			MessageBox.Show( e.Exception?.ToString() ?? "unhandled exception" );
 		}
 	}
 }
