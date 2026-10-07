@@ -16,7 +16,6 @@
 			
 			public override void Setup()
 			{
-				MessageBox.Show( Message );
 			}
 		}
 	</code>
