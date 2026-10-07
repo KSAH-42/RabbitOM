@@ -108,14 +108,15 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 # RabbitOM.Player and run script
 
 The media player used the Roslyn compiler to compile script for controlling the application.
+The following example show how to control remotly the player using Asp.Net Kestrel http in stand alone mode.
+
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.UsingCurls.png)
 
 ~~~~XML
-
 <?xml version="1.0" encoding="utf-8"?>
 <script language="csharp">
-	<references/>
 	<properties>
-		<property name="Message">my message</property>
+		<property name="Endpoint">https://*:5000</property>
 	</properties>
 	<code>
 		using RabbitOM.Player;
@@ -125,16 +126,37 @@ The media player used the Roslyn compiler to compile script for controlling the 
 
 		public sealed class MediaPlayerScript : ApplicationScript
 		{
-			public string Message { get; set; }
+			public string Endpoint { get; set; }
 			
 			public override void Setup()
 			{
-				MessageBox.Show( Message );
+				Server.MapRoutePost( "/start" , OnStartStreaming );
+				Server.MapRoutePost( "/stop" , OnStopStreaming );
+				Server.Start( Endpoint );
+			}
+			
+			private void OnStartStreaming()
+			{
+				Window.StartStreamingCommand.Execute( null , Window );
+			}
+			
+			private void OnStopStreaming()
+			{
+				Window.StopStreamingCommand.Execute( null , Window );
 			}
 		}
 	</code>
 </script>
- 
+~~~~
+
+Starting the streaming:
+~~~~
+curl.exe -X POST https://127.0.0.1:5000/start
+~~~~
+
+Stopping the streaming:
+~~~~
+curl.exe -X POST https://127.0.0.1:5000/stop
 ~~~~
 
 # If you test first with VLC
