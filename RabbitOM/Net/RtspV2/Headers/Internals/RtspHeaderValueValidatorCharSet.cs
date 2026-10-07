@@ -6,7 +6,9 @@ namespace RabbitOM.Net.RtspV2.Headers
 {
     internal sealed class RtspHeaderValueValidatorCharSet
     {
-        private const string DefaultLetters = "azertyuiopqsdfghjklmwxcvbn" + "AZERTYUIOPQSDFGHJKLMWXCVBN";
+        private const string DefaultLettersLower = "azertyuiopqsdfghjklmwxcvbn";
+        private const string DefaultLettersUpper = "AZERTYUIOPQSDFGHJKLMWXCVBN";
+        private const string DefaultLetters = DefaultLettersLower + DefaultLettersUpper;
         private const string DefaultDigits = "0123456789";
         private const string DefaultSymbols1 = "!#$%&'*+-.^_|~";
         private const string DefaultSymbols2 = "/\\ {}[]()<>\"'`";
@@ -26,5 +28,7 @@ namespace RabbitOM.Net.RtspV2.Headers
         public static RtspHeaderValueValidatorCharSet LettersAndDigits { get; } = new RtspHeaderValueValidatorCharSet( (DefaultLetters + DefaultDigits ).ToHashSet<char>() );
 
         public static RtspHeaderValueValidatorCharSet BasicToken { get; } = new RtspHeaderValueValidatorCharSet( (DefaultLetters + DefaultDigits + DefaultSymbols1).ToHashSet<char>() );
+
+        public static RtspHeaderValueValidatorCharSet MethodToken { get; } = new RtspHeaderValueValidatorCharSet( (DefaultLettersUpper + DefaultDigits + "._*" ).ToHashSet<char>() );
     }
 }

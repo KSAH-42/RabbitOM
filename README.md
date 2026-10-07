@@ -108,7 +108,7 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 # RabbitOM.Player and run script
 
 The media player used the Roslyn compiler to compile script for controlling the application.
-The following example show how to control remotly the player using Asp.Net Kestrel http in stand alone mode.
+The following example show how to control remotly the player using ASP.NET KESTREL in stand alone mode.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.UsingCurls.png)
 

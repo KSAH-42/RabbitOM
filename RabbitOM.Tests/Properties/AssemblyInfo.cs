@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 
 [assembly: AssemblyCopyright("Copyright © 2026 A. SAHNINE")]
 [assembly: AssemblyCompany("")]

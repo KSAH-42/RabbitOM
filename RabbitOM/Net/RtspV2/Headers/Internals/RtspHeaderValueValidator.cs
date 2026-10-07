@@ -59,8 +59,8 @@ namespace RabbitOM.Net.RtspV2.Headers
             {
                 return true; // it's sound bizarre, but we need to accept empty value for accepting to reset field
             }
-            
-            for ( var i = 0 ; i < value.Length ; ++ i )
+
+            for ( var i = 0 ; i < value?.Length ; ++ i )
             {
                 if ( ! allowedChars.Values.Contains( value[ i ] ) )
                 {

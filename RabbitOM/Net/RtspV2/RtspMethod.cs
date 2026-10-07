@@ -8,21 +8,9 @@ namespace RabbitOM.Net.RtspV2
 
     public sealed class RtspMethod
     {
-        private readonly static IReadOnlyDictionary<string,RtspMethod> s_knowMethods = typeof( RtspMethod )
-                .GetProperties( System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public )
-                    .Select( property => property.GetValue( null ) as RtspMethod )
-                        .Where( method => method != null )
-                            .ToDictionary( method => method.Value );
-
-
-
-
-
-
-
         public RtspMethod( string value )
         {
-            Value = RtspHeaderValueValidator.EnsureWellFormed( value );
+            Value = RtspHeaderValueValidator.EnsureWellFormed( value , RtspHeaderValueValidatorCharSet.MethodToken );
         }
 
 
@@ -77,17 +65,19 @@ namespace RabbitOM.Net.RtspV2
         {
             result = null;
 
-            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueValidatorCharSet.BasicToken ) )
+            if ( string.IsNullOrWhiteSpace( input ) )
             {
                 return false;
             }
 
-            if ( ! s_knowMethods.TryGetValue( input , out result ) )
+            if ( ! RtspHeaderValueValidator.IsWellFormed( input , RtspHeaderValueValidatorCharSet.MethodToken ) )
             {
-                result = new RtspMethod( input );
+                return false;
             }
 
-            return result != null;
+            result = new RtspMethod( input );
+
+            return true;
         }
 
 
