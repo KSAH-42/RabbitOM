@@ -9,6 +9,9 @@ namespace RabbitOM.Tests.Rtsp
     {
         [TestCase( "MY_VALID_CUSTOM_METHOD" , "MY_VALID_CUSTOM_METHOD" ) ]
         [TestCase( "MY_VALID_CUSTOM_METHOD1" , "MY_VALID_CUSTOM_METHOD1" ) ]
+        [TestCase( "GET" , "GET" ) ]
+        [TestCase( "POST" , "POST" ) ]
+
         [TestCase( "OPTIONS" , "OPTIONS" ) ]
         [TestCase( "DESCRIBE" , "DESCRIBE" ) ]
         [TestCase( "SETUP" , "SETUP" ) ]
