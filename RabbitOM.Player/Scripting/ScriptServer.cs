@@ -11,7 +11,7 @@ namespace RabbitOM.Player.Scripting
 {
     public sealed class ScriptServer : IDisposable
 	{
-        private readonly ConcurrentDictionary<string, Dictionary<string,Func<HttpContext, Task>>> _routes = new();
+        private readonly ConcurrentDictionary<string, ConcurrentDictionary<string,Func<HttpContext, Task>>> _routes = new();
         private readonly Dispatcher _dispatcher = Application.Current.Dispatcher;
         private WebApplication _webApplication;
 
@@ -114,7 +114,7 @@ namespace RabbitOM.Player.Scripting
 
             if ( ! _routes.ContainsKey( method ) )
             {
-                _routes[ method ] = new Dictionary<string, Func<HttpContext, Task>>();
+                _routes[ method ] = new ConcurrentDictionary<string, Func<HttpContext, Task>>();
             }
 
             _routes[method][ NormalizeRoute(route)] = handler ?? throw new ArgumentNullException( nameof( handler ) );
