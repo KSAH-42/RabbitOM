@@ -45,6 +45,7 @@ namespace RabbitOM.Tests.Rtsp
         [TestCase( "ReCORD") ]
         [TestCase( " RECORD") ]
         [TestCase( "RECORD ") ]
+        [TestCase( "REC\0ORD") ]
         [TestCase( "RECORD\r") ]
         [TestCase( "RECORD\b") ]
         [TestCase( "'RECORD'") ]
