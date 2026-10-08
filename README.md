@@ -29,10 +29,6 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 * Reduce memory copy when using large memory blocks by using System.ArraySegment<byte> in order to minimize the usage of System.Buffer.BlockCopy
 * Force the creation of ports used for receiving packets in case if the ports are temporaly used by some others applications or even block by the windows firewall.
 
-# Breaking changes
-
-* NET Core Migration
-
 # Next arrivals:
 
 * Adding SRTP support 
@@ -157,6 +153,11 @@ curl.exe -X POST https://127.0.0.1:5000/start
 Stopping the streaming:
 ~~~~
 curl.exe -X POST https://127.0.0.1:5000/stop
+~~~~
+
+we use dev ssl certifcate, actually there is no selfsigned certificate, otherwise you can run this command in an another computer:
+~~~~
+curl.exe -X POST https://192.168.1.10:5000/start --insecure
 ~~~~
 
 # If you test first with VLC
