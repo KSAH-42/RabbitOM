@@ -7,9 +7,13 @@ namespace RabbitOM.Tests.Rtsp
     [TestFixture]
     public class RtspMethodTest
     {
+        // custom methods
         [TestCase( "MY_VALID_CUSTOM_METHOD" , "MY_VALID_CUSTOM_METHOD" ) ]
         [TestCase( "MY_VALID_CUSTOM_METHOD1" , "MY_VALID_CUSTOM_METHOD1" ) ]
+        [TestCase( "GET" , "GET" ) ]
+        [TestCase( "POST" , "POST" ) ]
 
+        // standard methods
         [TestCase( "OPTIONS" , "OPTIONS" ) ]
         [TestCase( "DESCRIBE" , "DESCRIBE" ) ]
         [TestCase( "SETUP" , "SETUP" ) ]
@@ -21,6 +25,8 @@ namespace RabbitOM.Tests.Rtsp
         [TestCase( "ANNOUNCE" , "ANNOUNCE" ) ]
         [TestCase( "REDIRECT" , "REDIRECT" ) ]
         [TestCase( "RECORD" , "RECORD" ) ]
+
+        // specials
         [TestCase( "*" , "*" ) ]
         public void CheckTryParseSucceed( string input , string method )
         {
@@ -32,6 +38,7 @@ namespace RabbitOM.Tests.Rtsp
         [TestCase( null! )]
         [TestCase( "" )]
         [TestCase( " " )]
+        [TestCase( "      " )]
         [TestCase( "!" )]
         [TestCase( " myMethod " )]
         [TestCase( "OPTiONS" ) ]
@@ -44,8 +51,6 @@ namespace RabbitOM.Tests.Rtsp
         [TestCase( "SEt_PARAMETER" ) ]
         [TestCase( "ANnOUNCE" ) ]
         [TestCase( "ReCORD") ]
-        [TestCase( " RECORD") ]
-        [TestCase( "RECORD ") ]
         [TestCase( "REC\0ORD") ]
         [TestCase( "RECORD\r") ]
         [TestCase( "RECORD\b") ]
