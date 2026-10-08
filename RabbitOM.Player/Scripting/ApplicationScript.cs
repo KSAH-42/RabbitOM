@@ -11,7 +11,7 @@ namespace RabbitOM.Player.Scripting
 
 		public MainWindow Window { get; private set; } = App.Current.MainWindow as MainWindow;
 
-		public ScriptServer Server { get; } = new KestrelScriptServer();
+		public ScriptServer Server { get; } = new ScriptServer();
 
 		public virtual void Setup() { }
 

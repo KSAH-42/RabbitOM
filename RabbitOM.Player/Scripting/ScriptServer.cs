@@ -1,26 +1,162 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Windows;
+using System.Windows.Threading;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 
 namespace RabbitOM.Player.Scripting
 {
-	public abstract class ScriptServer : IDisposable
+    public sealed class ScriptServer : IDisposable
 	{
-		public abstract bool IsStarted { get; }
-		public abstract void MapRouteGet( string route , Action action );
-		public abstract void MapRouteGet<TDto>( string route , Action<TDto> action );
-		public abstract void MapRoutePost( string route , Action action );
-		public abstract void MapRoutePost<TDto>( string route , Action<TDto> action );
-		public abstract void Start( string endpoint );
-		public abstract void Stop();
-		public abstract void Close();
+        private readonly ConcurrentDictionary<string, Dictionary<string,Func<HttpContext, Task>>> _routes = new();
+        private readonly Dispatcher _dispatcher = Application.Current.Dispatcher;
+        private WebApplication _webApplication;
 
-		public void Dispose()
-		{
-			Dispose( true );
-			GC.SuppressFinalize( this );
-		}
 
-		protected virtual void Dispose( bool disposing )
-		{
-		}
+
+
+        public bool IsStarted
+        {
+            get => _webApplication != null;
+        }
+
+
+
+
+        public void Start(string endpoint)
+        {
+            if ( string.IsNullOrWhiteSpace( endpoint ) )
+            {
+                throw new ArgumentNullException( nameof( endpoint ) );
+            }
+
+            if ( _webApplication != null )
+            {
+                throw new InvalidOperationException( "the server is already started" );
+            }
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+
+                builder.WebHost.UseKestrel().UseUrls( endpoint );
+
+                var webApplication = builder.Build();
+
+                webApplication.Run( async context =>
+                {
+                    var method = context.Request.Method;
+                    var path = NormalizeRoute(context.Request.Path.Value ?? "/");
+
+                    await OnHandleRequest( context , method , path );
+                });
+
+                webApplication.StartAsync().GetAwaiter().GetResult();
+
+                _webApplication = webApplication;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public void Stop()
+        {
+            if ( _webApplication != null )
+            {
+                _webApplication.StopAsync();
+                _webApplication.DisposeAsync().GetAwaiter().GetResult();
+                _webApplication = null;
+            }
+        }
+
+
+        public void Dispose()
+        {
+            Stop();
+            _routes.Clear();
+        }
+
+
+        public void MapRouteGet(string route, Action action)
+        {
+            AddRoute("GET", route, async context =>
+            {
+                await _dispatcher.InvokeAsync(action);
+                context.Response.StatusCode = StatusCodes.Status200OK;
+            });
+        }
+
+        public void MapRoutePost(string route, Action action)
+        {
+            AddRoute("POST", route, async context =>
+            {
+                await _dispatcher.InvokeAsync( action );
+                context.Response.StatusCode = StatusCodes.Status200OK;
+            });
+        }
+
+        private void AddRoute(string method, string route, Func<HttpContext, Task> handler)
+        {
+            if ( string.IsNullOrWhiteSpace( method ) )
+            {
+                throw new ArgumentNullException( nameof( method ) );
+            }
+
+            if ( string.IsNullOrWhiteSpace( route) )
+            {
+                throw new ArgumentNullException( nameof( route ) );
+            }
+
+            if ( ! _routes.ContainsKey( method ) )
+            {
+                _routes[ method ] = new Dictionary<string, Func<HttpContext, Task>>();
+            }
+
+            _routes[method][ NormalizeRoute(route)] = handler ?? throw new ArgumentNullException( nameof( handler ) );
+        }
+
+        private static string NormalizeRoute(string route)
+        {
+            if ( string.IsNullOrWhiteSpace( route ) )
+            {
+                return string.Empty;
+            }
+
+            route = route.Trim();
+
+            return route.StartsWith('/') ? route.ToLowerInvariant() : string.Concat( "/" , route ).ToLowerInvariant();
+        }
+
+
+        private async Task OnHandleRequest( HttpContext context , string method , string path )
+        {
+            if ( ! _routes.TryGetValue( method , out var handlers ) )
+            {
+                await context.Response.WriteAsync("404 Not Found");
+                return;
+            }
+
+            if (! handlers.TryGetValue( path, out var handler ) )
+            {
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                await context.Response.WriteAsync("404 Not Found");
+                return;
+            }    
+
+            try
+            {
+                await handler(context);
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsync($"Internal Error: {ex.Message}");
+            }
+        }
 	}
 }

@@ -9,5 +9,6 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<Deterministic>false</Deterministic>
+		<PlatformTarget>AnyCPU</PlatformTarget>
 	</PropertyGroup>
 </Project>
