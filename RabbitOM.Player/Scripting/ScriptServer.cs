@@ -26,6 +26,23 @@ namespace RabbitOM.Player.Scripting
 
 
 
+        public static string NormalizeRoute(string route)
+        {
+            if ( string.IsNullOrWhiteSpace( route ) )
+            {
+                return "/";
+            }
+
+            route = route.Trim();
+
+            return route.StartsWith('/') ? route.ToLowerInvariant() : string.Concat( "/" , route ).ToLowerInvariant();
+        }
+
+
+
+
+
+
         public void Start(string endpoint)
         {
             if ( string.IsNullOrWhiteSpace( endpoint ) )
@@ -48,17 +65,16 @@ namespace RabbitOM.Player.Scripting
 
                 webApplication.Run( async context =>
                 {
-                    var method = context.Request.Method;
-                    var path = NormalizeRoute(context.Request.Path.Value ?? "/");
+                    var path = NormalizeRoute(context.Request.Path.Value );
 
-                    await OnHandleRequest( context , method , path );
+                    await OnHandleRequest( context , context.Request.Method , path );
                 });
 
                 webApplication.StartAsync().GetAwaiter().GetResult();
 
                 _webApplication = webApplication;
             }
-            catch
+            catch( Exception )
             {
                 throw;
             }
@@ -120,33 +136,28 @@ namespace RabbitOM.Player.Scripting
             _routes[method][ NormalizeRoute(route)] = handler ?? throw new ArgumentNullException( nameof( handler ) );
         }
 
-        private static string NormalizeRoute(string route)
-        {
-            if ( string.IsNullOrWhiteSpace( route ) )
-            {
-                return string.Empty;
-            }
-
-            route = route.Trim();
-
-            return route.StartsWith('/') ? route.ToLowerInvariant() : string.Concat( "/" , route ).ToLowerInvariant();
-        }
 
 
+
+
+
+
+
+        // here were are not on wpf app where is recommend to return void. there is no eventargs
         private async Task OnHandleRequest( HttpContext context , string method , string path )
         {
             if ( ! _routes.TryGetValue( method , out var handlers ) )
             {
-                await context.Response.WriteAsync("404 Not Found");
+                await context.Response.WriteAsync("404 Not Found",context.RequestAborted);
                 return;
             }
 
             if (! handlers.TryGetValue( path, out var handler ) )
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;
-                await context.Response.WriteAsync("404 Not Found");
+                await context.Response.WriteAsync("404 Not Found",context.RequestAborted);
                 return;
-            }    
+            }
 
             try
             {
@@ -155,7 +166,7 @@ namespace RabbitOM.Player.Scripting
             catch (Exception ex)
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await context.Response.WriteAsync($"Internal Error: {ex.Message}");
+                await context.Response.WriteAsync($"Internal Error: {ex.Message}",context.RequestAborted);
             }
         }
 	}
