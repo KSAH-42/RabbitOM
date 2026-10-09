@@ -1,0 +1,60 @@
+architecture ethymologie: 
+
+Le mot architecture vient du latin architectura, lui-même emprunté au grec ancien arkhitektonikê (ἀρχιτεκτονική),
+qui désigne l'art ou l'ouvrage du maître-bâtisseur
+ -> checker les cloud pattern
+   -> contraintes: eviter des dupliquer des flux, side car pas idéal , sinon ca voudrais d'avoir un recorder avec n process locaux qui écrive sur via l'ipc, c'est pas réellement elastic, le scale horizontal risque d'etre délicat
+
+ethymologie d'art: Le mot art vient du latin ars (habileté, métier, connaissance technique), lui-même issu d'une racine indo-européenne *ar- qui signifie « ajuster » ou « assembler ».
+ -> « ajuster » ou « assembler »; on assemble des micro service
+
+innovation étymologie:
+Le mot innovation vient du latin innovare, qui signifie « renouveler » ou « changer »
+ -> déprioritiser l'intégration onvif -> on allège un poid qui s'exerce sur les délai, y a du taf et des zones obsucures
+
+
+next recorder ? -> forget cdn 
+ -> un recorder elastic ?
+
+
+ flexmentalo-recorder
+ elastic-recorder-front.exe : asp.net mvc 
+ elastic-recorder-front-v1.exe
+ elastic-recorder-front-v2.exe
+ elastic-recorder-front-v2-custom.exe
+ elastic-recorder.exe ? backend // il y a une incohérence dans le nom car le recording est fait par les micro service en local, pas par l'exe, sauf si c'est le process qui fait peut faire de l'enregistrement, pb -> répartission de charge et qui dit elsatic recorder dit elsatic storage, c'est fondamental.
+ elastic-recorder-db.exe : conf, events => build stats
+ elastic-recorder-ia.exe 
+ elastic-recorder-cli.exe ???? could be merge into the elastic-recorder.exe with cli contollers
+   la cli lancerai / stopperai les micro services, mais aussi pour récupérer les logs des micro services recorders, il y reste des choses à préiciser => donc repérer les zones de flou et clarifier ces zones sur le sujet. c'est pas encore claire, il y a encore un pb. pas clair sur la cli => on fait la cli en dernier. ca parait cohérent de le faire en dernier.
+
+   -> micro service recorder per cam ?
+		-> rest api (inov?-> actual tech)
+		-> onvif ? become legacy... (invo?-> soap legacy-> no) soap compilers, will just diseaper, etc... 
+
+   -> micro service recorder per cam ? that handle conf,io, ptz, with local storage ? -> create common streaming and io framework (?)
+   -> micro service recorder per cam ?
+   -> micro service recorder per cam ?
+   -> micro service recorder per cam ?
+   -> micro service recorder per cam ?
+   -> micro service recorder per cam ?
+   -> micro service recorder per nvr ?
+   -> micro service recorder per encoder ?
+
+   or 
+
+   -> micro service for n cam of same type ?
+
+recorder -> storage -> central ?
+                    -> per micro service ?
+
+ou une autre approache:
+   -> micro service as video source for a camera
+   -> micro service as audio source for a camera
+   -> micro service as io source for a camera
+   -> micro service as ptz source for a camera
+
+Danger zone: le nombre de type de micro service => vérifier si il y a pas des règles comme une sorte de nombre d'or qui indiquerai de ne pas dépasser le nombre de microservice pour un domaine spécific, dans la UI en UX, il y a la régle des 3 cliques. coté LOC c'est parreille. faire quel recherche la dessus, peut être que... faire un schéma basic, juste un arbre avec les intéractions. les arbres équilibrés sont souvent utilisés pour répartir la charge et certains arbres s'auto équilibre il me semble.
+
++ définir les contraintes et on prend se que l'on regarde et jette les autres idées. et on fait un boucle d'itération en rajoutant des contraintes supplémentaire pour vérifier la solidité de l'archi. 3 cycles c'est suffisant une fois que l'idée est jugé convenable. ce qui implique de faire du top down en premier au niveau du dev du poc.
+es ce qu'il faille un nombre limite de namespace par assembly ? question ouverte ? il y avait une phrase de sherlock homes qui était pas mal... "à méditer" 

@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Scripting
 		}
 
 		// TODO: replace by a kind of application classe or service app class 
-		// the main is accessible
+		// the main windows is accessible from the singleton
 		public MainWindow Window { get; private set; } = App.Current.MainWindow as MainWindow;
 
 		// TODO: for the next we will replace it by a client at connected when the backend using signal r will be ready, it just temp server for validating some basic ideas or may by we can keep that and expose a different baseScript class , and then we it's ready we smooth transition
