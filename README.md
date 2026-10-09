@@ -42,7 +42,6 @@ Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/relea
 # About the actual rtsp client and how to receive packets ?
 
 ~~~~C#
-
 using ( var client = new RtspClient() )
 {
     client.CommunicationStarted += ( sender , e ) =>
@@ -86,7 +85,6 @@ using ( var client = new RtspClient() )
     Console.WriteLine("Press any keys to close the application");
     Console.ReadKey();
 }
-
 ~~~~
 
 # About Player / VideoDecoder sample
@@ -104,9 +102,10 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 # RabbitOM.Player and run script
 
 The media player used the Roslyn compiler to compile script for controlling the application.
-The following example show how to control remotly the player using ASP.NET KESTREL in stand alone mode.
 
 ![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.UsingCurls.png)
+
+The following example show how to start stop streaming using ASP.NET KESTREL in stand alone mode.
 
 ~~~~XML
 <?xml version="1.0" encoding="utf-8"?>
@@ -118,6 +117,7 @@ The following example show how to control remotly the player using ASP.NET KESTR
 		using RabbitOM.Player;
 		using RabbitOM.Player.Scripting;
 		using System;
+		using System.Linq;
 		using System.Windows;
 
 		public sealed class MediaPlayerScript : ApplicationScript
@@ -126,13 +126,21 @@ The following example show how to control remotly the player using ASP.NET KESTR
 			
 			public override void Setup()
 			{
-				Server.MapRoutePost( "/start" , OnStartStreaming );
-				Server.MapRoutePost( "/stop" , OnStopStreaming );
+				Server.MapPost( "/start" , () => OnStartStreaming() );
+				Server.MapPost( "/stop" , () => OnStopStreaming() );
+				Server.MapPost( "/start/{id:int}" , (int id) => OnStartStreaming(id) );
 				Server.Start( Endpoint );
 			}
 			
 			private void OnStartStreaming()
 			{
+				Window.StartStreamingCommand.Execute( null , Window );
+			}
+			
+			private void OnStartStreaming( int streamNumber )
+			{
+				Window.SelectedSource = Window.Sources.ElementAtOrDefault( streamNumber ) ?? string.Empty;
+				Window.StopStreamingCommand.Execute( null , Window );
 				Window.StartStreamingCommand.Execute( null , Window );
 			}
 			
