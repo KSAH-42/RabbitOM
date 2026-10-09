@@ -28,27 +28,20 @@ namespace RabbitOM.Player.Scripting
                 throw new InvalidOperationException( "the server is already started" );
             }
 
-            try
+            var builder = WebApplication.CreateBuilder();
+
+            builder.WebHost.UseKestrel().UseUrls( endpoint );
+
+            var webApplication = builder.Build();
+
+            foreach ( var route in _routes.PostRoutes )
             {
-                var builder = WebApplication.CreateBuilder();
-
-                builder.WebHost.UseKestrel().UseUrls( endpoint );
-
-                var webApplication = builder.Build();
-
-                foreach ( var route in _routes.PostRoutes )
-                {
-                    webApplication.MapPost( route.Key , route.Value ).UseUIDispatcher( route.Value );
-                }
-
-                webApplication.StartAsync().GetAwaiter().GetResult();
-
-                _webApplication = webApplication;
+                webApplication.MapPost( route.Key , route.Value ).UseUIDispatcher( route.Value );
             }
-            catch( Exception )
-            {
-                throw;
-            }
+
+            webApplication.StartAsync().GetAwaiter().GetResult();
+
+            _webApplication = webApplication;
         }
 
         public void Stop()
