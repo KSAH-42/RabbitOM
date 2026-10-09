@@ -81,7 +81,7 @@ namespace RabbitOM.Player.Scripting
 
 		public static Guid ToGuid( this string source )
 		{
-			return Guid.TryParse( EnsureSource( source ) , out var result ) ? result : default;
+			return Guid.TryParse( EnsureSource( source ) , out var result ) ? result : Guid.Empty;
 		}
 
 		private static string EnsureSource( string value )

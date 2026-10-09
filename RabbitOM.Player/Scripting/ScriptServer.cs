@@ -10,18 +10,11 @@ namespace RabbitOM.Player.Scripting
         private WebApplication _webApplication;
 
 
-
         public bool IsStarted
         {
             get => _webApplication != null;
         }
 
-
-
-        public void MapPost(string pattern, Delegate action)
-        {
-            _routes.AddPostRoute( pattern, action );
-        }
 
         public void Start(string endpoint)
         {
@@ -72,6 +65,11 @@ namespace RabbitOM.Player.Scripting
         {
             Stop();
             _routes.RemoveAllRoutes();
+        }
+
+        public void MapPost(string pattern, Delegate action)
+        {
+            _routes.AddPostRoute( pattern, action );
         }
 	}
 }

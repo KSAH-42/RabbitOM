@@ -7,9 +7,7 @@ namespace RabbitOM.Player.Scripting
 	{
         private readonly ConcurrentDictionary<string, Delegate> _postRoutes = new ();
 
-
         public IReadOnlyDictionary<string,Delegate> PostRoutes { get => _postRoutes; }
-
 
         public void AddPostRoute( string pattern , Delegate handler )
         {
