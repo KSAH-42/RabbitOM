@@ -45,7 +45,7 @@ namespace RabbitOM.Player.Scripting
 
                 foreach ( var route in _routes.PostRoutes )
                 {
-                    webApplication.MapPost( route.Key , route.Value ).UseUIDispatcher();
+                    webApplication.MapPost( route.Key , route.Value ).UseUIDispatcher( route.Value );
                 }
 
                 webApplication.StartAsync().GetAwaiter().GetResult();

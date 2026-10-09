@@ -7,8 +7,18 @@ namespace RabbitOM.Player.Scripting
 {
     public static class RouteHandlerBuilderExtensions
     {
-        public static RouteHandlerBuilder UseUIDispatcher(this RouteHandlerBuilder builder)
+        public static RouteHandlerBuilder UseUIDispatcher(this RouteHandlerBuilder builder , Delegate handler )
         {
+            if ( builder == null )
+            {
+                throw new ArgumentNullException( nameof( builder ) );
+            }
+
+            if ( handler == null )
+            {
+                throw new ArgumentNullException( nameof( handler ) );
+            }
+
             return builder.AddEndpointFilter(async (context, next) =>
             {
                 var targetDispatcher = Application.Current?.Dispatcher;
@@ -18,11 +28,13 @@ namespace RabbitOM.Player.Scripting
                     return await next(context);
                 }
 
+                var args = context.Arguments.ToArray();
+
                 targetDispatcher.BeginInvoke( async () =>
                 {
                     try
                     {
-                         await next(context);
+                         handler.DynamicInvoke( args );
                     }
                     catch( Exception ex )
                     {
