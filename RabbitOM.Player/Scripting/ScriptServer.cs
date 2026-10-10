@@ -10,17 +10,24 @@ namespace RabbitOM.Player.Scripting
         private WebApplication _webApplication;
 
 
+
         public bool IsStarted
         {
             get => _webApplication != null;
         }
 
 
-        public void Start(string endpoint)
+
+        public void Start(params string[] endpoints)
         {
-            if ( string.IsNullOrWhiteSpace( endpoint ) )
+            if ( endpoints == null )
             {
-                throw new ArgumentNullException( nameof( endpoint ) );
+                throw new ArgumentNullException( nameof( endpoints ) );
+            }
+
+            if ( endpoints.Length == 0 || endpoints.Any( string.IsNullOrWhiteSpace ) )
+            {
+                throw new ArgumentException( nameof( endpoints ) );
             }
 
             if ( _webApplication != null )
@@ -30,7 +37,7 @@ namespace RabbitOM.Player.Scripting
 
             var builder = WebApplication.CreateBuilder();
 
-            builder.WebHost.UseKestrel().UseUrls( endpoint );
+            builder.WebHost.UseKestrel().UseUrls( endpoints );
 
             var webApplication = builder.Build();
 
