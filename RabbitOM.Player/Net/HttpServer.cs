@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 
-namespace RabbitOM.Player.Scripting
+namespace RabbitOM.Player.Net
 {
-    public sealed class ScriptServer : IDisposable
+    public sealed class HttpServer : IDisposable
 	{
-        private readonly ScriptServerRoutes _routes = new ScriptServerRoutes();
+        private readonly HttpServerRoutes _routes = new HttpServerRoutes();
         private WebApplication _webApplication;
 
 

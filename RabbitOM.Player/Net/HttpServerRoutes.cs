@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace RabbitOM.Player.Scripting
+namespace RabbitOM.Player.Net
 {
-	public sealed class ScriptServerRoutes
+	public sealed class HttpServerRoutes
 	{
         private readonly ConcurrentDictionary<string, Delegate> _postRoutes = new ();
 

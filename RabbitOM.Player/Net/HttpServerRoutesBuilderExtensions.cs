@@ -2,10 +2,11 @@
 using System.Windows;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using RabbitOM;
 
-namespace RabbitOM.Player.Scripting
+namespace RabbitOM.Player.Net
 {
-    public static class RouteHandlerBuilderExtensions
+    public static class HttpServerRoutesBuilderExtensions
     {
         // we routed at "bouche du rhone" , because , because https://www.youtube.com/watch?v=3PB0f8k_Yxw&t=3h3m16s
         // dispacth issue fixed now

@@ -19,13 +19,9 @@
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="Controllers\**" />
-	  <Compile Remove="Net\**" />
 	  <EmbeddedResource Remove="Controllers\**" />
-	  <EmbeddedResource Remove="Net\**" />
 	  <None Remove="Controllers\**" />
-	  <None Remove="Net\**" />
 	  <Page Remove="Controllers\**" />
-	  <Page Remove="Net\**" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Resource Include="Resources\icon.ico" />
