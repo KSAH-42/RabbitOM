@@ -9,8 +9,6 @@ namespace RabbitOM.Player.Scripting
 			Dispose( false );
 		}
 
-		// TODO: replace by a kind of application classe or service app class 
-		// the main windows is accessible from the singleton
 		public MainWindow Window { get; private set; } = App.Current.MainWindow as MainWindow;
 
 		public virtual void Setup() { }
@@ -23,7 +21,7 @@ namespace RabbitOM.Player.Scripting
 
 		protected virtual void Dispose( bool disposing )
 		{
-			Window = null; // set as null to allow the garbage to collect and tell to it that no more reference are keeped/locked in someway 
+			Window = null; // set as null to allow the garbage to collect for no more keeping references
 		}
 	}
 }
