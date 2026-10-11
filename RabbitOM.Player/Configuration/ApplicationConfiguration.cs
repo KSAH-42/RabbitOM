@@ -1,4 +1,6 @@
-﻿using System;
+﻿// TODO: remove legacy configuration section class to finish netcore migration
+// and use IConfiguration interface instead
+using System;
 using System.Linq;
 using System.Configuration;
 using System.Collections.Generic;
@@ -51,6 +53,11 @@ namespace RabbitOM.Player.Configuration
             var sources = section.EnsureSourcesExists();
 
             sources.Clear();
+        }
+
+        public ApiConfigurationSection GetApiConfiguration()
+        {
+            return _configuration.GetSectionOrDefault<ApiConfigurationSection>( "api" );
         }
 
         public void Save()
