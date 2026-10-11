@@ -69,7 +69,7 @@ namespace RabbitOM.Player.Net
 
         public void MapPost(string pattern, Delegate action)
         {
-            _routes.AddPostRoute( pattern, action );
+            _routes.AddOrUpdateRoute( pattern, action );
         }
 	}
 }

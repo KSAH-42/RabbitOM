@@ -9,7 +9,7 @@ namespace RabbitOM.Player.Net
 
         public IReadOnlyDictionary<string,Delegate> PostRoutes { get => _postRoutes; }
 
-        public void AddPostRoute( string pattern , Delegate handler )
+        public void AddOrUpdateRoute( string pattern , Delegate handler )
         {
             if ( string.IsNullOrWhiteSpace( pattern ) )
             {
