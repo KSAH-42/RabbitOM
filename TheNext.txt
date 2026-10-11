@@ -58,3 +58,52 @@ Danger zone: le nombre de type de micro service => vérifier si il y a pas des r
 
 + définir les contraintes et on prend se que l'on regarde et jette les autres idées. et on fait un boucle d'itération en rajoutant des contraintes supplémentaire pour vérifier la solidité de l'archi. 3 cycles c'est suffisant une fois que l'idée est jugé convenable. ce qui implique de faire du top down en premier au niveau du dev du poc.
 es ce qu'il faille un nombre limite de namespace par assembly ? question ouverte ? il y avait une phrase de sherlock homes qui était pas mal... "à méditer" 
+
+
+
+elastic-recorder-front.exe
+           |
+          \|/
+elastic-recorder.api.exe // hold master db, hold device manager endpoints, start/stop device throught device-manager api
+           |
+           +elastic-recorder.api.device-manager.exe // manage devices , adding localdb, storage ?
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.exe
+           | + elastic-recorder.api.device.onvif.exe
+           |
+           +elastic-recorder.api.device-manager.exe // manage devices , adding localdb, storage ?
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.exe
+             + elastic-recorder.api.device.onvif.exe
+
+| : http-rest links
++ : http-rest links
+
+elastic-recorder-front.exe          => run on kubernetes pod
+elastic-recorder.exe                => run on kubernetes pod
+elastic-recorder.api.device-manager => run on kubernetes pod, and launch device processes
+
+
+
+elastic-recorder.front.exe              -> hosted on cloud
+elastic-recorder.api.exe                -> hosted on cloud
+elastic-recorder.api.device-manager.exe -> hosted on cloud
+elastic-recorder.api.device-manager.exe -> hosted on cloud
+elastic-recorder.api.device-manager.exe -> hosted on cloud
+elastic-recorder.api.device-manager.exe -> hosted on cloud
+elastic-recorder.api.device-manager.exe -> hosted on-promise (site A)
+elastic-recorder.api.device-manager.exe -> hosted on-promise (site B)
+elastic-recorder.api.device-manager.exe -> hosted on-promise (site C)
+elastic-recorder.api.device-manager.exe -> hosted on-promise (site D)

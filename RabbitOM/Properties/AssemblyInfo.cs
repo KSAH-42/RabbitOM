@@ -6,4 +6,4 @@
 [assembly: AssemblyTitle("RabbitOM")]
 [assembly: AssemblyDescription("Network communication library")]
 [assembly: AssemblyTrademark("RabbitOM™")]
-[assembly: AssemblyVersion("2.0.9.*")]
+[assembly: AssemblyVersion("2.1.0.*")]
