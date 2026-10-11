@@ -115,6 +115,7 @@ The following example show how to start stop streaming using ASP.NET KESTREL in 
 	</properties>
 	<code>
 		using RabbitOM.Player;
+		using RabbitOM.Player.Net;
 		using RabbitOM.Player.Scripting;
 		using System;
 		using System.Linq;
@@ -123,13 +124,20 @@ The following example show how to start stop streaming using ASP.NET KESTREL in 
 		public sealed class MediaPlayerScript : ApplicationScript
 		{
 			public string Endpoint { get; set; }
-			
+
+			public HttpServer Server { get; } = new HttpServer();
+
 			public override void Setup()
 			{
 				Server.MapPost( "/start" , () => OnStartStreaming() );
 				Server.MapPost( "/stop" , () => OnStopStreaming() );
 				Server.MapPost( "/start/{id:int}" , (int id) => OnStartStreaming(id) );
 				Server.Start( Endpoint );
+			}
+			
+			protected override void Dispose( bool disposing )
+			{
+				Server.Dispose();
 			}
 			
 			private void OnStartStreaming()
