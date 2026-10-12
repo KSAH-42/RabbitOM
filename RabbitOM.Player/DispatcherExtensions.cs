@@ -6,12 +6,15 @@ namespace RabbitOM.Player
 {
     public static class DispatcherExtensions
     {
-        public static DispatcherOperation BeginInvoke( this Dispatcher source , DispatcherPriority priority , Action action )
+        public static DispatcherOperation SafeBeginInvoke( this Dispatcher source , DispatcherPriority priority , Action action )
         {
             Debug.Assert( source != null );
             Debug.Assert( action != null );
 
-            return source.BeginInvoke( priority , action );
+            return source.BeginInvoke( priority , () =>
+            {
+                try { action.Invoke(); } catch( Exception ex ) { Debug.WriteLine( ex ); }
+            } );
         }
     }
 }

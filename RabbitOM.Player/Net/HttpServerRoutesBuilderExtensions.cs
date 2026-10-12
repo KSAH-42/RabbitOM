@@ -28,22 +28,12 @@ namespace RabbitOM.Player.Net
 
                 if ( targetDispatcher == null || targetDispatcher.CheckAccess() )
                 {
-                    return await next(routeHandlerContext);
+                    return await next( routeHandlerContext );
                 }
 
                 var args = routeHandlerContext.Arguments.ToArray();
 
-                await targetDispatcher.BeginInvoke( async () =>
-                {
-                    try
-                    {
-                         handler.DynamicInvoke( args );
-                    }
-                    catch( Exception ex )
-                    {
-                        System.Diagnostics.Debug.WriteLine( ex );
-                    }
-                } );
+                await targetDispatcher.BeginInvoke( async () => handler.TryDynamicInvoke( args ) );
 
                 return Results.Ok();
             });
