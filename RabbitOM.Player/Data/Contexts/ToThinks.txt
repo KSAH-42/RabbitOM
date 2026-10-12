@@ -1,0 +1,30 @@
+﻿using System;
+using System.Windows;
+
+namespace RabbitOM.Player.Data.Contexts
+{
+    public abstract class DataContext : DependencyObject
+    {
+    }
+
+    public sealed class MainDataContext : DataContext // or just inherit from DependencyObject ? it's depend to the app needs 
+    {
+    }
+}
+
+
+// or
+
+namespace RabbitOM.Player.Dialogs.Contexts
+{
+    public abstract class DialogDataContext : DependencyObject
+    {
+    }
+}
+
+namespace RabbitOM.Player.Controls.Contexts
+{
+    public abstract class ControlDataContext : DependencyObject
+    {
+    }
+}
