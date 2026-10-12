@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace RabbitOM.Player.Controls
 {
-	using RabbitOM.Player.Services;
+	using RabbitOM.Player.Resources;
 
 	public sealed partial class ScriptEditorControl : UserControl , IDisposable
 	{
@@ -132,7 +132,7 @@ namespace RabbitOM.Player.Controls
 
 		public void Reset()
 		{
-			Script = ResourceService.GetResourceFile( ResourceService.ScriptTemplate );
+			Script = ResourceManager.GetResourceFile( ResourceManager.ScriptTemplate );
 		}
 
 		public void Clear()

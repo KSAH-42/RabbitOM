@@ -2,9 +2,9 @@
 using System.IO;
 using System.Reflection;
 
-namespace RabbitOM.Player.Services
+namespace RabbitOM.Player.Resources
 {
-	public static class ResourceService
+	public static class ResourceManager
 	{
 		public const string ScriptTemplate = "ScriptTemplate.txt";
 
