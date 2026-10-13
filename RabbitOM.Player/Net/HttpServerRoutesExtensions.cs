@@ -2,7 +2,6 @@
 using System.Windows;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using RabbitOM;
 
 namespace RabbitOM.Player.Net
 {

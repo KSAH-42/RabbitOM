@@ -11,6 +11,9 @@ namespace RabbitOM.Player.Net
 
 
 
+
+        public string ApiKey { get; set; }
+
         public bool IsStarted
         {
             get => _webApplication != null;
@@ -39,7 +42,7 @@ namespace RabbitOM.Player.Net
 
             builder.WebHost.UseKestrel().UseUrls( endpoints );
 
-            var webApplication = builder.Build();
+            var webApplication = builder.BuildWith<HttpServerAuthenticatorOptions,HttpServerAuthenticator>( ApiKey , options => options.ApiKey = ApiKey );
 
             foreach ( var route in _routes.PostRoutes )
             {

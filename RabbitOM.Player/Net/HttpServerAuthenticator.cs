@@ -7,13 +7,14 @@ using System.Text.Encodings.Web;
 
 namespace RabbitOM.Player.Net
 {
-	public sealed class HttpServerAuthenticator : AuthenticationHandler<AuthenticationSchemeOptions>
+	public sealed class HttpServerAuthenticator : AuthenticationHandler<HttpServerAuthenticatorOptions>
 	{
-		public HttpServerAuthenticator( IOptionsMonitor<AuthenticationSchemeOptions> options , ILoggerFactory logger , UrlEncoder encoder ) : base( options , logger , encoder  )
-		{
-		}
+		private readonly string _apiKey;
 
-		public string ApiKey { get; init; }
+		public HttpServerAuthenticator( IOptionsMonitor<HttpServerAuthenticatorOptions> options , ILoggerFactory logger , UrlEncoder encoder ) : base( options , logger , encoder  )
+		{
+			_apiKey = options.CurrentValue.ApiKey;
+		}
 
 		protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
 		{
@@ -22,7 +23,7 @@ namespace RabbitOM.Player.Net
 				return await Task.FromResult( AuthenticateResult.Fail( "no api key found" ) );
 			}
 
-			if ( ! keys.Any( key => StringComparer.OrdinalIgnoreCase.Equals( ApiKey ?? string.Empty , key ?? string.Empty ) ) )
+			if ( ! keys.Any( key => StringComparer.OrdinalIgnoreCase.Equals( _apiKey ?? string.Empty , key ?? string.Empty ) ) )
 			{
 				return await Task.FromResult( AuthenticateResult.Fail( "invalid api key" ) );
 			}
