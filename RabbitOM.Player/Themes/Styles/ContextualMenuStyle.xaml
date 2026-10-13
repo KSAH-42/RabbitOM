@@ -191,16 +191,6 @@
                             <Setter Property="Visibility" Value="Collapsed" TargetName="Icon" />
                         </Trigger>
                         
-                        <Trigger Property="AllowsTransparency" Value="true" SourceName="SubMenuPopup" >
-                            <Setter Property="Margin" Value="0,0,3,3" TargetName="SubMenu" />
-                            <Setter Property="SnapsToDevicePixels" Value="true" TargetName="SubMenu" />
-                            <Setter Property="BitmapEffect" >
-                                <Setter.Value>
-                                    <DropShadowBitmapEffect ShadowDepth="1.5" Softness="0.15" />
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter Property="Effect" TargetName="HeaderHost">
                                 <Setter.Value>
@@ -233,7 +223,7 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="white"/>
         <Setter Property="BorderBrush" Value="#DF000000" />
-        <Setter Property="Background" Value="#DF000000"/>
+		<Setter Property="Background" Value="#DF212124"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="SnapsToDevicePixels" Value="True" />
