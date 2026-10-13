@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Zoom.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Home.png)
 
 Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/releases
 
