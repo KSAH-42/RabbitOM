@@ -125,13 +125,17 @@ The following example show how to start stop streaming using ASP.NET KESTREL in 
 		{
 			private readonly HttpServer _server = new HttpServer();
 			
-			public string Endpoint { get; set; }
-
-			public override void Setup()
+			public MediaPlayerScript()
 			{
 				_server.MapPost( "/start" , () => OnStartStreaming() );
 				_server.MapPost( "/stop" , () => OnStopStreaming() );
 				_server.MapPost( "/start/{id:int}" , (int id) => OnStartStreaming(id) );
+			}
+			
+			public string Endpoint { get; set; }
+
+			public override void Setup()
+			{
 				_server.Start( Endpoint );
 			}
 			
