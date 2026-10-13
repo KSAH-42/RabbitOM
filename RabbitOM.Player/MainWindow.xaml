@@ -55,15 +55,15 @@
 
 		<Menu DockPanel.Dock="Top" >
 
-			<MenuItem Header="Application">
+			<MenuItem Header="APPLICATION">
 				<MenuItem Header="Quit" Command="{x:Static ApplicationCommands.Close}" />
 			</MenuItem>
 
-			<MenuItem Header="Configuration">
+			<MenuItem Header="CONFIGURATION">
 				<MenuItem Header="Network settings" Command="{Binding ShowNetworkSettingsDialogCommand,RelativeSource={RelativeSource AncestorType=Window}}" />
 			</MenuItem>
 
-			<MenuItem Header="Views">
+			<MenuItem Header="VIEWS">
 				
 				<MenuItem Header="Full screen" 
 						  Command="{Binding ToggleFullScreenCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
@@ -101,7 +101,7 @@
 				
 			</MenuItem>
 
-			<MenuItem Header="Help">
+			<MenuItem Header="HELP">
 				<MenuItem Header="About" 
 						  Command="{Binding ShowAboutDialogCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
 						  />
@@ -191,7 +191,7 @@
 							TabStripPlacement="Bottom" 
 							HorizontalContentAlignment="Center" 
 							FontSize="20" 
-							Padding="0,0,11,9"
+							Padding="0,0,0,9"
 							behaviors:TabControlFadeBehavior.EnableFade="True"
 							>
 

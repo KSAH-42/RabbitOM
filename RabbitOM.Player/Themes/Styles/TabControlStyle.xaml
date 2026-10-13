@@ -61,11 +61,11 @@
 						</Trigger>
 
 						<Trigger Property="IsSelected" Value="True">
-							<Setter Property="Background" Value="#90525252" TargetName="Part_Panel" />
+							<Setter Property="Foreground" Value="White" />
 						</Trigger>
 
 						<Trigger Property="IsSelected" Value="False">
-							<Setter Property="Background" Value="#90000000" TargetName="Part_Panel" />
+							<Setter Property="Foreground" Value="Gray" />
 						</Trigger>
 
 						<MultiTrigger>
@@ -74,7 +74,7 @@
 								<Condition Property="IsSelected" Value="False" />
 							</MultiTrigger.Conditions>
 							<MultiTrigger.Setters>
-								<Setter Property="Background" Value="#E6525252" TargetName="Part_Panel" />
+								<Setter Property="Foreground" Value="White" />
 							</MultiTrigger.Setters>
 						</MultiTrigger>
 
