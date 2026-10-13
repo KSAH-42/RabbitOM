@@ -41,8 +41,7 @@ namespace RabbitOM.Player
             CommandBindings.Add( new CommandBinding( FocusCommand , OnFocus ));
             CommandBindings.Add( new CommandBinding( SaveImageCommand , OnSaveImage , OnCanSaveImage ));
             CommandBindings.Add( new CommandBinding( TabNextCommand , OnTabNext ) );
-            CommandBindings.Add( new CommandBinding( StartScriptCommand , OnStartScript ) );
-            CommandBindings.Add( new CommandBinding( StopScriptCommand , OnStopScript ) );
+            CommandBindings.Add( new CommandBinding( ToggleStartScriptCommand , OnToggleStartStopScript ) );
 
             _scriptEditor.Runner = new ScriptRunner();
         }
@@ -65,8 +64,7 @@ namespace RabbitOM.Player
         public RoutedCommand SaveImageCommand { get; } = new RoutedCommand();
         public RoutedCommand StretchCommand { get; } = new RoutedCommand();
         public RoutedCommand TabNextCommand { get; } = new RoutedCommand();
-        public RoutedCommand StartScriptCommand { get; } = new RoutedCommand();
-        public RoutedCommand StopScriptCommand { get; } = new RoutedCommand();
+        public RoutedCommand ToggleStartScriptCommand { get; } = new RoutedCommand();
 
 
         public bool StreamingStatus
@@ -277,14 +275,16 @@ namespace RabbitOM.Player
             _tabcontrol.SelectedIndex = (_tabcontrol.SelectedIndex + 1 ) % _tabcontrol.Items.Count;
         }
 
-        private void OnStartScript( object sender , ExecutedRoutedEventArgs e )
+        private void OnToggleStartStopScript( object sender , ExecutedRoutedEventArgs e )
         {
-            _scriptEditor.RunScript();
-        }
-
-        private void OnStopScript( object sender , ExecutedRoutedEventArgs e )
-        {
-            _scriptEditor.StopScript();
+            if ( _scriptEditor.IsScriptRunning )
+            {
+                _scriptEditor.StopScript();
+            }
+            else
+            {
+                _scriptEditor.RunScript();
+            }
         }
 
         private static void OnStretchImageChanged( DependencyObject sender , DependencyPropertyChangedEventArgs e )

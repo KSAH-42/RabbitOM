@@ -36,14 +36,6 @@
 		<KeyBinding Command="{Binding TabNextCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
 					Key="F8"
 					/>
-		<KeyBinding Command="{Binding StartScriptCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-					Key="F5"
-					/>
-
-		<KeyBinding Command="{Binding StopScriptCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
-					Key="F5"
-					Modifiers="Shift"
-					/>
 
 	</Window.InputBindings>
 
@@ -98,13 +90,14 @@
 						  Command="{Binding TabNextCommand,RelativeSource={RelativeSource AncestorType=Window}}"
 						  InputGestureText="F8" 
 						  />
-				
 			</MenuItem>
 
 			<MenuItem Header="HELP">
+				
 				<MenuItem Header="About" 
 						  Command="{Binding ShowAboutDialogCommand,RelativeSource={RelativeSource AncestorType=Window}}" 
 						  />
+				
 			</MenuItem>
 
 		</Menu>
@@ -228,6 +221,12 @@
 									<MenuItem Header="Save Image" 
                                               Command="{Binding PlacementTarget.Tag.SaveImageCommand,RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                               />
+
+									<Separator/>
+
+									<MenuItem Header="Start / Stop script"
+											  Command="{Binding PlacementTarget.Tag.ToggleStartScriptCommand,RelativeSource={RelativeSource AncestorType=ContextMenu}}" 
+											  />
 
 								</ContextMenu>
 
