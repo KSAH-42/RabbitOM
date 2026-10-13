@@ -7,9 +7,9 @@ using System.Text.Encodings.Web;
 
 namespace RabbitOM.Player.Net
 {
-	public sealed class HttpAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+	public sealed class HttpServerAuthenticator : AuthenticationHandler<AuthenticationSchemeOptions>
 	{
-		public HttpAuthenticationHandler( IOptionsMonitor<AuthenticationSchemeOptions> options , ILoggerFactory logger , UrlEncoder encoder ) : base( options , logger , encoder  )
+		public HttpServerAuthenticator( IOptionsMonitor<AuthenticationSchemeOptions> options , ILoggerFactory logger , UrlEncoder encoder ) : base( options , logger , encoder  )
 		{
 		}
 
