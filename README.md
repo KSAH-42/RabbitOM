@@ -103,7 +103,7 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 
 The media player used the Roslyn compiler to compile script for controlling the application.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.UsingCurls.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Scripting.png)
 
 The following example show how to start stop streaming using ASP.NET KESTREL in stand alone mode.
 
@@ -175,6 +175,8 @@ Stopping the streaming:
 curl.exe -X POST https://127.0.0.1:5000/stop
 ~~~~
 
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.UsingCurls.png)
+	
 we use dev ssl certifcate, actually there is no selfsigned certificate, otherwise you can run this command in an another computer:
 ~~~~
 curl.exe -X POST https://192.168.1.10:5000/start --insecure
