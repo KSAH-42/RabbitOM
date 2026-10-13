@@ -256,7 +256,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
-        <Setter Property="Background" Value="{StaticResource ComboxBackground}" />
+		<Setter Property="Background" Value="#FF292829" />
 		<Setter Property="BorderThickness" Value="1.5" />
 		<Setter Property="Template">
             <Setter.Value>
