@@ -43,7 +43,7 @@
 								<ScrollContentPresenter Name="PART_ScrollContentPresenter" KeyboardNavigation.DirectionalNavigation="Local" CanContentScroll="True" CanHorizontallyScroll="False" CanVerticallyScroll="False" />
 							</DockPanel>
 						</Border>
-						<Border Name="PART_BorderBottom" BorderBrush="#FF656565" BorderThickness="1" Grid.Row="1" Grid.Column="1" Background="#FF656565" Visibility="Visible" />
+						<Border Name="PART_BorderBottom" BorderBrush="Transparent" BorderThickness="1" Grid.Row="1" Grid.Column="1" Background="Transparent" Visibility="Visible" />
 						<ScrollBar Name="PART_HorizontalScrollBar" Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Value="{TemplateBinding HorizontalOffset}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
 						<ScrollBar Name="PART_VerticalScrollBar" Orientation="Vertical" Grid.Row="0" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Value="{TemplateBinding VerticalOffset}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
 					</Grid>
