@@ -1,68 +1,11 @@
-﻿// TODO: remove legacy configuration section class to finish netcore migration
-// and use IConfiguration interface instead
-using System;
-using System.Linq;
-using System.Configuration;
-using System.Collections.Generic;
+﻿using System;
 
 namespace RabbitOM.Player.Configuration
 {
-    using SystemConfiguration = System.Configuration.Configuration;
+	public sealed class ApplicationConfiguration
+	{
+		public ServerConfiguration Server { get; } = new ServerConfiguration();
 
-    public sealed class ApplicationConfiguration
-    {
-        private readonly SystemConfiguration _configuration = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.None );
-
-        public void AddSources( IEnumerable<RtspSourceConfigurationElement> elements )
-        {
-            if ( elements == null )
-            {
-                throw new ArgumentNullException( nameof( elements ) );
-            }
-
-            var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
-            var sources = section.EnsureSourcesExists();
-
-            sources.AddRange( elements );
-        }
-
-        public IReadOnlyCollection<RtspSourceConfigurationElement> GetSources()
-        {
-            var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
-            var sources = section.EnsureSourcesExists();
-
-            return sources.Cast<RtspSourceConfigurationElement>().ToList();
-        }
-
-        public IReadOnlyCollection<RtspSourceConfigurationElement> GetSourcesOrDefault()
-        {
-            var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
-            var sources = section.EnsureSourcesExists();
-
-            if ( section.CreateSourcesIfEmpty && sources.Count == 0 )
-            {
-                sources.AddRange( RtspSourceConfigurationElementFactory.CreateDefaultSources() );
-            }
-
-            return sources.Cast<RtspSourceConfigurationElement>().ToList();
-        }
-
-        public void ClearSources()
-        {
-            var section = _configuration.GetSectionOrDefault<RtspConfigurationSection>( "rtsp" );
-            var sources = section.EnsureSourcesExists();
-
-            sources.Clear();
-        }
-
-        public ApiConfigurationSection GetApiConfiguration()
-        {
-            return _configuration.GetSectionOrDefault<ApiConfigurationSection>( "api" );
-        }
-
-        public void Save()
-        {
-            _configuration.Save();
-        }
-    }
+		public List<VideoSourceConfiguration> VideoSources { get; } = new List<VideoSourceConfiguration>();
+	}
 }

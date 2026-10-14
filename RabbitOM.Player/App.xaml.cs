@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Threading;
 using System.Windows;
 
 namespace RabbitOM.Player
 {
-    public partial class App : System.Windows.Application
+	public partial class App : System.Windows.Application
     {
-        private readonly Mutex _mutex;
-
-        public App()
-        {
-            _mutex = new Mutex( true , "RabbitOM.Player" );
-        }
+        private readonly Mutex _mutex = new Mutex( true , "RabbitOM.Player" );
 
 		protected override void OnStartup( StartupEventArgs e )
 		{
@@ -23,11 +17,6 @@ namespace RabbitOM.Player
 			}
 
 			base.OnStartup( e );
-		}
-
-		protected override void OnExit( ExitEventArgs e )
-		{
-			base.OnExit( e );
 		}
     }
 }

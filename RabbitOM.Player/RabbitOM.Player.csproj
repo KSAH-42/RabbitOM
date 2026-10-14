@@ -24,6 +24,14 @@
 	  <Page Remove="Controllers\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Remove="appsettings.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+	<ItemGroup>
 	  <Resource Include="Resources\icon.ico" />
 	  <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
 	</ItemGroup>

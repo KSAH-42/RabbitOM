@@ -97,7 +97,7 @@ namespace RabbitOM.Player
             set => SetValue( StatisticsVisibilityProperty , value );
         }
 
-        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfiguration().GetSourcesOrDefault().Select( element => element.Uri ) );
+        public ObservableCollection<string> Sources { get; } = new ObservableCollection<string>( new ApplicationConfigurationSource(ConfigurationProvider.Default.Configuration).GetConfiguration().VideoSources.Select( element => element.Uri ) );
 
         public MediaPlayerControl MediaPlayer { get => _mediaPlayer; }
 
