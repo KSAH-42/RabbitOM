@@ -1,28 +1,3 @@
-MDP: media decoder protocol (custom protocol)
-
-                    ++++++++++++++++++++++
-                    +     Decoder.exe    +
-                    ++++++++++++++++++++++
-player -----------> + http: start        +
-       <----------- +       stop         +
-                    +       get_status   +
-                    +       get_stats    +
-                    +       get_codecs   +
-                    +       get_transports +
-                    +---------------------
-                    +   transports:      +
-                    +---------------------
-       <----------- + IPC: shared mem    + use MDP protocol
-                    +      audio/video   +
-                    +      frames        +
-player              + sockets:           + use MDP protocol
-listener  <-------- +     use tcp client +
-                    ++++++++++++++++++++++
-
-MdpPacket
- FrameMdpPacket
- KeepAliveMdpPacket
-
 architecture ethymologie: 
 
 Le mot architecture vient du latin architectura, lui-même emprunté au grec ancien arkhitektonikê (ἀρχιτεκτονική),

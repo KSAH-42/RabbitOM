@@ -1,12 +1,25 @@
-﻿using System;
-
 namespace RabbitOM.Player.Decoder
 {
-	internal class Program
+	public static class Program
 	{
-		static void Main( string[] args )
+		public static void Main( string[] args )
 		{
-			Console.WriteLine( "Hello, World!" );
+			var builder = WebApplication.CreateBuilder(args);
+
+			builder.Services.AddControllers();
+			builder.Services.AddSwaggerGen();
+
+			var app = builder.Build();
+
+			app.UseHttpsRedirection();
+			app.UseSwagger();
+			app.UseSwaggerUI();
+
+			app.UseAuthorization();
+
+			app.MapControllers();
+
+			app.Run();
 		}
 	}
 }
