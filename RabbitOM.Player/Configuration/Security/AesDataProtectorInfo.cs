@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Player.Configuration.Security
 {
-	internal sealed class AesValueProtectorInfo
+	public sealed class AesDataProtectorInfo
 	{
 		public byte[] Nonce { get; set; }
 		public byte[] Tag { get; set; }
@@ -10,7 +10,7 @@ namespace RabbitOM.Player.Configuration.Security
 		public byte[] PlainValues { get; set; }
 
 
-		public static AesValueProtectorInfo FromString( string value )
+		public static AesDataProtectorInfo FromString( string value )
 		{
 			if ( string.IsNullOrEmpty( value ) )
 			{
@@ -19,7 +19,7 @@ namespace RabbitOM.Player.Configuration.Security
 
 			var payload = Convert.FromBase64String(value);
 
-			return new AesValueProtectorInfo()
+			return new AesDataProtectorInfo()
 			{
 				Nonce = payload[..12],
 				Tag = payload[12..28],
