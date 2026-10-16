@@ -33,13 +33,13 @@ namespace RabbitOM.Decoder.Controllers
 			throw new NotImplementedException();
 		}
 
-		[HttpGet("getStatus")]
+		[HttpGet("status")]
 		public ActionResult<DecoderStatus> GetStatus()
 		{
 			throw new NotImplementedException();
 		}
 
-		[HttpGet("getTransports")]
+		[HttpGet("transports")]
 		public ActionResult<List<string>> GetTransports()
 		{
 			throw new NotImplementedException();
