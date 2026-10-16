@@ -21,5 +21,27 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+		<PackageReference Include="FFmpeg.AutoGen" Version="4.4.1.0" />
+		<PackageReference Include="FFmpeg.Native" Version="4.4.0.2386" />
 	</ItemGroup>
+	<Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
+		<PropertyGroup>
+			<NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>
+			<FFmpegPkg>
+			</FFmpegPkg>
+			<FFmpegFallback>$(NuGetPackageRoot)ffmpeg.native.*\</FFmpegFallback>
+			<FFmpegRidPattern>win*-x64</FFmpegRidPattern>
+		</PropertyGroup>
+		<ItemGroup>
+			<FFmpegNativeFiles Condition=" '$(FFmpegPkg)' != '' " Include="$(FFmpegPkg)\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+			<FFmpegNativeFiles Condition=" '$(FFmpegPkg)' == '' " Include="$(FFmpegFallback)**\runtimes\$(FFmpegRidPattern)\native\*.dll" />
+		</ItemGroup>
+		<Message Text="Copying PkgFFmpeg_Native_H265: @(PkgFFmpeg_Native_H265)" Importance="High" />
+		<Message Text="Copying NuGetPackageRoot: @(NuGetPackageRoot)" Importance="High" />
+		<Message Text="Copying FFmpegPkg: @(FFmpegPkg)" Importance="High" />
+		<Message Text="Copying FFmpegFallback: @(FFmpegFallback)" Importance="High" />
+		<Message Text="Copying FFmpeg native files: @(FFmpegNativeFiles)" Importance="High" />
+		<Copy SourceFiles="@(FFmpegNativeFiles)" DestinationFiles="@(FFmpegDestinationFiles)" DestinationFolder="$(OutDir)" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="false" Condition=" '@(FFmpegNativeFiles)' != '' " />
+		<Message Text="FFmpeg output folder: $(OutDir)" Importance="High" />
+	</Target>
 </Project>
