@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.10.12224.181 stable
+VisualStudioVersion = 18.10.12224.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player", "src\Projects\RabbitOM.Player\RabbitOM.Player.csproj", "{7EAC1801-0B1C-423C-9BC9-7A0140172A04}"
 EndProject
@@ -39,6 +39,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{7DCE2F71-5E10-4C96-B3DD-58C7CFD2A222}"
 	ProjectSection(SolutionItems) = preProject
 		Resources\Notes\TheNext.txt = Resources\Notes\TheNext.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{4D2DFC4F-5090-4424-B69B-920C57E7B407}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
 Global

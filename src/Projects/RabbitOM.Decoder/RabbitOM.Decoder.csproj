@@ -9,15 +9,9 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
-	<PropertyGroup>
-		<Product>RabbitOM.Player.Decoder</Product>
-		<Authors>Rabbit Corp</Authors>
-		<Description>Web media decoder</Description>
-		<Copyright>Copyright © 2026 RabbitOM</Copyright>
-		<Trademark>RabbitOM™</Trademark>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<Deterministic>false</Deterministic>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\RabbitOM.Decoder.Core\RabbitOM.Decoder.Core.csproj" />

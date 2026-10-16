@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup Condition="!$(MSBuildProjectName.EndsWith('.Tests'))">
+	  <OutputPath>..\..\..\output\$(Configuration)\</OutputPath>
+	  <BaseOutputPath>bin\</BaseOutputPath>
+	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+</Project>

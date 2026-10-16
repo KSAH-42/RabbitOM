@@ -10,9 +10,7 @@
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<BaseOutputPath>bin\</BaseOutputPath>
-		<OutputPath>bin\$(Configuration)\</OutputPath>
-	    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<Deterministic>false</Deterministic>
 		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
