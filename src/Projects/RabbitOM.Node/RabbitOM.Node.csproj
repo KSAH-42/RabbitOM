@@ -18,8 +18,10 @@
 	  <None Remove="Scripting\Messages\**" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.8.0" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 	</ItemGroup>
 </Project>

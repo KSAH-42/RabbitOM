@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net10.0-windows</TargetFramework>
@@ -40,13 +40,15 @@
 	  <None Include="Data\ScriptReference.cs" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 		<PackageReference Include="AvalonEdit" Version="6.3.1.120" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
 		<PackageReference Include="Microsoft.CodeAnalysis.VisualBasic" Version="4.8.0" />
 		<PackageReference Include="FFmpeg.AutoGen" Version="4.4.1.0" />
 		<PackageReference Include="FFmpeg.Native" Version="4.4.0.2386" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 	</ItemGroup>
 	<Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
 		<PropertyGroup>
