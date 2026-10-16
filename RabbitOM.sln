@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Tests", "src\Tests\RabbitOM.Tests\RabbitOM.Tests.csproj", "{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{6440BEBF-0D0F-417A-9B97-442B5EFEAF57}"
 EndProject
@@ -41,7 +44,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{7DCE2F71
 		Resources\Notes\TheNext.txt = Resources\Notes\TheNext.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{4D2DFC4F-5090-4424-B69B-920C57E7B407}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Directory.Build", "Directory.Build", "{F5D19361-CF6C-46FB-9B7B-D21A237D8AEF}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
