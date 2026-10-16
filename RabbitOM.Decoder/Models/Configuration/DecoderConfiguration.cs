@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.Models
+﻿namespace RabbitOM.Decoder.Models.Configuration
 {
 	public class DecoderConfiguration
 	{

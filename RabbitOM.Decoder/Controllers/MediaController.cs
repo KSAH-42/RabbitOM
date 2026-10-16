@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace RabbitOM.Decoder.Controllers
 {
 	using RabbitOM.Decoder.Models;
+	using RabbitOM.Decoder.Models.Configuration;
 
 	[ApiController]
 	[Route( "[controller]" )]

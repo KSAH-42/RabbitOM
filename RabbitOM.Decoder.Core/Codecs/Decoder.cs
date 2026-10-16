@@ -36,7 +36,7 @@ namespace RabbitOM.Decoder.Codecs
 
         protected virtual void OnDecoded( DecodedEventArgs e )
         {
-            Decoded?.TryInvoke( this , e );
+            Decoded?.Invoke( this , e );
         }
     }
 }
