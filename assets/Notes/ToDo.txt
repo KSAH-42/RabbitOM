@@ -1,0 +1,3 @@
+Adding powershell script for building as:
+	- default
+	- distrib
