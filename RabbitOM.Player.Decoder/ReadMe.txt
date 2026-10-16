@@ -1,10 +1,9 @@
 ﻿MDP: media decoder protocol (custom protocol)
 
-1 stream per process
-
+1 stream per process 
                     +--------------------------+
                     |     Decoder.Cli.exe      |
-                    +--------------------------|
+                    +--------------------------+
 
                     +--------------------------+
                     |     Decoder.exe          | -> decoder must authent to an identity or propriatary directory at start up
