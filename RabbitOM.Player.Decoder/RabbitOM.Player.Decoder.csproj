@@ -9,6 +9,7 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<PropertyGroup>
 		<Product>RabbitOM.Player.Decoder</Product>
@@ -20,6 +21,7 @@
 		<Deterministic>false</Deterministic>
 	</PropertyGroup>
 	<ItemGroup>
+		<ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
 		<PackageReference Include="FFmpeg.AutoGen" Version="4.4.1.0" />
 		<PackageReference Include="FFmpeg.Native" Version="4.4.0.2386" />
