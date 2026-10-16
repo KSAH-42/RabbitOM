@@ -1,9 +1,8 @@
-﻿using System;
+﻿using FFmpeg.AutoGen;
+using System;
 
-namespace RabbitOM.Decoder.Codecs.FFMpeg
+namespace RabbitOM.Decoder.Codecs
 {
-    using FFmpeg.AutoGen;
-
     public static class FFMpegCodecTypeConverter
     {
         public static AVCodecID Convert( CodecType type )

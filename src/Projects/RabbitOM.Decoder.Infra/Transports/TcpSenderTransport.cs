@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.Infra.Transports
+namespace RabbitOM.Decoder.Transports
 {
-	using RabbitOM.Decoder.Core.Transports;
+	using RabbitOM.Decoder.Transports;
 
 	public sealed class TcpSenderTransport : ITransport
 	{

@@ -1,10 +1,9 @@
 ﻿
+using FFmpeg.AutoGen;
 using System;
 
-namespace RabbitOM.Decoder.Codecs.FFMpeg
+namespace RabbitOM.Decoder.Codecs
 {
-    using FFmpeg.AutoGen;
-
     public sealed unsafe class FFMpegRenderer : Renderer
     {
         private SwsContext* _sws_context = null;

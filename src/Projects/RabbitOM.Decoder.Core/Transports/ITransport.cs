@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.Core.Transports
+namespace RabbitOM.Decoder.Transports
 {
 	public interface ITransport : IDisposable
 	{

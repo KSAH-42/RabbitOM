@@ -1,11 +1,10 @@
-﻿using System;
+﻿using FFmpeg.AutoGen;
+using System;
 
 #pragma warning disable CS0618
 
-namespace RabbitOM.Decoder.Codecs.FFMpeg
+namespace RabbitOM.Decoder.Codecs
 {
-    using FFmpeg.AutoGen;
-
     // this implementation doesn't support hardware acceleration
     public unsafe sealed class FFMpegDecoder : Decoder
     {

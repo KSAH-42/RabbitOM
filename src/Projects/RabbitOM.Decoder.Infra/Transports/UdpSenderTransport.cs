@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.Infra.Transports
+namespace RabbitOM.Decoder.Transports
 {
-	using RabbitOM.Decoder.Core.Transports;
-
 	public sealed class UdpSenderTransport : ITransport
 	{
 		public bool IsOpened => throw new NotImplementedException();
