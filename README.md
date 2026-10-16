@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/KSAH-42/RabbitOM/actions/workflows/dotnet-desktop.yml)
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Home.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/assets/Images/RabbitOM.Home.png)
 
 Follow this link to download binaries: https://github.com/KSAH-42/RabbitOM/releases
 
@@ -103,7 +103,7 @@ This sample include a zoom feature (keep down the mouse left button, and draw th
 
 The media player used the Roslyn compiler to compile script for controlling the application.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.Scripting.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/assets/Images/RabbitOM.Player.Scripting.png)
 
 The following example show how to start stop streaming using ASP.NET KESTREL in stand alone mode.
 
@@ -175,7 +175,7 @@ Stopping the streaming:
 curl.exe -X POST https://127.0.0.1:5000/stop
 ~~~~
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/RabbitOM.Player.UsingCurls.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/assets/Images/RabbitOM.Player.UsingCurls.png)
 	
 we use dev ssl certifcate, actually there is no selfsigned certificate, otherwise you can run this command in an another computer:
 ~~~~
@@ -194,7 +194,7 @@ According to the rtsp headers there is the name of dll used here located on the 
 If you familliar with ASP.Net Web API, even if the ASP.Net hide the details and support more schemes than the RTSP protocols, here it'is excatly the same headers, etc... 
 And the repository that own the lib, the implementation use an Authenticator capable to computeDigestResponse, an try to createAuthenticatorString but it doesn't support latest digest algorithms needed to authenticate successfully the rtsp server. And maybe, if sales engineer identify this issue, they just can push this kind of camera for pushing the enduser for vms product replacement after making a cyber security audit.
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/Resources/Images/HIK.Settings.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/assets/Images/HIK.Settings.png)
 
 # RabbitOM.Node used to receive packet and run .net scripts triggered by the rtsp client events
 
