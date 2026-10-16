@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Player.Decoder.Models
+﻿namespace RabbitOM.Decoder.Models
 {
 	public class DecoderConfiguration
 	{

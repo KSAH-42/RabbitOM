@@ -1,4 +1,4 @@
-namespace RabbitOM.Player.Decoder
+namespace RabbitOM.Decoder
 {
 	public static class Program
 	{

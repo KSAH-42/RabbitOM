@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RabbitOM.Player.Decoder.Models
+namespace RabbitOM.Decoder.Models
 {
 	[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
 	[JsonDerivedType(typeof(SharedMemoryTransportConfiguration), typeDiscriminator: "shared-memory")]

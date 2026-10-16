@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM", "RabbitOM\Rabbit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Node", "RabbitOM.Node\RabbitOM.Node.csproj", "{B173ADBC-AC32-4345-9A84-1A73ACE563DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player.Decoder", "RabbitOM.Player.Decoder\RabbitOM.Player.Decoder.csproj", "{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Decoder", "RabbitOM.Decoder\RabbitOM.Decoder.csproj", "{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Tests", "RabbitOM.Tests\RabbitOM.Tests.csproj", "{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}"
 EndProject

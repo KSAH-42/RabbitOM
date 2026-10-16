@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Player.Decoder.Models
+﻿namespace RabbitOM.Decoder.Models
 {
 	public sealed class SharedMemoryTransportConfiguration : TransportConfiguration
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Player.Decoder.Codecs
+namespace RabbitOM.Decoder.Codecs
 {
     public abstract class Surface : IDisposable
     {

@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace RabbitOM.Player.Decoder.Controllers
+namespace RabbitOM.Decoder.Controllers
 {
-	using RabbitOM.Player.Decoder.Models;
+	using RabbitOM.Decoder.Models;
 
 	[ApiController]
 	[Route( "[controller]" )]
