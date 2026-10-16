@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace RabbitOM.Player
 {
-	public partial class App : System.Windows.Application
+	public partial class App : Application
     {
         private readonly Mutex _mutex = new Mutex( true , "RabbitOM.Player" );
 
