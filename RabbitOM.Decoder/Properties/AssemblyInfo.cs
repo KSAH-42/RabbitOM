@@ -6,4 +6,4 @@ using System.Reflection;
 [assembly: AssemblyTitle("RabbitOM.Decoder")]
 [assembly: AssemblyDescription("Media Decoder")]
 [assembly: AssemblyTrademark("RabbitOM™")]
-[assembly: AssemblyVersion("2.1.0.*")]
+[assembly: AssemblyVersion("2.2.0.*")]

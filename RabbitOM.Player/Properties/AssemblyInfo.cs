@@ -7,7 +7,7 @@ using System.Windows;
 [assembly: AssemblyTitle("RabbitOM.Player")]
 [assembly: AssemblyDescription("Media Player")]
 [assembly: AssemblyTrademark("RabbitOM™")]
-[assembly: AssemblyVersion("2.1.0.*")]
+[assembly: AssemblyVersion("2.2.0.*")]
 [assembly: ThemeInfo(
 	ResourceDictionaryLocation.None ,            //where theme specific resource dictionaries are located
 												 //(used if a resource is not found in the page,
