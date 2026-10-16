@@ -1,6 +1,14 @@
 <Project>
-  <PropertyGroup Condition="!$(MSBuildProjectName.EndsWith('.Tests'))">
-	  <OutputPath>..\..\..\output\$(Configuration)\</OutputPath>
+  <PropertyGroup>
+	<!-- to build distrib use cmd: $env:RABBITOM_GENERATE_DISTRIB = "true" -->
+	<OutputMode>$([System.Environment]::GetEnvironmentVariable('RABBITOM_GENERATE_DISTRIB'))</OutputMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(OutputMode)' != 'true'">
+	  <UseArtifactsOutput>true</UseArtifactsOutput>
+	  <ArtifactsPath>..\..\..\output\artifacts</ArtifactsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(OutputMode)' == 'true' AND !$(MSBuildProjectName.EndsWith('.Tests'))">
+	  <OutputPath>..\..\..\output\distrib\$(Configuration)\</OutputPath>
 	  <BaseOutputPath>bin\</BaseOutputPath>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
