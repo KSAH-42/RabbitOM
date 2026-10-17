@@ -1,3 +1,7 @@
-Adding powershell script for building as:
+Adding powershell scripts for building as:
 	- default
-	- distrib
+	- create-distrib -Debug/-Release -Path . +:
+		compress-archive
+	- install-distrib
+	- uninstall-distrib
+	
