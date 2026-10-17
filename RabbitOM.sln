@@ -38,7 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{7DCE2F71-5E10-4C96-B3DD-58C7CFD2A222}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\Notes\TheNext.txt = Resources\Notes\TheNext.txt
+		assets\Notes\TheNext.txt = assets\Notes\TheNext.txt
+		assets\Notes\ToDo.txt = assets\Notes\ToDo.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Directory.Build", "Directory.Build", "{F5D19361-CF6C-46FB-9B7B-D21A237D8AEF}"
