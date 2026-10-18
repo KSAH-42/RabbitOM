@@ -8,6 +8,8 @@ player              +--------------------------| should be the media controller 
 Req    -----------> | http: get_config         | returns: 400/200
 Resp   <----------- |       get_config         | returns: 400/200
 Resp   <----------- |       get_decoders       | returns: 400/200
+                    |       createDecoder      | returns: 400/200 returns endpoint
+                    |       removeDecoder      | returns: 400/200
                     +--------------------------+
                     | services:                |
                     +--------------------------+
