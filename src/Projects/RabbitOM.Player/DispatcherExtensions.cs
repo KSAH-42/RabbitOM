@@ -11,10 +11,7 @@ namespace RabbitOM.Player
             Debug.Assert( source != null );
             Debug.Assert( action != null );
 
-            return source.BeginInvoke( priority , () =>
-            {
-                try { action.Invoke(); } catch( Exception ex ) { Debug.WriteLine( ex ); }
-            } );
+            return source.BeginInvoke( priority , () => action.TryInvoke() );
         }
     }
 }
