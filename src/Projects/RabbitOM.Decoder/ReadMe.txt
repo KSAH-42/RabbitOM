@@ -4,17 +4,19 @@
 
                     +--------------------------+
                     |     Decoder.exe          | -> decoder must authent to an identity or propriatary directory at start up
-player              +--------------------------| should be the media controller ?
-Req    -----------> | http: get_config         | returns: 400/200
-Resp   <----------- |       get_config         | returns: 400/200
-Resp   <----------- |       get_decoders       | returns: 400/200
-                    |       createDecoder      | returns: 400/200 returns endpoint
-                    |       removeDecoder      | returns: 400/200
+player              +--------------------------| 
+Req    -----------> | http: getConfiguration   | returns: 400/200
+Resp   <----------- |                          | 
+                    |       setConfiguration   |
+                    |       createDecoder      | returns: 400/200 returns endpoint and launch RabbitOM.Decoder.XYZ.exe
+                    |       removeDecoderById  | returns: 400/200
+                    |       removeDecoders     | returns: 400/200
+                    |       getDecoderById     | returns: 400/200
                     +--------------------------+
                     | services:                |
                     +--------------------------+
-                    | webHookService       ??? | 
-                    | dbService            ??? |
+                    | webHookService           | => send http notification when decoder is created/remove or for something else
+                    | dbService                | => saving decoders settings using sqllite, and events
                     +--------------------------+
 
 
@@ -26,4 +28,5 @@ RabbitOM.Decoder.FFMpeg.exe   // api decoder
 RabbitOM.Decoder.FFMpeg.exe   // api decoder
 RabbitOM.Decoder.FFMpeg.exe   // api decoder
 RabbitOM.Decoder.DirectX.exe  // api decoder
+RabbitOM.Decoder.NVidia.exe   // api decoder
 
