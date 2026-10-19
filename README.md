@@ -175,7 +175,7 @@ Stopping the streaming:
 curl.exe -X POST https://127.0.0.1:5000/stop
 ~~~~
 
-![Player](https://github.com/KSAH-42/RabbitOM/blob/master/assets/Images/RabbitOM.Player.UsingCurls.png)
+![Player](https://github.com/KSAH-42/RabbitOM/blob/master/assets/Images/RabbitOM.Player.UsingCurls2.png)
 	
 we use dev ssl certifcate, actually there is no selfsigned certificate, otherwise you can run this command in an another computer:
 ~~~~

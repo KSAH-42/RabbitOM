@@ -19,7 +19,7 @@ namespace RabbitOM.Decoder.Controllers
 		}
 
 		[HttpPost("create/{type:string}")]
-		public ActionResult CreateDecoder( string type )
+		public ActionResult CreateDecoder( string type ) // TODO: use a class pass the type, version, and other options
 		{
 			throw new NotImplementedException();
 		}
