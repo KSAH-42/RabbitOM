@@ -48,6 +48,12 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
 
                 ffmpeg.sws_scale( _sws_context , surface.Frame->data , surface.Frame->linesize , 0 , surface.Height , dstData , _stride );
             }
+
+            var clonedBuffer = new byte[ _buffer.Length ];
+
+            System.Buffer.BlockCopy( _buffer , 0 , clonedBuffer, 0, _buffer.Length );
+
+            OnRender( new RenderEventArgs( new Image( surface.Width , surface.Height , clonedBuffer ) ) );
         }
 
         public override void Close()

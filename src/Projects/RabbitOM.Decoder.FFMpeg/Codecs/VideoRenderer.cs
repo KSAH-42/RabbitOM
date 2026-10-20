@@ -4,6 +4,8 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
 {
     public abstract class VideoRenderer : IDisposable
     {
+        public event EventHandler<RenderEventArgs>? Rendered;
+
         ~VideoRenderer()
         {
             Dispose( false );
@@ -22,6 +24,11 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
         protected virtual void Dispose( bool disposing )
         {
             Close();
+        }
+
+        protected virtual void OnRender( RenderEventArgs e )
+        {
+            Rendered?.Invoke( this, e );
         }
     }
 }

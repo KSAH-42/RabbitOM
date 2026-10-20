@@ -40,5 +40,5 @@ RabbitOM.Decoder.NVidia.exe   // api decoder
 - don't forget to create docker images: 
    + dockers is probrably already installed by default on operating systems,
      like some linux distrib, without to run a bash and execute apt-get or yum commands and remove setup and uninsallers, etc...
-     if not it will goes in that way.
+     if not it will goes in that way, it's self-evident
 - don't forget to add the CrystalProcess (project) at the end

@@ -1,26 +1,27 @@
-﻿MDP: media decoder protocol (custom protocol)
+﻿N streams per process:
+with approach we can launch one decoder for one stream
+or
+we can split N/K where K represent the total number of decoder launch locally
+ -> so the route will be different
 
-1 stream per process 
+
                     +--------------------------+
                     |     Decoder.exe          | -> decoder must authent to an identity or propriatary directory at start up
 player              +--------------------------| should be the media controller ?
-Req    -----------> | http: start              | returns: 400/200
-Resp   <----------- |       stop               | returns: 400/200
-Resp   <----------- |       get_status         | returns: 400/200
-Resp   <----------- |       get_stats          | returns: 400/200
-Resp   <----------- |       get_transports     | returns: 400/200
-                    |       register_plugin    | returns: 400/501/200 // load script and then run a local-compiler using Roslyn
-                    |       unregister_plugin  | returns: 400/501/200 // unload
+Req    -----------> | http: channels/0/start   | returns: 400/200  POST 
+Resp   <----------- |       channels/0/stop    | returns: 400/200  POST 
+Resp   <----------- |       channels/0/create  | returns: 400/200  POST CreateChannelRequest { Config : ChannelConfig , AutoStart : bool }
+Resp   <----------- |       channels/0/status  | returns: 400/200  GET
+Resp   <----------- |       channels/0/plugin  | returns: 400/200  GET/POST
+                    |       channels           |
                     +--------------------------+
                     | transports:              |
 player              +--------------------------+
-reader <----------- | shared-memory:           | use MDP protocol ?
+reader <----------- | shared-memory:           |
                     |      audio/video frames  |
                     |                          |
-player              | sockets:                 | use MDP protocol
-listener <--------- |     use tcp client       |   return: 400/501/200
-listener <--------- |     use udp client       |   return: 400/501/200
-listener <--------- |     use udp/mc client    |   return: 400/501/200
+player              | http/https:              |
+listener <--------- |     use multipart        |
                     +--------------------------+
                     | services:                |
                     +--------------------------+
@@ -31,13 +32,9 @@ listener <--------- |     use udp/mc client    |   return: 400/501/200
                     | dbService            ??? |
                     +--------------------------+
 
-MdpPacket
- LoginMdpPacket     // use at the first time before pushing anything and use also as keep-alive
- LogoutMdpPacket
- FrameMdpPacket
- HeartBeatMdpPacket
-
-
+ Mdp will be used instead of rtp, the reason comes about limitation of width/heigth about rtp and cause issue in case the picture become very large.
+ 
+ 
 
  Create a temp project, and implement the media pipeline like this:
   
@@ -68,3 +65,10 @@ MdpPacket
 
  graph.Run();
     
+
+
+http://127.0.0.1:20000/channels/0/create  CreateRequest { Config , AutoStart }
+http://127.0.0.1:20000/channels/0/start
+http://127.0.0.1:20000/channels/0/stop
+http://127.0.0.1:20000/channels/0/configuration
+http://127.0.0.1:20000/channels/0/status

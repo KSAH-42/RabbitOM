@@ -17,9 +17,9 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
                 return false;
             }
 
-            return value.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0
-                || value.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0
-                || value.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0
+            return value.Contains( "H265" , StringComparison.OrdinalIgnoreCase )
+                || value.Contains( "H264" , StringComparison.OrdinalIgnoreCase )
+                || value.Contains( "JPEG" , StringComparison.OrdinalIgnoreCase )
                 ;
         }
 
@@ -30,17 +30,17 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
                 throw new ArgumentNullException( nameof( value ) );
             }
 
-            if ( value.IndexOf( "H265" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+            if ( value.Contains( "H265" , StringComparison.OrdinalIgnoreCase ) )
             {
                 return new SoftwareVideoDecoder( AVCodecID.AV_CODEC_ID_HEVC );
             }
 
-            if ( value.IndexOf( "H264" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+            if ( value.Contains( "H264" , StringComparison.OrdinalIgnoreCase ) )
             {
                 return new SoftwareVideoDecoder( AVCodecID.AV_CODEC_ID_H264 );
             }
 
-            if ( value.IndexOf( "JPEG" , StringComparison.OrdinalIgnoreCase ) >= 0 )
+            if ( value.Contains( "JPEG" , StringComparison.OrdinalIgnoreCase ) )
             {
                 return new SoftwareVideoDecoder( AVCodecID.AV_CODEC_ID_MJPEG );
             }
