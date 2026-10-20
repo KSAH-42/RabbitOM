@@ -5,9 +5,9 @@ using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Codecs
 {
-    // this implementation doesn't support hardware acceleration
-    public unsafe sealed class FFMpegDecoder : Decoder
+    public unsafe class SoftwareVideoDecoder : VideoDecoder
     {
+        private readonly AVCodecID _codecId;
         private AVCodec* _decoder = null;
         private AVCodecContext* _context = null;
         private AVFrame* _frame = null;
@@ -16,10 +16,19 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
         private AVDictionary* _options = null;
         private byte[]? _extraParameters;
 
-        static FFMpegDecoder()
+
+
+
+
+        public SoftwareVideoDecoder( AVCodecID codecId )
         {
-            ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
+            _codecId = codecId;
         }
+
+
+
+
+
 
         public override bool IsOpened
         {
@@ -29,7 +38,7 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
             }
         }
 
-        public override void Open( CodecType type )
+        public override void Open()
         {
             if ( _decoder != null )
             {
@@ -38,7 +47,7 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
 
             try
             {
-                _decoder = ffmpeg.avcodec_find_decoder( FFMpegCodecTypeConverter.Convert( type ) );
+                _decoder = ffmpeg.avcodec_find_decoder( _codecId );
 
                 if ( _decoder == null )
                 {
@@ -269,7 +278,7 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
                 return;
             }
 
-            OnDecoded( new DecodedEventArgs( new FFMpegSurface( _context->width , _context->height , clonedFrame ) ) );
+            OnDecoded( new FrameDecodedEventArgs( new Surface( _context->width , _context->height , clonedFrame ) ) );
         }
     }
 }

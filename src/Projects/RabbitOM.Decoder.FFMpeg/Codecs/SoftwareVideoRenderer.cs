@@ -3,7 +3,7 @@ using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Codecs
 {
-    public sealed unsafe class FFMpegRenderer : Renderer
+    public sealed unsafe class SoftwareVideoRenderer : VideoRenderer
     {
         private SwsContext* _sws_context = null;
         private int _height;
@@ -15,14 +15,7 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
 
         public unsafe override void Render( Surface surface )
         {
-            if ( surface == null )
-            {
-                return;
-            }
-
-            AVFrame* pFrame = surface.Frame != IntPtr.Zero ? (AVFrame*) surface.Frame : null;
-
-            if ( pFrame == null || pFrame->data[0] == null )
+            if ( surface == null || surface.Frame == null || surface.Frame->data[0] == null )
             {
                 return;
             }
@@ -53,7 +46,7 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
 
                 dstData[0] = pBuffer;
 
-                ffmpeg.sws_scale( _sws_context , pFrame->data , pFrame->linesize , 0 , surface.Height , dstData , _stride );
+                ffmpeg.sws_scale( _sws_context , surface.Frame->data , surface.Frame->linesize , 0 , surface.Height , dstData , _stride );
             }
         }
 

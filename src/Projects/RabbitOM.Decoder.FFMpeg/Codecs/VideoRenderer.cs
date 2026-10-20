@@ -2,9 +2,9 @@
 
 namespace RabbitOM.Decoder.FFMpeg.Codecs
 {
-    public abstract class Renderer : IDisposable
+    public abstract class VideoRenderer : IDisposable
     {
-        ~Renderer()
+        ~VideoRenderer()
         {
             Dispose( false );
         }

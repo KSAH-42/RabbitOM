@@ -1,30 +1,60 @@
-﻿using System;
+﻿using FFmpeg.AutoGen;
+using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Codecs
 {
-    public abstract class Surface : IDisposable
+    public sealed unsafe class Surface : IDisposable
     {
-        protected Surface( int width , int height )
+        private int _width;
+        private int _height;
+        private AVFrame* _frame;
+
+
+
+
+
+        public Surface( int width , int height , AVFrame* frame )
         {
-            Width = width;
-            Height = height;
+            _width = width;
+            _height = height;
+            _frame = frame != null ? frame : throw new ArgumentNullException( nameof( frame ) );
         }
 
-        public int Width { get; }
+        ~Surface()
+        {
+            Dispose();
+        }
 
-        public int Height { get; }
 
-        public abstract IntPtr Frame { get; }
+
+
+
+        public int Width { get => _width; }
+
+        public int Height { get => _height; }
+
+        public AVFrame* Frame { get => _frame; }
+
+
+
+
 
         public void Dispose()
         {
-            Dispose( true );
+            if ( _frame != null )
+            {
+                fixed ( AVFrame** ppFrame = &_frame )
+                {
+                    ffmpeg.av_frame_free( ppFrame );
+                }
+
+                _frame = null;
+            }
+
+            _height = 0;
+            _width = 0;
+
             GC.SuppressFinalize( this );
-        }
-
-        protected virtual void Dispose( bool disposing )
-        {
-
         }
     }
 }

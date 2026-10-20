@@ -2,18 +2,18 @@
 
 namespace RabbitOM.Decoder.FFMpeg.Codecs
 {
-    public abstract class Decoder : IDisposable
+    public abstract class VideoDecoder : IDisposable
     {
-        public event EventHandler<DecodedEventArgs>? Decoded;
+        public event EventHandler<FrameDecodedEventArgs>? FrameDecoded;
 
-        ~Decoder()
+        ~VideoDecoder()
         {
             Dispose( false );
         }
 
         public abstract bool IsOpened { get; }
 
-        public abstract void Open( CodecType type );
+        public abstract void Open();
 
         public abstract void Close();
 
@@ -34,9 +34,9 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
             Close();
         }
 
-        protected virtual void OnDecoded( DecodedEventArgs e )
+        protected virtual void OnDecoded( FrameDecodedEventArgs e )
         {
-            Decoded?.Invoke( this , e );
+            FrameDecoded?.Invoke( this , e );
         }
     }
 }
