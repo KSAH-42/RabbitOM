@@ -20,7 +20,7 @@ namespace RabbitOM.Decoder.FFMpeg.Codecs
 
 
 
-        public SoftwareVideoDecoder( AVCodecID codecId )
+        internal SoftwareVideoDecoder( AVCodecID codecId )
         {
             _codecId = codecId;
         }
