@@ -30,8 +30,13 @@
                         Executed="OnRemove" 
                         CanExecute="OnCanRemove"
                         />
-        
-        <CommandBinding Command="{x:Static local:UrisDialog.CancelCommand}" 
+
+		<CommandBinding Command="{x:Static local:UrisDialog.AddCommand}" 
+                        Executed="OnAdd" 
+                        CanExecute="OnCanAdd"
+                        />
+
+		<CommandBinding Command="{x:Static local:UrisDialog.CancelCommand}" 
                         Executed="OnCancel" 
                         />
         
@@ -108,11 +113,19 @@
                     Command="{x:Static local:UrisDialog.MoveDownCommand}"
                     />
 
-            <Button Content="X"
+			<Button Content="✚"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom"
                     Width="30"
                     Margin="86,0,10,10"
+                    Command="{x:Static local:UrisDialog.AddCommand}"
+                    />
+
+			<Button Content="X"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom"
+                    Width="30"
+                    Margin="124,0,10,10"
                     Command="{x:Static local:UrisDialog.RemoveCommand}"
                     />
 

@@ -13,6 +13,7 @@ namespace RabbitOM.Player.Dialogs
         public static readonly RoutedCommand MoveUpCommand = new RoutedCommand();
         public static readonly RoutedCommand MoveDownCommand = new RoutedCommand();
         public static readonly RoutedCommand RemoveCommand = new RoutedCommand();
+        public static readonly RoutedCommand AddCommand = new RoutedCommand();
         public static readonly RoutedCommand CancelCommand = new RoutedCommand();
         public static readonly RoutedCommand AcceptCommand = new RoutedCommand();
 
@@ -74,6 +75,21 @@ namespace RabbitOM.Player.Dialogs
             if ( MessageBox.Show( "Would you like to remove these elements ?" , "Question" , MessageBoxButton.YesNo , MessageBoxImage.Question ) == MessageBoxResult.Yes )
             {
                 Uris.RemoveRange( Uris.Where( uri => uri.IsSelected ).ToList() );
+            }
+        }
+
+        private void OnCanAdd( object sender , CanExecuteRoutedEventArgs e )
+        {
+            e.CanExecute = true;
+        }
+
+        private void OnAdd( object sender , ExecutedRoutedEventArgs e )
+        {
+            var dialog = new UriSourceDialog() { Owner = this };
+
+            if ( dialog.ShowDialog().Value )
+            {
+                Uris.Add( new UriInfo() { Value = dialog.Value });
             }
         }
 

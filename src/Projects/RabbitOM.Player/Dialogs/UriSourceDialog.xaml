@@ -1,0 +1,91 @@
+﻿<Window x:Class="RabbitOM.Player.Dialogs.UriSourceDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RabbitOM.Player.Dialogs"
+		xmlns:converters="clr-namespace:RabbitOM.Player.Converters"
+		xmlns:validation="clr-namespace:RabbitOM.Player.Validation"
+        mc:Ignorable="d"
+        Title="Source URI" 
+        Height="165" 
+        Width="530"
+        MinWidth="380"
+		MinHeight="125" 
+		MaxHeight="165" 
+        WindowStartupLocation="CenterOwner"
+        Style="{DynamicResource WindowStyle}"
+        ShowInTaskbar="False"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        >
+	<Window.Resources>
+		<converters:RevertBooleanValueConverter x:Key="RevertBooleanValueConverter" />
+	</Window.Resources>
+	<Window.CommandBindings>
+		<CommandBinding Command="{x:Static local:UriSourceDialog.CloseCommand}" 
+						Executed="OnClose" 
+						/>
+	</Window.CommandBindings>
+	<Grid Background="#FF121212">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20" />
+			<RowDefinition Height="50" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+
+		<Grid Grid.Row="1" >
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="50"/>
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0"
+					   Text="URI: "
+					   Foreground="White"
+					   FontSize="15"
+					   HorizontalAlignment="Right"
+					   Margin="0,14,0,0"
+					   />
+			<TextBox   x:Name="_textboxValue"
+					   x:FieldModifier="private"
+					   Grid.Column="1"
+					   Margin="10,0,10,0"
+					   Height="25"
+					   >
+				<TextBox.Text>
+					<Binding Path="Value"
+							 Mode="TwoWay"
+							 UpdateSourceTrigger="PropertyChanged"
+							 >
+						<Binding.ValidationRules>
+							<validation:RtspUriValidationRule/>
+						</Binding.ValidationRules>
+					</Binding>
+				</TextBox.Text>
+			</TextBox>
+		</Grid>
+		<Grid Grid.Row="2" 
+			  Margin="0,5,0,0" 
+			  >
+			<StackPanel Orientation="Horizontal"
+						HorizontalAlignment="Right"
+						VerticalAlignment="Top"
+						>				
+				<Button Content="Cancel"
+						Width="70"
+						Margin="0,0,10,0"
+						IsCancel="True"
+						/>
+				<Button Content="Accept"
+						Width="70"
+						Margin="0,0,10,0"
+						IsDefault="True"
+						Command="{x:Static local:UriSourceDialog.CloseCommand}"
+						>
+					<Button.IsEnabled>
+						<Binding ElementName="_textboxValue" Path="(Validation.HasError)" Converter="{StaticResource RevertBooleanValueConverter}" />
+					</Button.IsEnabled>
+				</Button>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Window>

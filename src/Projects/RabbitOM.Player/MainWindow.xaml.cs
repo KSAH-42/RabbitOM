@@ -23,6 +23,12 @@ namespace RabbitOM.Player
         public static readonly DependencyProperty InfoVisibilityProperty = DependencyProperty.Register( nameof(InfoVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Collapsed,OnInfoVisibilityChanged) );
         public static readonly DependencyProperty StatisticsVisibilityProperty = DependencyProperty.Register( nameof(StatisticsVisibility), typeof(Visibility) , typeof(MainWindow) , new PropertyMetadata(Visibility.Visible,OnStatisticsVisibilityChanged) );
 
+        // THE FIRST RTSP CAMERA IS LOCATED ON INTERNET, THE BANDWITH WILL BE LIMITED
+        // AND IT'S CONFIGURATION IT'S UNKNOWN
+        // BECAUSE IT IS POSSIBLE THAN THE NETWORK IS SLOW AND THE CONFIGURATION OF REMOTE RTSP DEVICE HAS BEEN CONFIGURED TO HAVE A SLOW BANDWITH
+
+        // SO PLEASE, BUY A PROFESSIONAL SECURITY CAMERA AND PLUG IT ON YOUR LOCAL NETWORK
+        // AND DON'T FORGET TO CONFIGURE THE DEVICE IF YOU WANT 30 OR 60 FRAME PER SECONDS.
 
         public MainWindow()
         {
