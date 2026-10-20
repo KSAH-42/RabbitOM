@@ -18,8 +18,11 @@ player              +--------------------------+
 reader <----------- | shared-memory:           |
                     |      audio/video frames  |
                     |                          |
-player              | http/https:              |
-listener <--------- |     use multipart        |
+player              | http/https listener:     |
+client   <--------- |     use multipart        |
+                    |                          |
+listener <--------- | http/https client:       |
+                    |     send http multipart  |
                     +--------------------------+
                     | services:                |
                     +--------------------------+
