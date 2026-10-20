@@ -1,16 +1,14 @@
 ﻿N streams per process:
 with approach we can launch one decoder for one stream
 or
-we can split N/K where K represent the total number of decoder launch locally
- -> so the route will be different
-
+we can split: N/K where K represent the total number of decoder launch locally
+ and having a pool of decoders
 
                     +--------------------------+
                     |     Decoder.exe          | -> decoder must authent to an identity or propriatary directory at start up
 player              +--------------------------| should be the media controller ?
 Req    -----------> | http: channels/0/start   | returns: 400/200  POST 
 Resp   <----------- |       channels/0/stop    | returns: 400/200  POST 
-Resp   <----------- |       channels/0/create  | returns: 400/200  POST CreateChannelRequest { Config : ChannelConfig , AutoStart : bool }
 Resp   <----------- |       channels/0/status  | returns: 400/200  GET
 Resp   <----------- |       channels/0/plugin  | returns: 400/200  GET/POST
                     |       channels           |
@@ -70,5 +68,5 @@ listener <--------- |     use multipart        |
 http://127.0.0.1:20000/channels/0/create  CreateRequest { Config , AutoStart }
 http://127.0.0.1:20000/channels/0/start
 http://127.0.0.1:20000/channels/0/stop
-http://127.0.0.1:20000/channels/0/configuration
+http://127.0.0.1:20000/channels/0/config
 http://127.0.0.1:20000/channels/0/status
