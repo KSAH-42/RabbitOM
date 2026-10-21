@@ -172,7 +172,7 @@ namespace RabbitOM.Player.Controls
                     _datasource.SetCodec( e.TrackInfo.Encoder );
                     _datasource.SetClock( e.TrackInfo.ClockRate );
 
-                    _frameBuilder.Dispose(); // from .net recommendations, dispose must not throw any exceptions
+                    _frameBuilder.Dispose();
 
                     try
                     {
