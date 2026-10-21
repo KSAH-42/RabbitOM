@@ -260,7 +260,7 @@ namespace RabbitOM.Player.Controls
             {
                 _control.Dispatcher.BeginInvoke( DispatcherPriority.Render , () =>
                 {
-                    using ( e.Surface ) // mandatory to free unmanaged cloned buffer
+                    using ( e.Surface ) // make sure that unmanaged cloned buffer will be free
                     {
                         _renderer.Render( e.Surface );
                         _datasource.SetFrameSize( e.Surface.Height , e.Surface.Width );
