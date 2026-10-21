@@ -66,3 +66,10 @@ http://127.0.0.1:20000/channels/0/start
 http://127.0.0.1:20000/channels/0/stop
 http://127.0.0.1:20000/channels/0/config
 http://127.0.0.1:20000/channels/0/status
+
+Domain
+ /Channels
+ /Events
+
+DDD is not the best approach for decoding/streaming backend
+ -> find something else
