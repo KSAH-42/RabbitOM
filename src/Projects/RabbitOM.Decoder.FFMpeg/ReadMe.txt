@@ -30,6 +30,9 @@ reader   <--------- |        writer frame             |
                     | bufferingService            ??? |
                     +---------------------------------+ 
 
+child env-var or cli options:
+    RDECODER_FFMEG_POOL_SIZE= sbyte
+
  Create a temp project, and implement the media pipeline like this:
   
    var graph = new FilterGraphBuilder()
