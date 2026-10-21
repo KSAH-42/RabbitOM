@@ -4,38 +4,31 @@ or
 we can split: N/K where K represent the total number of decoder launch locally
  and having a pool of decoders
 
-                    +--------------------------+
-                    |     Decoder.exe          | -> decoder must authent to an identity or propriatary directory at start up
-player              +--------------------------| should be the media controller ?
-Req    -----------> | http: channels/0/start   | returns: 400/200  POST 
-Resp   <----------- |       channels/0/stop    | returns: 400/200  POST 
-Resp   <----------- |       channels/0/status  | returns: 400/200  GET
-Resp   <----------- |       channels/0/plugin  | returns: 400/200  GET/POST
-                    |       channels           |
-                    +--------------------------+
-                    | transports:              |
-player              +--------------------------+
-reader <----------- | shared-memory:           |
-                    |      audio/video frames  |
-                    |                          |
-player              | http/https listener:     |
-client   <--------- |     use multipart        |
-                    |                          |
-listener <--------- | http/https client:       |
-                    |     send http multipart  |
-                    +--------------------------+
-                    | services:                |
-                    +--------------------------+
-                    | mediaService             |
-                    | webHookService       ??? | 
-                    | observabiltyService  ??? |
-                    | localStorageService  ??? |
-                    | dbService            ??? |
-                    +--------------------------+
-
- Mdp will be used instead of rtp, the reason comes about limitation of width/heigth about rtp and cause issue in case the picture become very large.
- 
- 
+                    +---------------------------------+
+                    |     Decoder.exe                 | -> decoder must authent to an identity or propriatary directory at start up
+player              +---------------------------------| should be the media controller ?
+Req    -----------> | http: channels/0/start          | returns: 400/200  POST 
+Resp   <----------- |       channels/0/stop           | returns: 400/200  POST 
+Resp   <----------- |       channels/0/metrics        | returns: 400/200  GET
+Resp   <----------- |       channels/0/metrics/events | returns: 400/200  GET use SSE
+                    +---------------------------------+
+                    | transports:                     |
+                    +---------------------------------+
+player              | https: mutlipart                |
+client   <--------- |        channels/0/stream        | returns: 400/200  GET
+                    |                                 |
+player              | https: client                   |
+listener <--------- |        channels/0/stream        | returns: 400/200  POST
+                    |                                 |
+player              | shared-memory:                  |
+reader   <--------- |        writer frame             |
+                    +---------------------------------+
+                    | services:                       |
+                    +---------------------------------+
+                    | streamingService                |
+                    | observabiltyService         ??? |
+                    | bufferingService            ??? |
+                    +---------------------------------+ 
 
  Create a temp project, and implement the media pipeline like this:
   
