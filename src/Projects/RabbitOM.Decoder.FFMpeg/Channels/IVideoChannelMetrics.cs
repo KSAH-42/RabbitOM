@@ -2,9 +2,9 @@
 {
 	public interface IVideoChannelMetrics
 	{
-		string GetCodec();
+		string? GetCodec();
 
-        string GetTransport();
+        string? GetTransport();
 
         bool GetConnectionStatus();
 

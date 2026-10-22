@@ -4,20 +4,28 @@
 
                     +--------------------------+
                     |     Decoder.exe          |
-player              +--------------------------| 
-Req    -----------> | http: getConfiguration   | returns: 400/200
-Resp   <----------- |                          | 
-                    |       setConfiguration   |
-                    |       createDecoder      | returns: 400/200 returns endpoint and launch RabbitOM.Decoder.XYZ.exe
-                    |       removeDecoderById  | returns: 400/200
-                    |       removeDecoders     | returns: 400/200
-                    |       getDecoderById     | returns: 400/200
+                    +--------------------------+ 
+player              | https:                   |
+Req    -----------> |   configuration          | returns: 400/200
+Resp   <----------- |   registry/find          | returns: 400/200 // find a decoder
+                    |   registry/list          | returns: 400/200 
+                    |   registry/pull          | returns: 400/200
+                    |   management/install     | returns: 400/200
+                    |   management/uninstall   | returns: 400/200
+                    |   management/create      | returns: 400/200
+                    |   management/remove      | returns: 400/200
+                    |   management/remove-all  | returns: 400/200
+                    |   actions/start          | returns: 400/200
+                    |   actions/start-all      | returns: 400/200
+                    |   actions/stop           | returns: 400/200
+                    |   actions/stop-all       | returns: 400/200
                     +--------------------------+
                     | services:                |
                     +--------------------------+
                     | webHookService           | => send http notification when decoder is created/remove or for something else
                     | dbService                | => saving decoders settings using sqllite, and events
                     +--------------------------+
+
 
 // normally we can add new codec without restarting the app
 createDecoder( type , version /* codecs versions */, retry_failures, hooks_notifications, ... ) ->
