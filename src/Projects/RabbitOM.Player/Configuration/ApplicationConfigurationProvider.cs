@@ -4,11 +4,11 @@ namespace RabbitOM.Player.Configuration
 {
 	using Microsoft.Extensions.Configuration;
 
-	public sealed class ApplicationConfigurationSource
+	public sealed class ApplicationConfigurationProvider
 	{
 		private readonly IConfiguration _configuration;
 
-		public ApplicationConfigurationSource( IConfiguration configuration )
+		public ApplicationConfigurationProvider( IConfiguration configuration )
 		{
 			_configuration = configuration ?? throw new ArgumentNullException( nameof( configuration ) );
 		}

@@ -5,9 +5,9 @@ namespace RabbitOM.Net.RtspV2.Transports
     // this class must handle reopen, error reporting and transmit packet to the upper layer without parsing the payload
     public class RtspReceiverService : IDisposable
     {
-        private readonly IReceiver _receiver;
+        private readonly IDataReceiver _receiver;
 
-        public RtspReceiverService( IReceiver receiver )
+        public RtspReceiverService( IDataReceiver receiver )
         {
             _receiver = receiver ?? throw new ArgumentNullException( nameof( receiver ) );
         }

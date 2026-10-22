@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.RtspV2.Transports
 {
-    public sealed class UdpRtspReceiver : IReceiver
+    public sealed class UdpRtspReceiver : IDataReceiver
     {
         public bool IsOpened
         {

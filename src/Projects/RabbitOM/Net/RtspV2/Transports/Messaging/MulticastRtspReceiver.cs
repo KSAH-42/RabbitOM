@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Net.RtspV2.Transports
 {
-    public sealed class MulticastRtspReceiver : IReceiver
+    public sealed class MulticastRtspReceiver : IDataReceiver
     {
         public bool IsOpened
         {
