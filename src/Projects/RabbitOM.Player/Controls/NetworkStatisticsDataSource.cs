@@ -4,6 +4,7 @@ namespace RabbitOM.Player.Controls
 {
     using RabbitOM.Threading;
 
+    // TODO: refactor or remove this class when the decoder api will ready
     public sealed class NetworkStatisticsDataSource : IStatisticsDataSource
     {
         private readonly ReaderWriterLockProvider _provider = new ReaderWriterLockProvider();
