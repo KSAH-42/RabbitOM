@@ -3,7 +3,6 @@
 	public sealed class ChannelMetrics
 	{
 		public string? Codec { get; set; }
-        public string? Protocol { get; set; }
         public string? Transport { get; set; }
         public bool ConnectionStatus { get; set; }
         public long Clock { get; set; }
