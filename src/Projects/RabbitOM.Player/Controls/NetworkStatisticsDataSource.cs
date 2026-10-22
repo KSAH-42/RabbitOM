@@ -15,7 +15,7 @@ namespace RabbitOM.Player.Controls
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
         private long _frameCount;
-        private long _frameHeigth;
+        private long _frameHeight;
         private long _frameWidth;
         private long _packetsLostCount;
         private long _maxFrameCount;
@@ -80,7 +80,7 @@ namespace RabbitOM.Player.Controls
         {
             using ( _provider.ReaderLock )
             {
-                return _frameHeigth;
+                return _frameHeight;
             }
         }
 
@@ -136,7 +136,7 @@ namespace RabbitOM.Player.Controls
                 _frameCount = default;
                 _bytesReceivedCount = default;
                 _packetReceivedCount = default;
-                _frameHeigth = default;
+                _frameHeight = default;
                 _frameWidth = default;
                 _packetsLostCount = default;
                 _maxFrameCount = default;
@@ -160,7 +160,7 @@ namespace RabbitOM.Player.Controls
 
         internal void SetConnectionStatusOn()
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 _connectionStatus = true;
             }
@@ -168,7 +168,7 @@ namespace RabbitOM.Player.Controls
 
         internal void SetConnectionStatusOff()
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 _connectionStatus = false;
             }
@@ -176,7 +176,7 @@ namespace RabbitOM.Player.Controls
 
         internal void SetClock( long value )
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 _clock = value;
             }
@@ -184,16 +184,16 @@ namespace RabbitOM.Player.Controls
 
         internal void SetFrameSize( long height , long width )
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
-                _frameHeigth = height;
+                _frameHeight = height;
                 _frameWidth = width;
             }
         }
 
         internal void AddPacketsLost( long value )
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 StatisticsHelper.IncrementValue( ref _packetsLostCount , value , ref _ticks );
             }
@@ -201,7 +201,7 @@ namespace RabbitOM.Player.Controls
 
         internal void AddBytesReceived( long value )
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 StatisticsHelper.IncrementValue( ref _bytesReceivedCount , value , ref _ticks );
                 StatisticsHelper.IncrementValue( ref _maxBytesReceivedCount , value , ref _ticks );
@@ -210,7 +210,7 @@ namespace RabbitOM.Player.Controls
 
         internal void IncreasePacketReceived()
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 StatisticsHelper.IncrementValue( ref _packetReceivedCount , 1 , ref _ticks );
                 StatisticsHelper.IncrementValue( ref _maxPacketReceivedCount , 1 , ref _ticks );
@@ -219,7 +219,7 @@ namespace RabbitOM.Player.Controls
 
         internal void IncreaseFrameCount()
         {
-            using ( _provider.ReaderLock )
+            using ( _provider.WriterLock )
             {
                 StatisticsHelper.IncrementValue( ref _frameCount , 1 , ref _ticks );
                 StatisticsHelper.IncrementValue( ref _maxFrameCount , 1 , ref _ticks );
