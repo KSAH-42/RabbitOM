@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Transports
+namespace RabbitOM.Decoder.FFMpeg.Streaming
 {
-	public interface ITransport : IDisposable
+	public interface IOutputTransport : IDisposable
 	{
 		bool IsOpened { get; }
 		void Open();

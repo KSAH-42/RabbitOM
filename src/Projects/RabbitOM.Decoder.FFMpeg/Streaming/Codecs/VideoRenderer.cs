@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Codecs
 {
     public abstract class VideoRenderer : IDisposable
     {

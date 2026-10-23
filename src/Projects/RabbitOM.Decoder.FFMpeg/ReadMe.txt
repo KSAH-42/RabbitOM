@@ -4,13 +4,15 @@ or
 we can split: N/K where K represent the total number of decoder launch locally
  and having a pool of decoders
 
+                                 +----------------------> decoder must authent to an identity or propriatary directory at start up
+                                 |
                     +---------------------------------+
-                    |     Decoder.exe                 | -> decoder must authent to an identity or propriatary directory at start up
+                    |     Decoder.exe                 |
 player              +---------------------------------| should be the media controller ?
 Req    -----------> | http: channels/0/start          | returns: 400/200  POST 
 Resp   <----------- |       channels/0/stop           | returns: 400/200  POST 
 Resp   <----------- |       channels/0/metrics        | returns: 400/200  GET
-Resp   <----------- |       channels/0/metrics/events | returns: 400/200  GET use SSE
+Resp   <----------- |       channels/events           | returns: 400/200  GET use SSE
                     +---------------------------------+
                     | transports:                     |
                     +---------------------------------+
@@ -29,6 +31,62 @@ reader   <--------- |        writer frame             |
                     | observabiltyService         ??? |
                     | bufferingService            ??? |
                     +---------------------------------+ 
+
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/
+ {
+    ok( new { configuration { } , status {} } ) 
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/config
+ {
+    ok( new { configuration { } , status {} } ) 
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/status
+ {
+    ok( new status { } ) 
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/start
+ {
+    ok()
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/start-rtsp
+ {
+    ok()
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/start-http
+ {
+    ok()
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/start-xyz
+ {
+    ok()
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/stop
+ {
+    ok()
+ }
+
+
+
+
+ RabbitOM.Decoder.FFMpeg
+ RabbitOM.Decoder.FFMpeg.Controllers
+ RabbitOM.Decoder.FFMpeg.Models
+ RabbitOM.Decoder.FFMpeg.Services
+ RabbitOM.Decoder.FFMpeg.Services.Mapping
+ RabbitOM.Decoder.FFMpeg.Streaming
+ {
+   VideoChannel
+   VideoChannelConfiguration
+   VideoChannelMetrics
+   ITranport
+   HttpTransport
+   SharedMemoryTransport
+   TcpSenderTransport
+ }
+ RabbitOM.Decoder.FFMpeg.Streaming.Codecs
+ 
+
+
 
 child env-var or cli options:
     RDECODER_FFMEG_POOL_SIZE= sbyte
@@ -55,7 +113,7 @@ child env-var or cli options:
         .Handler( (f,i,o) => RenderHandler(f,i,o) )
     
     .AddFilter( new Filter() )
-        .Handler( (f,i) => ImageSenderHandler(f,i) )
+        .Handler( (f,i) => ImageSenderHandler(f,i) )d
     
     .Build()
     ;
@@ -64,11 +122,6 @@ child env-var or cli options:
     
 
 
-http://127.0.0.1:20000/channels/0/create  CreateRequest { Config , AutoStart }
-http://127.0.0.1:20000/channels/0/start
-http://127.0.0.1:20000/channels/0/stop
-http://127.0.0.1:20000/channels/0/config
-http://127.0.0.1:20000/channels/0/status
 
 Domain
  /Channels
@@ -77,19 +130,3 @@ Domain
 DDD is not the best approach for decoding/streaming backend
  -> find something else
 
- http://127.0.0.1:20000/decoder/ffmpeg/channels/0/
- {
-    ok( new { configuration { } , status {} } ) 
- }
- http://127.0.0.1:20000/decoder/ffmpeg/channels/0/status
- {
-    ok( new status { } ) 
- }
- http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/start
- {
-    ok()
- }
- http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/stop
- {
-    ok()
- }
