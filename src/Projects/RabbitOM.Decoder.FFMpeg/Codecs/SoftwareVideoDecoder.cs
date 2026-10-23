@@ -2,7 +2,7 @@
 // for instance when using H264/HEVC codec the keys send during rtsp session
 // contains configuration settings (store in the sdp during a rtsp session)
 // used by the CABAC algorithm which are a part of an entropy coding
-// CABAC is used for compressing macro block by browsing a macroblock in zigzag and use truncated binarizer it works by reading a bitstream as input for decoding but for compression it's reverted cabac will produce bitstream
+// CABAC is used for compressing macro block by browsing a macroblock in zigzag and use truncated binarizer (this is not a compression technic where you can imaging storing multiple numbers in a number, by including bit separator in the number) it works by reading a bitstream as input for decoding but for compression it's reverted cabac will produce bitstream
 // some these codec used also an other entropy coding which are the part of Video Coding Layer, called
 // Variable Length Coding (VLC or CAVLC) where this an another entropy coding compress numbers like this:
 // 0=>1 , 1=>010 => , 2=>011 , 8=>0001001   
