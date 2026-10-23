@@ -1,15 +1,13 @@
 ﻿/*
  It's a wrapper about thread, Win32 programming a starting a thread required to call the CreateThread method,
 and passing SID data struct for OS permission, a pointer to thread function, etc... this will an opaque pointer
-call handle. behind this a data structure, it highly important to CloseHandle to avoid leak.
+call handle. behind this a data structure, it highly important to CloseHandle to avoid mem leak but necessary thread leak.
 
-But wait few minutes, most of programmer use bool to alert the leave it's compute. It's is true a poor approch.
-According to Microsoft Press, and to Jefrey Ritcher who mainly write the a book for Win32 programming, discuss about the best to win32 thread (not pthread).
-A thread is unit a execution flow where the access of the cpu is managed by something like a round robbin algorithm using a quantum time where the quantum time is calculating about the OS properties and the type of CPU.
-And the quantum time is never fixed, it's quantum it may be possible that time variation occurs. It's look like a field times. and you may understand why synchronization objects are more usefull instead of using bool.
+Many programmers use bool to alert a thread to leave it's function. 
+According to Microsoft Press, and to Jefrey Ritcher who mainly write the a book for Win32 programming, he discuss about the best way to stop win32 thread.
 The recommended way to stop win32 thread is to use win32 synchronization technics with CreateEvent, SetEvent, ResetEvent, WaitForSingleObject...
 take a look on cancelationtokensource , there an event synchronization used.
-The other reason, we don't use task here, because task scheduler rely in thread pool, and the size of the thread can be changed by a third party libray, it may be possible to reduce the size of thread pool.
+The other reason, we don't use task here, because task scheduler rely in thread pool, and the size of the thread can be changed by a third party libray, it may be possible to reduce the size of thread pool and alter the TaskScheduler.
 I repeat, avoid using boolean to stop a thread, it's too dangerous for mission critical applications.
 
 Use synchronization objects instead.
