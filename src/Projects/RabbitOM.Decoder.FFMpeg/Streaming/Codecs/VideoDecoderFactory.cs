@@ -1,7 +1,7 @@
 ﻿using FFmpeg.AutoGen;
 using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Codecs
 {
     public static class VideoDecoderFactory
     {

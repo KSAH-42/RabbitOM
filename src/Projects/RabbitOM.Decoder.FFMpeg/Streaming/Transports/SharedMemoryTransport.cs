@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Transports
+namespace RabbitOM.Decoder.FFMpeg.Streaming
 {
-	public sealed class HttpMultipartTransport : ITransport
+	// TODO: Do we need to move to parent namespace (Streaming) actually there is 2 classes, for this class we can introduce memory namespace and the transport will used theses classes (Decoder.FFMpeg.Streaming.Memory ?)
+	public sealed class SharedMemoryTransport : IOutputTransport
 	{
 		public bool IsOpened => throw new NotImplementedException();
 

@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Channels
+﻿namespace RabbitOM.Decoder.FFMpeg.Streaming
 {
 	public sealed class Error
 	{
