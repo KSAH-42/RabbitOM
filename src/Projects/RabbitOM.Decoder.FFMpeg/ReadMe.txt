@@ -76,3 +76,20 @@ Domain
 
 DDD is not the best approach for decoding/streaming backend
  -> find something else
+
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/
+ {
+    ok( new { configuration { } , status {} } ) 
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/status
+ {
+    ok( new status { } ) 
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/start
+ {
+    ok()
+ }
+ http://127.0.0.1:20000/decoder/ffmpeg/channels/0/actions/stop
+ {
+    ok()
+ }
