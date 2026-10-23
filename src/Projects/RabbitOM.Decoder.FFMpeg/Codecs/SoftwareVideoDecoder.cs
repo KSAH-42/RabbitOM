@@ -1,4 +1,15 @@
-﻿using FFmpeg.AutoGen;
+﻿// Depending of codec, you need pre-append input buffer (with keys) for configuring the decoder
+// for instance when using H264/HEVC codec the keys send during rtsp session
+// contains configuration settings (store in the sdp during a rtsp session)
+// used by the CABAC algorithm which are a part of an entropy coding
+// CABAC is used for compressing macro block by browsing a macroblock in zigzag and use truncated binarizer it works by reading a bitstream as input for decoding but for compression it's reverted cabac will produce bitstream
+// some these codec used also an other entropy coding which are the part of Video Coding Layer, called
+// Variable Length Coding (VLC or CAVLC) where this an another entropy coding compress numbers like this:
+// 0=>1 , 1=>010 => , 2=>011 , 8=>0001001   
+// which are used to build a table symbols used internally by the decoder
+// theses keys are mandatories to informs the decoder of how the bitstream is encoded. does it use CABAC or the VLC entropy coding.
+
+using FFmpeg.AutoGen;
 using System;
 
 #pragma warning disable CS0618
