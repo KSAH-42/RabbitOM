@@ -277,6 +277,19 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }
 
+        // TODO: so here we know that this method below can saturate the visualtree
+        // and so the main thread, but the MediaPlayer will the VisualHost and run this usercontrol
+        // in a different thread
+        // I have already do that few years ago in a different project
+        // that's the reason that routedevent is used for preparing to check the behavior when it's running on a separate thread with xaml interaction
+        // where usercontrol's thread will it's own dispatcher that the way.
+        // normally simple EventHandler can be used here
+        // Improvement will be done here, but it's not actually the priority
+        // in another word, this usercontrol will be modified to run a different thread
+        // Modification will be added after the finalisation of decoder api not before
+        // and rendering performance will be increased especially when dealing with a multiview (quadra, etc...)
+        // so keep in mind this usercontrol will run in a different thread again
+
         private void OnFrameDecoded()
         {
             IsPlaying = true;
