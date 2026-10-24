@@ -12,6 +12,7 @@ player              +---------------------------------| should be the media cont
 Req    -----------> | http: channels/0/start          | returns: 400/200  POST 
 Resp   <----------- |       channels/0/stop           | returns: 400/200  POST 
 Resp   <----------- |       channels/0/metrics        | returns: 400/200  GET
+Resp   <----------- |       channels/0/events           | returns: 400/200  GET use SSE
 Resp   <----------- |       channels/events           | returns: 400/200  GET use SSE
                     +---------------------------------+
                     | transports:                     |
