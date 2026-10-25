@@ -19,6 +19,8 @@
 
 		public bool IsStarted { get => throw new NotImplementedException(); }
 
+		public bool IsDisposed { get => throw new NotImplementedException(); }
+
 		public RtspVideoChannelMetrics Metrics { get => throw new NotImplementedException(); }
 
 		public RtspVideoChannelConfiguration Configuration { get => throw new NotImplementedException(); }
