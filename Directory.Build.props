@@ -5,10 +5,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OutputMode)' != 'true'">
 	  <UseArtifactsOutput>true</UseArtifactsOutput>
-	  <ArtifactsPath>..\..\..\output\artifacts</ArtifactsPath>
+	  <ArtifactsPath>..\..\output\artifacts</ArtifactsPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(OutputMode)' == 'true' AND !$(MSBuildProjectName.EndsWith('.Tests'))">
-	  <OutputPath>..\..\..\output\distrib\$(Configuration)\</OutputPath>
+	  <OutputPath>..\..\output\distrib\$(Configuration)\</OutputPath>
 	  <BaseOutputPath>bin\</BaseOutputPath>
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>

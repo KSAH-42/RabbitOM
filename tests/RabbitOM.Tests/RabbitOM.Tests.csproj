@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Projects\RabbitOM\RabbitOM.csproj" />
+    <ProjectReference Include="..\..\src\RabbitOM\RabbitOM.csproj" />
   </ItemGroup>
 
   <ItemGroup>

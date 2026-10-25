@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.10.12224.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player", "src\Projects\RabbitOM.Player\RabbitOM.Player.csproj", "{7EAC1801-0B1C-423C-9BC9-7A0140172A04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Player", "src\RabbitOM.Player\RabbitOM.Player.csproj", "{7EAC1801-0B1C-423C-9BC9-7A0140172A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM", "src\Projects\RabbitOM\RabbitOM.csproj", "{353A7A14-1085-4FD1-B0EF-02499276571D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM", "src\RabbitOM\RabbitOM.csproj", "{353A7A14-1085-4FD1-B0EF-02499276571D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Node", "src\Projects\RabbitOM.Node\RabbitOM.Node.csproj", "{B173ADBC-AC32-4345-9A84-1A73ACE563DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Node", "src\RabbitOM.Node\RabbitOM.Node.csproj", "{B173ADBC-AC32-4345-9A84-1A73ACE563DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Decoder", "src\Projects\RabbitOM.Decoder\RabbitOM.Decoder.csproj", "{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Decoder", "src\RabbitOM.Decoder\RabbitOM.Decoder.csproj", "{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Tests", "src\Tests\RabbitOM.Tests\RabbitOM.Tests.csproj", "{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Tests", "tests\RabbitOM.Tests\RabbitOM.Tests.csproj", "{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Decoder.FFMpeg", "src\RabbitOM.Decoder.FFMpeg\RabbitOM.Decoder.FFMpeg.csproj", "{4A81403B-8316-43C4-93D7-447E7EB123A6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{6440BEBF-0D0F-417A-9B97-442B5EFEAF57}"
 EndProject
@@ -42,8 +44,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Directory.Build", "Director
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitOM.Decoder.FFMpeg", "src\Projects\RabbitOM.Decoder.FFMpeg\RabbitOM.Decoder.FFMpeg.csproj", "{4A81403B-8316-43C4-93D7-447E7EB123A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
