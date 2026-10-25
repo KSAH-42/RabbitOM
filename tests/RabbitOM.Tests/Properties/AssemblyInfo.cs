@@ -6,4 +6,4 @@
 [assembly: AssemblyTitle("RabbitOM.Tests")]
 [assembly: AssemblyDescription("Unit Tests library")]
 [assembly: AssemblyTrademark("RabbitOM™")]
-[assembly: AssemblyVersion("2.1.0.*")]
+[assembly: AssemblyVersion("2.2.0.*")]
