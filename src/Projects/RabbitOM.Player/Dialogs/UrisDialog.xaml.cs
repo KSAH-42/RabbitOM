@@ -85,7 +85,7 @@ namespace RabbitOM.Player.Dialogs
 
         private void OnAdd( object sender , ExecutedRoutedEventArgs e )
         {
-            var dialog = new UriSourceDialog() { Owner = this };
+            var dialog = new UriPromptDialog() { Owner = this };
 
             if ( dialog.ShowDialog().Value )
             {

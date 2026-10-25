@@ -1,4 +1,4 @@
-﻿<Window x:Class="RabbitOM.Player.Dialogs.UriSourceDialog"
+﻿<Window x:Class="RabbitOM.Player.Dialogs.UriPromptDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -22,7 +22,7 @@
 		<converters:RevertBooleanValueConverter x:Key="RevertBooleanValueConverter" />
 	</Window.Resources>
 	<Window.CommandBindings>
-		<CommandBinding Command="{x:Static local:UriSourceDialog.CloseCommand}" 
+		<CommandBinding Command="{x:Static local:UriPromptDialog.CloseCommand}" 
 						Executed="OnClose" 
 						/>
 	</Window.CommandBindings>
@@ -75,11 +75,11 @@
 						Margin="0,0,10,0"
 						IsCancel="True"
 						/>
-				<Button Content="Accept"
+				<Button Content="Ok"
 						Width="70"
 						Margin="0,0,10,0"
 						IsDefault="True"
-						Command="{x:Static local:UriSourceDialog.CloseCommand}"
+						Command="{x:Static local:UriPromptDialog.CloseCommand}"
 						>
 					<Button.IsEnabled>
 						<Binding ElementName="_textboxValue" Path="(Validation.HasError)" Converter="{StaticResource RevertBooleanValueConverter}" />
