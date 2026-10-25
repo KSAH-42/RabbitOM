@@ -67,28 +67,6 @@ reader   <--------- |        writer frame             |
  }
 
 
-
-
- RabbitOM.Decoder.FFMpeg
- RabbitOM.Decoder.FFMpeg.Controllers
- RabbitOM.Decoder.FFMpeg.Models
- RabbitOM.Decoder.FFMpeg.Services
- RabbitOM.Decoder.FFMpeg.Services.Mapping
- RabbitOM.Decoder.FFMpeg.Streaming
- {
-   VideoChannel
-   VideoChannelConfiguration
-   VideoChannelMetrics
-   ITranport
-   HttpTransport
-   SharedMemoryTransport
-   TcpSenderTransport
- }
- RabbitOM.Decoder.FFMpeg.Streaming.Codecs
- 
-
-
-
 child env-var or cli options:
     RDECODER_FFMEG_POOL_SIZE= sbyte
 
@@ -120,14 +98,3 @@ child env-var or cli options:
     ;
 
  graph.Run();
-    
-
-
-
-Domain
- /Channels
- /Events
-
-DDD is not the best approach for decoding/streaming backend
- -> find something else
-
