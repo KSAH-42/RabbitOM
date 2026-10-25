@@ -8,7 +8,6 @@
 
         private string? _codec;
         private string? _transport;
-        private bool _connectionStatus;
         private long _clock;
         private long _bytesReceivedCount;
         private long _packetReceivedCount;
@@ -48,17 +47,6 @@
                 using ( _provider.ReaderLock )
                 {
                     return _clock;
-                }
-            }
-        }
-
-        public bool ConnectionStatus
-        {
-            get
-            {
-                using ( _provider.ReaderLock )
-                {
-                    return _connectionStatus;
                 }
             }
         }
@@ -231,22 +219,6 @@
             _transport = value;
         }
 
-        private void SetConnectionStatusOn()
-        {
-            using ( _provider.WriterLock )
-            {
-                _connectionStatus = true;
-            }
-        }
-
-        private void SetConnectionStatusOff()
-        {
-            using ( _provider.WriterLock )
-            {
-                _connectionStatus = false;
-            }
-        }
-
         private void SetClock( long value )
         {
             using ( _provider.WriterLock )
@@ -306,7 +278,6 @@
                 _codec = default;
                 _transport = default;
                 _ticks = default;
-                _connectionStatus = default;
                 _clock = default;
                 _frameCount = default;
                 _bytesReceivedCount = default;
@@ -337,8 +308,6 @@
             public void Clear() => _metrics.Clear();
             public void SetCodec( string value ) => _metrics.SetCodec( value );
             public void SetTransport( string value ) => _metrics.SetTransport( value );
-            public void SetConnectionStatusOn() => _metrics.SetConnectionStatusOn();
-            public void SetConnectionStatusOff() => _metrics.SetConnectionStatusOff();
             public void SetClock( long value ) => _metrics.SetClock( value );
             public void SetFrameSize( long height , long width ) => _metrics.SetFrameSize( height , width );
             public void AddPacketsLost( long value ) => _metrics.AddPacketsLost( value );
