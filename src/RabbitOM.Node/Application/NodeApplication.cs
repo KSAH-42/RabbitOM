@@ -6,7 +6,7 @@ namespace RabbitOM.Node.Application
     using RabbitOM.Net.Rtsp.Clients;
 	using RabbitOM.Node.Logging;
 	using RabbitOM.Node.Scripting;
-    
+
 	public sealed class NodeApplication : IApplication
 	{
         private readonly ILogger _logger;
