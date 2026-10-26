@@ -2,8 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace RabbitOM.Player.Controls
 {
@@ -15,7 +15,6 @@ namespace RabbitOM.Player.Controls
         public static readonly RoutedEvent StoppedEvent = EventManager.RegisterRoutedEvent( nameof(Stopped), RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
         public static readonly RoutedEvent ConnectedEvent = EventManager.RegisterRoutedEvent( nameof(Connected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
         public static readonly RoutedEvent DisconnectedEvent = EventManager.RegisterRoutedEvent( nameof(Disconnected) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
-        public static readonly RoutedEvent FrameDecodedEvent = EventManager.RegisterRoutedEvent( nameof(FrameDecoded) , RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MediaPlayerControl) );
 
 
         public static readonly DependencyProperty StretchImageProperty = DependencyProperty.Register( nameof(StretchImage) , typeof(Stretch) , typeof(MediaPlayerControl) , new PropertyMetadata( Stretch.Fill ) );
@@ -78,11 +77,7 @@ namespace RabbitOM.Player.Controls
             remove => RemoveHandler( DisconnectedEvent , value );
         }
 
-        public event RoutedEventHandler FrameDecoded
-        {
-            add    => AddHandler( FrameDecodedEvent , value );
-            remove => RemoveHandler( FrameDecodedEvent , value );
-        }
+        public event EventHandler<MediaDataReceivedEventArgs> DataReceived;
 
 
 
@@ -277,24 +272,14 @@ namespace RabbitOM.Player.Controls
             RaiseEvent( new RoutedEventArgs( DisconnectedEvent ) );
         }
 
-        // TODO: so here we know that this method below can saturate the visualtree
-        // and so the main thread, but the MediaPlayer will the VisualHost and run this usercontrol
-        // in a different thread
-        // I have already do that few years ago in a different project
-        // that's the reason that routedevent is used for preparing to check the behavior when it's running on a separate thread with xaml interaction
-        // where usercontrol's thread will it's own dispatcher that the way.
-        // normally simple EventHandler can be used here
-        // Improvement will be done here, but it's not actually the priority
-        // in another word, this usercontrol will be modified to run a different thread
-        // Modification will be added after the finalisation of decoder api not before
-        // and rendering performance will be increased especially when dealing with a multiview (quadra, etc...)
-        // so keep in mind this usercontrol will run in a different thread again
-
-        private void OnFrameDecoded()
+        private void OnDataReceived( byte[] data )
         {
-            IsPlaying = true;
+            var handler = DataReceived;
 
-            RaiseEvent( new RoutedEventArgs( FrameDecodedEvent ) );
+            if ( handler != null )
+            {
+                handler( this , new MediaDataReceivedEventArgs( data ) );
+            }
         }
     }
 }

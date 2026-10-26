@@ -226,6 +226,8 @@ namespace RabbitOM.Player.Controls
 
             private void OnClientPacketReceived( object sender , RtspPacketReceivedEventArgs e )
             {
+                _control.OnDataReceived( e.Packet.Data );
+
                 _datasource.AddBytesReceived( e.Packet.Data.Length );
 
                 if ( RtpPacket.TryParse( e.Packet.Data , out var packet ) && _inspector.TryInspect( packet ) )
@@ -267,7 +269,7 @@ namespace RabbitOM.Player.Controls
                         _datasource.IncreaseFrameCount();
                     }
 
-                    _control.OnFrameDecoded();
+                    _control.IsPlaying = true;
                 });
             }
         }
