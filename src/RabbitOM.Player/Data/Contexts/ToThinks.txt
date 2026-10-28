@@ -1,30 +1,86 @@
-﻿using System;
-using System.Windows;
+﻿	
+	public class ApplicationDataContext : DependencyObject
+	{
+		public static readonly DependencyProperty ValueProperty = DependencyProperty.Register( nameof(Value), typeof(string), typeof(ApplicationDataContext));
 
-namespace RabbitOM.Player.Data.Contexts
-{
-    public abstract class DataContext : DependencyObject
-    {
-    }
+		public ApplicationDataContext()
+		{
+			LoadedEvent = new UIEventHandler( OnLoaded );
+		}
 
-    public sealed class MainDataContext : DataContext // or just inherit from DependencyObject ? it's depend to the app needs 
-    {
-    }
-}
+		public UIEventHandler LoadedEvent { get; }
 
+		public string Value
+		{
+			get => (string)GetValue(ValueProperty);
+			set => SetValue(ValueProperty, value);
+		}
 
-// or
+		protected virtual void OnLoaded( object sender , RoutedEvent e )
+		{
+		}
 
-namespace RabbitOM.Player.Dialogs.Contexts
-{
-    public abstract class DialogDataContext : DependencyObject
-    {
-    }
-}
+		protected override void OnPropertyChanged( DependencyPropertyChangedEventArgs e )
+		{
+			base.OnPropertyChanged( e );
+		}
+	}
 
-namespace RabbitOM.Player.Controls.Contexts
-{
-    public abstract class ControlDataContext : DependencyObject
-    {
-    }
-}
+	public sealed class UIEventHandler : DependencyObject
+	{
+		public static readonly DependencyProperty NameProperty = DependencyProperty.Register( nameof(Name), typeof(string), typeof(DataContext));
+		public static readonly DependencyProperty MethodProperty = DependencyProperty.Register( nameof(Method), typeof(string), typeof(DataContext));
+		public static readonly DependencyProperty SourceProperty = DependencyProperty.Register( nameof(Source), typeof(object), typeof(DataContext) , new FrameworkPropertyMetadata( null , FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSourceChanged ) );
+
+		private readonly Action<object,RoutedEvent> _action;
+		private EventHandler _handler;
+
+		public UIEventHandler( Action<object,RoutedEvent> action ) => _action = action;
+
+		public string Name
+		{
+			get => (string)GetValue(NameProperty);
+			set => SetValue(NameProperty, value);
+		}
+
+		public string Method
+		{
+			get => (string)GetValue(MethodProperty);
+			set => SetValue(MethodProperty, value);
+		}
+
+		public object Source
+		{
+			get => GetValue(SourceProperty);
+			set => SetValue(SourceProperty, value);
+		}
+
+		public void RaiseEvent( RoutedEvent e ) // can be used by tests
+		{
+			_action( Source , e );
+		}
+
+		private void OnEvent( object sender , RoutedEvent e )
+		{
+			_handler( sender , e );
+		}
+
+		private static void OnSourceChanged( DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e )
+		{
+			if ( dependencyObject == null )
+            {
+                return;
+            }
+
+            var element = dependencyObject as FrameworkElement;
+
+            if ( element == null )
+            {
+                return;
+            }
+
+			// use reflection compare action signature the event handler signature
+			// if not found throw exception
+			// otherwise bind to the _handler
+		}
+	}
