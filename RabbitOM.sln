@@ -26,20 +26,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{18F3B9
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{48314992-1774-4F55-BEF3-E4F6272F889E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xml", "Xml", "{48314992-1774-4F55-BEF3-E4F6272F889E}"
 	ProjectSection(SolutionItems) = preProject
-		Resources\Configuration\config-H264.xml = Resources\Configuration\config-H264.xml
-		Resources\Configuration\config-H265.xml = Resources\Configuration\config-H265.xml
-		Resources\Configuration\config-JPEG.xml = Resources\Configuration\config-JPEG.xml
-		Resources\Configuration\config.xml = Resources\Configuration\config.xml
-		Resources\Configuration\node-script.xml = Resources\Configuration\node-script.xml
-		Resources\Configuration\player-script.xml = Resources\Configuration\player-script.xml
+		Resources\Xml\config-H264.xml = Resources\Xml\config-H264.xml
+		Resources\Xml\config-H265.xml = Resources\Xml\config-H265.xml
+		Resources\Xml\config-JPEG.xml = Resources\Xml\config-JPEG.xml
+		Resources\Xml\config.xml = Resources\Xml\config.xml
+		Resources\Xml\node-script.xml = Resources\Xml\node-script.xml
+		Resources\Xml\player-script.xml = Resources\Xml\player-script.xml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{7DCE2F71-5E10-4C96-B3DD-58C7CFD2A222}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Text", "Texts", "{7DCE2F71-5E10-4C96-B3DD-58C7CFD2A222}"
 	ProjectSection(SolutionItems) = preProject
-		assets\Notes\TheNext.txt = assets\Notes\TheNext.txt
-		assets\Notes\ToDo.txt = assets\Notes\ToDo.txt
+		assets\Text\TheNext.txt = assets\Text\TheNext.txt
+		assets\Text\ToDo.txt = assets\Text\ToDo.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Directory.Build", "Directory.Build", "{F5D19361-CF6C-46FB-9B7B-D21A237D8AEF}"
@@ -69,6 +69,10 @@ Global
 		{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD270FDC-DE3A-420F-81FD-A6CED4585EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,10 +81,6 @@ Global
 		{4A81403B-8316-43C4-93D7-447E7EB123A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A81403B-8316-43C4-93D7-447E7EB123A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A81403B-8316-43C4-93D7-447E7EB123A6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,11 +90,11 @@ Global
 		{353A7A14-1085-4FD1-B0EF-02499276571D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{B173ADBC-AC32-4345-9A84-1A73ACE563DA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{4BF9CAE9-6462-4E89-8FCF-81C44C7D73C6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17} = {6440BEBF-0D0F-417A-9B97-442B5EFEAF57}
 		{CD270FDC-DE3A-420F-81FD-A6CED4585EF6} = {6440BEBF-0D0F-417A-9B97-442B5EFEAF57}
 		{4A81403B-8316-43C4-93D7-447E7EB123A6} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{48314992-1774-4F55-BEF3-E4F6272F889E} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
 		{7DCE2F71-5E10-4C96-B3DD-58C7CFD2A222} = {18F3B9A7-EC4B-4C77-B5C1-A0E81B0DE1D9}
-		{C66C4FF7-BDB0-4D13-978A-F67ADAD06D17} = {6440BEBF-0D0F-417A-9B97-442B5EFEAF57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B4AD862-E72F-4EE0-8635-83FD58C5B14A}
