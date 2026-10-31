@@ -1,9 +1,11 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Models
+﻿namespace RabbitOM.Decoder.FFMpeg.Models.Configuration
 {
-	public sealed class SharedMemoryConfigurationModel
+	public sealed class SharedMemoryTransportConfiguration
 	{
 		public string? MappingName { get; set; } // use bool env-var for encryption
+
 		public int? QueueCapacity { get; set; }
+
 		public int? BlockSize { get; set; }
 	}
 }
