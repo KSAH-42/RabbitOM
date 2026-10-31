@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace RabbitOM.Player.Data.Serialization
+namespace RabbitOM.Player.Data
 {
 	public static class ScriptSerializer
 	{

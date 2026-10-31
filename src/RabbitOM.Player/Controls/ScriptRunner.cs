@@ -5,7 +5,6 @@ using System.Windows;
 namespace RabbitOM.Player.Controls
 {
 	using RabbitOM.Player.Data;
-	using RabbitOM.Player.Data.Serialization;
 	using RabbitOM.Player.Scripting;
 
 	public sealed class ScriptRunner : IScriptRunner
