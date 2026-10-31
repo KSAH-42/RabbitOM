@@ -1,6 +1,6 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Models
 {
-	public sealed class RtspChannelMetricsModel
+	public sealed class RtspChannelMetrics
 	{
 		public string? Codec { get; set; }
         public string? Transport { get; set; }

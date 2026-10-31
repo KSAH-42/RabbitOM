@@ -1,6 +1,6 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Models
+﻿namespace RabbitOM.Decoder.FFMpeg.Models.Configuration
 {
-	public sealed class HttpStreamingConfigurationModel
+	public sealed class HttpStreamingTransportConfiguration
 	{
 		public string? EndPoint { get; set; }
 		public bool? UseCompression { get; set; }

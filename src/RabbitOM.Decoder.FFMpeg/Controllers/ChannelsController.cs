@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace RabbitOM.Decoder.FFMpeg.Controllers
 {
 	using RabbitOM.Decoder.FFMpeg.Models;
+	using RabbitOM.Decoder.FFMpeg.Models.Configuration;
 	using RabbitOM.Decoder.FFMpeg.Services;
 
 	[ApiController]
@@ -17,7 +18,7 @@ namespace RabbitOM.Decoder.FFMpeg.Controllers
 		}
 
 		[HttpPost("{index:int}/start")]
-		public ActionResult Start( int index , [FromBody] RtspChannelConfigurationModel configuration ) // in case if we dont' a new protocol add route like this start, start-rtsp, start-http, etc... and pass configmodel without any inheritance and the route start will used rtsp by default
+		public ActionResult Start( int index , [FromBody] RtspChannelConfiguration configuration ) // in case if we dont' a new protocol add route like this start, start-rtsp, start-http, etc... and pass configmodel without any inheritance and the route start will used rtsp by default
 		{
 			throw new NotImplementedException();
 		}
@@ -29,13 +30,13 @@ namespace RabbitOM.Decoder.FFMpeg.Controllers
 		}
 
 		[HttpGet("{index:int}/configuration")]
-		public ActionResult<RtspChannelConfigurationModel> GetConfiguration( int index )
+		public ActionResult<RtspChannelConfiguration> GetConfiguration( int index )
 		{
 			throw new NotImplementedException();
 		}
 
 		[HttpGet("{index:int}/status")]
-		public ActionResult<RtspChannelStatusModel> GetStatus( int index )
+		public ActionResult<RtspChannelStatus> GetStatus( int index )
 		{
 			throw new NotImplementedException();
 		}
