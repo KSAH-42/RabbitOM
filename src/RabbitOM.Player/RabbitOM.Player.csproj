@@ -31,7 +31,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Resource Include="icon.ico" />
-	  <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
+	  <EmbeddedResource Include="Resources\ScriptTemplate.xml" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Include="Data\ScriptProperty.cs" />

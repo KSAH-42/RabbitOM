@@ -6,7 +6,7 @@ namespace RabbitOM.Player.Resources
 {
 	public static class ResourceManager
 	{
-		public const string ScriptTemplate = "ScriptTemplate.txt";
+		public const string ScriptTemplate = "ScriptTemplate.xml";
 
 		public static string GetResourceFile(string resourceName)
 		{
