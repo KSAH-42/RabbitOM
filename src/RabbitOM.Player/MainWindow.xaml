@@ -15,7 +15,7 @@
         MinWidth="420"
 		Closing="OnWindowClosing"
 		Style="{DynamicResource WindowStyle}"
-        Icon="pack://application:,,,/Resources/icon.ico"
+        Icon="pack://application:,,,/icon.ico"
         WindowState="Maximized"
 		>
 

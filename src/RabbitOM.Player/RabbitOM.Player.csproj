@@ -10,10 +10,10 @@
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<Deterministic>false</Deterministic>
-		<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 	<ItemGroup>
 	  <Compile Remove="Controllers\**" />
@@ -30,7 +30,7 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <Resource Include="Resources\icon.ico" />
+	  <Resource Include="icon.ico" />
 	  <EmbeddedResource Include="Resources\ScriptTemplate.txt" />
 	</ItemGroup>
 	<ItemGroup>
