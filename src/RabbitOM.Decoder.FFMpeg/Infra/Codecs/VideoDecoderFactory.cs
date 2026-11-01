@@ -3,14 +3,16 @@ using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Infra.Codecs
 {
-    public static class VideoDecoderFactory
+    using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
+
+    public sealed class VideoDecoderFactory : IVideoDecoderFactory
     {
         static VideoDecoderFactory()
         {
             ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
 
-        public static bool IsDecoderSupported( string value )
+        public bool CanCreateDecoder( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
@@ -23,7 +25,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infra.Codecs
                 ;
         }
 
-        public static VideoDecoder CreateDecoder( string value )
+        public IVideoDecoder CreateDecoder( string value )
         {
             if ( string.IsNullOrWhiteSpace( value ) )
             {
