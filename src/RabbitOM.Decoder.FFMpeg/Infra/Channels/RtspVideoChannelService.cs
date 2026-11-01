@@ -2,7 +2,7 @@
 {
 	using RabbitOM.Decoder.FFMpeg.Application.Services;
 
-	public sealed class RtspChannelsService : IChannelsService
+	public sealed class RtspVideoChannelService : IVideoChannelService
 	{
 	}
 }

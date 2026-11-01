@@ -11,7 +11,7 @@ namespace RabbitOM.Decoder.FFMpeg
 
 			builder.Services.AddControllers();
 			builder.Services.AddSwaggerGen();
-			builder.Services.AddSingleton<IChannelsService>( new RtspChannelsService() );
+			builder.Services.AddSingleton<IVideoChannelService>( new RtspVideoChannelService() );
 
 			var app = builder.Build();
 

@@ -9,9 +9,9 @@ namespace RabbitOM.Decoder.FFMpeg.Presentation.Controllers
 	[Route( "[controller]" )]
 	public class ChannelsController : ControllerBase
 	{
-		private readonly IChannelsService _channelsService;
+		private readonly IVideoChannelService _channelsService;
 
-		public ChannelsController( IChannelsService channelsServices )
+		public ChannelsController( IVideoChannelService channelsServices )
 		{
 			_channelsService = channelsServices ?? throw new ArgumentNullException( nameof( channelsServices ) );
 		}
