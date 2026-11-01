@@ -4,7 +4,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infra.Codecs
 {
     using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
 
-    public abstract class VideoDecoder : IDisposable
+    public abstract class VideoDecoder : IVideoDecoder
     {
         public event EventHandler<FrameDecodedEventArgs>? FrameDecoded;
 
