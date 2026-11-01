@@ -6,8 +6,6 @@
 
 		public bool IsConnected { get; set; }
 
-		public string[]? Errors { get; set; }
-
 		public ChannelMetrics Metrics { get; } = new ChannelMetrics();
 	}
 }
