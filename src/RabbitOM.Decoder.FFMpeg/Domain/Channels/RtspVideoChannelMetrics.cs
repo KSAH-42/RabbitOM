@@ -158,7 +158,7 @@
 
 
 
-        public static void IncrementValue( ref long memberValue , long value , ref long ticks )
+        private static void IncrementValue( ref long memberValue , long value , ref long ticks )
         {
             if ( value < 0 )
             {
@@ -172,7 +172,7 @@
             ticks = DateTime.Now.Ticks;
         }
 
-        public static long GetAverageValue( ref long memberValue , ref long ticks )
+        private static long GetAverageValue( ref long memberValue , ref long ticks )
         {
             var totalSeconds = (long) TimeSpan.FromTicks( DateTime.Now.Ticks - ticks ).TotalSeconds;
 
@@ -183,7 +183,7 @@
             return result;
         }
 
-        public static long GetAverageValue( ref long memberValue , ref long maxMemberValue , ref long ticks )
+        private static long GetAverageValue( ref long memberValue , ref long maxMemberValue , ref long ticks )
         {
             var totalSeconds = (long) TimeSpan.FromTicks( DateTime.Now.Ticks - ticks ).TotalSeconds;
 
