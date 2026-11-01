@@ -4,8 +4,8 @@ using System.Windows;
 
 namespace RabbitOM.Player.Controls
 {
-	using RabbitOM.Player.Data;
 	using RabbitOM.Player.Scripting;
+	using RabbitOM.Player.Scripting.Documents;
 
 	public sealed class ScriptRunner : IScriptRunner
 	{
@@ -60,6 +60,8 @@ namespace RabbitOM.Player.Controls
 			try
 			{
 				var model = ScriptSerializer.Deserialize( script );
+
+				ScriptValidator.Validate( model );
 
 				_script = new ApplicationScriptBuilder( model , _loadContext )
 					.ClearOutputDirectory()

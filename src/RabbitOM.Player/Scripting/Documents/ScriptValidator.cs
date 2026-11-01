@@ -1,21 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace RabbitOM.Player.Data
+namespace RabbitOM.Player.Scripting.Documents
 {
-	public sealed class Script
+	public static class ScriptValidator
 	{
-		public string Language { get; set; }
-
-		public List<ScriptReference> References { get; set; }
-
-		public List<ScriptProperty> Properties { get; set; }
-
-		public string Code { get; set; }
-
-
-
-
 		public static void Validate( Script script )
 		{
 			if ( script == null )

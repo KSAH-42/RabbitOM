@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using RabbitOM.Player.Scripting.Documents;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -6,8 +7,6 @@ using System.Runtime.Loader;
 
 namespace RabbitOM.Player.Scripting
 {
-	using RabbitOM.Player.Data;
-
 	// TODO: refactor this class
 	public sealed class ApplicationScriptBuilder
 	{

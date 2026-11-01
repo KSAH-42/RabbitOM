@@ -34,8 +34,8 @@
 	  <EmbeddedResource Include="Resources\ScriptTemplate.xml" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Include="Data\ScriptProperty.cs" />
-	  <None Include="Data\ScriptReference.cs" />
+	  <None Include="Scripting\Documents\ScriptProperty.cs" />
+	  <None Include="Scripting\Documents\ScriptReference.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="AvalonEdit" Version="6.3.1.120" />

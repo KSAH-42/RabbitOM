@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Player.Scripting.Documents;
+using System;
 
 namespace RabbitOM.Player.Scripting
 {

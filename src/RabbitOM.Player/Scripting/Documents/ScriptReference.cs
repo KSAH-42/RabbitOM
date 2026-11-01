@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Player.Data
+namespace RabbitOM.Player.Scripting.Documents
 {
 	public sealed class ScriptReference
 	{

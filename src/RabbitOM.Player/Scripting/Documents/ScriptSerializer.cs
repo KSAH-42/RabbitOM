@@ -1,7 +1,8 @@
-﻿using System;
+﻿using RabbitOM.Player.Data;
+using System;
 using System.Xml.Linq;
 
-namespace RabbitOM.Player.Data
+namespace RabbitOM.Player.Scripting.Documents
 {
 	public static class ScriptSerializer
 	{
