@@ -1,6 +1,6 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Application.Models
 {
-	public sealed class ChannelMetrics
+	public sealed class VideoChannelMetrics
 	{
 		public string? Codec { get; set; }
 

@@ -5,7 +5,7 @@
 // and then transform exception to http error do not make a ToString, log the exception instead.
 namespace RabbitOM.Decoder.FFMpeg.Application.Models
 {
-	public sealed class ChannelConfiguration
+	public sealed class VideoChannelConfiguration
 	{
 		public string? Uri { get; set; }
 
