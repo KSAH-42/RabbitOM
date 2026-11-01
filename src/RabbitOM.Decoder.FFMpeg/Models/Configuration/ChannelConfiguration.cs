@@ -19,7 +19,7 @@ namespace RabbitOM.Decoder.FFMpeg.Models.Configuration
 
 		public string? TranportType { get; set; }
 
-		public UnicastTransportConfiguration? UnicastTransport { get; set; }
+		public UdpTransportConfiguration? UdpTransport { get; set; }
 
 		public MulitcastTransportConfiguration? MutlicastTransport { get; set; }
 

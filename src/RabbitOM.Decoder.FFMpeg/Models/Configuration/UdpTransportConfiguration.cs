@@ -1,6 +1,6 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Models.Configuration
 {
-	public sealed class UnicastTransportConfiguration
+	public sealed class UdpTransportConfiguration
 	{
 		public int? Port { get; set; }
 
