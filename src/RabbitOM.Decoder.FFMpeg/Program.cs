@@ -1,4 +1,5 @@
-using RabbitOM.Decoder.FFMpeg.Services;
+using RabbitOM.Decoder.FFMpeg.Application.Services;
+using RabbitOM.Decoder.FFMpeg.Infra.Channels;
 
 namespace RabbitOM.Decoder.FFMpeg
 {
@@ -10,7 +11,7 @@ namespace RabbitOM.Decoder.FFMpeg
 
 			builder.Services.AddControllers();
 			builder.Services.AddSwaggerGen();
-			builder.Services.AddSingleton<IChannelsService>( new ChannelsService() );
+			builder.Services.AddSingleton<IChannelsService>( new RtspChannelsService() );
 
 			var app = builder.Build();
 
