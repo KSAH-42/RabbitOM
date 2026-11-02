@@ -10,6 +10,7 @@ Req    -----------> |   configuration          | returns: 400/200
 Resp   <----------- |   registry/find          | returns: 400/200 // find a decoder
                     |   registry/list          | returns: 400/200 
                     |   registry/pull          | returns: 400/200
+                    |   database ???           | returns: 400/200
                     |   management/install     | returns: 400/200
                     |   management/uninstall   | returns: 400/200
                     |   management/create      | returns: 400/200
