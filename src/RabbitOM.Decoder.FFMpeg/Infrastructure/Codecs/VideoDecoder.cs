@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infra.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
 {
     using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
 

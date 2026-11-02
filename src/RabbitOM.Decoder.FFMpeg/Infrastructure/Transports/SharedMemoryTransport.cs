@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infra.Transports
+namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Transports
 {
 	using RabbitOM.Decoder.FFMpeg.Domain.Transports;
 
-	public sealed class HttpTransport : IOutputTransport
+	public sealed class SharedMemoryTransport : IOutputTransport
 	{
 		public bool IsOpened => throw new NotImplementedException();
 

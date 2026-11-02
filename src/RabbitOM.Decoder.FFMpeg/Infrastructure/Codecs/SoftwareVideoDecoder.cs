@@ -14,7 +14,7 @@ using System;
 
 #pragma warning disable CS0618
 
-namespace RabbitOM.Decoder.FFMpeg.Infra.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
 {
     using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
 

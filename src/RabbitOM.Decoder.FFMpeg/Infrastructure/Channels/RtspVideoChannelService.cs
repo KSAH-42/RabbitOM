@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Infra.Channels
+﻿namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Channels
 {
 	using RabbitOM.Decoder.FFMpeg.Application.Services;
 

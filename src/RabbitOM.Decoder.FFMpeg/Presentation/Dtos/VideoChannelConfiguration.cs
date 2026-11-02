@@ -3,7 +3,7 @@
 // ie: bad message contains a very long string with n space chars
 // throw exception to tell the client to review its implementation for reducing memory space and time sending and force the client to fix this issue a big string with many space carrier on the network is a just a bad packet present on the network
 // and then transform exception to http error do not make a ToString, log the exception instead.
-namespace RabbitOM.Decoder.FFMpeg.Application.Models
+namespace RabbitOM.Decoder.FFMpeg.Presentation.Dtos
 {
 	public sealed class VideoChannelConfiguration
 	{
