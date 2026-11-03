@@ -5,16 +5,16 @@
 
 	public sealed class RtspVideoChannel : IDisposable
 	{
-		private readonly IVideoDecoderFactory _decoderFactory;
-		private readonly IVideoRendererFactory _rendererFactory;
+		private readonly IVideoDecoder _decoder;
+		private readonly IVideoRenderer _renderer;
 		private readonly IOutputTransport _outputTransport;
 
 
 
-		public RtspVideoChannel( IVideoDecoderFactory decoderFactory , IVideoRendererFactory rendererFactory , IOutputTransport outputTransport )
+		public RtspVideoChannel( IVideoDecoder decoder , IVideoRenderer renderer , IOutputTransport outputTransport )
 		{
-			_decoderFactory  = decoderFactory  ?? throw new ArgumentNullException( nameof( decoderFactory  ) );
-			_rendererFactory = rendererFactory ?? throw new ArgumentNullException( nameof( rendererFactory ) );
+			_decoder  = decoder ?? throw new ArgumentNullException( nameof( decoder ) );
+			_renderer = renderer ?? throw new ArgumentNullException( nameof( renderer ) );
 			_outputTransport = outputTransport ?? throw new ArgumentNullException( nameof( outputTransport ) );
 		}
 

@@ -52,3 +52,26 @@ RabbitOM.Decoder.NVidia.exe   // api decoder
      like some linux distrib, without to run a bash and execute apt-get or yum commands and exits setup and insallers, etc...
      if not it will goes in that way, it's self-evident
 - don't forget to add the CrystalProcess (project) at the end
+
+
+
+                                           
+    +-----------------+             +--------------------------+
+    | VideoAnalyticMgr|             |     Decoder.exe          | 
+    +-----------------+             +--------------------------+
+            |                                   |
+            |                       +--------------------------+
+            |                       |     Decoder.FFMpeg.exe   | Instance1
+            |                       +--------------------------+
+            |                       +--------------------------+
+            |                       |     Decoder.FFMpeg.exe   | Instance2
+            |                       +--------------------------+
+            |                       +--------------------------+
+            |                       |     Decoder.FFMpeg.exe   | Instance3
+     +-----------------+            +--------------------------+
+     | VideoAnalytic 1 |<-----------|     Channel 1            |
+     +-----------------+            +--------------------------+
+                                    |     Channel 2            |
+                                    +--------------------------+
+                                    |     Channel 3            |
+                                    +--------------------------+

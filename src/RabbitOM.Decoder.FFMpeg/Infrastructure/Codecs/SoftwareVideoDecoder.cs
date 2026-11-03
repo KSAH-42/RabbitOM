@@ -18,9 +18,8 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
 {
     using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
 
-    public unsafe class SoftwareVideoDecoder : VideoDecoder
+    public sealed unsafe class SoftwareVideoDecoder : VideoDecoder
     {
-        private readonly AVCodecID _codecId;
         private AVCodec* _decoder = null;
         private AVCodecContext* _context = null;
         private AVFrame* _frame = null;
@@ -33,10 +32,11 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
 
 
 
-        internal SoftwareVideoDecoder( AVCodecID codecId )
+        static SoftwareVideoDecoder()
         {
-            _codecId = codecId;
+            ffmpeg.RootPath = AppDomain.CurrentDomain.BaseDirectory;
         }
+
 
 
 
@@ -51,7 +51,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
             }
         }
 
-        public override void Open()
+        public override void Open( string type )
         {
             if ( _decoder != null )
             {
@@ -60,7 +60,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
 
             try
             {
-                _decoder = ffmpeg.avcodec_find_decoder( _codecId );
+                _decoder = ffmpeg.avcodec_find_decoder( ValueConverter.Convert( type ) );
 
                 if ( _decoder == null )
                 {

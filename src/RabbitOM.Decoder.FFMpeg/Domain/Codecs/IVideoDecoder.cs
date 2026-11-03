@@ -6,16 +6,16 @@ namespace RabbitOM.Decoder.FFMpeg.Domain.Codecs
     {
         event EventHandler<FrameDecodedEventArgs>? FrameDecoded;
 
-        public bool IsOpened { get; }
+        bool IsOpened { get; }
 
-        public void Open();
+        void Open( string type );
 
-        public void Close();
+        void Close();
 
-        public bool CanConfigure( byte[] extraParameters );
+        bool CanConfigure( byte[] extraParameters );
 
-        public bool Configure( byte[] extraParameters );
+        bool Configure( byte[] extraParameters );
 
-        public void Decode( byte[] buffer );
+        void Decode( byte[] buffer );
     }
 }

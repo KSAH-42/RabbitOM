@@ -15,7 +15,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
 
         public abstract bool IsOpened { get; }
 
-        public abstract void Open();
+        public abstract void Open( string type );
 
         public abstract void Close();
 
