@@ -54,7 +54,9 @@ RabbitOM.Decoder.NVidia.exe   // api decoder
 - don't forget to add the CrystalProcess (project) at the end
 
 
-
+                                    +--------------------------+
+                                    |     Decoder.Cli.exe      |  // to control decoder from the command prompt
+                                    +--------------------------+
                                            
     +-----------------+             +--------------------------+
     | VideoAnalyticMgr|             |     Decoder.exe          | 
