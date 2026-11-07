@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
 {
-    using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
+    using RabbitOM.Decoder.FFMpeg.Domain.Media;
 
     public abstract class VideoRenderer : IVideoRenderer
     {

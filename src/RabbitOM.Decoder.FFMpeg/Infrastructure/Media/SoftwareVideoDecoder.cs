@@ -14,9 +14,9 @@ using System;
 
 #pragma warning disable CS0618
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
 {
-    using RabbitOM.Decoder.FFMpeg.Domain.Codecs;
+    using RabbitOM.Decoder.FFMpeg.Domain.Media;
 
     public sealed unsafe class SoftwareVideoDecoder : VideoDecoder
     {

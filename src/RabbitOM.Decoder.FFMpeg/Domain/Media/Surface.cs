@@ -1,7 +1,7 @@
 ﻿using FFmpeg.AutoGen;
 using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Domain.Codecs
+namespace RabbitOM.Decoder.FFMpeg.Domain.Media
 {
     public sealed unsafe class Surface : IDisposable
     {
