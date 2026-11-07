@@ -55,7 +55,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
 
             System.Buffer.BlockCopy( _buffer , 0 , clonedBuffer, 0, _buffer.Length );
 
-            OnRender( new RenderEventArgs( new Image( surface.Width , surface.Height , clonedBuffer ) ) );
+            OnRender( new RenderEventArgs( new Image( clonedBuffer , surface.Width , surface.Height ) ) );
         }
 
         public override void Close()

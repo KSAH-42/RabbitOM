@@ -4,7 +4,7 @@ namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Transports
 {
 	using RabbitOM.Decoder.FFMpeg.Domain.Transports;
 
-	public sealed class SharedMemoryTransport : IOutputTransport
+	public sealed class SharedMemoryTransport : ITransport
 	{
 		public bool IsOpened => throw new NotImplementedException();
 

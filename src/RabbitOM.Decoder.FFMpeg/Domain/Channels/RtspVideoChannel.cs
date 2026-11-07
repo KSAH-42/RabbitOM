@@ -1,21 +1,20 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Domain.Channels
 {
 	using RabbitOM.Decoder.FFMpeg.Domain.Media;
-	using RabbitOM.Decoder.FFMpeg.Domain.Transports;
 
 	public sealed class RtspVideoChannel : IDisposable
 	{
 		private readonly IVideoDecoder _decoder;
 		private readonly IVideoRenderer _renderer;
-		private readonly IOutputTransport _outputTransport;
+		private readonly IVideoOutput _output;
 
 
 
-		public RtspVideoChannel( IVideoDecoder decoder , IVideoRenderer renderer , IOutputTransport outputTransport )
+		public RtspVideoChannel( IVideoDecoder decoder , IVideoRenderer renderer , IVideoOutput output )
 		{
-			_decoder  = decoder ?? throw new ArgumentNullException( nameof( decoder ) );
+			_decoder = decoder ?? throw new ArgumentNullException( nameof( decoder ) );
 			_renderer = renderer ?? throw new ArgumentNullException( nameof( renderer ) );
-			_outputTransport = outputTransport ?? throw new ArgumentNullException( nameof( outputTransport ) );
+			_output = output ?? throw new ArgumentNullException( nameof( output ) );
 		}
 
 

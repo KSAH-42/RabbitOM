@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Decoder.FFMpeg.Domain.Transports
 {
-	public interface IOutputTransport : IDisposable
+	public interface ITransport : IDisposable
 	{
 		bool IsOpened { get; }
 		void Open();
