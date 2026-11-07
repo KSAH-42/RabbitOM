@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Presentation.DTOs
+﻿namespace RabbitOM.Decoder.FFMpeg.Presentation.DTOs.Configuration
 {
 	public sealed class UdpTransportConfiguration
 	{
