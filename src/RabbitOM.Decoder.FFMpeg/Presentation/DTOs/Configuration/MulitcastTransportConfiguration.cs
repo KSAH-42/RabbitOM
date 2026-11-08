@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Presentation.DTOs.Configuration
+﻿namespace RabbitOM.Decoder.FFMpeg.Presentation.Dtos.Configuration
 {
 	public sealed class MulitcastTransportConfiguration
 	{
