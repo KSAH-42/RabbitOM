@@ -198,7 +198,7 @@ And the repository that own the lib, the implementation use an Authenticator cap
 
 # If you test first with recorders
 
-Some recorder needs custom rtsp header, like X-DeviceId, etc... the player is not able to know in advance the extra mandatory headers, must contact the recorder vendors, and ask if it can deliver for you theses headers, otherwise, you must used wireshark can compare with vendors softwares. Then you can adapt the player code.
+Some recorder needs custom rtsp header, like X-DeviceId, etc... the player is not able to know in advance the extra mandatory headers, you must contact the recorder vendors, and ask if it can deliver for you theses headers, otherwise, you must used wireshark and inspect vendors headers softwares. And then you can adapt the player code.
 
 # RabbitOM.Node used to receive packet and run .net scripts triggered by the rtsp client events
 
