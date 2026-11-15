@@ -1,4 +1,5 @@
-﻿using System;
+﻿// adding the base class to prepare to add the HardwareVideoDecoder using FFMpeg
+using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
 {
