@@ -15,21 +15,21 @@ namespace RabbitOM.Player.Configuration.Security
 		{
 			if ( string.IsNullOrWhiteSpace( keyVariable ) )
 			{
-				throw new InvalidOperationException( "key env-var has been set" );
+				throw new ArgumentNullException( nameof( keyVariable ) );
 			}
 
 			var keyValue = Environment.GetEnvironmentVariable( keyVariable );
 
 			if ( string.IsNullOrWhiteSpace( keyValue ) )
 			{
-				throw new InvalidOperationException( "no key has been found" );
+				throw new ArgumentException( "env-var is not found" , nameof( keyVariable ) );
 			}
 
 			var key = Convert.FromHexString( keyValue );
 
 			if ( key.Length == 0 )
 			{
-				throw new InvalidOperationException( "the key is empty" );
+				throw new ArgumentException( "env-var is empty" , nameof( keyVariable ) );
 			}
 
 			return new AesDataProtector( key );
