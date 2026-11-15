@@ -216,7 +216,7 @@ You can also configure the script: in the xml section called "properties", the n
 	</references>
 	<properties>
 		<property name="CommunicationStartedMessage">The communication is started</property>
-	    <property name="CommunicationStoppedMessage">The communication is stopped</property>
+		<property name="CommunicationStoppedMessage">The communication is stopped</property>
 		<property name="ConnectedMessage">Connected to the device</property>
 		<property name="DisconnectedMessage">Disconnected from the device</property>
 		<property name="ErrorMessage">Communication error</property>
