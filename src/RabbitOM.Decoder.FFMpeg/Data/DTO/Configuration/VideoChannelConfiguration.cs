@@ -1,5 +1,5 @@
 ﻿// TODO: for validation don't use use string.IsNullOrWhiteSpace string don't trim or  throw exception in case
-namespace RabbitOM.Decoder.FFMpeg.Data.Dtos.Configuration
+namespace RabbitOM.Decoder.FFMpeg.Data.DTOs.Configuration
 {
 	public sealed class VideoChannelConfiguration
 	{

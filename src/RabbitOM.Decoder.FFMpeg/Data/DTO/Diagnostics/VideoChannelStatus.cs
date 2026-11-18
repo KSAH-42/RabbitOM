@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Data.Dtos.Diagnostics
+﻿namespace RabbitOM.Decoder.FFMpeg.Data.DTOs.Diagnostics
 {
 	public sealed class VideoChannelStatus
 	{
