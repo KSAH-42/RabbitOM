@@ -1,6 +1,8 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 {
-	using RabbitOM.Decoder.FFMpeg.Streaming.Media;
+	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders;
+	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Outputs;
+	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Renders;
 
 	public sealed class RtspVideoChannel : IDisposable
 	{

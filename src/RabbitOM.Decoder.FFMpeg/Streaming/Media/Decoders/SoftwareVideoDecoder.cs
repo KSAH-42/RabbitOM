@@ -14,7 +14,7 @@ using System;
 
 #pragma warning disable CS0618
 
-namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders
 {
 	public sealed unsafe class SoftwareVideoDecoder : VideoDecoder
     {
@@ -58,7 +58,7 @@ namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
 
             try
             {
-                _decoder = ffmpeg.avcodec_find_decoder( ValueConverter.Convert( type ) );
+                _decoder = ffmpeg.avcodec_find_decoder( ValueTypeConverter.Convert( type ) );
 
                 if ( _decoder == null )
                 {

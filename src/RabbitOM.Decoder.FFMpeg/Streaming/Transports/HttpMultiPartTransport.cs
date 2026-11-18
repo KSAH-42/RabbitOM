@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Decoder.FFMpeg.Streaming.Transports
 {
-	public sealed class HttpTransport : ITransport
+	public sealed class HttpMultiPartTransport : ITransport
 	{
 		public bool IsOpened => throw new NotImplementedException();
 

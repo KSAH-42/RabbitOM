@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders
 {
     public interface IVideoDecoder : IDisposable
     {

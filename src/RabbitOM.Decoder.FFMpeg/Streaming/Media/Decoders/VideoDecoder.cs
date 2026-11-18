@@ -1,7 +1,7 @@
 ﻿// adding the base class to prepare to add the HardwareVideoDecoder using FFMpeg
 using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders
 {
 	public abstract class VideoDecoder : IVideoDecoder
     {

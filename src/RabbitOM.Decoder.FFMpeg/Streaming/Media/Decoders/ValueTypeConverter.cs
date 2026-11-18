@@ -1,9 +1,9 @@
 ﻿using FFmpeg.AutoGen;
 using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders
 {
-    public static class ValueConverter
+    public static class ValueTypeConverter
     {
         public static AVCodecID Convert( string value )
         {
