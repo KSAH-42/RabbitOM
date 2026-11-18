@@ -14,11 +14,9 @@ using System;
 
 #pragma warning disable CS0618
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
 {
-    using RabbitOM.Decoder.FFMpeg.Streaming.Media;
-
-    public sealed unsafe class SoftwareVideoDecoder : VideoDecoder
+	public sealed unsafe class SoftwareVideoDecoder : VideoDecoder
     {
         private AVCodec* _decoder = null;
         private AVCodecContext* _context = null;

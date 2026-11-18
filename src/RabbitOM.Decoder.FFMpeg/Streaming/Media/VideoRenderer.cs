@@ -1,10 +1,8 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
 {
-    using RabbitOM.Decoder.FFMpeg.Streaming.Media;
-
-    public abstract class VideoRenderer : IVideoRenderer
+	public abstract class VideoRenderer : IVideoRenderer
     {
         public event EventHandler<RenderEventArgs>? Rendered;
 

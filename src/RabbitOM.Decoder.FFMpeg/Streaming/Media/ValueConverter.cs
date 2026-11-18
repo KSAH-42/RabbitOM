@@ -1,7 +1,7 @@
 ﻿using FFmpeg.AutoGen;
 using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
 {
     public static class ValueConverter
     {

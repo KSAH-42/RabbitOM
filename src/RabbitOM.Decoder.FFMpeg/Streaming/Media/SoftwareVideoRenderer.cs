@@ -1,11 +1,9 @@
 ﻿using FFmpeg.AutoGen;
 using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
 {
-    using RabbitOM.Decoder.FFMpeg.Streaming.Media;
-
-    public sealed unsafe class SoftwareVideoRenderer : VideoRenderer
+	public sealed unsafe class SoftwareVideoRenderer : VideoRenderer
     {
         private SwsContext* _sws_context = null;
         private int _height;
