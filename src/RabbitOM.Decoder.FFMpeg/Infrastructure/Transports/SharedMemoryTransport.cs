@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Transports
 {
-	using RabbitOM.Decoder.FFMpeg.Domain.Transports;
+	using RabbitOM.Decoder.FFMpeg.Streaming.Transports;
 
 	public sealed class SharedMemoryTransport : ITransport
 	{

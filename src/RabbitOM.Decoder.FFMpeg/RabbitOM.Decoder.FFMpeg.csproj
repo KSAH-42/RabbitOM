@@ -22,9 +22,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\RabbitOM\RabbitOM.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Presentation\" />
-	</ItemGroup>
 	<Target Name="CopyFFmpegNative" AfterTargets="Restore;Build">
 		<PropertyGroup>
 			<NuGetPackageRoot>$(SolutionDir)packages\</NuGetPackageRoot>

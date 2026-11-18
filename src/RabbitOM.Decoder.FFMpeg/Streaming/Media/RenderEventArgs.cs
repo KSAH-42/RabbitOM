@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Domain.Media
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Media
 {
     public class RenderEventArgs : EventArgs
     {

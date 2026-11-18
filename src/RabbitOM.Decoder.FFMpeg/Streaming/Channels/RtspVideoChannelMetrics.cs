@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Domain.Channels
+﻿namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 {
 	using RabbitOM.Threading;
 

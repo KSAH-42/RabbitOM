@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Domain.Transports
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Transports
 {
 	public interface ITransport : IDisposable
 	{

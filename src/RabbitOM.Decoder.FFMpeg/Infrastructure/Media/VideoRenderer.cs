@@ -2,7 +2,7 @@
 
 namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Media
 {
-    using RabbitOM.Decoder.FFMpeg.Domain.Media;
+    using RabbitOM.Decoder.FFMpeg.Streaming.Media;
 
     public abstract class VideoRenderer : IVideoRenderer
     {
