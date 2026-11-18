@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RabbitOM.Decoder.FFMpeg.Streaming.Media;
+using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders
 {

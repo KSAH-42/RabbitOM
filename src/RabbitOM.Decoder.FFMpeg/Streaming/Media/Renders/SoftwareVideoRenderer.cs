@@ -1,4 +1,5 @@
 ﻿using FFmpeg.AutoGen;
+using RabbitOM.Decoder.FFMpeg.Streaming.Media;
 using System;
 
 namespace RabbitOM.Decoder.FFMpeg.Streaming.Media.Renders
