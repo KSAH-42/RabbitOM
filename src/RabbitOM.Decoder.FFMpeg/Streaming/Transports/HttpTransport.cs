@@ -1,9 +1,7 @@
 ﻿using System;
 
-namespace RabbitOM.Decoder.FFMpeg.Infrastructure.Transports
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Transports
 {
-	using RabbitOM.Decoder.FFMpeg.Streaming.Transports;
-
 	public sealed class HttpTransport : ITransport
 	{
 		public bool IsOpened => throw new NotImplementedException();
