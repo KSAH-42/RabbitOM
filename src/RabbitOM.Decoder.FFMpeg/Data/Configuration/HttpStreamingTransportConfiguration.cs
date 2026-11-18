@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Presentation.Dtos.Configuration
+﻿namespace RabbitOM.Decoder.FFMpeg.Data.Configuration
 {
 	public sealed class HttpStreamingTransportConfiguration
 	{

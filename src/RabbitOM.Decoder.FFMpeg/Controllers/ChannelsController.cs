@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace RabbitOM.Decoder.FFMpeg.Presentation.Controllers
+namespace RabbitOM.Decoder.FFMpeg.Controllers
 {
-	using RabbitOM.Decoder.FFMpeg.Presentation.Dtos.Configuration;
-	using RabbitOM.Decoder.FFMpeg.Presentation.Dtos.Diagnostics;
+	using RabbitOM.Decoder.FFMpeg.Data.Configuration;
+	using RabbitOM.Decoder.FFMpeg.Data.Diagnostics;
 	using RabbitOM.Decoder.FFMpeg.Services;
 
 	[ApiController]
