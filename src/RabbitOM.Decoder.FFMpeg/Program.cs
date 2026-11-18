@@ -1,4 +1,4 @@
-using RabbitOM.Decoder.FFMpeg.Services;
+using RabbitOM.Decoder.FFMpeg.Api.Services;
 
 namespace RabbitOM.Decoder.FFMpeg
 {

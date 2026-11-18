@@ -1,4 +1,4 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Data.DTOs.Configuration
+﻿namespace RabbitOM.Decoder.FFMpeg.Api.Data.Configuration
 {
 	public sealed class SharedMemoryTransportConfiguration
 	{

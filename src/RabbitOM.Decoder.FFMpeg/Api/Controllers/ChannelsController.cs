@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace RabbitOM.Decoder.FFMpeg.Controllers
+namespace RabbitOM.Decoder.FFMpeg.Api.Controllers
 {
-	using RabbitOM.Decoder.FFMpeg.Data.DTOs.Configuration;
-	using RabbitOM.Decoder.FFMpeg.Data.DTOs.Diagnostics;
-	using RabbitOM.Decoder.FFMpeg.Services;
+	using RabbitOM.Decoder.FFMpeg.Api.Data.Configuration;
+	using RabbitOM.Decoder.FFMpeg.Api.Data.Diagnostics;
+	using RabbitOM.Decoder.FFMpeg.Api.Services;
 
 	[ApiController]
 	[Route( "[controller]" )]
