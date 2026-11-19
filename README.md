@@ -342,3 +342,5 @@ static class Program
 }
 
 ~~~~
+
+Copyright Kader SAHNINE, commercial usage are allowed
