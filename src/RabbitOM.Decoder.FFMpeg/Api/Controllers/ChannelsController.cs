@@ -4,19 +4,11 @@ namespace RabbitOM.Decoder.FFMpeg.Api.Controllers
 {
 	using RabbitOM.Decoder.FFMpeg.Api.Data.Configuration;
 	using RabbitOM.Decoder.FFMpeg.Api.Data.Diagnostics;
-	using RabbitOM.Decoder.FFMpeg.Api.Services;
 
 	[ApiController]
 	[Route( "[controller]" )]
 	public class ChannelsController : ControllerBase
 	{
-		private readonly IVideoChannelService _channelsService;
-
-		public ChannelsController( IVideoChannelService channelsServices )
-		{
-			_channelsService = channelsServices ?? throw new ArgumentNullException( nameof( channelsServices ) );
-		}
-
 		[HttpPost("{index:int}/start")]
 		public ActionResult Start( int index , [FromBody] VideoChannelConfiguration configuration ) // in case if we dont' a new protocol add route like this start, start-rtsp, start-http, etc... and pass configmodel without any inheritance and the route start will used rtsp by default
 		{

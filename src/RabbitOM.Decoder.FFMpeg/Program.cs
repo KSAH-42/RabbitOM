@@ -1,5 +1,3 @@
-using RabbitOM.Decoder.FFMpeg.Api.Services;
-
 namespace RabbitOM.Decoder.FFMpeg
 {
 	public static class Program
@@ -10,7 +8,6 @@ namespace RabbitOM.Decoder.FFMpeg
 
 			builder.Services.AddControllers();
 			builder.Services.AddSwaggerGen();
-			builder.Services.AddSingleton<IVideoChannelService>( new RtspVideoChannelService() );
 
 			var app = builder.Build();
 

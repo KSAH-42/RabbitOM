@@ -1,21 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace RabbitOM.Decoder.Controllers
+namespace RabbitOM.Decoder.Api.Controllers
 {
-	using RabbitOM.Decoder.Models;
-	using RabbitOM.Decoder.Services;
-
+	using RabbitOM.Decoder.Api.Data;
+	
 	[ApiController]
 	[Route( "[configuration]" )]
 	public class ConfigurationController : ControllerBase
 	{
-		private readonly IConfigurationService _configurationService;
-
-		public ConfigurationController( IConfigurationService configurationService )
-		{
-			_configurationService = configurationService ?? throw new ArgumentNullException( nameof( configurationService ) );
-		}
-
 		[HttpGet()]
 		public ActionResult<Configuration> GetConfiguration()
 		{
