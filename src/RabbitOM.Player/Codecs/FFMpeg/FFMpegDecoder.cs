@@ -6,7 +6,6 @@ namespace RabbitOM.Player.Codecs.FFMpeg
 {
     using FFmpeg.AutoGen;
 
-    // this implementation doesn't support hardware acceleration
     public unsafe sealed class FFMpegDecoder : Decoder
     {
         private AVCodec* _decoder = null;
