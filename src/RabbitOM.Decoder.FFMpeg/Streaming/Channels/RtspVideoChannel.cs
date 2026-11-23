@@ -1,15 +1,14 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 {
-	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders;
-	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Outputs;
-	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Renders;
 	using RabbitOM.Net.Rtp;
     using RabbitOM.Net.Rtp.H264;
     using RabbitOM.Net.Rtp.H265;
     using RabbitOM.Net.Rtp.Jpeg;
     using RabbitOM.Net.Rtsp;
     using RabbitOM.Net.Rtsp.Clients;
-	using System.Data.Common;
+    using RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders;
+	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Outputs;
+	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Renders;
 
 	public sealed class RtspVideoChannel : IDisposable
 	{
@@ -21,11 +20,15 @@
         private readonly IVideoDecoder _decoder;
 		private readonly IVideoRenderer _renderer;
 		private readonly IVideoOutput _output;
+        private RtspVideoChannelConfiguration _configuration;
 
-		private RtspVideoChannelConfiguration _configuration;
 
 
-		public RtspVideoChannel( IVideoDecoder decoder , IVideoRenderer renderer , IVideoOutput output )
+
+
+
+
+		public RtspVideoChannel( IVideoDecoder decoder , IVideoRenderer renderer , IVideoOutput output ) // used decorator if need
 		{
 			_decoder = decoder ?? throw new ArgumentNullException( nameof( decoder ) );
 			_renderer = renderer ?? throw new ArgumentNullException( nameof( renderer ) );
@@ -36,6 +39,7 @@
             _frameBuilder = new RtpMediaBuilderProxy();
 			_metrics = new RtspVideoChannelMetrics();
 			_metricsUpdater = new RtspVideoChannelMetrics.Writer( _metrics );
+            _configuration = RtspVideoChannelConfiguration.Default;
 
 			_client.CommunicationStarted += OnClientCommunicationStarted;
 			_client.CommunicationStopped += OnClientCommunicationStopped;
@@ -45,7 +49,11 @@
 			_frameBuilder.MediaBuilded += OnRtpFrameBuilded;
 			_frameBuilder.PacketsLost += OnRtpPacketsLost;
 			_decoder.FrameDecoded += OnFrameDecoded;
+			_renderer.Rendered += OnRendered;
 		}
+
+
+
 
 
 
@@ -63,7 +71,7 @@
         public bool IsStopping
         {
             get => _client.IsCommunicationStopping;
-            }
+        }
 
 		public RtspVideoChannelMetrics Metrics
 		{
@@ -79,8 +87,14 @@
 
 
 
+
 		public bool Start( RtspVideoChannelConfiguration configuration )
 		{
+            if ( configuration == null )
+            {
+                throw new ArgumentNullException( nameof( configuration ) );
+            }
+
 			throw new NotImplementedException();
 		}
 
@@ -98,12 +112,15 @@
             _client.Disconnected -= OnClientDisconnected;
             _client.PacketReceived -= OnClientPacketReceived;
             _client.Dispose();
+
             _frameBuilder.MediaBuilded -= OnRtpFrameBuilded;
             _frameBuilder.PacketsLost -= OnRtpPacketsLost;
             _frameBuilder.Dispose();
+
             _decoder.FrameDecoded -= OnFrameDecoded;
             _renderer.Dispose();
             _decoder.Dispose();
+            _output.Dispose();
 		}
 
 
@@ -126,6 +143,8 @@
 
             _frameBuilder.Dispose();
 
+            _output.Open();
+
             throw new NotImplementedException();
         }
 
@@ -134,6 +153,7 @@
             _frameBuilder.Clear();
             _decoder.Close();
             _renderer.Close();
+            _output.Close();
         }
 
         private void OnClientPacketReceived( object sender , RtspPacketReceivedEventArgs e )
@@ -160,9 +180,9 @@
                 return;
             }
 
-            byte[] extraParameters = e.MediaElement is IExtraParameters parameters ? parameters.GetExtraParameters() : null;
+            byte[]? extraParameters = e.MediaElement is IExtraParameters parameters ? parameters.GetExtraParameters()  : null;
 
-            if ( ! _decoder.CanConfigure( extraParameters ) || _decoder.Configure( extraParameters ) )
+            if ( ! _decoder.CanConfigure( extraParameters! ) || _decoder.Configure( extraParameters! ) )
             {
                 _decoder.Decode( e.MediaElement.Buffer );
             }
@@ -170,7 +190,12 @@
 
         private void OnFrameDecoded( object sender , FrameDecodedEventArgs e )
         {
-            throw new NotImplementedException();
+            _renderer.Render( e.Surface );
         }
+
+        private void OnRendered( object? sender , RenderEventArgs e )
+		{
+			_output.SendImage( e.Image );
+		}
 	}
 }
