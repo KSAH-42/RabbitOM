@@ -1,15 +1,25 @@
 ﻿namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 {
+	using RabbitOM.Net.Rtp;
+    using RabbitOM.Net.Rtp.H264;
+    using RabbitOM.Net.Rtp.H265;
+    using RabbitOM.Net.Rtp.Jpeg;
+    using RabbitOM.Net.Rtsp;
+    using RabbitOM.Net.Rtsp.Clients;
 	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Decoders;
 	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Outputs;
 	using RabbitOM.Decoder.FFMpeg.Streaming.Media.Renders;
 
 	public sealed class RtspVideoChannel : IDisposable
 	{
-		private readonly IVideoDecoder _decoder;
+		private readonly RtspClient _client;
+        private readonly RtpPacketInspector _inspector;
+        private readonly RtpMediaBuilderProxy _frameBuilder;
+		private readonly RtspVideoChannelMetrics _metrics;
+		private readonly RtspVideoChannelMetrics.Writer _metricsWriter;
+        private readonly IVideoDecoder _decoder;
 		private readonly IVideoRenderer _renderer;
-		private readonly IVideoOutput _output;
-
+		private readonly IVideoOutput _output;    
 
 
 		public RtspVideoChannel( IVideoDecoder decoder , IVideoRenderer renderer , IVideoOutput output )
