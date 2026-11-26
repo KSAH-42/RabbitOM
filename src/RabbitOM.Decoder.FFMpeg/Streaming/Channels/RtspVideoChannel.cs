@@ -1,5 +1,4 @@
-﻿// using the Oscedar decoder
-namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
+﻿namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 {
 	using RabbitOM.Net.Rtp;
     using RabbitOM.Net.Rtp.H264;
@@ -42,7 +41,6 @@ namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 			_metricsUpdater = new RtspVideoChannelMetrics.Writer( _metrics );
             _configuration = RtspVideoChannelConfiguration.Default;
 
-			_client.CommunicationStarted += OnClientCommunicationStarted;
 			_client.CommunicationStopped += OnClientCommunicationStopped;
 			_client.Connected += OnClientConnected;
 			_client.Disconnected += OnClientDisconnected;
@@ -107,7 +105,6 @@ namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 		public void Dispose()
 		{
 			_client.StopCommunication();
-            _client.CommunicationStarted -= OnClientCommunicationStarted;
             _client.CommunicationStopped -= OnClientCommunicationStopped;
             _client.Connected -= OnClientConnected;
             _client.Disconnected -= OnClientDisconnected;
@@ -127,11 +124,7 @@ namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 
 
 
-		private void OnClientCommunicationStarted( object sender , RtspClientCommunicationStartedEventArgs e )
-        {
-        }
-
-        private void OnClientCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
+		private void OnClientCommunicationStopped( object sender , RtspClientCommunicationStoppedEventArgs e )
         {
             _metricsUpdater.Clear();
         }
