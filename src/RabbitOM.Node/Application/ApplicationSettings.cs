@@ -30,7 +30,7 @@ namespace RabbitOM.Node.Application
 
 
         // refactoring as O(n) see previous comit of the parse method
-        // RabbiOM.Node https://www.youtube.com/watch?v=ENdpvW1otMQ&t=7196s --script spying@curie.xml --disable-logging
+        // RabbiOM.Node https://www.youtube.com/watch?v=ENdpvW1otMQ&t=7196s --script pierre@curie.xml --disable-logging
 
         public static ApplicationSettings Parse( string[] input )
         {

@@ -1,4 +1,5 @@
-﻿namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
+﻿// using the Oscedar decoder
+namespace RabbitOM.Decoder.FFMpeg.Streaming.Channels
 {
 	using RabbitOM.Net.Rtp;
     using RabbitOM.Net.Rtp.H264;

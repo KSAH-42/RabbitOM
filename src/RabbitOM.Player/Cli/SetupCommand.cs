@@ -1,5 +1,4 @@
-﻿// RabbitOM.Player.exe setup rtsp://192.168.1.64/streaming/channels/101 --play --no-stats --window-state-maximize --redirect-address 192.168.1.2 
-using System;
+﻿using System;
 
 namespace RabbitOM.Player.Cli
 {

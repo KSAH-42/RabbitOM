@@ -7,8 +7,6 @@ namespace RabbitOM.Player.Net
 {
     public static class HttpServerRoutesBuilderExtensions
     {
-        // we routed at "bouche du rhone" , because , because https://www.youtube.com/watch?v=3PB0f8k_Yxw&t=3h3m16s
-        // dispacth issue fixed now
         public static RouteHandlerBuilder UseUIDispatcher( this RouteHandlerBuilder builder , Delegate handler )
         {
             if ( builder == null )
