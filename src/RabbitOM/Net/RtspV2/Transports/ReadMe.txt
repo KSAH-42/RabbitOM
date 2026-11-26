@@ -20,7 +20,7 @@
 
  using RabbitOM.Net.Rtsp.Transports;
  using RabbitOM.Net.Rtsp.Transports.Channels
- using RabbitOM.Net.Rtsp.Transports.Channels.Bindings
+ using RabbitOM.Net.Rtsp.Transports.Channels.Bindings;
  using RabbitOM.Net.Rtsp.Transports.Messages;
 
  using ( var channel = new Channel( new Binding() ) ) // require 3 usings directives for one statement
