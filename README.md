@@ -189,9 +189,7 @@ curl.exe -X POST https://192.168.1.10:5000/start --insecure
 
 If your are using some cameras and you may use first VLC for testing, you may observed that VLC fail to display BUT the Media.Player will display the stream.
 
-First of all, here I use a HIK camera, and HIK camera just works as expected and works well.
-
-The issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this library doesn't support all digest algs supported by the camera.
+First of all, here I use a camera. And authentication issue does not really come from VLC, but where ? VLC just used an existing external RTSP-Library, and this library doesn't support all digest algs supported by the camera.
 VLC (3.0.23 and probably previous versions) will enter in a loop and will normally ask to you to enter the credentials until the authentication succeed, but the rtsp source will reply by a forbidden access result, and VLC will repeat again and again and never leave the authentication loop.
 According to the rtsp headers there is the name of dll used here located on the useragent header. If you get more details, look at the Authorization header (emitted by client) and WWW-Authentication (server response).
 If you familliar with ASP.Net Web API, even if the ASP.Net hide the details and support more schemes than the RTSP protocols, here it'is excatly the same headers, etc... 
