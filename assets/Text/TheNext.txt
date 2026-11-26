@@ -1,22 +1,3 @@
-architecture ethymologie: 
-
-Le mot architecture vient du latin architectura, lui-même emprunté au grec ancien arkhitektonikê (ἀρχιτεκτονική),
-qui désigne l'art ou l'ouvrage du maître-bâtisseur
- -> checker les cloud pattern
-   -> contraintes: eviter des dupliquer des flux, side car pas idéal , sinon ca voudrais d'avoir un recorder avec n process locaux qui écrive sur via l'ipc, c'est pas réellement elastic, le scale horizontal risque d'etre délicat
-
-ethymologie d'art: Le mot art vient du latin ars (habileté, métier, connaissance technique), lui-même issu d'une racine indo-européenne *ar- qui signifie « ajuster » ou « assembler ».
- -> « ajuster » ou « assembler »; on assemble des micro service
-
-innovation étymologie:
-Le mot innovation vient du latin innovare, qui signifie « renouveler » ou « changer »
- -> déprioritiser l'intégration onvif -> on allège un poid qui s'exerce sur les délai, y a du taf et des zones obsucures
-
-
-next recorder ? -> forget cdn 
- -> un recorder elastic ?
-
-
  flexmentalo-recorder
  elastic-recorder-front.exe : asp.net mvc 
  elastic-recorder-front-v1.exe
