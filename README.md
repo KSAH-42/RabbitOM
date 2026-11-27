@@ -209,7 +209,6 @@ In this example, the node will monitor the status of the communication and trigg
 You can also configure the script: in the xml section called "properties", the name of a property are case sensitive and may be the same as a clr property.
 
 ~~~~XML
-
 <?xml version="1.0" encoding="utf-8"?>
 <script language="csharp">
 	<references>
@@ -288,7 +287,6 @@ You can also configure the script: in the xml section called "properties", the n
 		}
 	</code>
 </script>
-
 ~~~~
 
 and run by executing the following command (take care regarding the path it may be incorrect)
@@ -341,7 +339,6 @@ static class Program
         }
     }
 }
-
 ~~~~
 
 Copyright Kader SAHNINE, commercial usage are allowed
